@@ -12,7 +12,7 @@
  *      organic-ground-truth.json e adjudications.json não podem aparecer em nenhum arquivo de texto
  *      exportado; vocabulário que descreveria uma violação plantada é RELATADO (não falha, salvo nos
  *      arquivos que o exportador escreve);
- *   5. pasta limpa: cópia do pacote num diretório novo, `server.mjs` numa porta livre com ambiente
+ *   5. pasta limpa (telas A, B e A2): cópia do pacote num diretório novo, `server.mjs` numa porta livre com ambiente
  *      mínimo; bytes servidos = manifesto; travessia de caminho → 400/404; Playwright abre A e B,
  *      executa os passos `setup` das referências (lidos aqui, nunca copiados para o pacote) e a
  *      interação de `telas.json`; nenhum pedido sai da origem; console comparado com o do mesmo site
@@ -29,10 +29,10 @@ import { chromium, type Browser, type Page } from "playwright";
 import { validateContract } from "../contracts/index";
 import { ROOT } from "./adjudication";
 import {
-  PACKAGE_NODE_VERSION, PACKAGE_SKILLS, ROOT_FILES, machineText, SCREEN_A, SCREEN_B, SITE_DIR, TEXT_EXTENSIONS, auditPackage, exportTelas, listTree,
+  KNOWN_SOURCE_MAP_DIRECTIVES, PACKAGE_NODE_VERSION, PACKAGE_SKILLS, ROOT_FILES, machineText, SCREEN_A, SCREEN_A2, SCREEN_B, SCREENS, SITE_DIR, TEXT_EXTENSIONS, auditPackage, exportTelas, listTree,
   type SiteManifestDoc,
 } from "./export-telas";
-import { createSiteServer, loadSite } from "./measurement-surface";
+import { assetClosure, createSiteServer, loadSite } from "./measurement-surface";
 import { telaOf, type Tela } from "./telas";
 
 let tests = 0;
@@ -102,6 +102,21 @@ function collectNeedles(): AnswerKeyNeedles {
  * motivo e é listada no relatório; não há curinga.
  */
 const KNOWN_PAGE_CONTENT: { needle: string; file: RegExp; reason: string }[] = [];
+
+/**
+ * Frases inteiras da página que a referência CITA entre aspas (o texto como a página o mostra), registradas uma a
+ * uma: cada sequência de 6 palavras da frase vira uma entrada exata, presa ao arquivo da página onde ela está.
+ */
+function pageSentence(sentence: string, file: RegExp, reason: string): void {
+  const w = words(sentence);
+  for (let i = 0; i + SHINGLE <= w.length; i++) KNOWN_PAGE_CONTENT.push({ needle: w.slice(i, i + SHINGLE).join(" "), file, reason });
+}
+// Tela A2 (govbr-corpus 1abcc50): ground-truth-acompanhamento.json cita estas duas frases da página na medida da
+// unidade do campo de envio ('…' na medida da construção).
+pageSentence("Você também pode arrastar o arquivo até a área acima.", /^site\/acompanhamento\.html$/,
+  "A2: texto de apoio do campo de envio (#arquivo-apoio), visível na página; a referência o cita entre aspas");
+pageSentence("O arquivo deve estar em PDF, JPG ou PNG e ter até 5 MB.", /^site\/acompanhamento\/comportamento\.js$/,
+  "A2: mensagem de recusa do envio que a página mostra (comportamento.js); a referência a cita entre aspas");
 
 interface LeakHit { file: string; kind: "id" | "regra" | "frase"; needle: string; context: string; found?: string }
 
@@ -296,6 +311,7 @@ async function main(): Promise<void> {
     assert.equal(result.files, manifest.files.length);
     assert.ok(manifest.files.some((f) => f.path === "solicitacao.html"));
     assert.ok(manifest.files.some((f) => f.path === "pnip/index.html"));
+    assert.ok(manifest.files.some((f) => f.path === "acompanhamento.html"));
     console.log(`   ${result.files} arquivos servidos, ${result.bytes} bytes; corpus ${manifest.origin.corpus.commit}${manifest.origin.corpus.dirty ? " (sujo)" : ""}`);
   });
 
@@ -317,7 +333,8 @@ async function main(): Promise<void> {
     // injetado), sem ser diretiva de arquivo: relatada, não falha.
     for (const f of all.filter((p) => TEXT_EXTENSIONS.has(extname(p).toLowerCase()))) {
       const n = readFileSync(join(OUT, f), "utf8").split("sourceMappingURL").length - 1;
-      if (n) console.log(`   relatado: "sourceMappingURL" ×${n} em ${f} (não é diretiva: está dentro de código)`);
+      if (n && KNOWN_SOURCE_MAP_DIRECTIVES.some((k) => k.path === f)) console.log(`   relatado: "sourceMappingURL" ×${n} em ${f} (diretiva de terceiros mantida, ver o teste da exceção)`);
+      else if (n) console.log(`   relatado: "sourceMappingURL" ×${n} em ${f} (não é diretiva: está dentro de código)`);
     }
   });
 
@@ -342,13 +359,32 @@ async function main(): Promise<void> {
     rmSync(copy, { recursive: true, force: true });
   });
 
+  await test("diretiva de terceiros mantida (A2 core.min.js): só com o hash exato e sem o mapa no pacote", () => {
+    for (const k of KNOWN_SOURCE_MAP_DIRECTIVES) console.log(`   relatado: diretiva mantida em ${k.path} (${k.reason})`);
+    const [k] = KNOWN_SOURCE_MAP_DIRECTIVES;
+    assert.ok(manifest.files.some((f) => `${SITE_DIR}/${f.path}` === k.path && f.sha256 === k.sha256), `${k.path} com outro hash no pacote`);
+    assert.ok(!manifest.files.some((f) => `${SITE_DIR}/${f.path}` === k.map), `${k.map} no pacote`);
+    // (a) o arquivo alterado perde a exceção; (b) o mapa presente também
+    const alterado = join(WORK, "diretiva-alterada");
+    cpSync(OUT, alterado, { recursive: true });
+    appendFileSync(join(alterado, k.path), "\n");
+    assert.ok(auditPackage(alterado).errors.includes(`diretiva sourceMappingURL: ${k.path}`), "arquivo alterado devia perder a exceção");
+    rmSync(alterado, { recursive: true, force: true });
+    const comMapa = join(WORK, "diretiva-com-mapa");
+    cpSync(OUT, comMapa, { recursive: true });
+    writeFileSync(join(comMapa, k.map), "{}");
+    const errs = auditPackage(comMapa).errors;
+    assert.ok(errs.includes(`diretiva sourceMappingURL: ${k.path}`) && errs.includes(`source map: ${k.map}`), errs.join("\n"));
+    rmSync(comMapa, { recursive: true, force: true });
+  });
+
   await test("manifesto: site-manifest.v1 e item encaixa em snapshot-manifest.v1 (validateContract)", () => {
     assert.equal(manifest.contract, "site-manifest.v1");
     assert.equal(manifest.subsetOf, "snapshot-manifest.v1");
     assert.equal(manifest.fixture, false);
-    assert.deepEqual(manifest.screens.map((s) => s.id), [SCREEN_A, SCREEN_B]);
-    assert.equal(manifest.screens[0].entry, `/${telaOf(SCREEN_A).entry}`);
-    assert.equal(manifest.screens[1].entry, `/${telaOf(SCREEN_B).entry}`);
+    assert.deepEqual(manifest.screens.map((s) => s.id), [SCREEN_A, SCREEN_B, SCREEN_A2]);
+    assert.deepEqual([...SCREENS], [SCREEN_A, SCREEN_B, SCREEN_A2]);
+    for (const [i, nome] of SCREENS.entries()) assert.equal(manifest.screens[i].entry, `/${telaOf(nome).entry}`);
     assert.deepEqual(manifest.routing.aliases, telaOf(SCREEN_B).isolamento.site!.aliases);
     // Os outros três itens obrigatórios (referência, plano, instrumento) não pertencem ao site: aqui são
     // marcadores sintéticos, e o documento composto é fixture.
@@ -381,12 +417,28 @@ async function main(): Promise<void> {
     const freeze = JSON.parse(readFileSync(join(CORPUS, "public", "pnip", "manifesto.json"), "utf8")) as { arquivos: Record<string, string> };
     const exportedB = Object.fromEntries(manifest.files.filter((f) => f.path.startsWith("pnip/")).map((f) => [f.path.slice(5), f.sha256]));
     assert.deepEqual(exportedB, freeze.arquivos);
-    for (const nome of [SCREEN_A, SCREEN_B]) {
+    // Arquivos de cada tela no pacote: B = a árvore pnip/ (SPA); A e A2 = o fechamento da entrada sobre o site
+    // exportado SEM a árvore pnip/ (o fechamento casa por nome de arquivo e o bundle do DS cita nomes como
+    // collapse.js, que a SPA também tem — a mesma razão por que o exportador tira public/ do build). As duas
+    // dividem as fontes do DS. Juntas, as três cobrem exatamente files[].
+    const siteDir = join(WORK, "site-sem-pnip");
+    cpSync(join(OUT, SITE_DIR), siteDir, { recursive: true, filter: (from) => !/[\\/]site[\\/]pnip([\\/]|$)/.test(from) });
+    const doPacote = (nome: string): Set<string> => nome === SCREEN_B
+      ? new Set(manifest.files.filter((f) => f.path.startsWith("pnip/")).map((f) => f.path))
+      : new Set(assetClosure(siteDir, telaOf(nome).entry));
+    const porTela = new Map(SCREENS.map((nome) => [nome, doPacote(nome)]));
+    const cobertos = new Set([...porTela.values()].flatMap((s) => [...s]));
+    assert.deepEqual([...cobertos].sort(), manifest.files.map((f) => f.path).sort(), "files[] ≠ união das três telas");
+    for (const f of porTela.get(SCREEN_A2)!) assert.ok(!f.startsWith("pnip/") && !/solicitacao/.test(f), `A2 trouxe ${f}`);
+    for (const f of porTela.get(SCREEN_A)!) assert.ok(!f.startsWith("pnip/") && !/acompanhamento|inicio\.html|meus-requerimentos/.test(f), `A trouxe ${f}`);
+    console.log(`   por tela: ${SCREENS.map((n) => `${n} ${porTela.get(n)!.size}`).join(" · ")} (${cobertos.size} no total)`);
+    for (const nome of SCREENS) {
       const tela = telaOf(nome);
       const surface = latestSurface(tela.entry);
       if (!surface) { console.log(`   ${nome}: sem superfície anterior em pipeline/logs para comparar`); continue; }
       const measured = (JSON.parse(readFileSync(join(surface, "site-manifest.json"), "utf8")) as { files: Record<string, string> }).files;
-      const mine = Object.fromEntries(manifest.files.filter((f) => (nome === SCREEN_B) === f.path.startsWith("pnip/")).map((f) => [`/${f.path}`, f.sha256]));
+      const meus = porTela.get(nome)!;
+      const mine = Object.fromEntries(manifest.files.filter((f) => meus.has(f.path)).map((f) => [`/${f.path}`, f.sha256]));
       assert.deepEqual(mine, measured, `${nome}: arquivos/bytes diferem da superfície ${surface}`);
       console.log(`   ${nome}: ${Object.keys(mine).length} arquivos idênticos a ${surface.split(/[\\/]/).pop()}`);
     }
@@ -458,6 +510,7 @@ async function main(): Promise<void> {
   await test("pasta limpa: servidor sobe sem instalar nada e serve exatamente os bytes do manifesto", async () => {
     assert.ok(!existsSync(join(clean, "node_modules")));
     assert.match(server.output(), /Solicitar serviço: http:\/\/127\.0\.0\.1:\d+\/solicitacao\.html/);
+    assert.match(server.output(), /Acompanhar requerimento: http:\/\/127\.0\.0\.1:\d+\/acompanhamento\.html/);
     const { createHash } = await import("node:crypto");
     for (const f of manifest.files) {
       const res = await fetch(`${server.origin}/${f.path.split("/").map(encodeURIComponent).join("/")}`);
@@ -483,6 +536,8 @@ async function main(): Promise<void> {
       ["/README.md", [404]], ["/skills/avaliar-tela/SKILL.md", [404]], ["/site/../skills/avaliar-tela/SKILL.md", [400]], ["/package.json", [404]], ["/.node-version", [404]], ["/site/solicitacao.html", [404]],
       ["/", [404]], ["/assets/", [404]], ["/assets", [404]], ["/pnip/manifesto.json", [404]], ["/fluxo.html", [404]],
       ["/index.html", [404]], ["/src/solicitacao.tsx", [404]], ["/@fs/etc/passwd", [404]], ["/solicitacao.html", [405], "POST"],
+      ["/acompanhamento/", [404]], ["/acompanhamento", [404]], ["/acompanhamento/core.min.js.map", [404]], ["/src/acompanhamento/acompanhamento.css", [404]], ["/acompanhamento/../server.mjs", [400]],
+      ["/controles/", [404]], ["/pnip-c/index.html", [404]], ["/acompanhamento.html", [405], "PUT"],
     ];
     for (const [path, expected, method] of cases) {
       const status = await rawStatus(server.origin, path, method);
@@ -493,7 +548,7 @@ async function main(): Promise<void> {
   const browser = await chromium.launch({ headless: true });
   cleanups.push(() => browser.close());
   const references = new Map<string, string>();
-  for (const nome of [SCREEN_A, SCREEN_B]) {
+  for (const nome of SCREENS) {
     const surface = latestSurface(telaOf(nome).entry);
     if (!surface) continue;
     const refServer = createSiteServer(loadSite(surface));
@@ -501,7 +556,7 @@ async function main(): Promise<void> {
     cleanups.push(() => new Promise<void>((done) => { refServer.closeAllConnections(); refServer.close(() => done()); }));
   }
 
-  for (const nome of [SCREEN_A, SCREEN_B]) {
+  for (const nome of SCREENS) {
     await test(`pasta limpa: ${nome} carrega, interações do setup respondem, nada sai da origem, console sem novidade`, async () => {
       const tela = telaOf(nome);
       const mine = await visitScreen(browser, server.origin, tela);

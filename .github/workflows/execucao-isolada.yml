@@ -27,9 +27,9 @@ on:
         options: [roteirizado, duble, real]
         default: roteirizado
       tela:
-        description: "tela A (solicitacao) ou B (vistorias)"
+        description: "tela A (solicitacao), B (vistorias) ou A2 (acompanhamento)"
         type: choice
-        options: [solicitacao, vistorias]
+        options: [solicitacao, vistorias, acompanhamento]
         default: solicitacao
       braco:
         description: "sem, com (oráculo, perfil evaluation) ou ferramentas (oráculo, perfil knowledge-free) — da-agenda = o braço do slot; campanha sem agenda exige um dos três"

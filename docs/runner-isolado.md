@@ -185,7 +185,7 @@ o agente não controla, e a tentativa tem de aparecer como dado (não some silen
 **Outras larguras (meio declarado).** Uma instância do Playwright MCP por largura declarada, cada uma
 com o próprio navegador de tamanho fixo; a ponte expõe `browser_select_window { width }` para trocar
 a instância ativa. `{{MEIO_LARGURAS}}` é preenchido pelo runner com esse meio quando há mais de uma
-largura (`runner/telas-runner.json` ou `--larguras`). As duas telas declaram hoje só 1280×900.
+largura (`runner/telas-runner.json` ou `--larguras`). As três telas (A, B e A2) declaram hoje só 1280×900.
 
 ## Coletor
 

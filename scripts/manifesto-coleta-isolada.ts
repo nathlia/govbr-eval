@@ -285,7 +285,7 @@ export function campanhaDoDisparo(m: Omit<IsolatedCollectionManifest, "campaign"
 export function screenVersionOf(siteSha256: string): string {
   return `govbr-telas-site-${siteSha256.slice(0, 12)}`;
 }
-export const SCREEN_LABELS: Record<string, string> = { solicitacao: "Solicitar serviço", vistorias: "Vistorias" };
+export const SCREEN_LABELS: Record<string, string> = { solicitacao: "Solicitar serviço", vistorias: "Vistorias", acompanhamento: "Acompanhar requerimento" };
 
 export interface BuildOptions {
   tela: string; telasDir: string; validatorDir: string; referencePath?: string;

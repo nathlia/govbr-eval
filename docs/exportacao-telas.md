@@ -26,6 +26,7 @@ diretório temporário apagado no fim.
 | Caminho no pacote | De onde vem | Como é escolhido |
 |---|---|---|
 | `site/solicitacao.html` + `site/assets/*` | build de produção do corpus (`vite build --outDir <temporário>`) | `assetClosure` da superfície de medida a partir de `solicitacao.html`, depois de tirar do build o que o Vite copiou de `public/`. O fechamento tem de caber no padrão da tela (a página e `assets/`); um arquivo de outra entrada (`index.html`, `fluxo*`, `main-*`) faz a exportação parar. |
+| `site/acompanhamento.html` + `site/acompanhamento/*` + `site/inicio.html` + `site/meus-requerimentos.html` + `site/assets/*` (tela A2, desde `export-telas-1.3.0`) | o mesmo build da tela A, mais `public/acompanhamento/`, `public/inicio.html` e `public/meus-requerimentos.html` do corpus | `assetClosure` a partir de `acompanhamento.html`, depois de devolver ao build SÓ essas três entradas de `public/` (`SCREEN_A2_PUBLIC`: os scripts clássicos e as marcas da página e as duas páginas de destino da trilha). O fechamento tem de caber no padrão da A2 (a página, as duas páginas de destino, `acompanhamento/*.js|svg`, CSS e fontes de `assets/`; nenhum JS do build). As fontes do DS são os mesmos arquivos da A. Hoje: 34 arquivos, 26 novos. |
 | `site/pnip/**` | `govbr-corpus/public/pnip/` (build Angular congelado) | Exatamente a lista do manifesto do congelamento (`manifesto.json`), cada arquivo conferido por sha256; árvore com arquivo a mais ou a menos faz a exportação parar. O manifesto do congelamento fica de fora (telas.json `isolamento.site.excluir`). |
 | `server.mjs`, `README.md` | modelos em `scripts/export-telas/` | copiados como estão |
 | `package.json`, `.node-version`, `.gitattributes`, `site-manifest.json` | gerados pelo exportador | — |
@@ -33,7 +34,11 @@ diretório temporário apagado no fim.
 
 Os bytes servidos são os mesmos que a superfície de medida congelou: o teste compara cada tela com a
 última superfície em `pipeline/logs/*-superficie/` (hoje, `solicitacao` = 14 arquivos e `vistorias` =
-190 arquivos, idênticos). Uma mudança substantiva em qualquer tela exige nova identidade de tela; o
+190 arquivos, idênticos; `acompanhamento` não tem superfície anterior, e o teste diz isso). O teste
+separa as telas pelo fechamento de cada entrada sobre o site exportado sem a árvore `pnip/`, e exige que
+as três juntas cubram exatamente `files[]`. A A2 entrou em `export-telas-1.3.0` (site `88076aec26e9`, corpus
+`1abcc50`) sem mudar um byte de A nem de B: só `package.json` (descrição), `README.md` (três telas) e o
+manifesto mudaram na raiz. Uma mudança substantiva em qualquer tela exige nova identidade de tela; o
 exportador não faz nenhuma.
 
 ## O que não entra, e por quê
@@ -45,7 +50,12 @@ exportador não faz nenhuma.
 - Outras alas do corpus (`real/`, `static/`, a suíte `TC-*`, a tela de fluxo).
 - Source maps: o build do corpus não os emite, o congelamento do PNIP também não
   (`build.sourceMaps: false`), e a auditoria falha com qualquer `*.map` ou diretiva
-  `sourceMappingURL` no início de linha.
+  `sourceMappingURL` no início de linha. **Exceção única (1.3.0):** o `acompanhamento/core.min.js` da A2 é
+  o `dist/core.min.js` do `@govbr-ds/core` 3.7.0 byte a byte (a construção da tela o deixou intocado e a
+  referência 1.0.0 foi medida sobre ele) e termina com `//# sourceMappingURL=core.min.js.map`. A diretiva é
+  aceita só para esse caminho e esse sha256 (`KNOWN_SOURCE_MAP_DIRECTIVES`), e só se o mapa citado NÃO
+  estiver no pacote: o servidor responde 404 a ele, e nenhuma fonte chega ao navegador. O teste prova que o
+  arquivo alterado, ou o mapa presente, volta a falhar.
 
 ## O servidor
 
@@ -59,7 +69,7 @@ exportador não faz nenhuma.
 - qualquer outro caminho: 404, sem listagem de diretório; método diferente de GET/HEAD: 405.
 
 Escuta em `127.0.0.1:3300` por padrão (`--port`/`PORT`, `--host`/`HOST`). Endereços: A =
-`/solicitacao.html`, B = `/pnip/portal-mpa/vistorias?mock-perfil=mpa`.
+`/solicitacao.html`, B = `/pnip/portal-mpa/vistorias?mock-perfil=mpa`, A2 = `/acompanhamento.html`.
 
 ## O manifesto (`site-manifest.json`)
 
@@ -142,4 +152,9 @@ temporário com `core.autocrlf=true`, clona e audita o clone.
   `bg-orange-vivid-30 text-pure-0`), o `src` do ícone "Sair", um estilo inline e a própria URL de
   entrada da tela B (no README e no manifesto). Todas são conteúdo da página que a referência cita.
 
-Nenhuma sequência em prosa, nenhum id e nenhuma regra do gabarito aparecem no pacote.
+Nenhuma sequência em prosa, nenhum id e nenhuma regra do gabarito aparecem no pacote. Desde 1.3.0 (A2,
+corpus `1abcc50`), duas frases da página que `ground-truth-acompanhamento.json` cita entre aspas na medida do
+campo de envio aparecem como conteúdo conhecido (`KNOWN_PAGE_CONTENT`, uma entrada por sequência de 6 palavras,
+presa ao arquivo): o texto de apoio "Você também pode arrastar o arquivo até a área acima." em
+`acompanhamento.html` e a mensagem de recusa "O arquivo deve estar em PDF, JPG ou PNG e ter até 5 MB." em
+`acompanhamento/comportamento.js`. É a referência citando a página.

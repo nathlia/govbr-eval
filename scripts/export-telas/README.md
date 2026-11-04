@@ -1,6 +1,6 @@
 # govbr-telas
 
-Duas páginas web prontas para abrir no navegador, servidas por um servidor mínimo que usa só o
+Três páginas web prontas para abrir no navegador, servidas por um servidor mínimo que usa só o
 Node.js. Não há código-fonte a compilar nem dependência a instalar: a pasta `site/` já traz os
 arquivos finais.
 
@@ -26,7 +26,7 @@ ou, sem npm:
 node server.mjs
 ```
 
-O servidor escuta em `http://127.0.0.1:3300` e imprime os endereços das duas telas. `Ctrl+C`
+O servidor escuta em `http://127.0.0.1:3300` e imprime os endereços das três telas. `Ctrl+C`
 encerra.
 
 Outra porta: `node server.mjs --port 8080` (ou a variável de ambiente `PORT`). O servidor só aceita
@@ -38,6 +38,7 @@ conexões da própria máquina; para escutar em outra interface, use `--host` (o
 |---|---|
 | Solicitar serviço | <http://127.0.0.1:3300/solicitacao.html> |
 | Vistorias | <http://127.0.0.1:3300/pnip/portal-mpa/vistorias?mock-perfil=mpa> |
+| Acompanhar requerimento | <http://127.0.0.1:3300/acompanhamento.html> |
 
 **Solicitar serviço** é uma página única: um formulário de solicitação com o histórico de pedidos
 anteriores.
@@ -46,7 +47,11 @@ anteriores.
 (pessoas, documentos, embarcações e endereços inventados). O parâmetro `?mock-perfil=mpa` abre uma
 sessão de demonstração já autenticada; sem ele, a aplicação leva à página de entrada. A aplicação
 retira o parâmetro da barra de endereço depois de lido. O que for alterado nela vale enquanto a
-página estiver aberta; recarregar volta ao estado inicial. Nenhuma das telas faz pedidos a outros
+página estiver aberta; recarregar volta ao estado inicial.
+
+**Acompanhar requerimento** é uma página única com abas (andamento e documentos de um requerimento
+fictício) e um formulário de envio de documento. Os dois links da trilha de navegação levam a duas
+páginas simples do mesmo site. Nenhuma das telas faz pedidos a outros
 endereços.
 
 ## O que o servidor faz
@@ -64,7 +69,7 @@ endereços.
 | Arquivo | Papel |
 |---|---|
 | `server.mjs` | Servidor estático (somente módulos nativos do Node.js). |
-| `site/` | Os arquivos servidos: `solicitacao.html` + `assets/`, e a aplicação em `pnip/`. |
+| `site/` | Os arquivos servidos: `solicitacao.html` + `assets/`, a aplicação em `pnip/`, e `acompanhamento.html` + `acompanhamento/` (com as páginas `inicio.html` e `meus-requerimentos.html`). |
 | `site-manifest.json` | Origem dos arquivos, rotas e sha256 + tamanho de cada arquivo. |
 | `skills/avaliar-tela/SKILL.md` | Procedimento genérico para avaliar uma tela em execução pela interface e enviar um relatório JSON. Os marcadores `{{...}}` da seção Entradas são preenchidos por quem prepara a execução. O servidor não o serve. |
 | `package.json` | Só o script `npm start`; sem dependências. |

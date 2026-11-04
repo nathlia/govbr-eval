@@ -1,7 +1,7 @@
 /**
  * run-once — UMA execução isolada (T3 do plano do benchmark isolado; T3a: agente roteirizado).
  *
- *   npm run run-once -- --tela solicitacao|vistorias --braco sem|com|ferramentas --modelo <id> --esforco <nível>
+ *   npm run run-once -- --tela solicitacao|vistorias|acompanhamento --braco sem|com|ferramentas --modelo <id> --esforco <nível>
  *        --limite-min 90 --saida <dir-novo> --agente fake|claude [--cenario honesto] [--permitir-modelo]
  *        [--campanha id] [--slot id] [--par id] [--tentativa 1] [--repeticao 1] [--run-id id]
  *        [--larguras 1280x900,390x844] [--egress stub|real] [--limite-seg N] [--telas dir] [--validator dir]
@@ -90,7 +90,9 @@ const SECRET_ENV_NAMES: readonly string[] = CREDENTIAL_ENV;
 /** Ferramenta adiada que o cliente 2.1.288 sempre anuncia, sem esquema, com a instrução de nunca chamá-la. */
 const DEFERRED_PLACEHOLDERS = ["DeferredToolPlaceholder"];
 
-export type Tela = "solicitacao" | "vistorias";
+export type Tela = "solicitacao" | "vistorias" | "acompanhamento";
+/** Rótulo neutro de cada tela no run.json (o mesmo título do site-manifest.json e de SCREEN_LABELS do manifesto de coleta). */
+export const TELA_LABELS: Record<Tela, string> = { solicitacao: "Solicitar serviço", vistorias: "Vistorias", acompanhamento: "Acompanhar requerimento" };
 export interface RunOptions {
   tela: Tela;
   braco: Braco;
@@ -796,7 +798,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     const run: RunV2 = {
       contract: "run.v2", fixture, campaignId: opts.campanha, slotId: opts.slot, pairId: opts.par, runId, attempt: opts.tentativa,
       idempotencyKey: `${opts.campanha}/${opts.slot}/${opts.braco}/${opts.tentativa}`,
-      screen: { id: opts.tela, label: opts.tela === "solicitacao" ? "Solicitar serviço" : "Vistorias", version: `govbr-telas-site-${(L?.versions.telas.siteSha256 ?? sha256(telasManifestText)).slice(0, 12)}` },
+      screen: { id: opts.tela, label: TELA_LABELS[opts.tela], version: `govbr-telas-site-${(L?.versions.telas.siteSha256 ?? sha256(telasManifestText)).slice(0, 12)}` },
       arm: opts.braco, repetition: opts.repeticao,
       // modelo resolvido = o `model` das respostas, lido do stream-json do cliente (nunca copiado do pedido)
       model: client && client.models.length === 1
@@ -1035,7 +1037,7 @@ export function parseArgs(argv: string[]): RunOptions {
     return v;
   };
   const tela = need("--tela") as Tela;
-  if (tela !== "solicitacao" && tela !== "vistorias") throw new Error("--tela: solicitacao | vistorias");
+  if (!(tela in TELA_LABELS)) throw new Error(`--tela: ${Object.keys(TELA_LABELS).join(" | ")}`);
   const braco = need("--braco") as Braco;
   if (braco !== "sem" && braco !== "com" && braco !== "ferramentas") throw new Error("--braco: sem | com | ferramentas");
   const agente = need("--agente") as "fake" | "claude";

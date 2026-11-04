@@ -1,12 +1,16 @@
 /**
  * Exportador das telas (T1 do plano do benchmark isolado) — lado confiável da preparação.
  *
- * Monta um projeto mínimo e clonável com as duas telas de avaliação, por LISTA EXPLÍCITA de arquivos:
+ * Monta um projeto mínimo e clonável com as telas de avaliação, por LISTA EXPLÍCITA de arquivos:
  *
  *   tela `solicitacao`  build de produção do corpus (Vite) num diretório temporário; entra só o
  *                       fechamento de arquivos citados a partir de `solicitacao.html` — o mesmo
  *                       `assetClosure` da superfície de medida —, e o fechamento tem de caber no
  *                       padrão da tela (a página e `assets/`), senão a exportação para.
+ *   tela `acompanhamento` (A2, desde 1.3.0) do mesmo build: o fechamento de `acompanhamento.html`,
+ *                       calculado depois de devolver ao build SÓ os arquivos de `public/` que a página
+ *                       carrega (`SCREEN_A2_PUBLIC`: scripts clássicos e marcas de `public/acompanhamento/`
+ *                       e as duas páginas de destino da trilha); o fechamento tem de caber no padrão da tela.
  *   tela `vistorias`    os bytes congelados de `govbr-corpus/public/pnip/`, arquivo a arquivo pela
  *                       lista do manifesto do congelamento (`manifesto.json`), conferidos por sha256.
  *                       Árvore com arquivo a mais ou a menos que o manifesto: para. O manifesto do
@@ -30,7 +34,7 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
-  existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync,
+  cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync,
 } from "node:fs";
 import { homedir, tmpdir, userInfo } from "node:os";
 import { dirname, extname, join, resolve } from "node:path";
@@ -41,7 +45,8 @@ import { assetClosure } from "./measurement-surface";
 import { telaOf, type TelaSite } from "./telas";
 
 // 1.2.0: Node do pacote fixado em 24.21.0 (LTS), o mesmo da imagem da coleta (runner T3a); site/ inalterado.
-export const EXPORTER_VERSION = "export-telas-1.2.0";
+// 1.3.0: terceira tela, A2 `acompanhamento` (NAT-110, D-160); os arquivos de A e B não mudam.
+export const EXPORTER_VERSION = "export-telas-1.3.0";
 /** Nome provisório do projeto exportado (pendente NAT-45). */
 export const PACKAGE_NAME = "govbr-telas";
 export const PACKAGE_VERSION = "1.0.0";
@@ -57,6 +62,16 @@ const TEMPLATES = join(dirname(fileURLToPath(import.meta.url)), "export-telas");
 
 export const SCREEN_A = "solicitacao";
 export const SCREEN_B = "vistorias";
+/** Tela A2 (NAT-110, D-160): entrada Vite com HTML escrito à mão e scripts clássicos de `public/acompanhamento/`. */
+export const SCREEN_A2 = "acompanhamento";
+/** As telas do pacote, na ordem de `screens[]` do manifesto. */
+export const SCREENS = [SCREEN_A, SCREEN_B, SCREEN_A2] as const;
+/**
+ * O que a A2 carrega de `public/` (o Vite copia `public/` sem processar, e o exportador tira essas cópias do
+ * build antes do fechamento): os scripts clássicos e as marcas da página e as duas páginas de destino da
+ * trilha de navegação. Só estas entradas voltam ao build para o fechamento da A2; nada mais de `public/`.
+ */
+export const SCREEN_A2_PUBLIC = ["acompanhamento", "inicio.html", "meus-requerimentos.html"] as const;
 
 /** Arquivos da raiz do pacote — a lista completa. Qualquer outro arquivo na raiz é recusado. */
 export const ROOT_FILES = [".gitattributes", ".node-version", "README.md", "package.json", "server.mjs", "site-manifest.json"] as const;
@@ -85,11 +100,34 @@ export const TEXT_EXTENSIONS = new Set([".html", ".js", ".mjs", ".css", ".json",
 
 /** Padrão de arquivo da tela `solicitacao` dentro de `site/`: a página e os assets do build. */
 const SCREEN_A_FILE = /^(solicitacao\.html|assets\/[A-Za-z0-9_.-]+\.(js|css|woff2?|ttf|eot|svg|png))$/;
+/**
+ * Padrão de arquivo da tela `acompanhamento` dentro de `site/`: a página, as duas páginas de destino da trilha,
+ * os arquivos de `public/acompanhamento/` e a folha de estilo + fontes do build (nenhum JS do build: a página só
+ * usa scripts clássicos).
+ */
+const SCREEN_A2_FILE = /^(acompanhamento\.html|inicio\.html|meus-requerimentos\.html|acompanhamento\/[A-Za-z0-9_.-]+\.(js|svg)|assets\/[A-Za-z0-9_.-]+\.(css|woff2?|ttf|eot|svg|png))$/;
 /** Nomes do build que pertencem a OUTRAS entradas do corpus e nunca podem entrar. */
 const FOREIGN_BUILD = /(^|\/)(index\.html|fluxo\.html|main-[^/]+\.js|fluxo-[^/]+\.(js|css)|real\/|static\/|pnip\/)/;
 
 /** Diretiva de source map de verdade: no início de linha, como os bundlers a escrevem. */
 export const SOURCE_MAP_DIRECTIVE = /^[ \t]*(\/\/|\/\*)[#@][ \t]*sourceMappingURL[ \t]*=/m;
+
+/**
+ * Diretivas de source map de TERCEIROS mantidas de propósito (1.3.0), cada uma presa ao caminho e ao sha256 do
+ * arquivo: o `core.min.js` da A2 é o `@govbr-ds/core` 3.7.0 byte a byte (`dist/core.min.js` do pacote npm; a
+ * construção da tela o deixou intocado e a referência 1.0.0 foi medida sobre estes bytes), e termina com
+ * `//# sourceMappingURL=core.min.js.map`. O mapa NÃO entra no pacote: o servidor responde 404 e nenhuma fonte
+ * chega ao navegador. A auditoria só aceita a diretiva se o arquivo tiver exatamente este hash e o mapa citado
+ * não estiver no pacote; qualquer outra diretiva continua falhando.
+ */
+export const KNOWN_SOURCE_MAP_DIRECTIVES: { path: string; sha256: string; map: string; reason: string }[] = [
+  {
+    path: "site/acompanhamento/core.min.js",
+    sha256: "7fad494d8750e635ed0f94b1220466c682d248e2b7ce52932672939a008f45b4",
+    map: "site/acompanhamento/core.min.js.map",
+    reason: "@govbr-ds/core 3.7.0 dist/core.min.js sem alteração (tela A2); o .map citado não é exportado (404)",
+  },
+];
 
 export const sha256 = (data: string | Buffer): string => createHash("sha256").update(data).digest("hex");
 
@@ -117,6 +155,8 @@ export interface SiteManifestDoc {
   origin: {
     corpus: { commit: string | null; dirty: boolean | null; dirtyAllowed: boolean };
     [SCREEN_A]: { build: { command: string; tool: string; node: string }; selection: string };
+    /** Mesmo build da tela A; `public` = o que voltou de `public/` ao build para o fechamento. */
+    [SCREEN_A2]: { build: { command: string; tool: string; node: string }; public: string[]; selection: string };
     [SCREEN_B]: {
       freezeManifestSha256: string; selection: string;
       upstream: { app: string; commit: string; fork: string; forkCommit: string; buildCommand: string; node: string; framework: string };
@@ -237,7 +277,7 @@ function packageJson(): string {
     name: PACKAGE_NAME,
     version: PACKAGE_VERSION,
     private: true,
-    description: "Duas telas web estáticas e um servidor mínimo (somente módulos nativos do Node.js).",
+    description: "Três telas web estáticas e um servidor mínimo (somente módulos nativos do Node.js).",
     type: "module",
     scripts: { start: "node server.mjs" },
     engines: { node: ">=20.19.0" },
@@ -260,6 +300,7 @@ export function exportTelas(options: ExportOptions): ExportResult {
 
   const telaA = telaOf(SCREEN_A);
   const telaB = telaOf(SCREEN_B);
+  const telaA2 = telaOf(SCREEN_A2);
   const siteB = telaB.isolamento.site;
   if (!siteB) throw new Error(`A tela ${SCREEN_B} não declara isolamento.site em telas.json`);
 
@@ -270,6 +311,20 @@ export function exportTelas(options: ExportOptions): ExportResult {
     for (const rel of assetClosure(buildDir, telaA.entry)) {
       if (!SCREEN_A_FILE.test(rel) || FOREIGN_BUILD.test(rel)) throw new Error(`Fechamento de ${telaA.entry} trouxe ${rel}, fora do padrão da tela`);
       plan.set(rel, join(buildDir, rel));
+    }
+    // A2: devolve ao build só o que a página carrega de public/ (os bytes do corpus, os mesmos que o Vite copia)
+    // e fecha a partir da entrada. Um caminho que a A também usa (fontes do DS) é o mesmo arquivo do build.
+    for (const entry of SCREEN_A2_PUBLIC) {
+      const from = join(corpus, "public", entry);
+      if (!existsSync(from)) throw new Error(`public/${entry} (tela ${SCREEN_A2}) não existe no corpus`);
+      if (existsSync(join(buildDir, entry))) throw new Error(`public/${entry} colide com um arquivo do build`);
+      cpSync(from, join(buildDir, entry), { recursive: true });
+    }
+    for (const rel of assetClosure(buildDir, telaA2.entry)) {
+      if (!SCREEN_A2_FILE.test(rel) || FOREIGN_BUILD.test(rel)) throw new Error(`Fechamento de ${telaA2.entry} trouxe ${rel}, fora do padrão da tela`);
+      const abs = join(buildDir, rel);
+      if (plan.has(rel) && plan.get(rel) !== abs) throw new Error(`Colisão de caminho entre as telas: ${rel}`);
+      plan.set(rel, abs);
     }
     const b = screenBFiles(corpus, siteB);
     for (const { rel, abs } of b.files) {
@@ -327,7 +382,7 @@ export function exportTelas(options: ExportOptions): ExportResult {
       item: {
         id: `${PACKAGE_NAME}-site-${listingSha256(files).slice(0, 12)}`,
         kind: "site",
-        description: "Arquivos servidos das telas solicitacao e vistorias; sha256 = hash da listagem 'sha256  caminho' ordenada de files[].",
+        description: `Arquivos servidos das telas ${SCREEN_A}, ${SCREEN_B} e ${SCREEN_A2}; sha256 = hash da listagem 'sha256  caminho' ordenada de files[].`,
         sha256: listingSha256(files),
         bytes,
         location: { kind: "package-path", path: SITE_DIR, note: "pasta site/ deste pacote; destino de arquivo durável pendente" },
@@ -338,6 +393,7 @@ export function exportTelas(options: ExportOptions): ExportResult {
       screens: [
         { id: SCREEN_A, title: "Solicitar serviço", entry: `/${telaA.entry}` },
         { id: SCREEN_B, title: "Vistorias", entry: `/${telaB.entry}` },
+        { id: SCREEN_A2, title: "Acompanhar requerimento", entry: `/${telaA2.entry}` },
       ],
       routing: {
         spa: { prefix: `/${siteB.arvore.replace(/\/+$/, "")}/`, index: siteB.indice },
@@ -348,6 +404,11 @@ export function exportTelas(options: ExportOptions): ExportResult {
         [SCREEN_A]: {
           build: { command: BUILD_COMMAND, tool: `vite ${viteVersion(corpus)}`, node: process.version },
           selection: `fechamento de arquivos citados a partir de ${telaA.entry} no build`,
+        },
+        [SCREEN_A2]: {
+          build: { command: BUILD_COMMAND, tool: `vite ${viteVersion(corpus)}`, node: process.version },
+          public: SCREEN_A2_PUBLIC.map((e) => `public/${e}`),
+          selection: `fechamento de arquivos citados a partir de ${telaA2.entry} no build, com ${SCREEN_A2_PUBLIC.map((e) => `public/${e}`).join(", ")} devolvidos ao build`,
         },
         [SCREEN_B]: {
           freezeManifestSha256: b.freezeSha256,
@@ -422,7 +483,11 @@ export function auditPackage(dir: string, options: AuditOptions = {}): AuditRepo
     hashes.set(f, sha256(body));
     if (!TEXT_EXTENSIONS.has(extname(f).toLowerCase())) continue;
     const text = body.toString("utf8");
-    if (SOURCE_MAP_DIRECTIVE.test(text)) errors.push(`diretiva sourceMappingURL: ${f}`);
+    if (SOURCE_MAP_DIRECTIVE.test(text)) {
+      const known = KNOWN_SOURCE_MAP_DIRECTIVES.find((k) => k.path === f);
+      const accepted = known && sha256(body) === known.sha256 && !files.includes(known.map);
+      if (!accepted) errors.push(`diretiva sourceMappingURL: ${f}`);
+    }
     const lower = text.toLowerCase();
     for (const needle of options.forbiddenText ?? []) {
       if (needle && lower.includes(needle.toLowerCase())) errors.push(`trecho proibido "${needle}" em ${f}`);
