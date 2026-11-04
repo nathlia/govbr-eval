@@ -62,7 +62,7 @@ import {
   CAMPOS, CLASSIFICACOES, analisar, cohen, creditoDe, estadoDe, fleiss, regraCanonica, relatorioMd, sujeitoDe, tipoDeSujeito,
   type Analise, type Julgado, type Membro, type Referencias,
 } from "./e14-consistencia";
-import { specDetectada } from "./e14-deteccao";
+import { FORMATO_SENSIBILIDADE_REGRA, conferirLeitura, specDetectada } from "./e14-deteccao";
 import { contextoDe, ingerir } from "./e14-ingerir";
 
 type Card = SemanticPackage["cards"][number];
@@ -626,7 +626,7 @@ export function unidadesDaCampanha(p: Passada, a: Analise, desacordos: { id: str
 export const FORMATO_REGRA_MECANICA = "nat78-regra-publicada-mecanica-1.0.0";
 export const DERIVACAO_TEMPLATE_REGISTRO = "template-x-registro-1.0.0";
 export const FORMATO_AFETADOS = "nat78-revisao-afetados-regra-1.0.0";
-export const FORMATO_SENSIBILIDADE_REGRA = "nat78-sensibilidade-regra-1.0.0";
+export { FORMATO_SENSIBILIDADE_REGRA };
 export const LEITURAS_DA_REGRA = ["identidade-demonstrada", "identidade-nao-demonstrada"] as const;
 export type LeituraDaRegra = typeof LEITURAS_DA_REGRA[number];
 /** Marca de rascunho: uma regra com ela (no texto ou no nome do arquivo) nunca vai a adjudicador. */
@@ -660,8 +660,14 @@ publicada que use este gatilho. O sha256 deste arquivo vai para o manifesto da a
    de sempre, \`leiturasDaRegra\`: a leitura adotada (identidade demonstrada ou não), a evidência que a sustenta, e por
    cartão o registro alcançado e a spec que ele credita em CADA leitura (ou \`null\`). A spec creditada pela resposta tem de
    ser a da leitura adotada. A cegueira cobre os arquivos novos como os demais.
-5. **Sensibilidade.** A aplicação grava \`adjudicacao/sensibilidade-regra.json\` (por cartão: as duas leituras); a tabela de
-   detecção (\`e14-deteccao --sensibilidade-regra\`) mostra a contagem por braço em cada leitura, em número.
+   **Cada leitura é derivada pela mesma política** (revisão Codex d0d554fa, P1): a mesma resposta, com SÓ o vínculo
+   trocado pela spec da leitura, passa pela mesma derivação da 1ª passada; a spec que a leitura credita tem de ser a que
+   essa derivação credita. A leitura varia só a identidade/vínculo: nunca resgata fato falso, estado não alcançado, norma
+   inaplicável ou não violada, origem DS, pendência ou outra exclusão de crédito. E a spec tem de ser do fato do cartão:
+   uma das specs da unidade (d) ou das \`candidatas\` do cartão. Fora disso a etapa é recusada.
+5. **Sensibilidade.** A aplicação grava \`adjudicacao/sensibilidade-regra.json\` (por cartão: a resposta adotada, as specs
+   da unidade e as duas leituras); a tabela de detecção (\`e14-deteccao --sensibilidade-regra\`) re-deriva cada leitura pela
+   mesma política (nunca conta a spec da leitura direto) e mostra a contagem por braço em cada leitura, em número.
 6. **Sem confiabilidade.** Com regra publicada, a amostra de confiabilidade é opcional. Sem ela, a rodada é SÓ do (d):
    (a) e (c) não entram nesta rodada (contados no manifesto) e (b) não é avaliável; o manifesto grava o motivo. Nada
    disso muda uma rodada sem regra publicada (byte a byte).
@@ -684,7 +690,12 @@ Nessas unidades, as duas etapas pedem também \`leiturasDaRegra\` (esquemas \`es
   \`creditaSeIdentidadeNaoDemonstrada\` (id da referência, ou \`null\` se não credita).
 
 A resposta do cartão é a da leitura adotada: a spec que ela credita tem de ser a desta leitura em \`porCartao\`. A outra
-leitura é sensibilidade (vai para a tabela como número), nunca resposta. Uma leitura da norma incompatível e plausível
+leitura é sensibilidade (vai para a tabela como número), nunca resposta. As duas leituras mudam SÓ a identidade (o
+vínculo): a spec de cada leitura tem de ser a que a sua própria resposta creditaria se o \`vinculo\` fosse essa spec, com
+todo o resto igual. Se o fato é falso ou indisponível (inclusive estado não alcançado), se a norma não se aplica, não foi
+violada ou fica incerta, ou se nada credita por outro motivo, as duas leituras são \`null\`. A spec de uma leitura é uma
+das \`candidatas\` do cartão ou a spec abrangida pela regra que formou este lote, nunca outra (a validação diz quais são
+quando recusa). Uma leitura da norma incompatível e plausível
 continua indo em \`leiturasAlternativasPlausiveis\` (etapa B); a identidade entre registros vai só em \`leiturasDaRegra\`.
 `;
 
@@ -1122,6 +1133,15 @@ export function validarEtapa(cx: CtxAdj, lote: string, etapa: "a" | "b", loteTex
       const det = specDetectada(d);
       if (x && creditaNaLeitura(x, doc.leiturasDaRegra.leituraAdotada) !== det)
         erros.push(`${pre}: ${r.id}: a resposta credita ${det ?? "nada"}, mas leiturasDaRegra (${doc.leiturasDaRegra.leituraAdotada}) diz ${creditaNaLeitura(x, doc.leiturasDaRegra.leituraAdotada) ?? "null"}`);
+      // [Codex d0d554fa, P1] CADA leitura é derivada pela mesma política: a mesma resposta, com só o vínculo trocado pela
+      // spec da leitura (`derivarClasse`, contexto da passada). A leitura só varia a identidade/vínculo: nunca resgata fato
+      // falso, estado não alcançado, norma inaplicável ou não violada, origem DS ou outra exclusão; e a spec é do fato do
+      // cartão (specs da unidade (d) ∪ `candidatas` do cartão).
+      if (x) {
+        const specsDoFato = unicos([...(u.specsDaRegra ?? []), ...(c.candidatas ?? [])]);
+        for (const lr of LEITURAS_DA_REGRA)
+          for (const e of conferirLeitura(r, ctx, creditaNaLeitura(x, lr), specsDoFato).erros) erros.push(`${pre}: ${r.id}: leiturasDaRegra (${lr}): ${e}`);
+      }
     }
   }
   if (ehD && doc.leiturasDaRegra) {
@@ -1225,7 +1245,9 @@ export function aplicarAdjudicacao(p: Passada, dd: string): Aplicacao {
       sensRegra.push({ id: m.idOriginal, idAdjudicacao: m.id, chave: m.chave, unidade: u.id, lote: ml.lote, specsDaRegra: u.specsDaRegra ?? [],
         leituraAdotada: docB.leiturasDaRegra.leituraAdotada, registroAlcancado: x.registroAlcancado,
         credita: { "identidade-demonstrada": x.creditaSeIdentidadeDemonstrada, "identidade-nao-demonstrada": x.creditaSeIdentidadeNaoDemonstrada },
-        primeiraPassada: specDetectada(p.julgados.get(m.idOriginal)!.derivado) });
+        primeiraPassada: specDetectada(p.julgados.get(m.idOriginal)!.derivado),
+        // [Codex d0d554fa, P1] A resposta adotada (B, id original): a tabulação re-deriva cada leitura a partir dela.
+        respostaAdotada: { ...vb.derivadas.get(m.idOriginal)!.resposta, id: m.idOriginal } });
     }
     for (const m of u.membros) {
       const j1 = p.julgados.get(m.idOriginal)!, A = va.derivadas.get(m.idOriginal)!, B = vb.derivadas.get(m.idOriginal)!;
@@ -1293,7 +1315,7 @@ export function aplicarAdjudicacao(p: Passada, dd: string): Aplicacao {
   if (sensRegra.length) {
     const sTxt = jsonTexto({ formato: FORMATO_SENSIBILIDADE_REGRA, versao: REVISAO_VERSAO, aviso: "NÃO entregar a juízes (traz a chave). Insumo de e14-deteccao --sensibilidade-regra.",
       regra: cx.man.regraPublicada, adjudicacao: { manifestoSha256: sha(lerTexto(join(dd, "manifesto.json"))) }, passada: { nome: p.nome, julgamentosSha256: p.julgSha },
-      leituras: LEITURAS_DA_REGRA, regraDaContagem: "detecção (specDetectada): a resposta B dá a leitura adotada; a outra leitura troca só a spec creditada pelos cartões das unidades (d)",
+      leituras: LEITURAS_DA_REGRA, regraDaContagem: "detecção (specDetectada): a resposta B dá a leitura adotada; cada leitura é re-derivada pela mesma política, com a resposta B e só o vínculo trocado pela spec da leitura (validada na etapa A e na B)",
       cartoes: ordenar(sensRegra, x => x.id as string) });
     arquivos.set("adjudicacao/sensibilidade-regra.json", sTxt);
     arquivos.set("adjudicacao/sensibilidade-regra.json.sha256", `${sha(sTxt)}  sensibilidade-regra.json\n`);

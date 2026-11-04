@@ -20,9 +20,9 @@ import { NAO_PERGUNTADO, type Resposta } from "./e14-comum";
 import {
   FORMATO_ADJ_RESP_A, FORMATO_ADJ_RESP_B, REGRAS_CAMPANHA, aplicarAdjudicacao, consistencia, executar, lerArgs, lerPassada, loteB, medirConfiabilidade,
   prepararAdjudicacao, prepararAmostra, sementeDaCampanha, sortearAmostra, unidadesDaCampanha, gravarImutavel, type Passada,
-  DERIVACAO_TEMPLATE_REGISTRO, FORMATO_REGRA_MECANICA, REGRAS_GATILHO_D, derivarAfetados, lerRegraPublicada,
+  DERIVACAO_TEMPLATE_REGISTRO, FORMATO_REGRA_MECANICA, REGRAS_GATILHO_D, contextoNaPassada, derivarAfetados, lerRegraPublicada,
 } from "./revisao-campanha";
-import { cenariosDaRegra, cenariosMd, specDetectada, tabular, type SensibilidadeRegra } from "./e14-deteccao";
+import { cenariosDaRegra, cenariosMd, conferirLeitura, derivarNaLeitura, fatoDaPassada, specDetectada, tabular, type SensibilidadeRegra } from "./e14-deteccao";
 
 let n = 0, falhas = 0, pulados = 0;
 const t = (nome: string, f: () => void) => { n++; try { f(); console.log(`  ok  ${nome}`); } catch (e) { falhas++; console.log(`  FALHA ${nome}\n       ${e instanceof Error ? e.stack?.split("\n").slice(0, 3).join(" | ") : e}`); } };
@@ -372,6 +372,49 @@ try {
       assert.match(loteB(pd, ddD, l).erros.join(), /difere do sha256 da regra/);
       gravar(ddD, "lotes/regra-teste.md", orig);
     });
+    t("[Codex d0d554fa P1] (d) etapa A: a leitura alternativa só varia o vínculo — fato falso, estado não alcançado, norma não aplicável ou não violada, origem DS e spec alheia ao fato são recusados; violação verdadeira credita só pelo vínculo", () => {
+      const l = loteB23();
+      const u = chD().unidades.find(x => x.lote === l)!;
+      const m = u.membros.find(x => x.idOriginal === "T3-8fcadb0eda")!;
+      // Positivo (o caso da sensibilidade): violação verdadeira sem vínculo na leitura adotada (null) credita B-23 na
+      // leitura 'demonstrada' só pelo vínculo, pela mesma derivação.
+      etapaD(l, "a");
+      assert.deepEqual(loteB(pd, ddD, l).erros, []);
+      const r0 = pd.julgados.get(m.idOriginal)!.resposta;
+      assert.equal(specDetectada(pd.julgados.get(m.idOriginal)!.derivado), null);
+      const ctx = contextoNaPassada(pd, pd.cartao.get(m.idOriginal)!, pd.item.get(m.idOriginal)!);
+      assert.equal(specDetectada(derivarNaLeitura(r0, ctx, "B-23")), "B-23");
+      // Negativos: só a resposta desse cartão muda; a leitura adotada continua null (sem crédito) e a alternativa credita B-23.
+      const respostas = (f: (r: Resposta) => Resposta) => u.membros.map(x => { const r = { ...pd.julgados.get(x.idOriginal)!.resposta, id: x.id }; return x.id === m.id ? f(r) : r; });
+      const n = r0.norma as Exclude<Resposta["norma"], typeof NAO_PERGUNTADO>;
+      // Norma que não vale: a sugestão (R11d) e a referência do cartão (REF1, 1.3.0) também têm de ser respondidas, e a
+      // referência também não vale (nenhum resgate): a classe fica erro normativo.
+      const semNorma = (r: Resposta, aplicabilidade: "aplica" | "nao-aplica"): Resposta => ({ ...r, norma: { ...n, aplicabilidade, violada: "nao" },
+        sugestao: { trataOFato: "nao", especificaDoSujeito: "sim", naoViolaNormaObrigatoria: "sim", qualidade: "invalida" },
+        referencias: [{ id: "REF1", forca: "obrigatorio", aplicabilidade, violada: "nao" }] });
+      const casos: [string, (r: Resposta) => Resposta, RegExp][] = [
+        ["fato falso (o caso do Codex)", r => ({ ...r, verdadeFactual: "falsa" }), /\(identidade-demonstrada\): credita B-23, mas .* deriva erro-factual \(R1\), sem crédito/],
+        ["estado não alcançado", r => ({ ...r, verdadeFactual: "indisponivel", estadoAlcancado: "nao-alcancado" }), /\(identidade-demonstrada\): credita B-23, mas .* deriva evidencia-indisponivel \(R9\), sem crédito/],
+        ["norma não se aplica", r => semNorma(r, "nao-aplica"), /\(identidade-demonstrada\): credita B-23, mas .* deriva erro-normativo \(R11\), sem crédito/],
+        ["norma não violada", r => semNorma(r, "aplica"), /\(identidade-demonstrada\): credita B-23, mas .* deriva erro-normativo \(R11\), sem crédito/],
+      ];
+      for (const [nome, f, re] of casos) {
+        etapaD(l, "a", { respostas: respostas(f) });
+        const e = loteB(pd, ddD, l).erros;
+        assert.ok(e.some(x => re.test(x) && x.includes(m.id)), `${nome}: ${JSON.stringify(e)}`);
+        // Com as duas leituras null, a mesma resposta passa: a exclusão vale nas duas leituras.
+        etapaD(l, "a", { respostas: respostas(f), leiturasDaRegra: leit(l, x => { for (const y of x.porCartao as { id: string; creditaSeIdentidadeDemonstrada: string | null }[]) if (y.id === m.id) y.creditaSeIdentidadeDemonstrada = null; }) });
+        assert.deepEqual(loteB(pd, ddD, l).erros, [], nome);
+      }
+      // Origem DS: a origem vem da medida (chave), não da resposta; a mesma conferência que validarEtapa usa recusa.
+      assert.match(conferirLeitura(r0, { ...ctx, origemMedida: "ds-entregue" }, "B-23", ["B-23"]).erros.join(), /deriva violacao-ds \(R5\), sem crédito/);
+      // Spec alheia ao fato: B-10 não é da unidade (B-23) nem das candidatas do cartão.
+      assert.ok(!pd.cartao.get(m.idOriginal)!.candidatas.includes("B-10"));
+      etapaD(l, "a", { leiturasDaRegra: leit(l, x => { for (const y of x.porCartao as { id: string; creditaSeIdentidadeDemonstrada: string | null }[]) if (y.id === m.id) y.creditaSeIdentidadeDemonstrada = "B-10"; }) });
+      assert.ok(loteB(pd, ddD, l).erros.some(x => x.includes(m.id) && /spec B-10 alheia ao fato do cartão \(só uma spec da unidade ou das candidatas do cartão: B-01, B-23\)/.test(x)), JSON.stringify(loteB(pd, ddD, l).erros));
+      etapaD(l, "a");
+      assert.deepEqual(loteB(pd, ddD, l).erros, []);
+    });
     t("(d) revelar → B → aplicar sem confiabilidade: sensibilidade-regra.json; 1ª passada intacta; tabela: com 18 → 19 na leitura 'demonstrada'", () => {
       for (const x of manD().lotes) {
         const r = loteB(pd, ddD, x.lote);
@@ -393,7 +436,7 @@ try {
       const js = [...pd.julgados.values()].map(j => ({ ...j, chave: pd.item.get(j.id)!.chave })) as never[];
       const ref = JSON.parse(readFileSync(join(AD, "entradas", "referencia.json"), "utf8")) as { violations: { id: string; categories: string[] }[] };
       const tab = tabular(js, k => ch.get(k)!, ref.violations, "politica-normativa-1.3.0", ["sem", "ferramentas", "com"]);
-      const cen = cenariosDaRegra(js, k => ch.get(k)!, tab, sens, js);
+      const cen = cenariosDaRegra(js, k => ch.get(k)!, tab, sens, { primeira: js, fato: fatoDaPassada(PD, "politica-normativa-1.3.0") });
       assert.equal(cen.porCenario["1a-passada"].com!.deteccao, 18);
       assert.equal(cen.porCenario["identidade-nao-demonstrada"].com!.deteccao, 18);
       assert.equal(cen.porCenario["identidade-demonstrada"].com!.deteccao, 19);

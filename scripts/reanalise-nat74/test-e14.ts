@@ -21,7 +21,7 @@ import { ingerir } from "./e14-ingerir";
 import { materiais } from "./e14-materiais";
 import { prepararFila } from "./e14-preparar";
 import { DERIVADO } from "./e14-comum";
-import { cenariosDaRegra, cenariosMd, tabular, type Julgamento } from "./e14-deteccao";
+import { FORMATO_SENSIBILIDADE_REGRA, cenariosDaRegra, cenariosMd, derivarNaLeitura, tabular, type Julgamento, type SensibilidadeRegra } from "./e14-deteccao";
 
 let n = 0, falhas = 0;
 const t = (nome: string, f: () => void) => { n++; try { f(); console.log(`  ok  ${nome}`); } catch (e) { falhas++; console.log(`  FALHA ${nome}\n       ${e instanceof Error ? e.message : e}`); } };
@@ -280,26 +280,83 @@ t("tela A: materialidade por UNIDADE — U1 confirmada não esconde U2 da mesma 
   assert.equal(b.naoMateriais, 1);
 });
 
-t("[D-165] cenários da regra publicada: número por braço em cada leitura; só os cartões (d) trocam de spec; coleta não válida = sem número", () => {
-  const der = (classe: string, spec: string | null) => ({ classe, regraDaPolitica: "R7", spec, qualidadeDaSugestao: null, pendencias: [], fundamentacao: spec ? "norma" : null }) as never;
-  const j = (id: string, chave: string, d: unknown): Julgamento => ({ id, chave, resposta: {} as never, derivado: d as never });
-  const js = [j("T3-1", "k1", der("violacao-pagina", "B-01")), j("T3-2", "k2", der("violacao-origem-indeterminada", null)), j("T3-3", "k3", der("violacao-pagina", "B-02")), j("T3-4", "k4", der("violacao-pagina", "B-02"))];
+// [D-165, Codex d0d554fa P1] Respostas e contextos de verdade: a leitura só entra como vínculo, e a contagem é a da classe
+// re-derivada pela mesma política. Fixture comum aos testes dos cenários.
+const fixD165 = () => {
+  const SPECS = ["B-01", "B-02", "B-03"];
+  const ctxBase: ContextoDerivacao = { tipo: "citacao", citaRegra: true, temEsperado: true, specsDaTela: SPECS, citaveis: ["F1"], origemMedida: null, classeRegistrada: null };
+  const resp = (id: string, o: { fato?: string; aplic?: string; viol?: string; forca?: string; spec?: string | null; estado?: string } = {}): Resposta => ({
+    id, verdadeFactual: (o.fato ?? "verdadeira") as never, estadoAlcancado: (o.estado ?? "receita") as never,
+    norma: { id: "citada", forca: (o.forca ?? "obrigatorio") as never, aplicabilidade: (o.aplic ?? "aplica") as never, violada: (o.viol ?? "sim") as never },
+    vinculo: o.spec ? { spec: o.spec, relacao: "direta" } : "nenhum", sugestao: NAO_PERGUNTADO, forcaDoVeredito: "medido", evidencias: ["F1"], justificativa: "sintético F1" });
+  const ctxs: Record<string, ContextoDerivacao> = {};
+  const cands: Record<string, string[]> = {};
+  const j = (id: string, chave: string, r: Resposta, ctx: Partial<ContextoDerivacao> = {}, cand: string[] = ["B-02"]): Julgamento => {
+    ctxs[chave] = { ...ctxBase, ...ctx }; cands[chave] = cand;
+    return { id, chave, resposta: r, derivado: derivarClasse(r, ctxs[chave]) };
+  };
+  const fato = (k: string) => ({ contexto: ctxs[k], candidatas: cands[k] });
   const braco: Record<string, string> = { k1: "com", k2: "com", k3: "sem", k4: "com" };
-  const specs = [{ id: "B-01", categories: ["acessibilidade"] }, { id: "B-02", categories: ["acessibilidade"] }];
-  const tab = tabular(js, k => braco[k], specs, "politica-normativa-1.3.0", ["sem", "com", "ferramentas"], { estado: { ferramentas: "ausente" } });
-  const sens = { formato: "nat78-sensibilidade-regra-1.0.0", regra: { arquivo: "r.md", sha256: "0".repeat(64) }, leituras: ["identidade-demonstrada", "identidade-nao-demonstrada"],
-    cartoes: [{ id: "T3-2", chave: "k2", unidade: "D-x", leituraAdotada: "identidade-nao-demonstrada", credita: { "identidade-demonstrada": "B-02", "identidade-nao-demonstrada": null } },
-      { id: "T3-3", chave: "k3", unidade: "D-x", leituraAdotada: "identidade-nao-demonstrada", credita: { "identidade-demonstrada": "B-02", "identidade-nao-demonstrada": null } }] };
-  const c = cenariosDaRegra(js, k => braco[k], tab, sens, js);
+  const specs = SPECS.map(id => ({ id, categories: ["acessibilidade"] }));
+  const tab = (js: Julgamento[]) => tabular(js, k => braco[k], specs, "politica-normativa-1.3.0", ["sem", "com", "ferramentas"], { estado: { sem: "valida", com: "valida", ferramentas: "ausente" } });
+  const cart = (id: string, chave: string, r: Resposta, dem: string | null, nao: string | null, adot = "identidade-nao-demonstrada") =>
+    ({ id, chave, unidade: "D-x", leituraAdotada: adot, credita: { "identidade-demonstrada": dem, "identidade-nao-demonstrada": nao }, specsDaRegra: ["B-02"], respostaAdotada: r });
+  const sens = (cartoes: ReturnType<typeof cart>[]): SensibilidadeRegra => ({ formato: FORMATO_SENSIBILIDADE_REGRA, regra: { arquivo: "r.md", sha256: "0".repeat(64) },
+    leituras: ["identidade-demonstrada", "identidade-nao-demonstrada"], cartoes });
+  return { resp, j, fato, braco, tab, cart, sens };
+};
+
+t("[D-165] cenários da regra publicada: número por braço em cada leitura, re-derivado; coleta não válida = sem número", () => {
+  const { resp, j, fato, braco, tab, cart, sens } = fixD165();
+  // T3-2 e T3-3: violação verdadeira (obrigatória, aplica, violada) sem vínculo na leitura adotada; T3-4 já credita B-02.
+  const r2 = resp("T3-2"), r3 = resp("T3-3");
+  const js = [j("T3-1", "k1", resp("T3-1", { spec: "B-01" })), j("T3-2", "k2", r2), j("T3-3", "k3", r3), j("T3-4", "k4", resp("T3-4", { spec: "B-02" }))];
+  const s = sens([cart("T3-2", "k2", r2, "B-02", null), cart("T3-3", "k3", r3, "B-02", null)]);
+  const c = cenariosDaRegra(js, k => braco[k], tab(js), s, { primeira: js, fato });
   assert.deepEqual(Object.keys(c.porCenario), ["1a-passada", "julgamentos", "identidade-demonstrada", "identidade-nao-demonstrada"]);
-  assert.equal(c.porCenario.julgamentos.com!.deteccao, 2); assert.equal(c.porCenario.julgamentos.sem!.deteccao, 1);
+  assert.equal(c.porCenario.julgamentos.com!.deteccao, 2); assert.equal(c.porCenario.julgamentos.sem!.deteccao, 0);
   assert.equal(c.porCenario["identidade-demonstrada"].com!.deteccao, 2, "B-02 já estava pelo T3-4: não soma duas vezes");
+  assert.equal(c.porCenario["identidade-demonstrada"].sem!.deteccao, 1, "violação verdadeira: o crédito muda só pelo vínculo");
   assert.equal(c.porCenario["identidade-nao-demonstrada"].sem!.deteccao, 0);
-  assert.equal(c.porCenario["identidade-demonstrada"].sem!.deteccao, 1);
   assert.equal(c.porCenario.julgamentos.ferramentas, null);
-  assert.deepEqual(c.cartoes.map(x => [x.id, x.braco]), [["T3-2", "com"], ["T3-3", "sem"]]);
-  assert.match(cenariosMd(c, tab.bracos), /\| identidade-nao-demonstrada \| 0 \| 2 \| — \|/);
-  assert.throws(() => cenariosDaRegra(js, k => braco[k], tab, { ...sens, cartoes: [{ ...sens.cartoes[0], credita: { "identidade-demonstrada": null } as never }] }), /sem a leitura/);
+  assert.deepEqual(c.cartoes.map(x => [x.id, x.braco, x.porCenario["identidade-demonstrada"]]), [["T3-2", "com", "B-02"], ["T3-3", "sem", "B-02"]]);
+  assert.match(cenariosMd(c, tab(js).bracos), /\| identidade-nao-demonstrada \| 0 \| 2 \| — \|/);
+  assert.throws(() => cenariosDaRegra(js, k => braco[k], tab(js), { ...s, cartoes: [{ ...s.cartoes[0], credita: { "identidade-demonstrada": null } as never }] }, { fato }), /sem a leitura/);
+  // Positivo: com R15 (norma mais fraca, aplica, violada) o vínculo da leitura muda a classe (erro normativo → violação), e é só ele.
+  const rf = resp("T3-3", { forca: "recomendado" }), jf = [j("T3-3", "k3", rf)];
+  assert.equal(jf[0].derivado.classe, "erro-normativo");
+  const cf = cenariosDaRegra(jf, k => braco[k], tab(jf), sens([cart("T3-3", "k3", rf, "B-02", null)]), { fato });
+  assert.equal(cf.porCenario["identidade-demonstrada"].sem!.deteccao, 1); assert.equal(cf.porCenario["identidade-nao-demonstrada"].sem!.deteccao, 0);
+});
+
+t("[Codex d0d554fa P1] cenários: a leitura nunca resgata exclusão de crédito nem credita spec alheia ao fato (recusa, nada sai)", () => {
+  const { resp, j, fato, braco, tab, cart, sens } = fixD165();
+  const casos: [string, Resposta, Partial<ContextoDerivacao>, RegExp][] = [
+    ["fato falso", resp("T3-3", { fato: "falsa" }), {}, /deriva erro-factual \(R1\), sem crédito/],
+    ["estado não alcançado", resp("T3-3", { fato: "indisponivel", estado: "nao-alcancado" }), {}, /deriva evidencia-indisponivel \(R9\), sem crédito/],
+    ["norma não se aplica", resp("T3-3", { aplic: "nao-aplica", viol: "nao" }), {}, /deriva erro-normativo \(R11\), sem crédito/],
+    ["norma não violada", resp("T3-3", { viol: "nao" }), {}, /deriva erro-normativo \(R11\), sem crédito/],
+    ["origem DS", resp("T3-3"), { origemMedida: "ds-entregue" }, /deriva violacao-ds \(R5\), sem crédito/],
+    ["força indeterminada (pendente)", resp("T3-3", { forca: "indeterminado" }), {}, /deriva pendente/],
+  ];
+  for (const [nome, r, ctx, re] of casos) {
+    const js = [j("T3-3", "k3", r, ctx)];
+    assert.equal(js[0].derivado.fundamentacao, null, nome);
+    assert.throws(() => cenariosDaRegra(js, k => braco[k], tab(js), sens([cart("T3-3", "k3", r, "B-02", null)]), { fato }), re, nome);
+    // A mesma resposta com as duas leituras null passa e conta 0: a exclusão fica nas duas leituras.
+    const ok = cenariosDaRegra(js, k => braco[k], tab(js), sens([cart("T3-3", "k3", r, null, null)]), { fato });
+    assert.equal(ok.porCenario["identidade-demonstrada"].sem!.deteccao, 0, nome);
+  }
+  // Spec alheia ao fato: B-03 não é da unidade (B-02) nem das candidatas do cartão, ainda que a derivação a creditasse.
+  const r = resp("T3-3"), js = [j("T3-3", "k3", r)];
+  assert.throws(() => cenariosDaRegra(js, k => braco[k], tab(js), sens([cart("T3-3", "k3", r, "B-03", null)]), { fato }), /spec B-03 alheia ao fato/);
+  // Julgamentos que não são os da adjudicação; leitura adotada que não reproduz o julgamento.
+  assert.throws(() => cenariosDaRegra(js, k => braco[k], tab(js), sens([cart("T3-3", "k3", resp("T3-3", { viol: "nao" }), null, null)]), { fato }), /não é a adotada na adjudicação/);
+  const jv = [j("T3-3", "k3", resp("T3-3", { spec: "B-02" }))];
+  assert.throws(() => cenariosDaRegra(jv, k => braco[k], tab(jv), sens([cart("T3-3", "k3", jv[0].resposta, "B-02", null)]), { fato }), /a leitura adotada \(identidade-nao-demonstrada\) re-derivada credita nada, o julgamento B-02/);
+  // Vínculo não perguntado: nenhuma leitura cria a pergunta.
+  const rn = { ...resp("T3-3"), vinculo: NAO_PERGUNTADO } as Resposta;
+  assert.equal(derivarNaLeitura(rn, { tipo: "citacao", citaRegra: true, temEsperado: true, specsDaTela: ["B-02"], citaveis: [], origemMedida: null, classeRegistrada: null }, "B-02").spec, null);
 });
 
 console.log(`\n${n - falhas}/${n} testes da E14 passaram`);

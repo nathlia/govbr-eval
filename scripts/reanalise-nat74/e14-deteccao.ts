@@ -22,17 +22,21 @@
  *
  * - **[D-165] sensibilidade da regra publicada** (só com `--sensibilidade-regra`): a detecção por braço em número, em cada
  *   cenário — 1ª passada (o `julgamentos.json` de `--passada`, quando `--julgamentos` é outro), os julgamentos dados, e cada
- *   leitura da regra (identidade demonstrada × não demonstrada), trocando só a spec dos cartões das unidades (d). Sem a
- *   opção, nada muda (byte a byte).
+ *   leitura da regra (identidade demonstrada × não demonstrada). [Codex d0d554fa, P1] Cada leitura é DERIVADA: a resposta
+ *   adotada do cartão (d), com SÓ o vínculo trocado pela spec da leitura, passa pela mesma `derivarClasse` da passada
+ *   (contexto do cartão, política do `julgamentos.json`); uma leitura que credita sem que essa derivação credite (fato
+ *   falso, estado não alcançado, norma inaplicável ou não violada, origem DS, pendente…) ou que credita spec alheia ao
+ *   fato (fora das specs da unidade e das `candidatas` do cartão) para a tabulação. Sem a opção, nada muda (byte a byte).
  *
  * O braço vem da chave da passada (nunca vai ao juiz). Determinístico, sem rede, sem modelo. Entradas com sha256.
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import type { SemanticPackage } from "../semantic-flow";
-import { gravar, jsonTexto, sha } from "./comum";
+import { gravar, jsonTexto, sha, unicos, versaoDaPolitica } from "./comum";
 import { bracoDoRun } from "./e14-campanha";
-import type { Derivado, ItemChave, Resposta } from "./e14-comum";
+import { NAO_PERGUNTADO, derivarClasse, type CartaoCego, type ContextoDerivacao, type Derivado, type ItemChave, type Resposta } from "./e14-comum";
+import { contextoDe } from "./e14-ingerir";
 
 export const DETECCAO_VERSAO = "nat78-deteccao-1.1.0";
 /** Vocabulário de `categories` das referências e a classe de spec de cada categoria (D-156 3.i). */
@@ -142,9 +146,50 @@ export function tabular(julgs: Julgamento[], bracoDe: (chave: string) => string,
 
 // ───────────────────────────────────────────── [D-165] sensibilidade do gatilho (d): contagem por leitura da regra
 
-/** Uma linha de `adjudicacao/sensibilidade-regra.json` (revisao-campanha aplicar): a spec creditada em cada leitura. */
-export interface CartaoDaRegra { id: string; chave: string; unidade: string; leituraAdotada: string; credita: Record<string, string | null> }
+/**
+ * [D-165, Codex d0d554fa P1] A resposta numa leitura da regra: a MESMA resposta, com só o vínculo trocado pela spec que a
+ * leitura credita (`null` → `"nenhum"`). Fato, estado alcançado, norma, sugestão e referências ficam como estão; a relação
+ * do vínculo é a da resposta (`direta` quando ela não tinha vínculo: a relação não entra na derivação). Vínculo não
+ * perguntado fica como está — nenhuma leitura cria a pergunta, logo não credita.
+ */
+export function respostaNaLeitura(r: Resposta, spec: string | null): Resposta {
+  if (r.vinculo === NAO_PERGUNTADO) return r;
+  return { ...r, vinculo: spec === null ? "nenhum" : { spec, relacao: typeof r.vinculo === "object" ? r.vinculo.relacao : "direta" } };
+}
+
+/** A classe da resposta numa leitura, pela MESMA derivação da passada (`derivarClasse`, contexto e política do cartão). */
+export const derivarNaLeitura = (r: Resposta, ctx: ContextoDerivacao, spec: string | null): Derivado => derivarClasse(respostaNaLeitura(r, spec), ctx);
+
+/**
+ * Confere o crédito que uma leitura atribui a um cartão: a spec tem de ser do fato do cartão (`specsDoFato` = specs da
+ * unidade (d) ∪ `candidatas` do cartão) e tem de ser exatamente o que a derivação dá à resposta com só o vínculo trocado.
+ * Uma leitura nunca resgata fato falso, estado não alcançado, norma inaplicável ou não violada, origem DS, pendência nem
+ * outra exclusão de crédito. Devolve os erros (vazio = compatível) e a classe derivada.
+ */
+export function conferirLeitura(r: Resposta, ctx: ContextoDerivacao, spec: string | null, specsDoFato: string[]): { erros: string[]; derivado: Derivado } {
+  const erros: string[] = [];
+  if (spec !== null && !specsDoFato.includes(spec))
+    erros.push(`spec ${spec} alheia ao fato do cartão (só uma spec da unidade ou das candidatas do cartão: ${specsDoFato.join(", ") || "nenhuma"})`);
+  const derivado = derivarNaLeitura(r, ctx, spec);
+  const det = specDetectada(derivado);
+  if (det !== spec) erros.push(`credita ${spec ?? "null"}, mas a mesma resposta com só o vínculo trocado deriva ${derivado.classe} (${derivado.regraDaPolitica})${det ? `, creditando ${det}` : ", sem crédito"}`);
+  return { erros, derivado };
+}
+
+/** Comparação de respostas independente da ordem das chaves. */
+const canonica = (x: unknown): string => JSON.stringify(x, (_k, v) => (v && typeof v === "object" && !Array.isArray(v) ? Object.fromEntries(Object.entries(v).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))) : v));
+export const mesmaResposta = (a: Resposta, b: Resposta): boolean => canonica(a) === canonica(b);
+
+export const FORMATO_SENSIBILIDADE_REGRA = "nat78-sensibilidade-regra-1.1.0";
+/**
+ * Uma linha de `adjudicacao/sensibilidade-regra.json` (revisao-campanha aplicar): a resposta adotada (B, id original), as
+ * specs da unidade (d) e a spec que cada leitura atribui. Insumo, nunca contagem: a tabulação re-deriva cada leitura.
+ */
+export interface CartaoDaRegra { id: string; chave: string; unidade: string; leituraAdotada: string; credita: Record<string, string | null>;
+  specsDaRegra: string[]; respostaAdotada: Resposta }
 export interface SensibilidadeRegra { formato: string; regra: { arquivo: string; sha256: string } | null; leituras: string[]; cartoes: CartaoDaRegra[] }
+/** O que a re-derivação precisa de um cartão, pela chave: contexto de derivação da passada e as `candidatas` do cartão. */
+export type FatoDoCartao = (chave: string) => { contexto: ContextoDerivacao; candidatas: string[] };
 export interface Cenarios {
   formato: string; regra: SensibilidadeRegra["regra"]; leituras: string[];
   /** Por cenário (`1a-passada` quando dado, `julgamentos` = a entrada, e cada leitura da regra), detecção por braço; null = coleta não válida. */
@@ -157,14 +202,35 @@ export const FORMATO_CENARIOS = "nat78-deteccao-cenarios-regra-1.0.0";
 
 /**
  * Detecção por braço em cada cenário: a dos julgamentos dados; a da 1ª passada (se dada); e, para cada leitura da regra, a
- * dos julgamentos dados com a spec creditada pelos cartões das unidades (d) trocada pela daquela leitura. Nada mais muda:
- * os demais cartões contam como nos julgamentos. Só detecção (a coluna fundamentada de uma leitura não adotada não existe).
+ * dos julgamentos dados com os cartões das unidades (d) RE-DERIVADOS: a resposta do julgamento, com só o vínculo trocado
+ * pela spec da leitura, pela mesma `derivarClasse` (contexto do cartão e política da passada, `fato`). A spec da leitura
+ * nunca é contada direto: ela só entra como vínculo, e a contagem é a da classe derivada. Para (nada sai) se a leitura
+ * credita o que a derivação não credita, se credita spec alheia ao fato, se a resposta do julgamento não é a adotada na
+ * adjudicação, ou se a leitura adotada não reproduz o julgamento. Os demais cartões contam como nos julgamentos. Só
+ * detecção (a coluna fundamentada de uma leitura não adotada não existe).
  */
 export function cenariosDaRegra(julgs: Julgamento[], bracoDe: (chave: string) => string, t: Tabela, sens: SensibilidadeRegra,
-  primeira: Julgamento[] | null = null): Cenarios {
+  o: { primeira?: Julgamento[] | null; fato: FatoDoCartao }): Cenarios {
+  const primeira = o.primeira ?? null;
   const porChave = new Map(sens.cartoes.map(c => [c.chave, c]));
   const nossos = julgs.filter(j => porChave.has(j.chave));
   for (const c of sens.cartoes) for (const l of sens.leituras) if (!(l in c.credita)) throw new Error(`sensibilidade: ${c.id} sem a leitura ${l}`);
+  // Cada cartão (d), em cada leitura: a classe derivada com só o vínculo trocado (conferida contra a leitura).
+  const naLeitura = new Map<string, Record<string, string | null>>();
+  for (const j of nossos) {
+    const c = porChave.get(j.chave)!;
+    if (!c.respostaAdotada || !Array.isArray(c.specsDaRegra)) throw new Error(`sensibilidade: ${c.id} sem respostaAdotada/specsDaRegra (formato ${sens.formato}; a tabulação re-deriva cada leitura)`);
+    if (!mesmaResposta(j.resposta, c.respostaAdotada)) throw new Error(`sensibilidade: ${j.id}: a resposta dos julgamentos dados não é a adotada na adjudicação (dê os julgamentos da passada adjudicada)`);
+    const f = o.fato(j.chave), specsDoFato = unicos([...c.specsDaRegra, ...f.candidatas]);
+    const porL: Record<string, string | null> = {};
+    for (const l of sens.leituras) {
+      const x = conferirLeitura(j.resposta, f.contexto, c.credita[l], specsDoFato);
+      if (x.erros.length) throw new Error(`sensibilidade: ${j.id}: leitura ${l}: ${x.erros.join("; ")}`);
+      porL[l] = specDetectada(x.derivado);
+    }
+    if (porL[c.leituraAdotada] !== specDetectada(j.derivado)) throw new Error(`sensibilidade: ${j.id}: a leitura adotada (${c.leituraAdotada}) re-derivada credita ${porL[c.leituraAdotada] ?? "nada"}, o julgamento ${specDetectada(j.derivado) ?? "nada"}`);
+    naLeitura.set(j.chave, porL);
+  }
   const conta = (f: (j: Julgamento) => string | null, js: Julgamento[]) => Object.fromEntries(t.bracos.map(b => {
     if (t.estado[b] !== "valida") return [b, null];
     const specs = [...new Set(js.filter(j => bracoDe(j.chave) === b).map(f).filter((x): x is string => !!x))].sort();
@@ -173,14 +239,37 @@ export function cenariosDaRegra(julgs: Julgamento[], bracoDe: (chave: string) =>
   const porCenario: Cenarios["porCenario"] = {};
   if (primeira) porCenario["1a-passada"] = conta(j => specDetectada(j.derivado), primeira);
   porCenario.julgamentos = conta(j => specDetectada(j.derivado), julgs);
-  for (const l of sens.leituras) porCenario[l] = conta(j => { const c = porChave.get(j.chave); return c ? c.credita[l] : specDetectada(j.derivado); }, julgs);
+  for (const l of sens.leituras) porCenario[l] = conta(j => { const x = naLeitura.get(j.chave); return x ? x[l] : specDetectada(j.derivado); }, julgs);
   const p1 = primeira ? new Map(primeira.map(j => [j.chave, j])) : null;
-  const cartoes = nossos.map(j => { const c = porChave.get(j.chave)!;
+  const cartoes = nossos.map(j => { const c = porChave.get(j.chave)!, x = naLeitura.get(j.chave)!;
     return { id: j.id, braco: bracoDe(j.chave), unidade: c.unidade, leituraAdotada: c.leituraAdotada,
       porCenario: { ...(p1 ? { "1a-passada": p1.get(j.chave) ? specDetectada(p1.get(j.chave)!.derivado) : null } : {}), julgamentos: specDetectada(j.derivado),
-        ...Object.fromEntries(sens.leituras.map(l => [l, c.credita[l]])) } }; }).sort((x, y) => x.id.localeCompare(y.id));
+        ...Object.fromEntries(sens.leituras.map(l => [l, x[l]])) } }; }).sort((x, y) => x.id.localeCompare(y.id));
   return { formato: FORMATO_CENARIOS, regra: sens.regra, leituras: sens.leituras, porCenario, cartoes,
-    regraDaContagem: "detecção (specDetectada) por braço; em cada leitura da regra, só os cartões das unidades (d) trocam de spec (a da leitura); os demais contam como nos julgamentos" };
+    regraDaContagem: "detecção (specDetectada) por braço; em cada leitura da regra, cada cartão das unidades (d) é re-derivado pela mesma política (a resposta adotada com só o vínculo trocado pela spec da leitura); os demais contam como nos julgamentos" };
+}
+
+/**
+ * O fato de cada cartão da passada, pela chave, para a re-derivação: o cartão cego e a referência da tela (lotes conferidos
+ * pelo sha256 do manifesto), o item da chave e a política dos julgamentos — o mesmo `contextoDe` da ingestão e da revisão.
+ */
+export function fatoDaPassada(passada: string, politica: string): FatoDoCartao {
+  const ler = <T>(p: string): T => JSON.parse(readFileSync(p, "utf8").replace(/^﻿/, "")) as T;
+  const man = ler<{ lotes: { lote: string; sha256: string }[] }>(join(passada, "lotes", "manifesto.json"));
+  const itens = new Map(ler<{ itens: ItemChave[] }>(join(passada, "chave", "fila-t3-chave.json")).itens.map(i => [i.chave, i]));
+  const cartoes = new Map<string, { c: CartaoCego; specs: string[] }>();
+  for (const ml of man.lotes) {
+    const txt = readFileSync(join(passada, "lotes", `${ml.lote}.json`), "utf8").replace(/^﻿/, "");
+    if (sha(txt) !== ml.sha256) throw new Error(`${passada}: lotes/${ml.lote}.json difere do manifesto (sha256)`);
+    const l = JSON.parse(txt) as { referencias: Record<string, { defeitos: { id: string }[] }>; cartoes: CartaoCego[] };
+    for (const c of l.cartoes) cartoes.set(c.id, { c, specs: l.referencias[c.tela].defeitos.map(d => d.id) });
+  }
+  const v = versaoDaPolitica(politica);
+  return (chave: string) => {
+    const it = itens.get(chave), x = it ? cartoes.get(it.id) : undefined;
+    if (!it || !x) throw new Error(`sensibilidade: cartão ${chave} fora da passada ${passada}`);
+    return { contexto: contextoDe(x.c, it, x.specs, v), candidatas: x.c.candidatas ?? [] };
+  };
 }
 
 export function cenariosMd(c: Cenarios, bracos: string[]): string {
@@ -258,7 +347,7 @@ if (process.argv[1] && /(?:^|[\\/])e14-deteccao\.ts$/.test(process.argv[1])) {
   const jTxt = readFileSync(jAbs, "utf8");
   const sAbs = val("--sensibilidade-regra") ? resolve(val("--sensibilidade-regra")!) : null;
   const sens = sAbs ? ler<SensibilidadeRegra>(sAbs) : null;
-  if (sens && sens.formato !== "nat78-sensibilidade-regra-1.0.0") { console.error(`${sAbs}: não é sensibilidade-regra (${sens.formato})`); process.exit(1); }
+  if (sens && sens.formato !== FORMATO_SENSIBILIDADE_REGRA) { console.error(`${sAbs}: não é sensibilidade-regra ${FORMATO_SENSIBILIDADE_REGRA} (${sens.formato}; a 1.0.0 não traz a resposta adotada para re-derivar as leituras)`); process.exit(1); }
   const p1Abs = resolve(join(passada, "julgamentos.json"));
   const primeira = sens && p1Abs !== jAbs ? (JSON.parse(readFileSync(p1Abs, "utf8").replace(/^﻿/, "")) as { julgamentos: Julgamento[] }).julgamentos : null;
   const j = JSON.parse(jTxt.replace(/^﻿/, "")) as { politica: string; completo: boolean; julgamentos: Julgamento[] };
@@ -301,7 +390,8 @@ if (process.argv[1] && /(?:^|[\\/])e14-deteccao\.ts$/.test(process.argv[1])) {
   const lidos = [jAbs, cAbs, mAbs, refAbs, campAbs, pkgAbs, ...(slots ? [coletaAbs] : []), ...(sAbs ? [sAbs] : []), ...(primeira ? [p1Abs] : [])];
   const entradas = Object.fromEntries(lidos.map(p => [p.replace(/\\/g, "/"), sha(readFileSync(p))]));
   const bracoDe = (k: string) => { const b = chave.get(k); if (!b) throw new Error(`cartão fora da chave: ${k}`); return b; };
-  const cen = sens ? cenariosDaRegra(js, bracoDe, t, sens, primeira ? (multi ? primeira.filter(x => x.chave.split("|")[1] === a0.dir) : primeira) : null) : null;
+  const cen = sens ? cenariosDaRegra(js, bracoDe, t, sens, { primeira: primeira ? (multi ? primeira.filter(x => x.chave.split("|")[1] === a0.dir) : primeira) : null,
+    fato: fatoDaPassada(resolve(passada), j.politica) }) : null;
   const doc = { ...t, ...(multi ? { analise: a0.dir, cartoesDaAnalise: js.length } : {}), colunaPrincipalOrigem: cli ? "--coluna-principal" : camp.design.colunaPrincipal ? "campanha.design.colunaPrincipal" : null, entradas,
     ...(cen ? { sensibilidadeDaRegra: cen } : {}) };
   const dest = multi ? join(saida, a0.dir.split("/")[0]) : saida;
