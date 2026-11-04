@@ -1,0 +1,70 @@
+{
+  "contract": "resgates.v1",
+  "fixture": false,
+  "campaignId": "dev-371-a2-01",
+  "resgates": [
+    {
+      "slot": "p01-ferramentas",
+      "runId": "20261104-032059-acompanhamento-ferramentas-62e4",
+      "pacoteSha256": "c176be68650912901a0aeba968e1c0850986c9b7682ee20a2cd0c6813455b506",
+      "detectorQueAcusou": "vazamento-conhecimento-1.3.2",
+      "motivo": "o verify_finding serializa no traço de foco o elemento ativo de cada passo (binding.context.trace[*].active = <div.br-button.circle.small> \"Fechar\", o botão fechar da modal da própria tela A2, pelo describe() do validator: <tag#id.classe…> \"texto\"); o núcleo só lia o descritor <…> como seletor de elemento da página sem o texto depois dele, e o detector vazamento-conhecimento-1.3.2 leu a classe br-button como vazamento (1 sem explicação)",
+      "rechecagem": {
+        "detectorVersao": "vazamento-conhecimento-1.3.3",
+        "evalCommit": "4a05864a57e6af497268edaebbf9141de6816bc3",
+        "validatorBuild": {
+          "version": "3.7.1",
+          "commit": "a0038a9381cb283e999fe9ab5c553a0d12f38629"
+        },
+        "relatorio": "resgates/p01-ferramentas.json",
+        "relatorioSha256": "384040b22865d14276ac423fb42d759de8982dfd003c71335d2ce574f32d2073",
+        "semExplicacao": 0
+      },
+      "decisao": "D-164",
+      "escopo": "desenvolvimento",
+      "data": "2026-11-04T07:34:07Z"
+    },
+    {
+      "slot": "p02-ferramentas",
+      "runId": "20261104-033226-acompanhamento-ferramentas-0344",
+      "pacoteSha256": "d0409beb0b00e7b194924d4c67d97ee72343173924723000e5d778f26d6c50aa",
+      "detectorQueAcusou": "vazamento-conhecimento-1.3.2",
+      "motivo": "o verify_finding serializa no traço de foco o elemento ativo de cada passo (binding.context.trace[*].active = <div.br-button.circle.small> \"Fechar\", o botão fechar da modal da própria tela A2, pelo describe() do validator: <tag#id.classe…> \"texto\"); o núcleo só lia o descritor <…> como seletor de elemento da página sem o texto depois dele, e o detector vazamento-conhecimento-1.3.2 leu a classe br-button como vazamento (1 sem explicação)",
+      "rechecagem": {
+        "detectorVersao": "vazamento-conhecimento-1.3.3",
+        "evalCommit": "4a05864a57e6af497268edaebbf9141de6816bc3",
+        "validatorBuild": {
+          "version": "3.7.1",
+          "commit": "a0038a9381cb283e999fe9ab5c553a0d12f38629"
+        },
+        "relatorio": "resgates/p02-ferramentas.json",
+        "relatorioSha256": "bd4c79b4655d54cdc949a328cb4c2016020d10e60b12c375bb1bdb17231843c5",
+        "semExplicacao": 0
+      },
+      "decisao": "D-164",
+      "escopo": "desenvolvimento",
+      "data": "2026-11-04T07:34:07Z"
+    },
+    {
+      "slot": "p03-ferramentas",
+      "runId": "20261104-041808-acompanhamento-ferramentas-774c",
+      "pacoteSha256": "3ff51132fbbd7d3b8d5e1de2bb7809d43eb7ed62761fc6b2eb37747b41294464",
+      "detectorQueAcusou": "vazamento-conhecimento-1.3.2",
+      "motivo": "o verify_finding serializa no traço de foco o elemento ativo de cada passo (binding.context.trace[*].active = <div.br-button.circle.small> \"Fechar\", o botão fechar da modal da própria tela A2, pelo describe() do validator: <tag#id.classe…> \"texto\"); o núcleo só lia o descritor <…> como seletor de elemento da página sem o texto depois dele, e o detector vazamento-conhecimento-1.3.2 leu a classe br-button como vazamento (1 sem explicação)",
+      "rechecagem": {
+        "detectorVersao": "vazamento-conhecimento-1.3.3",
+        "evalCommit": "4a05864a57e6af497268edaebbf9141de6816bc3",
+        "validatorBuild": {
+          "version": "3.7.1",
+          "commit": "a0038a9381cb283e999fe9ab5c553a0d12f38629"
+        },
+        "relatorio": "resgates/p03-ferramentas.json",
+        "relatorioSha256": "3f1d4c392af5f424fea2c7db8fd4cf657fb350a4bf460431b2d12113ac40327a",
+        "semExplicacao": 0
+      },
+      "decisao": "D-164",
+      "escopo": "desenvolvimento",
+      "data": "2026-11-04T07:34:07Z"
+    }
+  ]
+}

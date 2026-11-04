@@ -1,0 +1,36 @@
+{
+ "portao": "portao-vazamento-reexecucao-1.1.0",
+ "detector": "vazamento-conhecimento-1.3.3",
+ "validator": "F:\\Dev Nath\\TCC\\.tmp-eval\\validator-371",
+ "versao": "3.7.1",
+ "perfil": "knowledge-free",
+ "site": "http://127.0.0.1:3300",
+ "telas": "F:\\Dev Nath\\TCC\\govbr-telas",
+ "passa": true,
+ "semExplicacaoNoPerfilLivre": 0,
+ "sessoes": [
+  {
+   "sessao": "2026-11-04T03-32-26Z__acompanhamento__opus__ferramentas__rep-02__20261104-033226-acompanhamento-ferramentas-0344",
+   "modo": "revarredura",
+   "tela": "acompanhamento",
+   "enviadas": 0,
+   "foraDoPerfil": 0,
+   "isError": 0,
+   "trocas": 0,
+   "travaMax": null,
+   "inventario": "acompanhamento ok (38 tags, 145+1 classes)",
+   "respostas": 9,
+   "semExplicacao": [],
+   "porClasse": {
+    "excecao-nomeada": 1,
+    "pagina": 1
+   },
+   "incompletas": 0,
+   "canarios": "45/45",
+   "canariosOk": true,
+   "perfil": "knowledge-free",
+   "sem": 0,
+   "ok": true
+  }
+ ]
+}
