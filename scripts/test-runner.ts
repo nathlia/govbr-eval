@@ -238,7 +238,7 @@ async function testesSemDocker(): Promise<void> {
     assert.equal(limpas.inventario.status, "ok", JSON.stringify(limpas.inventario));
     assert.equal(limpas.semExplicacao.length, 0, JSON.stringify(limpas.semExplicacao));
     assert.equal(limpas.porClasse.pagina, 7, JSON.stringify(limpas.porClasse));
-    assert.ok(limpas.canarios.every((c) => c.ok) && limpas.canarios.length === 33, JSON.stringify(limpas.canarios));
+    assert.ok(limpas.canarios.every((c) => c.ok) && limpas.canarios.length === 45, JSON.stringify(limpas.canarios));
     // falha fechada: as mesmas formas sem a tela (sem inventário do DOM) não são perdoadas
     const semTela = await varrerPayloadsDoOraculo({ ...base, tela: null, eventos: formas });
     assert.equal(semTela.inventario.status, "sem-tela");
@@ -318,7 +318,7 @@ async function testesSemDocker(): Promise<void> {
     const vinculado = await varrerPayloadsDoOraculo({ ...base, eventos: [scan(1, "S-page-003", sel), ledger(2, { scanId: "S-page-003", view: "families" }, "S-page-003")] });
     assert.equal(vinculado.semExplicacao.length, 0, JSON.stringify(vinculado.semExplicacao));
     assert.ok(vinculado.perdoadas.some((p) => p.tool === "get_finding_details" && p.path === "$.ledger.state.recipe.actions[*].selector" && p.class === "eco"), JSON.stringify(vinculado.perdoadas));
-    assert.ok(vinculado.canarios.every((c) => c.ok) && vinculado.canarios.length === 33, JSON.stringify(vinculado.canarios));
+    assert.ok(vinculado.canarios.every((c) => c.ok) && vinculado.canarios.length === 45, JSON.stringify(vinculado.canarios));
     // estrito: ledger pedido ANTES do scan, de outro scanId, sem scanId (ids) e com o seletor reescrito continuam sem explicação
     const conta = async (eventos: unknown[]) => (await varrerPayloadsDoOraculo({ ...base, eventos: eventos as Record<string, unknown>[] })).semExplicacao.filter((u) => u.tool === "get_finding_details").reduce((n, u) => n + u.count, 0);
     assert.ok(await conta([ledger(1, { scanId: "S-page-003" }, "S-page-003"), scan(2, "S-page-003", sel)]) > 0, "ledger antes do scan que o criou");
@@ -336,6 +336,47 @@ async function testesSemDocker(): Promise<void> {
     assert.ok(soLocalizador.semExplicacao.some((u) => u.path === "$.verification.binding.state.failure.detail"), JSON.stringify(soLocalizador.semExplicacao));
     const solto = await varrerPayloadsDoOraculo({ ...base, eventos: [verify(acoes, `O br-input falhou. ${falhou}`)] });
     assert.equal(solto.semExplicacao.filter((u) => u.term === "br-input").length, 4, JSON.stringify(solto.semExplicacao));
+  });
+  await test("varredura 1.3.3 (dev-371-a2-01): descritor do elemento com foco no traço do verify (<composto> \"texto\") é página pelo inventário; texto, prosa, outra ferramenta e base não", async () => {
+    if (!existsSync(join(DEFAULT_VALIDATOR_DIR, "dist", "checkers", "grounding.js"))) { console.log("     · validator sem dist/: varredura não exercitada"); return; }
+    const call = (seq: number, tool: string, result: unknown, args: unknown = {}) => ({ kind: "call", seq, tool, args: { text: JSON.stringify(args), truncated: false }, result: { text: JSON.stringify(result), truncated: false } });
+    const base = { validatorDir: DEFAULT_VALIDATOR_DIR, telasDir: DEFAULT_TELAS_DIR, tela: "acompanhamento", toolsList: null, ler: () => null };
+    const traco = (...active: (string | null)[]) => ({ verification: { binding: { context: { actions: active.length - 1, trace: active.map((a, i) => ({ step: i - 1, url: "http://screens:3300/acompanhamento.html", active: a, nextTarget: null,
+      subjects: [{ ref: 0, shown: i > 0, focusInside: false, text: "" }] })) } } } });
+    // a forma real das três execuções ferramentas da dev-371-a2-01 (A2: o botão fechar da modal da própria página)
+    const real = [call(1, "verify_finding", traco(null, '<button#aba-documentos> "Documentos"', '<div.br-button.circle.small> "Fechar"'))];
+    const limpa = await varrerPayloadsDoOraculo({ ...base, eventos: real });
+    assert.equal(limpa.inventario.status, "ok", JSON.stringify(limpa.inventario));
+    assert.equal(limpa.semExplicacao.length, 0, JSON.stringify(limpa.semExplicacao));
+    assert.ok(limpa.perdoadas.some((p) => p.class === "pagina" && p.term === "br-button" && p.path === "$.verification.binding.context.trace[*].active" && /1\.3\.3/.test(p.why)), JSON.stringify(limpa.perdoadas));
+    assert.ok(limpa.canarios.every((c) => c.ok) && limpa.canarios.length === 45, JSON.stringify(limpa.canarios.filter((c) => !c.ok)));
+    // falha fechada: sem tela (sem inventário do DOM) a mesma forma fica sem explicação
+    const semTela = await varrerPayloadsDoOraculo({ ...base, tela: null, eventos: real });
+    assert.ok(semTela.semExplicacao.some((u) => u.term === "br-button" && u.path === "$.verification.binding.context.trace[*].active"), JSON.stringify(semTela.semExplicacao));
+    // estrito: base plantada no descritor, o nome no texto visível, o descritor na prosa, noutro campo do traço, noutra ferramenta e fora do formato
+    const dict = await import("./vazamento/conhecimento").then((m) => m.dicionarioDoValidator(DEFAULT_VALIDATOR_DIR));
+    const titulo = [...dict.phrases.values()].find((t) => t.source === "kb:title")!.term;
+    const id = [...dict.exact.values()].find((t) => t.source === "kb:id")!.term;
+    const sujas = await varrerPayloadsDoOraculo({ ...base, eventos: [
+      call(1, "verify_finding", traco(`<button#aba-documentos> "${id}"`)),
+      call(2, "verify_finding", traco(`<div#${id}> "Fechar"`)),
+      call(3, "verify_finding", traco(`<button#aba-documentos> "${titulo}"`)),
+      call(4, "verify_finding", traco('<div.br-button.circle.small> "Fechar br-button"')),
+      call(5, "verify_finding", { verification: { detail: 'ao fechar (passo 1), o foco foi para <div.br-button.circle.small> "Fechar", não para o invocador.' } }),
+      call(6, "verify_finding", { verification: { binding: { context: { trace: [{ step: 1, error: '<div.br-button.circle.small> "Fechar"' }] } } } }),
+      call(7, "scan_page", traco('<div.br-button.circle.small> "Fechar"')),
+      call(8, "verify_finding", traco("<div.br-button.circle.small> Fechar")),
+    ] });
+    const sem = (path: string, source: string, tool = "verify_finding") => sujas.semExplicacao.some((u) => u.path === path && u.source === source && u.tool === tool);
+    const ATIVO = "$.verification.binding.context.trace[*].active";
+    assert.ok(sem(ATIVO, "kb:id"), "id da base no texto e no id do descritor");
+    assert.equal(sujas.semExplicacao.find((u) => u.path === ATIVO && u.source === "kb:id")?.count, 2, JSON.stringify(sujas.semExplicacao));
+    assert.ok(sem(ATIVO, "kb:title"), "título da base no texto do descritor");
+    assert.equal(sujas.semExplicacao.find((u) => u.path === ATIVO && u.term === "br-button" && u.tool === "verify_finding")?.count, 2, `nome no texto visível + fora do formato: ${JSON.stringify(sujas.semExplicacao)}`);
+    assert.ok(sem("$.verification.detail", "specs:rootClass"), "descritor na prosa do veredito");
+    assert.ok(sem("$.verification.binding.context.trace[*].error", "specs:rootClass"), "descritor noutro campo do traço");
+    assert.ok(sem(ATIVO, "specs:rootClass", "scan_page"), "mesmo caminho noutra ferramenta");
+    assert.equal(sujas.porClasse.pagina ?? 0, 0, `nada perdoado como página: ${JSON.stringify(sujas.porClasse)}`);
   });
 }
 

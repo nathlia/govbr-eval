@@ -64,8 +64,26 @@ import { argValues, buildDictionary, classify, exactTokens, hitsInText, leaves, 
  *       na prosa continuam sem explicação.
  * O núcleo (cópia do validator) não muda. Dez canários novos marcam os dois lados das duas formas (33 no total).
  * Rechecagem offline (`--revarrer`): rep-01 10 → 0, rep-03 4 → 0 sem explicação; rep-02 segue 0.
+ *
+ * 1.3.3 (dev-371-a2-01 rep-01/rep-02/rep-03-ferramentas, oráculo 3.7.1, tela A2 acompanhamento): as três execuções
+ * falharam o isolamento por UMA ocorrência cada, `br-button` em `verify_finding`
+ * `$.verification.binding.context.trace[*].active` = `<div.br-button.circle.small> "Fechar"`: o elemento com foco no passo
+ * do traço, serializado pelo `describe()` do validator (`<tag#id.classe.classe> "texto"`, até 3 classes do classList e
+ * os 40 primeiros caracteres do textContent), ou seja o botão fechar da modal da PRÓPRIA página. O núcleo já lê o
+ * descritor `<…>` como seletor de elemento da página (condição 2), mas só a folha INTEIRA `^<…>$`: com o texto
+ * visível depois do descritor a folha não casa, e o texto entre aspas ("Fechar") não é seletor. Nas entradas do traço
+ * (`step`, `url`, `active`, `nextTarget`, `subjects[*]`, `message`, `error`: `summarizeContext` do gate da 3.7.1, e
+ * as respostas reais dos três pacotes) só `active` carrega essa serialização; `subjects[*].text`/`message.text` são texto.
+ * Esta camada, só do eval, aplica a regra do núcleo ao DESCRITOR quando, e só quando: a ferramenta e o caminho são os
+ * declarados em DESCRITOR_DO_TRACO, a folha inteira é `<composto>` ou `<composto> "texto"` (o formato do describe), o
+ * termo não aparece no texto, e o núcleo, chamado com a folha `<composto>`, classifica `pagina` (nome de componente
+ * em posição de tipo/classe RENDERIZADO pela tela no inventário do DOM; sem inventário, nada). Id ou título da base no
+ * texto ou no id do descritor, o nome no texto visível, o mesmo descritor na prosa do veredito ou noutro campo do traço,
+ * outra ferramenta, e a folha fora do formato continuam sem explicação. O núcleo (cópia do validator) não muda. Doze
+ * canários novos marcam os dois lados (45 no total).
+ * Rechecagem offline (`--revarrer`): rep-01/rep-02/rep-03 1 → 0 sem explicação cada.
  */
-export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.2";
+export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.3";
 
 /**
  * 1.2.0 (D-154): eco do SELETOR DE AÇÃO da mesma chamada. Desde o validator 3.4.3 a resposta encolhida do
@@ -159,6 +177,27 @@ function ecoDeSeletor(hit: Hit, folha: string, prov: Provenance, sessao: SessaoD
   return null;
 }
 
+/**
+ * 1.3.3: caminhos em que a folha é o DESCRITOR do elemento com foco no traço do verify (`describe()` do validator:
+ * `<tag#id.classe…>` seguido, se o elemento tem texto, de ` "texto"`). Só `active` traz essa forma nas entradas do traço.
+ */
+export const DESCRITOR_DO_TRACO: Record<string, string[]> = {
+  verify_finding: ["$.verification.binding.context.trace[*].active"],
+};
+/** O formato do describe(): um composto entre <> (como o ELEMENT_DESCRIPTOR do núcleo) e, opcional, espaço + texto entre aspas duplas. */
+const DESCRITOR_COM_TEXTO = /^<([^<>\s]+)>(?: "([^\n]*)")?$/;
+
+function descritorDoTraco(hit: Hit, folha: string, prov: Provenance, cache: Map<string, string>): { class: Classification; why: string } | null {
+  if (!(DESCRITOR_DO_TRACO[prov.tool] ?? []).includes(hit.path) || hit.kind !== "exact") return null;
+  const m = DESCRITOR_COM_TEXTO.exec(folha);
+  if (!m) return null;
+  // o nome no texto visível do elemento não é posição de tipo/classe: fica sem explicação (como a prosa fora do seletor)
+  if (exactTokens(m[2] ?? "").includes(hit.term)) return null;
+  const c = classify(hit, prov, cache, `<${m[1]}>`);
+  if (c.class !== "pagina") return null;
+  return { class: "pagina", why: `${c.why}; descritor do elemento com foco no traço (<composto> "texto" do describe), termo só no composto (1.3.3)` };
+}
+
 /** scanId de topo de uma resposta JSON (o do lote: scan_page devolve o novo, get_finding_details o pedido), ou null. */
 export function scanIdDaResposta(text: string): string | null {
   try {
@@ -193,6 +232,8 @@ export function varrerResposta(dict: Dictionary, text: string, prov: Provenance,
       let c = classify(hit, prov, cache);
       if (c.class === "sem-explicacao") c = ecoDeSeletor(hit, leaf.text, prov, sessao, respostaScanId) ?? c;
       if (c.class === "sem-explicacao") c = classify(hit, prov, cache, leaf.text);
+      // 1.3.3: o descritor do elemento com foco no traço do verify, com o texto visível depois dele
+      if (c.class === "sem-explicacao") c = descritorDoTraco(hit, leaf.text, prov, cache) ?? c;
       hits.push({ ...hit, ...c, folha: leaf.text });
     }
   }
@@ -312,6 +353,9 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
   const scans = (...pares: [string, unknown][]) => new Map<string, unknown>(pares);
   const selInterno = `${rootClass}[formcontrolname='porto'] >>> input`;
   const falhou = `Nenhum elemento para '${selInterno}' no passo 4.`;
+  // 1.3.3: entrada do traço do verify com o descritor do elemento com foco; inventário com a classe raiz em posição de classe
+  const traco = (active: string) => JSON.stringify({ verification: { binding: { context: { trace: [{ step: 1, url: "http://x/", active, nextTarget: null }] } } } });
+  const doTraco: PageElements = { tags: new Set(["html", "body", "div", "button", rootClass]), classes: new Set([rootClass, "circle", "small"]) };
   const prosa = JSON.stringify({ reasons: [{ detail: `Limitação: ${falhou}` }], verification: { detail: `Limitação: ${falhou}`, binding: { state: { failure: { detail: falhou }, limitation: { detail: `Passo 4 (fill) falhou. ${falhou}` } } } } });
   const casos: { nome: string; tool: string; texto: string; args: unknown; page: string | null; espera: Classification; elements?: PageElements | null; scans?: Map<string, unknown> }[] = [
     { nome: "título da base numa nota do servidor", tool: "verify_finding", texto: JSON.stringify({ note: `Veja ${kbTitle}.` }), args: {}, page, espera: "sem-explicacao" },
@@ -350,6 +394,19 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
     { nome: "classe raiz solta na prosa além da citação do seletor do agente", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `O ${rootClass} falhou: '${selInterno}'.` } }), args: { actions: [{ action: "fill", selector: selInterno }] }, page: pageComTag, elements: null, espera: "sem-explicacao" },
     { nome: "só um prefixo do seletor do agente entre aspas (não é o valor inteiro)", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `Nenhum elemento para '${rootClass}[formcontrolname='porto']'.` } }), args: { actions: [{ action: "fill", selector: selInterno }] }, page: pageComTag, elements: null, espera: "sem-explicacao" },
     { nome: "seletor com aspa interna citado, mas só em finding.element.locator (não em actions)", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: falhou } }), args: { finding: { element: { locator: selInterno } } }, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    // 1.3.3 (dev-371-a2-01): descritor do elemento com foco no traço do verify, com o texto visível depois dele
+    { nome: "classe raiz renderizada no descritor do traço com texto (trace.active)", tool: "verify_finding", texto: traco(`<div.${rootClass}.circle.small> "Fechar"`), args: {}, page: pageComTag, elements: doTraco, espera: "pagina" },
+    { nome: "tag renderizada no descritor do traço com texto (trace.active)", tool: "verify_finding", texto: traco(`<${rootClass}#fechar> "Fechar"`), args: {}, page: pageComTag, elements: doTraco, espera: "pagina" },
+    { nome: "descritor do traço com classe raiz que a tela NÃO renderiza", tool: "verify_finding", texto: traco(`<div.${rootClass}.circle.small> "Fechar"`), args: {}, page: pageComTag, elements: { tags: doTraco.tags, classes: new Set(["circle", "small"]) }, espera: "sem-explicacao" },
+    { nome: "descritor do traço sem inventário da tela (falha fechada)", tool: "verify_finding", texto: traco(`<div.${rootClass}.circle.small> "Fechar"`), args: {}, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    { nome: "classe raiz também no texto visível do descritor do traço", tool: "verify_finding", texto: traco(`<div.${rootClass}> "Fechar ${rootClass}"`), args: {}, page: pageComTag, elements: doTraco, espera: "sem-explicacao" },
+    { nome: "id da base plantado no texto do descritor do traço", tool: "verify_finding", texto: traco(`<button#aba-documentos> "${kbId}"`), args: {}, page: `${pageComTag}<!-- ${kbId} -->`, elements: doTraco, espera: "sem-explicacao" },
+    { nome: "id da base plantado como id do descritor do traço", tool: "verify_finding", texto: traco(`<div#${kbId}> "Fechar"`), args: {}, page: `${pageComTag}<!-- ${kbId} -->`, elements: doTraco, espera: "sem-explicacao" },
+    { nome: "título da base (frase normativa) no texto do descritor do traço", tool: "verify_finding", texto: traco(`<button#aba-documentos> "${kbTitle}"`), args: {}, page, elements: doTraco, espera: "sem-explicacao" },
+    { nome: "descritor com texto citado na prosa do veredito (verification.detail), não no traço", tool: "verify_finding", texto: JSON.stringify({ verification: { detail: `ao fechar (passo 1), o foco foi para <div.${rootClass}.circle.small> "Fechar", não para o invocador.` } }), args: {}, page: pageComTag, elements: doTraco, espera: "sem-explicacao" },
+    { nome: "descritor com texto noutro campo da entrada do traço (trace.error, não declarado)", tool: "verify_finding", texto: JSON.stringify({ verification: { binding: { context: { trace: [{ step: 1, error: `<div.${rootClass}> "Fechar"` }] } } } }), args: {}, page: pageComTag, elements: doTraco, espera: "sem-explicacao" },
+    { nome: "descritor com texto no mesmo caminho, mas noutra ferramenta (scan_page)", tool: "scan_page", texto: traco(`<div.${rootClass}.circle.small> "Fechar"`), args: {}, page: pageComTag, elements: doTraco, espera: "sem-explicacao" },
+    { nome: "descritor do traço fora do formato do describe (texto sem aspas)", tool: "verify_finding", texto: traco(`<div.${rootClass}.circle.small> Fechar`), args: {}, page: pageComTag, elements: doTraco, espera: "sem-explicacao" },
   ];
   return casos.map((c) => {
     const { hits } = varrerResposta(dict, c.texto, { tool: c.tool, args: c.args, page: c.page, axe, elements: c.elements ?? null }, { argsDoScan: c.scans ?? new Map() });
