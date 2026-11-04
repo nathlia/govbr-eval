@@ -1,0 +1,28 @@
+{
+  "contract": "resgates.v1",
+  "fixture": false,
+  "campaignId": "dev-372-b-01",
+  "resgates": [
+    {
+      "slot": "p02-ferramentas",
+      "runId": "20261104-104825-vistorias-ferramentas-a9e4",
+      "pacoteSha256": "d48cd689fdbce849f854543f37342d26d09586bffbdca449e47438f66b5250b8",
+      "detectorQueAcusou": "vazamento-conhecimento-1.3.4",
+      "motivo": "o scan_page encolhe a pendência de página para a linha curta do validator (checksRun.pageLevel.notMeasured[*] = P-01:contrast-incomplete:2⇒wcag-1.4.3 @.content fg #ffffff bg #ff8c00 ratio 2.33; br-button[label=\"Ocultar\"] >>> span · decida o contraste…), que carrega o localizador que o axe mediu no span do botão Ocultar, web component da própria tela B; a folha não é …locator, o localizador não está entre aspas e a linha inteira não é seletor, e o detector vazamento-conhecimento-1.3.4 leu a tag br-button como vazamento (1 sem explicação)",
+      "rechecagem": {
+        "detectorVersao": "vazamento-conhecimento-1.3.5",
+        "evalCommit": "67f5576143893e426ca125ab15c650efd381e5b8",
+        "validatorBuild": {
+          "version": "3.7.2",
+          "commit": "cd1134733d8ca7448e8cc8526a4aaf0c307ce3b0"
+        },
+        "relatorio": "resgates/p02-ferramentas.json",
+        "relatorioSha256": "abfc098ddf176ffcc4989c03e25edd1088421a5f0a3e20c030edbc364f96545a",
+        "semExplicacao": 0
+      },
+      "decisao": "D-164",
+      "escopo": "desenvolvimento",
+      "data": "2026-11-04T12:30:39Z"
+    }
+  ]
+}
