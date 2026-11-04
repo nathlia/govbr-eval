@@ -25,6 +25,9 @@
  * cego as mostra em `referencias` (`REF1`, `REF2`, com o texto da norma como em `normaCitada`) e a resposta ganha
  * `referencias` (um julgamento de norma por referência), usadas só quando a primária cai por citação. Cartão sem referência
  * fica igual. `--politica 1.2.0` refaz a passada 1.3.1 byte a byte (referências ignoradas, formatos 1.2.0).
+ * 1.4.3 (passada cega dev-372-b-01: juízes adivinharam qual registro é a parada `detalhe`): na 1.3.0, `referencias.<tela>`
+ * ganha `paradas` (de `_meta.states`: rota, registro, receita e nota de cada parada) e cada defeito ganha `registro` e, se a
+ * referência o declara, `dominio` (`{ regra, registros }`, sem mudança). A 1.2.0 não muda.
  */
 import { existsSync, readFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
@@ -60,10 +63,19 @@ import { leiameJuiz, tamanhosDosLotes } from "./e14-preparar";
  * 1.3.0 valida pelo mesmo conjunto. Corrige a 1.4.1, que tinha posto "receita vazia" também no LEIAME da 1.2.0: a
  * `--politica 1.2.0` volta a refazer as passadas 1.2.0 arquivadas byte a byte. Formatos do lote, do manifesto e das
  * respostas iguais; os bytes do lote mudam porque ele traz o sha256 do LEIAME e do esquema.
+ * 1.4.3 (passada cega dev-372-b-01): o "registro da referência" da regra registro × template não estava no lote — `referencias`
+ * só trazia o `endereco` e o nome do `estado` de cada defeito, e os juízes adivinharam qual registro era a parada `detalhe`
+ * (a maioria inferiu 3038 pelo indicador "0%"; outros desistiram e desvincularam). Na 1.3.0, `referencias.<tela>.paradas`
+ * (`paradasDaReferencia`, mecânico, de `_meta.states`: `path`, `registro` pelo fim do caminho (`registroDaRota`), `receita`
+ * pelos passos da referência até a parada e `nota`); cada defeito ganha `registro` (o da parada do seu `estado`; `null` em
+ * `sempre`) e, quando a referência o declara, `dominio: { regra, registros }` sem mudança (`dominioDoDefeito`; nenhuma
+ * referência o declara hoje — o campo é para uma referência 1.1.0). O LEIAME 1.3.0 ganha LEIAME_PARADAS logo depois da regra
+ * registro × template. A 1.2.0 não muda (lote, LEIAME e esquema byte a byte). Formatos do lote, do manifesto e das respostas
+ * iguais; a ingestão lê de `referencias` só `defeitos[].id`, como antes. Passadas já julgadas não se refazem.
  */
 export const E14_CAMPANHA_VERSAO = "nat78-primeira-passada-1.3.1";
 /** [D-156] Versão da passada preparada na política 1.3.0 (referências secundárias). A 1.2.0 continua 1.3.1. */
-export const E14_CAMPANHA_VERSAO_1_4 = "nat78-primeira-passada-1.4.2";
+export const E14_CAMPANHA_VERSAO_1_4 = "nat78-primeira-passada-1.4.3";
 /** Política das campanhas novas (D-156). `--politica 1.2.0` reproduz o histórico. */
 export const POLITICA_CAMPANHA_PADRAO: VersaoPolitica = "1.3.0";
 
@@ -111,7 +123,9 @@ export function bracoDoRun(r: SemanticPackage["runs"][number], bracos: readonly 
 }
 
 interface Passo { action: string; selector?: string; value?: string; path?: string; waitFor?: string }
-interface Ref { _meta: { version: string; url?: string; waitFor?: string; setup?: Passo[] }; violations: { id: string; state: string; expectedCount?: number; rules: string[]; description: string }[] }
+interface Estado { id: string; afterStep?: number; path?: string; note?: string }
+interface Ref { _meta: { version: string; url?: string; waitFor?: string; setup?: Passo[]; states?: Estado[] };
+  violations: { id: string; state: string; expectedCount?: number; rules: string[]; description: string; dominio?: unknown }[] }
 export interface PreparoCampanha { arquivosDoJuiz: Map<string, string>; arquivosInternos: Map<string, string>; cegueira: Cegueira; falhasTrio: string[]; fontes: Record<string, string> }
 
 /** `dataSha256` do oráculo fixado na campanha (campaign.v2: perfis com/ferramentas; v1: `fixed.oracle`). Um só, senão para. */
@@ -143,6 +157,61 @@ export function passosLegiveis(passos: string[], ref: Ref["_meta"]): string[] {
   });
 }
 
+/** [1.4.3] Parada da referência como o lote a publica (`referencias.<tela>.paradas[estado]`). */
+export interface Parada { path: string | null; registro: string | null; receita?: string[]; nota?: string }
+/** [1.4.3] Domínio declarado de um defeito (referência 1.1.0 em diante): a regra de identidade e os registros que a unidade cobre. */
+export interface Dominio { regra: string; registros: string[] }
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+/**
+ * [1.4.3] Registro de uma rota: o último segmento do caminho quando ele é o identificador de um registro de dados — UUID,
+ * só dígitos, ou código curto de letras + dígitos (`VST-3038`, `P123`); fora disso (`vistorias`, `solicitacao.html`,
+ * `cadastrar-empresa`), `null`. A consulta e o fragmento não contam.
+ */
+export function registroDaRota(path: string | null | undefined): string | null {
+  if (!path) return null;
+  const ult = new URL(path, "http://x").pathname.split("/").filter(Boolean).pop() ?? "";
+  let id: string;
+  try { id = decodeURIComponent(ult); } catch { id = ult; }
+  return UUID.test(id) || /^\d+$/.test(id) || /^[A-Za-z]{1,6}-?\d{2,}$/.test(id) ? id : null;
+}
+
+/** [1.4.3] Texto da referência que vai ao juiz como os passos dos cartões vão (a mesma máscara). */
+const passoCego = (s: string): string => mascararTextoCego(mascararNormaCega(mascarar(s)!))!;
+
+/**
+ * [1.4.3] Paradas da referência para o lote, na ordem de `_meta.states`: para cada estado, `path` (como a referência o
+ * declara; `null` se não declara), `registro` (`registroDaRota`), `receita` (os passos da referência até a parada, com o
+ * mesmo texto de `passosLegiveis`, quando ela declara `afterStep`) e `nota` (a da referência, quando há). Referência sem
+ * `states` → `null` (o lote fica sem o bloco).
+ */
+export function paradasDaReferencia(meta: Ref["_meta"]): Record<string, Parada> | null {
+  if (!meta.states?.length) return null;
+  const out: Record<string, Parada> = {};
+  for (const e of meta.states) {
+    if (e.id in out) throw new Error(`E14 campanha: estado repetido em _meta.states: ${e.id}`);
+    const p: Parada = { path: e.path ?? null, registro: registroDaRota(e.path) };
+    if (typeof e.afterStep === "number") p.receita = passosLegiveis([`setup do plano de estados (${e.afterStep} passo(s))`], meta).map(passoCego);
+    if (e.note) p.nota = mascararNormaCega(e.note);
+    out[e.id] = p;
+  }
+  return out;
+}
+
+/**
+ * [1.4.3] `dominio` do defeito, sem mudança (`{ regra, registros: [] }`): `regra` = o que tem de ser igual para outro
+ * registro contar como o mesmo defeito; `registros` = os registros que a unidade cobre. Ausente → `undefined`; fora do
+ * formato, para (nunca cai calado no "só o registro da parada").
+ */
+export function dominioDoDefeito(v: { id: string; dominio?: unknown }): Dominio | undefined {
+  if (v.dominio === undefined) return undefined;
+  const d = v.dominio as Partial<Dominio> | null;
+  if (!d || typeof d !== "object" || Array.isArray(d) || typeof d.regra !== "string" || !d.regra.trim()
+    || !Array.isArray(d.registros) || !d.registros.length || !d.registros.every(x => typeof x === "string" && x.trim()))
+    throw new Error(`E14 campanha: dominio do defeito ${v.id} fora do formato { regra: texto, registros: [texto, …] }`);
+  return v.dominio as Dominio;
+}
+
 /**
  * [D-154] Endereço da tela para o juiz: a entrada que a referência mediu (`_meta.url`, com a consulta), a mesma que os runs
  * abriram. O `capture.json` da análise guarda só o pathname; ele confere o caminho e só vale sozinho quando a referência não
@@ -164,7 +233,7 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
   if (datas.length !== 1) throw new Error(`E14 campanha: esperado 1 dataSha256 de oráculo nas campanhas das análises, achei ${datas.length} (${datas.map(x => x.slice(0, 12)).join(", ")})`);
   const nr = normasDaCampanha({ dataSha256: datas[0], validador: resolve(o.validador ?? VALIDADOR_PADRAO), checkerAliases: o.checkerAliases });
   const itens: { item: ItemChave; card: Card; cartao: CartaoCego }[] = [];
-  const telas: Record<string, { nome: string; versao: string; endereco: string; defeitos: unknown[] }> = {};
+  const telas: Record<string, { nome: string; versao: string; endereco: string; paradas?: Record<string, Parada>; defeitos: unknown[] }> = {};
   const fontes: Record<string, string> = { ...nr.fontes };
   let desenho: { arms: string[]; comparisons: { id: string; arms: string[]; role?: string }[] } | null = null;
   let idsDeAchado = 0;
@@ -186,12 +255,23 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
     const resumo = lerJson<{ execucoes: { identidade: { tela: { id: string; label: string } } }[] }>(join(dir, "summary.json"));
     const { id: telaId, label } = resumo.execucoes[0].identidade.tela;
     const nome = `Tela ${label}`;
-    const specs = ref.violations.map(v => ({ id: v.id, estado: v.state, unidades: v.expectedCount ?? 1, descricao: mascararNormaCega(v.description),
-      normas: v.rules.map(nr.resolver).filter(Boolean) }));
+    // [1.4.3] Só na 1.3.0: paradas da referência e, em cada defeito, o registro da sua parada (+ `dominio`, se declarado).
+    const paradas = v13 ? paradasDaReferencia(ref._meta) : null;
+    const registroDe = (v: Ref["violations"][number]): string | null => {
+      if (v.state === "sempre" || !paradas) return null;
+      if (!(v.state in paradas)) throw new Error(`E14 campanha: defeito ${v.id} no estado ${v.state}, que _meta.states não declara`);
+      return paradas[v.state].registro;
+    };
+    const specs = ref.violations.map(v => {
+      const unidades = v.expectedCount ?? 1, descricao = mascararNormaCega(v.description), normas = v.rules.map(nr.resolver).filter(Boolean);
+      if (!v13) return { id: v.id, estado: v.state, unidades, descricao, normas };
+      const dominio = dominioDoDefeito(v);
+      return { id: v.id, estado: v.state, registro: registroDe(v), unidades, descricao, normas, ...(dominio ? { dominio } : {}) };
+    });
     const endereco = enderecoDaTela(ref._meta, lerJson<{ url: string }>(join(dir, "revisao", "capture.json")).url);
     const refAbs = join(dir, "entradas", "referencia.json");
     fontes[`${rotuloDe(dir)}/entradas/referencia.json`] = sha(readFileSync(refAbs));
-    telas[telaId] ??= { nome, versao: ref._meta.version, endereco, defeitos: specs };
+    telas[telaId] ??= { nome, versao: ref._meta.version, endereco, ...(paradas ? { paradas } : {}), defeitos: specs };
     const specDe = new Map(pkg.units.map(u => [u.id, u.specId]));
     const runDe = new Map(pkg.runs.flatMap(r => r.cardIds.map(id => [id, r] as const)));
     for (const card of pkg.cards) {
@@ -357,9 +437,9 @@ export function leiameCampanha13(total: number, nLotes: number, nomes: string, b
   if (baseUrl !== BASE_URL_PADRAO) t = trocar(t, "`" + BASE_URL_PADRAO + "`", "`" + baseUrlValida(baseUrl) + "`");
   // [1.4.2, C2] Cabeçalho vazio × WCAG 1.3.1, logo depois do vocabulário de `violada`.
   t = trocar(t, "- `violada`: `sim` · `nao` · `incerto`." + NL, "- `violada`: `sim` · `nao` · `incerto`." + NL + LEIAME_CABECALHO_VAZIO + NL);
-  // [1.4.2, C1] Registro × template, no fim da seção `vinculo`.
+  // [1.4.2, C1] Registro × template, no fim da seção `vinculo`; [1.4.3] e, logo depois, de onde se lê o registro da referência.
   t = trocar(t, "- Nunca pelo id da regra nem por semelhança de texto (R7): só pelo fato." + NL,
-    "- Nunca pelo id da regra nem por semelhança de texto (R7): só pelo fato." + NL + LEIAME_IDENTIDADE_REGISTRO + NL);
+    "- Nunca pelo id da regra nem por semelhança de texto (R7): só pelo fato." + NL + LEIAME_IDENTIDADE_REGISTRO + NL + LEIAME_PARADAS + NL);
   t = t.split("política normativa 1.2.0").join("política normativa 1.3.0");
   t = t.split("política 1.2.0").join("política 1.3.0");
   t = trocar(t, `"formato": "${FORMATO_RESPOSTAS_CAMPANHA}"`, `"formato": "${FORMATO_RESPOSTAS_CAMPANHA_1_3}"`);
@@ -408,6 +488,22 @@ export const LEIAME_IDENTIDADE_REGISTRO = [
   "  deles em `candidatas`, que o vincularia, ou cujo `observado` descreve conteúdo de rota de registro. Ficam fora os",
   "  componentes da casca da aplicação (cabeçalho, menu do avatar) que persistem entre rotas: não pertencem ao template",
   "  do registro.",
+].join("\n");
+
+/**
+ * [1.4.3, passada cega dev-372-b-01] De onde se lê o registro da referência: `referencias.<tela>.paradas` e o `registro`
+ * de cada defeito. Logo depois da regra registro × template (LEIAME_IDENTIDADE_REGISTRO), na seção `vinculo`.
+ */
+export const LEIAME_PARADAS = [
+  "- **Paradas da referência.** Em `referencias`, cada tela traz `paradas`: para cada estado da referência (o nome que",
+  "  cada defeito traz em `estado`), a rota (`path`), o `registro` (o identificador no fim da rota, ou `null` quando a",
+  "  rota não é de registro), os passos da referência até ali (`receita`) e a nota da referência (`nota`). Cada defeito",
+  "  traz em `registro` o registro da parada do seu `estado` (`null` em `sempre`, que vale em todas as paradas, e em",
+  "  parada fora de rota de registro). O registro da referência de que a regra acima fala (\"o registro em que a",
+  "  referência o mediu\") é esse: leia-o ali, nunca o deduza do texto do defeito, de um indicador da página ou da",
+  "  posição na lista. Sem `dominio` declarado no defeito, a unidade cobre só o registro listado na sua parada: outro",
+  "  registro não é o mesmo defeito. Com `dominio` (`{ regra, registros }`), ela cobre os registros listados em",
+  "  `registros`, pelo critério escrito em `regra`: é essa a prova do item 2.",
 ].join("\n");
 
 /**

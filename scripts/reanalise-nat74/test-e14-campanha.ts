@@ -18,8 +18,8 @@ import {
   type CartaoCego, type Resposta,
 } from "./e14-comum";
 import {
-  BASE_URL_PADRAO, LEIAME_CABECALHO_VAZIO, LEIAME_IDENTIDADE_REGISTRO, baseUrlValida, bracoDoRun, enderecoDaTela, leiameCampanha, leiameCampanha13, mascararTrio,
-  passosLegiveis, prepararCampanha,
+  BASE_URL_PADRAO, LEIAME_CABECALHO_VAZIO, LEIAME_IDENTIDADE_REGISTRO, LEIAME_PARADAS, baseUrlValida, bracoDoRun, dominioDoDefeito, enderecoDaTela, leiameCampanha,
+  leiameCampanha13, mascararTrio, paradasDaReferencia, passosLegiveis, prepararCampanha, registroDaRota,
 } from "./e14-campanha";
 import { FORCA_NO_VOCABULARIO, normasDaCampanha } from "./e14-fila";
 import { argumentosIngerir, contextoDe, ingerir } from "./e14-ingerir";
@@ -342,14 +342,16 @@ try {
   const LEIAME13_1_4_1 = "84a05a9b69f3380a5726480df33dfd91489eb5c3d65eb46973d611fae94c0069";
   /** sha256 do LEIAME 1.2.0 histórico com os mesmos argumentos (sem "receita vazia": as passadas 1.2.0 arquivadas). */
   const LEIAME12_HISTORICO = "15672b0c594955cce77a845243d8b1513a1b4e69cb9274be0baf8c5cad6cd74d";
-  t("LEIAME 1.3.0 = o da 1.4.1 + registro × template (vinculo) + cabeçalho vazio (norma), e nada mais", () => {
+  t("LEIAME 1.3.0 = o da 1.4.1 + registro × template e paradas da referência (vinculo, 1.4.3) + cabeçalho vazio (norma), e nada mais", () => {
     const l = leiameCampanha13(10, 2, "Tela X");
-    for (const b of [LEIAME_IDENTIDADE_REGISTRO, LEIAME_CABECALHO_VAZIO]) assert.equal(l.split(b + "\n").length - 1, 1, b.slice(0, 40));
+    for (const b of [LEIAME_IDENTIDADE_REGISTRO, LEIAME_PARADAS, LEIAME_CABECALHO_VAZIO]) assert.equal(l.split(b + "\n").length - 1, 1, b.slice(0, 40));
     assert.ok(l.indexOf(LEIAME_IDENTIDADE_REGISTRO) > l.indexOf("### `vinculo`") && l.indexOf(LEIAME_IDENTIDADE_REGISTRO) < l.indexOf("### `sugestao`"), "na seção vinculo");
+    assert.ok(l.includes(LEIAME_IDENTIDADE_REGISTRO + "\n" + LEIAME_PARADAS + "\n"), "paradas logo depois da regra registro × template");
     assert.ok(l.indexOf(LEIAME_CABECALHO_VAZIO) > l.indexOf("### `norma`") && l.indexOf(LEIAME_CABECALHO_VAZIO) < l.indexOf("### `vinculo`"), "na seção norma");
-    assert.equal(sha(l.replace(LEIAME_IDENTIDADE_REGISTRO + "\n", "").replace(LEIAME_CABECALHO_VAZIO + "\n", "")), LEIAME13_1_4_1);
+    assert.equal(sha(l.replace(LEIAME_IDENTIDADE_REGISTRO + "\n", "").replace(LEIAME_PARADAS + "\n", "").replace(LEIAME_CABECALHO_VAZIO + "\n", "")), LEIAME13_1_4_1);
+    for (const x of ["`paradas`", "`registro`", "`dominio`", "{ regra, registros }", "nunca o deduza", "só o registro listado na sua parada"]) assert.ok(LEIAME_PARADAS.includes(x), x);
     // Neutro: nenhum padrão da verificação de cegueira, nenhuma spec citada, "origem do cartão" e nunca a palavra do desenho.
-    for (const b of [LEIAME_IDENTIDADE_REGISTRO, LEIAME_CABECALHO_VAZIO]) {
+    for (const b of [LEIAME_IDENTIDADE_REGISTRO, LEIAME_PARADAS, LEIAME_CABECALHO_VAZIO]) {
       for (const [nome, re] of proibidos(["sem", "ferramentas", "com"])) assert.ok(!re.test(b), `${nome} no bloco novo`);
       assert.ok(!/\b[ABPU]-\d{2}\b/.test(b), "o bloco novo não cita spec");
     }
@@ -433,6 +435,130 @@ try {
     assert.deepEqual({ ...la, instrucoes: null }, { ...lb, instrucoes: null }, "fora do sha256 do LEIAME, o lote é o mesmo");
     assert.equal(la.esquema.sha256, sha(pA.arquivosDoJuiz.get("lotes/esquema-respostas.schema.json")!));
     assert.equal(la.instrucoes.sha256, sha(pA.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!));
+  });
+  // ── passada 1.4.3 (passada cega dev-372-b-01): paradas da referência, registro de cada defeito, dominio opcional
+  console.log("E14 campanha 1.4.3: paradas da referência (rota + registro), registro do defeito, dominio declarado");
+  const refV = JSON.parse(readFileSync(join(EVAL, "ground-truth-vistorias.json"), "utf8")) as {
+    _meta: Parameters<typeof paradasDaReferencia>[0] & { url: string; states: { id: string; afterStep: number; path: string; note: string }[] };
+    violations: { id: string; state: string; dominio?: unknown }[] };
+  const UUID_3046 = "00000000-0000-4000-8a01-000000003046", UUID_3038 = "00000000-0000-4000-8a01-000000003038";
+  t("registroDaRota: UUID, número ou código no fim do caminho; rota de lista, arquivo ou nome comum → null; consulta não conta", () => {
+    assert.equal(registroDaRota(`/pnip/portal-mpa/vistorias/agendar-vistoria/${UUID_3038}`), UUID_3038);
+    assert.equal(registroDaRota("/processos/123"), "123");
+    assert.equal(registroDaRota("/processos/42/?aba=docs#x"), "42");
+    assert.equal(registroDaRota("/vistorias/VST-3038"), "VST-3038");
+    for (const x of ["/pnip/portal-mpa/vistorias", "/solicitacao.html", "/pnip-c/portal-admin/empresas/cadastrar-empresa", "/tela-a2", "/", "", null, undefined])
+      assert.equal(registroDaRota(x), null, String(x));
+  });
+  t("paradas da referência real (ground-truth-vistorias.json): rota e registro de cada parada, receita = passos da referência até ela, nota", () => {
+    const pr = paradasDaReferencia(refV._meta)!;
+    assert.deepEqual(Object.keys(pr), refV._meta.states.map(s => s.id));
+    assert.deepEqual(Object.keys(pr), ["inicial", "detalhe-menu", "detalhe", "modal"]);
+    assert.deepEqual(Object.values(pr).map(p => p.registro), [null, UUID_3046, UUID_3038, UUID_3038]);
+    for (const s of refV._meta.states) {
+      assert.equal(pr[s.id].path, s.path);
+      assert.deepEqual(pr[s.id].receita, passosLegiveis([`setup do plano de estados (${s.afterStep} passo(s))`], refV._meta), s.id);
+      assert.equal(pr[s.id].nota, s.note, "nota da referência sem mudança (nada a mascarar nela)");
+    }
+    assert.equal(pr.inicial.receita!.length, 1); assert.match(pr.inicial.receita![0], /^abrir o endereço da tela e esperar/);
+    assert.ok(pr.detalhe.receita!.some(x => x.includes(UUID_3038)) && !pr["detalhe-menu"].receita!.some(x => x.includes(UUID_3038)));
+    assert.equal(paradasDaReferencia({ version: "1" }), null, "referência sem states: sem bloco");
+    assert.deepEqual(paradasDaReferencia({ version: "1", states: [{ id: "inicial" }] } as never), { inicial: { path: null, registro: null } }, "sem path nem afterStep nem nota");
+    assert.throws(() => paradasDaReferencia({ version: "1", states: [{ id: "a" }, { id: "a" }] } as never), /repetido/);
+  });
+  // A análise sintética com a referência real da tela B (os cartões e o validador sintéticos de sempre).
+  const dirV = join(tmp, "trio-vistorias");
+  cpSync(dir, dirV, { recursive: true });
+  gravarJson(dirV, "revisao/package.json", { ...JSON.parse(readFileSync(join(dir, "revisao", "package.json"), "utf8")), units: [{ id: "U-1", specId: "B-21" }] });
+  gravarJson(dirV, "revisao/capture.json", { url: "/pnip/portal-mpa/vistorias" });
+  gravarJson(dirV, "summary.json", { execucoes: [{ identidade: { tela: { id: "vistorias", label: "Vistorias" } } }] });
+  gravar(dirV, "entradas/referencia.json", readFileSync(join(EVAL, "ground-truth-vistorias.json"), "utf8"));
+  type RefLote = { endereco: string; paradas?: Record<string, { path: string | null; registro: string | null }>; defeitos: ({ id: string; estado: string; registro?: string | null; dominio?: unknown } & Record<string, unknown>)[] };
+  const refDoLote = (pp: ReturnType<typeof prepararCampanha>) => (JSON.parse(pp.arquivosDoJuiz.get("lotes/lote-01.json")!) as { referencias: Record<string, RefLote> }).referencias.vistorias;
+  const pV = prepararCampanha([dirV], opts13), pV12 = prepararCampanha([dirV], { ...opts13, politica: "1.2.0" });
+  t("lote 1.3.0 com a referência real: referencias.vistorias.paradas = paradasDaReferencia; cada defeito com estado + registro da sua parada (sempre → null)", () => {
+    const r = refDoLote(pV);
+    assert.deepEqual(Object.keys(r), ["nome", "versao", "endereco", "paradas", "defeitos"]);
+    assert.equal(r.endereco, "/pnip/portal-mpa/vistorias?mock-perfil=mpa");
+    assert.deepEqual(r.paradas, paradasDaReferencia(refV._meta));
+    const de = (id: string) => r.defeitos.find(d => d.id === id)!;
+    assert.deepEqual([de("B-21").estado, de("B-21").registro], ["detalhe", UUID_3038]);
+    assert.deepEqual([de("B-24").estado, de("B-24").registro], ["modal", UUID_3038]);
+    assert.deepEqual([de("B-15").estado, de("B-15").registro], ["detalhe-menu", UUID_3046]);
+    assert.deepEqual([de("B-01").estado, de("B-01").registro], ["sempre", null]);
+    assert.deepEqual([de("B-02").estado, de("B-02").registro], ["inicial", null]);
+    for (const d of r.defeitos) {
+      assert.deepEqual(Object.keys(d), ["id", "estado", "registro", "unidades", "descricao", "normas"], d.id);
+      assert.equal(d.registro, d.estado === "sempre" ? null : r.paradas![d.estado].registro, d.id);
+    }
+  });
+  t("cegueira com paradas e registros: OK (rota e registro são fatos da página, não sinal de braço); nenhum resíduo novo", () => {
+    assert.deepEqual(pV.cegueira.falhas, []); assert.deepEqual(pV.falhasTrio, []);
+    const res = (pp: typeof pV) => (JSON.parse(pp.arquivosInternos.get("residuo-de-braco.json")!) as { porBraco: unknown }).porBraco;
+    assert.deepEqual(res(pV), res(pV12), "o resíduo é medido nos cartões, que não mudam");
+    const lt = pV.arquivosDoJuiz.get("lotes/lote-01.json")!;
+    for (const [nome, re] of proibidos(["sem", "ferramentas", "com"])) assert.ok(!re.test(JSON.stringify(refDoLote(pV).paradas)), `${nome} nas paradas`);
+    assert.ok(lt.includes(UUID_3038));
+    const l13 = JSON.parse(lt) as { cartoes: unknown[] }, l12 = JSON.parse(pV12.arquivosDoJuiz.get("lotes/lote-01.json")!) as { cartoes: unknown[] };
+    assert.deepEqual(l13.cartoes, l12.cartoes, "cartões iguais aos da 1.2.0 (sem referências secundárias no pacote sintético)");
+  });
+  t("1.2.0 com a mesma referência: sem paradas nem registro (defeitos como sempre); _meta.states não muda um byte da 1.2.0", () => {
+    const r = refDoLote(pV12);
+    assert.deepEqual(Object.keys(r), ["nome", "versao", "endereco", "defeitos"]);
+    for (const d of r.defeitos) assert.deepEqual(Object.keys(d), ["id", "estado", "unidades", "descricao", "normas"], d.id);
+    const dirS = join(tmp, "sem-states", "trio-vistorias"); // mesmo nome de pasta: o rótulo entra no id opaco
+    cpSync(dirV, dirS, { recursive: true });
+    const semStates = { ...refV, _meta: { ...refV._meta, states: undefined }, violations: refV.violations.map(v => ({ ...v, dominio: { regra: "x", registros: ["1"] } })) };
+    gravarJson(dirS, "entradas/referencia.json", semStates);
+    const pS = prepararCampanha([dirS], { ...opts13, politica: "1.2.0" });
+    for (const [rel, x] of pV12.arquivosDoJuiz) assert.equal(pS.arquivosDoJuiz.get(rel), x, rel);
+  });
+  // Referência com `dominio` declarado num defeito (a forma de uma futura referência 1.1.0; nenhuma o declara hoje).
+  const DOMINIO = { regra: "mesmo indicador de progresso no cabeçalho do detalhe, com o mesmo texto", registros: [UUID_3038, UUID_3046] };
+  const dirD = join(tmp, "trio-vistorias-dominio");
+  cpSync(dirV, dirD, { recursive: true });
+  gravarJson(dirD, "entradas/referencia.json", { ...refV, violations: refV.violations.map(v => v.id === "B-21" ? { ...v, dominio: DOMINIO } : v) });
+  const pD = prepararCampanha([dirD], opts13);
+  t("dominio declarado no defeito passa sem mudança para o lote (só nele); fora do formato para; a 1.2.0 o ignora", () => {
+    const r = refDoLote(pD);
+    assert.deepEqual(r.defeitos.find(d => d.id === "B-21")!.dominio, DOMINIO);
+    assert.deepEqual(Object.keys(r.defeitos.find(d => d.id === "B-21")!), ["id", "estado", "registro", "unidades", "descricao", "normas", "dominio"]);
+    assert.ok(r.defeitos.filter(d => d.id !== "B-21").every(d => !("dominio" in d)));
+    assert.deepEqual(pD.cegueira.falhas, []); assert.deepEqual(pD.falhasTrio, []);
+    assert.equal(dominioDoDefeito({ id: "X" }), undefined);
+    for (const ruim of [null, "texto", [], { regra: "" , registros: ["1"] }, { regra: "r" }, { regra: "r", registros: [] }, { regra: "r", registros: [1] }, { registros: ["1"] }])
+      assert.throws(() => dominioDoDefeito({ id: "X", dominio: ruim }), /fora do formato/, JSON.stringify(ruim));
+    const dirR = join(tmp, "trio-vistorias-dominio-ruim");
+    cpSync(dirV, dirR, { recursive: true });
+    gravarJson(dirR, "entradas/referencia.json", { ...refV, violations: refV.violations.map(v => v.id === "B-21" ? { ...v, dominio: { regra: "r" } } : v) });
+    assert.throws(() => prepararCampanha([dirR], opts13), /dominio do defeito B-21/);
+    assert.ok(!("dominio" in refDoLote(prepararCampanha([dirD], { ...opts13, politica: "1.2.0" })).defeitos.find(d => d.id === "B-21")!));
+    const dirE = join(tmp, "trio-vistorias-estado-ruim");
+    cpSync(dirV, dirE, { recursive: true });
+    gravarJson(dirE, "entradas/referencia.json", { ...refV, violations: refV.violations.map(v => v.id === "B-21" ? { ...v, state: "nao-declarado" } : v) });
+    assert.throws(() => prepararCampanha([dirE], opts13), /B-21 no estado nao-declarado/);
+  });
+  t("ingestão 1.3.0 da passada com paradas, registro e dominio: aceita sem mudança; vinculo B-21 credita B-21 (derivarClasse igual)", () => {
+    const filaD = join(tmp, "fila-dominio");
+    for (const [rel, x] of [...pD.arquivosDoJuiz, ...pD.arquivosInternos]) gravar(filaD, rel, x);
+    const loteTxt = pD.arquivosDoJuiz.get("lotes/lote-01.json")!, l = JSON.parse(loteTxt) as { cartoes: CartaoCego[] };
+    const chD = JSON.parse(pD.arquivosInternos.get("chave/fila-t3-chave.json")!) as { itens: { id: string; cardIdOriginal: string }[] };
+    const alvo = chD.itens.find(i => i.cardIdOriginal === "C-aaaa")!.id;
+    const respostas = l.cartoes.map(c => c.id === alvo
+      ? { id: c.id, verdadeFactual: "verdadeira", norma: { id: "citada", forca: "obrigatorio", aplicabilidade: "aplica", violada: "sim" }, vinculo: { spec: "B-21", relacao: "direta" },
+        sugestao: c.perguntas.includes("sugestao") ? { trataOFato: "sim", especificaDoSujeito: "sim", naoViolaNormaObrigatoria: "sim", qualidade: "valida" } : NAO_PERGUNTADO,
+        forcaDoVeredito: "medido", evidencias: ["MEDIDA", "OBS"], justificativa: "MEDIDA mostra o campo sem rótulo que o OBS descreve.", estadoAlcancado: "receita" }
+      : { id: c.id, verdadeFactual: "indeterminado",
+        norma: c.alegacao.regra === null ? { id: "nenhuma", forca: "nenhuma", aplicabilidade: NAO_PERGUNTADO, violada: NAO_PERGUNTADO } : { id: "citada", forca: "indeterminado", aplicabilidade: "incerta", violada: "incerto" },
+        vinculo: "indeterminado", sugestao: NAO_PERGUNTADO, forcaDoVeredito: "incerto", evidencias: ["MEDIDA"], justificativa: "MEDIDA não decidiu o fato neste teste sintético.", estadoAlcancado: "receita" });
+    gravarJson(filaD, "respostas/lote-01.json", { formato: FORMATO_RESPOSTAS_CAMPANHA_1_3, lote: "lote-01", loteSha256: sha(loteTxt), juiz: "teste sintético", respostas });
+    const r = ingerir(filaD); assert.deepEqual(r.erros, []);
+    const j = (r.julgamentos as { julgamentos: { id: string; derivado: { spec: string | null; classe: string } }[] }).julgamentos.find(x => x.id === alvo)!;
+    assert.equal(j.derivado.spec, "B-21");
+    const c = l.cartoes.find(x => x.id === alvo)!, it = chD.itens.find(i => i.id === alvo)!;
+    const resp = respostas.find(x => x.id === alvo)! as unknown as Resposta;
+    const d = derivarClasse(resp, contextoDe(c, it as never, refDoLote(pD).defeitos.map(x => x.id), "1.3.0"));
+    assert.deepEqual([j.derivado.classe, j.derivado.spec], [d.classe, d.spec], "a derivação é a de sempre");
   });
   await testesReferencias({ t, tmp, dir, valDir, aliasesAbs, prepararCampanha, cli });
 } finally { rmSync(tmp, { recursive: true, force: true }); }
