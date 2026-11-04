@@ -2,7 +2,7 @@
  * [D-156] Tabulação da leitura de campanha: specs achadas por braço em DUAS colunas, e cada uma por classe de spec.
  *
  *   npx tsx scripts/reanalise-nat74/e14-deteccao.ts --passada PASTA_DA_PASSADA [--julgamentos ARQ] --saida PASTA
- *       [--coluna-principal deteccao|fundamentada] [--sensibilidade-regra ADJ/adjudicacao/sensibilidade-regra.json]
+ *       [--analise DIR] [--coluna-principal deteccao|fundamentada] [--sensibilidade-regra ADJ/adjudicacao/sensibilidade-regra.json]
  *     → PASTA/deteccao.json + deteccao.md (recusa se já existirem: versão nova = arquivo novo)
  *
  * - **detecção**: o crédito elegível de detecção — `derivado.spec` com `violacao-pagina`/`violacao-origem-indeterminada` e
@@ -340,7 +340,7 @@ export function estadoDosBracos(runs: { id: string; braco: string }[], slots: { 
 if (process.argv[1] && /(?:^|[\\/])e14-deteccao\.ts$/.test(process.argv[1])) {
   const a = process.argv.slice(2), val = (k: string) => (a.includes(k) ? a[a.indexOf(k) + 1] : undefined);
   const passada = val("--passada"), saida = val("--saida");
-  if (!passada || !saida) { console.error("Uso: --passada PASTA [--julgamentos ARQ] --saida PASTA [--coluna-principal deteccao|fundamentada]"); process.exit(1); }
+  if (!passada || !saida) { console.error("Uso: --passada PASTA [--julgamentos ARQ] [--analise DIR] --saida PASTA [--coluna-principal deteccao|fundamentada] [--sensibilidade-regra ARQ]"); process.exit(1); }
   const jAbs = resolve(val("--julgamentos") ?? join(passada, "julgamentos.json"));
   for (const f of ["deteccao.json", "deteccao.md"]) if (existsSync(join(saida, f))) { console.error(`${join(saida, f)} já existe (versão nova = pasta nova)`); process.exit(1); }
   const ler = <T>(p: string): T => JSON.parse(readFileSync(p, "utf8").replace(/^﻿/, "")) as T;
@@ -365,7 +365,12 @@ if (process.argv[1] && /(?:^|[\\/])e14-deteccao\.ts$/.test(process.argv[1])) {
   // O rótulo da análise no manifesto é o nome da pasta (`analisar-<carimbo>`) e só ganha a pasta do trio quando os nomes
   // se repetem (e14-campanha). Com UM trio na passada (dev-366-b-01: p01/p02 fora por isolamento), o rótulo não traz
   // `pNN/`: procura-se a pasta única com esse nome um nível abaixo da campanha; mais de uma ou nenhuma → recusa.
-  let anal = join(dirname(resolve(passada)), a0.dir);
+  // `--analise DIR` (passada com UMA análise): a pasta da análise, quando o nome se repete em vários trios da campanha
+  // (p01/p02/p03 com o mesmo carimbo) e a busca abaixo acharia mais de uma; tem de terminar no rótulo do manifesto.
+  const analCli = val("--analise");
+  if (analCli && m.analises.length > 1) { console.error("--analise só vale para passada com uma análise"); process.exit(1); }
+  if (analCli && !resolve(analCli).replace(/[\/]+$/, "").endsWith(a0.dir)) { console.error(`--analise ${analCli} não é a análise do manifesto (${a0.dir})`); process.exit(1); }
+  let anal = analCli ? resolve(analCli) : join(dirname(resolve(passada)), a0.dir);
   if (!existsSync(anal)) {
     const base = dirname(resolve(passada));
     const achadas = readdirSync(base, { withFileTypes: true }).filter(e => e.isDirectory() && existsSync(join(base, e.name, a0.dir))).map(e => join(base, e.name, a0.dir));
