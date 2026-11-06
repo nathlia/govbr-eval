@@ -29,6 +29,29 @@ A base é a revisão `thesis-workspace/planejamento/atual/revisao-prompt-ab-2026
 Revisão, item 1 (o roteiro comum ensina o método): mantido. O procedimento de inspeção (árvore de
 acessibilidade, DOM, estilos, teclado, foco, nomes, papéis, mensagens) continua igual nos dois braços.
 
+## Continuação B2 da lista 3.7.3 (06/11/2026): template `860feacb…`
+
+O template atual explicita o tempo em segundos, calculado de `limites.tempoMinutos` pelo renderizador
+1.1.0: 30 minutos viram 1800 segundos; 40 viram 2400. O marcador novo `{{TEMPO_SEGUNDOS}}` é opcional
+para o renderizador: templates congelados que não o usam continuam renderizados byte a byte como antes,
+inclusive o texto de `{{LIMITES}}`. As entradas e o procedimento permanecem idênticos nos três braços.
+
+`inspection.clauses[].ref` pede explicitamente o identificador da cláusula recebida, nunca o id de um
+achado, pendência, grupo ou sessão. Esses últimos pertencem a candidatos/evidência. O contrato e o scorer
+não mudam, e o texto não promete validar automaticamente a origem de cada id declarado.
+
+Na chegada a cada estado, o agente pede pelo menos 20 000 caracteres de resposta **se a ferramenta
+permitir escolher esse limite**. Se o máximo permitido for menor, pede esse máximo e usa a continuação.
+O texto comum não ensina nomes de ferramentas ou parâmetros. Isso importa porque o scan aceita 20 000,
+mas outras consultas têm teto menor: não se deve induzir chamadas inválidas para aplicar um mínimo
+universal. Sem essa capacidade, vale o procedimento existente de continuar as respostas cortadas.
+
+Esta alteração exige novo hash de template nas campanhas futuras e reexportação do pacote de telas;
+não altera templates/campanhas já congelados. Nenhuma campanha foi executada para validar esta fatia.
+Validação determinística: `npm run test:avaliar-tela`, `npm run lint:skills`, `npm run lint:protocol`;
+paridade dos três braços, segundos derivados de entradas diferentes e compatibilidade de template antigo.
+O teto de concisão da skill passa de 1600 a 1700 palavras para estas instruções de procedimento.
+
 ## Versão da lista única 3.7.2 (B1–B4, 2026-11-04): template `054a183f…`
 
 A versão da skill é o sha256 do template (`templateSha256`, quebras em LF), que cada campanha congela em

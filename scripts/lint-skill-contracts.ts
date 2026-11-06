@@ -86,7 +86,8 @@ const avaliarWords = words(avaliar);
 // iguais nos três braços e só procedimento (nenhum id nem regra); meta 1350 → 1400.
 // Lista única 3.7.2 (B1–B4): registro de cada situação, estado lido = estado medido, `clauses` (procedimento + contrato +
 // exemplo), comparação entre instâncias e encerramento pelo tempo; ~200 palavras, iguais nos três braços; meta 1400 → 1600.
-if (avaliarWords < 800 || avaliarWords > 1600) failures.push(`avaliar-tela: ${avaliarWords} palavras; meta 800–1600`);
+// Lista única 3.7.3 B2: orçamento de resposta condicional e tipo do identificador da cláusula, sem conhecimento normativo.
+if (avaliarWords < 800 || avaliarWords > 1700) failures.push(`avaliar-tela: ${avaliarWords} palavras; meta 800–1700`);
 
 const screenWords = words(shared) + words(screen);
 // Oráculo 3.0.0 (NAT-99): continuação por cursor ou id + ação da ferramenta como sugestão, ~18 palavras; meta 800 → 820.

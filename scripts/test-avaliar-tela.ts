@@ -142,6 +142,36 @@ test("texto renderizado: sem frontmatter nem marcador; hash do template independ
   assert.throws(() => renderTaskPrompt(template.replace("{{LIMITES}}", ""), EXAMPLE_INPUTS), /ausentes/);
 });
 
+test("B2: segundos vêm das entradas; template antigo conserva a renderização dos limites", () => {
+  for (const minutes of [1, 30, 40]) {
+    const inputs = { ...clone(EXAMPLE_INPUTS), limites: { tempoMinutos: minutes, maxTurnos: null } };
+    const rendered = renderTaskPrompt(template, inputs);
+    assert.ok(rendered.prompt.includes(`Tempo máximo: ${minutes * 60} segundos desde o início.`));
+    assert.ok(rendered.prompt.includes(`até ${minutes} minutos.`));
+    const prompts = (["sem", "ferramentas", "com"] as const).map((arm) => renderRun(template, run(arm, inputs)).prompt);
+    assert.equal(new Set(prompts).size, 1);
+  }
+  // A nova substituição é opt-in: templates congelados sem o marcador continuam aceitos e sem bytes novos.
+  const oldTemplate = PLACEHOLDERS.map((p) => `{{${p}}}`).join("\n");
+  assert.equal(renderTaskPrompt(oldTemplate, EXAMPLE_INPUTS).prompt, [
+    EXAMPLE_INPUTS.url, EXAMPLE_INPUTS.escopo, "somente a janela inicial (1280×900).",
+    "não há; o escopo cobre somente a janela inicial.", EXAMPLE_INPUTS.envio.origem,
+    "`/api/submit`", "até 30 minutos.",
+  ].join("\n"));
+  const withTurns = renderTaskPrompt(template, VISTORIAS_LIKE).prompt;
+  assert.ok(withTurns.includes("até 40 minutos e 200 turnos."));
+  assert.ok(withTurns.includes("Tempo máximo: 2400 segundos"));
+});
+
+test("B2: orçamento usa só capacidade disponível e cláusulas não recebem ids de candidatos", () => {
+  const body = stripFrontmatter(template);
+  assert.match(body, /se a ferramenta permitir escolher o limite de resposta/);
+  assert.match(body, /20 000 caracteres; se o máximo permitido for menor, use esse máximo e a continuação/);
+  assert.match(body, /identificador da cláusula, nunca de achado, pendência, grupo ou sessão/);
+  assert.match(body, /Achados e pendências vão em `candidates` e `evidence`/);
+  assert.deepEqual(scanForbidden(body), []);
+});
+
 const fenced = [...normalizeNewlines(template).matchAll(/```json\n([\s\S]*?)\n```/g)].map((m) => m[1]);
 
 test("exemplo JSON da skill: validateFlowReport e findings.v2 (com registro de inspeção), com rule null", () => {

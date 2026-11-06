@@ -28,7 +28,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-export const RENDERER_VERSION = "render-task-prompt-1.0.0";
+export const RENDERER_VERSION = "render-task-prompt-1.1.0";
 export const SKILL_NAME = "avaliar-tela";
 export const SKILL_PATH = join(dirname(fileURLToPath(import.meta.url)), "..", "skills", SKILL_NAME, "SKILL.md");
 
@@ -136,6 +136,9 @@ export function scanForbidden(text: string): VocabularyHit[] {
 // ───────────────────────────────────────────────────────────────── template
 
 export const PLACEHOLDERS = ["URL", "ESCOPO", "LARGURAS", "MEIO_LARGURAS", "ORIGEM_ENVIO", "CAMINHO_ENVIO", "LIMITES"] as const;
+/** Novos templates podem explicitar segundos; os antigos conservam o texto e hash renderizados. */
+export const OPTIONAL_PLACEHOLDERS = ["TEMPO_SEGUNDOS"] as const;
+const ALL_PLACEHOLDERS = [...PLACEHOLDERS, ...OPTIONAL_PLACEHOLDERS] as const;
 const PLACEHOLDER = /\{\{([A-Z_]+)\}\}/g;
 
 /** Retira o frontmatter (metadado de carregador de skill, não instrução). */
@@ -181,7 +184,7 @@ export function validateTaskInputs(value: unknown): string[] {
   return errors;
 }
 
-function formatInputs(t: TaskInputs): Record<(typeof PLACEHOLDERS)[number], string> {
+function formatInputs(t: TaskInputs): Record<(typeof ALL_PLACEHOLDERS)[number], string> {
   const fmt = (w: Viewport): string => `${w.width}×${w.height}`;
   const [first, ...rest] = t.larguras;
   return {
@@ -194,6 +197,7 @@ function formatInputs(t: TaskInputs): Record<(typeof PLACEHOLDERS)[number], stri
     ORIGEM_ENVIO: t.envio.origem,
     CAMINHO_ENVIO: `\`${t.envio.caminho}\``,
     LIMITES: `até ${t.limites.tempoMinutos} minutos${t.limites.maxTurnos === null ? "" : ` e ${t.limites.maxTurnos} turnos`}.`,
+    TEMPO_SEGUNDOS: String(t.limites.tempoMinutos * 60),
   };
 }
 
@@ -204,13 +208,13 @@ export function renderTaskPrompt(template: string, inputs: TaskInputs): Rendered
   const normalized = normalizeNewlines(template);
   const body = stripFrontmatter(normalized);
   const found = new Set([...body.matchAll(PLACEHOLDER)].map((m) => m[1]));
-  const unknown = [...found].filter((p) => !(PLACEHOLDERS as readonly string[]).includes(p));
+  const unknown = [...found].filter((p) => !(ALL_PLACEHOLDERS as readonly string[]).includes(p));
   const missing = PLACEHOLDERS.filter((p) => !found.has(p));
   if (unknown.length || missing.length) throw new Error(`template: marcadores desconhecidos ${JSON.stringify(unknown)}, ausentes ${JSON.stringify(missing)}`);
   const values = formatInputs(inputs);
   const valueHits = Object.entries(values).flatMap(([k, v]) => scanForbidden(v).map((h) => `${k}: [${h.id}] ${h.text}`));
   if (valueHits.length) throw new Error(`entradas com vocabulário proibido:\n  ${valueHits.join("\n  ")}`);
-  const prompt = body.replace(PLACEHOLDER, (_, name: (typeof PLACEHOLDERS)[number]) => values[name]);
+  const prompt = body.replace(PLACEHOLDER, (_, name: (typeof ALL_PLACEHOLDERS)[number]) => values[name]);
   if (PLACEHOLDER.test(prompt)) throw new Error("marcador restante depois da substituição");
   return {
     prompt,

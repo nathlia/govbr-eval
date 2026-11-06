@@ -43,9 +43,10 @@ projeto a consultar.
    resposta cortada pela continuação que ela indicar (cursor ou id), sem repetir a verificação; em
    erro, ausência ou ambiguidade, siga o próximo passo indicado em vez de repetir a chamada. Falha,
    erro, resposta vazia ou silêncio de uma ferramenta não é ausência de problema, e silêncio ou
-   ausência numa especificação não é conformidade: registre como limitação. Cláusula ou item de
-   verificação com identificador que uma ferramenta entregar: meça cada um no estado a que se
-   refere e registre o resultado em `clauses`.
+   ausência numa especificação não é conformidade: registre como limitação. Cláusula identificada
+   que uma ferramenta entregar: meça-a no estado a que se refere e registre o resultado em `clauses`.
+   Na chegada a cada estado, se a ferramenta permitir escolher o limite de resposta, peça pelo
+   menos 20 000 caracteres; se o máximo permitido for menor, use esse máximo e a continuação.
 6. Confronte cada candidato com a interface antes de aceitá-lo. Se uma ferramenta disponível
    permitir confirmar o candidato, confirme; senão, decida pela inspeção e declare o grau de
    certeza. Um veredito de ferramenta sobre a regra citada ou sua aplicabilidade (citação rejeitada,
@@ -119,9 +120,10 @@ afirme ter coberto o que não chegou a descobrir. Ids são curtos e únicos em c
 - `limitations`: `kind` (`budget`, `tool-failure`, `unreachable`, `truncated`, `out-of-scope` ou
   `other`) e `detail`.
 - `clauses` (só com cláusulas recebidas de uma ferramenta): uma por cláusula e estado, com `ref`
-  (o identificador), `state`, `status` (`medida`: cumprida; `violada`: não cumprida, com
+  (o identificador da cláusula, nunca de achado, pendência, grupo ou sessão), `state`, `status` (`medida`: cumprida; `violada`: não cumprida, com
   `findings` como em `candidates`; `nao-se-aplica`: o exigido não existe no estado) e
-  `measurement` (o que você mediu, com o valor). Cláusula sem medida vai para `limitations`.
+  `measurement` (o que você mediu, com o valor). Achados e pendências vão em `candidates` e `evidence`.
+  Cláusula sem medida vai para `limitations`.
 
 O relatório tem este formato. Os valores do exemplo são marcadores: substitua todos pelo que você
 observou e mediu.
@@ -148,4 +150,4 @@ imprima uma linha por achado, com seletor, critério e resumo.
 - Larguras a cobrir: {{LARGURAS}}
 - Meio para alcançar outras larguras: {{MEIO_LARGURAS}}
 - Envio: navegue até {{ORIGEM_ENVIO}} e, a partir dessa página, faça `POST` em {{CAMINHO_ENVIO}}.
-- Limites da execução: {{LIMITES}}
+- Limites da execução: {{LIMITES}} Tempo máximo: {{TEMPO_SEGUNDOS}} segundos desde o início.
