@@ -19,7 +19,8 @@ import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { CONTRACTS_DIR, type Findings, type FindingsV2, type InspectionLedger } from "../contracts/index";
-import { coletorAceitaClausulas, collectorFindingsContract, skillPedeClausulas } from "../runner/run-once";
+import { coletorAceitaClausulas, collectorFindingsContract, skillPedeClausulas, coletorConfereRotas } from "../runner/run-once";
+import { mixedRouteErrors, routeKey, ROUTE_GUARD_VERSION } from "../runner/container/route-guard.mjs";
 import { collectorInspectionRevisionOf } from "../runner/build-images";
 import { INSPECTION_CLAUSES_REVISION } from "../contracts/index";
 import { ROOT } from "./adjudication";
@@ -42,12 +43,13 @@ const LEDGER: InspectionLedger = v2Ex.report.inspection!;
 
 const freePort = () => new Promise<number>((ok) => { const s = createServer(); s.listen(0, "127.0.0.1", () => { const p = (s.address() as { port: number }).port; s.close(() => ok(p)); }); });
 
-async function withCollector(contract: string | null, fn: (post: (body: unknown) => Promise<{ status: number; body: { ok: boolean; errors?: string[] } }>, out: string) => Promise<void>) {
+async function withCollector(contract: string | null, fn: (post: (body: unknown) => Promise<{ status: number; body: { ok: boolean; errors?: unknown[] } }>, out: string) => Promise<void>, routeContext?: string) {
   const port = await freePort();
   const out = mkdtempSync(join(TMP, "coletor-"));
   const env: NodeJS.ProcessEnv = { ...process.env, COLLECTOR_RUN_ID: "fixture-run-01", COLLECTOR_CAMPAIGN_ID: "fixture-campanha-01", COLLECTOR_FIXTURE: "1",
     COLLECTOR_OUT: out, COLLECTOR_PORT: String(port), COLLECTOR_SCHEMAS: CONTRACTS_DIR };
   if (contract) env.COLLECTOR_FINDINGS_CONTRACT = contract; else delete env.COLLECTOR_FINDINGS_CONTRACT;
+  if (routeContext) env.COLLECTOR_ROUTE_CONTEXT = routeContext; else delete env.COLLECTOR_ROUTE_CONTEXT;
   const child: ChildProcess = spawn(process.execPath, [join(ROOT, "runner", "container", "collector.mjs")], { env, stdio: ["ignore", "pipe", "pipe"] });
   try {
     await new Promise<void>((ok, fail) => {
@@ -371,6 +373,102 @@ function evento(server: "playwright" | "oracle", tool: string, args: string, res
 }
 const SNAPSHOT = "### Page\n- Page URL: http://screens:3300/fixture.html\n### Snapshot\n```yaml\n- generic [ref=e3]:\n  - dialog \"Fixture\" [ref=e12]:\n    - button \"Fechar\" [ref=e123]\n```";
 const SCAN = "{\n  \"url\": \"http://screens:3300/fixture.html\",\n  \"scanId\": \"S-page-001\",\n  \"stateFingerprint\": \"sha256:33e6c348\"\n}";
+
+function routeContext(events: string[]): string {
+  const dir = mkdtempSync(join(TMP, "rotas-"));
+  writeFileSync(join(dir, "tool-events.ndjson"), events.join("\n") + "\n");
+  return dir;
+}
+const scanEvent = (scan: string, url: string, extra: Record<string, unknown> = {}, args: Record<string, unknown> = {}) =>
+  evento("oracle", "scan_page", JSON.stringify(args), JSON.stringify({ kind: "scan", scanId: scan, url, state: { observed: { url } }, ...extra }));
+const routeReport = (...refs: string[]) => ({ findings: [{ evidence: refs }] });
+
+await test("B1: rota segue sessão do oráculo: query/filtro não muda rota, fragmento SPA muda", () => {
+  assert.equal(routeKey("HTTP://SCREENS:3300/a?q=1#tab"), "http://screens:3300/a");
+  assert.equal(routeKey("http://screens:3300/a?q=1"), routeKey("http://screens:3300/a?q=2"));
+  assert.equal(routeKey("http://screens:3300/a"), routeKey("http://screens:3300/a/"));
+  assert.notEqual(routeKey("http://screens:3300/#/a"), routeKey("http://screens:3300/#/b"));
+  assert.equal(routeKey("http://screens:3300/#!/a?filter=x"), "http://screens:3300/#!/a");
+  assert.equal(routeKey("file:///out/findings.json"), null);
+});
+
+await test("B1: coletor recusa mistura antes de aceitar, preserva recusa e aceita reenvio corrigido", async () => {
+  const dir = routeContext([scanEvent("S-one", "http://screens:3300/a"), scanEvent("S-two", "http://screens:3300/b")]);
+  await withCollector("findings.v2", async (post, out) => {
+    const r = report();
+    r.findings = [{ ...clone(v2Ex.report.findings[0]), evidence: ["S-one", "S-two"] }];
+    const refused = await post(r);
+    assert.equal(refused.status, 400);
+    assert.ok(JSON.stringify(refused.body).includes("mixed-routes"));
+    assert.equal(existsSync(join(out, "findings.json")), false);
+    assert.ok(readFileSync(join(out, "refused/001.json"), "utf8").includes("S-two"));
+    r.findings[0].evidence = ["S-one"];
+    assert.equal((await post(r)).status, 200);
+    assert.deepEqual(readJson<FindingsV2>(join(out, "findings.json")).report.findings[0].evidence, ["S-one"]);
+  }, dir);
+});
+
+await test("B1: estados/filtros da mesma rota passam; rota SPA diferente conflita; norma não vincula rota", () => {
+  const dir = routeContext([
+    scanEvent("S-one", "http://screens:3300/a?q=1#one"), scanEvent("S-two", "http://screens:3300/a?q=1#two"),
+    scanEvent("S-three", "http://screens:3300/a?q=2"), scanEvent("S-spa", "http://screens:3300/a#/other"),
+    evento("oracle", "get_ds_rules", "{}", JSON.stringify({ scanId: "normative-ref", url: "http://screens:3300/other" })),
+  ]);
+  assert.deepEqual(mixedRouteErrors(routeReport("S-one", "S-two", "normative-ref"), dir).errors, []);
+  assert.deepEqual(mixedRouteErrors(routeReport("S-one", "S-three"), dir).errors, []);
+  assert.equal(mixedRouteErrors(routeReport("S-one", "S-spa"), dir).errors.length, 1);
+  assert.deepEqual(mixedRouteErrors(routeReport("S-one-extended", "S-three"), dir).errors, []);
+});
+
+await test("B1: só ids estruturados próprios são vinculados; colisão fica ambígua", () => {
+  const dir = routeContext([
+    scanEvent("S-one", "http://screens:3300/a", { findings: [{ id: "F-one", element: { page: "http://screens:3300/a" } }],
+      observations: [{ pendingId: "P-one" }], families: [{ familyId: "G-shared", memberIds: ["F-member"] }],
+      alsoIn: [{ scanId: "S-two", route: "http://screens:3300/b" }] }),
+    scanEvent("S-two", "http://screens:3300/b", { families: [{ familyId: "G-shared", memberIds: ["F-two"] }] }),
+  ]);
+  for (const first of ["F-one", "P-one", "F-member"]) assert.equal(mixedRouteErrors(routeReport(first, "F-two"), dir).errors.length, 1);
+  assert.deepEqual(mixedRouteErrors(routeReport("G-shared", "S-one", "unknown"), dir).errors, []);
+  assert.equal(mixedRouteErrors(routeReport("S-one", "S-two"), dir).errors.length, 1, "alsoIn não contamina S-two");
+});
+
+await test("B1: payload completo exige hash/tamanho e caminho contido, sem ler caminho externo", () => {
+  const original = JSON.parse(scanEvent("S-one", "http://screens:3300/a"));
+  const bytes = Buffer.from(original.result.text);
+  original.result = { text: "{", truncated: true, payload: { status: "complete", path: "payloads/full.txt", bytes: bytes.length, sha256: sha(bytes) } };
+  const other = scanEvent("S-two", "http://screens:3300/b");
+  const dir = routeContext([JSON.stringify(original), other]);
+  mkdirSync(join(dir, "payloads")); writeFileSync(join(dir, "payloads/full.txt"), bytes);
+  assert.equal(mixedRouteErrors(routeReport("S-one", "S-two"), dir).errors.length, 1);
+  writeFileSync(join(dir, "payloads/full.txt"), "alterado");
+  assert.deepEqual(mixedRouteErrors(routeReport("S-one", "S-two"), dir).errors, []);
+  original.result.payload.path = "../outside.txt";
+  writeFileSync(join(dir, "tool-events.ndjson"), [JSON.stringify(original), other].join("\n"));
+  assert.deepEqual(mixedRouteErrors(routeReport("S-one", "S-two"), dir).errors, []);
+});
+
+await test("B1: navegação usa URL final medida; URL inicial sem observação não decide rota", () => {
+  const args = { actions: [{ action: "navigate", url: "http://screens:3300/b" }] };
+  const dir = routeContext([
+    scanEvent("S-final", "http://screens:3300/a", { state: { observed: { url: "http://screens:3300/b" } } }, args),
+    scanEvent("S-incomplete", "http://screens:3300/a", { state: undefined }, args),
+    scanEvent("S-one", "http://screens:3300/a"),
+  ]);
+  assert.equal(mixedRouteErrors(routeReport("S-one", "S-final"), dir).errors.length, 1);
+  assert.deepEqual(mixedRouteErrors(routeReport("S-one", "S-incomplete"), dir).errors, []);
+});
+
+await test("B1: contexto ausente, erro e payload incompleto não inventam conflito; capacidade antiga não afirma gate", () => {
+  assert.equal(mixedRouteErrors(routeReport("S-one", "S-two")).checked, false);
+  const bad = JSON.parse(scanEvent("S-two", "http://screens:3300/b")); bad.result.truncated = true;
+  const dir = routeContext([scanEvent("S-one", "http://screens:3300/a"), JSON.stringify(bad),
+    evento("oracle", "scan_page", "{}", JSON.stringify({ scanId: "S-error", url: "http://screens:3300/b" }), { isError: true })]);
+  const result = mixedRouteErrors(routeReport("S-one", "S-two", "S-error"), dir);
+  assert.deepEqual(result.errors, []); assert.ok(result.unavailable > 0);
+  assert.equal(coletorConfereRotas(undefined), false);
+  assert.equal(coletorConfereRotas({ "govbr.collector.route-guard": "old" }), false);
+  assert.equal(coletorConfereRotas({ "govbr.collector.route-guard": ROUTE_GUARD_VERSION }), true);
+});
 
 function ledgerCom(originRef: string, evidence: string[]): FindingsV2 {
   const f = clone(v2Ex);

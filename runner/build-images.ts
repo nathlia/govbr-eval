@@ -20,6 +20,7 @@
  */
 import { execFileSync } from "node:child_process";
 import { cpSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { ROUTE_GUARD_VERSION } from "./container/route-guard.mjs";
 import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -135,6 +136,7 @@ function stage(name: Name, telasDir: string, validatorDir: string): string {
     case "collector":
       for (const f of ["package.json", "package-lock.json"]) cpSync(join(img, f), join(ctx, f));
       cpSync(join(container, "collector.mjs"), join(ctx, "collector.mjs"));
+      cpSync(join(container, "route-guard.mjs"), join(ctx, "route-guard.mjs"));
       mkdirSync(join(ctx, "schemas"));
       for (const f of COLLECTOR_CONTRACT_FILES) cpSync(join(EVAL_ROOT, "contracts", f), join(ctx, "schemas", f));
       break;
@@ -216,6 +218,7 @@ async function main(): Promise<void> {
     collector: { "govbr.collector.schemas": sha256(readFileSync(join(EVAL_ROOT, "contracts", "findings.v1.schema.json"))),
       "govbr.collector.findings-contracts": "findings.v1,findings.v2",
       "govbr.collector.inspection-revision": collectorInspectionRevisionOf(),
+      "govbr.collector.route-guard": ROUTE_GUARD_VERSION,
       "govbr.collector.contracts-sha256": sha256(COLLECTOR_CONTRACT_FILES.map((f) => `${f}:${sha256(readFileSync(join(EVAL_ROOT, "contracts", f)))}`).join("\n")) },
     egress: {},
     // `data-sha256` = data/ do validador no host, inteiro (o que o preflight do run-once recalcula e compara);

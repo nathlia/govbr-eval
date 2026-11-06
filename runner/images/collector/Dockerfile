@@ -4,6 +4,7 @@ WORKDIR /opt/collector
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev && rm -rf /root/.npm
 COPY collector.mjs ./
+COPY route-guard.mjs ./
 COPY schemas/ ./schemas/
 USER 10001:10001
 EXPOSE 8080

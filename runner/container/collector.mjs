@@ -26,6 +26,7 @@ import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } fr
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
+import { mixedRouteErrors, ROUTE_GUARD_VERSION } from "./route-guard.mjs";
 
 const RUN_ID = process.env.COLLECTOR_RUN_ID ?? "";
 const CAMPAIGN_ID = process.env.COLLECTOR_CAMPAIGN_ID ?? "";
@@ -45,6 +46,7 @@ if (CONTRACT !== "findings.v1" && CONTRACT !== "findings.v2") {
   process.exit(2);
 }
 const V2 = CONTRACT === "findings.v2";
+const ROUTE_CONTEXT = process.env.COLLECTOR_ROUTE_CONTEXT;
 
 const ajv = new Ajv2020({ allErrors: true, strict: true, strictTypes: false, strictRequired: false, allowUnionTypes: true });
 const SCHEMA_FILES = ["common.v1.schema.json", "findings.v1.schema.json", ...(V2 ? ["inspection.v1.schema.json", "findings.v2.schema.json"] : [])];
@@ -199,6 +201,12 @@ createServer(async (req, res) => {
     event({ ...base, status: 400, reason: "contrato", refused: file });
     return send(res, 400, { ok: false, errors });
   }
+  const routeCheck = mixedRouteErrors(report, ROUTE_CONTEXT);
+  if (routeCheck.errors.length) {
+    const file = refuse(`rotas: ${JSON.stringify(routeCheck.errors)}`, body);
+    event({ ...base, status: 400, reason: "rotas-misturadas", refused: file, routeGuard: ROUTE_GUARD_VERSION });
+    return send(res, 400, { ok: false, errors: routeCheck.errors });
+  }
   if (existsSync(FINDINGS)) {
     event({ ...base, status: 409, reason: "arquivo-existente" });
     return send(res, 409, { ok: false, error: "já existe relatório" });
@@ -207,6 +215,7 @@ createServer(async (req, res) => {
   writeFileSync(join(OUT, "accepted-raw.txt"), body, { flag: "wx" });
   accepted = { sha, receipt };
   event({ ...base, status: 200, reason: "aceito", receipt, contract: CONTRACT, findings: Array.isArray(report.findings) ? report.findings.length : null,
+    ...(ROUTE_CONTEXT ? { routeGuard: { version: ROUTE_GUARD_VERSION, checked: routeCheck.checked, unavailable: routeCheck.unavailable } } : {}),
     ...(V2 ? { inspection: envelope.inspectionStatus } : {}) });
   return send(res, 200, { ok: true, receipt });
 }).listen(PORT, "0.0.0.0", () => {

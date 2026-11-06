@@ -49,6 +49,7 @@ import {
   claudeCommand, clientFailure, oracleAdherence, parseClientStream, stubRoteiro, summarizeStub, type StubRoteiro,
 } from "./cliente-claude";
 import { generateStubTls } from "./container/tls-cert.mjs";
+import { ROUTE_GUARD_VERSION } from "./container/route-guard.mjs";
 import { renderRun, SKILL_PATH, type TaskInputs } from "../scripts/render-task-prompt";
 import {
   DEFAULT_TELAS_DIR, DEFAULT_VALIDATOR_DIR, EVAL_ROOT, ISOLATION_POLICY_VERSION, RUNNER_DIR, RUNNER_VERSION, TCC_ROOT,
@@ -74,6 +75,10 @@ export function collectorFindingsContract(labels: Record<string, string> | undef
 export function skillPedeClausulas(skill: string): boolean { return skill.includes("`clauses`"); }
 export function coletorAceitaClausulas(labels: Record<string, string> | undefined): boolean {
   return labels?.["govbr.collector.inspection-revision"] === INSPECTION_CLAUSES_REVISION;
+}
+/** Imagem histórica sem capacidade declarada conserva o comportamento anterior. */
+export function coletorConfereRotas(labels: Record<string, string> | undefined): boolean {
+  return labels?.["govbr.collector.route-guard"] === ROUTE_GUARD_VERSION;
 }
 
 /**
@@ -485,7 +490,8 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       };
       const egressImage = L.images.egress.id;
       create("screens", L.images.screens.id, [[net.site, "screens"]], [], [], null);
-      create("collector", L.images.collector.id, [[net.site, "collector"]], ["-e", `COLLECTOR_RUN_ID=${runId}`, "-e", `COLLECTOR_CAMPAIGN_ID=${opts.campanha}`, "-e", `COLLECTOR_FIXTURE=${fixture ? "1" : "0"}`, "-e", `COLLECTOR_FINDINGS_CONTRACT=${findingsContract}`], [], "collector");
+      create("collector", L.images.collector.id, [[net.site, "collector"]], ["-e", `COLLECTOR_RUN_ID=${runId}`, "-e", `COLLECTOR_CAMPAIGN_ID=${opts.campanha}`, "-e", `COLLECTOR_FIXTURE=${fixture ? "1" : "0"}`, "-e", `COLLECTOR_FINDINGS_CONTRACT=${findingsContract}`,
+        ...(coletorConfereRotas(L.images.collector.labels) ? ["--mount", `type=bind,src=${join(work, "oracle")},dst=/evidence/oracle,readonly`, "-e", "COLLECTOR_ROUTE_CONTEXT=/evidence/oracle"] : [])], [], "collector");
       create("egress-site", egressImage, [[net.site, "egress-site"], [net.browse, "egress-site"]],
         ["-e", "EGRESS_NAME=egress-site", "-e", `EGRESS_ALLOW_HTTP=${SITE_ALLOW.join(",")}`, "-e", "EGRESS_ALLOW_CONNECT=", "-e", "EGRESS_LOG=/out/egress.ndjson"], [], "egress-site");
       create("egress-provider", egressImage, [[net.egress, "egress"], [net.up, "egress-up"]],
