@@ -111,7 +111,13 @@ foi construída de um clone limpo no commit `e15b1b1` (3.4.1; tools/list igual a
 `data/`), o mesmo estado que o checkout por SHA do CI produz: `GOVBR_VALIDATOR_DIR=<clone>` no build e no
 `run-once`/testes. O checkout de trabalho do validator só serve ao preflight se o `dist/` e o `data/` dele
 forem os do commit (sem arquivos de builds antigos nem `data/models/`).
-Rodada 3.7.3 (lock de 2026-11-09T14:52): `govbr-runner-oracle:3.7.3-402b76ee5d0b` (`sha256:e1e9ba1a…`,
+Rodada 3.7.4 (lock de 2026-11-09T16:34): `govbr-runner-oracle:3.7.4-27fc05c49137` (`sha256:cb883c93…`,
+commit `844b43c`, dist `27fc05c49137…`, `dataSha256` `b4b2eceb…` igual ao da 3.7.3; novo: os consertos do teste à mão
+da 3.7.3, D-185; tools/list e instructions iguais nos seis perfis, pins `TOOLS_LIST_SHA256_3_7_3` seguem: evaluation
+`04ae1437…`, knowledge-free `5b9c59aa…`, conferidos dentro da imagem), construída de uma worktree limpa
+(`.tmp-eval/validator-374`, `npm ci` + `tsc`; o mesmo `dist` do checkout de trabalho no commit); agente, tela, coletor e
+egress com os mesmos ids da 3.7.3 (tela `sha256:e6ee88df…`, coletor `sha256:1d0f82bb…`). Inventários do DOM intocados.
+Antes dela, a da rodada 3.7.3 (lock de 2026-11-09T14:52): `govbr-runner-oracle:3.7.3-402b76ee5d0b` (`sha256:e1e9ba1a…`,
 commit `376d54f`, dist `402b76ee5d0b…`, `dataSha256` `b4b2eceb…`, novo: emenda-2 da base e checklists; tools/list de
 evaluation e knowledge-free mudam pelo esquema comum de ações, pins `TOOLS_LIST_SHA256_3_7_3`: evaluation `04ae1437…`,
 knowledge-free `5b9c59aa…`, conferidos dentro da imagem), construída de uma worktree limpa (`.tmp-eval/validator-373`,

@@ -24,7 +24,7 @@ export const temOraculo = (b: Braco): boolean => PERFIL_DO_BRACO[b] !== null;
 /**
  * Ferramentas que cada perfil registra, em ordem alfabética, e o sha256 de `JSON.stringify(tools)` do
  * tools/list (cliente MCP 1.29.0, o mesmo da ponte). Os pins VIGENTES (só para campanhas NOVAS) são os da 3.7.3
- * (TOOLS_LIST_SHA256_3_7_3, acima da tabela da 3.6.1); antes, os do validator 3.6.1 (3e0897b), medidos em 2026-10-31; vigentes também na 3.6.2 (3801924), que não muda tools/list nem instructions contra o dist/ construído de 3e0897b com o
+ * (TOOLS_LIST_SHA256_3_7_3, acima da tabela da 3.6.1), vigentes também na 3.7.4 (844b43c); antes, os do validator 3.6.1 (3e0897b), medidos em 2026-10-31; vigentes também na 3.6.2 (3801924), que não muda tools/list nem instructions contra o dist/ construído de 3e0897b com o
  * SDK 1.29.0 da ponte (stdio, GOVBR_VALIDATOR_TOOL_PROFILE=<perfil>, sem GOVBR_RETRIEVAL_MODE = busca
  * léxica padrão, sha256 de JSON.stringify(tools)) e de novo dentro da imagem do oráculo travada.
  * Da 3.6.0 para a 3.6.1 mudaram evaluation, full, normative e deterministic; knowledge-free e evidence
@@ -44,6 +44,9 @@ export const temOraculo = (b: Braco): boolean => PERFIL_DO_BRACO[b] !== null;
  * 1.29.0 da ponte (evaluation e knowledge-free) e conferidos em memória nos seis perfis. Da 3.7.2 para a 3.7.3 mudam
  * evaluation, knowledge-free, full, normative e deterministic (esquema comum de ações scan/verify com upload/drop, D-181;
  * checklist de página, D-175); evidence fica igual. A 3.7.2 usava os pins da 3.6.1 abaixo.
+ * Vigentes também na 3.7.4 (844b43c, consertos do teste à mão da 3.7.3, D-185): tools/list e instructions iguais nos seis
+ * perfis (medidos em 2026-11-09 pelo stdio com o SDK 1.29.0 contra o dist/ construído de 844b43c) e de novo dentro da
+ * imagem do oráculo travada (evaluation e knowledge-free).
  */
 export const TOOLS_LIST_SHA256_3_7_3 = {
   "knowledge-free": "5b9c59aaa490f5de2a4a497eda8a2e3dbedd25b2a8288fed8eb049f7233d40dc",
