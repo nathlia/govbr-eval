@@ -107,7 +107,9 @@ export function extrairFila(raiz = DERIVADO, inv: Inventario = inventarioDeAtomo
 interface Kb { id: string; title: string; normalizedRule: string; force: string }
 const FORCA_KB: Record<string, string> = { required: "obrigatorio", recommended: "recomendado", optional: "opcional", example: "exemplo" };
 
-export interface Normas { resolver: (id: string | null) => NormaVista | null; fontes: Record<string, string> }
+export interface Normas { resolver: (id: string | null) => NormaVista | null; fontes: Record<string, string>;
+  /** [1.4.5] Forças declaradas na base da campanha (ordenadas); só `normasDaCampanha`. O LEIAME imprime por elas as linhas condicionais. */
+  forcas?: string[] }
 
 export function normas(): Normas {
   const val = join(TCC, "govbr-ds-validator", "data");
@@ -152,7 +154,7 @@ export function normas(): Normas {
 /** Força declarada na base literal (validator ≥ 2.12.0, D-124) → rótulo da vista cega. Informativo: o juiz decide `norma.forca`. */
 const FORCA_LITERAL: Record<string, string> = { required: "obrigatorio", prohibited: "obrigatorio (proibição)", recommended: "recomendado",
   discouraged: "recomendado (desaconselha)", permitted: "permitido (opcional)", optional: "opcional", example: "exemplo", informative: "informativo",
-  unclear: "não declarada" };
+  unclear: "não declarada", especificacao: "especificação (descreve o componente)" };
 
 /**
  * [M, 1.2.0; decisão do assistente com registro] Correspondência FIXA força da base literal → vocabulário de `norma.forca`
@@ -161,14 +163,25 @@ const FORCA_LITERAL: Record<string, string> = { required: "obrigatorio", prohibi
  * o juiz continua respondendo `norma.forca`, e a classe sai pela mesma derivação. `null` = sem correspondência (o juiz
  * decide pela leitura do texto; não se adivinha): `informative` (texto descritivo, não é regra) e `unclear` (a base não
  * declara força).
+ * [1.4.5, D-167, validator 3.7.3] `especificacao`: linha da tabela de especificação do componente ou frase descritiva dele
+ * ("descreve o componente; não obriga nem proíbe", src/responses/verify.ts do validador) → `null`, como `informative`: não
+ * há força no vocabulário do juiz, e a derivação a trata como sem força (nunca `nenhuma`, que deriva erro normativo).
  */
 export const FORCA_NO_VOCABULARIO: Readonly<Record<string, string | null>> = {
   required: "obrigatorio", prohibited: "obrigatorio", recommended: "recomendado", discouraged: "recomendado",
-  permitted: "nenhuma", optional: "nenhuma", example: "exemplo", informative: null, unclear: null,
+  permitted: "nenhuma", optional: "nenhuma", example: "exemplo", informative: null, unclear: null, especificacao: null,
 };
+/**
+ * [1.4.5] Forças que o LEIAME só imprime quando a base da campanha as traz: as bases anteriores à 3.7.3 não têm
+ * `especificacao`, e os LEIAMEs delas (todas as passadas arquivadas, 1.2.0 e 1.3.0) saem byte a byte como antes.
+ */
+export const FORCAS_SO_COM_A_BASE: ReadonlySet<string> = new Set(["especificacao"]);
 /** Linhas da tabela (rótulo que o cartão mostra → valor no vocabulário), na ordem acima: o LEIAME imprime esta lista. */
 export const TABELA_FORCAS: readonly { literal: string; rotulo: string; vocabulario: string | null }[] =
   Object.entries(FORCA_NO_VOCABULARIO).map(([literal, vocabulario]) => ({ literal, rotulo: FORCA_LITERAL[literal] ?? literal, vocabulario }));
+/** [1.4.5] Linhas que o LEIAME imprime para uma base: as fixas sempre; as de FORCAS_SO_COM_A_BASE só se a base as declara. */
+export const tabelaForcasDaBase = (forcasDaBase: readonly string[] = []) =>
+  TABELA_FORCAS.filter(f => !FORCAS_SO_COM_A_BASE.has(f.literal) || forcasDaBase.includes(f.literal));
 const regraVista = (k: Kb) => ({ titulo: mascarar(k.title), texto: mascarar(k.normalizedRule), forcaDeclarada: FORCA_LITERAL[k.force] ?? k.force,
   forcaNoVocabulario: FORCA_NO_VOCABULARIO[k.force] ?? null });
 
@@ -199,7 +212,8 @@ export function normasDaCampanha(o: OraculoDaCampanha): Normas {
   if (existsSync(legadoAbs)) for (const e of lerJson<{ entries: { id: string; record?: Kb }[] }>(legadoAbs).entries)
     if (e.record && !kb.has(e.id)) kb.set(e.id, { k: e.record, tipo: "id antigo, fora do contexto normativo da base" });
   // [M] Força que a tabela fixa não conhece → para (nunca cai calada em "sem correspondência").
-  const novas = [...new Set([...kb.values()].map(x => x.k.force))].filter(f => !(f in FORCA_NO_VOCABULARIO));
+  const forcas = [...new Set([...kb.values()].map(x => x.k.force))].sort();
+  const novas = forcas.filter(f => !(f in FORCA_NO_VOCABULARIO));
   if (novas.length) throw new Error(`E14 campanha: força(s) da base fora da tabela FORCA_NO_VOCABULARIO: ${novas.join(", ")}`);
   const wcag = new Map(lerJson<{ criteria: { num: string; handle: string; level: string }[] }>(wcagAbs).criteria.map(c => [c.num, c]));
   const emag = new Map(Object.values(lerJson<{ sections: Record<string, { title: string; rules: { id: string; title: string; description: string }[] }> }>(emagAbs).sections)
@@ -243,7 +257,7 @@ export function normasDaCampanha(o: OraculoDaCampanha): Normas {
   if (existsSync(legadoAbs)) fontes[relTcc(legadoAbs)] = shaArquivo(legadoAbs);
   Object.assign(fontes, { [relTcc(chkAbs)]: shaArquivo(chkAbs), [relTcc(wcagAbs)]: shaArquivo(wcagAbs), [relTcc(emagAbs)]: shaArquivo(emagAbs),
     [`axe-core@${axe.version}`]: sha(JSON.stringify([...axeRegras.keys()].sort())) });
-  return { resolver, fontes };
+  return { resolver, fontes, forcas };
 }
 
 // ───────────────────────────────────────────────────────────────── referências e fatos medidos

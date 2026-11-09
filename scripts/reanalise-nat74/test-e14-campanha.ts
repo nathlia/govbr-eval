@@ -23,7 +23,7 @@ import {
   BASE_URL_PADRAO, LEIAME_ARIA_ESTADO, LEIAME_CABECALHO_VAZIO, LEIAME_IDENTIDADE_REGISTRO, LEIAME_MOTIVO_SEM_VINCULO, LEIAME_PARADAS, baseUrlValida, bracoDoRun, dominioDoDefeito, enderecoDaTela, leiameCampanha,
   leiameCampanha13, mascararTrio, paradasDaReferencia, passosLegiveis, prepararCampanha, registroDaRota,
 } from "./e14-campanha";
-import { FORCA_NO_VOCABULARIO, normasDaCampanha } from "./e14-fila";
+import { FORCAS_SO_COM_A_BASE, FORCA_NO_VOCABULARIO, normasDaCampanha } from "./e14-fila";
 import { argumentosIngerir, contextoDe, ingerir } from "./e14-ingerir";
 import { testesReferencias } from "./test-e14-referencias";
 
@@ -279,7 +279,8 @@ try {
     for (const x of ["passosUsados", "passos-proprios"]) assert.ok(!l.includes(x), x);
   });
   t("tabela fixa: força desconhecida na base para (nunca cai calada em sem correspondência)", () => {
-    assert.deepEqual(Object.keys(FORCA_NO_VOCABULARIO).sort(), ["discouraged", "example", "informative", "optional", "permitted", "prohibited", "recommended", "required", "unclear"]);
+    assert.deepEqual(Object.keys(FORCA_NO_VOCABULARIO).sort(), ["discouraged", "especificacao", "example", "informative", "optional", "permitted", "prohibited", "recommended", "required", "unclear"]);
+    assert.equal(FORCA_NO_VOCABULARIO.especificacao, null, "[1.4.5, D-167] especificação: sem correspondência, como informative");
     const v2 = join(tmp, "validador-forca"), d2 = join(v2, "data");
     gravarJson(d2, "knowledge/manifest.json", { activeVersion: "3.7.0-literal-teste" });
     gravar(d2, `${vNorm}/rules.jsonl`, JSON.stringify(regra("govbr-3.7.0-x-dddddddddddd", "X", "weird")) + "\n");
@@ -603,7 +604,7 @@ try {
     assert.deepEqual(esq.properties.respostas.items.properties.motivoSemVinculo, { enum: [...MOTIVO_SEM_VINCULO] });
     assert.equal(esq.properties.formato.const, FORMATO_RESPOSTAS_CAMPANHA_1_3_1);
     const m = JSON.parse(pA.arquivosInternos.get("lotes/manifesto.json")!) as { formato: string; versao: string; respostas: { formato: string } };
-    assert.deepEqual([m.formato, m.versao, m.respostas.formato], [FORMATO_MANIFESTO_CAMPANHA_1_3_1, "nat78-primeira-passada-1.4.4", FORMATO_RESPOSTAS_CAMPANHA_1_3_1]);
+    assert.deepEqual([m.formato, m.versao, m.respostas.formato], [FORMATO_MANIFESTO_CAMPANHA_1_3_1, "nat78-primeira-passada-1.4.5", FORMATO_RESPOSTAS_CAMPANHA_1_3_1]);
     const ajv = compilar(esq);
     const base = { id: "T3-0123456789", verdadeFactual: "verdadeira", norma: { id: "citada", forca: "obrigatorio", aplicabilidade: "aplica", violada: "sim" },
       vinculo: "nenhum", sugestao: NAO_PERGUNTADO, forcaDoVeredito: "medido", evidencias: ["MEDIDA"], justificativa: "MEDIDA mostra o fato fora dos defeitos da tela.", estadoAlcancado: "receita" };
@@ -682,6 +683,71 @@ try {
     assert.ok(!("porMotivoSemVinculo" in (r.julgamentos as object)) && !r.texto!.includes("motivoSemVinculo"));
     gravaResp(f, cartoesA.map((c, k) => semVinc(c, motivoDe(k))), FORMATO_RESPOSTAS_CAMPANHA_1_3);
     assert.match(ingerir(f).erros.join(), /esquema/, "1.3.0: campo recusado pelo esquema");
+  });
+  // ── passada 1.4.5 (D-167, validator 3.7.3): força `especificacao` na base
+  console.log("E14 campanha 1.4.5: força especificacao (D-167) — null no vocabulário, linha do LEIAME só com a base que a traz");
+  /** sha256 de leiameCampanha13(10, 2, "Tela X") no gerador 1.4.4 (commit ac32e1f), antes da 1.4.5. */
+  const LEIAME13_1_4_4 = "916f302ef0196c021447a7246451e776188ddcd6221d7fb0347264d516cf7307";
+  const LINHA_ESP = "  | especificação (descreve o componente) | `null` (sem correspondência) |";
+  // Validador sintético com uma unidade de especificação (o mesmo data/ + uma linha) e a análise apontando para essa data/.
+  const valE = join(tmp, "validador-esp"), dE = join(valE, "data");
+  cpSync(vData, dE, { recursive: true });
+  gravar(dE, `${vNorm}/rules.jsonl`, readFileSync(join(vData, vNorm, "rules.jsonl"), "utf8")
+    + JSON.stringify(regra("govbr-3.7.0-component-input-eeeeeeeeeeee", "Rótulo | Componente Input | Texto", "especificacao")) + "\n");
+  const dataE = sha256Tree(dE)!.sha256, dirE = join(tmp, "trio-esp");
+  cpSync(dir, dirE, { recursive: true });
+  gravar(dirE, "entradas/campanha.json", readFileSync(join(dir, "entradas", "campanha.json"), "utf8").split(dataSha).join(dataE));
+  const pk = JSON.parse(readFileSync(join(dir, "revisao", "package.json"), "utf8")) as { cards: { id: string; rule: string | null }[]; runs: { cardIds: string[] }[] };
+  pk.cards.push({ ...pk.cards.find(c => c.id === "C-cccc")!, id: "C-jjjj", rule: "govbr-3.7.0-component-input-eeeeeeeeeeee" });
+  pk.runs[2].cardIds.push("C-jjjj");
+  gravarJson(dirE, "revisao/package.json", pk);
+  const optsE = { validador: valE, checkerAliases: aliasesAbs };
+  const pE = prepararCampanha([dirE], optsE), pE12 = prepararCampanha([dirE], { ...optsE, politica: "1.2.0" });
+  const totalDe = (p_: typeof pE) => JSON.parse(p_.arquivosInternos.get("lotes/manifesto.json")!) as { total: number; versao: string; formato: string; lotes: unknown[] };
+  t("base com especificacao prepara: forcaNoVocabulario null no cartão, linha na tabela do LEIAME (1.3.0 e 1.2.0) e nada mais, versão 1.4.5, cegueira OK", () => {
+    assert.ok(FORCAS_SO_COM_A_BASE.has("especificacao"));
+    assert.deepEqual(normasDaCampanha({ dataSha256: dataE, validador: valE, checkerAliases: aliasesAbs }).forcas, ["especificacao", "permitted", "recommended", "required"]);
+    const lE = JSON.parse(pE.arquivosDoJuiz.get("lotes/lote-01.json")!) as { cartoes: CartaoCego[] };
+    const chE = JSON.parse(pE.arquivosInternos.get("chave/fila-t3-chave.json")!) as { itens: { id: string; cardIdOriginal: string }[] };
+    const j = lE.cartoes.find(c => c.id === chE.itens.find(i => i.cardIdOriginal === "C-jjjj")!.id)!;
+    assert.deepEqual(j.normaCitada!.regrasDaBase!.map(r => [r.forcaDeclarada, r.forcaNoVocabulario]), [["especificação (descreve o componente)", null]]);
+    assert.ok(!pE.arquivosDoJuiz.get("lotes/lote-01.json")!.includes("eeeeeeeeeeee"), "id da base mascarado");
+    for (const p_ of [pE, pE12]) {
+      const l = p_.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!;
+      assert.equal(l.split(LINHA_ESP).length - 1, 1, "uma linha");
+      assert.ok(l.includes("  | não declarada | `null` (sem correspondência) |\n" + LINHA_ESP + "\n"), "logo depois da última linha fixa");
+    }
+    // O LEIAME com a linha = o de sempre + a linha, e nada mais (nas duas políticas).
+    const m = totalDe(pE);
+    assert.equal(pE.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!.replace(LINHA_ESP + "\n", ""), leiameCampanha13(m.total, m.lotes.length, "Tela X"));
+    assert.equal(pE12.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!.replace(LINHA_ESP + "\n", ""), leiameCampanha(m.total, m.lotes.length, "Tela X"));
+    assert.deepEqual([m.versao, m.formato], ["nat78-primeira-passada-1.4.5", FORMATO_MANIFESTO_CAMPANHA_1_3_1]);
+    assert.equal(totalDe(pE12).versao, "nat78-primeira-passada-1.3.1", "a 1.2.0 não muda de versão");
+    assert.deepEqual(pE.cegueira.falhas, []); assert.deepEqual(pE.falhasTrio, []);
+  });
+  t("cartão que cita unidade de especificação: forcasDaCitada [null], derivação igual à de regra informativa; \"nenhuma\" com essa regra recusado (não é \"só permite\")", () => {
+    const lE = JSON.parse(pE.arquivosDoJuiz.get("lotes/lote-01.json")!) as { cartoes: CartaoCego[] };
+    const chE = JSON.parse(pE.arquivosInternos.get("chave/fila-t3-chave.json")!) as { itens: { id: string; cardIdOriginal: string }[] };
+    const it = (o: string) => chE.itens.find(i => i.cardIdOriginal === o)!, c = (o: string) => lE.cartoes.find(x => x.id === it(o).id)!;
+    const ctx = contextoDe(c("C-jjjj"), it("C-jjjj") as never, ["A-01"], "1.3.0");
+    assert.deepEqual(ctx.forcasDaCitada, [null]);
+    const o131 = { normaNeutra: true, v12: true, v13: true, v131: true, candidatas: c("C-jjjj").candidatas };
+    const r = { id: c("C-jjjj").id, verdadeFactual: "verdadeira", norma: { id: "citada", forca: "nenhuma", aplicabilidade: NAO_PERGUNTADO, violada: NAO_PERGUNTADO },
+      vinculo: { spec: "A-01", relacao: "direta" }, sugestao: NAO_PERGUNTADO, forcaDoVeredito: "medido", evidencias: ["MEDIDA"], justificativa: "MEDIDA mostra o fato.", estadoAlcancado: "receita" };
+    assert.match(validarResposta(r, ctx, o131).join(), /só quando toda força da base da regra corresponde a "nenhuma"/);
+    for (const forca of ["obrigatorio", "recomendado", "indeterminado"]) for (const violada of ["sim", "nao"]) {
+      const rr = { ...r, norma: { id: "citada", forca, aplicabilidade: "aplica", violada } } as unknown as Resposta;
+      assert.deepEqual(derivarClasse(rr, ctx), derivarClasse(rr, { ...ctx, forcasDaCitada: [FORCA_NO_VOCABULARIO.informative] }), `${forca}/${violada}`);
+    }
+  });
+  t("base sem especificacao: LEIAME byte a byte o da 1.4.4 (1.3.0) e o histórico (1.2.0), sem a linha; com ela, só a linha a mais", () => {
+    assert.equal(sha(leiameCampanha13(10, 2, "Tela X")), LEIAME13_1_4_4);
+    assert.equal(sha(leiameCampanha13(10, 2, "Tela X", BASE_URL_PADRAO, ["informative", "required", "unclear"])), LEIAME13_1_4_4, "forças fixas não mudam nada");
+    assert.equal(sha(leiameCampanha(10, 2, "Tela X", ["required"])), LEIAME12_HISTORICO);
+    assert.equal(sha(leiameCampanha13(10, 2, "Tela X", BASE_URL_PADRAO, ["especificacao"]).replace(LINHA_ESP + "\n", "")), LEIAME13_1_4_4);
+    for (const p_ of [p, pA]) assert.ok(!p_.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!.includes("especificação"), "base sem a força: sem a linha");
+    const m = totalDe(pA);
+    assert.equal(pA.arquivosDoJuiz.get("lotes/LEIAME-juiz.md"), leiameCampanha13(m.total, m.lotes.length, "Tela X"));
   });
   await testesReferencias({ t, tmp, dir, valDir, aliasesAbs, prepararCampanha, cli });
 } finally { rmSync(tmp, { recursive: true, force: true }); }

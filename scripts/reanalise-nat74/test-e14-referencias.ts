@@ -130,7 +130,7 @@ export async function testesReferencias(o: Ctx): Promise<void> {
     assert.equal(l13.politica, "politica-normativa-1.3.0");
     const m = JSON.parse(p13.arquivosInternos.get("lotes/manifesto.json")!) as { formato: string; versao: string; politica: string; cartoesComReferencias: number; respostas: { formato: string } };
     assert.deepEqual([m.formato, m.versao, m.politica, m.cartoesComReferencias, m.respostas.formato],
-      [FORMATO_MANIFESTO_CAMPANHA_1_3_1, "nat78-primeira-passada-1.4.4", "politica-normativa-1.3.0", 1, FORMATO_RESPOSTAS_CAMPANHA_1_3_1]);
+      [FORMATO_MANIFESTO_CAMPANHA_1_3_1, "nat78-primeira-passada-1.4.5", "politica-normativa-1.3.0", 1, FORMATO_RESPOSTAS_CAMPANHA_1_3_1]);
     const le = p13.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!;
     for (const x of ["### `referencias`", "política normativa 1.3.0", FORMATO_RESPOSTAS_CAMPANHA_1_3_1, "(R16)", "**Receita vazia**", "nunca é `nao-alcancado`",
       "**Registro × template.**", "**Cabeçalho de tabela vazio.**", "**Atributo ARIA preso × estado nativo.**", "**`motivoSemVinculo`**"]) assert.ok(le.includes(x), x);

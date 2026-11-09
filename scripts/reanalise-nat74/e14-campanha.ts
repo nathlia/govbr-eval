@@ -30,6 +30,8 @@
  * referência o declara, `dominio` (`{ regra, registros }`, sem mudança). A 1.2.0 não muda.
  * 1.4.4 (lista única 3.7.3, C3–C4): na 1.3.0, a regra do atributo ARIA preso × estado nativo na seção `norma` do LEIAME e
  * `motivoSemVinculo` na resposta (manifesto e respostas `…-1.3.1`). A 1.2.0 não muda.
+ * 1.4.5 (D-167, validator 3.7.3): força `especificacao` da base → `forcaNoVocabulario: null`; a linha dela na tabela de forças
+ * do LEIAME só sai quando a base da campanha a traz (base sem ela: LEIAME byte a byte, nas duas políticas).
  */
 import { existsSync, readFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
@@ -42,7 +44,7 @@ import {
   FORMATO_RESPOSTAS_CAMPANHA, FORMATO_RESPOSTAS_CAMPANHA_1_3_1, IDS_REFERENCIA, MOTIVO_SEM_VINCULO, NAO_PERGUNTADO,
   esquemaDaPassada, hashDaChave, idOpaco, mascarar, nomeLote, type CartaoCego, type ItemChave,
 } from "./e14-comum";
-import { TABELA_FORCAS, cartaoCego, normasDaCampanha, type Extracao } from "./e14-fila";
+import { cartaoCego, normasDaCampanha, tabelaForcasDaBase, type Extracao } from "./e14-fila";
 import { leiameJuiz, tamanhosDosLotes } from "./e14-preparar";
 
 /**
@@ -83,10 +85,17 @@ import { leiameJuiz, tamanhosDosLotes } from "./e14-preparar";
  * reconta ler o motivo sem ler justificativas. Manifesto e respostas passam a `…-1.3.1` (o esquema 1.3.0 não aceita o campo
  * e as passadas 1.3.0 congeladas não o têm: elas seguem ingeridas pelo esquema 1.3.0, byte a byte). Classe derivada igual
  * (política do juiz 1.3.0). A 1.2.0 não muda (lote, LEIAME e esquema byte a byte).
+ * 1.4.5 (D-167, validator 3.7.3: 2.449 unidades `force: "especificacao"` na base 3.7.0-literal-2026-10-15, linhas da tabela de
+ * especificação do componente e frases descritivas; o validador as lê como "descreve o componente; não obriga nem proíbe"):
+ * a tabela fixa ganha `especificacao` → `null` (sem correspondência, como `informative`: a derivação a trata como sem força),
+ * e a linha "especificação (descreve o componente)" entra na tabela de forças do LEIAME **só quando a base da campanha
+ * declara essa força** (`tabelaForcasDaBase`, pelas forças que `normasDaCampanha` leu). Base sem ela (toda passada arquivada,
+ * 1.2.0 e 1.3.0): LEIAME byte a byte. Formatos do lote, do manifesto e das respostas iguais; ingestão e derivação iguais
+ * (`forcasDaCitada` já trata `null`). A 1.2.0 continua 1.3.1: o histórico dela não muda.
  */
 export const E14_CAMPANHA_VERSAO = "nat78-primeira-passada-1.3.1";
 /** [D-156] Versão da passada preparada na política 1.3.0 (referências secundárias). A 1.2.0 continua 1.3.1. */
-export const E14_CAMPANHA_VERSAO_1_4 = "nat78-primeira-passada-1.4.4";
+export const E14_CAMPANHA_VERSAO_1_4 = "nat78-primeira-passada-1.4.5";
 /** Política das campanhas novas (D-156). `--politica 1.2.0` reproduz o histórico. */
 export const POLITICA_CAMPANHA_PADRAO: VersaoPolitica = "1.3.0";
 
@@ -319,7 +328,9 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
   tamanhosDosLotes(ord.length).forEach((t, k) => { lotes.push({ lote: nomeLote(k), ids: ord.slice(i, i + t).map(x => x.item.id) }); i += t; });
   for (const l of lotes) for (const id of l.ids) ord.find(x => x.item.id === id)!.item.lote = l.lote;
   const nomes = Object.values(telas).map(t => t.nome).join(", ");
-  const leiame = v13 ? leiameCampanha13(ord.length, lotes.length, nomes, baseUrl) : leiameCampanha(ord.length, lotes.length, nomes);
+  // [1.4.5] Linhas condicionais da tabela de forças pelas forças da base da campanha (sem elas, o LEIAME de sempre).
+  const forcas = nr.forcas ?? [];
+  const leiame = v13 ? leiameCampanha13(ord.length, lotes.length, nomes, baseUrl, forcas) : leiameCampanha(ord.length, lotes.length, nomes, forcas);
   // [1.4.2] Na 1.3.0, `vinculo.spec` = os ids dos defeitos das telas da passada (os mesmos que os lotes publicam em
   // `referencias`); a 1.2.0 publica o esquema histórico, byte a byte.
   const esquema = jsonTexto(v13 ? esquemaDaPassada(ESQUEMA_RESPOSTAS_CAMPANHA_1_3_1, Object.values(telas).flatMap(t => (t.defeitos as { id: string }[]).map(d => d.id)))
@@ -401,9 +412,10 @@ function trocar(t: string, de: string | RegExp, para: string): string {
 /**
  * LEIAME do juiz da primeira passada (1.2.0): o histórico (`leiameJuiz`, que não muda) com as trocas da campanha nova —
  * página congelada medida (D-138), caminho único de respostas (I), norma neutra para `id: "nenhuma"` (K1), `norma.forca`
- * explícito (K2), receitas (K3) e o que não abrir (K4).
+ * explícito (K2), receitas (K3) e o que não abrir (K4). [1.4.5] `forcasDaBase`: forças da base da campanha (linhas
+ * condicionais da tabela de forças); sem `especificacao`, o texto de sempre.
  */
-export function leiameCampanha(total: number, nLotes: number, nomes: string): string {
+export function leiameCampanha(total: number, nLotes: number, nomes: string, forcasDaBase: readonly string[] = []): string {
   let t = leiameJuiz(total, nLotes);
   t = trocar(t, "# Fila T3 — instruções do juiz", "# Primeira passada cega — instruções do juiz");
   t = trocar(t, "(Tela A · Solicitar serviço, ou Tela B · Vistorias)", `(${nomes})`);
@@ -427,7 +439,7 @@ export function leiameCampanha(total: number, nLotes: number, nomes: string): st
     "(estado que a receita não alcança — `estadoAlcancado: \"nao-alcancado\"` —, elemento ausente,\n  medida impossível) (R9, R10).");
   t = trocar(t, "`nenhuma` (só com `id: \"nenhuma\"`) ·\n  `indeterminado`.",
     "`nenhuma` (com `id: \"nenhuma\"`; ou com regra citada quando **toda** regra da base que ela traz tem\n  `forcaNoVocabulario: \"nenhuma\"`) · `indeterminado`.");
-  t = trocar(t, "não para o que o DS entrega (R4).\n", `não para o que o DS entrega (R4).\n${LEIAME_FORCAS}\n`);
+  t = trocar(t, "não para o que o DS entrega (R4).\n", `não para o que o DS entrega (R4).\n${leiameForcas(forcasDaBase)}\n`);
   t = trocar(t, "### Em todo cartão\n", `### Em todo cartão\n${LEIAME_ESTADO}\n`);
   t = trocar(t, "| fato `indisponivel` | evidência indisponível (pendente, R9) |",
     "| fato `indisponivel` (também o que `estadoAlcancado: \"nao-alcancado\"` exige) | evidência indisponível (pendente, R9/R10) |");
@@ -441,9 +453,9 @@ export function leiameCampanha(total: number, nLotes: number, nomes: string): st
  * [D-156] LEIAME da política 1.3.0: o da 1.2.0 (`leiameCampanha`, que não muda) com o título, o formato das respostas,
  * a seção das referências secundárias e as linhas da tabela de classes. Só procedimento de julgamento: nenhuma regra.
  */
-export function leiameCampanha13(total: number, nLotes: number, nomes: string, baseUrl = BASE_URL_PADRAO): string {
+export function leiameCampanha13(total: number, nLotes: number, nomes: string, baseUrl = BASE_URL_PADRAO, forcasDaBase: readonly string[] = []): string {
   const NL = "\n";
-  let t = leiameCampanha(total, nLotes, nomes);
+  let t = leiameCampanha(total, nLotes, nomes, forcasDaBase);
   // [1.4.2] Endereço da página congelada (--base-url); com o padrão, nada muda.
   if (baseUrl !== BASE_URL_PADRAO) t = trocar(t, "`" + BASE_URL_PADRAO + "`", "`" + baseUrlValida(baseUrl) + "`");
   // [1.4.2, C2] Cabeçalho vazio × WCAG 1.3.1, logo depois do vocabulário de `violada`; [1.4.4, C3] e, logo depois, o atributo
@@ -598,8 +610,11 @@ const LEIAME_REFERENCIAS = [
   "- Uma referência nunca muda o fato: com fato `falsa`, `indisponivel` ou `indeterminado` ela não é usada.",
 ].join("\n");
 
-/** [M] Tabela fixa das forças da base literal, impressa a partir de TABELA_FORCAS (e14-fila.ts). */
-const LEIAME_FORCAS = [
+/**
+ * [M] Tabela fixa das forças da base literal, impressa a partir de TABELA_FORCAS (e14-fila.ts). [1.4.5] As linhas de
+ * FORCAS_SO_COM_A_BASE (`especificacao`) só quando a base da campanha as declara (`tabelaForcasDaBase`).
+ */
+const leiameForcas = (forcasDaBase: readonly string[] = []) => [
   "- **Força declarada da base do DS → `forca`.** Cada regra da base em `normaCitada.regrasDaBase` (e nas normas dos",
   "  defeitos) traz `forcaDeclarada` (a palavra da própria base) e `forcaNoVocabulario` (a mesma força já posta nesta lista,",
   "  por uma tabela fixa, feita antes de qualquer julgamento e só pelas palavras da base). Use `forcaNoVocabulario` como",
@@ -611,7 +626,7 @@ const LEIAME_FORCAS = [
   "",
   "  | `forcaDeclarada` (base) | `forcaNoVocabulario` |",
   "  |---|---|",
-  ...TABELA_FORCAS.map(f => `  | ${f.rotulo} | ${f.vocabulario === null ? "`null` (sem correspondência)" : `\`${f.vocabulario}\``} |`),
+  ...tabelaForcasDaBase(forcasDaBase).map(f => `  | ${f.rotulo} | ${f.vocabulario === null ? "`null` (sem correspondência)" : `\`${f.vocabulario}\``} |`),
 ].join("\n");
 
 /** [N] Estado alcançado: resposta fechada, não só a justificativa. */
