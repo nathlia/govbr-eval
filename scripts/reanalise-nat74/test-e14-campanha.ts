@@ -438,9 +438,12 @@ try {
   });
   // ── passada 1.4.3 (passada cega dev-372-b-01): paradas da referência, registro de cada defeito, dominio opcional
   console.log("E14 campanha 1.4.3: paradas da referência (rota + registro), registro do defeito, dominio declarado");
-  const refV = JSON.parse(readFileSync(join(EVAL, "ground-truth-vistorias.json"), "utf8")) as {
+  // [D-168] A referência real a partir da 1.1.0 declara `dominio` em B-20…B-24 e B-27: estes testes usam a forma sem o campo
+  // (a 1.0.0, salvo version/historico) e o teste "referência 1.1.0 real" abaixo confere o campo declarado.
+  const refReal = JSON.parse(readFileSync(join(EVAL, "ground-truth-vistorias.json"), "utf8")) as {
     _meta: Parameters<typeof paradasDaReferencia>[0] & { url: string; states: { id: string; afterStep: number; path: string; note: string }[] };
     violations: { id: string; state: string; dominio?: unknown }[] };
+  const refV: typeof refReal = { ...refReal, violations: refReal.violations.map(({ dominio: _d, ...v }) => v) };
   const UUID_3046 = "00000000-0000-4000-8a01-000000003046", UUID_3038 = "00000000-0000-4000-8a01-000000003038";
   t("registroDaRota: UUID, número ou código no fim do caminho; rota de lista, arquivo ou nome comum → null; consulta não conta", () => {
     assert.equal(registroDaRota(`/pnip/portal-mpa/vistorias/agendar-vistoria/${UUID_3038}`), UUID_3038);
@@ -472,7 +475,7 @@ try {
   gravarJson(dirV, "revisao/package.json", { ...JSON.parse(readFileSync(join(dir, "revisao", "package.json"), "utf8")), units: [{ id: "U-1", specId: "B-21" }] });
   gravarJson(dirV, "revisao/capture.json", { url: "/pnip/portal-mpa/vistorias" });
   gravarJson(dirV, "summary.json", { execucoes: [{ identidade: { tela: { id: "vistorias", label: "Vistorias" } } }] });
-  gravar(dirV, "entradas/referencia.json", readFileSync(join(EVAL, "ground-truth-vistorias.json"), "utf8"));
+  gravarJson(dirV, "entradas/referencia.json", refV);
   type RefLote = { endereco: string; paradas?: Record<string, { path: string | null; registro: string | null }>; defeitos: ({ id: string; estado: string; registro?: string | null; dominio?: unknown } & Record<string, unknown>)[] };
   const refDoLote = (pp: ReturnType<typeof prepararCampanha>) => (JSON.parse(pp.arquivosDoJuiz.get("lotes/lote-01.json")!) as { referencias: Record<string, RefLote> }).referencias.vistorias;
   const pV = prepararCampanha([dirV], opts13), pV12 = prepararCampanha([dirV], { ...opts13, politica: "1.2.0" });
@@ -512,6 +515,16 @@ try {
     gravarJson(dirS, "entradas/referencia.json", semStates);
     const pS = prepararCampanha([dirS], { ...opts13, politica: "1.2.0" });
     for (const [rel, x] of pV12.arquivosDoJuiz) assert.equal(pS.arquivosDoJuiz.get(rel), x, rel);
+  });
+  t("[D-168] referência 1.1.0 real: o dominio de cada defeito que o declara chega ao lote sem mudança; cegueira OK", () => {
+    const declarados = refReal.violations.filter(v => v.dominio !== undefined);
+    if (!declarados.length) return; // referência ainda sem domínio (1.0.0)
+    const dirReal = join(tmp, "trio-vistorias-1.1.0");
+    cpSync(dirV, dirReal, { recursive: true });
+    gravar(dirReal, "entradas/referencia.json", readFileSync(join(EVAL, "ground-truth-vistorias.json"), "utf8"));
+    const pR = prepararCampanha([dirReal], opts13), r = refDoLote(pR);
+    for (const v of refReal.violations) assert.deepEqual(r.defeitos.find(d => d.id === v.id)!.dominio, v.dominio, v.id);
+    assert.deepEqual(pR.cegueira.falhas, []); assert.deepEqual(pR.falhasTrio, []);
   });
   // Referência com `dominio` declarado num defeito (a forma de uma futura referência 1.1.0; nenhuma o declara hoje).
   const DOMINIO = { regra: "mesmo indicador de progresso no cabeçalho do detalhe, com o mesmo texto", registros: [UUID_3038, UUID_3046] };

@@ -1,6 +1,159 @@
 {
   "_meta": {
-    "version": "2.0.0",
+    "version": "2.1.0",
+    "historico": [
+      {
+        "de": "2.0.0",
+        "para": "2.1.0",
+        "data": "2026-11-04",
+        "motivo": "Migração de ids (autora: \"migrar\", NAT-117; decisão D-169, a registrar). `rules[]` de cada spec: ids da base 3.7.0 antiga trocados pela(s) unidade(s) da base literal que carregam a mesma cláusula (scripts/rules-legado.ts: sucessor do legacy-ids.json; id descartado → unidade literal de texto normalizado igual ou que começa pelo antigo; senão nenhuma); o `rules[]` antigo fica em `rulesLegado[]`. P-01 e P-02 não citavam id: ganham a unidade da emenda-1 do Template Base cuja cláusula tela-a/restricoes-pagina.md já citava literalmente (como \"clausula-citada\"). Nenhuma unidade, âncora, estado, chamariz, sorteio nem texto de norma muda; sem `dominio` (a tela não tem rota de registro).",
+        "baseLiteral": {
+          "validador": "govbr-ds-validator 3.7.2 (cd11347), build em .tmp-eval/validator-372",
+          "fontes": {
+            "data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/rules.jsonl": "c8c4327d3b4c9eea173f96ce2ee72d0eeddbb534f5da6409627c921d30879a0f",
+            "data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/carried-over.jsonl": "16e0a764e4a0f05b3f116df83f1400598a95173f5dec34f775c0a9b843cade19",
+            "data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/legacy-ids.json": "3f85974355af8b4f402666f20c35a732478c5988dfd2e39aa739d457a883ef8b"
+          }
+        },
+        "migracao": [
+          {
+            "spec": "A-01",
+            "de": "govbr-3.7.0-accessibility-global-5be1f553cc03",
+            "para": [
+              "govbr-3.7.0-accessibility-global-f217a4680edd"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "A-02",
+            "de": "govbr-3.7.0-accessibility-global-79db88c7f55d",
+            "para": [
+              "govbr-3.7.0-accessibility-global-19004a5f90fd"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "A-02",
+            "de": "govbr-3.7.0-accessibility-global-e101928665cc",
+            "para": [
+              "govbr-3.7.0-accessibility-global-44cc347427a4"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "A-02",
+            "de": "govbr-3.7.0-accessibility-global-cb56ad444da2",
+            "para": [
+              "govbr-3.7.0-accessibility-global-67a136404372"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "A-04",
+            "de": "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+            "para": [
+              "govbr-3.7.0-accessibility-global-a399e39c0110"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "A-05",
+            "de": "govbr-3.7.0-accessibility-global-cd705eb5da2a",
+            "para": [
+              "govbr-3.7.0-accessibility-global-8ca3df343265"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "A-06",
+            "de": "govbr-3.7.0-accessibility-global-1cb2c878824b",
+            "para": [
+              "govbr-3.7.0-accessibility-global-0fb088a47830"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "A-06",
+            "de": "govbr-3.7.0-accessibility-global-2f22b7245ef9",
+            "para": [],
+            "como": "sem-unidade"
+          },
+          {
+            "spec": "A-07",
+            "de": "govbr-3.7.0-accessibility-global-cf61b3eb3c71",
+            "para": [
+              "govbr-3.7.0-accessibility-global-36c47203b523"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "A-08",
+            "de": "govbr-3.7.0-accessibility-global-cc837bbaf713",
+            "para": [
+              "govbr-3.7.0-accessibility-global-87553578ca71"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "A-09",
+            "de": "govbr-3.7.0-accessibility-global-b5fad7ce076d",
+            "para": [],
+            "como": "sem-unidade"
+          },
+          {
+            "spec": "A-09",
+            "de": "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+            "para": [
+              "govbr-3.7.0-accessibility-global-1c77d9289315"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "A-10",
+            "de": "govbr-3.7.0-component-upload-985fd2775586",
+            "para": [
+              "govbr-3.7.0-component-upload-a54eed419af5"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "A-11",
+            "de": "govbr-3.7.0-component-message-66b01a712e67",
+            "para": [
+              "govbr-3.7.0-component-message-add10093ae9f",
+              "govbr-3.7.0-component-message-4bfd5a220fb8"
+            ],
+            "como": "texto-normalizado"
+          },
+          {
+            "spec": "A-12",
+            "de": "govbr-3.7.0-accessibility-global-e038367bd7d6",
+            "para": [
+              "govbr-3.7.0-accessibility-global-5817ddd685a6"
+            ],
+            "como": "texto-normalizado"
+          },
+          {
+            "spec": "P-01",
+            "de": null,
+            "para": [
+              "govbr-3.7.0-template-global-c21ff1c7eefc"
+            ],
+            "como": "clausula-citada",
+            "fonte": "tela-a/restricoes-pagina.md"
+          },
+          {
+            "spec": "P-02",
+            "de": null,
+            "para": [
+              "govbr-3.7.0-template-global-79cf9ea963ee"
+            ],
+            "como": "clausula-citada",
+            "fonte": "tela-a/restricoes-pagina.md"
+          }
+        ]
+      }
+    ],
     "version_note": "2.0.0 (2026-10-03, D-83): acrescenta a CAMADA DE PÁGINA — specs P-01 e P-02, 2 unidades — às 12 specs e 14 unidades sorteadas, que ficam idênticas. As specs P-* NÃO foram sorteadas: vêm de uma omissão da construção (a tela foi feita sem as áreas de cabeçalho e rodapé do Template Base, procedimento §1 e §5), conhecida antes de medir, e entram por decisão da autora (D-83). Regra de inclusão escrita antes da medição e tirada só da documentação pública do Template Base (áreas obrigatórias: cabeçalho, conteúdo, rodapé); fonte, citações, medidas e vereditos em tela-a/restricoes-pagina.md. Recall da 2.0.0 se reporta sempre separado: sorteadas (A-*, 14 unidades) × página (P-*, 2 unidades). Números da 1.0.0 (piloto-01) e da 2.0.0 nunca formam série. | 1.0.0 (2026-09-18, fatia 8 / D-49): primeira referência da tela A. As 12 specs NÃO foram escolhidas: saíram do sorteio em tela-a/sorteio.json (semente d6ed93fd095b93e9a45a3145fafac702494fe822, o commit que congelou o procedimento em docs/tela-a-procedimento-sorteio.md). Regra, hospedeiro, variante e quais são compartilhadas vêm de lá; o que a construção ainda precisou decidir está em tela-a/construcao.md. 12 specs, 14 unidades (A-04 e A-08 valem duas: os dois selects). Congelada ANTES de qualquer execução de modelo sobre a tela e antes de anotar quais regras o oráculo verifica.",
     "camada_pagina": "Specs com id P-* são a camada de página (D-83): não sorteadas, escopo página, estado sempre. Specs com id A-* são as sorteadas (tela-a/sorteio.json). O prefixo do id é a marca da camada — types.ts entra no hash do scorer, por isso não há campo novo na spec.",
     "page": "Solicitar serviço — tela A da fatia 8 (D-49)",
@@ -38,7 +191,8 @@
       "expectedCount": 1,
       "state": "dialogo-aberto",
       "conditional": true,
-      "rules": ["govbr-3.7.0-accessibility-global-5be1f553cc03", "emag:1.9", "wcag:3.2.5"],
+      "rules": ["govbr-3.7.0-accessibility-global-f217a4680edd", "emag:1.9", "wcag:3.2.5"],
+      "rulesLegado": ["govbr-3.7.0-accessibility-global-5be1f553cc03", "emag:1.9", "wcag:3.2.5"],
       "categories": ["acessibilidade", "navegacao"],
       "description": "Estrato K · variante fecha-sem-devolver. Ao fechar o diálogo de descarte (X, Continuar preenchendo ou Esc) o foco não volta ao botão Cancelar que o abriu: cai em <body>. Abrir o diálogo leva o foco para dentro dele, como deve. Sem predicado na referência — o observável exige fechar o diálogo e ler document.activeElement; está medido em tela-a/conferir-construcao.mjs."
     },
@@ -48,7 +202,8 @@
       "scope": "unico",
       "expectedCount": 1,
       "state": "sempre",
-      "rules": ["govbr-3.7.0-accessibility-global-79db88c7f55d", "emag:1.4", "wcag:1.3.2", "wcag:2.4.3", "govbr-3.7.0-accessibility-global-e101928665cc", "emag:6.3", "govbr-3.7.0-accessibility-global-cb56ad444da2"],
+      "rules": ["govbr-3.7.0-accessibility-global-19004a5f90fd", "emag:1.4", "wcag:1.3.2", "wcag:2.4.3", "govbr-3.7.0-accessibility-global-44cc347427a4", "emag:6.3", "govbr-3.7.0-accessibility-global-67a136404372"],
+      "rulesLegado": ["govbr-3.7.0-accessibility-global-79db88c7f55d", "emag:1.4", "wcag:1.3.2", "wcag:2.4.3", "govbr-3.7.0-accessibility-global-e101928665cc", "emag:6.3", "govbr-3.7.0-accessibility-global-cb56ad444da2"],
       "categories": ["acessibilidade", "navegacao", "formulario"],
       "description": "Estrato K · variante tabindex-positivo. O botão do upload tem tabindex=1: o primeiro Tab da página cai nele, antes do atalho para o conteúdo e de todos os campos que o precedem no formulário. Sem predicado na referência (as espécies existentes medem ausência de atributo, não valor); medido em tela-a/conferir-construcao.mjs."
     },
@@ -75,7 +230,8 @@
       "scope": "todos",
       "expectedCount": 2,
       "state": "sempre",
-      "rules": ["govbr-3.7.0-accessibility-global-21fbcc2fe37b", "emag:4.4", "wcag:2.4.7"],
+      "rules": ["govbr-3.7.0-accessibility-global-a399e39c0110", "emag:4.4", "wcag:2.4.7"],
+      "rulesLegado": ["govbr-3.7.0-accessibility-global-21fbcc2fe37b", "emag:4.4", "wcag:2.4.7"],
       "categories": ["token", "acessibilidade"],
       "description": "Estrato T · variante outline-none · COMPARTILHADA pelos dois selects. O campo de texto do select não mostra indicador de foco: a borda e o box-shadow com que o DS desenha o foco dos campos foram suprimidos (e o outline segue none). Nome, CPF, data e descrição mostram o indicador. Sem predicado na referência — o observável exige focar o elemento; medido em tela-a/conferir-construcao.mjs."
     },
@@ -86,7 +242,8 @@
       "expectedCount": 1,
       "participantCount": 2,
       "state": "sempre",
-      "rules": ["govbr-3.7.0-accessibility-global-cd705eb5da2a", "emag:3.9", "wcag:1.3.1"],
+      "rules": ["govbr-3.7.0-accessibility-global-8ca3df343265", "emag:3.9", "wcag:1.3.1"],
+      "rulesLegado": ["govbr-3.7.0-accessibility-global-cd705eb5da2a", "emag:3.9", "wcag:1.3.1"],
       "categories": ["estrutura", "acessibilidade"],
       "description": "Estrato E · variante caption-removido. A tabela de solicitações anteriores não tem <caption>; o título visível é um div da barra superior do componente, fora do <table>. Sem predicado na referência (nenhuma espécie mede ausência de elemento filho); medido em tela-a/conferir-construcao.mjs."
     },
@@ -97,7 +254,8 @@
       "expectedCount": 1,
       "state": "apos-envio-vazio",
       "conditional": true,
-      "rules": ["govbr-3.7.0-accessibility-global-1cb2c878824b", "emag:1.2", "wcag:1.3.1", "govbr-3.7.0-accessibility-global-2f22b7245ef9"],
+      "rules": ["govbr-3.7.0-accessibility-global-0fb088a47830", "emag:1.2", "wcag:1.3.1"],
+      "rulesLegado": ["govbr-3.7.0-accessibility-global-1cb2c878824b", "emag:1.2", "wcag:1.3.1", "govbr-3.7.0-accessibility-global-2f22b7245ef9"],
       "categories": ["estrutura", "acessibilidade"],
       "description": "Estrato E · variante nativo-para-div. O botão Fechar da mensagem de retorno é um <div role=\"button\" tabindex=\"0\"> com tratadores de Enter e Espaço, no lugar do <button> nativo do exemplo oficial. Continua operável por teclado e nomeado — o defeito é só o elemento.",
       "acceptance": {
@@ -113,7 +271,8 @@
       "expectedCount": 1,
       "participantCount": 4,
       "state": "sempre",
-      "rules": ["govbr-3.7.0-accessibility-global-cf61b3eb3c71", "emag:1.7", "wcag:1.3.1"],
+      "rules": ["govbr-3.7.0-accessibility-global-36c47203b523", "emag:1.7", "wcag:1.3.1"],
+      "rulesLegado": ["govbr-3.7.0-accessibility-global-cf61b3eb3c71", "emag:1.7", "wcag:1.3.1"],
       "categories": ["estrutura", "navegacao"],
       "description": "Estrato E · variante links-fora-de-lista. Os links de página são âncoras adjacentes soltas dentro do <nav>, sem o <ul>/<li> do exemplo oficial: nada além de espaço os separa. Sem predicado na referência (nenhuma espécie mede o elemento pai); medido em tela-a/conferir-construcao.mjs."
     },
@@ -123,7 +282,8 @@
       "scope": "todos",
       "expectedCount": 2,
       "state": "apos-envio-vazio",
-      "rules": ["govbr-3.7.0-accessibility-global-cc837bbaf713", "emag:6.6", "wcag:3.3.1"],
+      "rules": ["govbr-3.7.0-accessibility-global-87553578ca71", "emag:6.6", "wcag:3.3.1"],
+      "rulesLegado": ["govbr-3.7.0-accessibility-global-cc837bbaf713", "emag:6.6", "wcag:3.3.1"],
       "categories": ["formulario", "acessibilidade"],
       "description": "Estrato E · variante erro-sem-associacao · COMPARTILHADA pelos dois selects. Depois do envio vazio o texto de erro aparece sob o select, mas o campo não o referencia: não há aria-describedby. Os outros seis campos obrigatórios referenciam o próprio texto de erro. A unidade existe só neste estado, embora o campo exista desde o primeiro paint — por isso não é `conditional`.",
       "acceptance": {
@@ -138,7 +298,8 @@
       "expectedCount": 1,
       "participantCount": 2,
       "state": "sempre",
-      "rules": ["govbr-3.7.0-accessibility-global-b5fad7ce076d", "govbr-3.7.0-accessibility-global-b95c42b61ed3", "emag:6.2", "wcag:1.3.1"],
+      "rules": ["govbr-3.7.0-accessibility-global-1c77d9289315", "emag:6.2", "wcag:1.3.1"],
+      "rulesLegado": ["govbr-3.7.0-accessibility-global-b5fad7ce076d", "govbr-3.7.0-accessibility-global-b95c42b61ed3", "emag:6.2", "wcag:1.3.1"],
       "categories": ["formulario", "acessibilidade"],
       "description": "Estrato S · variante label-sem-for, na primeira opção do grupo (convenção registrada em tela-a/construcao.md). O <label> de \"Presencial\" não tem for: o radio fica sem nome acessível e clicar no texto não o marca. As outras duas opções estão associadas.",
       "acceptance": {
@@ -153,7 +314,8 @@
       "expectedCount": 1,
       "participantCount": 2,
       "state": "sempre",
-      "rules": ["govbr-3.7.0-component-upload-985fd2775586"],
+      "rules": ["govbr-3.7.0-component-upload-a54eed419af5"],
+      "rulesLegado": ["govbr-3.7.0-component-upload-985fd2775586"],
       "categories": ["estrutura"],
       "description": "Estrato S · variante apoio-sem-arraste. O upload aceita arrastar e soltar (comportamento do core.js), mas o texto de apoio informa só formato e tamanho — não diz que o arquivo pode ser arrastado. Sem predicado na referência (nenhuma espécie mede texto); medido em tela-a/conferir-construcao.mjs."
     },
@@ -165,7 +327,8 @@
       "participantCount": 3,
       "state": "apos-envio-vazio",
       "conditional": true,
-      "rules": ["govbr-3.7.0-component-message-66b01a712e67"],
+      "rules": ["govbr-3.7.0-component-message-add10093ae9f", "govbr-3.7.0-component-message-4bfd5a220fb8"],
+      "rulesLegado": ["govbr-3.7.0-component-message-66b01a712e67"],
       "categories": ["estrutura"],
       "description": "Estrato S · variante icone-e-fechar-trocados. Na mensagem de retorno o botão Fechar está à esquerda e o ícone semântico à direita — o inverso da anatomia do componente. Sem predicado na referência (nenhuma espécie mede posição); medido em tela-a/conferir-construcao.mjs."
     },
@@ -176,7 +339,8 @@
       "expectedCount": 1,
       "participantCount": 4,
       "state": "sempre",
-      "rules": ["govbr-3.7.0-accessibility-global-e038367bd7d6"],
+      "rules": ["govbr-3.7.0-accessibility-global-5817ddd685a6"],
+      "rulesLegado": ["govbr-3.7.0-accessibility-global-e038367bd7d6"],
       "categories": ["acessibilidade", "navegacao"],
       "description": "Estrato S · variante aria-removido. A página ativa da paginação é marcada só pela classe `active`: nenhum link carrega aria-current=\"page\", o estado que o próprio DS escreve em tempo de execução. A trilha de navegação da mesma tela marca a página atual com aria-current.",
       "acceptance": {
@@ -190,7 +354,8 @@
       "scope": "unico",
       "expectedCount": 1,
       "state": "sempre",
-      "rules": [],
+      "rules": ["govbr-3.7.0-template-global-c21ff1c7eefc"],
+      "rulesLegado": [],
       "categories": ["estrutura"],
       "description": "Camada de página (D-83) · não sorteada · área de cabeçalho. A região de cabeçalho da página é um <header> que contém só a marca gov.br (um link); o componente Header do DS não é usado nessa área. Sem predicado na referência; medido em tela-a/restricoes-pagina.md."
     },
@@ -200,7 +365,8 @@
       "scope": "unico",
       "expectedCount": 1,
       "state": "sempre",
-      "rules": [],
+      "rules": ["govbr-3.7.0-template-global-79cf9ea963ee"],
+      "rulesLegado": [],
       "categories": ["estrutura"],
       "description": "Camada de página (D-83) · não sorteada · área de rodapé. A página não tem área de rodapé: nenhum componente Footer do DS e nenhuma região de rodapé (footer ou contentinfo), em estado algum. A âncora é o documento porque a área ausente não tem elemento. Sem predicado na referência; medido em tela-a/restricoes-pagina.md."
     }

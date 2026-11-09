@@ -7,6 +7,7 @@
  *   npx tsx scripts/reanalise-nat74/test-recalculo-campanha.ts
  */
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -39,7 +40,13 @@ try {
   });
 
   const refD = lerJson<Parameters<typeof regraDaTela>[1]>(join(EVAL, "ground-truth-processos.json"));
-  const refA = lerJson<Parameters<typeof regraDaTela>[1]>(join(EVAL, "ground-truth-solicitacao.json"));
+  // A regra de desfecho foi pré-registrada para a solicitacao 2.0.0 (commit def2125). A 2.1.0 (migração de ids, NAT-117) não
+  // tem regra própria até a autora a registrar: o teste lê a 2.0.0 congelada, e a 2.1.0 do repositório tem de ser recusada.
+  const refA = JSON.parse(execFileSync("git", ["show", "def2125:ground-truth-solicitacao.json"], { cwd: EVAL, encoding: "utf8", maxBuffer: 1 << 26 })) as Parameters<typeof regraDaTela>[1];
+  const refAAtual = lerJson<Parameters<typeof regraDaTela>[1]>(join(EVAL, "ground-truth-solicitacao.json"));
+  if (refAAtual._meta.version !== "2.0.0") t("solicitacao 2.1.0 (migração de ids) sem regra de desfecho pré-registrada: recusa", () => {
+    assert.throws(() => regraDaTela("solicitacao", refAAtual), /sem regra de desfecho pré-registrada/);
+  });
   t("desfecho §5.1 + D-102: primário por SPEC nas duas telas (D: 9 não expostas, 13 como sensibilidade; A: 12 A-*, unidades A-* como sensibilidade, P-* à parte); outra tela recusa", () => {
     const d = regraDaTela("processos", refD), a = regraDaTela("solicitacao", refA);
     const pd = conjuntoDe(d, "primario"), pa = conjuntoDe(a, "primario");

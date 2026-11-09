@@ -1,6 +1,284 @@
 {
   "_meta": {
-    "version": "1.0.0",
+    "version": "1.1.0",
+    "historico": [
+      {
+        "de": "1.0.0",
+        "para": "1.1.0",
+        "data": "2026-11-04",
+        "motivo": "D-168 (autora: \"declarar\"). Só declaração e migração de ids; nenhum fato, âncora, unidade, estado, controle nem texto de norma muda. (1) `dominio: { regra, registros }` em toda spec de parada em rota de registro fora da casca da aplicação (B-20, B-21, B-22, B-23, B-24, B-27), pela evidência da medição sem modelo arquivada; B-15…B-19 (casca, `pnip-header`) ficam sem domínio, como na regra D-165 § 3. (2) `rules[]`: ids da base 3.7.0 antiga trocados pela(s) unidade(s) da base literal que carregam a mesma cláusula (scripts/rules-legado.ts: sucessor do legacy-ids.json; id descartado → unidade literal de texto normalizado igual ou que começa pelo antigo; senão nenhuma); o `rules[]` antigo fica em `rulesLegado[]` (proveniência). Specs sem id legado (B-15, B-28, B-29) não mudam.",
+        "evidencia": {
+          "arquivo": "tela-b/vistorias/medicao-dominio-2026-11-04.json",
+          "sha256": "55e68c9dc104d03bb70009e55c560e6ded8bc65f3ee915e96aaf287949a8a198"
+        },
+        "baseLiteral": {
+          "validador": "govbr-ds-validator 3.7.2 (cd11347), build em .tmp-eval/validator-372",
+          "fontes": {
+            "data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/rules.jsonl": "c8c4327d3b4c9eea173f96ce2ee72d0eeddbb534f5da6409627c921d30879a0f",
+            "data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/carried-over.jsonl": "16e0a764e4a0f05b3f116df83f1400598a95173f5dec34f775c0a9b843cade19",
+            "data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/legacy-ids.json": "3f85974355af8b4f402666f20c35a732478c5988dfd2e39aa739d457a883ef8b"
+          }
+        },
+        "migracao": [
+          {
+            "spec": "B-01",
+            "de": "govbr-3.7.0-accessibility-global-7d2b85f81c52",
+            "para": [
+              "govbr-3.7.0-accessibility-global-735a059968e3"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-02",
+            "de": "govbr-3.7.0-accessibility-global-3ac0aaa53900",
+            "para": [
+              "govbr-3.7.0-accessibility-global-eae0553d6387"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-03",
+            "de": "govbr-3.7.0-accessibility-global-cd705eb5da2a",
+            "para": [
+              "govbr-3.7.0-accessibility-global-8ca3df343265"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-04",
+            "de": "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+            "para": [
+              "govbr-3.7.0-accessibility-global-1c77d9289315"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-04",
+            "de": "govbr-3.7.0-accessibility-global-b5fad7ce076d",
+            "para": [],
+            "como": "sem-unidade"
+          },
+          {
+            "spec": "B-05",
+            "de": "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+            "para": [
+              "govbr-3.7.0-accessibility-global-1c77d9289315"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-05",
+            "de": "govbr-3.7.0-accessibility-global-b5fad7ce076d",
+            "para": [],
+            "como": "sem-unidade"
+          },
+          {
+            "spec": "B-06",
+            "de": "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+            "para": [
+              "govbr-3.7.0-accessibility-global-1c77d9289315"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-06",
+            "de": "govbr-3.7.0-accessibility-global-b5fad7ce076d",
+            "para": [],
+            "como": "sem-unidade"
+          },
+          {
+            "spec": "B-07",
+            "de": "govbr-3.7.0-accessibility-global-7e6420514860",
+            "para": [
+              "govbr-3.7.0-accessibility-global-f12b1bae5784"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-08",
+            "de": "govbr-3.7.0-component-button-4d7b5f978df1",
+            "para": [
+              "govbr-3.7.0-component-button-7ef75d42ac65"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-09",
+            "de": "govbr-3.7.0-component-button-4d7b5f978df1",
+            "para": [
+              "govbr-3.7.0-component-button-7ef75d42ac65"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-10",
+            "de": "govbr-3.7.0-component-button-4d7b5f978df1",
+            "para": [
+              "govbr-3.7.0-component-button-7ef75d42ac65"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-11",
+            "de": "govbr-3.7.0-accessibility-global-e6fd5e1247de",
+            "para": [
+              "govbr-3.7.0-accessibility-global-cba01678f54a"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-11",
+            "de": "govbr-3.7.0-accessibility-global-f639993e9416",
+            "para": [
+              "govbr-3.7.0-accessibility-global-5e5dd3d9b3cb"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-12",
+            "de": "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+            "para": [
+              "govbr-3.7.0-accessibility-global-d3badaa7e5ca"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-13",
+            "de": "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+            "para": [
+              "govbr-3.7.0-accessibility-global-d3badaa7e5ca"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-14",
+            "de": "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+            "para": [
+              "govbr-3.7.0-accessibility-global-d3badaa7e5ca"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-16",
+            "de": "govbr-3.7.0-accessibility-global-3a3e47354c53",
+            "para": [
+              "govbr-3.7.0-accessibility-global-543ad367fffa"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-17",
+            "de": "govbr-3.7.0-accessibility-global-e038367bd7d6",
+            "para": [
+              "govbr-3.7.0-accessibility-global-5817ddd685a6"
+            ],
+            "como": "texto-normalizado"
+          },
+          {
+            "spec": "B-18",
+            "de": "govbr-3.7.0-accessibility-global-7e6420514860",
+            "para": [
+              "govbr-3.7.0-accessibility-global-f12b1bae5784"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-19",
+            "de": "govbr-3.7.0-accessibility-global-e6fd5e1247de",
+            "para": [
+              "govbr-3.7.0-accessibility-global-cba01678f54a"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-19",
+            "de": "govbr-3.7.0-accessibility-global-f639993e9416",
+            "para": [
+              "govbr-3.7.0-accessibility-global-5e5dd3d9b3cb"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-19",
+            "de": "govbr-3.7.0-accessibility-list-03813ffeeb42",
+            "para": [
+              "govbr-3.7.0-accessibility-list-300a3d636087"
+            ],
+            "como": "texto-normalizado"
+          },
+          {
+            "spec": "B-20",
+            "de": "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+            "para": [
+              "govbr-3.7.0-accessibility-global-1c77d9289315"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-20",
+            "de": "govbr-3.7.0-accessibility-global-b5fad7ce076d",
+            "para": [],
+            "como": "sem-unidade"
+          },
+          {
+            "spec": "B-21",
+            "de": "govbr-3.7.0-accessibility-global-3ac0aaa53900",
+            "para": [
+              "govbr-3.7.0-accessibility-global-eae0553d6387"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-22",
+            "de": "govbr-3.7.0-accessibility-global-cd705eb5da2a",
+            "para": [
+              "govbr-3.7.0-accessibility-global-8ca3df343265"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-23",
+            "de": "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+            "para": [
+              "govbr-3.7.0-accessibility-global-d3badaa7e5ca"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-24",
+            "de": "govbr-3.7.0-accessibility-global-e038367bd7d6",
+            "para": [
+              "govbr-3.7.0-accessibility-global-5817ddd685a6"
+            ],
+            "como": "texto-normalizado"
+          },
+          {
+            "spec": "B-25",
+            "de": "govbr-3.7.0-accessibility-global-5d5a5f21d94b",
+            "para": [
+              "govbr-3.7.0-accessibility-global-e77859710a44"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-26",
+            "de": "govbr-3.7.0-accessibility-global-1ccbc61dddbc",
+            "para": [
+              "govbr-3.7.0-accessibility-global-9b31bc6b5b43"
+            ],
+            "como": "legado-sucessor"
+          },
+          {
+            "spec": "B-27",
+            "de": "govbr-3.7.0-accessibility-modal-64b84991229c",
+            "para": [
+              "govbr-3.7.0-accessibility-modal-9be44ed1a8e0"
+            ],
+            "como": "texto-normalizado"
+          }
+        ]
+      }
+    ],
     "status": "congelada — 2026-10-01 (D-61): escaladas decididas pela autora, re-medida independente feita (1acf20b), portões repassados",
     "version_note": "1.0.0 (2026-10-01, D-61): congelamento da 1.0.0-candidata. A autora aceitou a recomendação do assistente para os 20 itens escalados (tela-b/vistorias/recomendacoes-escaladas.md): E-01, E-04, E-06 e E-07 viram unidade (B-25…B-29, origem autora), E-18 vira o controle C-13, e as demais ficam fora com motivo. E-20 era recomendada como unidade, mas a medida feita ao aplicar desmentiu a premissa: o botão user-times chama a mesma ação de atribuir (diálogo \"Atribuir Vistoriador\", POST /atribuir-vistoriador), então o nome corresponde à ação e o critério da recomendação não é atendido; ficou fora. B-02 e B-07/B-18 mantidas (citações ⚠). 29 specs, 102 unidades, 4 estados em 3 segmentos. 1.0.0-candidata (2026-09-30, fatia 8 / D-49, D-57, D-58): referência AUDITADA da tela B (Vistorias PROPESC do PNIP, build do modo mock congelado em govbr-corpus/public/pnip/), saída da auditoria por medição de tela-b/metodo-auditoria.md (govbr-eval 5838702) com o adendo tela-b/metodo-auditoria-adendo-vistorias.md (9406aed), executada por assistente LLM sem o oráculo. É incompleta por natureza: recall nesta tela é \"contra a referência auditada\", e alegações corretas fora dela são descobertas (D-48) que não mudam o denominador. Escrita ANTES de qualquer execução de modelo sobre a tela. Não congelada: faltam as decisões da autora sobre a lista escalada (tela-b/vistorias/auditoria.md § 8), a re-medida do segundo agente e a ratificação no log. 24 specs, 96 unidades, 4 estados em 3 segmentos.",
     "page": "Vistorias PROPESC do PNIP — tela B da fatia 8 (D-57), aplicação real em modo mock",
@@ -277,6 +555,11 @@
       "expectedCount": 1,
       "state": "sempre",
       "rules": [
+        "govbr-3.7.0-accessibility-global-735a059968e3",
+        "emag:1.5",
+        "wcag:2.4.1"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-7d2b85f81c52",
         "emag:1.5",
         "wcag:2.4.1"
@@ -294,6 +577,11 @@
       "expectedCount": 1,
       "state": "inicial",
       "rules": [
+        "govbr-3.7.0-accessibility-global-eae0553d6387",
+        "emag:1.3",
+        "wcag:1.3.1"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-3ac0aaa53900",
         "emag:1.3",
         "wcag:1.3.1"
@@ -311,6 +599,11 @@
       "expectedCount": 1,
       "state": "inicial",
       "rules": [
+        "govbr-3.7.0-accessibility-global-8ca3df343265",
+        "emag:3.9",
+        "wcag:1.3.1"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-cd705eb5da2a",
         "emag:3.9",
         "wcag:1.3.1"
@@ -328,6 +621,11 @@
       "expectedCount": 1,
       "state": "inicial",
       "rules": [
+        "govbr-3.7.0-accessibility-global-1c77d9289315",
+        "emag:6.2",
+        "wcag:1.3.1"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-b95c42b61ed3",
         "emag:6.2",
         "wcag:1.3.1",
@@ -346,6 +644,11 @@
       "expectedCount": 2,
       "state": "inicial",
       "rules": [
+        "govbr-3.7.0-accessibility-global-1c77d9289315",
+        "emag:6.2",
+        "wcag:1.3.1"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-b95c42b61ed3",
         "emag:6.2",
         "wcag:1.3.1",
@@ -364,6 +667,11 @@
       "expectedCount": 11,
       "state": "inicial",
       "rules": [
+        "govbr-3.7.0-accessibility-global-1c77d9289315",
+        "emag:6.2",
+        "wcag:1.3.1"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-b95c42b61ed3",
         "emag:6.2",
         "wcag:1.3.1",
@@ -382,6 +690,11 @@
       "expectedCount": 10,
       "state": "inicial",
       "rules": [
+        "govbr-3.7.0-accessibility-global-f12b1bae5784",
+        "emag:1.1",
+        "wcag:4.1.2"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-7e6420514860",
         "emag:1.1",
         "wcag:4.1.2"
@@ -398,6 +711,9 @@
       "expectedCount": 40,
       "state": "inicial",
       "rules": [
+        "govbr-3.7.0-component-button-7ef75d42ac65"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-component-button-4d7b5f978df1"
       ],
       "categories": [
@@ -412,6 +728,9 @@
       "expectedCount": 1,
       "state": "inicial",
       "rules": [
+        "govbr-3.7.0-component-button-7ef75d42ac65"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-component-button-4d7b5f978df1"
       ],
       "categories": [
@@ -426,6 +745,9 @@
       "expectedCount": 2,
       "state": "inicial",
       "rules": [
+        "govbr-3.7.0-component-button-7ef75d42ac65"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-component-button-4d7b5f978df1"
       ],
       "categories": [
@@ -440,6 +762,14 @@
       "expectedCount": 4,
       "state": "inicial",
       "rules": [
+        "govbr-3.7.0-accessibility-global-cba01678f54a",
+        "emag:2.1",
+        "wcag:2.1.1",
+        "govbr-3.7.0-accessibility-global-5e5dd3d9b3cb",
+        "emag:2.2",
+        "govbr-3.7.0-accessibility-global-41850b4791b8"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-e6fd5e1247de",
         "emag:2.1",
         "wcag:2.1.1",
@@ -467,6 +797,11 @@
       "expectedCount": 10,
       "state": "inicial",
       "rules": [
+        "govbr-3.7.0-accessibility-global-d3badaa7e5ca",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
         "emag:4.1",
         "wcag:1.4.3"
@@ -484,6 +819,11 @@
       "expectedCount": 1,
       "state": "inicial",
       "rules": [
+        "govbr-3.7.0-accessibility-global-d3badaa7e5ca",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
         "emag:4.1",
         "wcag:1.4.3"
@@ -501,6 +841,11 @@
       "expectedCount": 1,
       "state": "sempre",
       "rules": [
+        "govbr-3.7.0-accessibility-global-d3badaa7e5ca",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
         "emag:4.1",
         "wcag:1.4.3"
@@ -539,6 +884,11 @@
       "expectedCount": 1,
       "state": "detalhe-menu",
       "rules": [
+        "govbr-3.7.0-accessibility-global-543ad367fffa",
+        "emag:3.6",
+        "wcag:1.1.1"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-3a3e47354c53",
         "emag:3.6",
         "wcag:1.1.1"
@@ -561,6 +911,9 @@
       "expectedCount": 1,
       "state": "detalhe-menu",
       "rules": [
+        "govbr-3.7.0-accessibility-global-5817ddd685a6"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-e038367bd7d6"
       ],
       "categories": [
@@ -575,6 +928,11 @@
       "expectedCount": 1,
       "state": "detalhe-menu",
       "rules": [
+        "govbr-3.7.0-accessibility-global-f12b1bae5784",
+        "emag:1.1",
+        "wcag:4.1.1"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-7e6420514860",
         "emag:1.1",
         "wcag:4.1.1"
@@ -591,6 +949,15 @@
       "expectedCount": 1,
       "state": "detalhe-menu",
       "rules": [
+        "govbr-3.7.0-accessibility-global-cba01678f54a",
+        "emag:2.1",
+        "wcag:2.1.1",
+        "govbr-3.7.0-accessibility-global-5e5dd3d9b3cb",
+        "emag:2.2",
+        "govbr-3.7.0-accessibility-global-41850b4791b8",
+        "govbr-3.7.0-accessibility-list-300a3d636087"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-e6fd5e1247de",
         "emag:2.1",
         "wcag:2.1.1",
@@ -619,6 +986,11 @@
       "expectedCount": 1,
       "state": "detalhe-menu",
       "rules": [
+        "govbr-3.7.0-accessibility-global-1c77d9289315",
+        "emag:6.2",
+        "wcag:1.3.1"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-b95c42b61ed3",
         "emag:6.2",
         "wcag:1.3.1",
@@ -628,7 +1000,20 @@
         "formulario",
         "acessibilidade"
       ],
-      "description": "Detalhe da vistoria de não comparecimento: a <textarea> do motivo tem um <label> \"Descrever o motivo do não comparecimento\" como irmão, mas sem for (e a textarea sem id): o rótulo não está associado; nome acessível vazio. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+      "description": "Detalhe da vistoria de não comparecimento: a <textarea> do motivo tem um <label> \"Descrever o motivo do não comparecimento\" como irmão, mas sem for (e a textarea sem id): o rótulo não está associado; nome acessível vazio. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.",
+      "dominio": {
+        "regra": "Mesma rota parametrizada `/pnip/portal-mpa/vistorias/agendar-vistoria/<registro>` e mesmo componente `pnip-propesc-agendar-vistoria`, e nele o mesmo sujeito com o mesmo defeito: a textarea visível do motivo (`.br-textarea textarea`), sem id, com um <label> irmão \"Descrever o motivo do não comparecimento\" sem `for`, nenhum aria-label/aria-labelledby e nome acessível vazio na árvore do Chromium. Só os detalhes de não comparecimento ainda em Tramitando a têm; nos concluídos ela não existe e nos preenchidos fica oculta. Evidência: tela-b/vistorias/medicao-dominio-2026-11-04.json (sha256 em _meta.historico), medição sem modelo dos 69 registros de detalhe alcançáveis pela lista (D-168).",
+        "registros": [
+          "00000000-0000-4000-8a01-000000003039",
+          "00000000-0000-4000-8a01-000000003040",
+          "00000000-0000-4000-8a01-000000003041",
+          "00000000-0000-4000-8a01-000000003042",
+          "00000000-0000-4000-8a01-000000003043",
+          "00000000-0000-4000-8a01-000000003044",
+          "00000000-0000-4000-8a01-000000003045",
+          "00000000-0000-4000-8a01-000000003046"
+        ]
+      }
     },
     {
       "id": "B-21",
@@ -637,6 +1022,11 @@
       "expectedCount": 1,
       "state": "detalhe",
       "rules": [
+        "govbr-3.7.0-accessibility-global-eae0553d6387",
+        "emag:1.3",
+        "wcag:1.3.1"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-3ac0aaa53900",
         "emag:1.3",
         "wcag:1.3.1"
@@ -645,7 +1035,81 @@
         "estrutura",
         "acessibilidade"
       ],
-      "description": "Detalhe da vistoria: a hierarquia começa num <h3> (\"Programa Nacional de Regularização de Embarcação de Pesca\"), seguido de <h4>; não há <h1> nem <h2>. Unidade única para o template do detalhe, ancorada na parada `detalhe` (o mesmo template da parada detalhe-menu não é contado de novo; auditoria.md § 5). Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+      "description": "Detalhe da vistoria: a hierarquia começa num <h3> (\"Programa Nacional de Regularização de Embarcação de Pesca\"), seguido de <h4>; não há <h1> nem <h2>. Unidade única para o template do detalhe, ancorada na parada `detalhe` (o mesmo template da parada detalhe-menu não é contado de novo; auditoria.md § 5). Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.",
+      "dominio": {
+        "regra": "Mesma rota parametrizada `/pnip/portal-mpa/vistorias/agendar-vistoria/<registro>` e mesmo componente `pnip-propesc-agendar-vistoria`, e nele o mesmo defeito do template comum: nenhum h1 nem h2 visível no documento e o primeiro título do detalhe é o h3 \"Programa Nacional de Regularização de Embarcação de Pesca\", seguido de h4. As seções h4 variam com a situação do registro e não contam para a identidade. Evidência: tela-b/vistorias/medicao-dominio-2026-11-04.json (sha256 em _meta.historico), medição sem modelo dos 69 registros de detalhe alcançáveis pela lista (D-168).",
+        "registros": [
+          "00000000-0000-4000-8a01-000000003001",
+          "00000000-0000-4000-8a01-000000003002",
+          "00000000-0000-4000-8a01-000000003003",
+          "00000000-0000-4000-8a01-000000003004",
+          "00000000-0000-4000-8a01-000000003005",
+          "00000000-0000-4000-8a01-000000003006",
+          "00000000-0000-4000-8a01-000000003007",
+          "00000000-0000-4000-8a01-000000003008",
+          "00000000-0000-4000-8a01-000000003009",
+          "00000000-0000-4000-8a01-000000003010",
+          "00000000-0000-4000-8a01-000000003011",
+          "00000000-0000-4000-8a01-000000003012",
+          "00000000-0000-4000-8a01-000000003013",
+          "00000000-0000-4000-8a01-000000003014",
+          "00000000-0000-4000-8a01-000000003015",
+          "00000000-0000-4000-8a01-000000003016",
+          "00000000-0000-4000-8a01-000000003017",
+          "00000000-0000-4000-8a01-000000003018",
+          "00000000-0000-4000-8a01-000000003019",
+          "00000000-0000-4000-8a01-000000003020",
+          "00000000-0000-4000-8a01-000000003021",
+          "00000000-0000-4000-8a01-000000003022",
+          "00000000-0000-4000-8a01-000000003023",
+          "00000000-0000-4000-8a01-000000003024",
+          "00000000-0000-4000-8a01-000000003025",
+          "00000000-0000-4000-8a01-000000003026",
+          "00000000-0000-4000-8a01-000000003027",
+          "00000000-0000-4000-8a01-000000003028",
+          "00000000-0000-4000-8a01-000000003029",
+          "00000000-0000-4000-8a01-000000003030",
+          "00000000-0000-4000-8a01-000000003031",
+          "00000000-0000-4000-8a01-000000003032",
+          "00000000-0000-4000-8a01-000000003033",
+          "00000000-0000-4000-8a01-000000003034",
+          "00000000-0000-4000-8a01-000000003035",
+          "00000000-0000-4000-8a01-000000003036",
+          "00000000-0000-4000-8a01-000000003037",
+          "00000000-0000-4000-8a01-000000003038",
+          "00000000-0000-4000-8a01-000000003039",
+          "00000000-0000-4000-8a01-000000003040",
+          "00000000-0000-4000-8a01-000000003041",
+          "00000000-0000-4000-8a01-000000003042",
+          "00000000-0000-4000-8a01-000000003043",
+          "00000000-0000-4000-8a01-000000003044",
+          "00000000-0000-4000-8a01-000000003045",
+          "00000000-0000-4000-8a01-000000003046",
+          "00000000-0000-4000-8a01-000000003047",
+          "00000000-0000-4000-8a01-000000003048",
+          "00000000-0000-4000-8a01-000000003049",
+          "00000000-0000-4000-8a01-000000003050",
+          "00000000-0000-4000-8a01-000000003051",
+          "00000000-0000-4000-8a01-000000003052",
+          "00000000-0000-4000-8a01-000000003053",
+          "00000000-0000-4000-8a01-000000003054",
+          "00000000-0000-4000-8a01-000000003055",
+          "00000000-0000-4000-8a01-000000003056",
+          "00000000-0000-4000-8a01-000000003057",
+          "00000000-0000-4000-8a01-000000003058",
+          "00000000-0000-4000-8a01-000000003059",
+          "00000000-0000-4000-8a01-000000003060",
+          "00000000-0000-4000-8a01-000000003061",
+          "00000000-0000-4000-8a01-000000003062",
+          "00000000-0000-4000-8a01-000000003063",
+          "00000000-0000-4000-8a01-000000003064",
+          "00000000-0000-4000-8a01-000000003065",
+          "00000000-0000-4000-8a01-000000003066",
+          "00000000-0000-4000-8a01-000000003067",
+          "00000000-0000-4000-8a01-000000003068",
+          "00000000-0000-4000-8a01-000000003069"
+        ]
+      }
     },
     {
       "id": "B-22",
@@ -654,6 +1118,11 @@
       "expectedCount": 1,
       "state": "detalhe",
       "rules": [
+        "govbr-3.7.0-accessibility-global-8ca3df343265",
+        "emag:3.9",
+        "wcag:1.3.1"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-cd705eb5da2a",
         "emag:3.9",
         "wcag:1.3.1"
@@ -662,7 +1131,48 @@
         "estrutura",
         "acessibilidade"
       ],
-      "description": "Tabela \"Dados da Notificação\" do detalhe (Status, Data, Hora) sem <caption>, aria-label nem aria-labelledby: nome acessível vazio. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+      "description": "Tabela \"Dados da Notificação\" do detalhe (Status, Data, Hora) sem <caption>, aria-label nem aria-labelledby: nome acessível vazio. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.",
+      "dominio": {
+        "regra": "Mesma rota parametrizada `/pnip/portal-mpa/vistorias/agendar-vistoria/<registro>` e mesmo componente `pnip-propesc-agendar-vistoria`, e nele o mesmo sujeito com o mesmo defeito: a tabela visível precedida do h4 \"Dados da Notificação\", com os cabeçalhos Status, Data e Hora, sem <caption>, aria-label nem aria-labelledby, nome acessível vazio. Outra tabela do detalhe (o histórico Data/Solicitante/…/Arquivos dos concluídos) não é este sujeito; registro sem essa tabela fica fora. Evidência: tela-b/vistorias/medicao-dominio-2026-11-04.json (sha256 em _meta.historico), medição sem modelo dos 69 registros de detalhe alcançáveis pela lista (D-168).",
+        "registros": [
+          "00000000-0000-4000-8a01-000000003013",
+          "00000000-0000-4000-8a01-000000003019",
+          "00000000-0000-4000-8a01-000000003025",
+          "00000000-0000-4000-8a01-000000003029",
+          "00000000-0000-4000-8a01-000000003030",
+          "00000000-0000-4000-8a01-000000003031",
+          "00000000-0000-4000-8a01-000000003032",
+          "00000000-0000-4000-8a01-000000003033",
+          "00000000-0000-4000-8a01-000000003034",
+          "00000000-0000-4000-8a01-000000003035",
+          "00000000-0000-4000-8a01-000000003036",
+          "00000000-0000-4000-8a01-000000003037",
+          "00000000-0000-4000-8a01-000000003038",
+          "00000000-0000-4000-8a01-000000003047",
+          "00000000-0000-4000-8a01-000000003048",
+          "00000000-0000-4000-8a01-000000003049",
+          "00000000-0000-4000-8a01-000000003050",
+          "00000000-0000-4000-8a01-000000003051",
+          "00000000-0000-4000-8a01-000000003052",
+          "00000000-0000-4000-8a01-000000003053",
+          "00000000-0000-4000-8a01-000000003054",
+          "00000000-0000-4000-8a01-000000003055",
+          "00000000-0000-4000-8a01-000000003056",
+          "00000000-0000-4000-8a01-000000003057",
+          "00000000-0000-4000-8a01-000000003058",
+          "00000000-0000-4000-8a01-000000003059",
+          "00000000-0000-4000-8a01-000000003060",
+          "00000000-0000-4000-8a01-000000003061",
+          "00000000-0000-4000-8a01-000000003062",
+          "00000000-0000-4000-8a01-000000003063",
+          "00000000-0000-4000-8a01-000000003064",
+          "00000000-0000-4000-8a01-000000003065",
+          "00000000-0000-4000-8a01-000000003066",
+          "00000000-0000-4000-8a01-000000003067",
+          "00000000-0000-4000-8a01-000000003068",
+          "00000000-0000-4000-8a01-000000003069"
+        ]
+      }
     },
     {
       "id": "B-23",
@@ -671,6 +1181,11 @@
       "expectedCount": 1,
       "state": "detalhe",
       "rules": [
+        "govbr-3.7.0-accessibility-global-d3badaa7e5ca",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
         "emag:4.1",
         "wcag:1.4.3"
@@ -679,7 +1194,22 @@
         "acessibilidade",
         "token"
       ],
-      "description": "Indicador \"0%\" do detalhe: texto branco (text-secondary-01) sobre #888 (bg-secondary-06), 14 px peso 400 — contraste 3,54:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs."
+      "description": "Indicador \"0%\" do detalhe: texto branco (text-secondary-01) sobre #888 (bg-secondary-06), 14 px peso 400 — contraste 3,54:1. Sem predicado na referência; medido em tela-b/vistorias/conferir-auditoria.mjs.",
+      "dominio": {
+        "regra": "Mesma rota parametrizada `/pnip/portal-mpa/vistorias/agendar-vistoria/<registro>` e mesmo componente `pnip-propesc-agendar-vistoria`, e nele o mesmo sujeito com o mesmo defeito: o indicador \"0%\" da seção Conclusão (`.bg-secondary-06 > .text-secondary-01`), texto branco sobre #888 (bg-secondary-06), 14 px peso 400, contraste 3,54:1. Outro texto no mesmo seletor (\"Aguarda preenchimento\" da seção Vistoria, \"60%\" de Envio de documentação) não é este sujeito, mesmo com as mesmas cores. Evidência: tela-b/vistorias/medicao-dominio-2026-11-04.json (sha256 em _meta.historico), medição sem modelo dos 69 registros de detalhe alcançáveis pela lista (D-168).",
+        "registros": [
+          "00000000-0000-4000-8a01-000000003029",
+          "00000000-0000-4000-8a01-000000003030",
+          "00000000-0000-4000-8a01-000000003031",
+          "00000000-0000-4000-8a01-000000003032",
+          "00000000-0000-4000-8a01-000000003033",
+          "00000000-0000-4000-8a01-000000003034",
+          "00000000-0000-4000-8a01-000000003035",
+          "00000000-0000-4000-8a01-000000003036",
+          "00000000-0000-4000-8a01-000000003037",
+          "00000000-0000-4000-8a01-000000003038"
+        ]
+      }
     },
     {
       "id": "B-24",
@@ -689,6 +1219,9 @@
       "state": "modal",
       "conditional": true,
       "rules": [
+        "govbr-3.7.0-accessibility-global-5817ddd685a6"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-e038367bd7d6"
       ],
       "categories": [
@@ -703,7 +1236,22 @@
           "aria-labelledby"
         ]
       },
-      "description": "O br-modal \"Trocar embarcação\" (div.br-modal medium) não declara role dialog/alertdialog, aria-modal nem nome: a árvore de acessibilidade do Chromium não expõe nenhum diálogo quando ele está aberto. Só existe depois do clique em \"Trocar embarcação da vistoria\"."
+      "description": "O br-modal \"Trocar embarcação\" (div.br-modal medium) não declara role dialog/alertdialog, aria-modal nem nome: a árvore de acessibilidade do Chromium não expõe nenhum diálogo quando ele está aberto. Só existe depois do clique em \"Trocar embarcação da vistoria\".",
+      "dominio": {
+        "regra": "Mesma rota parametrizada `/pnip/portal-mpa/vistorias/agendar-vistoria/<registro>` e mesmo componente `pnip-propesc-agendar-vistoria`, e nele o mesmo sujeito com o mesmo defeito: o br-modal de `pnip-propesc-trocar-embarcacao`, aberto pelo botão \"Trocar embarcação da vistoria\", sem role, aria-modal, aria-label nem aria-labelledby, e nenhum nó dialog/alertdialog na árvore do Chromium com ele aberto. Evidência: tela-b/vistorias/medicao-dominio-2026-11-04.json (sha256 em _meta.historico), medição sem modelo dos 69 registros de detalhe alcançáveis pela lista (D-168).",
+        "registros": [
+          "00000000-0000-4000-8a01-000000003029",
+          "00000000-0000-4000-8a01-000000003030",
+          "00000000-0000-4000-8a01-000000003031",
+          "00000000-0000-4000-8a01-000000003032",
+          "00000000-0000-4000-8a01-000000003033",
+          "00000000-0000-4000-8a01-000000003034",
+          "00000000-0000-4000-8a01-000000003035",
+          "00000000-0000-4000-8a01-000000003036",
+          "00000000-0000-4000-8a01-000000003037",
+          "00000000-0000-4000-8a01-000000003038"
+        ]
+      }
     },
     {
       "id": "B-25",
@@ -712,6 +1260,11 @@
       "expectedCount": 1,
       "state": "sempre",
       "rules": [
+        "govbr-3.7.0-accessibility-global-e77859710a44",
+        "emag:3.3",
+        "wcag:2.4.2"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-5d5a5f21d94b",
         "emag:3.3",
         "wcag:2.4.2"
@@ -729,6 +1282,11 @@
       "expectedCount": 1,
       "state": "inicial",
       "rules": [
+        "govbr-3.7.0-accessibility-global-9b31bc6b5b43",
+        "emag:3.10",
+        "wcag:1.3.1"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-global-1ccbc61dddbc",
         "emag:3.10",
         "wcag:1.3.1"
@@ -747,13 +1305,31 @@
       "state": "modal",
       "conditional": true,
       "rules": [
+        "govbr-3.7.0-accessibility-modal-9be44ed1a8e0"
+      ],
+      "rulesLegado": [
         "govbr-3.7.0-accessibility-modal-64b84991229c"
       ],
       "categories": [
         "navegacao",
         "acessibilidade"
       ],
-      "description": "Escalada E-06, origem: \"autora\" (decisão da escalada, 2026-10-01, D-61). Com o br-modal \"Trocar embarcação\" aberto, Tab sai do modal depois do último controle (Trocar) e percorre os botões do detalhe, o cabeçalho e o breadcrumb por trás do scrim antes de voltar: o foco não fica contido na Modal aberta. Só existe depois do clique em \"Trocar embarcação da vistoria\". Sem predicado na referência; medido por Tab real em tela-b/vistorias/conferir-auditoria.mjs."
+      "description": "Escalada E-06, origem: \"autora\" (decisão da escalada, 2026-10-01, D-61). Com o br-modal \"Trocar embarcação\" aberto, Tab sai do modal depois do último controle (Trocar) e percorre os botões do detalhe, o cabeçalho e o breadcrumb por trás do scrim antes de voltar: o foco não fica contido na Modal aberta. Só existe depois do clique em \"Trocar embarcação da vistoria\". Sem predicado na referência; medido por Tab real em tela-b/vistorias/conferir-auditoria.mjs.",
+      "dominio": {
+        "regra": "Mesma rota parametrizada `/pnip/portal-mpa/vistorias/agendar-vistoria/<registro>` e mesmo componente `pnip-propesc-agendar-vistoria`, e nele o mesmo sujeito com o mesmo defeito: com o br-modal \"Trocar embarcação\" aberto, Tab real a partir do primeiro controle do modal sai dele e percorre a página por trás (foco não contido). Evidência: tela-b/vistorias/medicao-dominio-2026-11-04.json (sha256 em _meta.historico), medição sem modelo dos 69 registros de detalhe alcançáveis pela lista (D-168).",
+        "registros": [
+          "00000000-0000-4000-8a01-000000003029",
+          "00000000-0000-4000-8a01-000000003030",
+          "00000000-0000-4000-8a01-000000003031",
+          "00000000-0000-4000-8a01-000000003032",
+          "00000000-0000-4000-8a01-000000003033",
+          "00000000-0000-4000-8a01-000000003034",
+          "00000000-0000-4000-8a01-000000003035",
+          "00000000-0000-4000-8a01-000000003036",
+          "00000000-0000-4000-8a01-000000003037",
+          "00000000-0000-4000-8a01-000000003038"
+        ]
+      }
     },
     {
       "id": "B-28",
