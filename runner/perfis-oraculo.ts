@@ -23,8 +23,8 @@ export const temOraculo = (b: Braco): boolean => PERFIL_DO_BRACO[b] !== null;
 
 /**
  * Ferramentas que cada perfil registra, em ordem alfabética, e o sha256 de `JSON.stringify(tools)` do
- * tools/list (cliente MCP 1.29.0, o mesmo da ponte). Os pins VIGENTES (só para campanhas NOVAS) são os do
- * validator 3.6.1 (3e0897b), medidos em 2026-10-31; vigentes também na 3.6.2 (3801924), que não muda tools/list nem instructions contra o dist/ construído de 3e0897b com o
+ * tools/list (cliente MCP 1.29.0, o mesmo da ponte). Os pins VIGENTES (só para campanhas NOVAS) são os da 3.7.3
+ * (TOOLS_LIST_SHA256_3_7_3, acima da tabela da 3.6.1); antes, os do validator 3.6.1 (3e0897b), medidos em 2026-10-31; vigentes também na 3.6.2 (3801924), que não muda tools/list nem instructions contra o dist/ construído de 3e0897b com o
  * SDK 1.29.0 da ponte (stdio, GOVBR_VALIDATOR_TOOL_PROFILE=<perfil>, sem GOVBR_RETRIEVAL_MODE = busca
  * léxica padrão, sha256 de JSON.stringify(tools)) e de novo dentro da imagem do oráculo travada.
  * Da 3.6.0 para a 3.6.1 mudaram evaluation, full, normative e deterministic; knowledge-free e evidence
@@ -39,6 +39,22 @@ export const temOraculo = (b: Braco): boolean => PERFIL_DO_BRACO[b] !== null;
  * knowledge-free 72abd549…); a tabela da 3.0.0 fica abaixo só como registro.
  * Mudou de propósito? Mude aqui E no validator, e declare: é diferença de tratamento do braço.
  */
+/**
+ * Pins VIGENTES (campanhas novas): validator 3.7.3 (lista única 3.7.3, D-184), medidos em 2026-11-09 pelo stdio com o SDK
+ * 1.29.0 da ponte (evaluation e knowledge-free) e conferidos em memória nos seis perfis. Da 3.7.2 para a 3.7.3 mudam
+ * evaluation, knowledge-free, full, normative e deterministic (esquema comum de ações scan/verify com upload/drop, D-181;
+ * checklist de página, D-175); evidence fica igual. A 3.7.2 usava os pins da 3.6.1 abaixo.
+ */
+export const TOOLS_LIST_SHA256_3_7_3 = {
+  "knowledge-free": "5b9c59aaa490f5de2a4a497eda8a2e3dbedd25b2a8288fed8eb049f7233d40dc",
+  evaluation: "04ae14378db09bd4cdef48841e3d1a9388b701e18279fe08a04267af3c74614c",
+  full: "44242a956e42f6207546935192be6a2eda96c5185d3f45d97d0516640b0c871b",
+  normative: "57b5e9bc7dedfa6a89a823e8d8d6a5edc385ab37286a21b2b26cd11cbdb43bd6",
+  deterministic: "a8a343164defddce6fd1f35f243b44271cd6bde1be9dd4ccfe51da944bea1184",
+  evidence: "4b4f82499cfe923b26f178c9dff3f5dcf233512ddbee6128b5a6bd0cc7a81ba7",
+} as const;
+
+/** Registro: pins do validator 3.6.1 (3e0897b), vigentes da 3.6.1 à 3.7.2 (cd11347). */
 export const TOOLS_LIST_SHA256_3_6_1 = {
   "knowledge-free": "f358152ab77b8b6930687c1b12206f3821170600d52c0fda0a3dde8d0774bf44",
   evaluation: "3807ad9534e64155cc8d38bdcdfb16413ec195d482d119cedb16776420aa8063",
@@ -101,11 +117,11 @@ export const TOOLS_LIST_SHA256_3_0_0 = {
 export const PERFIS: Readonly<Record<PerfilOraculo, { tools: readonly string[]; toolsListSha256: string }>> = {
   evaluation: {
     tools: ["get_component_spec", "get_design_tokens", "get_ds_rules", "get_emag_rules", "get_finding_details", "get_page_rules", "scan_page", "verify_finding"],
-    toolsListSha256: TOOLS_LIST_SHA256_3_6_1.evaluation,
+    toolsListSha256: TOOLS_LIST_SHA256_3_7_3.evaluation,
   },
   "knowledge-free": {
     tools: ["get_finding_details", "scan_page", "verify_finding"],
-    toolsListSha256: TOOLS_LIST_SHA256_3_6_1["knowledge-free"],
+    toolsListSha256: TOOLS_LIST_SHA256_3_7_3["knowledge-free"],
   },
 };
 
