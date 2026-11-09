@@ -4,7 +4,7 @@
  *
  *   tsx scripts/pipeline-t4.ts entradas                  ENTRADAS = toJSON(inputs); grava em GITHUB_OUTPUT
  *   tsx scripts/pipeline-t4.ts conferir-imagens --travado ARQ --construido ARQ --imagens agent,screens,...
- *   tsx scripts/pipeline-t4.ts conferir-ambiente [--pacote DIR] [--checkouts DIR,DIR] [--credencial-permitida NOME]
+ *   tsx scripts/pipeline-t4.ts conferir-ambiente [--pacote DIR] [--checkouts DIR,DIR] [--credencial-permitida NOME | --modo M --conta C]
  *   tsx scripts/pipeline-t4.ts resumo-coleta --pacote DIR | resumo-linha-de-base --dir DIR | resumo-arquivo --saida-json ARQ [--arquivo DIR] [--pacote DIR]
  *
  * Os resumos começam por um cartão de saúde (NAT-58): ✅/❌ do slot, identidade, números e o próximo passo;
@@ -15,7 +15,7 @@
 import { appendFileSync, existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { EFFORT_LEVELS, CREDENTIAL_ENV } from "../runner/cliente-claude";
+import { EFFORT_LEVELS, CREDENTIAL_ENV, type UsoDaColeta } from "../runner/cliente-claude";
 import type { AnyCampaign, AnyRun } from "../contracts/index";
 import { BRACOS, temOraculo, type Braco } from "../runner/perfis-oraculo";
 import { caminhoAgenda, recusadoNoPreflight, type Agenda } from "./agenda-campanha";
@@ -28,11 +28,35 @@ const MODELO = /^[A-Za-z0-9][A-Za-z0-9._:@\-[\]]{0,127}$/;
 export const TELAS = ["solicitacao", "vistorias", "acompanhamento"] as const;
 export const MODOS = ["real", "duble", "roteirizado"] as const;
 export const ETAPAS = ["coleta+linha-de-base", "so-coleta", "so-linha-de-base"] as const;
+/**
+ * Quem paga a coleta real (input `conta`): principal e segunda = assinaturas (token OAuth), api = chave de API
+ * da organização (créditos). Cada conta tem UMA variável de credencial; o passo da coleta real só recebe ela.
+ */
+export const CONTAS = ["principal", "segunda", "api"] as const;
+export type Conta = (typeof CONTAS)[number];
+export const CREDENCIAL_DA_CONTA: Record<Conta, { env: (typeof CREDENTIAL_ENV)[number]; authMethod: "api-key" | "oauth-subscription" }> = {
+  principal: { env: "CLAUDE_CODE_OAUTH_TOKEN", authMethod: "oauth-subscription" },
+  segunda: { env: "CLAUDE_CODE_OAUTH_TOKEN", authMethod: "oauth-subscription" },
+  api: { env: "ANTHROPIC_API_KEY", authMethod: "api-key" },
+};
+/** Conta do disparo; vazio = principal (disparos de antes do input). Fora da lista = null. */
+export const contaDe = (v: string | undefined): Conta | null => {
+  const c = String(v ?? "").trim() || "principal";
+  return (CONTAS as readonly string[]).includes(c) ? c as Conta : null;
+};
+/** A credencial que pode aparecer nos contêineres: a da conta no modo real; a falsa do roteiro no dublê ("*"); nenhuma no roteirizado. */
+export function credencialPermitida(modo: string, conta: string | undefined): string {
+  if (modo === "duble") return "*";
+  if (modo !== "real") return "nenhuma";
+  const c = contaDe(conta);
+  if (!c) throw new Error(`conta desconhecida: ${String(conta)} (${CONTAS.join(" | ")})`);
+  return CREDENCIAL_DA_CONTA[c].env;
+}
 
 export interface Entradas {
   tela: string; braco: string; modo: string; modelo: string; esforco: string; limite_min: string;
   campanha: string; slot: string; par: string; tentativa: string; repeticao: string;
-  telas_sha: string; validator_sha: string; etapas: string; refazer_linha_de_base_de?: string; motivo_refazer?: string;
+  telas_sha: string; validator_sha: string; etapas: string; refazer_linha_de_base_de?: string; motivo_refazer?: string; conta?: string;
 }
 
 /** Valor das entradas que diz "venha da agenda" (braço) ou "da campanha" (esforço); texto vazio vale o mesmo. */
@@ -87,6 +111,11 @@ export function conferirEntradas(e: Partial<Entradas>, ag: AgendaDoDisparo | nul
       if (vazio("tentativa")) tentativa = "auto";
     }
     if (c.design.screens[0] && c.design.screens[0].id !== has("tela")) p.push(`tela ${has("tela")} ≠ ${c.design.screens[0].id} da campanha`);
+    // quem paga é identidade da campanha (provider.authMethod): conta=api só numa campanha congelada com api-key
+    const congelada = c.fixed.provider?.authMethod, conta = contaDe(has("conta"));
+    if (modo === "real" && conta && congelada && congelada !== "unknown" && CREDENCIAL_DA_CONTA[conta].authMethod !== congelada) {
+      p.push(`conta ${conta} paga com ${CREDENCIAL_DA_CONTA[conta].authMethod} ≠ ${congelada} congelada na campanha ${c.campaignId}`);
+    }
   } else {
     if (braco === DA_AGENDA || !braco) p.push(`braco: ${BRACOS.join(" | ")} (a campanha ${has("campanha")} não tem agenda)`);
     if (!par) par = "par-01";
@@ -108,6 +137,7 @@ export function conferirEntradas(e: Partial<Entradas>, ag: AgendaDoDisparo | nul
     if (!MODELO.test(modelo) || /duble|teste|roteirizado/i.test(modelo)) p.push("modelo: id exato do modelo (modo real)");
     if (!EFFORT_LEVELS.includes(esforco)) p.push(`esforco: ${EFFORT_LEVELS.join(" | ")}`);
   }
+  if (!contaDe(has("conta"))) p.push(`conta: ${CONTAS.join(" | ")}`);
   const rerun = has("refazer_linha_de_base_de");
   if (rerun && (!ID.test(rerun) || !has("motivo_refazer"))) p.push("refazer_linha_de_base_de exige id válido e motivo_refazer");
   if (rerun && has("etapas") !== "so-linha-de-base") p.push("refazer a linha de base só com etapas = so-linha-de-base (sem chamar o agente de novo)");
@@ -185,6 +215,8 @@ export function resumoColeta(dir: string): string {
   if (!existsSync(runPath)) return `### Coleta\n\n**Sem pacote**: \`run.json\` não foi produzido em \`${dir}\`. A execução fica registrada como interrompida, sem pacote.\n`;
   const r = JSON.parse(readFileSync(runPath, "utf8")) as AnyRun;
   const oraculo = r.contract === "run.v2" ? r.intervention.oracle : null;
+  const usoPath = join(dir, "evidence", "uso.json");
+  const uso = existsSync(usoPath) ? JSON.parse(readFileSync(usoPath, "utf8")) as UsoDaColeta : null;
   const L = [
     `### Coleta — ${r.screen.id} · braço ${r.arm} · ${r.fixture ? "ENSAIO (fixture, nunca dado)" : "execução formal"}`, "",
     "| Estado | Valor |", "|---|---|",
@@ -194,7 +226,11 @@ export function resumoColeta(dir: string): string {
     `| Submissão | ${r.submission.status} |`, `| Pontuação | ${r.status.score} (a análise é outra etapa) |`,
     `| Modelo | ${r.model.requested} → ${r.model.resolved} · esforço ${r.effort} |`,
     `| Duração do agente (s) | ${fmt(r.usage.wallClockSeconds)} |`, `| Tokens entrada/saída | ${fmt(r.usage.inputTokens)} / ${fmt(r.usage.outputTokens)} |`,
-    `| Custo estimado pelo cliente (US$) | ${fmt(r.usage.estimatedCostUsd)} (estimativa, não fatura) |`,
+    `| Tokens cache leitura/criação | ${fmt(r.usage.cacheReadTokens)} / ${fmt(r.usage.cacheCreationTokens)} |`,
+    `| Credencial | ${r.provider.authMethod}${uso?.clientKeySource ? ` (cliente: ${uso.clientKeySource})` : ""} |`,
+    `| Custo estimado pelo cliente (US$) | ${fmt(r.usage.estimatedCostUsd)} (${r.provider.authMethod === "api-key" ? "estimativa a preço de tabela; débito em créditos da organização" : "estimativa, não fatura"}) |`,
+    ...(uso?.perModel?.length ? [`| Por modelo | ${uso.perModel.map((m) => `${m.model}: US$ ${m.costUsd ?? "?"} (${m.input}/${m.output}/${m.cacheRead}/${m.cacheCreation})`).join("; ")} |`] : []),
+    ...(uso?.source === "mensagens" && uso.partial ? [`| Consumo parcial (sem evento final) | entrada ${uso.partial.input} · cache ${uso.partial.cacheRead}/${uso.partial.cacheCreation} · saída ≥ ${uso.partial.outputLowerBound} |`] : []),
     `| Chamadas ao oráculo | ${fmt(r.usage.oracleCalls)} |`,
     // NAT-61: o perfil MEDIDO do servidor e as ferramentas que a ponte de fato expôs
     ...(oraculo ? [`| Oráculo (perfil medido) | ${oraculo.profile} · ${oraculo.tools.join(", ")} · tools/list ${oraculo.toolsListSha256.slice(0, 12)}… |`] : []),
@@ -421,7 +457,9 @@ function main(): number {
       const pacote = val("--pacote");
       if (pacote) {
         const cfg = join(resolve(pacote), "evidence", "container-config.json");
-        if (existsSync(cfg)) p.push(...conferirAmbienteDosConteineres(JSON.parse(readFileSync(cfg, "utf8")), val("--credencial-permitida") ?? null));
+        // a credencial permitida sai do modo e da conta do disparo (ou, explícita, de --credencial-permitida)
+        const permitida = val("--credencial-permitida") ?? (val("--modo") ? credencialPermitida(need("--modo"), val("--conta")) : null);
+        if (existsSync(cfg)) p.push(...conferirAmbienteDosConteineres(JSON.parse(readFileSync(cfg, "utf8")), permitida));
         else console.log("sem evidence/container-config.json: nenhum contêiner da execução partiu");
       }
       if (p.length) {

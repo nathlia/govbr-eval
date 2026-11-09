@@ -15,6 +15,8 @@
 #                            campanha com agenda: lê indice/entradas para contar tentativas; a coleta nunca o vê)
 #   CLAUDE_CODE_OAUTH_TOKEN  `claude setup-token` da assinatura (SÓ no passo da coleta real)
 #   CLAUDE_CODE_OAUTH_TOKEN_2  idem, da segunda conta; usado quando o disparo escolhe conta = segunda
+#   ANTHROPIC_API_KEY_ORG    chave de API da organização (créditos); usada quando o disparo escolhe conta = api,
+#                            entra no passo da coleta real como ANTHROPIC_API_KEY. Uma conta = UMA credencial no passo.
 # Toda lógica está em scripts/ci/t4.sh e scripts/*.ts; entradas chegam por env, nunca interpoladas no shell.
 name: execucao-isolada
 
@@ -91,9 +93,9 @@ on:
         type: string
         default: ""
       conta:
-        description: "assinatura Claude que paga a coleta real (principal = CLAUDE_CODE_OAUTH_TOKEN, segunda = CLAUDE_CODE_OAUTH_TOKEN_2)"
+        description: "quem paga a coleta real (principal = CLAUDE_CODE_OAUTH_TOKEN, segunda = CLAUDE_CODE_OAUTH_TOKEN_2, api = ANTHROPIC_API_KEY_ORG, créditos da organização)"
         type: choice
-        options: [principal, segunda]
+        options: [principal, segunda, api]
         default: principal
 
 permissions: {}
@@ -257,11 +259,14 @@ jobs:
       - name: Nenhuma credencial de GitHub/publicação no passo nem nos checkouts
         run: bash govbr-eval/scripts/ci/t4.sh conferir-ambiente
       # Único passo com a credencial do provedor; o run-once a repassa só ao contêiner do agente (-e NOME).
+      # Exatamente UMA das duas variáveis tem valor, a da conta; a outra fica vazia (o run-once trata vazio como
+      # ausente). Segredo da conta faltando = nenhuma credencial = not-run, nunca outra conta pagando no lugar.
       - name: Coleta com o modelo real
         id: coleta_real
         if: inputs.modo == 'real'
         env:
-          CLAUDE_CODE_OAUTH_TOKEN: ${{ inputs.conta == 'segunda' && secrets.CLAUDE_CODE_OAUTH_TOKEN_2 || secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ (inputs.conta == 'principal' && secrets.CLAUDE_CODE_OAUTH_TOKEN) || (inputs.conta == 'segunda' && secrets.CLAUDE_CODE_OAUTH_TOKEN_2) || '' }}
+          ANTHROPIC_API_KEY: ${{ (inputs.conta == 'api' && secrets.ANTHROPIC_API_KEY_ORG) || '' }}
           TELA: ${{ inputs.tela }}
           BRACO: ${{ needs.preparar.outputs.braco }}
           MODO: ${{ inputs.modo }}
@@ -298,6 +303,7 @@ jobs:
         if: always()
         env:
           MODO: ${{ inputs.modo }}
+          CONTA: ${{ inputs.conta }}
         run: bash govbr-eval/scripts/ci/t4.sh conferir-ambiente-pacote
       # Cartão de saúde no topo (NAT-58); as tabelas técnicas ficam dobradas.
       - name: Resumo da coleta

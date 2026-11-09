@@ -206,7 +206,23 @@ export interface ClientTelemetry {
   toolErrors: { tool: string; text: string }[];
   apiRetries: { attempt: number; status: number | null; error: string | null }[];
   result: { subtype: string | null; isError: boolean; apiErrorStatus: number | null; terminalReason: string | null; stopReason: string | null; numTurns: number | null;
-    totalCostUsd: number | null; usage: { input: number; output: number; cacheRead: number; cacheCreation: number } | null; permissionDenials: unknown[]; text: string } | null;
+    totalCostUsd: number | null; usage: { input: number; output: number; cacheRead: number; cacheCreation: number } | null; permissionDenials: unknown[]; text: string;
+    /** Detalhe do consumo no mesmo evento `result` (para medir custo por slot; ausente em clientes antigos = null). */
+    durationMs: number | null; durationApiMs: number | null;
+    usageDetail: { thinking: number | null; cacheCreation1h: number | null; cacheCreation5m: number | null; serviceTier: string | null } | null;
+    /** `modelUsage` do cliente: um item por modelo (inclui modelos auxiliares que o `usage` principal não soma). */
+    modelUsage: ModelUsage[] | null } | null;
+  /**
+   * Soma de `message.usage` por mensagem (id único) das linhas `assistant`. Serve quando o evento `result` falta
+   * (agente morto no limite de tempo): entrada e cache batem com o `result`; a saída do stream é parcial
+   * (contagem do início da mensagem), então só vale como piso.
+   */
+  messageUsage: { messages: number; input: number; cacheRead: number; cacheCreation: number; outputLowerBound: number };
+}
+
+export interface ModelUsage {
+  model: string; input: number; output: number; cacheRead: number; cacheCreation: number;
+  thinking: number | null; webSearchRequests: number | null; costUsd: number | null; costBasis: string | null;
 }
 
 export function parseClientStream(path: string): ClientTelemetry {
@@ -227,6 +243,10 @@ export function parseClientStream(path: string): ClientTelemetry {
     }
   }
   const r = [...events].reverse().find((e) => e.type === "result");
+  const num = (v: unknown): number | null => (typeof v === "number" && Number.isFinite(v) ? v : null);
+  const porMensagem = new Map<string, Json>();
+  for (const a of assistant) if (a.message?.usage && a.message?.model !== "<synthetic>") porMensagem.set(String(a.message.id ?? a.uuid ?? porMensagem.size), a.message.usage);
+  const mu = [...porMensagem.values()];
   return {
     present: events.length > 0,
     init: init ? {
@@ -245,7 +265,59 @@ export function parseClientStream(path: string): ClientTelemetry {
       stopReason: r.stop_reason ?? null, numTurns: r.num_turns ?? null, totalCostUsd: typeof r.total_cost_usd === "number" ? r.total_cost_usd : null,
       usage: r.usage ? { input: r.usage.input_tokens ?? 0, output: r.usage.output_tokens ?? 0, cacheRead: r.usage.cache_read_input_tokens ?? 0, cacheCreation: r.usage.cache_creation_input_tokens ?? 0 } : null,
       permissionDenials: r.permission_denials ?? [], text: String(r.result ?? "").slice(0, 500),
+      durationMs: num(r.duration_ms), durationApiMs: num(r.duration_api_ms),
+      usageDetail: r.usage ? {
+        thinking: num(r.usage.output_tokens_details?.thinking_tokens), cacheCreation1h: num(r.usage.cache_creation?.ephemeral_1h_input_tokens),
+        cacheCreation5m: num(r.usage.cache_creation?.ephemeral_5m_input_tokens), serviceTier: typeof r.usage.service_tier === "string" ? r.usage.service_tier : null,
+      } : null,
+      modelUsage: r.modelUsage && typeof r.modelUsage === "object" ? Object.entries(r.modelUsage as Record<string, Json>).map(([model, m]) => ({
+        model, input: num(m.inputTokens) ?? 0, output: num(m.outputTokens) ?? 0, cacheRead: num(m.cacheReadInputTokens) ?? 0, cacheCreation: num(m.cacheCreationInputTokens) ?? 0,
+        thinking: num(m.thinkingTokens), webSearchRequests: num(m.webSearchRequests), costUsd: num(m.costUSD), costBasis: typeof m.costBasis === "string" ? m.costBasis : null,
+      })).sort((a, b) => a.model.localeCompare(b.model)) : null,
     } : null,
+    messageUsage: {
+      messages: mu.length, input: mu.reduce((n, u) => n + (num(u.input_tokens) ?? 0), 0), cacheRead: mu.reduce((n, u) => n + (num(u.cache_read_input_tokens) ?? 0), 0),
+      cacheCreation: mu.reduce((n, u) => n + (num(u.cache_creation_input_tokens) ?? 0), 0), outputLowerBound: mu.reduce((n, u) => n + (num(u.output_tokens) ?? 0), 0),
+    },
+  };
+}
+
+/**
+ * `evidence/uso.json` — o consumo da execução num bloco só, para medir quanto custa um slot (conta=api).
+ * Lido do mesmo `stream-json` que já alimenta `run.json` (`usage`): nada novo é pedido ao cliente nem à imagem.
+ * Guarda o MÉTODO de autenticação (declarado pelo runner) e a fonte da chave que o próprio cliente relatou
+ * (`init.apiKeySource`: um nome, nunca o valor). `total_cost_usd` é a estimativa do cliente a preço de tabela:
+ * com chave de API aproxima o débito em créditos da organização; com assinatura não é fatura.
+ */
+export interface UsoDaColeta {
+  contract: "uso-coleta.v1";
+  runId: string; fixture: boolean;
+  authMethod: "api-key" | "oauth-subscription" | "unknown";
+  /** `init.apiKeySource` do cliente (ex.: "ANTHROPIC_API_KEY", "none" com token OAuth); null sem evento init. */
+  clientKeySource: string | null;
+  /** result = evento final do cliente; mensagens = sem evento final, soma das mensagens (saída é piso); ausente = nada medido. */
+  source: "result" | "mensagens" | "ausente";
+  numTurns: number | null; totalCostUsd: number | null; durationMs: number | null; durationApiMs: number | null;
+  tokens: { input: number; output: number; cacheRead: number; cacheCreation: number; cacheCreation1h: number | null; cacheCreation5m: number | null; thinking: number | null } | null;
+  perModel: ModelUsage[] | null;
+  partial: ClientTelemetry["messageUsage"] | null;
+  note: string;
+}
+
+export function usoDaColeta(t: ClientTelemetry, authMethod: UsoDaColeta["authMethod"], id: { runId: string; fixture: boolean }): UsoDaColeta {
+  const r = t.result;
+  const source: UsoDaColeta["source"] = r?.usage ? "result" : t.messageUsage.messages > 0 ? "mensagens" : "ausente";
+  const custo = authMethod === "api-key" ? "estimativa do cliente a preço de tabela; com chave de API aproxima o débito em créditos (a fatura do console é a medida final)"
+    : authMethod === "oauth-subscription" ? "estimativa do cliente a preço de tabela; com assinatura não é fatura (o consumo sai da janela de uso)" : "estimativa do cliente";
+  return {
+    contract: "uso-coleta.v1", runId: id.runId, fixture: id.fixture, authMethod, clientKeySource: t.init?.apiKeySource ?? null, source,
+    numTurns: r?.numTurns ?? null, totalCostUsd: r?.totalCostUsd ?? null, durationMs: r?.durationMs ?? null, durationApiMs: r?.durationApiMs ?? null,
+    tokens: r?.usage ? { ...r.usage, cacheCreation1h: r.usageDetail?.cacheCreation1h ?? null, cacheCreation5m: r.usageDetail?.cacheCreation5m ?? null, thinking: r.usageDetail?.thinking ?? null } : null,
+    perModel: r?.modelUsage ?? null,
+    partial: source === "result" ? null : t.messageUsage.messages > 0 ? t.messageUsage : null,
+    note: source === "result" ? `totalCostUsd: ${custo}${id.fixture ? "; dublê: números fixos, nunca custo" : ""}`
+      : source === "mensagens" ? "sem evento result (agente interrompido): só a soma das mensagens; saída é piso, custo não medido"
+      : "nenhum consumo medido",
   };
 }
 

@@ -20,7 +20,7 @@ import { join } from "node:path";
 import yaml from "js-yaml";
 import { validateContract, type Run } from "../contracts/index";
 import { avaliar, interpolar, type Workflow } from "./ci/emular-workflow";
-import { cartaoSaude, conferirAmbienteDosConteineres, conferirCheckouts, conferirEntradas, conferirImagens, resumoArquivo, situacaoDoPar } from "./pipeline-t4";
+import { CONTAS, CREDENCIAL_DA_CONTA, cartaoSaude, conferirAmbienteDosConteineres, conferirCheckouts, conferirEntradas, conferirImagens, credencialPermitida, resumoArquivo, resumoColeta, situacaoDoPar } from "./pipeline-t4";
 import { buildIsolatedManifest, documentoDaCampanha, isolatedManifestProblems, problemasDaCampanha, readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
 import {
   caminhoCampanha, caminhoConjunto, caminhoConjuntoReparado, caminhoManifesto, caminhoReparoConjunto, caminhoSite, conjuntoDeSnapshots, idDoConjunto, resolverConjunto, criarTarGz, garantirGitattributes, gravarEntrada, gravarImutavel, lerTarGz, listagemDoCommit, listarArquivos, problemasDoPacote, Recusa,
@@ -103,16 +103,18 @@ await teste("workflow: cada segredo só onde é usado (escrita só em arquivar; 
       assert.ok(!(s.run ?? "").includes("${{"), `interpolação no shell em ${id}#${i}`);
     }
   }
-  assert.deepEqual(Object.keys(usos).sort(), ["CLAUDE_CODE_OAUTH_TOKEN", "CLAUDE_CODE_OAUTH_TOKEN_2", "GOVBR_LEITURA_TOKEN", "GOVBR_RESULTADOS_LEITURA_TOKEN", "GOVBR_RESULTADOS_TOKEN"]);
+  assert.deepEqual(Object.keys(usos).sort(), ["ANTHROPIC_API_KEY_ORG", "CLAUDE_CODE_OAUTH_TOKEN", "CLAUDE_CODE_OAUTH_TOKEN_2", "GOVBR_LEITURA_TOKEN", "GOVBR_RESULTADOS_LEITURA_TOKEN", "GOVBR_RESULTADOS_TOKEN"]);
   assert.ok(usos.GOVBR_RESULTADOS_TOKEN.every((u) => u.startsWith("arquivar#")), `escrita fora de arquivar: ${usos.GOVBR_RESULTADOS_TOKEN}`);
   assert.equal(usos.CLAUDE_CODE_OAUTH_TOKEN.length, 1, "credencial do provedor em mais de um passo");
   // as duas assinaturas (input `conta`) moram no mesmo passo da coleta real, e só nele
   assert.deepEqual(usos.CLAUDE_CODE_OAUTH_TOKEN_2, usos.CLAUDE_CODE_OAUTH_TOKEN, "segunda conta fora do passo da coleta real");
+  // conta = api: a chave da organização mora no mesmo passo, e só nele
+  assert.deepEqual(usos.ANTHROPIC_API_KEY_ORG, usos.CLAUDE_CODE_OAUTH_TOKEN, "chave de API fora do passo da coleta real");
   const [job, idx] = usos.CLAUDE_CODE_OAUTH_TOKEN[0].split("#");
   const passo = wf.jobs[job].steps[Number(idx)];
   assert.equal(job, "coleta");
   assert.equal(passo.if, "inputs.modo == 'real'");
-  assert.deepEqual(Object.keys(passo.env ?? {}).filter((k) => texto(passo.env![k]).includes("secrets.")), ["CLAUDE_CODE_OAUTH_TOKEN"]);
+  assert.deepEqual(Object.keys(passo.env ?? {}).filter((k) => texto(passo.env![k]).includes("secrets.")).sort(), ["ANTHROPIC_API_KEY", "CLAUDE_CODE_OAUTH_TOKEN"]);
   assert.ok(texto(passo.run).includes("t4.sh coleta"));
   for (const u of usos.GOVBR_LEITURA_TOKEN) {
     const [j2, i2] = u.split("#");
@@ -130,11 +132,41 @@ await teste("workflow: cada segredo só onde é usado (escrita só em arquivar; 
   // nenhum outro job toca o govbr-resultados; arquivar não recebe o provedor
   for (const { job: j3, step } of todosOsPassos()) {
     if (texto(step).includes("govbr-resultados") && step !== leitura) assert.equal(j3, "arquivar", `govbr-resultados em ${j3}`);
-    if (j3 === "arquivar") assert.ok(!texto(step).includes("CLAUDE_CODE_OAUTH_TOKEN"));
+    if (j3 === "arquivar") assert.ok(!texto(step).includes("CLAUDE_CODE_OAUTH_TOKEN") && !texto(step).includes("ANTHROPIC_API_KEY"));
   }
   // o que o preparar passa adiante são ids e valores congelados — nada do índice vai para a coleta
   const saidas = Object.keys(wf.jobs.preparar.outputs ?? {}).sort();
   assert.deepEqual(saidas, ["agente", "braco", "coleta", "corpus_sha", "egress", "esforco", "imagens", "limite_seg", "linha_de_base", "modelo", "par", "repeticao", "tentativa"]);
+});
+
+await teste("workflow: cada conta põe exatamente UMA credencial no passo da coleta real (a dela); segredo faltando não troca de conta", () => {
+  const inputs = (wf.on.workflow_dispatch as { inputs: Record<string, { options?: string[]; default?: string }> }).inputs;
+  assert.deepEqual(inputs.conta.options, [...CONTAS], "opções do input = CONTAS de pipeline-t4.ts");
+  assert.equal(inputs.conta.default, "principal");
+  const passo = wf.jobs.coleta.steps.find((s) => s.id === "coleta_real")!;
+  const env = passo.env as Record<string, string>;
+  const segredos = { CLAUDE_CODE_OAUTH_TOKEN: "tok-principal", CLAUDE_CODE_OAUTH_TOKEN_2: "tok-segunda", ANTHROPIC_API_KEY_ORG: "chave-org" };
+  const esperado: Record<string, string> = { principal: "tok-principal", segunda: "tok-segunda", api: "chave-org" };
+  const credenciais = (conta: string, secrets: Record<string, string>): Record<string, string> =>
+    Object.fromEntries(["CLAUDE_CODE_OAUTH_TOKEN", "ANTHROPIC_API_KEY"].map((k) => [k, interpolar(env[k], { inputs: { conta }, secrets })]));
+  for (const conta of CONTAS) {
+    const c = credenciais(conta, segredos);
+    const cheias = Object.entries(c).filter(([, v]) => v !== "");
+    assert.equal(cheias.length, 1, `${conta}: ${JSON.stringify(c)}`);
+    assert.deepEqual(cheias[0], [CREDENCIAL_DA_CONTA[conta].env, esperado[conta]], `${conta}: credencial errada`);
+    // o conferir-ambiente-pacote do mesmo disparo autoriza exatamente esse nome no contêiner do agente
+    assert.equal(credencialPermitida("real", conta), cheias[0][0]);
+    // segredo da conta ausente: nenhuma credencial (o run-once recusa partir), nunca a de outra conta
+    const semOProprio = Object.fromEntries(Object.entries(segredos).filter(([k]) => k !== { principal: "CLAUDE_CODE_OAUTH_TOKEN", segunda: "CLAUDE_CODE_OAUTH_TOKEN_2", api: "ANTHROPIC_API_KEY_ORG" }[conta]));
+    assert.deepEqual(Object.values(credenciais(conta, semOProprio)).filter(Boolean), [], `${conta} sem o próprio segredo caiu noutra conta`);
+  }
+  // o passo que confere o ambiente dos contêineres recebe a conta do disparo
+  const amb = wf.jobs.coleta.steps.find((s) => /Ambiente dos contêineres/.test(String(s.name)))!;
+  assert.equal((amb.env as Record<string, string>).CONTA, "${{ inputs.conta }}");
+  assert.equal(credencialPermitida("duble", "api"), "*");
+  assert.equal(credencialPermitida("roteirizado", "api"), "nenhuma");
+  assert.equal(credencialPermitida("real", ""), "CLAUDE_CODE_OAUTH_TOKEN", "vazio = principal");
+  assert.throws(() => credencialPermitida("real", "terceira"), /conta desconhecida/);
 });
 
 await teste("workflow: checkouts por SHA, sem credencial persistida; coleta sem gabarito e sem manifesto", () => {
@@ -226,9 +258,10 @@ await teste("entradas: válidas derivam agente/egress/imagens; inválidas param 
   const casos: [Record<string, string>, RegExp][] = [
     [{ telas_sha: "main" }, /telas_sha/], [{ validator_sha: "abc123" }, /validator_sha/], [{ limite_min: "91" }, /limite_min/],
     [{ modelo: "" }, /modelo/], [{ esforco: "turbo" }, /esforco/], [{ campanha: "../x" }, /campanha/], [{ tela: "fluxo" }, /tela/],
-    [{ refazer_linha_de_base_de: "lb-1", motivo_refazer: "queda" }, /so-linha-de-base/],
+    [{ refazer_linha_de_base_de: "lb-1", motivo_refazer: "queda" }, /so-linha-de-base/], [{ conta: "terceira" }, /conta: principal \| segunda \| api/],
   ];
   for (const [delta, re] of casos) assert.match(conferirEntradas({ ...ENTRADAS_OK, ...delta }).problemas.join(" "), re, JSON.stringify(delta));
+  for (const conta of [...CONTAS, ""]) assert.deepEqual(conferirEntradas({ ...ENTRADAS_OK, conta }).problemas, [], `conta ${conta || "(vazia)"}`);
 });
 
 await teste("imagens: versões iguais às travadas passam; Chromium ou oráculo diferente param", () => {
@@ -245,6 +278,27 @@ await teste("imagens: versões iguais às travadas passam; Chromium ou oráculo 
   assert.match(conferirImagens(lock, oraculo, ["agent", "oracle"]).join(), /oracle/);
 });
 
+await teste("resumo da coleta: credencial, cache e custo por modelo (evidence/uso.json); sem uso.json, como antes", () => {
+  const dir = join(TMP, "resumo-uso");
+  mkdirSync(join(dir, "evidence"), { recursive: true });
+  const run = JSON.parse(readFileSync(join(ROOT, "contracts", "examples", "valid", "run--v2-sem-passed.json"), "utf8")) as Run;
+  run.provider = { name: "anthropic", authMethod: "api-key" };
+  run.usage.estimatedCostUsd = { value: 1.25, status: "measured", source: "estimativa do cliente (result.total_cost_usd)" };
+  writeFileSync(join(dir, "run.json"), JSON.stringify(run));
+  const semUso = resumoColeta(dir);
+  assert.match(semUso, /\| Credencial \| api-key \|/);
+  assert.match(semUso, /débito em créditos da organização/);
+  assert.ok(!/Por modelo/.test(semUso), "sem uso.json não há linha por modelo");
+  writeFileSync(join(dir, "evidence", "uso.json"), JSON.stringify({ contract: "uso-coleta.v1", authMethod: "api-key", clientKeySource: "ANTHROPIC_API_KEY", source: "result",
+    perModel: [{ model: "claude-opus-5-5", input: 140, output: 42709, cacheRead: 5172365, cacheCreation: 134853, costUsd: 2.97 }], partial: null }));
+  const comUso = resumoColeta(dir);
+  assert.match(comUso, /\| Credencial \| api-key \(cliente: ANTHROPIC_API_KEY\) \|/);
+  assert.match(comUso, /\| Por modelo \| claude-opus-5-5: US\$ 2\.97 \(140\/42709\/5172365\/134853\) \|/);
+  run.provider.authMethod = "oauth-subscription";
+  writeFileSync(join(dir, "run.json"), JSON.stringify(run));
+  assert.match(resumoColeta(dir), /estimativa, não fatura/);
+});
+
 await teste("ambiente: token do GitHub/publicação em contêiner, credencial fora do agente ou sem redação reprovam", () => {
   const limpo = { agent: { env: ["HOME=/home/runner", "HTTPS_PROXY=http://egress:3128", "CLAUDE_CODE_OAUTH_TOKEN=<redigido>"] }, browser: { env: ["HOME=/home/runner"] } };
   assert.deepEqual(conferirAmbienteDosConteineres(limpo, "CLAUDE_CODE_OAUTH_TOKEN"), []);
@@ -253,6 +307,11 @@ await teste("ambiente: token do GitHub/publicação em contêiner, credencial fo
   assert.match(conferirAmbienteDosConteineres({ browser: { env: ["ANTHROPIC_API_KEY=<redigido>"] } }, "*").join(), /fora do contêiner do agente/);
   assert.match(conferirAmbienteDosConteineres({ agent: { env: ["CLAUDE_CODE_OAUTH_TOKEN=sk-ant-oat-xyz"] } }, "CLAUDE_CODE_OAUTH_TOKEN").join(), /não redigido/);
   assert.match(conferirAmbienteDosConteineres({ agent: { env: ["ANTHROPIC_API_KEY=<redigido>"] } }, "CLAUDE_CODE_OAUTH_TOKEN").join(), /não autorizada/);
+  // conta = api: só a chave de API, redigida, só no agente; o token OAuth passa a ser o não autorizado
+  assert.deepEqual(conferirAmbienteDosConteineres({ agent: { env: ["ANTHROPIC_API_KEY=<redigido>"] } }, credencialPermitida("real", "api")), []);
+  assert.match(conferirAmbienteDosConteineres({ agent: { env: ["CLAUDE_CODE_OAUTH_TOKEN=<redigido>"] } }, credencialPermitida("real", "api")).join(), /não autorizada/);
+  assert.match(conferirAmbienteDosConteineres({ agent: { env: ["ANTHROPIC_API_KEY=sk-ant-api03-x"] } }, credencialPermitida("real", "api")).join(), /não redigido/);
+  assert.match(conferirAmbienteDosConteineres({ collector: { env: ["ANTHROPIC_API_KEY=<redigido>"] } }, credencialPermitida("real", "api")).join(), /fora do contêiner do agente/);
   const ck = join(TMP, "checkout-com-token");
   mkdirSync(join(ck, ".git"), { recursive: true });
   writeFileSync(join(ck, ".git", "config"), "[http \"https://github.com/\"]\n\textraheader = AUTHORIZATION: basic eDp5\n");

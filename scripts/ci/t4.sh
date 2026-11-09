@@ -72,9 +72,8 @@ case "$fase" in
     case "$codigo" in 0|3|4) exit 0 ;; *) exit "$codigo" ;; esac
     ;;
   conferir-ambiente-pacote)
-    cred="nenhuma"
-    if [ "$MODO" = "real" ]; then cred="CLAUDE_CODE_OAUTH_TOKEN"; elif [ "$MODO" = "duble" ]; then cred="*"; fi
-    tsx scripts/pipeline-t4.ts conferir-ambiente --pacote "$TMP/pacote/execucao" --credencial-permitida "$cred"
+    # a credencial permitida no contêiner do agente sai do modo e da conta (real: a da conta; dublê: a falsa; roteirizado: nenhuma)
+    tsx scripts/pipeline-t4.ts conferir-ambiente --pacote "$TMP/pacote/execucao" --modo "$MODO" --conta "${CONTA:-principal}"
     ;;
   resumo-coleta)
     tsx scripts/pipeline-t4.ts resumo-coleta --pacote "$TMP/pacote/execucao"

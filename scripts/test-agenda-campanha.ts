@@ -230,6 +230,14 @@ await teste("entradas do workflow: com agenda basta o slot; digitado divergente 
   assert.match(conferirEntradas({ ...base, modelo: "claude-outro" }, ag).problemas.join(), /modelo claude-outro ≠/);
   assert.match(conferirEntradas({ ...base, slot: "p99-sem" }, ag).problemas.join(), /fora da agenda/);
   assert.deepEqual(conferirEntradas({ ...base, braco: A.slots[0].arm, par: "p01", repeticao: "1" }, ag).problemas, [], "igual à agenda também passa");
+  // quem paga é identidade: conta=api (chave de API) numa campanha congelada com assinatura para antes de qualquer gasto
+  const comAuth = (authMethod: "api-key" | "oauth-subscription" | "unknown") => ({ agenda: A, campanha: { ...C, fixed: { ...C.fixed, provider: { ...C.fixed.provider, authMethod } } } as typeof C });
+  assert.deepEqual(conferirEntradas({ ...base, conta: "principal" }, comAuth("oauth-subscription")).problemas, []);
+  assert.match(conferirEntradas({ ...base, conta: "api" }, comAuth("oauth-subscription")).problemas.join(), /conta api paga com api-key ≠ oauth-subscription congelada/);
+  assert.deepEqual(conferirEntradas({ ...base, conta: "api" }, comAuth("api-key")).problemas, [], "campanha congelada com api-key aceita conta=api");
+  assert.match(conferirEntradas({ ...base, conta: "segunda" }, comAuth("api-key")).problemas.join(), /conta segunda paga com oauth-subscription ≠ api-key/);
+  assert.deepEqual(conferirEntradas({ ...base, conta: "api" }, comAuth("unknown")).problemas, [], "campanha sem método congelado: não confere");
+  assert.deepEqual(conferirEntradas({ ...base, modo: "duble", conta: "api" }, comAuth("oauth-subscription")).problemas, [], "fora do modo real a conta não paga nada");
   const semAgenda = conferirEntradas({ ...base, modelo: "claude-opus-5-5" }, null);
   assert.match(semAgenda.problemas.join(), /não tem agenda/);
   const antigo = conferirEntradas({ ...base, braco: "sem", modelo: "claude-opus-5-5" }, null);

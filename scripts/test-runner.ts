@@ -18,7 +18,7 @@ import { fileURLToPath } from "node:url";
 import { validateContract, crossCheckRun, type ArtifactManifest, type Findings, type Isolation, type RunV2 as Run } from "../contracts/index";
 import { runOnce, type RunOptions, type RunOutcome } from "../runner/run-once";
 import { DEFAULT_TELAS_DIR, DEFAULT_VALIDATOR_DIR, docker, dockerAvailable, sha256 } from "../runner/lib";
-import { FAKE_CREDENTIAL, FERRAMENTAS_FORA_DO_PERFIL_LIVRE, forbiddenCalls, oracleAdherence, type ClientTelemetry, type StubSummary } from "../runner/cliente-claude";
+import { FAKE_CREDENTIAL, FERRAMENTAS_FORA_DO_PERFIL_LIVRE, forbiddenCalls, oracleAdherence, parseClientStream, usoDaColeta, type ClientTelemetry, type StubSummary, type UsoDaColeta } from "../runner/cliente-claude";
 import { PERFIS, perfilMedido, type InventarioOraculo } from "../runner/perfis-oraculo";
 import { ORACLE_RETRIEVAL_MODE, RETRIEVAL_ENV_PREFIX, assertNoRetrievalEnv, excludedFromOracleData } from "../runner/build-images";
 import { varrerPayloadsDoOraculo } from "./vazamento/conhecimento";
@@ -168,6 +168,51 @@ function assertParity(a: RunOutcome | undefined, b: RunOutcome | undefined): voi
  * proibidas do braço ferramentas, a cópia do detector de vazamento (guarda de deriva) e a varredura em si.
  */
 async function testesSemDocker(): Promise<void> {
+  await test("uso da coleta: evento result → tokens, custo, turnos e por modelo; sem result → soma das mensagens (saída é piso); credencial só pelo nome", async () => {
+    const dir = mkdtempSync(join(ROOT, "uso-"));
+    const msg = (id: string, model: string, u: Record<string, number>) => JSON.stringify({ type: "assistant", message: { id, model, content: [{ type: "text", text: "x" }], usage: u } });
+    const linhas = [
+      JSON.stringify({ type: "system", subtype: "init", tools: [], mcp_servers: [], model: "claude-opus-5-5", apiKeySource: "ANTHROPIC_API_KEY", claude_code_version: "2.1.288" }),
+      // a mesma mensagem aparece uma vez por bloco de conteúdo, com a saída parcial do início do stream
+      msg("m1", "claude-opus-5-5", { input_tokens: 10, output_tokens: 3, cache_read_input_tokens: 1000, cache_creation_input_tokens: 500 }),
+      msg("m1", "claude-opus-5-5", { input_tokens: 10, output_tokens: 3, cache_read_input_tokens: 1000, cache_creation_input_tokens: 500 }),
+      msg("m2", "claude-opus-5-5", { input_tokens: 4, output_tokens: 2, cache_read_input_tokens: 1500, cache_creation_input_tokens: 80 }),
+      JSON.stringify({ type: "assistant", message: { id: "s1", model: "<synthetic>", content: [], usage: { input_tokens: 0, output_tokens: 0 } } }),
+    ];
+    const result = JSON.stringify({ type: "result", subtype: "success", is_error: false, num_turns: 7, total_cost_usd: 0.4321, duration_ms: 60000, duration_api_ms: 45000, result: "ok",
+      usage: { input_tokens: 14, output_tokens: 900, cache_read_input_tokens: 2500, cache_creation_input_tokens: 580, output_tokens_details: { thinking_tokens: 300 },
+        cache_creation: { ephemeral_1h_input_tokens: 0, ephemeral_5m_input_tokens: 580 }, service_tier: "standard" },
+      modelUsage: {
+        "claude-opus-5-5": { inputTokens: 14, outputTokens: 900, cacheReadInputTokens: 2500, cacheCreationInputTokens: 580, thinkingTokens: 300, webSearchRequests: 0, costUSD: 0.42, costBasis: "list" },
+        "claude-haiku-4-5": { inputTokens: 50, outputTokens: 5, cacheReadInputTokens: 0, cacheCreationInputTokens: 0, webSearchRequests: 0, costUSD: 0.0121 },
+      } });
+    writeFileSync(join(dir, "completo.ndjson"), [...linhas, result].join("\n") + "\n");
+    writeFileSync(join(dir, "interrompido.ndjson"), linhas.join("\n") + "\n");
+    const t = parseClientStream(join(dir, "completo.ndjson"));
+    assert.deepEqual(t.messageUsage, { messages: 2, input: 14, cacheRead: 2500, cacheCreation: 580, outputLowerBound: 5 }, "uma vez por mensagem, sem a sintética");
+    const u = usoDaColeta(t, "api-key", { runId: "r-1", fixture: false });
+    assert.equal(u.contract, "uso-coleta.v1");
+    assert.equal(u.source, "result");
+    assert.equal(u.authMethod, "api-key");
+    assert.equal(u.clientKeySource, "ANTHROPIC_API_KEY");
+    assert.deepEqual(u.tokens, { input: 14, output: 900, cacheRead: 2500, cacheCreation: 580, cacheCreation1h: 0, cacheCreation5m: 580, thinking: 300 });
+    assert.equal(u.totalCostUsd, 0.4321);
+    assert.equal(u.numTurns, 7);
+    assert.equal(u.durationApiMs, 45000);
+    assert.deepEqual(u.perModel!.map((m) => [m.model, m.costUsd, m.costBasis]), [["claude-haiku-4-5", 0.0121, null], ["claude-opus-5-5", 0.42, "list"]], "modelo auxiliar entra no por modelo");
+    assert.equal(u.partial, null);
+    assert.match(u.note, /débito em créditos/);
+    assert.match(usoDaColeta(t, "oauth-subscription", { runId: "r-1", fixture: false }).note, /não é fatura/);
+    const i = usoDaColeta(parseClientStream(join(dir, "interrompido.ndjson")), "oauth-subscription", { runId: "r-2", fixture: false });
+    assert.equal(i.source, "mensagens");
+    assert.equal(i.totalCostUsd, null, "sem result o custo não é inventado");
+    assert.equal(i.tokens, null);
+    assert.deepEqual(i.partial, { messages: 2, input: 14, cacheRead: 2500, cacheCreation: 580, outputLowerBound: 5 });
+    const vazio = usoDaColeta(parseClientStream(join(dir, "nao-existe.ndjson")), "unknown", { runId: "r-3", fixture: true });
+    assert.equal(vazio.source, "ausente");
+    assert.equal(vazio.partial, null);
+    assert.ok(!JSON.stringify(u).includes("sk-ant"), "nenhum valor de credencial");
+  });
   await test("perfil medido: tools/list do servidor (nomes + sha256 fixado) e marca da telemetria; o rótulo do braço não conta", async () => {
     const inv = (p: "evaluation" | "knowledge-free", hash?: string): InventarioOraculo => ({ childTools: [...PERFIS[p].tools].reverse(), exposed: [...PERFIS[p].tools], hidden: [],
       childToolsSha256: hash ?? PERFIS[p].toolsListSha256, exposedToolsSha256: PERFIS[p].toolsListSha256,
@@ -788,6 +833,18 @@ async function main(): Promise<void> {
       assert.equal(r.usage.turns.status, "measured");
       assert.equal(r.usage.estimatedCostUsd.status, "measured");
       assert.equal(r.usage.billedCostUsd.status, "unavailable");
+      // evidence/uso.json: o mesmo consumo do run.json num bloco só, com o método de autenticação e por modelo
+      const uso = read<UsoDaColeta>(o.runDir, "evidence/uso.json");
+      assert.equal(uso.source, "result");
+      assert.equal(uso.authMethod, r.provider.authMethod);
+      assert.equal(uso.authMethod, "api-key");
+      assert.equal(uso.clientKeySource, "ANTHROPIC_API_KEY");
+      assert.equal(uso.fixture, true);
+      assert.deepEqual([uso.tokens!.input, uso.tokens!.output, uso.tokens!.cacheRead, uso.tokens!.cacheCreation],
+        [r.usage.inputTokens.value, r.usage.outputTokens.value, r.usage.cacheReadTokens.value, r.usage.cacheCreationTokens.value]);
+      assert.equal(uso.totalCostUsd, r.usage.estimatedCostUsd.value);
+      assert.equal(uso.numTurns, r.usage.turns.value);
+      assert.deepEqual(uso.perModel!.map((m) => m.model), [STUB_MODEL]);
       // 5. texto da tarefa: a mensagem do usuário no 1º pedido é o texto renderizado, byte a byte
       assert.equal(c.stub!.promptDelivered, true);
       assert.equal(sha256(readFileSync(join(o.runDir, "evidence/prompt.txt"))), r.versions.promptSha256);
@@ -882,6 +939,10 @@ async function main(): Promise<void> {
     assert.deepEqual(c.stub!.credentialKinds, ["bearer"]);
     assert.ok(c.providerConnectsDuringAgent.every((x) => x.target === "api.anthropic.com:443"), "platform.claude.com não tentado");
     assert.ok(read<Record<string, { env: string[] }>>(o.runDir, "evidence/container-config.json").agent.env.includes("CLAUDE_CODE_OAUTH_TOKEN=<redigido>"));
+    const uso = read<UsoDaColeta>(o.runDir, "evidence/uso.json");
+    assert.equal(uso.authMethod, "oauth-subscription", "uso.json carrega o método de autenticação da execução");
+    assert.notEqual(uso.clientKeySource, "ANTHROPIC_API_KEY", "com token OAuth o cliente não relata chave de API");
+    console.log(`     · uso.json: fonte ${uso.source}; credencial relatada pelo cliente ${uso.clientKeySource}`);
   });
 
   await test("modo dublê recusa --permitir-modelo e roteiro desconhecido (nenhum contêiner)", async () => {

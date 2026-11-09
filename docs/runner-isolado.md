@@ -366,12 +366,29 @@ com → envio pelo navegador), `erros`, `429`, `529`.
 - `run.json`: `model.resolved` = o `model` das respostas (fonte `client-log`, nunca copiado do pedido);
   tokens e turnos do `result` do cliente; `estimatedCostUsd` = estimativa do próprio cliente a preço de
   referência (nunca fatura; `billedCostUsd` fica indisponível).
+- `evidence/uso.json` (`uso-coleta.v1`, toda execução do cliente real): o consumo num bloco só, lido do
+  mesmo `stream-json` (nenhuma imagem muda) — tokens de entrada, saída, cache lido e criado (1 h/5 min),
+  pensamento, `total_cost_usd`, `num_turns`, durações, e `modelUsage` por modelo (inclui modelos
+  auxiliares que o `usage` principal não soma), com `authMethod` e a origem da credencial que o cliente
+  relatou (`init.apiKeySource`: um nome, nunca o valor). Sem evento `result` (agente morto no limite de
+  tempo), fica a soma das mensagens: entrada e cache exatos, saída só como piso, custo não medido.
 - Checks novos no `isolation.json`: `ferramentas-do-cliente` (init e campo `tools` dos pedidos = só as
   ferramentas MCP das pontes; sem: navegador; com: + oráculo), `extensoes-do-cliente` (sem skills,
   comandos, plugins instalados ou servidores MCP além dos configurados, todos conectados),
   `texto-da-tarefa-entregue` (só observável no dublê), `hosts-do-cliente` (informativo).
 - Erro de API relatado pelo cliente: 429 → `interrupted`/`rate-limited`; 529/503 → `interrupted`/
   `model-unavailable`; 401/403 → `failed`/`auth-failed`. Nunca "zero achados"; artefatos preservados.
+
+**`conta=api` (workflow `execucao-isolada`).** `principal`/`segunda` pagam com a assinatura
+(`CLAUDE_CODE_OAUTH_TOKEN`); `api` paga com a chave de API da organização (segredo `ANTHROPIC_API_KEY_ORG`,
+entregue como `ANTHROPIC_API_KEY`). O passo da coleta real recebe exatamente uma variável com valor, a da
+conta; segredo faltando = nenhuma credencial = `not-run`, nunca outra conta no lugar. O caminho é o mesmo
+da assinatura: só o contêiner do agente recebe o nome, o valor fica redigido, e o
+`conferir-ambiente-pacote` só aceita no agente o nome da conta do disparo. `provider.authMethod`
+(`api-key` × `oauth-subscription`) é identidade: `entradas` recusa conta que diverge da campanha com
+agenda, a análise recusa o run que diverge, e `checkAggregation` nunca junta os dois. Para medir o custo de
+um slot, use uma campanha congelada com `fixed.provider.authMethod: "api-key"` e leia `evidence/uso.json`;
+`total_cost_usd` é preço de tabela, a fatura do console é a medida final.
 
 ### Comportamento do cliente 2.1.288 observado (medido contra o dublê)
 

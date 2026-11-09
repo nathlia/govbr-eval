@@ -33,6 +33,12 @@ export interface IdentidadeEfetiva {
   protocolSha256: string | null;
   attempt: number;
   repetition: number;
+  /**
+   * Quem paga o modelo (`provider.authMethod`): chave de API × assinatura. null/ausente = não conhecido ou sem
+   * sentido (agente roteirizado, dublê com credencial falsa): fica de fora. Assinatura e chave de API diferem em
+   * cache (TTL), limites e custo; uma campanha congela um dos dois e só ele.
+   */
+  authMethod?: string | null;
 }
 
 /** Diferenças entre o que a execução usa/usou e o que a campanha congelou. [] = idêntico. */
@@ -51,6 +57,10 @@ export function divergenciasDaCampanha(c: AnyCampaign, e: IdentidadeEfetiva): st
   if (e.protocolSha256 !== null && e.protocolSha256 !== c.fixed.protocolSha256) {
     p.push(`protocolo ${e.protocolSha256.slice(0, 12)} ≠ ${c.fixed.protocolSha256.slice(0, 12)} congelado na campanha`);
   }
+  const auth = c.fixed.provider?.authMethod;
+  if (e.authMethod != null && e.authMethod !== "unknown" && auth && auth !== "unknown" && e.authMethod !== auth) {
+    p.push(`credencial ${e.authMethod} ≠ ${auth} congelada na campanha (conta=api só em campanha congelada com api-key)`);
+  }
   const max = c.retryPolicy.maxAttemptsPerSlot;
   if (!Number.isInteger(e.attempt) || e.attempt < 1 || e.attempt > max) p.push(`tentativa ${e.attempt} fora da política da campanha (1–${max} por slot)`);
   const reps = c.design.repetitions;
@@ -61,7 +71,9 @@ export function divergenciasDaCampanha(c: AnyCampaign, e: IdentidadeEfetiva): st
 /** A identidade que um run.json registrou. */
 export function identidadeDoRun(run: AnyRun): IdentidadeEfetiva {
   return { effort: run.effort, timeoutSeconds: run.limits.timeoutSeconds, maxTurns: run.limits.maxTurns, maxBudgetUsd: run.limits.maxBudgetUsd, client: run.client, protocolSha256: run.versions.protocolSha256,
-    attempt: run.attempt, repetition: run.repetition };
+    attempt: run.attempt, repetition: run.repetition,
+    // dublê (fixture): a credencial é falsa e escolhida pelo roteiro; não diz quem pagaria
+    authMethod: run.fixture ? null : run.provider.authMethod };
 }
 
 /** Perfis equivalentes: o runner v1 gravava `combined` para o servidor no perfil evaluation (D-131/NAT-61). */

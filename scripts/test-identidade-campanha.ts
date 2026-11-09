@@ -20,7 +20,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { validateContract, type Campaign, type Run } from "../contracts/index";
+import { validateContract, type Campaign, type CampaignV2, type Run, type RunV2 } from "../contracts/index";
 import { ROOT } from "./adjudication";
 import { analisar, motivosDeInelegibilidade, renderResumo, type Resumo } from "./analisar-execucao";
 import { construirFixture } from "./fixtures/analise/construir";
@@ -266,6 +266,30 @@ for (const [nome, muda, esperado] of CENARIOS_R2) {
     assert.equal(placar.somaSem, null);
   });
 }
+
+await teste("credencial (conta=api): run pago por chave de API numa campanha congelada com assinatura diverge (e vice-versa); dublê e 'unknown' ficam de fora", () => {
+  const c = clone(lerJson<CampaignV2>(join(ROOT, "contracts", "examples", "valid", "campaign--v2-trio.json")));
+  const r = clone(lerJson<RunV2>(join(ROOT, "contracts", "examples", "valid", "run--v2-sem-passed.json")));
+  const credencial = (): string[] => divergenciasDaCampanha(c, identidadeDoRun(r)).filter(x => /credencial/.test(x));
+  c.fixed.provider.authMethod = "oauth-subscription";
+  r.fixture = false;
+  r.provider = { name: "anthropic", authMethod: "oauth-subscription" };
+  assert.deepEqual(credencial(), [], "mesma credencial");
+  r.provider.authMethod = "api-key";
+  assert.match(credencial().join(), /credencial api-key ≠ oauth-subscription congelada na campanha/);
+  c.fixed.provider.authMethod = "api-key";
+  assert.deepEqual(credencial(), [], "campanha congelada com api-key aceita conta=api");
+  r.provider.authMethod = "oauth-subscription";
+  assert.match(credencial().join(), /credencial oauth-subscription ≠ api-key/);
+  r.fixture = true;
+  assert.deepEqual(credencial(), [], "dublê: credencial falsa, fora da identidade");
+  r.fixture = false;
+  r.provider.authMethod = "unknown";
+  assert.deepEqual(credencial(), [], "run sem método conhecido fica de fora");
+  r.provider.authMethod = "api-key";
+  c.fixed.provider.authMethod = "unknown";
+  assert.deepEqual(credencial(), [], "campanha sem método congelado fica de fora");
+});
 
 console.log(`\n${ok}/${ok + falhas} testes de identidade/elegibilidade ok${pulados ? ` (${pulados} bloco pulado)` : ""} — saídas em ${work}`);
 if (falhas) process.exit(1);

@@ -46,7 +46,7 @@ import { gitState, oracleIdentity } from "../scripts/collection-manifest";
 import { TOOL_PAYLOAD_PATH, rebaseToolPayloads, verifyToolPayloads } from "../scripts/tool-payloads";
 import {
   CREDENTIAL_ENV, EFFORT_LEVELS, FAKE_CREDENTIAL, ORACLE_SERVER_NAME, STUB_SCENARIOS,
-  claudeCommand, clientFailure, oracleAdherence, parseClientStream, stubRoteiro, summarizeStub, type StubRoteiro,
+  claudeCommand, clientFailure, oracleAdherence, parseClientStream, stubRoteiro, summarizeStub, usoDaColeta, type StubRoteiro,
 } from "./cliente-claude";
 import { generateStubTls } from "./container/tls-cert.mjs";
 import { ROUTE_GUARD_VERSION } from "./container/route-guard.mjs";
@@ -648,6 +648,8 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
     const stubSeen = claudeStub && rendered ? summarizeStub(join(raw, "provider-stub"), rendered.promptSha256) : null;
     const agentConnects = egressProvider.slice(egressLinesBeforeAgent).filter((e) => e.kind === "connect");
     if (client) evidence("cliente.json", { client, stub: stubSeen, providerConnectsDuringAgent: agentConnects.map((e) => ({ target: e.target, allowed: e.allowed, status: e.status })) });
+    // consumo num bloco só (tokens, custo estimado, por modelo, método de autenticação): medir quanto custa um slot
+    if (client) evidence("uso.json", usoDaColeta(client, authMethod, { runId, fixture }));
 
     // checks de execução (só se o agente rodou)
     const ran = agentStartedAt !== null;
