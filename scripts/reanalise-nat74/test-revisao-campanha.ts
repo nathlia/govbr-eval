@@ -12,13 +12,14 @@
  *   npx tsx scripts/reanalise-nat74/test-revisao-campanha.ts
  */
 import assert from "node:assert/strict";
+import Ajv2020 from "ajv/dist/2020.js";
 import { cpSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { RESULTADOS, gravar, gravarJson, jsonTexto, sha } from "./comum";
-import { NAO_PERGUNTADO, type Resposta } from "./e14-comum";
+import { MOTIVO_SEM_VINCULO, NAO_PERGUNTADO, type Resposta } from "./e14-comum";
 import {
-  FORMATO_ADJ_RESP_A, FORMATO_ADJ_RESP_B, REGRAS_CAMPANHA, aplicarAdjudicacao, consistencia, executar, lerArgs, lerPassada, loteB, medirConfiabilidade,
+  esquemaAmostra, esquemasAdjudicacao, specsDaPassada, specsDoEsquema, FORMATO_ADJ_RESP_A, FORMATO_ADJ_RESP_B, REGRAS_CAMPANHA, aplicarAdjudicacao, consistencia, executar, lerArgs, lerPassada, loteB, medirConfiabilidade,
   prepararAdjudicacao, prepararAmostra, sementeDaCampanha, sortearAmostra, unidadesDaCampanha, gravarImutavel, type Passada,
   DERIVACAO_TEMPLATE_REGISTRO, FORMATO_REGRA_MECANICA, REGRAS_GATILHO_D, contextoNaPassada, derivarAfetados, lerRegraPublicada,
 } from "./revisao-campanha";
@@ -29,6 +30,48 @@ const t = (nome: string, f: () => void) => { n++; try { f(); console.log(`  ok  
 const silencioso = <T>(f: () => T): T => { const e = console.error, l = console.log; console.error = () => {}; console.log = () => {}; try { return f(); } finally { console.error = e; console.log = l; } };
 
 console.log("revisão de campanha nova: sintético");
+t("[C4, passada 1.4.4] adjudicação de passada 1.3.1: o item de resposta é o 1.3.1 (motivoSemVinculo); 1.3.0 e 1.2.0 sem o campo", () => {
+  const item = (e: { a: object }) => (e.a as { properties: { respostas: { items: { properties: Record<string, unknown> } } } }).properties.respostas.items.properties;
+  assert.deepEqual(item(esquemasAdjudicacao(true, true, { v131: true })).motivoSemVinculo, { enum: [...MOTIVO_SEM_VINCULO] });
+  assert.deepEqual(item(esquemasAdjudicacao(true, true, { v131: true, regra: true })).motivoSemVinculo, { enum: [...MOTIVO_SEM_VINCULO] });
+  for (const e of [esquemasAdjudicacao(true, true), esquemasAdjudicacao(true, false), esquemasAdjudicacao(true, true, { regra: true })]) assert.ok(!("motivoSemVinculo" in item(e)));
+  assert.equal(JSON.stringify(esquemasAdjudicacao(true, true, {})), JSON.stringify(esquemasAdjudicacao(true, true)), "sem v131: o esquema de sempre");
+});
+t("[1.4.2 na revisão] amostra e adjudicação de passada 1.3.0/1.3.1: vinculo.spec = enum dos ids da passada (U-07 aceito, id fora recusado); 1.2.0 sem mudança", () => {
+  const ajv = (e: object) => new Ajv2020({ allErrors: true, strict: true, allowUnionTypes: true }).compile(e);
+  const resp = (spec: string, extra: Record<string, unknown> = {}) => ({ id: "T3-0123456789", verdadeFactual: "verdadeira",
+    norma: { id: "citada", forca: "obrigatorio", aplicabilidade: "aplica", violada: "sim" }, vinculo: { spec, relacao: "direta" }, sugestao: NAO_PERGUNTADO,
+    forcaDoVeredito: "medido", evidencias: ["MEDIDA"], justificativa: "MEDIDA mostra o switch ligado com aria-checked preso.", estadoAlcancado: "receita", ...extra });
+  const pass = (v131: boolean, versao = "nat78-primeira-passada-1.4.1") => ({ v12: true, v13: true, versao, ...(v131 ? { v131: true } : {}), referencias: { "tela-a2": { defeitos: [{ id: "U-01" }, { id: "U-07" }] } } }) as unknown as Passada;
+  const itemDe = (e: object) => (e as { properties: { respostas: { items: object } } }).properties.respostas.items;
+  for (const v131 of [false, true]) {
+    const p = pass(v131);
+    assert.deepEqual(specsDaPassada(p), ["U-01", "U-07"]);
+    const am = ajv(esquemaAmostra(p)), doc = (spec: string) => ({ formato: v131 ? "nat78-primeira-passada-respostas-1.3.1" : "nat78-primeira-passada-respostas-1.3.0",
+      lote: "amostra-01", loteSha256: "a".repeat(64), juiz: "juiz j1", respostas: [resp(spec)] });
+    assert.ok(am(doc("U-07")), `amostra ${v131}: ${JSON.stringify(am.errors)}`);
+    for (const fora of ["U-08", "A-01"]) assert.ok(!am(doc(fora)), `amostra ${v131}: ${fora} fora da passada`);
+    for (const regra of [false, true]) {
+      const e = esquemasAdjudicacao(true, true, { ...(v131 ? { v131: true } : {}), ...(regra ? { regra: true } : {}), specs: specsDoEsquema(p) });
+      const it = ajv(itemDe(e.a)), itB = ajv(itemDe(e.b));
+      assert.ok(it(resp("U-07")) && itB(resp("U-07")), `adjudicação ${v131}/${regra}: ${JSON.stringify(it.errors)}`);
+      assert.ok(!it(resp("U-08")) && !itB(resp("U-08")), `adjudicação ${v131}/${regra}: U-08 fora da passada`);
+    }
+  }
+  assert.ok(!ajv(itemDe(esquemasAdjudicacao(true, true).a))(resp("U-07")), "sem specs: a constante de sempre (recusa U-07)");
+  const e12 = esquemasAdjudicacao(true, false, { specs: ["U-07"] });
+  assert.equal(JSON.stringify(e12), JSON.stringify(esquemasAdjudicacao(true, false)), "1.2.0: specs ignorados, esquema de sempre");
+  // Passada anterior à 1.4.2 só com ids que a constante aceita (dev-366-b-01, revisao-b23-*): a constante, byte a byte; da 1.4.2 em diante, o enum.
+  const pB = (versao: string) => ({ v12: true, v13: true, versao, referencias: { vistorias: { defeitos: [{ id: "B-21" }, { id: "B-23" }] } } }) as unknown as Passada;
+  assert.equal(specsDoEsquema(pB("nat78-primeira-passada-1.4.1")), undefined);
+  assert.equal(JSON.stringify(esquemaAmostra(pB("nat78-primeira-passada-1.4.1"))), JSON.stringify(esquemaAmostra({ ...pB("x"), referencias: {} } as unknown as Passada)));
+  assert.deepEqual(specsDoEsquema(pB("nat78-primeira-passada-1.4.2")), ["B-21", "B-23"]);
+  assert.deepEqual(specsDoEsquema(pass(false)), ["U-01", "U-07"], "1.4.1 com U-xx: o enum (a constante recusaria toda resposta)");
+  assert.deepEqual(specsDoEsquema(pass(true, "nat78-primeira-passada-1.4.4")), ["U-01", "U-07"]);
+  const p12 = { v12: true, v13: false, versao: "nat78-primeira-passada-1.3.1", referencias: { x: { defeitos: [{ id: "U-07" }] } } } as unknown as Passada;
+  assert.ok(JSON.stringify(esquemaAmostra(p12)).includes("^[ABP]-\\\\d{2}$"), "amostra 1.2.0: padrão de sempre");
+  assert.equal(specsDoEsquema(p12), undefined);
+});
 t("CLI: toda pasta é obrigatória; sem --passada recusa; opção desconhecida recusa", () => {
   assert.equal(silencioso(() => executar(["consistencia"])), 1);
   assert.equal(silencioso(() => executar(["consistencia", "--saida", "x"])), 1);

@@ -8,7 +8,8 @@ import { join } from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
 import { gravar, gravarJson, lerJson, sha } from "./comum";
 import {
-  ESQUEMA_RESPOSTAS_CAMPANHA_1_3, FORMATO_MANIFESTO_CAMPANHA_1_3, FORMATO_RESPOSTAS_CAMPANHA, FORMATO_RESPOSTAS_CAMPANHA_1_3, NAO_PERGUNTADO,
+  ESQUEMA_RESPOSTAS_CAMPANHA_1_3, FORMATO_MANIFESTO_CAMPANHA_1_3_1, FORMATO_RESPOSTAS_CAMPANHA, FORMATO_RESPOSTAS_CAMPANHA_1_3, FORMATO_RESPOSTAS_CAMPANHA_1_3_1,
+  NAO_PERGUNTADO,
   derivarClasse, validarResposta, type CartaoCego, type ContextoDerivacao, type Resposta,
 } from "./e14-comum";
 import type { prepararCampanha as Preparar } from "./e14-campanha";
@@ -129,10 +130,11 @@ export async function testesReferencias(o: Ctx): Promise<void> {
     assert.equal(l13.politica, "politica-normativa-1.3.0");
     const m = JSON.parse(p13.arquivosInternos.get("lotes/manifesto.json")!) as { formato: string; versao: string; politica: string; cartoesComReferencias: number; respostas: { formato: string } };
     assert.deepEqual([m.formato, m.versao, m.politica, m.cartoesComReferencias, m.respostas.formato],
-      [FORMATO_MANIFESTO_CAMPANHA_1_3, "nat78-primeira-passada-1.4.3", "politica-normativa-1.3.0", 1, FORMATO_RESPOSTAS_CAMPANHA_1_3]);
+      [FORMATO_MANIFESTO_CAMPANHA_1_3_1, "nat78-primeira-passada-1.4.4", "politica-normativa-1.3.0", 1, FORMATO_RESPOSTAS_CAMPANHA_1_3_1]);
     const le = p13.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!;
-    for (const x of ["### `referencias`", "política normativa 1.3.0", FORMATO_RESPOSTAS_CAMPANHA_1_3, "(R16)", "**Receita vazia**", "nunca é `nao-alcancado`",
-      "**Registro × template.**", "**Cabeçalho de tabela vazio.**"]) assert.ok(le.includes(x), x);
+    for (const x of ["### `referencias`", "política normativa 1.3.0", FORMATO_RESPOSTAS_CAMPANHA_1_3_1, "(R16)", "**Receita vazia**", "nunca é `nao-alcancado`",
+      "**Registro × template.**", "**Cabeçalho de tabela vazio.**", "**Atributo ARIA preso × estado nativo.**", "**`motivoSemVinculo`**"]) assert.ok(le.includes(x), x);
+    assert.ok(!le.includes(FORMATO_RESPOSTAS_CAMPANHA_1_3 + "\""), "formato 1.3.0 fora do LEIAME 1.4.4");
     assert.ok(!le.includes("política normativa 1.2.0") && !le.includes(`"${FORMATO_RESPOSTAS_CAMPANHA}"`));
     assert.deepEqual(p13.cegueira.falhas, []); assert.deepEqual(p13.falhasTrio, []);
   });
@@ -148,7 +150,7 @@ export async function testesReferencias(o: Ctx): Promise<void> {
     : { id: c.id, verdadeFactual: "indeterminado",
       norma: c.alegacao.regra === null ? { id: "nenhuma", forca: "nenhuma", aplicabilidade: NAO_PERGUNTADO, violada: NAO_PERGUNTADO } : { id: "citada", forca: "indeterminado", aplicabilidade: "incerta", violada: "incerto" },
       vinculo: "indeterminado", sugestao: NAO_PERGUNTADO, forcaDoVeredito: "incerto", evidencias: ["MEDIDA"], justificativa: "MEDIDA não decidiu o fato neste teste sintético.", estadoAlcancado: "receita" });
-  gravarJson(fila13, "respostas/lote-01.json", { formato: FORMATO_RESPOSTAS_CAMPANHA_1_3, lote: "lote-01", loteSha256: sha(loteTxt), juiz: "teste sintético", respostas });
+  gravarJson(fila13, "respostas/lote-01.json", { formato: FORMATO_RESPOSTAS_CAMPANHA_1_3_1, lote: "lote-01", loteSha256: sha(loteTxt), juiz: "teste sintético", respostas });
 
   t("ingestão 1.3.0: a referência resgata o cartão (citacaoPor), contado em citacaoPor; --politica 1.2.0 sobre a mesma passada deixa erro normativo", () => {
     const r = ingerir(fila13); assert.deepEqual(r.erros, []);

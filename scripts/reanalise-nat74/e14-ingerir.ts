@@ -18,7 +18,11 @@
  *
  * [D-156] Política do juiz: a do manifesto (`politica`; 1.2.0 se ausente), ou `--politica 1.2.0|1.3.0`. Na 1.3.0 a
  * referência secundária do cartão (`referencias`) resgata a citação que caiu (`derivado.citacaoPor`); cartão sem
- * referência deriva igual à 1.2.0. Sob a 1.2.0 a saída é a de sempre, byte a byte. `--gravar-em PASTA_NOVA` (só com
+ * referência deriva igual à 1.2.0. Sob a 1.2.0 a saída é a de sempre, byte a byte.
+ *
+ * [passada 1.4.4, C4] Manifesto 1.3.1: respostas 1.3.1 (`motivoSemVinculo` na lista fechada, só com `vinculo: "nenhum"`,
+ * obrigatório quando o cartão tem `candidatas`); o motivo vai com a resposta para `julgamentos.json`, que ganha
+ * `porMotivoSemVinculo`. Manifestos 1.3.0 e anteriores: nada muda. `--gravar-em PASTA_NOVA` (só com
  * `--fila`) grava julgamentos.json + .sha256 + origem.json numa pasta NOVA, sem tocar na passada (reingestão).
  */
 import Ajv2020 from "ajv/dist/2020.js";
@@ -26,9 +30,9 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { POLITICA_PRINCIPAL, gravar, jsonTexto, ordenar, raizSaida, rotuloPolitica, sha, versaoDaPolitica, type VersaoPolitica } from "./comum";
 import {
-  E14_VERSAO, ESQUEMA_RESPOSTAS, ESQUEMA_RESPOSTAS_CAMPANHA, ESQUEMA_RESPOSTAS_CAMPANHA_1_1, ESQUEMA_RESPOSTAS_CAMPANHA_1_3, FORMATO_JULGAMENTOS, esquemaDaPassada,
-  FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1, FORMATO_MANIFESTO_CAMPANHA_1_3, FORMATO_RESPOSTAS, FORMATO_RESPOSTAS_CAMPANHA,
-  FORMATO_RESPOSTAS_CAMPANHA_1_1, FORMATO_RESPOSTAS_CAMPANHA_1_3, derivarClasse, validarResposta,
+  E14_VERSAO, ESQUEMA_RESPOSTAS, ESQUEMA_RESPOSTAS_CAMPANHA, ESQUEMA_RESPOSTAS_CAMPANHA_1_1, ESQUEMA_RESPOSTAS_CAMPANHA_1_3, ESQUEMA_RESPOSTAS_CAMPANHA_1_3_1,
+  FORMATO_JULGAMENTOS, esquemaDaPassada, FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1, FORMATO_MANIFESTO_CAMPANHA_1_3, FORMATO_MANIFESTO_CAMPANHA_1_3_1,
+  FORMATO_RESPOSTAS, FORMATO_RESPOSTAS_CAMPANHA, FORMATO_RESPOSTAS_CAMPANHA_1_1, FORMATO_RESPOSTAS_CAMPANHA_1_3, FORMATO_RESPOSTAS_CAMPANHA_1_3_1, derivarClasse, validarResposta,
   type ArquivoRespostas, type CartaoCego, type ContextoDerivacao, type ItemChave, type Resposta,
 } from "./e14-comum";
 
@@ -59,9 +63,9 @@ export function contextoDe(c: CartaoCego, it: ItemChave, specsDaTela: string[], 
 }
 
 type Validador = ((x: unknown) => boolean) & { errors?: { instancePath: string; message?: string }[] | null };
-type Versao = "historica" | "campanha-1.1" | "campanha-1.2" | "campanha-1.3";
+type Versao = "historica" | "campanha-1.1" | "campanha-1.2" | "campanha-1.3" | "campanha-1.3.1";
 const ESQUEMAS: Record<Versao, object> = { historica: ESQUEMA_RESPOSTAS, "campanha-1.1": ESQUEMA_RESPOSTAS_CAMPANHA_1_1, "campanha-1.2": ESQUEMA_RESPOSTAS_CAMPANHA,
-  "campanha-1.3": ESQUEMA_RESPOSTAS_CAMPANHA_1_3 };
+  "campanha-1.3": ESQUEMA_RESPOSTAS_CAMPANHA_1_3, "campanha-1.3.1": ESQUEMA_RESPOSTAS_CAMPANHA_1_3_1 };
 const validadores = new Map<string, Validador>();
 /**
  * Validador do arquivo de respostas. [passada 1.4.2] Na 1.3.0, com `specs`: o esquema da passada (`esquemaDaPassada`,
@@ -69,7 +73,7 @@ const validadores = new Map<string, Validador>();
  * usam o esquema constante delas, como sempre.
  */
 function esquema(v: Versao, specs?: readonly string[]): Validador {
-  const base = v === "campanha-1.3" && specs?.length ? esquemaDaPassada(ESQUEMAS[v], specs) : ESQUEMAS[v];
+  const base = (v === "campanha-1.3" || v === "campanha-1.3.1") && specs?.length ? esquemaDaPassada(ESQUEMAS[v], specs) : ESQUEMAS[v];
   const k = JSON.stringify(base);
   if (!validadores.has(k)) validadores.set(k, new Ajv2020({ allErrors: true, strict: true, allowUnionTypes: true }).compile(base) as Validador);
   return validadores.get(k)!;
@@ -86,10 +90,12 @@ export function ingerir(fila: string, o: { refazer?: boolean; politica?: VersaoP
   // [1b] Primeira passada de campanha nova 1.1.0: esquema/formato próprios, norma neutra, caminho único de respostas.
   // [M/N] 1.2.0: + estadoAlcancado e força da base já mapeada; a 1.1.0 segue o esquema dela, sem mudança.
   // [D-156] 1.3.0: + `referencias` no cartão e na resposta (o resto é a 1.2.0).
-  const versao: Versao = manifesto.formato === FORMATO_MANIFESTO_CAMPANHA_1_3 ? "campanha-1.3" : manifesto.formato === FORMATO_MANIFESTO_CAMPANHA ? "campanha-1.2"
-    : manifesto.formato === FORMATO_MANIFESTO_CAMPANHA_1_1 ? "campanha-1.1" : "historica";
-  const campanha = versao !== "historica", v13 = versao === "campanha-1.3", v12 = versao === "campanha-1.2" || v13;
-  const formatoResp = v13 ? FORMATO_RESPOSTAS_CAMPANHA_1_3 : v12 ? FORMATO_RESPOSTAS_CAMPANHA : campanha ? FORMATO_RESPOSTAS_CAMPANHA_1_1 : FORMATO_RESPOSTAS;
+  // [C4] 1.3.1: + `motivoSemVinculo` na resposta (o resto é a 1.3.0; a 1.3.0 não muda).
+  const versao: Versao = manifesto.formato === FORMATO_MANIFESTO_CAMPANHA_1_3_1 ? "campanha-1.3.1" : manifesto.formato === FORMATO_MANIFESTO_CAMPANHA_1_3 ? "campanha-1.3"
+    : manifesto.formato === FORMATO_MANIFESTO_CAMPANHA ? "campanha-1.2" : manifesto.formato === FORMATO_MANIFESTO_CAMPANHA_1_1 ? "campanha-1.1" : "historica";
+  const campanha = versao !== "historica", v131 = versao === "campanha-1.3.1", v13 = versao === "campanha-1.3" || v131, v12 = versao === "campanha-1.2" || v13;
+  const formatoResp = v131 ? FORMATO_RESPOSTAS_CAMPANHA_1_3_1 : v13 ? FORMATO_RESPOSTAS_CAMPANHA_1_3 : v12 ? FORMATO_RESPOSTAS_CAMPANHA
+    : campanha ? FORMATO_RESPOSTAS_CAMPANHA_1_1 : FORMATO_RESPOSTAS;
   // [D-156] Política: a pedida, senão a do manifesto (1.2.0 se ausente). A fila histórica é sempre 1.2.0.
   const politica: VersaoPolitica = o.politica ?? versaoDaPolitica(manifesto.politica);
   if (!campanha && politica !== "1.2.0") erros.push("a fila T3 histórica só se ingere na política 1.2.0");
@@ -137,7 +143,8 @@ export function ingerir(fila: string, o: { refazer?: boolean; politica?: VersaoP
       if (vistos.has(r.id)) { erros.push(`respostas/${f}: ${r.id} já respondido em ${vistos.get(r.id)}`); continue; }
       vistos.set(r.id, f);
       const ctx = contextoDe(c, it, lote.l.referencias[c.tela].defeitos.map(d => d.id), politica);
-      const e = validarResposta(r, ctx, v12 ? { normaNeutra: true, v12: true, ...(v13 ? { v13: true } : {}) } : campanha ? { normaNeutra: true } : {});
+      const e = validarResposta(r, ctx, v12 ? { normaNeutra: true, v12: true, ...(v13 ? { v13: true } : {}), ...(v131 ? { v131: true, candidatas: c.candidatas } : {}) }
+        : campanha ? { normaNeutra: true } : {});
       if (e.length) { for (const x of e) erros.push(`respostas/${f}: ${r.id}: ${x}`); continue; }
       julg.push({ id: r.id, chave: it.chave, tipo: it.tipo, lote: nome, juiz: doc.juiz, resposta: r, derivado: derivarClasse(r as Resposta, ctx) });
     }
@@ -153,13 +160,18 @@ export function ingerir(fila: string, o: { refazer?: boolean; politica?: VersaoP
   // [D-156] Cartões cuja classe veio de uma referência secundária (só 1.3.0; o campo só aparece fora da 1.2.0).
   const porCitacao: Record<string, number> = {};
   for (const j of ordenados) { const k = (j.derivado as { citacaoPor?: string }).citacaoPor ?? "primaria"; porCitacao[k] = (porCitacao[k] ?? 0) + 1; }
+  // [C4, 1.3.1] Respostas com `vinculo: "nenhum"`, pelo motivo (`ausente` = cartão sem candidatas que não deu motivo). O
+  // motivo de cada uma fica na própria `resposta`; só a 1.3.1 ganha o campo (as outras saem byte a byte).
+  const porMotivoSemVinculo: Record<string, number> = {};
+  if (v131) for (const j of ordenados) { const r = j.resposta as Resposta; if (r.vinculo !== "nenhum") continue;
+    const k = r.motivoSemVinculo ?? "ausente"; porMotivoSemVinculo[k] = (porMotivoSemVinculo[k] ?? 0) + 1; }
   const julgamentos = { formato: FORMATO_JULGAMENTOS, versao: E14_VERSAO, politica: politica === "1.2.0" ? POLITICA_PRINCIPAL : rotuloPolitica(politica),
     ...(politica !== "1.2.0" ? { citacaoPor: porCitacao } : {}),
     juizRotulo: campanha ? "julgado só por LLM (juiz cego por lote, primeira passada §8.1 do protocolo NAT-78)"
       : "julgado só por LLM (assistente, subagente cego por lote; D-130), salvo os materiais revistos pela autora (P5 a, materiais.json)",
     fila: { manifestoSha256: sha(mTxt), chaveSha256: manifesto.chaveSha256 },
     total: manifesto.total, julgados: ordenados.length, completo: ordenados.length === manifesto.total,
-    lotes: resumoLotes, porClasse, ...(v12 ? { porEstadoAlcancado } : {}), conteudoSha256: sha(JSON.stringify(ordenados)), julgamentos: ordenados };
+    lotes: resumoLotes, porClasse, ...(v12 ? { porEstadoAlcancado } : {}), ...(v131 ? { porMotivoSemVinculo: Object.fromEntries(Object.entries(porMotivoSemVinculo).sort()) } : {}), conteudoSha256: sha(JSON.stringify(ordenados)), julgamentos: ordenados };
   const texto = jsonTexto(julgamentos);
   const atual = join(o.destino ?? fila, "julgamentos.json");
   if (existsSync(atual) && !o.refazer) {

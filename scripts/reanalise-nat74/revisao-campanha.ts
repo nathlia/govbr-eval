@@ -53,11 +53,13 @@ import { distingueComDeFerramentas, mascararTextoCego } from "../painel/mascara"
 import { gravar, jsonTexto, lerJson, ordenar, rotuloPolitica, sha, unicos, versaoDaPolitica, type VersaoPolitica } from "./comum";
 import { janelas, residuoDeBraco, verificarCegueira, type Falha } from "./e14-cegueira";
 import {
-  ESQUEMA_RESPOSTAS_CAMPANHA, ESQUEMA_RESPOSTAS_CAMPANHA_1_1, ESQUEMA_RESPOSTAS_CAMPANHA_1_3, FORMATO_LOTE, FORMATO_MANIFESTO_CAMPANHA,
-  FORMATO_MANIFESTO_CAMPANHA_1_1, FORMATO_MANIFESTO_CAMPANHA_1_3, FORMATO_RESPOSTAS_CAMPANHA, FORMATO_RESPOSTAS_CAMPANHA_1_1, FORMATO_RESPOSTAS_CAMPANHA_1_3,
+  ESQUEMA_RESPOSTAS_CAMPANHA, ESQUEMA_RESPOSTAS_CAMPANHA_1_1, ESQUEMA_RESPOSTAS_CAMPANHA_1_3, ESQUEMA_RESPOSTAS_CAMPANHA_1_3_1, FORMATO_LOTE, FORMATO_MANIFESTO_CAMPANHA,
+  FORMATO_MANIFESTO_CAMPANHA_1_1, FORMATO_MANIFESTO_CAMPANHA_1_3, FORMATO_MANIFESTO_CAMPANHA_1_3_1, FORMATO_RESPOSTAS_CAMPANHA, FORMATO_RESPOSTAS_CAMPANHA_1_1,
+  FORMATO_RESPOSTAS_CAMPANHA_1_3, FORMATO_RESPOSTAS_CAMPANHA_1_3_1,
   NAO_PERGUNTADO, NORMA_PUBLICA, VAL, derivarClasse, validarResposta,
   type CartaoCego, type Derivado, type ItemChave, type Resposta,
 } from "./e14-comum";
+import { esquemaDaPassada as esquemaComSpecs } from "./e14-comum";
 import {
   CAMPOS, CLASSIFICACOES, analisar, cohen, creditoDe, estadoDe, fleiss, regraCanonica, relatorioMd, sujeitoDe, tipoDeSujeito,
   type Analise, type Julgado, type Membro, type Referencias,
@@ -155,6 +157,8 @@ export interface Passada {
    * passada adjudicada) usa ESTA política: nunca desfaz um resgate da 1.3.0 nem cria um sob a 1.2.0.
    */
   v13: boolean; politica: VersaoPolitica;
+  /** [C4, passada 1.4.4] Formato 1.3.1: a 1.3.0 + `motivoSemVinculo` na resposta (o mesmo esquema e a mesma validação na revisão). */
+  v131?: boolean;
   manifestoTxt: string; chaveTxt: string; julgTxt: string; julgSha: string; leiameJuiz: string;
   itens: ItemChave[]; item: Map<string, ItemChave>; cartao: Map<string, CartaoCego>; loteDe: Map<string, string>;
   referencias: LotePassada["referencias"]; card: Map<string, Card>; julgados: Map<string, Julgado>;
@@ -187,10 +191,11 @@ export function lerPassada(dirArg: string, o: { analises?: string[] } = {}): Pas
   if (!existsSync(mAbs)) throw new Error(`${dir}: sem lotes/manifesto.json (não é uma passada preparada)`);
   const manifestoTxt = lerTexto(mAbs);
   const man = JSON.parse(manifestoTxt) as ManifestoPassada;
-  if (![FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1, FORMATO_MANIFESTO_CAMPANHA_1_3].includes(man.formato))
+  if (![FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1, FORMATO_MANIFESTO_CAMPANHA_1_3, FORMATO_MANIFESTO_CAMPANHA_1_3_1].includes(man.formato))
     throw new Error(`${dir}: manifesto ${man.formato ?? "(sem formato)"} não é de primeira passada de campanha nova (o caminho histórico é e14-consistencia/e14-desempate)`);
-  // [D-156] 1.3.0 = 1.2.0 + referências (v12 e v13); a política do juiz vem do julgamentos.json (abaixo).
-  const v13 = man.formato === FORMATO_MANIFESTO_CAMPANHA_1_3, v12 = man.formato === FORMATO_MANIFESTO_CAMPANHA || v13;
+  // [D-156] 1.3.0 = 1.2.0 + referências (v12 e v13); a política do juiz vem do julgamentos.json (abaixo). [C4] 1.3.1 = 1.3.0 + motivo.
+  const v131 = man.formato === FORMATO_MANIFESTO_CAMPANHA_1_3_1, v13 = man.formato === FORMATO_MANIFESTO_CAMPANHA_1_3 || v131,
+    v12 = man.formato === FORMATO_MANIFESTO_CAMPANHA || v13;
   const chaveTxt = lerTexto(join(dir, "chave", "fila-t3-chave.json"));
   if (sha(chaveTxt) !== man.chaveSha256) throw new Error(`${dir}: chave difere do manifesto`);
   const jAbs = join(dir, "julgamentos.json");
@@ -249,18 +254,46 @@ export function lerPassada(dirArg: string, o: { analises?: string[] } = {}): Pas
       perguntaNorma: cego.perguntas.includes("norma"), cartao: cego });
   }
   if (membros.length !== man.total) throw new Error(`${dir}: ${membros.length} cartões ≠ ${man.total}`);
-  return { dir, nome: basename(dir), versao: (man as { versao: string }).versao, v12, v13, politica, mascara13: versaoAoMenos(man.versao, [1, 3, 0]),
+  return { dir, nome: basename(dir), versao: (man as { versao: string }).versao, v12, v13, ...(v131 ? { v131 } : {}), politica, mascara13: versaoAoMenos(man.versao, [1, 3, 0]),
     manifestoTxt, chaveTxt, julgTxt, julgSha, leiameJuiz: lerTexto(join(dir, "lotes", "LEIAME-juiz.md")),
     itens, item, cartao, loteDe, referencias, card, julgados, membros: ordenar(membros, m => m.id), campanha, fontes, dirsAnalise };
 }
 
 const specsDe = (p: Passada, c: CartaoCego) => p.referencias[c.tela].defeitos.map(d => d.id);
-const opcoesValidacao = (p: Passada) => (p.v13 ? { normaNeutra: true, v12: true, v13: true } : p.v12 ? { normaNeutra: true, v12: true } : { normaNeutra: true });
+/** [C4] Na 1.3.1, as `candidatas` do cartão decidem se `motivoSemVinculo` é obrigatório. */
+const opcoesValidacao = (p: Passada, c: CartaoCego) => (p.v131 ? { normaNeutra: true, v12: true, v13: true, v131: true, candidatas: c.candidatas }
+  : p.v13 ? { normaNeutra: true, v12: true, v13: true } : p.v12 ? { normaNeutra: true, v12: true } : { normaNeutra: true });
 /** [D-156] Contexto de derivação na política da passada (a mesma da 1ª passada e da ingestão). */
 export const contextoNaPassada = (p: Passada, c: CartaoCego, it: ItemChave): ReturnType<typeof contextoDe> => contextoDe(c, it, specsDe(p, c), p.politica);
-/** [D-156] Esquema e formato de resposta dos juízes da revisão: os da 1ª passada (1.3.0 com `referencias`). */
-const esquemaDaPassada = (p: { v12: boolean; v13?: boolean }) => (p.v13 ? ESQUEMA_RESPOSTAS_CAMPANHA_1_3 : p.v12 ? ESQUEMA_RESPOSTAS_CAMPANHA : ESQUEMA_RESPOSTAS_CAMPANHA_1_1);
-const formatoDaPassada = (p: { v12: boolean; v13?: boolean }) => (p.v13 ? FORMATO_RESPOSTAS_CAMPANHA_1_3 : p.v12 ? FORMATO_RESPOSTAS_CAMPANHA : FORMATO_RESPOSTAS_CAMPANHA_1_1);
+/**
+ * [D-156] Esquema e formato de resposta dos juízes da revisão: os da 1ª passada (1.3.0 com `referencias`).
+ * [passada 1.4.2 na revisão] Na 1.3.0/1.3.1, com `specs` (os ids dos defeitos das referências da passada, `specsDaPassada`),
+ * `vinculo.spec` vira o enum desses ids pela mesma `esquemaDaPassada` de e14-comum que e14-campanha publica e e14-ingerir
+ * valida; até aqui a revisão usava a constante (`^[ABP]-\d{2}$`), que recusava os `U-xx` da A2. A 1.2.0 e a 1.1.0 não mudam.
+ */
+const esquemaDaPassada = (p: { v12: boolean; v13?: boolean; v131?: boolean }, specs?: readonly string[]): object => {
+  const base = p.v131 ? ESQUEMA_RESPOSTAS_CAMPANHA_1_3_1 : p.v13 ? ESQUEMA_RESPOSTAS_CAMPANHA_1_3 : p.v12 ? ESQUEMA_RESPOSTAS_CAMPANHA : ESQUEMA_RESPOSTAS_CAMPANHA_1_1;
+  return p.v13 && specs?.length ? esquemaComSpecs(base, specs) : base;
+};
+/** [passada 1.4.2 na revisão] Ids dos defeitos das referências que os lotes da passada publicam (todas as telas), como em e14-ingerir. */
+export const specsDaPassada = (p: Pick<Passada, "referencias">): string[] =>
+  Object.values(p.referencias ?? {}).flatMap(r => (r.defeitos ?? []).map(d => d.id));
+/** Padrão de `vinculo.spec` dos esquemas constantes (o que as passadas anteriores à 1.4.2 publicaram). */
+const SPEC_LEGADO = /^[ABP]-\d{2}$/;
+/**
+ * [passada 1.4.2 na revisão] Os `specs` com que a revisão monta o esquema dos juízes e adjudicadores, ou `undefined` (a
+ * constante de sempre). A revisão responde no esquema que a 1ª passada publicou: da 1.4.2 em diante, o enum dos ids da
+ * passada; antes dela, a constante (`^[ABP]-\d{2}$`) — o que mantém byte a byte os esquemas e lotes das revisões já
+ * arquivadas (revisao-b23-*, passada 1.4.1). Exceção: passada anterior à 1.4.2 com id que a constante recusa (A2 na 1.4.1,
+ * `U-xx`) usa o enum, como a ingestão 1.3.0 desde a 1.4.2 — senão nenhuma resposta dela passaria. Só 1.3.0/1.3.1.
+ */
+export function specsDoEsquema(p: Pick<Passada, "referencias" | "versao" | "v13">): string[] | undefined {
+  if (!p.v13) return undefined;
+  const specs = specsDaPassada(p);
+  return versaoAoMenos(p.versao, [1, 4, 2]) || specs.some(id => !SPEC_LEGADO.test(id)) ? specs : undefined;
+}
+const formatoDaPassada = (p: { v12: boolean; v13?: boolean; v131?: boolean }) => (p.v131 ? FORMATO_RESPOSTAS_CAMPANHA_1_3_1 : p.v13 ? FORMATO_RESPOSTAS_CAMPANHA_1_3
+  : p.v12 ? FORMATO_RESPOSTAS_CAMPANHA : FORMATO_RESPOSTAS_CAMPANHA_1_1);
 
 // ───────────────────────────────────────────────────────────────── consistência (triagem)
 
@@ -344,7 +377,7 @@ export function sortearAmostra(p: Passada, n: number, semente: string): { estrat
 }
 
 function esquemaComLote(p: Passada, padrao: string, titulo: string): object {
-  const e = JSON.parse(JSON.stringify(esquemaDaPassada(p))) as { title: string; properties: { lote: { pattern: string } } };
+  const e = JSON.parse(JSON.stringify(esquemaDaPassada(p, specsDoEsquema(p)))) as { title: string; properties: { lote: { pattern: string } } };
   e.title = titulo; e.properties.lote.pattern = padrao;
   return e;
 }
@@ -442,7 +475,7 @@ export function juizDePassada(p: Passada, dir: string, ids: string[]): { nome: s
   const abs = resolve(dir);
   const mTxt = lerTexto(join(abs, "lotes", "manifesto.json"));
   const man = JSON.parse(mTxt) as ManifestoPassada;
-  if (![FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1, FORMATO_MANIFESTO_CAMPANHA_1_3].includes(man.formato)) throw new Error(`--juiz-passada ${abs}: não é passada de campanha nova`);
+  if (![FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1, FORMATO_MANIFESTO_CAMPANHA_1_3, FORMATO_MANIFESTO_CAMPANHA_1_3_1].includes(man.formato)) throw new Error(`--juiz-passada ${abs}: não é passada de campanha nova`);
   if (resolve(abs) === p.dir) throw new Error("--juiz-passada é a própria 1ª passada");
   const jTxt = lerTexto(join(abs, "julgamentos.json"));
   // [D-156] O juiz substituto traz o derivado da política dele: só entra se for a mesma da 1ª passada.
@@ -473,9 +506,11 @@ export function juizDePassada(p: Passada, dir: string, ids: string[]): { nome: s
     const j = js.get(o2.id)!;
     julg.set(id, { juiz: nome, idOriginal: id, idAmostra: null, resposta: j.resposta, derivado: j.derivado });
   }
-  const v13 = man.formato === FORMATO_MANIFESTO_CAMPANHA_1_3, v12 = man.formato === FORMATO_MANIFESTO_CAMPANHA || v13;
+  const v131 = man.formato === FORMATO_MANIFESTO_CAMPANHA_1_3_1, v13 = man.formato === FORMATO_MANIFESTO_CAMPANHA_1_3 || v131,
+    v12 = man.formato === FORMATO_MANIFESTO_CAMPANHA || v13;
   const naoComparaveis = [...(v12 === p.v12 ? [] : [{ campo: "estadoAlcancado", motivo: `existe só no esquema ${p.v12 ? "1.2.0 (1ª passada)" : "1.2.0 (juiz substituto)"}`, cartoes: mesmoOriginal }]),
-    ...(v13 === p.v13 ? [] : [{ campo: "referencias", motivo: `existe só no esquema ${p.v13 ? "1.3.0 (1ª passada)" : "1.3.0 (juiz substituto)"}`, cartoes: mesmoOriginal }])];
+    ...(v13 === p.v13 ? [] : [{ campo: "referencias", motivo: `existe só no esquema ${p.v13 ? "1.3.0 (1ª passada)" : "1.3.0 (juiz substituto)"}`, cartoes: mesmoOriginal }]),
+    ...(v131 === !!p.v131 ? [] : [{ campo: "motivoSemVinculo", motivo: `existe só no esquema ${p.v131 ? "1.3.1 (1ª passada)" : "1.3.1 (juiz substituto)"}`, cartoes: mesmoOriginal }])];
   return { nome, julg, casamento: { pasta: basename(abs), formato: man.formato, versao: (man as { versao: string }).versao, julgamentosSha256: sha(jTxt),
     substitutoDeEnsaio: true, cartoesDaAmostra: ids.length, mesmoId, mesmaChave, mesmoCartaoOriginal: mesmoOriginal, mesmoCartaoCego: mesmoCego,
     cartoesCegosDiferentes: mesmoOriginal - mesmoCego, semPar: semPar.length, excluidos: semPar,
@@ -518,7 +553,7 @@ export function medirConfiabilidade(p: Passada, am: string, o: { juizesPassada?:
         const c = cart.get(r.id), ia = porIdAmostra.get(r.id);
         if (!c || !ia) continue;
         const ctx = contextoNaPassada(p, c, p.item.get(ia.idOriginal)!);
-        const e = validarResposta(r, ctx, opcoesValidacao(p));
+        const e = validarResposta(r, ctx, opcoesValidacao(p, c));
         if (e.length) { for (const x of e) erros.push(`${rel}: ${r.id}: ${x}`); continue; }
         mapa.set(ia.idOriginal, { juiz: j, idOriginal: ia.idOriginal, idAmostra: r.id, resposta: r, derivado: derivarClasse(r, ctx) });
       }
@@ -824,9 +859,10 @@ export const LEITURAS_DA_REGRA_ESQUEMA = { type: "object", additionalProperties:
       properties: { id: { type: "string", pattern: "^T3-[0-9a-f]{10}$" }, registroAlcancado: { type: "string", minLength: 10 },
         creditaSeIdentidadeDemonstrada: SPEC_OU_NULL, creditaSeIdentidadeNaoDemonstrada: SPEC_OU_NULL } } } } } as const;
 
-export function esquemasAdjudicacao(v12: boolean, v13 = false, o: { regra?: boolean } = {}): { a: object; b: object } {
+export function esquemasAdjudicacao(v12: boolean, v13 = false, o: { regra?: boolean; v131?: boolean; specs?: readonly string[] } = {}): { a: object; b: object } {
   // [D-156] 1.3.0: o item de resposta é o da 1ª passada 1.3.0 (com `referencias`): o adjudicador responde a mesma pergunta.
-  const item = (esquemaDaPassada({ v12, v13 }) as typeof ESQUEMA_RESPOSTAS_CAMPANHA).properties.respostas.items;
+  // [C4] 1.3.1: o da 1ª passada 1.3.1 (com `motivoSemVinculo`). [1.4.2] `specs`: `vinculo.spec` = enum dos ids da passada.
+  const item = (esquemaDaPassada({ v12, v13, v131: o.v131 }, o.specs) as typeof ESQUEMA_RESPOSTAS_CAMPANHA).properties.respostas.items;
   const base = (formato: string, lote: string, etapa: "a" | "b") => ({
     formato: { const: formato }, lote: { type: "string", pattern: lote }, loteSha256: { type: "string", pattern: "^[0-9a-f]{64}$" },
     juiz: { type: "string", minLength: 3 }, etapa: { const: etapa }, grupo: { type: "string", pattern: "^D-[0-9a-f]{10}$" },
@@ -979,11 +1015,11 @@ export function prepararAdjudicacao(p: Passada, o: { confiabilidade?: string | n
     return { rel: `lotes/evidencia/${basename(abs)}`, arquivo: `evidencia/${basename(abs)}`, texto: readFileSync(abs, "utf8") }; });
   if (new Set(evid.map(e => e.rel)).size !== evid.length) throw new Error("--evidencia com dois arquivos de mesmo nome");
   const leiame = leiameAdjudicacao(p.politica) + (regra ? LEIAME_ADJ_REGRA(regra.nome, evid.map(e => e.arquivo)) : "");
-  const esq = esquemasAdjudicacao(p.v12, p.v13);
+  const esq = esquemasAdjudicacao(p.v12, p.v13, { ...(p.v131 ? { v131: true } : {}), specs: specsDoEsquema(p) });
   const esqA = jsonTexto(esq.a), esqB = jsonTexto(esq.b);
   const juiz = new Map<string, string>([["lotes/LEIAME-adjudicacao.md", leiame], ["lotes/LEIAME-juiz.md", p.leiameJuiz],
     ["lotes/esquema-adjudicacao-a.schema.json", esqA], ["lotes/esquema-adjudicacao-b.schema.json", esqB]]);
-  const esqR = regra ? esquemasAdjudicacao(p.v12, p.v13, { regra: true }) : null;
+  const esqR = regra ? esquemasAdjudicacao(p.v12, p.v13, { regra: true, ...(p.v131 ? { v131: true } : {}), specs: specsDoEsquema(p) }) : null;
   const esqRA = esqR ? jsonTexto(esqR.a) : "", esqRB = esqR ? jsonTexto(esqR.b) : "";
   if (regra) {
     juiz.set(`lotes/${regra.nome}`, regra.texto);
@@ -1089,8 +1125,9 @@ export function validarEtapa(cx: CtxAdj, lote: string, etapa: "a" | "b", loteTex
   let doc: DocEtapa;
   try { doc = JSON.parse(docTexto); } catch (e) { return { erros: [`${pre}: JSON inválido (${(e as Error).message})`], doc: null, derivadas }; }
   const ehD = (cx.unidades.get(lote)?.gatilhos ?? []).includes("d");
-  const k = `${cx.p.v12}|${cx.p.v13}|${etapa}${ehD ? "|d" : ""}`;
-  if (!ajvAdj.has(k)) { const e = esquemasAdjudicacao(cx.p.v12, cx.p.v13, ehD ? { regra: true } : {}); ajvAdj.set(k, new Ajv2020({ allErrors: true, strict: true, allowUnionTypes: true }).compile(etapa === "a" ? e.a : e.b)); }
+  const specsAdj = specsDoEsquema(cx.p);
+  const k = `${cx.p.v12}|${cx.p.v13}|${!!cx.p.v131}|${etapa}${ehD ? "|d" : ""}|${specsAdj ? [...new Set(specsAdj)].sort().join(",") : "constante"}`;
+  if (!ajvAdj.has(k)) { const e = esquemasAdjudicacao(cx.p.v12, cx.p.v13, { ...(ehD ? { regra: true } : {}), ...(cx.p.v131 ? { v131: true } : {}), specs: specsAdj }); ajvAdj.set(k, new Ajv2020({ allErrors: true, strict: true, allowUnionTypes: true }).compile(etapa === "a" ? e.a : e.b)); }
   const v = ajvAdj.get(k)! as ((x: unknown) => boolean) & { errors?: { instancePath: string; message?: string }[] | null };
   if (!v(doc)) return { erros: (v.errors ?? []).map(x => `${pre}: esquema ${x.instancePath || "/"} ${x.message}`), doc: null, derivadas };
   const l = JSON.parse(loteTexto) as LoteAdj;
@@ -1117,7 +1154,7 @@ export function validarEtapa(cx: CtxAdj, lote: string, etapa: "a" | "b", loteTex
     // [D-156] O cartão da adjudicação é o da 1ª passada (lote conferido pelo sha256): as mesmas referências, a mesma política.
     if (JSON.stringify({ ...c, id: "", grupo: undefined }) !== JSON.stringify({ ...cx.p.cartao.get(m.idOriginal)!, id: "", grupo: undefined })) { erros.push(`${pre}: ${r.id}: cartão difere do da 1ª passada`); continue; }
     const ctx = contextoNaPassada(cx.p, c, cx.p.item.get(m.idOriginal)!);
-    const e = validarResposta(r, ctx, opcoesValidacao(cx.p));
+    const e = validarResposta(r, ctx, opcoesValidacao(cx.p, c));
     if (e.length) { for (const x of e) erros.push(`${pre}: ${r.id}: ${x}`); continue; }
     if (l.grupo.normaUnica && leitura !== NAO_PERGUNTADO && r.norma !== NAO_PERGUNTADO) {
       if (r.norma.id !== leitura.norma) erros.push(`${pre}: ${r.id}: norma.id ${r.norma.id} ≠ leitura (${leitura.norma})`);
@@ -1195,7 +1232,7 @@ export function loteB(p: Passada, dd: string, lote: string): { erros: string[]; 
   const u = cx.unidades.get(lote)!;
   const ls = u.membros.map(m => ({ m, l: leiturasAnteriores(cx, m) }));
   const ehD = u.gatilhos.includes("d");
-  const esqB = jsonTexto(esquemasAdjudicacao(p.v12, p.v13, ehD ? { regra: true } : {}).b);
+  const esqB = jsonTexto(esquemasAdjudicacao(p.v12, p.v13, { ...(ehD ? { regra: true } : {}), ...(p.v131 ? { v131: true } : {}), specs: specsDoEsquema(p) }).b);
   const texto = jsonTexto({ formato: FORMATO_ADJ_LOTE_B, lote: `${lote}-b`, etapa: "b", politica: rotuloPolitica(p.politica),
     instrucoes: la.instrucoes, instrucoesDoJuiz: la.instrucoesDoJuiz, ...(ehD ? { instrucoesDaRegra: la.instrucoesDaRegra, evidenciaArquivada: la.evidenciaArquivada } : {}),
     esquema: { arquivo: ehD ? ESQ_REGRA.b : "esquema-adjudicacao-b.schema.json", sha256: sha(esqB) },

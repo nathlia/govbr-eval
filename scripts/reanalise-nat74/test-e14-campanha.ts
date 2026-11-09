@@ -5,6 +5,7 @@
  *   npx tsx scripts/reanalise-nat74/test-e14-campanha.ts
  */
 import assert from "node:assert/strict";
+import Ajv2020 from "ajv/dist/2020.js";
 import { spawnSync } from "node:child_process";
 import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -14,11 +15,12 @@ import { EVAL, bracoDosCartoes, gravar, gravarJson, jsonTexto, sha } from "./com
 import { PROIBIDOS, proibidos } from "./e14-cegueira";
 import {
   FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_1, FORMATO_RESPOSTAS, FORMATO_RESPOSTAS_CAMPANHA, FORMATO_RESPOSTAS_CAMPANHA_1_1, NAO_PERGUNTADO,
-  ESQUEMA_RESPOSTAS_CAMPANHA, ESQUEMA_RESPOSTAS_CAMPANHA_1_3, FORMATO_RESPOSTAS_CAMPANHA_1_3, derivarClasse, validarResposta,
+  ESQUEMA_RESPOSTAS_CAMPANHA, ESQUEMA_RESPOSTAS_CAMPANHA_1_3, ESQUEMA_RESPOSTAS_CAMPANHA_1_3_1, FORMATO_MANIFESTO_CAMPANHA_1_3, FORMATO_MANIFESTO_CAMPANHA_1_3_1,
+  FORMATO_RESPOSTAS_CAMPANHA_1_3, FORMATO_RESPOSTAS_CAMPANHA_1_3_1, MOTIVO_SEM_VINCULO, derivarClasse, validarResposta,
   type CartaoCego, type Resposta,
 } from "./e14-comum";
 import {
-  BASE_URL_PADRAO, LEIAME_CABECALHO_VAZIO, LEIAME_IDENTIDADE_REGISTRO, LEIAME_PARADAS, baseUrlValida, bracoDoRun, dominioDoDefeito, enderecoDaTela, leiameCampanha,
+  BASE_URL_PADRAO, LEIAME_ARIA_ESTADO, LEIAME_CABECALHO_VAZIO, LEIAME_IDENTIDADE_REGISTRO, LEIAME_MOTIVO_SEM_VINCULO, LEIAME_PARADAS, baseUrlValida, bracoDoRun, dominioDoDefeito, enderecoDaTela, leiameCampanha,
   leiameCampanha13, mascararTrio, paradasDaReferencia, passosLegiveis, prepararCampanha, registroDaRota,
 } from "./e14-campanha";
 import { FORCA_NO_VOCABULARIO, normasDaCampanha } from "./e14-fila";
@@ -342,16 +344,18 @@ try {
   const LEIAME13_1_4_1 = "84a05a9b69f3380a5726480df33dfd91489eb5c3d65eb46973d611fae94c0069";
   /** sha256 do LEIAME 1.2.0 histórico com os mesmos argumentos (sem "receita vazia": as passadas 1.2.0 arquivadas). */
   const LEIAME12_HISTORICO = "15672b0c594955cce77a845243d8b1513a1b4e69cb9274be0baf8c5cad6cd74d";
-  t("LEIAME 1.3.0 = o da 1.4.1 + registro × template e paradas da referência (vinculo, 1.4.3) + cabeçalho vazio (norma), e nada mais", () => {
+  t("LEIAME 1.3.0 = o da 1.4.1 + registro × template, paradas (1.4.3) e motivo sem vínculo (1.4.4) no vinculo + cabeçalho vazio e ARIA × estado nativo (1.4.4) na norma + formato 1.3.1, e nada mais", () => {
     const l = leiameCampanha13(10, 2, "Tela X");
-    for (const b of [LEIAME_IDENTIDADE_REGISTRO, LEIAME_PARADAS, LEIAME_CABECALHO_VAZIO]) assert.equal(l.split(b + "\n").length - 1, 1, b.slice(0, 40));
+    for (const b of [LEIAME_IDENTIDADE_REGISTRO, LEIAME_PARADAS, LEIAME_CABECALHO_VAZIO, LEIAME_ARIA_ESTADO, LEIAME_MOTIVO_SEM_VINCULO]) assert.equal(l.split(b + "\n").length - 1, 1, b.slice(0, 40));
     assert.ok(l.indexOf(LEIAME_IDENTIDADE_REGISTRO) > l.indexOf("### `vinculo`") && l.indexOf(LEIAME_IDENTIDADE_REGISTRO) < l.indexOf("### `sugestao`"), "na seção vinculo");
     assert.ok(l.includes(LEIAME_IDENTIDADE_REGISTRO + "\n" + LEIAME_PARADAS + "\n"), "paradas logo depois da regra registro × template");
     assert.ok(l.indexOf(LEIAME_CABECALHO_VAZIO) > l.indexOf("### `norma`") && l.indexOf(LEIAME_CABECALHO_VAZIO) < l.indexOf("### `vinculo`"), "na seção norma");
-    assert.equal(sha(l.replace(LEIAME_IDENTIDADE_REGISTRO + "\n", "").replace(LEIAME_PARADAS + "\n", "").replace(LEIAME_CABECALHO_VAZIO + "\n", "")), LEIAME13_1_4_1);
+    const sem = [LEIAME_IDENTIDADE_REGISTRO, LEIAME_PARADAS, LEIAME_CABECALHO_VAZIO, LEIAME_ARIA_ESTADO, LEIAME_MOTIVO_SEM_VINCULO].reduce((x, b) => x.replace(b + "\n", ""), l);
+    assert.equal(l.split(FORMATO_RESPOSTAS_CAMPANHA_1_3_1).length - 1, 1, "o formato 1.3.1 no exemplo, uma vez");
+    assert.equal(sha(sem.replace(FORMATO_RESPOSTAS_CAMPANHA_1_3_1, FORMATO_RESPOSTAS_CAMPANHA_1_3)), LEIAME13_1_4_1);
     for (const x of ["`paradas`", "`registro`", "`dominio`", "{ regra, registros }", "nunca o deduza", "só o registro listado na sua parada"]) assert.ok(LEIAME_PARADAS.includes(x), x);
     // Neutro: nenhum padrão da verificação de cegueira, nenhuma spec citada, "origem do cartão" e nunca a palavra do desenho.
-    for (const b of [LEIAME_IDENTIDADE_REGISTRO, LEIAME_PARADAS, LEIAME_CABECALHO_VAZIO]) {
+    for (const b of [LEIAME_IDENTIDADE_REGISTRO, LEIAME_PARADAS, LEIAME_CABECALHO_VAZIO, LEIAME_ARIA_ESTADO, LEIAME_MOTIVO_SEM_VINCULO]) {
       for (const [nome, re] of proibidos(["sem", "ferramentas", "com"])) assert.ok(!re.test(b), `${nome} no bloco novo`);
       assert.ok(!/\b[ABPU]-\d{2}\b/.test(b), "o bloco novo não cita spec");
     }
@@ -363,7 +367,8 @@ try {
   t("LEIAME 1.2.0 é o histórico byte a byte (a 1.4.1 tinha posto \"receita vazia\" nele; corrigido); passadas 1.2.0 arquivadas refeitas iguais", () => {
     const l = leiameCampanha(10, 2, "Tela X");
     assert.equal(sha(l), LEIAME12_HISTORICO);
-    for (const x of ["**Receita vazia**", LEIAME_IDENTIDADE_REGISTRO, LEIAME_CABECALHO_VAZIO]) assert.ok(!l.includes(x), x.slice(0, 30));
+    for (const x of ["**Receita vazia**", LEIAME_IDENTIDADE_REGISTRO, LEIAME_CABECALHO_VAZIO, LEIAME_ARIA_ESTADO, LEIAME_MOTIVO_SEM_VINCULO, "motivoSemVinculo", "aria-checked",
+      FORMATO_RESPOSTAS_CAMPANHA_1_3_1]) assert.ok(!l.includes(x), x.slice(0, 30));
     assert.ok(leiameCampanha13(10, 2, "Tela X").includes("**Receita vazia**"), "a 1.3.0 continua com a receita vazia");
     // Arquivo real (govbr-resultados), quando presente: a passada 1.2.0 do ensaio-trio-real-05 (gerador 1.3.x) sai igual.
     const arq = join(EVAL, "..", "govbr-resultados", "analises", "ensaio-trio-real-05", "p01", "primeira-passada-20261029T1", "lotes", "LEIAME-juiz.md");
@@ -416,7 +421,7 @@ try {
       : { id: c.id, verdadeFactual: "indeterminado",
         norma: c.alegacao.regra === null ? { id: "nenhuma", forca: "nenhuma", aplicabilidade: NAO_PERGUNTADO, violada: NAO_PERGUNTADO } : { id: "citada", forca: "indeterminado", aplicabilidade: "incerta", violada: "incerto" },
         vinculo: "indeterminado", sugestao: NAO_PERGUNTADO, forcaDoVeredito: "incerto", evidencias: ["MEDIDA"], justificativa: "MEDIDA não decidiu o fato neste teste sintético.", estadoAlcancado: "receita" });
-    const grava = (spec: string) => gravarJson(filaU, "respostas/lote-01.json", { formato: FORMATO_RESPOSTAS_CAMPANHA_1_3, lote: "lote-01", loteSha256: sha(loteTxt), juiz: "teste sintético", respostas: resposta(spec) });
+    const grava = (spec: string) => gravarJson(filaU, "respostas/lote-01.json", { formato: FORMATO_RESPOSTAS_CAMPANHA_1_3_1, lote: "lote-01", loteSha256: sha(loteTxt), juiz: "teste sintético", respostas: resposta(spec) });
     grava("U-01");
     const r = ingerir(filaU); assert.deepEqual(r.erros, []);
     const j = (r.julgamentos as { julgamentos: { id: string; derivado: { spec: string | null } }[] }).julgamentos.find(x => x.id === alvo)!;
@@ -564,7 +569,7 @@ try {
       : { id: c.id, verdadeFactual: "indeterminado",
         norma: c.alegacao.regra === null ? { id: "nenhuma", forca: "nenhuma", aplicabilidade: NAO_PERGUNTADO, violada: NAO_PERGUNTADO } : { id: "citada", forca: "indeterminado", aplicabilidade: "incerta", violada: "incerto" },
         vinculo: "indeterminado", sugestao: NAO_PERGUNTADO, forcaDoVeredito: "incerto", evidencias: ["MEDIDA"], justificativa: "MEDIDA não decidiu o fato neste teste sintético.", estadoAlcancado: "receita" });
-    gravarJson(filaD, "respostas/lote-01.json", { formato: FORMATO_RESPOSTAS_CAMPANHA_1_3, lote: "lote-01", loteSha256: sha(loteTxt), juiz: "teste sintético", respostas });
+    gravarJson(filaD, "respostas/lote-01.json", { formato: FORMATO_RESPOSTAS_CAMPANHA_1_3_1, lote: "lote-01", loteSha256: sha(loteTxt), juiz: "teste sintético", respostas });
     const r = ingerir(filaD); assert.deepEqual(r.erros, []);
     const j = (r.julgamentos as { julgamentos: { id: string; derivado: { spec: string | null; classe: string } }[] }).julgamentos.find(x => x.id === alvo)!;
     assert.equal(j.derivado.spec, "B-21");
@@ -572,6 +577,111 @@ try {
     const resp = respostas.find(x => x.id === alvo)! as unknown as Resposta;
     const d = derivarClasse(resp, contextoDe(c, it as never, refDoLote(pD).defeitos.map(x => x.id), "1.3.0"));
     assert.deepEqual([j.derivado.classe, j.derivado.spec], [d.classe, d.spec], "a derivação é a de sempre");
+  });
+  // ── passada 1.4.4 (lista única 3.7.3, C3–C4): ARIA preso × estado nativo; motivo estruturado do "sem vínculo"
+  console.log("E14 campanha 1.4.4: ARIA preso × estado nativo (norma) e motivoSemVinculo (vinculo, respostas 1.3.1)");
+  const compilar = (e: object) => new Ajv2020({ allErrors: true, strict: true, allowUnionTypes: true }).compile(e);
+  t("LEIAME 1.3.0: ARIA × estado nativo na seção norma, logo depois do cabeçalho vazio; motivo no fim da seção vinculo, uma linha por valor; 1.2.0 sem os dois", () => {
+    const l = pA.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!;
+    assert.ok(l.includes(LEIAME_CABECALHO_VAZIO + "\n" + LEIAME_ARIA_ESTADO + "\n"), "logo depois do cabeçalho vazio");
+    assert.ok(l.indexOf(LEIAME_ARIA_ESTADO) > l.indexOf("### `norma`") && l.indexOf(LEIAME_ARIA_ESTADO) < l.indexOf("### `vinculo`"), "na seção norma");
+    assert.ok(l.includes(LEIAME_PARADAS + "\n" + LEIAME_MOTIVO_SEM_VINCULO + "\n"), "logo depois das paradas");
+    assert.ok(l.indexOf(LEIAME_MOTIVO_SEM_VINCULO) > l.indexOf("### `vinculo`") && l.indexOf(LEIAME_MOTIVO_SEM_VINCULO) < l.indexOf("### `sugestao`"), "na seção vinculo");
+    for (const x of ["`aria-checked`", "estado nativo", "regra do DS citada", "WCAG 4.1.2", "`wcag:4.1.2`", "`aplica` e violada `sim`", "não torna o fato",
+      "`verdadeira`, nunca `falsa`", "atributo ausente", "igual ao estado nativo", "`nao-aplica`", "`nao-alcancado`", "`MEDIDA`", "receita"])
+      assert.ok(LEIAME_ARIA_ESTADO.includes(x), x);
+    assert.deepEqual([...MOTIVO_SEM_VINCULO], ["registro", "estado", "sujeito", "fato", "fora-da-lista", "incerto"]);
+    for (const k of MOTIVO_SEM_VINCULO) assert.equal(LEIAME_MOTIVO_SEM_VINCULO.split(`\n  - \`${k}\`: `).length - 1, 1, k);
+    assert.equal(LEIAME_MOTIVO_SEM_VINCULO.split("\n  - `").length - 1, MOTIVO_SEM_VINCULO.length, "uma linha por valor, nada mais");
+    for (const x of ["`vinculo: \"nenhum\"`", "obrigatório quando o cartão tem `candidatas`", "Não muda a classe"]) assert.ok(LEIAME_MOTIVO_SEM_VINCULO.includes(x), x);
+    assert.ok(!/\bswitch\b|accessibility-|[0-9a-f]{12}/.test(LEIAME_ARIA_ESTADO), "nenhum componente nem id da base no bloco");
+    const l12 = p.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!;
+    for (const x of [LEIAME_ARIA_ESTADO, LEIAME_MOTIVO_SEM_VINCULO, "motivoSemVinculo", "aria-checked"]) assert.ok(!l12.includes(x), x.slice(0, 30));
+  });
+  t("esquema publicado na 1.3.0 = respostas 1.3.1: motivoSemVinculo na lista e só com vinculo \"nenhum\"; manifesto 1.3.1; a constante 1.3.0 não muda (recusa o campo)", () => {
+    const esq = JSON.parse(pA.arquivosDoJuiz.get("lotes/esquema-respostas.schema.json")!) as { properties: { formato: { const: string }; respostas: { items: { properties: Record<string, unknown> } } } };
+    assert.deepEqual(esq.properties.respostas.items.properties.motivoSemVinculo, { enum: [...MOTIVO_SEM_VINCULO] });
+    assert.equal(esq.properties.formato.const, FORMATO_RESPOSTAS_CAMPANHA_1_3_1);
+    const m = JSON.parse(pA.arquivosInternos.get("lotes/manifesto.json")!) as { formato: string; versao: string; respostas: { formato: string } };
+    assert.deepEqual([m.formato, m.versao, m.respostas.formato], [FORMATO_MANIFESTO_CAMPANHA_1_3_1, "nat78-primeira-passada-1.4.4", FORMATO_RESPOSTAS_CAMPANHA_1_3_1]);
+    const ajv = compilar(esq);
+    const base = { id: "T3-0123456789", verdadeFactual: "verdadeira", norma: { id: "citada", forca: "obrigatorio", aplicabilidade: "aplica", violada: "sim" },
+      vinculo: "nenhum", sugestao: NAO_PERGUNTADO, forcaDoVeredito: "medido", evidencias: ["MEDIDA"], justificativa: "MEDIDA mostra o fato fora dos defeitos da tela.", estadoAlcancado: "receita" };
+    const doc = (r: unknown, formato = FORMATO_RESPOSTAS_CAMPANHA_1_3_1) => ({ formato, lote: "lote-01", loteSha256: "a".repeat(64), juiz: "teste", respostas: [r] });
+    for (const k of MOTIVO_SEM_VINCULO) assert.ok(ajv(doc({ ...base, motivoSemVinculo: k })), `${k}: ${JSON.stringify(ajv.errors)}`);
+    assert.ok(ajv(doc(base)), "ausente: o esquema não vê as candidatas (a ingestão decide)");
+    assert.ok(!ajv(doc({ ...base, motivoSemVinculo: "outro" })), "fora da lista");
+    for (const v of [{ spec: "A-01", relacao: "direta" }, "indeterminado", NAO_PERGUNTADO]) {
+      assert.ok(ajv(doc({ ...base, vinculo: v })), JSON.stringify(v));
+      assert.ok(!ajv(doc({ ...base, vinculo: v, motivoSemVinculo: "fato" })), `motivo com vinculo ${JSON.stringify(v)}`);
+    }
+    const a13 = compilar(ESQUEMA_RESPOSTAS_CAMPANHA_1_3);
+    assert.ok(a13(doc(base, FORMATO_RESPOSTAS_CAMPANHA_1_3)) && !a13(doc({ ...base, motivoSemVinculo: "fato" }, FORMATO_RESPOSTAS_CAMPANHA_1_3)), "1.3.0: sem o campo");
+    assert.ok(!("motivoSemVinculo" in ESQUEMA_RESPOSTAS_CAMPANHA_1_3.properties.respostas.items.properties));
+    assert.equal(ESQUEMA_RESPOSTAS_CAMPANHA_1_3_1.title, FORMATO_RESPOSTAS_CAMPANHA_1_3_1);
+  });
+  t("validação 1.3.1: motivo obrigatório com vinculo \"nenhum\" e candidatas, opcional sem candidatas, recusado com outro vínculo ou fora da lista; 1.3.0 não conhece o campo; derivação igual", () => {
+    const ctx = ctxDe("C-cccc"), cand = cartao("C-cccc").candidatas;
+    assert.deepEqual(cand, ["A-01"]);
+    const o131 = { normaNeutra: true, v12: true, v13: true, v131: true, candidatas: cand }, o13 = { normaNeutra: true, v12: true, v13: true };
+    const r = resp("C-cccc", { norma: { id: "citada", forca: "obrigatorio", aplicabilidade: "aplica", violada: "sim" }, vinculo: "nenhum" });
+    assert.match(validarResposta(r, ctx, o131).join(), /responda motivoSemVinculo/);
+    for (const k of MOTIVO_SEM_VINCULO) assert.deepEqual(validarResposta({ ...r, motivoSemVinculo: k }, ctx, o131), [], k);
+    assert.deepEqual(validarResposta(r, ctx, { ...o131, candidatas: [] }), [], "sem candidatas: opcional");
+    assert.deepEqual(validarResposta({ ...r, motivoSemVinculo: "fora-da-lista" }, ctx, { ...o131, candidatas: [] }), []);
+    assert.match(validarResposta({ ...r, motivoSemVinculo: "outro" }, ctx, o131).join(), /motivoSemVinculo fora da lista/);
+    for (const v of [{ spec: "A-01", relacao: "direta" }, "indeterminado"]) {
+      assert.deepEqual(validarResposta({ ...r, vinculo: v }, ctx, o131), [], JSON.stringify(v));
+      assert.match(validarResposta({ ...r, vinculo: v, motivoSemVinculo: "fato" }, ctx, o131).join(), /só com vinculo "nenhum"/, JSON.stringify(v));
+    }
+    assert.match(validarResposta({ ...r, motivoSemVinculo: "fato" }, ctx, o13).join(), /campo desconhecido: motivoSemVinculo/, "1.3.0 não conhece o campo");
+    assert.deepEqual(validarResposta(r, ctx, o13), [], "1.3.0: sem motivo, como sempre");
+    assert.throws(() => validarResposta(r, ctx, { ...o13, v131: true }), /candidatas/);
+    assert.deepEqual(derivarClasse({ ...r, motivoSemVinculo: "estado" } as Resposta, ctx), derivarClasse(r as Resposta, ctx), "o motivo não entra na derivação");
+  });
+  const filaDe = (nome: string, troca: (rel: string, x: string) => string = (_r, x) => x) => {
+    const f = join(tmp, nome);
+    for (const [rel, x] of [...pA.arquivosDoJuiz, ...pA.arquivosInternos]) gravar(f, rel, troca(rel, x));
+    return f;
+  };
+  const loteA = pA.arquivosDoJuiz.get("lotes/lote-01.json")!, cartoesA = (JSON.parse(loteA) as { cartoes: CartaoCego[] }).cartoes;
+  const semVinc = (c: CartaoCego, motivo?: string) => ({ id: c.id, verdadeFactual: "indeterminado",
+    norma: c.alegacao.regra === null ? { id: "nenhuma", forca: "nenhuma", aplicabilidade: NAO_PERGUNTADO, violada: NAO_PERGUNTADO } : { id: "citada", forca: "indeterminado", aplicabilidade: "incerta", violada: "incerto" },
+    vinculo: "nenhum", sugestao: NAO_PERGUNTADO, forcaDoVeredito: "incerto", evidencias: ["MEDIDA"], justificativa: "MEDIDA não decidiu o fato neste teste sintético.", estadoAlcancado: "receita",
+    ...(motivo ? { motivoSemVinculo: motivo } : {}) });
+  const motivoDe = (k: number) => MOTIVO_SEM_VINCULO[k % MOTIVO_SEM_VINCULO.length];
+  const gravaResp = (f: string, rs: unknown[], formato: string) => gravarJson(f, "respostas/lote-01.json", { formato, lote: "lote-01", loteSha256: sha(loteA), juiz: "teste sintético", respostas: rs });
+  t("ingestão 1.3.1: sem motivo com candidatas recusa; com motivo, ele vai na resposta de julgamentos.json e em porMotivoSemVinculo; classe igual à sem o campo", () => {
+    const f = filaDe("fila-131");
+    assert.ok(cartoesA.every(c => c.candidatas.length), "todo cartão sintético tem candidatas");
+    gravaResp(f, cartoesA.map(c => semVinc(c)), FORMATO_RESPOSTAS_CAMPANHA_1_3_1);
+    const e = ingerir(f).erros; assert.equal(e.filter(x => /responda motivoSemVinculo/.test(x)).length, cartoesA.length, e.join("\n"));
+    gravaResp(f, cartoesA.map((c, k) => semVinc(c, motivoDe(k))), FORMATO_RESPOSTAS_CAMPANHA_1_3_1);
+    const r = ingerir(f); assert.deepEqual(r.erros, []);
+    const j = r.julgamentos as { porMotivoSemVinculo: Record<string, number>; julgamentos: { id: string; resposta: Resposta; derivado: unknown }[] };
+    const esperado: Record<string, number> = {};
+    cartoesA.forEach((_c, k) => { esperado[motivoDe(k)] = (esperado[motivoDe(k)] ?? 0) + 1; });
+    assert.deepEqual(j.porMotivoSemVinculo, Object.fromEntries(Object.entries(esperado).sort()));
+    assert.deepEqual(Object.keys(j.porMotivoSemVinculo), Object.keys(j.porMotivoSemVinculo).sort());
+    const ch = JSON.parse(pA.arquivosInternos.get("chave/fila-t3-chave.json")!) as { itens: { id: string }[] };
+    for (const x of j.julgamentos) {
+      const k = cartoesA.findIndex(c => c.id === x.id);
+      assert.equal(x.resposta.motivoSemVinculo, motivoDe(k), x.id);
+      const { motivoSemVinculo: _m, ...sem } = x.resposta;
+      assert.deepEqual(x.derivado, derivarClasse(sem as Resposta, contextoDe(cartoesA[k], ch.itens.find(i => i.id === x.id)! as never, ["A-01"], "1.3.0")), x.id);
+    }
+    gravaResp(f, cartoesA.map(c => ({ ...semVinc(c, "fato"), vinculo: "indeterminado" })), FORMATO_RESPOSTAS_CAMPANHA_1_3_1);
+    assert.match(ingerir(f).erros.join(), /esquema \/respostas\/\d+/, "motivo com outro vínculo: recusado pelo esquema");
+    gravaResp(f, cartoesA.map((c, k) => semVinc(c, motivoDe(k))), FORMATO_RESPOSTAS_CAMPANHA_1_3);
+    assert.match(ingerir(f).erros.join(), /formato|esquema/, "formato 1.3.0 numa passada 1.3.1: recusado");
+  });
+  t("passada 1.3.0 congelada (manifesto 1.3.0): ingerida pelo esquema 1.3.0 de sempre — sem motivo aceita, com motivo recusada; julgamentos sem porMotivoSemVinculo", () => {
+    const f = filaDe("fila-130", (rel, x) => (rel === "lotes/manifesto.json" ? x.replace(FORMATO_MANIFESTO_CAMPANHA_1_3_1, FORMATO_MANIFESTO_CAMPANHA_1_3).replace(FORMATO_RESPOSTAS_CAMPANHA_1_3_1, FORMATO_RESPOSTAS_CAMPANHA_1_3) : x));
+    gravaResp(f, cartoesA.map(c => semVinc(c)), FORMATO_RESPOSTAS_CAMPANHA_1_3);
+    const r = ingerir(f); assert.deepEqual(r.erros, []);
+    assert.ok(!("porMotivoSemVinculo" in (r.julgamentos as object)) && !r.texto!.includes("motivoSemVinculo"));
+    gravaResp(f, cartoesA.map((c, k) => semVinc(c, motivoDe(k))), FORMATO_RESPOSTAS_CAMPANHA_1_3);
+    assert.match(ingerir(f).erros.join(), /esquema/, "1.3.0: campo recusado pelo esquema");
   });
   await testesReferencias({ t, tmp, dir, valDir, aliasesAbs, prepararCampanha, cli });
 } finally { rmSync(tmp, { recursive: true, force: true }); }

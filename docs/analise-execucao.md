@@ -268,8 +268,8 @@ cegos, que recebem só os arquivos indicados.
   o que as campanhas novas fixam em `protocolSha256`. O coletor valida pelo `findings.v1.schema.json` (campo novo,
   opcional): imagens de coletor antigas recusam relatório com o campo, então a imagem do coletor tem de ser refeita
   (`npm run runner:imagens`) antes da primeira campanha com a skill nova.
-- **Passada cega.** `e14-campanha.ts` prepara na política **1.3.0 por padrão** (`nat78-primeira-passada-1.4.2`: desde a 1.4.1 o LEIAME diz que receita vazia é a página como carrega, julgada nela; desde a 1.4.2 (lista única 3.7.2, C1–C2) ele traz, na seção `vinculo`, a regra registro × template (a de `govbr-resultados/analises/dev-366-b-01/revisao-b23-20261104T1/regra-identidade-registro.md`, §§ 2–3, no registro do juiz) e, na seção `norma`, a do cabeçalho de tabela vazio × WCAG 1.3.1; `--base-url` põe no LEIAME a origem da página congelada de fato servida (padrão `http://127.0.0.1:3300`); o esquema publicado aceita em `vinculo.spec` exatamente os ids dos defeitos das referências do lote (enum, `esquemaDaPassada`; antes, `^[ABP]-\d{2}$`, que recusava os `U-xx` da A2), e a ingestão 1.3.0 valida pelo mesmo conjunto. O lote traz o sha256 do LEIAME e do esquema: refazer a passada na 1.4.2 muda os bytes de todo lote, e um `loteSha256` de juiz anterior deixa de valer; manifesto e
-  respostas `…-1.3.0`): o cartão de agente cujo achado traz referências ganha `referencias` (`REF1`, `REF2`, com o texto da
+- **Passada cega.** `e14-campanha.ts` prepara na política **1.3.0 por padrão** (`nat78-primeira-passada-1.4.4`: desde a 1.4.1 o LEIAME diz que receita vazia é a página como carrega, julgada nela; desde a 1.4.2 (lista única 3.7.2, C1–C2) ele traz, na seção `vinculo`, a regra registro × template (a de `govbr-resultados/analises/dev-366-b-01/revisao-b23-20261104T1/regra-identidade-registro.md`, §§ 2–3, no registro do juiz) e, na seção `norma`, a do cabeçalho de tabela vazio × WCAG 1.3.1; `--base-url` põe no LEIAME a origem da página congelada de fato servida (padrão `http://127.0.0.1:3300`); o esquema publicado aceita em `vinculo.spec` exatamente os ids dos defeitos das referências do lote (enum, `esquemaDaPassada`; antes, `^[ABP]-\d{2}$`, que recusava os `U-xx` da A2), e a ingestão 1.3.0 valida pelo mesmo conjunto. O lote traz o sha256 do LEIAME e do esquema: refazer a passada na 1.4.2 muda os bytes de todo lote, e um `loteSha256` de juiz anterior deixa de valer; desde a 1.4.3, `referencias.<tela>.paradas` (rota, registro, receita e nota de cada parada) e, em cada defeito, `registro` e o `dominio` declarado; desde a 1.4.4 (lista única 3.7.3, C3–C4), na seção `norma`, a regra do atributo de estado ARIA preso × estado nativo (`LEIAME_ARIA_ESTADO`: contradição medida depois da receita, com regra do DS que exige o valor acompanhar o estado ou com a WCAG 4.1.2 citada, é `aplica` + `sim`; sem regra, `wcag:4.1.2`; o navegador expor o estado nativo não torna o fato falso) e, no fim da seção `vinculo`, `motivoSemVinculo` (ver **Juiz**); manifesto e
+  respostas `…-1.3.0` até a 1.4.3, `…-1.3.1` desde a 1.4.4): o cartão de agente cujo achado traz referências ganha `referencias` (`REF1`, `REF2`, com o texto da
   norma, como `normaCitada`; a que repete a `rule` sai), e `REF1`/`REF2` ficam citáveis. Cartão sem referência fica igual
   ao da 1.2.0. `--politica 1.2.0` refaz a passada antiga byte a byte (referências ignoradas). A 1.4.1 tinha quebrado isso
   (a receita vazia entrou também no LEIAME 1.2.0); a 1.4.2 corrige, e as passadas 1.2.0 arquivadas desde o gerador 1.2.0
@@ -278,6 +278,15 @@ cegos, que recebem só os arquivos indicados.
   se aplica, não violada, mais fraca sem vínculo, ou só permite), a resposta tem de trazer `referencias`: um
   `{id, forca, aplicabilidade, violada}` por referência (mesmo vocabulário de `norma`). Nos outros casos, `"nao-perguntado"`.
   Em cartão sem referência o campo não existe.
+  **`motivoSemVinculo` (respostas 1.3.1, passada 1.4.4).** Com `vinculo: "nenhum"`, um valor da lista fechada
+  `MOTIVO_SEM_VINCULO` (o que separa o fato do defeito mais próximo, em geral um dos `candidatas`; com mais de um, o
+  primeiro): `registro` (o mesmo fato noutro registro, sem identidade provada) · `estado` (outro estado) · `sujeito` (outro
+  elemento) · `fato` (mesmo elemento e estado, outro fato) · `fora-da-lista` (nenhum defeito da lista trata do fato) ·
+  `incerto`. Obrigatório quando o cartão tem `candidatas`, opcional sem elas, recusado (esquema e ingestão) com qualquer
+  outro `vinculo`. Não entra na derivação. A ingestão o deixa na `resposta` de `julgamentos.json` e conta
+  `porMotivoSemVinculo` (`ausente` = cartão sem candidatas que não deu motivo); passadas 1.3.0 congeladas seguem o esquema
+  1.3.0, sem o campo, e saem byte a byte. A revisão (amostra, adjudicação, juiz substituto) usa o esquema e a validação
+  1.3.1 quando a passada é 1.3.1.
 - **Derivação (R16).** Só na 1.3.0 e só quando a primária cai por citação: a primeira referência, na ordem do achado, que,
   julgada como se fosse a citada, dá violação (obrigatória aplicável e violada; ou mais fraca aplicável e violada com
   vínculo, R15) decide a classe, e com ela o crédito da detecção, exatamente como uma primária correta. O `derivado` grava

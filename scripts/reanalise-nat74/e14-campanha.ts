@@ -28,6 +28,8 @@
  * 1.4.3 (passada cega dev-372-b-01: juízes adivinharam qual registro é a parada `detalhe`): na 1.3.0, `referencias.<tela>`
  * ganha `paradas` (de `_meta.states`: rota, registro, receita e nota de cada parada) e cada defeito ganha `registro` e, se a
  * referência o declara, `dominio` (`{ regra, registros }`, sem mudança). A 1.2.0 não muda.
+ * 1.4.4 (lista única 3.7.3, C3–C4): na 1.3.0, a regra do atributo ARIA preso × estado nativo na seção `norma` do LEIAME e
+ * `motivoSemVinculo` na resposta (manifesto e respostas `…-1.3.1`). A 1.2.0 não muda.
  */
 import { existsSync, readFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
@@ -36,8 +38,8 @@ import { ID_DE_ACHADO, distingueComDeFerramentas, mascararNormaCega, mascararTex
 import { POLITICA_PRINCIPAL, TCC, bracoDoPerfil, gravar, jsonTexto, lerJson, ordenar, rotuloPolitica, sha, versaoDaPolitica, type VersaoPolitica } from "./comum";
 import { CATEGORIAS_RESIDUO, residuoDeBraco, verificarCegueira, type Cegueira, type ResiduoDoCartao } from "./e14-cegueira";
 import {
-  ESQUEMA_RESPOSTAS_CAMPANHA, ESQUEMA_RESPOSTAS_CAMPANHA_1_3, FORMATO_LOTE, FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_3, FORMATO_RESPOSTAS,
-  FORMATO_RESPOSTAS_CAMPANHA, FORMATO_RESPOSTAS_CAMPANHA_1_3, IDS_REFERENCIA, NAO_PERGUNTADO,
+  ESQUEMA_RESPOSTAS_CAMPANHA, ESQUEMA_RESPOSTAS_CAMPANHA_1_3_1, FORMATO_LOTE, FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_3_1, FORMATO_RESPOSTAS,
+  FORMATO_RESPOSTAS_CAMPANHA, FORMATO_RESPOSTAS_CAMPANHA_1_3_1, IDS_REFERENCIA, MOTIVO_SEM_VINCULO, NAO_PERGUNTADO,
   esquemaDaPassada, hashDaChave, idOpaco, mascarar, nomeLote, type CartaoCego, type ItemChave,
 } from "./e14-comum";
 import { TABELA_FORCAS, cartaoCego, normasDaCampanha, type Extracao } from "./e14-fila";
@@ -72,10 +74,19 @@ import { leiameJuiz, tamanhosDosLotes } from "./e14-preparar";
  * referência o declara hoje — o campo é para uma referência 1.1.0). O LEIAME 1.3.0 ganha LEIAME_PARADAS logo depois da regra
  * registro × template. A 1.2.0 não muda (lote, LEIAME e esquema byte a byte). Formatos do lote, do manifesto e das respostas
  * iguais; a ingestão lê de `referencias` só `defeitos[].id`, como antes. Passadas já julgadas não se refazem.
+ * 1.4.4 (lista única 3.7.3, C3–C4; juiz da A2 de 04/11, U-07: o mesmo `aria-checked` preso teve crédito sem regra, erro
+ * factual e observação com norma errada): o LEIAME 1.3.0 ganha LEIAME_ARIA_ESTADO na seção `norma`, logo depois do cabeçalho
+ * vazio (atributo de estado ARIA que contradiz o estado nativo depois da receita: com regra do DS que exige o valor
+ * acompanhar o estado, ou com a WCAG 4.1.2, `aplica` + `sim`; sem regra, `wcag:4.1.2`; o navegador expor o estado nativo não
+ * torna o fato falso). E a resposta ganha `motivoSemVinculo` (MOTIVO_SEM_VINCULO, lista fechada; só com `vinculo: "nenhum"`,
+ * obrigatório quando o cartão tem `candidatas`), documentado no fim da seção `vinculo` (LEIAME_MOTIVO_SEM_VINCULO), para a
+ * reconta ler o motivo sem ler justificativas. Manifesto e respostas passam a `…-1.3.1` (o esquema 1.3.0 não aceita o campo
+ * e as passadas 1.3.0 congeladas não o têm: elas seguem ingeridas pelo esquema 1.3.0, byte a byte). Classe derivada igual
+ * (política do juiz 1.3.0). A 1.2.0 não muda (lote, LEIAME e esquema byte a byte).
  */
 export const E14_CAMPANHA_VERSAO = "nat78-primeira-passada-1.3.1";
 /** [D-156] Versão da passada preparada na política 1.3.0 (referências secundárias). A 1.2.0 continua 1.3.1. */
-export const E14_CAMPANHA_VERSAO_1_4 = "nat78-primeira-passada-1.4.3";
+export const E14_CAMPANHA_VERSAO_1_4 = "nat78-primeira-passada-1.4.4";
 /** Política das campanhas novas (D-156). `--politica 1.2.0` reproduz o histórico. */
 export const POLITICA_CAMPANHA_PADRAO: VersaoPolitica = "1.3.0";
 
@@ -311,7 +322,7 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
   const leiame = v13 ? leiameCampanha13(ord.length, lotes.length, nomes, baseUrl) : leiameCampanha(ord.length, lotes.length, nomes);
   // [1.4.2] Na 1.3.0, `vinculo.spec` = os ids dos defeitos das telas da passada (os mesmos que os lotes publicam em
   // `referencias`); a 1.2.0 publica o esquema histórico, byte a byte.
-  const esquema = jsonTexto(v13 ? esquemaDaPassada(ESQUEMA_RESPOSTAS_CAMPANHA_1_3, Object.values(telas).flatMap(t => (t.defeitos as { id: string }[]).map(d => d.id)))
+  const esquema = jsonTexto(v13 ? esquemaDaPassada(ESQUEMA_RESPOSTAS_CAMPANHA_1_3_1, Object.values(telas).flatMap(t => (t.defeitos as { id: string }[]).map(d => d.id)))
     : ESQUEMA_RESPOSTAS_CAMPANHA);
   const rotulo = v13 ? rotuloPolitica(politica) : POLITICA_PRINCIPAL, versao = v13 ? E14_CAMPANHA_VERSAO_1_4 : E14_CAMPANHA_VERSAO;
   const juiz = new Map<string, string>([["lotes/LEIAME-juiz.md", leiame], ["lotes/esquema-respostas.schema.json", esquema]]);
@@ -339,9 +350,9 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
       porBraco, relato12: { nota: "sinais de verificarCegueira (relato até a 1.2.0), para comparar com passadas anteriores", porBraco: relato12 },
       residuo: { arquivo: "residuo-de-braco.json", sha256: sha(residuoTxt) }, porCartao: cegueira.porCartao })],
     ["residuo-de-braco.json", residuoTxt],
-    ["lotes/manifesto.json", jsonTexto({ formato: v13 ? FORMATO_MANIFESTO_CAMPANHA_1_3 : FORMATO_MANIFESTO_CAMPANHA, versao, politica: rotulo, total: ord.length,
+    ["lotes/manifesto.json", jsonTexto({ formato: v13 ? FORMATO_MANIFESTO_CAMPANHA_1_3_1 : FORMATO_MANIFESTO_CAMPANHA, versao, politica: rotulo, total: ord.length,
       ...(v13 ? { cartoesComReferencias: ord.filter(x => x.cartao.referencias?.length).length } : {}),
-      respostas: { pasta: "respostas/", formato: v13 ? FORMATO_RESPOSTAS_CAMPANHA_1_3 : FORMATO_RESPOSTAS_CAMPANHA, nota: "pasta da passada, ao lado de lotes/ (nunca lotes/respostas/)" },
+      respostas: { pasta: "respostas/", formato: v13 ? FORMATO_RESPOSTAS_CAMPANHA_1_3_1 : FORMATO_RESPOSTAS_CAMPANHA, nota: "pasta da passada, ao lado de lotes/ (nunca lotes/respostas/)" },
       analises: analises.map(d => ({ dir: rotuloDe(d), packageSha256: sha(readFileSync(join(d, "revisao", "package.json"))) })),
       arquivos: Object.fromEntries([...juiz].map(([rel, t]) => [rel, sha(t)])),
       lotes: lotes.map(l => ({ lote: l.lote, n: l.ids.length, sha256: sha(juiz.get(`lotes/${l.lote}.json`)!), ids: l.ids })), chaveSha256: sha(chaveTxt), residuoSha256: sha(residuoTxt), fontes })]]);
@@ -435,14 +446,17 @@ export function leiameCampanha13(total: number, nLotes: number, nomes: string, b
   let t = leiameCampanha(total, nLotes, nomes);
   // [1.4.2] Endereço da página congelada (--base-url); com o padrão, nada muda.
   if (baseUrl !== BASE_URL_PADRAO) t = trocar(t, "`" + BASE_URL_PADRAO + "`", "`" + baseUrlValida(baseUrl) + "`");
-  // [1.4.2, C2] Cabeçalho vazio × WCAG 1.3.1, logo depois do vocabulário de `violada`.
-  t = trocar(t, "- `violada`: `sim` · `nao` · `incerto`." + NL, "- `violada`: `sim` · `nao` · `incerto`." + NL + LEIAME_CABECALHO_VAZIO + NL);
-  // [1.4.2, C1] Registro × template, no fim da seção `vinculo`; [1.4.3] e, logo depois, de onde se lê o registro da referência.
+  // [1.4.2, C2] Cabeçalho vazio × WCAG 1.3.1, logo depois do vocabulário de `violada`; [1.4.4, C3] e, logo depois, o atributo
+  // ARIA preso × estado nativo.
+  t = trocar(t, "- `violada`: `sim` · `nao` · `incerto`." + NL, "- `violada`: `sim` · `nao` · `incerto`." + NL + LEIAME_CABECALHO_VAZIO + NL + LEIAME_ARIA_ESTADO + NL);
+  // [1.4.2, C1] Registro × template, no fim da seção `vinculo`; [1.4.3] e, logo depois, de onde se lê o registro da referência;
+  // [1.4.4, C4] e, por último, o motivo do "sem vínculo".
   t = trocar(t, "- Nunca pelo id da regra nem por semelhança de texto (R7): só pelo fato." + NL,
-    "- Nunca pelo id da regra nem por semelhança de texto (R7): só pelo fato." + NL + LEIAME_IDENTIDADE_REGISTRO + NL + LEIAME_PARADAS + NL);
+    "- Nunca pelo id da regra nem por semelhança de texto (R7): só pelo fato." + NL + LEIAME_IDENTIDADE_REGISTRO + NL + LEIAME_PARADAS + NL
+    + LEIAME_MOTIVO_SEM_VINCULO + NL);
   t = t.split("política normativa 1.2.0").join("política normativa 1.3.0");
   t = t.split("política 1.2.0").join("política 1.3.0");
-  t = trocar(t, `"formato": "${FORMATO_RESPOSTAS_CAMPANHA}"`, `"formato": "${FORMATO_RESPOSTAS_CAMPANHA_1_3}"`);
+  t = trocar(t, `"formato": "${FORMATO_RESPOSTAS_CAMPANHA}"`, `"formato": "${FORMATO_RESPOSTAS_CAMPANHA_1_3_1}"`);
   t = trocar(t, "- `perguntas`: o que responder neste cartão (abaixo).", [
     "- `referencias` (ids `REF1`, `REF2`, só em alguns cartões): outras normas que o autor do cartão citou para o mesmo fato,",
     "  além da `regra` (que continua a principal). Cada uma traz `regra` e `norma` (o texto, como em `normaCitada`).",
@@ -518,6 +532,45 @@ export const LEIAME_CABECALHO_VAZIO = [
   "  referência da tela pode descrever esse defeito pela WCAG 1.3.1. Se nenhuma célula de dados daquela coluna (ou",
   "  linha) tem conteúdo, não há relação a transmitir: `nao-aplica`. O cartão que cita só a regra do axe-core continua",
   "  com a força dela (`boa-pratica`).",
+].join("\n");
+
+/**
+ * [1.4.4, lista única 3.7.3 C3] Atributo de estado ARIA preso × estado nativo, na seção `norma`, logo depois do cabeçalho
+ * vazio. Motivou: U-07 da A2 (dev-371-a2-01), `aria-checked="false"` fixo num controle que, ligado, fica com `checked` =
+ * `true`; o mesmo fato teve crédito sem regra, erro factual ("o navegador expõe o estado nativo") e observação com norma
+ * errada (WCAG 4.1.2 julgada não violada). Regra geral de aplicabilidade e de fato; nenhuma spec nem id da base citados (a
+ * força da regra do DS citada continua a da `forcaNoVocabulario`).
+ */
+export const LEIAME_ARIA_ESTADO = [
+  "- **Atributo ARIA preso × estado nativo.** Um atributo de estado ARIA (`aria-checked`, `aria-pressed`, `aria-selected`,",
+  "  `aria-expanded`…) que, depois da interação que a receita faz, contradiz o estado nativo do mesmo elemento (ex.:",
+  "  `checked` = `true` e `aria-checked` = `\"false\"`) é defeito da marcação da página: o atributo afirma um valor e o",
+  "  controle está em outro. Meça os dois refazendo a receita (`MEDIDA`). Com uma regra do DS citada cujo texto exige que",
+  "  o valor do atributo acompanhe o estado, ou com a WCAG 4.1.2 citada (o estado exposto programaticamente é",
+  "  contraditório), responda `aplica` e violada `sim`; a `forca` é a de sempre. Num cartão sem regra, a norma implicada é",
+  "  `wcag:4.1.2`. O navegador expor o estado nativo na árvore de acessibilidade, apesar do atributo, não torna o fato",
+  "  falso: medido, `verdadeFactual` fica `verdadeira`, nunca `falsa`. Não é este caso o atributo ausente, o atributo",
+  "  igual ao estado nativo (sem contradição, a norma não se aplica a ela: `nao-aplica`) nem o estado que a receita não",
+  "  alcança (`nao-alcancado` e `indisponivel`, como acima).",
+].join("\n");
+
+/**
+ * [1.4.4, lista única 3.7.3 C4] `motivoSemVinculo`, no fim da seção `vinculo` (depois de LEIAME_PARADAS): uma linha por valor
+ * de MOTIVO_SEM_VINCULO, na ordem da lista (a primeira que vale). Não muda a classe; é o que a reconta lê.
+ */
+const MOTIVOS_NO_LEIAME: Record<typeof MOTIVO_SEM_VINCULO[number], string> = {
+  registro: "o mesmo fato do defeito, noutro registro, sem a identidade provada (registro × template, acima).",
+  estado: "o fato está noutro estado que não o do defeito.",
+  sujeito: "o fato está noutro elemento que não o do defeito.",
+  fato: "mesmo elemento e mesmo estado, mas o fato não é o que o defeito descreve.",
+  "fora-da-lista": "nenhum defeito da lista trata desse fato.",
+  incerto: "não dá para dizer qual destes.",
+};
+export const LEIAME_MOTIVO_SEM_VINCULO = [
+  "- **`motivoSemVinculo`** (só com `vinculo: \"nenhum\"`; obrigatório quando o cartão tem `candidatas`, opcional quando",
+  "  não tem; nunca com outro `vinculo`): o que separa o fato do defeito da lista mais próximo dele (em geral um dos",
+  "  `candidatas`). Um valor; se mais de um vale, o primeiro desta ordem. Não muda a classe.",
+  ...MOTIVO_SEM_VINCULO.map(k => `  - \`${k}\`: ${MOTIVOS_NO_LEIAME[k]}`),
 ].join("\n");
 
 /** [1.4.2] Endereço da página congelada no LEIAME (`--base-url`); o padrão é o de sempre. */

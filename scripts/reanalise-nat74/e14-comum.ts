@@ -34,6 +34,19 @@ export const FORMATO_RESPOSTAS_CAMPANHA = "nat78-primeira-passada-respostas-1.2.
  */
 export const FORMATO_MANIFESTO_CAMPANHA_1_3 = "nat78-primeira-passada-manifesto-1.3.0";
 export const FORMATO_RESPOSTAS_CAMPANHA_1_3 = "nat78-primeira-passada-respostas-1.3.0";
+/**
+ * [passada 1.4.4, lista única 3.7.3 C4] 1.3.1: a 1.3.0 + `motivoSemVinculo` (lista fechada MOTIVO_SEM_VINCULO) na resposta,
+ * só com `vinculo: "nenhum"` e obrigatório quando o cartão tem `candidatas`. Não muda a derivação da classe (política do juiz
+ * 1.3.0). Passadas 1.3.0 já preparadas seguem o esquema 1.3.0, sem mudança.
+ */
+export const FORMATO_MANIFESTO_CAMPANHA_1_3_1 = "nat78-primeira-passada-manifesto-1.3.1";
+export const FORMATO_RESPOSTAS_CAMPANHA_1_3_1 = "nat78-primeira-passada-respostas-1.3.1";
+/**
+ * [C4] Por que o fato não vincula defeito algum, para o defeito da referência mais próximo do fato (em geral um dos
+ * `candidatas`): outro registro da mesma rota sem identidade provada · outro estado · outro elemento · mesmo elemento e
+ * estado, outro fato · nenhum defeito da lista perto do fato · não dá para dizer.
+ */
+export const MOTIVO_SEM_VINCULO = ["registro", "estado", "sujeito", "fato", "fora-da-lista", "incerto"] as const;
 /** Ids das referências secundárias no cartão cego (na ordem do achado). */
 export const IDS_REFERENCIA = ["REF1", "REF2"] as const;
 /** [N] O juiz refez a receita do cartão: ela chega ao estado que ele descreve, ou não (R10: julga-se só no estado da receita). */
@@ -171,6 +184,11 @@ export interface Resposta {
    * ou `nao-perguntado`. Obrigatório (lista) quando a primária cai por citação (fato verdadeiro + erro normativo).
    */
   referencias?: ReferenciaJulgada[] | typeof NAO_PERGUNTADO;
+  /**
+   * [C4, respostas 1.3.1] Só com `vinculo: "nenhum"`: o motivo, na lista fechada. Obrigatório quando o cartão tem
+   * `candidatas`. Não entra na derivação.
+   */
+  motivoSemVinculo?: typeof MOTIVO_SEM_VINCULO[number];
 }
 export interface ReferenciaJulgada {
   id: typeof IDS_REFERENCIA[number];
@@ -316,6 +334,23 @@ export const ESQUEMA_RESPOSTAS_CAMPANHA_1_3 = (() => {
     then: { properties: { aplicabilidade: np, violada: np } }, else: { properties: { aplicabilidade: { not: np }, violada: { not: np } } } } }] };
   return e;
 })();
+/**
+ * [passada 1.4.4, C4] Esquema 1.3.1: o 1.3.0 com outro formato e `motivoSemVinculo` opcional na lista fechada, recusado com
+ * qualquer `vinculo` que não seja `"nenhum"`. A exigência cruzada (obrigatório com `candidatas` no cartão) fica em
+ * `validarResposta(…, { v131: true, candidatas })`: o esquema não vê o cartão.
+ */
+export const ESQUEMA_RESPOSTAS_CAMPANHA_1_3_1 = (() => {
+  const e = JSON.parse(JSON.stringify(ESQUEMA_RESPOSTAS_CAMPANHA_1_3)) as { title: string; properties: { formato: { const: string };
+    respostas: { items: Record<string, unknown> & { properties: Record<string, unknown> } } } };
+  e.title = FORMATO_RESPOSTAS_CAMPANHA_1_3_1;
+  e.properties.formato.const = FORMATO_RESPOSTAS_CAMPANHA_1_3_1;
+  const it = e.properties.respostas.items;
+  it.properties.motivoSemVinculo = { enum: [...MOTIVO_SEM_VINCULO] };
+  it.if = { properties: { vinculo: { const: "nenhum" } }, required: ["vinculo"] };
+  it.then = true;
+  it.else = { properties: { motivoSemVinculo: false } };
+  return e;
+})();
 
 /**
  * [passada 1.4.2] Esquema da passada: o esquema base com `vinculo.spec` restrito, por enum, aos ids dos defeitos das
@@ -447,15 +482,26 @@ function derivarPrincipal(r: Resposta, c: ContextoDerivacao): Omit<Derivado, "s5
 }
 
 /** Valida uma resposta contra o esquema, as perguntas do átomo e os ids citáveis. Devolve a lista de erros (vazia = ok). */
-export function validarResposta(x: unknown, c: ContextoDerivacao, o: { normaNeutra?: boolean; v12?: boolean; v13?: boolean } = {}): string[] {
+export function validarResposta(x: unknown, c: ContextoDerivacao,
+  o: { normaNeutra?: boolean; v12?: boolean; v13?: boolean; v131?: boolean; candidatas?: readonly string[] } = {}): string[] {
   const e: string[] = [];
   if (!isObj(x)) return ["resposta não é objeto"];
+  // [C4, 1.3.1] As `candidatas` do cartão decidem se `motivoSemVinculo` é obrigatório: quem valida a 1.3.1 tem de dá-las.
+  if (o.v131 && (!o.v13 || !o.candidatas)) throw new Error("validarResposta: respostas 1.3.1 exigem v13 e as candidatas do cartão");
   // [D-156] `referencias` só é campo da resposta na 1.3.0 e só em cartão que traz referências.
   const comRef = !!o.v13 && !!c.referencias?.length;
   const permitidos = ["id", "verdadeFactual", "norma", "vinculo", "sugestao", "forcaDoVeredito", "evidencias", "justificativa", ...(o.v12 ? ["estadoAlcancado"] : []), ...(comRef ? ["referencias"] : [])];
-  for (const k of Object.keys(x)) if (!permitidos.includes(k)) e.push(`campo desconhecido: ${k}`);
+  // [C4, 1.3.1] campo opcional: conferido abaixo, nunca "campo ausente".
+  for (const k of Object.keys(x)) if (!permitidos.includes(k) && !(o.v131 && k === "motivoSemVinculo")) e.push(`campo desconhecido: ${k}`);
   for (const k of permitidos) if (!(k in x)) e.push(`campo ausente: ${k}`);
   if (e.length) return e;
+  // [C4, 1.3.1] motivo do "sem vínculo": só com `vinculo: "nenhum"`, na lista; obrigatório quando o cartão tem candidatas.
+  if (o.v131) {
+    if ("motivoSemVinculo" in x) {
+      if (!em(MOTIVO_SEM_VINCULO, x.motivoSemVinculo)) e.push(`motivoSemVinculo fora da lista: ${JSON.stringify(x.motivoSemVinculo)}`);
+      if (x.vinculo !== "nenhum") e.push("motivoSemVinculo só com vinculo \"nenhum\"");
+    } else if (x.vinculo === "nenhum" && o.candidatas!.length) e.push("vinculo \"nenhum\" num cartão com candidatas: responda motivoSemVinculo");
+  }
   // [N, 1.2.0] estado: a receita alcança o estado do cartão, ou não (= evidência indisponível, R9/R10). Julga-se só no
   // estado da receita (R10); o que o juiz viu noutro estado pode ir à justificativa, mas não muda resposta.
   if (o.v12) {
