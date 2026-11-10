@@ -34,6 +34,11 @@ export const CLAUDE_CODE_VERSION = "2.1.288";
 export const RUNNER_VERSION = "runner-isolado-1.0.0";
 /** 1.1.0 (T3b): allowlist do provedor só com api.anthropic.com; checks do cliente real (ferramentas, extensões, texto, hosts). */
 export const ISOLATION_POLICY_VERSION = "isolamento-runner-1.1.0";
+/**
+ * NAT-111 A: revisão do relógio real do coletor (`GET /tempo`). Vai no rótulo `govbr.collector.relogio` da imagem
+ * (build-images) e é a mesma string fixa em container/collector.mjs (test:runner confere).
+ */
+export const RELOGIO_REVISION = "relogio-1";
 
 export const sha256 = (data: string | Buffer): string => createHash("sha256").update(data).digest("hex");
 

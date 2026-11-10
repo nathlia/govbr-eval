@@ -53,8 +53,9 @@ import { ROUTE_GUARD_VERSION } from "./container/route-guard.mjs";
 import { renderRun, SKILL_PATH, type TaskInputs } from "../scripts/render-task-prompt";
 import {
   DEFAULT_TELAS_DIR, DEFAULT_VALIDATOR_DIR, EVAL_ROOT, ISOLATION_POLICY_VERSION, RUNNER_DIR, RUNNER_VERSION, TCC_ROOT,
-  docker, dockerAvailable, imageId, loadLock, nowUtc, sha256, type ImagesLock,
+  docker, dockerAvailable, imageId, loadLock, nowUtc, RELOGIO_REVISION, sha256, type ImagesLock,
 } from "./lib";
+export { RELOGIO_REVISION };
 
 // ───────────────────────────────────────────────────────────────── política
 
@@ -80,6 +81,18 @@ export function coletorAceitaClausulas(labels: Record<string, string> | undefine
 export function coletorConfereRotas(labels: Record<string, string> | undefined): boolean {
   return labels?.["govbr.collector.route-guard"] === ROUTE_GUARD_VERSION;
 }
+/** Arquivo no tmpfs do PRÓPRIO coletor que o harness cria (docker exec) para dar a partida no relógio. */
+export const RELOGIO_ARQUIVO = "/tmp/relogio-inicio";
+/**
+ * NAT-111, opção A: relógio real no coletor (`GET /tempo`, revisão `relogio-1`, rótulo `govbr.collector.relogio`).
+ * O relógio das telas é simulado; sem isto o agente estima o tempo e encerra cedo. Igual nos três braços: depende só
+ * do rótulo da imagem travada do coletor (a mesma para a campanha inteira), o texto ganha uma frase constante (o
+ * `promptSha256` muda uma vez, igual para todos; o template e o `protocolSha256` não mudam) e a resposta do /tempo
+ * não conhece braço, oráculo nem referência. Imagem sem o rótulo: texto, coletor e pacote exatamente como antes.
+ */
+export function coletorTemRelogio(labels: Record<string, string> | undefined): boolean {
+  return labels?.["govbr.collector.relogio"] === RELOGIO_REVISION;
+}
 
 /**
  * Destinos que o PROCESSO DO AGENTE alcança pelo proxy do provedor (CONNECT, 443). Nada mais sai.
@@ -101,6 +114,8 @@ const STUB_HOSTS = ["api.anthropic.com", "platform.claude.com"];
 const SITE_ALLOW = ["screens:3300", "collector:8080"];
 const SCREENS_ORIGIN = "http://screens:3300";
 const COLLECTOR_ORIGIN = "http://collector:8080/";
+/** Endereço do relógio real: constante, o mesmo em todo braço e toda execução (nunca carrega run id). */
+export const RELOGIO_URL = `${COLLECTOR_ORIGIN}tempo`;
 const OLD_PORTS = [3000, 4000, 4100, 4101, 4102];
 const SECRET_ENV_NAMES: readonly string[] = CREDENTIAL_ENV;
 /** Ferramenta adiada que o cliente 2.1.288 sempre anuncia, sem esquema, com a instrução de nunca chamá-la. */
@@ -144,7 +159,7 @@ const COMMON_FLAGS = ["--read-only", "--tmpfs", "/tmp:rw,nosuid,size=768m", "--t
 
 // ───────────────────────────────────────────────────────────────── entradas da tarefa
 
-export function taskInputs(tela: Tela, telasDir: string, larguras: string[] | undefined, limiteSeg: number): TaskInputs {
+export function taskInputs(tela: Tela, telasDir: string, larguras: string[] | undefined, limiteSeg: number, relogio = false): TaskInputs {
   const conf = (JSON.parse(readFileSync(join(RUNNER_DIR, "telas-runner.json"), "utf8")) as Record<string, { escopo: string; larguras: string[] }>)[tela];
   if (!conf) throw new Error(`tela desconhecida: ${tela}`);
   const manifest = JSON.parse(readFileSync(join(telasDir, "site-manifest.json"), "utf8")) as { screens: { id: string; entry: string }[] };
@@ -163,7 +178,7 @@ export function taskInputs(tela: Tela, telasDir: string, larguras: string[] | un
       ? "a ferramenta de navegador `browser_select_window`: cada largura declarada tem o próprio navegador, aberto com tamanho fixo e sem estado compartilhado com os outros; selecione a largura e repita nela a navegação desde o início."
       : null,
     envio: { origem: COLLECTOR_ORIGIN, caminho: "/api/submit" },
-    limites: { tempoMinutos: Math.max(1, Math.ceil(limiteSeg / 60)), maxTurnos: null },
+    limites: { tempoMinutos: Math.max(1, Math.ceil(limiteSeg / 60)), maxTurnos: null, ...(relogio ? { relogio: RELOGIO_URL } : {}) },
   };
 }
 
@@ -353,8 +368,10 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
   }
   let rendered: ReturnType<typeof renderRun> | null = null;
   let inputs: TaskInputs | null = null;
+  // NAT-111 A: o relógio real vale para a execução inteira só se a imagem travada do coletor o declara
+  const relogio = coletorTemRelogio(lock?.images.collector.labels);
   try {
-    inputs = taskInputs(opts.tela, opts.telasDir, opts.larguras, opts.limiteSeg);
+    inputs = taskInputs(opts.tela, opts.telasDir, opts.larguras, opts.limiteSeg, relogio);
     rendered = renderRun(skillPkg.toString("utf8"), { task: inputs, arm: opts.braco, runId, collectorToken: null, oracleProfile: PERFIL_DO_BRACO[opts.braco] });
     integ("texto-da-tarefa", "texto renderizado da skill + entradas, sem vocabulário proibido", true, rendered.promptSha256);
   } catch (e) {
@@ -397,7 +414,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
   }
   const harness = gitState(EVAL_ROOT);
   const preflightDoc = { runner: RUNNER_VERSION, policy: ISOLATION_POLICY_VERSION, plannedAt, harness, dockerEngine: engine, lock: lock ? { images: Object.fromEntries(Object.entries(lock.images).map(([k, v]) => [k, { tag: v.tag, id: v.id }])), versions: lock.versions } : null,
-    telasManifestSha, skillSha256: sha256(skillPkg), prompt: rendered ? { sha256: rendered.promptSha256, templateSha256: rendered.templateSha256, bytes: rendered.bytes } : null,
+    telasManifestSha, skillSha256: sha256(skillPkg), relogio: relogio ? { revision: RELOGIO_REVISION, url: RELOGIO_URL } : null, prompt: rendered ? { sha256: rendered.promptSha256, templateSha256: rendered.templateSha256, bytes: rendered.bytes } : null,
     oracle: oracleNow, providerAllowlist: PROVIDER_ALLOWLIST, providerDeniedOnPurpose: PROVIDER_DENIED_ON_PURPOSE,
     agent: { kind: opts.agente, provider: opts.agente === "fake" ? null : claudeStub ? "stub" : "real", roteiro: roteiro?.name ?? null,
       credentialEnv: credentialEnv.length ? credentialEnv[1].split("=")[0] : null } };
@@ -409,6 +426,8 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
   let probeDoc: { checks: CheckRow[]; positiveControls: PositiveRow[]; inventory: Record<string, { ok: boolean; tools?: string[] }> } | null = null;
   /** Linhas do log do proxy do provedor antes do agente partir: o que vem depois é do agente (a sonda usa o mesmo proxy). */
   let egressLinesBeforeAgent = 0;
+  /** Eventos do coletor antes do agente: o 503 do controle positivo do relógio (parado) não é capacidade do agente. */
+  let collectorLinesBeforeAgent = 0;
   let notRunReason: { reason: "preflight-failed" | "isolation-failed" | "harness-error"; detail: string } | null = null;
   /** NAT-61: perfil do oráculo medido na ponte ANTES do agente (inventário do servidor); diverge → o agente não parte. */
   const oracleChecks: CheckRow[] = [];
@@ -491,6 +510,7 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       const egressImage = L.images.egress.id;
       create("screens", L.images.screens.id, [[net.site, "screens"]], [], [], null);
       create("collector", L.images.collector.id, [[net.site, "collector"]], ["-e", `COLLECTOR_RUN_ID=${runId}`, "-e", `COLLECTOR_CAMPAIGN_ID=${opts.campanha}`, "-e", `COLLECTOR_FIXTURE=${fixture ? "1" : "0"}`, "-e", `COLLECTOR_FINDINGS_CONTRACT=${findingsContract}`,
+        ...(relogio ? ["-e", `COLLECTOR_LIMITE_SEG=${opts.limiteSeg}`, "-e", `COLLECTOR_RELOGIO_ARQUIVO=${RELOGIO_ARQUIVO}`] : []),
         ...(coletorConfereRotas(L.images.collector.labels) ? ["--mount", `type=bind,src=${join(work, "oracle")},dst=/evidence/oracle,readonly`, "-e", "COLLECTOR_ROUTE_CONTEXT=/evidence/oracle"] : [])], [], "collector");
       create("egress-site", egressImage, [[net.site, "egress-site"], [net.browse, "egress-site"]],
         ["-e", "EGRESS_NAME=egress-site", "-e", `EGRESS_ALLOW_HTTP=${SITE_ALLOW.join(",")}`, "-e", "EGRESS_ALLOW_CONNECT=", "-e", "EGRESS_LOG=/out/egress.ndjson"], [], "egress-site");
@@ -546,6 +566,11 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       positives.push({ id: "tela-pelo-proxy", target: `${inputs!.url} pelo proxy do navegador`, outcome: siteStatus === "200" ? "passed" : "failed", detail: siteStatus });
       const collStatus = viaProxy(`${COLLECTOR_ORIGIN}health`);
       positives.push({ id: "coletor-pelo-proxy", target: "coletor /health pelo proxy do navegador", outcome: collStatus === "200" ? "passed" : "failed", detail: collStatus });
+      if (relogio) {
+        // o agente alcança o relógio pelo MESMO caminho do envio (proxy do navegador → coletor); antes de armado: 503
+        const relStatus = viaProxy(RELOGIO_URL);
+        positives.push({ id: "relogio-pelo-proxy", target: "relógio real do coletor (/tempo) pelo proxy do navegador, ainda parado antes do agente (503)", outcome: relStatus === "503" ? "passed" : "failed", detail: relStatus });
+      }
       const otherRunVisible = otherRuns.filter((p) => existsSync(p));
       positives.push({ id: "outras-saidas-existem", target: "pastas de outras execuções existem no host (alvo das tentativas de leitura)", outcome: otherRunVisible.length > 0 ? "passed" : "failed", detail: otherRunVisible.map((p) => basename(p)).join(", ") });
 
@@ -580,8 +605,14 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
         const cmd = opts.agente === "fake" ? ["node", "/opt/runner/fake-agent.mjs"] : claudeCommand(opts);
         const extraEnv = opts.agente === "fake" ? ["-e", `FAKE_SCENARIO=${opts.cenario}`, "-e", `FAKE_CONFIG=${JSON.stringify(fakeCfg)}`] : credentialEnv;
         egressLinesBeforeAgent = readNdjson(join(work, "egress-provider", "egress.ndjson")).length;
+        collectorLinesBeforeAgent = readNdjson(join(work, "collector", "events.ndjson")).length;
         const agent = create("agent", L.images.agent.id, agentNets, [...agentEnv, ...extraEnv, ...taskMount], cmd, "agent");
         containerConfigs = Object.fromEntries(containers.map((c) => [c.replace(`gr-${short}-`, ""), normalizedConfig(c, short, runId, sentinelHost?.port ?? null)]));
+        if (relogio) {
+          // partida do relógio real ANTES do agente: o restante que o /tempo informa nunca passa do limite aplicado abaixo
+          const armou = docker(["exec", cname("collector"), "node", "-e", "require('fs').writeFileSync(process.argv[1], '')", RELOGIO_ARQUIVO], { allowFail: true, timeoutMs: 30_000 });
+          if (armou.code !== 0) limitations.push(`relógio real não armado (docker exec no coletor falhou: ${armou.stderr.trim().slice(0, 200)}); o /tempo respondeu 503`);
+        }
         agentStartedAt = iso();
         docker(["start", agent]);
         log(`agente (${opts.agente}${opts.agente === "fake" ? `:${opts.cenario}` : ""}) iniciado; limite ${opts.limiteSeg}s`);
@@ -700,7 +731,14 @@ export async function runOnce(opts: RunOptions): Promise<RunOutcome> {
       }
       for (const e of browserEvents.filter((x) => x.kind === "refused")) capabilities.push(`recusado pela ponte: ${String(e.tool)} (${String(e.reason)})`);
       for (const e of [...egressSite, ...egressProvider].filter((x) => x.allowed === false)) capabilities.push(`recusado pelo ${String(e.proxy)}: ${String(e.method)} ${String(e.target)}`);
-      for (const e of collectorEvents.filter((x) => typeof x.status === "number" && (x.status as number) >= 400)) capabilities.push(`recusado pelo coletor: ${String(e.method)} ${String(e.path)} → ${String(e.status)} (${String(e.reason ?? "")})`);
+      if (relogio) {
+        const iniciado = collectorEvents.find((e) => e.reason === "relogio-iniciado");
+        const consultas = collectorEvents.filter((e) => e.reason === "tempo").length;
+        runtimeChecks.push({ id: "relogio-real", category: "state", required: false, outcome: iniciado ? "passed" : "failed", evidence: "evidence/raw/collector/events.ndjson",
+          target: `relógio real do coletor (${RELOGIO_URL}, ${RELOGIO_REVISION}) armado antes do agente; o mesmo endereço e a mesma resposta em todos os braços (informativo)`,
+          detail: `${iniciado ? `início ${String(iniciado.inicio)}` : "não armado"}; ${consultas} consulta(s) ao /tempo` });
+      }
+      for (const e of collectorEvents.filter((x, i) => typeof x.status === "number" && (x.status as number) >= 400 && !(x.reason === "relogio-parado" && i < collectorLinesBeforeAgent))) capabilities.push(`recusado pelo coletor: ${String(e.method)} ${String(e.path)} → ${String(e.status)} (${String(e.reason ?? "")})`);
     }
     if (containers.length) {
       runtimeChecks.push({ id: "desmontagem", category: "state", target: "nenhum contêiner nem rede da execução sobrevive (perfil do navegador, storage e mocks morrem com eles)", required: true,

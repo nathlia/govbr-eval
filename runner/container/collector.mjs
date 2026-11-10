@@ -9,6 +9,7 @@
 //   GET  /            página neutra (origem para o POST do navegador)
 //   GET  /health      { ok: true }
 //   POST /api/submit  relatório JSON (Content-Type: application/json, até COLLECTOR_MAX_BYTES)
+//   GET  /tempo       relógio real da execução (só com COLLECTOR_LIMITE_SEG; ver abaixo)
 //   o resto           404 — não há listagem nem leitura de relatórios
 //
 // Regras: caminho com "..", "%2e", "%2f", "%5c", barra invertida ou NUL → 400; cabeçalho
@@ -20,6 +21,13 @@
 // ausente = findings.v1, o mesmo envelope de antes). findings.v2 aceita `report.inspection`
 // (inspection.v1) e aplica as regras de inspection-ledger.mjs, copiado junto com os schemas. O agente
 // não escolhe contrato: o mesmo texto de tarefa vale nos dois braços e o envelope é o do run armado.
+// Relógio real (revisão relogio-1, NAT-111 opção A): o relógio das telas é simulado (congelado), então o
+// agente não mede o tempo pela página. Com COLLECTOR_LIMITE_SEG, `GET /tempo` devolve
+// { ok, inicio, agora, decorridoS, restanteS, limiteS } no relógio DESTE contêiner. O relógio começa quando
+// o harness cria COLLECTOR_RELOGIO_ARQUIVO (no tmpfs do próprio coletor, por `docker exec`, logo ANTES de
+// partir o agente: o restante nunca passa do que o limite do harness deixa); antes disso, 503. O agente não
+// alcança esse arquivo (outro contêiner). A resposta não depende de braço, oráculo, run nem referência: só
+// do relógio e do limite, que já está no texto da tarefa. Sem COLLECTOR_LIMITE_SEG, /tempo é 404 como antes.
 import { createServer } from "node:http";
 import { createHash } from "node:crypto";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -47,6 +55,13 @@ if (CONTRACT !== "findings.v1" && CONTRACT !== "findings.v2") {
 }
 const V2 = CONTRACT === "findings.v2";
 const ROUTE_CONTEXT = process.env.COLLECTOR_ROUTE_CONTEXT;
+const RELOGIO_REVISION = "relogio-1";
+const LIMITE_S = process.env.COLLECTOR_LIMITE_SEG ? Number(process.env.COLLECTOR_LIMITE_SEG) : null;
+if (LIMITE_S !== null && !(Number.isInteger(LIMITE_S) && LIMITE_S > 0)) {
+  console.error(`COLLECTOR_LIMITE_SEG inválido: ${process.env.COLLECTOR_LIMITE_SEG}`);
+  process.exit(2);
+}
+const RELOGIO_ARQUIVO = process.env.COLLECTOR_RELOGIO_ARQUIVO || "/tmp/relogio-inicio";
 
 const ajv = new Ajv2020({ allErrors: true, strict: true, strictTypes: false, strictRequired: false, allowUnionTypes: true });
 const SCHEMA_FILES = ["common.v1.schema.json", "findings.v1.schema.json", ...(V2 ? ["inspection.v1.schema.json", "findings.v2.schema.json"] : [])];
@@ -60,6 +75,9 @@ let seq = 0;
 let refusedCount = 0;
 let accepted = null; // { sha, receipt }
 const FINDINGS = join(OUT, "findings.json");
+/** Início do relógio real (ms, relógio deste contêiner); null até o harness armá-lo. */
+let relogioInicio = null;
+const isoS = (ms) => new Date(ms).toISOString().replace(/\.\d+Z$/, "Z");
 
 function event(e) {
   appendFileSync(join(OUT, "events.ndjson"), JSON.stringify({ seq: seq++, at: new Date().toISOString(), ...e }) + "\n");
@@ -127,6 +145,21 @@ createServer(async (req, res) => {
   if (req.method === "GET" && rawPath === "/health") {
     event({ ...base, status: 200 });
     return send(res, 200, { ok: true });
+  }
+  if (rawPath === "/tempo" && LIMITE_S !== null) {
+    if (req.method !== "GET") {
+      event({ ...base, status: 405 });
+      return send(res, 405, { ok: false, error: "use GET" });
+    }
+    if (relogioInicio === null) {
+      event({ ...base, status: 503, reason: "relogio-parado" });
+      return send(res, 503, { ok: false, error: "o relógio começa com a execução" });
+    }
+    const agora = Date.now();
+    const decorridoS = Math.max(0, Math.floor((agora - relogioInicio) / 1000));
+    const restanteS = Math.max(0, LIMITE_S - decorridoS);
+    event({ ...base, status: 200, reason: "tempo", decorridoS });
+    return send(res, 200, { ok: true, inicio: isoS(relogioInicio), agora: isoS(agora), decorridoS, restanteS, limiteS: LIMITE_S });
   }
   if (rawPath !== "/api/submit") {
     event({ ...base, status: 404, reason: "sem-rota" });
@@ -219,7 +252,15 @@ createServer(async (req, res) => {
     ...(V2 ? { inspection: envelope.inspectionStatus } : {}) });
   return send(res, 200, { ok: true, receipt });
 }).listen(PORT, "0.0.0.0", () => {
-  event({ method: "-", path: "-", status: null, reason: "start", contract: CONTRACT });
+  event({ method: "-", path: "-", status: null, reason: "start", contract: CONTRACT, ...(LIMITE_S !== null ? { relogio: RELOGIO_REVISION, limiteS: LIMITE_S } : {}) });
+  if (LIMITE_S !== null) {
+    const poll = setInterval(() => {
+      if (!existsSync(RELOGIO_ARQUIVO)) return;
+      relogioInicio = Date.now();
+      clearInterval(poll);
+      event({ method: "-", path: "-", status: null, reason: "relogio-iniciado", inicio: isoS(relogioInicio), relogio: RELOGIO_REVISION });
+    }, 100);
+  }
   console.log(`coletor armado em :${PORT}`);
 });
 for (const s of ["SIGINT", "SIGTERM"]) process.on(s, () => process.exit(0));
