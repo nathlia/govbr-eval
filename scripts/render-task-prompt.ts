@@ -28,7 +28,8 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-export const RENDERER_VERSION = "render-task-prompt-1.1.0";
+/** 1.2.0: `limites.relogio` opcional (endereço do relógio real da execução); sem ele, o texto é byte a byte o da 1.1.0. */
+export const RENDERER_VERSION = "render-task-prompt-1.2.0";
 export const SKILL_NAME = "avaliar-tela";
 export const SKILL_PATH = join(dirname(fileURLToPath(import.meta.url)), "..", "skills", SKILL_NAME, "SKILL.md");
 
@@ -49,7 +50,13 @@ export interface TaskInputs {
   /** Como alcançar as larguras além da primeira; obrigatório se houver mais de uma. Preenchido pelo runner (T3). */
   meioLarguras: string | null;
   envio: { origem: string; caminho: string };
-  limites: { tempoMinutos: number; maxTurnos: number | null };
+  /**
+   * `relogio` (opcional): URL que devolve o tempo REAL desta execução (início, agora, decorrido, restante).
+   * O relógio da página é simulado (telas congeladas), então o agente não tem outro jeito de medir o tempo.
+   * É uma constante do harness (o mesmo endereço em todo braço e toda execução): o texto continua idêntico
+   * entre braços e o `promptSha256` igual em todas as execuções de uma tela. Ausente/null = texto da 1.1.0.
+   */
+  limites: { tempoMinutos: number; maxTurnos: number | null; relogio?: string | null };
 }
 
 /**
@@ -178,10 +185,22 @@ export function validateTaskInputs(value: unknown): string[] {
   const lim = v.limites;
   if (!isRecord(lim) || !Number.isInteger(lim.tempoMinutos) || (lim.tempoMinutos as number) <= 0 ||
     !(lim.maxTurnos === null || (Number.isInteger(lim.maxTurnos) && (lim.maxTurnos as number) > 0)) ||
-    Object.keys(lim).some((k) => !["tempoMinutos", "maxTurnos"].includes(k))) {
-    errors.push("entradas.limites: { tempoMinutos: inteiro > 0, maxTurnos: inteiro > 0 | null }");
+    Object.keys(lim).some((k) => !["tempoMinutos", "maxTurnos", "relogio"].includes(k))) {
+    errors.push("entradas.limites: { tempoMinutos: inteiro > 0, maxTurnos: inteiro > 0 | null, relogio?: URL http(s) | null }");
+  } else if (lim.relogio !== undefined && lim.relogio !== null && (!isText(lim.relogio) || !/^https?:\/\/[^\s]+$/.test(lim.relogio))) {
+    errors.push("entradas.limites.relogio: URL http(s) ou null");
   }
   return errors;
+}
+
+/**
+ * Frase do relógio real, anexada ao valor de LIMITES (não ao template: o `templateSha256`/`protocolSha256`
+ * que as campanhas congelam não muda). Só procedimento: onde perguntar e o que volta; nenhuma pista da tela.
+ */
+export function relogioTexto(url: string): string {
+  return `O relógio da página pode não ser o real; para medir o tempo, use o relógio real desta execução: \`GET\` em ${url}, ` +
+    "alcançado como o destino do envio, devolve em JSON o início (`inicio`), o momento atual (`agora`), o tempo decorrido " +
+    "(`decorridoS`) e o restante (`restanteS`), em segundos.";
 }
 
 function formatInputs(t: TaskInputs): Record<(typeof ALL_PLACEHOLDERS)[number], string> {
@@ -196,7 +215,8 @@ function formatInputs(t: TaskInputs): Record<(typeof ALL_PLACEHOLDERS)[number], 
     MEIO_LARGURAS: t.larguras.length > 1 ? t.meioLarguras! : "não há; o escopo cobre somente a janela inicial.",
     ORIGEM_ENVIO: t.envio.origem,
     CAMINHO_ENVIO: `\`${t.envio.caminho}\``,
-    LIMITES: `até ${t.limites.tempoMinutos} minutos${t.limites.maxTurnos === null ? "" : ` e ${t.limites.maxTurnos} turnos`}.`,
+    LIMITES: `até ${t.limites.tempoMinutos} minutos${t.limites.maxTurnos === null ? "" : ` e ${t.limites.maxTurnos} turnos`}.` +
+      (t.limites.relogio ? ` ${relogioTexto(t.limites.relogio)}` : ""),
     TEMPO_SEGUNDOS: String(t.limites.tempoMinutos * 60),
   };
 }

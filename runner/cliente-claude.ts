@@ -140,6 +140,8 @@ export function stubRoteiro(cenario: string, braco: Braco, inputs: TaskInputs, p
           ...(braco === "com" ? [{ calls: [or("get_emag_rules", { section: 1 })] }, { calls: [or("scan_page", { url })] }] : []),
           // NAT-61: o braço ferramentas mede e verifica (sem consulta normativa, que não existe nele)
           ...(braco === "ferramentas" ? [{ calls: [or("scan_page", { url })] }, { calls: [verifyCall(url)] }] : []),
+          // NAT-111 A: com o relógio real anunciado no texto, o roteiro o consulta pelo navegador (mesmo passo nos três braços)
+          ...(inputs.limites.relogio ? [{ calls: [pw("browser_navigate", { url: inputs.limites.relogio })] }] : []),
           { calls: [pw("browser_navigate", { url: origem })] },
           { calls: [submitCall(caminho, reportOf(url, [finding], `roteiro honesto, braço ${braco}`))] },
           { text: "Relatório enviado." },

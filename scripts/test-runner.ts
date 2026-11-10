@@ -16,8 +16,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validateContract, crossCheckRun, type ArtifactManifest, type Findings, type Isolation, type RunV2 as Run } from "../contracts/index";
-import { runOnce, type RunOptions, type RunOutcome } from "../runner/run-once";
-import { DEFAULT_TELAS_DIR, DEFAULT_VALIDATOR_DIR, docker, dockerAvailable, sha256 } from "../runner/lib";
+import { coletorTemRelogio, runOnce, type RunOptions, type RunOutcome } from "../runner/run-once";
+import { DEFAULT_TELAS_DIR, DEFAULT_VALIDATOR_DIR, docker, dockerAvailable, loadLock, sha256 } from "../runner/lib";
 import { FAKE_CREDENTIAL, FERRAMENTAS_FORA_DO_PERFIL_LIVRE, forbiddenCalls, oracleAdherence, parseClientStream, usoDaColeta, type ClientTelemetry, type StubSummary, type UsoDaColeta } from "../runner/cliente-claude";
 import { PERFIS, perfilMedido, type InventarioOraculo } from "../runner/perfis-oraculo";
 import { ORACLE_RETRIEVAL_MODE, RETRIEVAL_ENV_PREFIX, assertNoRetrievalEnv, excludedFromOracleData } from "../runner/build-images";
@@ -504,6 +504,115 @@ async function testesSemDocker(): Promise<void> {
     assert.equal(a2Antigo.estado.status, "site-diverge");
     assert.equal(a2Antigo.estado.siteSha256, NOVO, "arquivo de um site só relata o próprio site, como antes");
   });
+  await testesDoRelogio();
+}
+
+/**
+ * NAT-111 A — relógio real da execução (o das telas é simulado). Sem Docker: o coletor roda como processo local
+ * (mesmo collector.mjs da imagem, schemas de contracts/) e o lado do harness é conferido em funções puras.
+ */
+async function testesDoRelogio(): Promise<void> {
+  const { RELOGIO_REVISION } = await import("../runner/lib");
+  const { RELOGIO_URL, coletorTemRelogio, taskInputs } = await import("../runner/run-once");
+  const { stubRoteiro } = await import("../runner/cliente-claude");
+  const { renderRun, SKILL_PATH, relogioTexto } = await import("./render-task-prompt");
+
+  await test("relógio no coletor (NAT-111 A): 404 sem limite; 503 parado; 200 com início/agora/decorrido/restante e nada mais; GET só", async () => {
+    const { spawn } = await import("node:child_process");
+    const { createServer } = await import("node:net");
+    const livre = (): Promise<number> => new Promise((ok) => {
+      const s = createServer().listen(0, "127.0.0.1", () => { const p = (s.address() as { port: number }).port; s.close(() => ok(p)); });
+    });
+    const subir = async (env: Record<string, string>): Promise<{ port: number; out: string; parar: () => void }> => {
+      const port = await livre();
+      const out = mkdtempSync(join(ROOT, "coletor-"));
+      const child = spawn(process.execPath, [join(ROOT_EVAL, "runner", "container", "collector.mjs")], {
+        env: { PATH: process.env.PATH ?? "", COLLECTOR_RUN_ID: "run-relogio-01", COLLECTOR_CAMPAIGN_ID: "camp-relogio", COLLECTOR_OUT: out, COLLECTOR_PORT: String(port),
+          COLLECTOR_SCHEMAS: join(ROOT_EVAL, "contracts"), COLLECTOR_FINDINGS_CONTRACT: "findings.v2", ...env },
+        stdio: ["ignore", "pipe", "pipe"] });
+      let log = "";
+      const saiu = (c: number | null): void => { log += `\n(saiu ${c})`; };
+      child.on("exit", saiu);
+      await new Promise<void>((ok, fail) => {
+        const t = setTimeout(() => fail(new Error(`coletor não subiu: ${log}`)), 15_000);
+        const on = (d: Buffer): void => { log += d.toString(); if (log.includes("coletor armado")) { clearTimeout(t); ok(); } };
+        child.stdout.on("data", on);
+        child.stderr.on("data", on);
+        child.on("exit", () => { clearTimeout(t); fail(new Error(`coletor saiu: ${log}`)); });
+      });
+      return { port, out, parar: () => { child.removeAllListeners("exit"); child.kill(); } };
+    };
+    const get = async (port: number, path: string, method = "GET"): Promise<{ status: number; body: Record<string, unknown> }> => {
+      const r = await fetch(`http://127.0.0.1:${port}${path}`, { method });
+      return { status: r.status, body: await r.json() as Record<string, unknown> };
+    };
+    // sem COLLECTOR_LIMITE_SEG (harness de antes): /tempo não existe
+    const antigo = await subir({});
+    try {
+      assert.equal((await get(antigo.port, "/tempo")).status, 404, "sem limite, o coletor é o de antes");
+    } finally { antigo.parar(); }
+
+    const arquivo = join(mkdtempSync(join(ROOT, "relogio-")), "relogio-inicio");
+    const c = await subir({ COLLECTOR_LIMITE_SEG: "1800", COLLECTOR_RELOGIO_ARQUIVO: arquivo });
+    try {
+      const parado = await get(c.port, "/tempo");
+      assert.equal(parado.status, 503, "antes da partida do harness o relógio está parado");
+      assert.equal(parado.body.ok, false);
+      assert.equal((await get(c.port, "/tempo", "POST")).status, 405);
+      writeFileSync(arquivo, "");
+      await new Promise((r) => setTimeout(r, 400));
+      const t1 = await get(c.port, "/tempo");
+      assert.equal(t1.status, 200);
+      assert.deepEqual(Object.keys(t1.body).sort(), ["agora", "decorridoS", "inicio", "limiteS", "ok", "restanteS"], "a resposta só fala do tempo");
+      assert.equal(t1.body.limiteS, 1800);
+      assert.ok(t1.body.decorridoS === 0 || t1.body.decorridoS === 1, `decorrido ${String(t1.body.decorridoS)}`);
+      assert.equal((t1.body.decorridoS as number) + (t1.body.restanteS as number), 1800);
+      assert.match(String(t1.body.inicio), /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$/);
+      assert.ok(Date.parse(String(t1.body.agora)) >= Date.parse(String(t1.body.inicio)));
+      const texto = JSON.stringify(t1.body);
+      for (const segredo of ["run-relogio-01", "camp-relogio", "findings", "sem", "com", "ferramentas"]) assert.ok(!texto.includes(segredo), `resposta do relógio traz ${segredo}`);
+      await new Promise((r) => setTimeout(r, 1100));
+      const t2 = await get(c.port, "/tempo");
+      assert.ok((t2.body.decorridoS as number) >= 1 && t2.body.inicio === t1.body.inicio, "o início não se move; o decorrido anda");
+      // o envio continua igual: relatório fora do contrato é recusado como sempre, sem campo de tempo
+      const sub = await fetch(`http://127.0.0.1:${c.port}/api/submit`, { method: "POST", headers: { "content-type": "application/json" }, body: "{}" });
+      assert.equal(sub.status, 400);
+      assert.ok(!("decorridoS" in (await sub.json() as Record<string, unknown>)));
+      const ev = ndjson(join(c.out, "events.ndjson"));
+      assert.equal(ev.filter((e) => e.reason === "relogio-iniciado").length, 1, "uma partida só");
+      assert.equal(ev.find((e) => e.reason === "start")?.relogio, RELOGIO_REVISION);
+      assert.equal(ev.filter((e) => e.reason === "tempo").length, 2);
+      assert.ok(ev.some((e) => e.reason === "relogio-parado" && e.status === 503));
+    } finally { c.parar(); }
+    assert.match(readFileSync(join(ROOT_EVAL, "runner", "container", "collector.mjs"), "utf8"), new RegExp(`RELOGIO_REVISION = "${RELOGIO_REVISION}"`), "revisão do coletor = a do rótulo (runner/lib.ts)");
+  });
+
+  await test("relógio no harness (NAT-111 A): só com o rótulo da imagem; frase constante, igual nos três braços; template e protocolo intactos; roteiro honesto consulta", async () => {
+    assert.equal(coletorTemRelogio(undefined), false);
+    assert.equal(coletorTemRelogio({ "govbr.collector.route-guard": "x" }), false, "imagem de antes: nada muda");
+    assert.equal(coletorTemRelogio({ "govbr.collector.relogio": RELOGIO_REVISION }), true);
+    assert.equal(RELOGIO_URL, "http://collector:8080/tempo", "mesma origem do envio, nenhum run id");
+    const template = readFileSync(SKILL_PATH, "utf8");
+    const sem = taskInputs("solicitacao", DEFAULT_TELAS_DIR, undefined, 1800, false);
+    const com = taskInputs("solicitacao", DEFAULT_TELAS_DIR, undefined, 1800, true);
+    assert.equal("relogio" in sem.limites, false, "sem rótulo as entradas são as de antes");
+    assert.equal(com.limites.relogio, RELOGIO_URL);
+    const antes = renderRun(template, { task: sem, arm: "sem", runId: "r-1", collectorToken: null, oracleProfile: null });
+    const trio = (["sem", "ferramentas", "com"] as const).map((arm, i) => renderRun(template, {
+      task: taskInputs("solicitacao", DEFAULT_TELAS_DIR, undefined, 1800, true), arm, runId: `r-${i}`, collectorToken: null, oracleProfile: arm === "sem" ? null : arm }));
+    assert.equal(new Set(trio.map((r) => r.promptSha256)).size, 1, "texto com relógio idêntico nos três braços");
+    assert.equal(new Set([antes.templateSha256, ...trio.map((r) => r.templateSha256)]).size, 1, "templateSha256 (= protocolSha256) não muda");
+    assert.notEqual(trio[0].promptSha256, antes.promptSha256, "o promptSha256 muda uma vez (frase do relógio)");
+    assert.equal(trio[0].prompt.replace(` ${relogioTexto(RELOGIO_URL)}`, ""), antes.prompt, "a única diferença é a frase do relógio");
+    assert.ok(trio[0].prompt.includes(RELOGIO_URL));
+    for (const arm of ["sem", "ferramentas", "com"] as const) {
+      const navs = stubRoteiro("honesto", arm, com, trio[0].promptSha256).steps.flatMap((s) => s.calls ?? [])
+        .filter((c) => c.name === "mcp__playwright__browser_navigate").map((c) => c.input.url);
+      assert.ok(navs.includes(RELOGIO_URL), `${arm}: roteiro honesto consulta o relógio`);
+      const semRel = stubRoteiro("honesto", arm, sem, antes.promptSha256).steps.flatMap((s) => s.calls ?? []).filter((c) => c.input.url === RELOGIO_URL);
+      assert.equal(semRel.length, 0, `${arm}: sem rótulo, roteiro de antes`);
+    }
+  });
 }
 
 async function main(): Promise<void> {
@@ -525,6 +634,11 @@ async function main(): Promise<void> {
       assert.equal(r.submission.status, "accepted");
       assert.equal(findings?.report.findings.length, 1);
       assert.deepEqual(findings?.report.findings[0].state.viewport, { width: 1280, height: 900 }, "viewport medido na janela fixa");
+      // NAT-111 A: com o coletor travado que declara o relógio real, ele responde pelo proxy (parado) e é armado antes do agente
+      if (coletorTemRelogio(loadLock().images.collector.labels)) {
+        assert.equal(isolation?.positiveControls.find((p) => p.id === "relogio-pelo-proxy")?.outcome, "passed", "relógio pelo proxy do navegador");
+        assert.equal(isolation?.checks.find((c) => c.id === "relogio-real")?.outcome, "passed", "relógio armado antes do agente");
+      }
       assert.equal(r.status.oracleUsage, braco === "sem" ? "absent-verified" : "used-adherent");
       assert.equal(isolation?.toolInventory.oracleAnnounced, braco !== "sem");
       assert.ok(!isolation?.toolInventory.announced.includes("browser_resize") && !isolation?.toolInventory.announced.includes("browser_run_code"));

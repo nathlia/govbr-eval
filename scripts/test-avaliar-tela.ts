@@ -22,7 +22,7 @@ import { ROOT } from "./adjudication";
 import { validateFlowReport } from "./flow-contract";
 import {
   ARM_DIFF_ALLOWLIST, EXAMPLE_INPUTS, FORBIDDEN_TASK_PATTERNS, ORACLE_TOOL_NAMES, PLACEHOLDERS, SKILL_PATH,
-  compareArmRenders, normalizeNewlines, renderRun, renderTaskPrompt, scanForbidden, sha256, stripFrontmatter,
+  compareArmRenders, normalizeNewlines, relogioTexto, renderRun, renderTaskPrompt, scanForbidden, sha256, stripFrontmatter,
   type RunInputs, type TaskInputs,
 } from "./render-task-prompt";
 
@@ -93,6 +93,29 @@ test("paridade do trio (NAT-61): sem × ferramentas × com → mesmo sha256 do t
     // os perfis do servidor nunca aparecem no texto ("ferramentas", como "sem"/"com", é palavra comum da skill e não é procurada)
     for (const p of ["knowledge-free", "evaluation"]) assert.ok(!rs[0].prompt.includes(p), `perfil do oráculo no texto: ${p}`);
     assert.deepEqual(pair(run("ferramentas", clone(task)), run("com", clone(task))), []);
+  }
+});
+
+test("relógio real (NAT-111 A): frase constante nos LIMITES; template intacto; sem relógio = texto de antes; trio idêntico; sem vocabulário proibido", () => {
+  const URL_RELOGIO = "http://collector:8080/tempo";
+  for (const task of [EXAMPLE_INPUTS, VISTORIAS_LIKE]) {
+    const antes = renderTaskPrompt(template, clone(task));
+    const nulo = renderTaskPrompt(template, { ...clone(task), limites: { ...task.limites, relogio: null } });
+    assert.equal(nulo.prompt, antes.prompt, "relogio: null = texto de antes, byte a byte");
+    const comRel = { ...clone(task), limites: { ...task.limites, relogio: URL_RELOGIO } };
+    const rs = (["sem", "ferramentas", "com"] as const).map((arm) => renderRun(template, run(arm, clone(comRel))));
+    assert.equal(new Set(rs.map((x) => x.promptSha256)).size, 1, "texto com relógio difere entre braços");
+    assert.equal(rs[0].templateSha256, antes.templateSha256, "templateSha256 (protocolo congelado) não muda");
+    assert.notEqual(rs[0].promptSha256, antes.promptSha256);
+    assert.equal(rs[0].prompt.replace(` ${relogioTexto(URL_RELOGIO)}`, ""), antes.prompt, "a única diferença é a frase do relógio");
+    assert.deepEqual(scanForbidden(rs[0].prompt).filter((h) => h.text.includes(URL_RELOGIO)), [], "frase do relógio com vocabulário proibido");
+    assert.match(rs[0].prompt, /Limites da execução: até \d+ minutos[^\n]*O relógio da página pode não ser o real[^\n]*decorridoS[^\n]*restanteS[^\n]*Tempo máximo: \d+ segundos desde o início\./);
+    assert.deepEqual(pair(run("sem", clone(comRel)), run("com", clone(comRel))), []);
+    // relógio num braço e não no outro é diferença fora da allowlist
+    assert.ok(pair(run("sem", clone(task)), run("com", clone(comRel))).some((e) => e.includes("fora da allowlist")));
+  }
+  for (const ruim of ["ftp://collector/tempo", "", 3, "http://collector:8080/tempo com espaço"]) {
+    assert.throws(() => renderTaskPrompt(template, { ...clone(EXAMPLE_INPUTS), limites: { ...EXAMPLE_INPUTS.limites, relogio: ruim as string } }), /relogio/, String(ruim));
   }
 });
 

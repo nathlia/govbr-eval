@@ -224,6 +224,26 @@ com `..`/`%2e`/`%2f`/barra invertida → 400; `x-govbr-run-id` diferente → 409
 aceito → 200 `duplicate` (idempotente); diferente → 409 (sem sobrescrita); acima de 2 MB → 413;
 JSON inválido ou fora do schema → 400 e corpo arquivado em `refused/`.
 
+**Relógio real (`GET /tempo`, revisão `relogio-1`, NAT-111 opção A).** O relógio das telas é simulado
+(`new Date()` congelado), então o agente não tinha como medir o tempo e encerrava "por tempo" muito antes do
+teto (dev-374-b-01: 259–574 s de 1 800 s). Com o rótulo `govbr.collector.relogio=relogio-1` na imagem travada do
+coletor, o run-once (i) arma o coletor com `COLLECTOR_LIMITE_SEG` = `--limite-seg`; (ii) acrescenta ao valor de
+`{{LIMITES}}` uma frase **constante** que aponta `http://collector:8080/tempo`, alcançado como o destino do envio
+(pelo navegador e pelo proxy do site; o processo do agente continua sem rota direta); (iii) confere, antes do
+agente, que `/tempo` responde 503 pelo proxy do navegador (controle positivo `relogio-pelo-proxy`); (iv) dá a
+partida no relógio por `docker exec` no coletor, criando um arquivo no tmpfs do PRÓPRIO coletor, logo **antes**
+de partir o agente (o restante informado nunca passa do limite aplicado); e (v) registra o check informativo
+`relogio-real` (armado ou não, quantas consultas). A resposta é `{ ok, inicio, agora, decorridoS, restanteS,
+limiteS }`, no relógio do coletor; não leva run id, campanha, braço, oráculo nem nada da referência, e o
+recibo do envio não muda. Neutralidade: o template da skill não muda (`templateSha256` = `protocolSha256`
+congelado continua 860feacb…), a frase é a mesma em todo braço e toda execução (nada de horário de início no
+texto: isso tornaria cada `promptSha256` único e quebraria a paridade byte a byte e a chave de agregação, que
+exige `versions.promptSha256` igual), e o `promptSha256` muda uma vez, igual para os três braços (solicitação
+1360d1dd… → 4881c868…, vistorias 9948858f… → 684235b9…, acompanhamento 55a56598… → 8c1bdf49…, a 1 800 s). Como a
+chave de agregação contém o `promptSha256`, execuções com e sem relógio nunca se misturam numa análise.
+Imagem sem o rótulo (as travadas hoje): texto, coletor e pacote exatamente como antes. Ligar exige
+reconstruir só a imagem do coletor (`npm run runner:imagens -- --so collector`) e travar o lock novo. Atenção: a etiqueta do coletor é fixa (`govbr-runner-collector:1.0.0`), então reconstruir numa worktree move a etiqueta que o lock de outro checkout confere (`imagem-collector` falha lá); reconstrua sem campanha em curso.
+
 ## Ciclo do `run-once`
 
 ```sh

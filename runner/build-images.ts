@@ -29,7 +29,7 @@ import { PERFIS, type PerfilOraculo } from "./perfis-oraculo";
 import { INSPECTION_CLAUSES_REVISION, INSPECTION_CONTRACT } from "../contracts/index";
 import {
   BASE_IMAGE, CLAUDE_CODE_VERSION, COMMITTED_LOCK_PATH, DEFAULT_TELAS_DIR, DEFAULT_VALIDATOR_DIR, EVAL_ROOT, LOCK_PATH, NODE_VERSION, PLAYWRIGHT_MCP_VERSION,
-  RUNNER_DIR, RUNNER_VERSION, docker, dockerStream, imageId, imageLabels, sha256, type ImagesLock,
+  RELOGIO_REVISION, RUNNER_DIR, RUNNER_VERSION, docker, dockerStream, imageId, imageLabels, sha256, type ImagesLock,
 } from "./lib";
 
 type Name = keyof ImagesLock["images"];
@@ -219,6 +219,8 @@ async function main(): Promise<void> {
       "govbr.collector.findings-contracts": "findings.v1,findings.v2",
       "govbr.collector.inspection-revision": collectorInspectionRevisionOf(),
       "govbr.collector.route-guard": ROUTE_GUARD_VERSION,
+      // NAT-111 A: GET /tempo (relógio real). O run-once só anuncia o relógio no texto com este rótulo na imagem travada.
+      "govbr.collector.relogio": RELOGIO_REVISION,
       "govbr.collector.contracts-sha256": sha256(COLLECTOR_CONTRACT_FILES.map((f) => `${f}:${sha256(readFileSync(join(EVAL_ROOT, "contracts", f)))}`).join("\n")) },
     egress: {},
     // `data-sha256` = data/ do validador no host, inteiro (o que o preflight do run-once recalcula e compara);
