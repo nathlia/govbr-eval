@@ -121,7 +121,11 @@ perfis, medidos lado a lado com os dist/ de `a202245` e `8603d78`, pins `TOOLS_L
 destacada limpa (`.tmp-eval/validator-377r`, `npm ci` + `tsc` com `dist/` apagado antes; `GOVBR_VALIDATOR_DIR` no build
 e nos testes) e de uma worktree do eval com `core.autocrlf=false` (LF); agente, tela, coletor (`relogio-1`) e egress com
 os ids do lock anterior (agente `sha256:6646f57e…`, tela `sha256:e6ee88df…`, coletor `sha256:2eb16d43…`, egress
-`sha256:16659679…`). Inventários do DOM intocados.
+`sha256:16659679…`). Inventários do DOM intocados. `test:runner` 42/42 (rodada inteira, sozinha na máquina). A
+falha da 1ª tentativa (`proibido sem`, sob falta de memória no host) não era regressão: o braço `sem` não sobe o
+oráculo, e coletor e egress são as mesmas imagens (scripts iguais aos da fonte); o 3º POST morreu no proxy do
+navegador com `ECONNRESET` → 502 antes de chegar ao coletor (nenhum evento no `events.ndjson` dele), e o agente
+roteirizado conta todo status ≠ 409 como "alcançou". O caso sozinho passou 3/3.
 Antes dela, a da rodada 3.7.5 (lock de 2026-11-10T03:18): `govbr-runner-oracle:3.7.5-9d894a704c97` (`sha256:a791ef0f…`,
 commit `a202245`, dist `9d894a704c97…`, `dataSha256` `b4b2eceb…` igual ao da 3.7.4; novo: cláusulas adiadas com caminho
 e leitura obrigatória das regras de uso, pendência `usage-unread` com ids `L-NN`, D-186; tools/list e instructions iguais
