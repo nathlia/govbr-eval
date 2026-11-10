@@ -111,7 +111,18 @@ foi construída de um clone limpo no commit `e15b1b1` (3.4.1; tools/list igual a
 `data/`), o mesmo estado que o checkout por SHA do CI produz: `GOVBR_VALIDATOR_DIR=<clone>` no build e no
 `run-once`/testes. O checkout de trabalho do validator só serve ao preflight se o `dist/` e o `data/` dele
 forem os do commit (sem arquivos de builds antigos nem `data/models/`).
-Rodada 3.7.5 (lock de 2026-11-10T03:18): `govbr-runner-oracle:3.7.5-9d894a704c97` (`sha256:a791ef0f…`,
+Rodada 3.7.7 (lock de 2026-11-10T21:29): `govbr-runner-oracle:3.7.7-e9f7fc6facdb` (`sha256:593c22a6…`,
+commit `d7644ea`, dist `e9f7fc6facdb…`, `dataSha256` `b4b2eceb…` igual ao da 3.7.5; novo desde a 3.7.5: bloco
+`specification` no 1º `scan_page`, check `spec-part-token` e pendência `observed-required` com ids `O-NN`, D-188, e os
+predicados `font-size-on-ds-scale` (mede e não decide, D-32) e `part-value-matches-spec-token` no `verify_finding`, com a
+`O-NN` fechando pelo caminho que nomeia, D-189; a 3.7.6 não foi a campanha; tools/list e instructions iguais nos seis
+perfis, medidos lado a lado com os dist/ de `a202245` e `8603d78`, pins `TOOLS_LIST_SHA256_3_7_3` seguem: evaluation
+`04ae1437…`, knowledge-free `5b9c59aa…`, conferidos dentro da imagem), construída só com `--so oracle` de uma worktree
+destacada limpa (`.tmp-eval/validator-377r`, `npm ci` + `tsc` com `dist/` apagado antes; `GOVBR_VALIDATOR_DIR` no build
+e nos testes) e de uma worktree do eval com `core.autocrlf=false` (LF); agente, tela, coletor (`relogio-1`) e egress com
+os ids do lock anterior (agente `sha256:6646f57e…`, tela `sha256:e6ee88df…`, coletor `sha256:2eb16d43…`, egress
+`sha256:16659679…`). Inventários do DOM intocados.
+Antes dela, a da rodada 3.7.5 (lock de 2026-11-10T03:18): `govbr-runner-oracle:3.7.5-9d894a704c97` (`sha256:a791ef0f…`,
 commit `a202245`, dist `9d894a704c97…`, `dataSha256` `b4b2eceb…` igual ao da 3.7.4; novo: cláusulas adiadas com caminho
 e leitura obrigatória das regras de uso, pendência `usage-unread` com ids `L-NN`, D-186; tools/list e instructions iguais
 nos seis perfis, pins `TOOLS_LIST_SHA256_3_7_3` seguem: evaluation `04ae1437…`, knowledge-free `5b9c59aa…`, conferidos
