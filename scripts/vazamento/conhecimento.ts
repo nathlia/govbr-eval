@@ -114,8 +114,26 @@ import { argValues, buildDictionary, classify, exactTokens, hitsInText, leaves, 
  * os dois lados (59 no total). A causa não é da 3.7.2: a linha curta existe desde a 3.6.3; nas rodadas anteriores o
  * localizador medido nela nunca tinha sido um web component do DS.
  * Rechecagem offline (`--revarrer`): p02-ferramentas 1 → 0 sem explicação.
+ *
+ * 1.3.6 (dev-375-b-01 p01-ferramentas, oráculo 3.7.5, tela B vistorias): uma execução falhou o isolamento por UMA
+ * ocorrência, `br-button` em scan_page `$.checksRun.pageLevel.notMeasured[*].measured[*].locator` =
+ * `.my-3:nth-child(8) > .align-items-center.row > .col-auto:nth-child(3) > br-button[label="Ocultar"][icon="chevron-up"] >…`:
+ * o localizador que o axe mediu (o mesmo caminho que o 1.3.1 já perdoa), CORTADO pelo servidor em 120 caracteres
+ * (`clip()` de scan/notJudged.ts: `s.slice(0, n - 1) + "…"`). Com o `…` no fim a folha não é seletor bem-formado e o
+ * núcleo não a lê. O termo é a tag do botão Ocultar da própria tela; nada da base `data/`. Esta camada, só do eval,
+ * aplica a regra do núcleo ao PREFIXO INTEIRO do localizador quando, e só quando: a ferramenta e o caminho são os
+ * declarados em LOCALIZADOR_CORTADO (o localizador medido e os exemplos da pendência, os dois cortados pelo mesmo
+ * `clip()`), a folha termina no `…` do corte e não tem outro `…`, o prefixo é cortado na ÚLTIMA fronteira de topo
+ * (espaço, `>`, `+`, `~` ou vírgula fora de `[]`, `()` e aspas) e o composto cortado depois dela é descartado, o termo
+ * não aparece no composto descartado, e o núcleo, chamado com o prefixo como folha, classifica `pagina` (seletor
+ * bem-formado, termo em posição de tipo/classe RENDERIZADO pela tela no inventário do DOM; sem inventário, nada). O
+ * termo no composto cortado (`br-button[label="Ocul…`), base plantada no localizador, componente não renderizado, o
+ * corte no meio da folha, o mesmo localizador noutro campo do mesmo objeto (`reason`), noutro caminho ou noutra
+ * ferramenta continuam sem explicação. A linha curta (1.3.5) não muda: lá o localizador cortado segue sem explicação. O
+ * núcleo (cópia do validator) não muda. Treze canários novos marcam os dois lados (72 no total).
+ * Rechecagem offline (`--revarrer`): p01-ferramentas 1 → 0 sem explicação.
  */
-export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.5";
+export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.6";
 
 /**
  * 1.2.0 (D-154): eco do SELETOR DE AÇÃO da mesma chamada. Desde o validator 3.4.3 a resposta encolhida do
@@ -258,6 +276,60 @@ function linhaDePendencia(hit: Hit, folha: string, prov: Provenance, cache: Map<
   return { class: "pagina", why: `${cs[0].why}; localizador medido na linha curta da pendência de página (@lugar), termo só no localizador (1.3.5)` };
 }
 
+/**
+ * 1.3.6: caminhos em que a folha é um localizador medido que o servidor pode CORTAR (`clip()` do validator: os primeiros
+ * n−1 caracteres + `…`). Só a pendência de página do scan_page, na forma objeto.
+ */
+export const LOCALIZADOR_CORTADO: Record<string, string[]> = {
+  scan_page: ["$.checksRun.pageLevel.notMeasured[*].measured[*].locator", "$.checksRun.pageLevel.notMeasured[*].examples[*]"],
+};
+const CORTE = "…";
+const FRONTEIRA = /[\s>+~,]/;
+
+/**
+ * Início da última fronteira de topo de um seletor (sequência de espaço, `>`, `+`, `~`, vírgula fora de `[]`, `()` e
+ * aspas), ou -1. Tudo antes dela são compostos inteiros; o que vem depois é o composto que o corte pode ter partido.
+ */
+export function ultimaFronteira(s: string): number {
+  let profundidade = 0;
+  let aspa: string | null = null;
+  let corrida = -1;
+  let ultima = -1;
+  for (let i = 0; i < s.length; i += 1) {
+    const c = s[i];
+    if (aspa) {
+      if (c === "\\") i += 1;
+      else if (c === aspa) aspa = null;
+      continue;
+    }
+    if (profundidade === 0 && FRONTEIRA.test(c)) {
+      if (corrida < 0) corrida = i;
+      ultima = corrida;
+      continue;
+    }
+    corrida = -1;
+    if (c === '"' || c === "'") aspa = c;
+    else if (c === "[" || c === "(") profundidade += 1;
+    else if ((c === "]" || c === ")") && profundidade > 0) profundidade -= 1;
+  }
+  return ultima;
+}
+
+function localizadorCortado(hit: Hit, folha: string, prov: Provenance, cache: Map<string, string>): { class: Classification; why: string } | null {
+  if (!(LOCALIZADOR_CORTADO[prov.tool] ?? []).includes(hit.path) || hit.kind !== "exact") return null;
+  // o corte do servidor: um único `…`, no fim da folha
+  if (!folha.endsWith(CORTE) || folha.indexOf(CORTE) !== folha.length - CORTE.length) return null;
+  const resto = folha.slice(0, -CORTE.length);
+  const f = ultimaFronteira(resto);
+  if (f <= 0) return null;
+  const inteiro = resto.slice(0, f).trim();
+  // o composto partido pelo corte não é lido: o termo nele fica sem explicação (pode ser o começo de outro nome)
+  if (!inteiro || exactTokens(resto.slice(f)).includes(hit.term) || !exactTokens(inteiro).includes(hit.term)) return null;
+  const c = classify(hit, prov, cache, inteiro);
+  if (c.class !== "pagina") return null;
+  return { class: "pagina", why: `${c.why}; localizador cortado pelo servidor (…): lidos só os compostos inteiros antes da última fronteira, termo fora do composto cortado (1.3.6)` };
+}
+
 /** scanId de topo de uma resposta JSON (o do lote: scan_page devolve o novo, get_finding_details o pedido), ou null. */
 export function scanIdDaResposta(text: string): string | null {
   try {
@@ -296,6 +368,8 @@ export function varrerResposta(dict: Dictionary, text: string, prov: Provenance,
       if (c.class === "sem-explicacao") c = descritorDoTraco(hit, leaf.text, prov, cache) ?? c;
       // 1.3.5: o localizador medido na linha curta da pendência de página do scan_page
       if (c.class === "sem-explicacao") c = linhaDePendencia(hit, leaf.text, prov, cache) ?? c;
+      // 1.3.6: o localizador medido da pendência de página cortado pelo servidor (…)
+      if (c.class === "sem-explicacao") c = localizadorCortado(hit, leaf.text, prov, cache) ?? c;
       hits.push({ ...hit, ...c, folha: leaf.text });
     }
   }
@@ -446,6 +520,9 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
   const doLocalizador: PageElements = { tags: new Set(["html", "body", "div", "span", rootClass]), classes: new Set(["content"]) };
   const curta = (lugar: string, tarefa = "decida o contraste: o axe não concluiu (fundo não sólido, sobreposição,…") =>
     `P-01:contrast-incomplete:2⇒wcag-1.4.3 @.content fg #ffffff bg #ff8c00 ratio 2.33; ${lugar} · ${tarefa}`;
+  // 1.3.6: localizador medido da pendência de página (forma objeto) cortado pelo servidor; a forma real da p01-ferramentas
+  const medido = (locator: string, reason: string | null = "bgGradient") => JSON.stringify({ checksRun: { pageLevel: { notMeasured: [{ measured: [{ locator, fg: null, bg: null, ratio: null, reason }] }] } } });
+  const cortadoReal = `.my-3:nth-child(8) > .align-items-center.row > .col-auto:nth-child(3) > ${rootClass}[label="Ocultar"][icon="chevron-up"] >…`;
   const prosa = JSON.stringify({ reasons: [{ detail: `Limitação: ${falhou}` }], verification: { detail: `Limitação: ${falhou}`, binding: { state: { failure: { detail: falhou }, limitation: { detail: `Passo 4 (fill) falhou. ${falhou}` } } } } });
   const casos: { nome: string; tool: string; texto: string; args: unknown; page: string | null; espera: Classification; elements?: PageElements | null; scans?: Map<string, unknown> }[] = [
     { nome: "título da base numa nota do servidor", tool: "verify_finding", texto: JSON.stringify({ note: `Veja ${kbTitle}.` }), args: {}, page, espera: "sem-explicacao" },
@@ -512,6 +589,20 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
     { nome: "variante usada como tag no localizador da linha da pendência", tool: "scan_page", texto: pendencia(curta(`${variante}[x] >>> span`)), args: {}, page: pageComTag, elements: { tags: new Set([...doLocalizador.tags, variante]), classes: doLocalizador.classes }, espera: "sem-explicacao" },
     { nome: "mesma linha da pendência noutro caminho (sessionPending)", tool: "scan_page", texto: JSON.stringify({ sessionPending: { ids: [curta(`${rootClass}[label="Ocultar"] >>> span`)] } }), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
     { nome: "mesma linha da pendência no mesmo caminho, noutra ferramenta (verify_finding)", tool: "verify_finding", texto: pendencia(curta(`${rootClass}[label="Ocultar"] >>> span`)), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
+    // 1.3.6 (dev-375-b-01): localizador medido cortado pelo servidor (…) na pendência de página, forma objeto
+    { nome: "tag renderizada no localizador medido cortado (notMeasured[*].measured[*].locator, …)", tool: "scan_page", texto: medido(cortadoReal), args: {}, page: pageComTag, elements: doLocalizador, espera: "pagina" },
+    { nome: "tag renderizada num exemplo cortado da pendência (notMeasured[*].examples[*], …)", tool: "scan_page", texto: JSON.stringify({ checksRun: { pageLevel: { notMeasured: [{ examples: [`div > ${rootClass}[label="Ocultar"] >>> sp…`] }] } } }), args: {}, page: pageComTag, elements: doLocalizador, espera: "pagina" },
+    { nome: "localizador cortado com o termo só no composto partido pelo corte", tool: "scan_page", texto: medido(`.col-auto:nth-child(3) > ${rootClass}[label="Ocul…`), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
+    { nome: "localizador cortado com componente que a tela NÃO renderiza", tool: "scan_page", texto: medido(cortadoReal), args: {}, page: pageComTag, elements: { tags: new Set(["html", "body", "div", "span"]), classes: doLocalizador.classes }, espera: "sem-explicacao" },
+    { nome: "localizador cortado sem inventário da tela (falha fechada)", tool: "scan_page", texto: medido(cortadoReal), args: {}, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    { nome: "id da base plantado no localizador cortado, com o id na página", tool: "scan_page", texto: medido(`#${kbId} > span >…`), args: {}, page: `${pageComTag}<!-- ${kbId} -->`, elements: doLocalizador, espera: "sem-explicacao" },
+    { nome: "título da base no campo não-localizador do mesmo objeto medido (measured[*].reason)", tool: "scan_page", texto: medido("div > span", kbTitle), args: {}, page, elements: doLocalizador, espera: "sem-explicacao" },
+    { nome: "localizador cortado copiado para o campo não-localizador do mesmo objeto (measured[*].reason)", tool: "scan_page", texto: medido("div > span", cortadoReal), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
+    { nome: "localizador com … no meio da folha (não é o corte do servidor)", tool: "scan_page", texto: medido(`${rootClass}[label="Ocultar"]… > span >…`), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
+    { nome: "localizador terminado em combinador sem o … do corte", tool: "scan_page", texto: medido(`.col-auto > ${rootClass}[label="Ocultar"] >`), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
+    { nome: "localizador cortado noutro caminho …locator não declarado (ariaPairs)", tool: "scan_page", texto: JSON.stringify({ checksRun: { pageLevel: { notMeasured: [{ ariaPairs: [{ locator: cortadoReal }] }] } } }), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
+    { nome: "localizador cortado no mesmo caminho, noutra ferramenta (verify_finding)", tool: "verify_finding", texto: medido(cortadoReal), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
+    { nome: "variante usada como tag no localizador cortado", tool: "scan_page", texto: medido(`div > ${variante}[x] >…`), args: {}, page: pageComTag, elements: { tags: new Set([...doLocalizador.tags, variante]), classes: doLocalizador.classes }, espera: "sem-explicacao" },
   ];
   return casos.map((c) => {
     const { hits } = varrerResposta(dict, c.texto, { tool: c.tool, args: c.args, page: c.page, axe, elements: c.elements ?? null }, { argsDoScan: c.scans ?? new Map() });
