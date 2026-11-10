@@ -1,6 +1,6 @@
 {
   "lockVersion": 1,
-  "builtAt": "2026-11-10T03:18:27.450Z",
+  "builtAt": "2026-11-10T18:17:30.765Z",
   "base": {
     "ref": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
     "node": "24.21.0"
@@ -51,12 +51,13 @@
     },
     "collector": {
       "tag": "govbr-runner-collector:1.0.0",
-      "id": "sha256:1d0f82bb97ec2cb4eb065dba98e0b920905e0c67032a1553fa5a20b55e30192c",
+      "id": "sha256:2eb16d438db7d8ea86c6f91ab1cec1f42d383f267bfe160d04298726c18e4ff6",
       "labels": {
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
         "govbr.collector.contracts-sha256": "11484e688cfbac38676a0252e515e8c41af5d851d261b06f6177f60fbbfb1186",
         "govbr.collector.findings-contracts": "findings.v1,findings.v2",
         "govbr.collector.inspection-revision": "inspection.v1+clauses-1",
+        "govbr.collector.relogio": "relogio-1",
         "govbr.collector.route-guard": "collector-route-guard-1.0.0",
         "govbr.collector.schemas": "44b8a0f21fae0b3bc55ba6eba10e8c937db47e37f82121b1c3c26537df233326",
         "govbr.runner.image": "collector",
