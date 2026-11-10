@@ -1,0 +1,167 @@
+{
+  "contract": "campaign.v2",
+  "fixture": false,
+  "campaignId": "dev-375-b-01",
+  "kind": "pilot",
+  "title": "Desenvolvimento do oráculo na tela B (Vistorias), validator 3.7.5, rodada 1 (D-155/D-156) — 3 trios sem/ferramentas/com em quadrado latino, Opus 5.5 high; MEDIÇÃO DE DESENVOLVIMENTO fora de qualquer número da tese",
+  "objective": "Modo desenvolvimento (D-155): A, B, A2 e os controles são telas de desenvolvimento, iteradas como num produto; a meta é o braço com achar pelo menos o que o sem e o ferramentas acham e achar defeitos específicos do DS que só ele pega. Ciclo: trio → rastrear cada perda até a chamada → consertar → trio. Esta campanha mede uma rodada desse ciclo, o validator 3.7.5 (a202245 = a 3.7.4 844b43c, que já somava à 3.7.2 cd11347 a lista única 3.7.3 de 04/11 e os consertos do teste à mão da 3.7.3, D-167/D-170…D-185, mais a D-186, cláusulas adiadas com caminho e leitura obrigatória das regras de uso: o scan_page declara as cláusulas à parte dos fatos (clauses: complete, deferred, byComponent e um next que devolve de fato as cláusulas adiadas; cláusula já entregue na sessão vai por referência, com os ids); pendência nova usage-unread, com ids próprios L-NN, uma por componente investigado que tenha cláusula de uso que obriga, proíbe ou desaconselha, fechada só quando uma ferramenta de leitura (get_ds_rules, get_component_spec, get_page_rules) entrega essas cláusulas (pendingResolved não a fecha; ela não julga nada); get_ds_rules com ids e detail index traz a frase da cláusula, a força e o componente; revisão independente (2 HIGH, 4 MED, 7 LOW, todos corrigidos menos L5/L6); ids P-NN iguais aos da 3.7.4; o tools/list e as instructions ficam iguais aos da 3.7.3/3.7.4 nos seis perfis e o data/ não muda), com a skill avaliar-tela 860feacb (a mesma da 3.7.4; B2: tempo em segundos, pedir pelo menos 20 000 caracteres na chegada a cada estado, ids de cláusula distintos dos de achado; D-172), o coletor que recusa achado com evidências de rotas distintas (B1, D-173) e o LEIAME-juiz da passada cega 1.4.6, política 1.3.0 (a 1.4.4 da rodada 3.7.4 mais a força especificacao da base 3.7.3+ como informativa, 1.4.5, e a recomendação e-MAG citada direto com a força que a base declara, 1.4.6), na tela B (Vistorias PROPESC, referência 1.1.0 (domínio de registros declarado nas specs de rota de registro, D-168; ids da base literal, D-169), 29 specs / 102 unidades; site 88076aec26e9, o mesmo da 3.7.4), com 3 trios por versão (D-156 ii), na mesma forma das rodadas anteriores (quadrado latino, semente declarada, agenda v2; os 3 grupos p01..p03 cobrem as 3 linhas do quadrado). O oráculo, a regra do juiz e o relógio real mudam juntos nesta rodada, iguais nos três braços (a skill é a mesma da 3.7.4; pela D-187 o enunciado ganha uma frase com o tempo real decorrido, servido pelo coletor relogio-1, a mesma nos três braços; o juiz é cego ao braço): a diferença para a rodada 3.7.4 não se atribui a um deles sozinho, e esta série (com relógio) não se junta à anterior. O escopo da B agora inclui as rotas internas da aplicação a que a tela leva pela interface, igual nos três braços (D-156 iv, eval 674fede); as 6 specs da rota de detalhe ficam no denominador. É medição de desenvolvimento do 3.7.5: FICA FORA DE QUALQUER NÚMERO DA TESE (a D continua lacrada, D-138/D-155). Diferente dos ensaios anteriores, as saídas destes trios PODEM motivar mudanças na ferramenta (oráculo, skill, protocolo): é o ciclo de desenvolvimento da D-155. Toda mudança motivada por eles tem de ser genérica e validada fora da spec que a inspirou (controles, outra tela de desenvolvimento), entra em versão nova do validator e é medida em campanha nova; nada muda dentro desta campanha congelada. Técnico: os 9 slots rodam com isolamento passed e identidade igual à campanha congelada. Leitura (D-156): duas colunas, detecção e detecção fundamentada, separadas por classe de spec (específica do DS × acessibilidade geral, pela categories da referência), por trio e mediana dos 3, comparadas aos 3 trios do 3.7.4 (dev-374-b-01, passada 1.4.5, detecção por trio p01/p02/p03: sem 15/12/14 · ferramentas 14/14/17 · com 16/17/21 das 29 specs; medianas 14/14/17) e aos do 3.7.2 (dev-372-b-01: sem 17/15/12 · ferramentas 11/14/12 · com 19/18/18; sob o domínio declarado, reconta mecânica sem novo julgamento: com 20/20/20).",
+  "hypotheses": [
+    "Desenvolvimento, sem inferência: meta de produto da D-155 — na mediana dos 3 trios, com ≥ sem e com ≥ ferramentas em detecção e em detecção fundamentada, e com acha specs específicas do DS que sem e ferramentas não acham. A leitura orienta a próxima rodada do ciclo e não decide nada na tese. Técnico: passa se os 9 slots rodam com isolamento passed e identidade igual à campanha congelada."
+  ],
+  "createdAt": "2026-11-10T18:53:01Z",
+  "frozenAt": "2026-11-10T18:53:01Z",
+  "design": {
+    "screens": [
+      {
+        "id": "vistorias",
+        "label": "Vistorias PROPESC (PNIP)",
+        "version": "govbr-telas-site-88076aec26e9"
+      }
+    ],
+    "arms": [
+      "sem",
+      "ferramentas",
+      "com"
+    ],
+    "models": [
+      {
+        "family": "Opus",
+        "requested": "claude-opus-5-5"
+      }
+    ],
+    "effort": "high",
+    "repetitions": 3,
+    "order": "quadrado-latino",
+    "seed": 20261123,
+    "comparisons": [
+      {
+        "id": "ferramentas-x-com",
+        "arms": [
+          "ferramentas",
+          "com"
+        ],
+        "role": "primary",
+        "question": "Desenvolvimento (sem inferência): o que a base de conhecimento do oráculo 3.7.5 acrescenta às ferramentas de medição na tela B — detecção e fundamentada, por classe de spec, mediana dos 3 trios. Fora de qualquer número da tese."
+      },
+      {
+        "id": "sem-x-ferramentas",
+        "arms": [
+          "sem",
+          "ferramentas"
+        ],
+        "role": "secondary",
+        "question": "Desenvolvimento (sem inferência): o que as ferramentas de medição do 3.7.5 acrescentam ao navegador sozinho na tela B. Fora de qualquer número da tese."
+      },
+      {
+        "id": "sem-x-com",
+        "arms": [
+          "sem",
+          "com"
+        ],
+        "role": "secondary",
+        "question": "Desenvolvimento (sem inferência): o oráculo 3.7.5 inteiro contra o navegador sozinho na tela B. Fora de qualquer número da tese."
+      }
+    ]
+  },
+  "fixed": {
+    "protocolSha256": "860feacbe381110460c03fdc628f4a16b30ab3422f682cfe6cc6c901d0824f18",
+    "client": {
+      "name": "claude-code",
+      "version": "2.1.288 (Claude Code)"
+    },
+    "provider": {
+      "name": "anthropic",
+      "authMethod": "oauth-subscription"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "147.0.7727.15"
+    },
+    "playwrightMcp": "@playwright/mcp@0.0.70",
+    "isolationPolicyVersion": "isolamento-runner-1.1.0",
+    "oracleProfiles": {
+      "com": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.5",
+        "distSha256": "9d894a704c97356fa482cddaaf4c6ecdc3898630f531185a2946341acaefa300",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "evaluation",
+        "tools": [
+          "get_component_spec",
+          "get_design_tokens",
+          "get_ds_rules",
+          "get_emag_rules",
+          "get_finding_details",
+          "get_page_rules",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "04ae14378db09bd4cdef48841e3d1a9388b701e18279fe08a04267af3c74614c"
+      },
+      "ferramentas": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.5",
+        "distSha256": "9d894a704c97356fa482cddaaf4c6ecdc3898630f531185a2946341acaefa300",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "knowledge-free",
+        "tools": [
+          "get_finding_details",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "5b9c59aaa490f5de2a4a497eda8a2e3dbedd25b2a8288fed8eb049f7233d40dc"
+      }
+    },
+    "scorerVersion": "flow-semantic-1.8.2"
+  },
+  "limits": {
+    "timeoutSeconds": 1800,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 18,
+    "retryOn": [
+      "rate-limited",
+      "model-unavailable",
+      "auth-failed",
+      "preflight-failed",
+      "vm-lost",
+      "harness-error",
+      "archive-unavailable",
+      "cancelled"
+    ],
+    "attemptSelection": "Desenvolvimento: vale a primeira tentativa sem falha técnica de cada slot, na ordem da agenda. Nova tentativa só por falha técnica (protocolo §7.2, D-88), no máximo 1 por slot (9 slots, teto 18). Nada desta campanha entra em número da tese."
+  },
+  "failurePolicy": "Protocolo NAT-78 §7.2/§7.4: nova tentativa só por falha técnica (429, queda, modelo indisponível, autenticação, preflight, VM perdida, erro do harness ou do arquivo, cancelamento); tempo esgotado no teto de 30 min é resultado do agente, fica registrado e não se repete. Falha técnica de isolamento, inventário, trava ou crash leva a conserto e campanha nova. Mudanças na ferramenta motivadas pelas saídas (ciclo da D-155) vão para versão nova do validator, medida em campanha nova; esta campanha congelada não muda.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": []
+  },
+  "analysisPlan": {
+    "primaryOutcome": "Nenhum desfecho da tese (desenvolvimento). Técnico: isolamento passed e identidade congelada nos 9 slots (oráculo 3.7.5, perfis evaluation e knowledge-free medidos). Desenvolvimento (D-155/D-156): por braço, specs achadas das 29 da referência 1.0.0 (as 6 da rota de detalhe no denominador) em duas colunas — detecção e detecção fundamentada —, separadas por classe (específica do DS × acessibilidade geral, pela categories da referência), por trio e mediana dos 3 trios.",
+    "secondaryOutcomes": [
+      "Comparação descritiva com os 3 trios do 3.7.4 na B (dev-374-b-01: sem 15/12/14, ferramentas 14/14/17, com 16/17/21 das 29; medianas 14/14/17) e do 3.7.2 (dev-372-b-01: sem 17/15/12, ferramentas 11/14/12, com 19/18/18; reconta sob o domínio declarado 1.1.0: com 20/20/20), mesmo escopo; na dev-374-b-01 o com usou só o scan_page em 2 de 3 trios e nenhum braço achou B-09, B-10, B-18, B-28 e B-29 (D-186); a 3.7.5 mira a leitura das cláusulas adiadas e das regras de uso dos componentes investigados, para ver se o com mantém com ≥ sem/ferramentas e acrescenta specs do DS sem perder o resto.",
+      "Rastreamento de cada perda do braço com até a chamada do oráculo (como no mecanismo da B-03), que alimenta a próxima rodada do ciclo da D-155.",
+      "Medidas de recurso (tempo, tokens, custo estimado, fração da janela de 5 h), só registradas."
+    ],
+    "uncertaintyMethod": null,
+    "exclusionRules": "A campanha inteira fica fora de qualquer número da tese (regra 5 da Metodologia §5.7.5; D lacrada, D-138/D-155). Os números são lidos e PODEM motivar mudanças genéricas na ferramenta (ciclo da D-155), validadas fora da spec que as inspirou; nunca ajustam a referência, o scorer, a política do juiz nem N."
+  },
+  "budget": {
+    "approved": false,
+    "amount": null,
+    "currency": null,
+    "approvedBy": null,
+    "approvedAt": null
+  },
+  "pendingDecisions": []
+}
