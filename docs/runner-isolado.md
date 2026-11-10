@@ -111,7 +111,16 @@ foi construída de um clone limpo no commit `e15b1b1` (3.4.1; tools/list igual a
 `data/`), o mesmo estado que o checkout por SHA do CI produz: `GOVBR_VALIDATOR_DIR=<clone>` no build e no
 `run-once`/testes. O checkout de trabalho do validator só serve ao preflight se o `dist/` e o `data/` dele
 forem os do commit (sem arquivos de builds antigos nem `data/models/`).
-Rodada 3.7.4 (lock de 2026-11-09T16:34): `govbr-runner-oracle:3.7.4-27fc05c49137` (`sha256:cb883c93…`,
+Rodada 3.7.5 (lock de 2026-11-10T03:18): `govbr-runner-oracle:3.7.5-9d894a704c97` (`sha256:a791ef0f…`,
+commit `a202245`, dist `9d894a704c97…`, `dataSha256` `b4b2eceb…` igual ao da 3.7.4; novo: cláusulas adiadas com caminho
+e leitura obrigatória das regras de uso, pendência `usage-unread` com ids `L-NN`, D-186; tools/list e instructions iguais
+nos seis perfis, pins `TOOLS_LIST_SHA256_3_7_3` seguem: evaluation `04ae1437…`, knowledge-free `5b9c59aa…`, conferidos
+dentro da imagem), construída de uma worktree limpa (`.tmp-eval/validator-375`, `npm ci` + `tsc` com `dist/` apagado
+antes); agente, tela, coletor e egress com os mesmos ids da 3.7.4 (agente `sha256:6646f57e…`, tela `sha256:e6ee88df…`,
+coletor `sha256:1d0f82bb…`, egress `sha256:16659679…`). Inventários do DOM intocados. Lição da worktree do eval: com
+`core.autocrlf=true` o checkout novo sai em CRLF e as imagens do agente/coletor/egress mudam de id (o coletor também de
+rótulo `contracts-sha256`/`schemas`); o build foi refeito com os bytes do checkout de trabalho (LF) e voltou aos ids do lock.
+Antes dela, a da rodada 3.7.4 (lock de 2026-11-09T16:34): `govbr-runner-oracle:3.7.4-27fc05c49137` (`sha256:cb883c93…`,
 commit `844b43c`, dist `27fc05c49137…`, `dataSha256` `b4b2eceb…` igual ao da 3.7.3; novo: os consertos do teste à mão
 da 3.7.3, D-185; tools/list e instructions iguais nos seis perfis, pins `TOOLS_LIST_SHA256_3_7_3` seguem: evaluation
 `04ae1437…`, knowledge-free `5b9c59aa…`, conferidos dentro da imagem), construída de uma worktree limpa
