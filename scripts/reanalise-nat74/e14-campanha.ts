@@ -32,6 +32,8 @@
  * `motivoSemVinculo` na resposta (manifesto e respostas `…-1.3.1`). A 1.2.0 não muda.
  * 1.4.5 (D-167, validator 3.7.3): força `especificacao` da base → `forcaNoVocabulario: null`; a linha dela na tabela de forças
  * do LEIAME só sai quando a base da campanha a traz (base sem ela: LEIAME byte a byte, nas duas políticas).
+ * 1.4.6 (passada dev-374-b-01): na 1.3.0, a norma `emag:N.N` traz a força que a base declara para a recomendação
+ * (`regrasDaBase` = registro do título "Recomendação N.N – …") e o LEIAME diz que é essa a `forca`. A 1.2.0 não muda.
  */
 import { existsSync, readFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
@@ -92,10 +94,20 @@ import { leiameJuiz, tamanhosDosLotes } from "./e14-preparar";
  * declara essa força** (`tabelaForcasDaBase`, pelas forças que `normasDaCampanha` leu). Base sem ela (toda passada arquivada,
  * 1.2.0 e 1.3.0): LEIAME byte a byte. Formatos do lote, do manifesto e das respostas iguais; ingestão e derivação iguais
  * (`forcasDaCitada` já trata `null`). A 1.2.0 continua 1.3.1: o histórico dela não muda.
+ * 1.4.6 (passada cega dev-374-b-01, passada 1.4.5: na mesma recomendação do e-MAG citada direto como `emag:N.N`, 5 lotes
+ * responderam `recomendado` e 3 `obrigatorio`, pelo "must"/"deve" do texto; a classe derivada mudava com o lote): na 1.3.0,
+ * `normasDaCampanha({ emagPelaBase })` põe na norma `emag:N.N` (`normaCitada`, `REF1`/`REF2` e normas dos defeitos)
+ * `regrasDaBase` = o registro da base do título da recomendação (`standard: "e-MAG"`, "Recomendação N.N – …",
+ * `emagReferences: ["N.N"]`), com `forcaDeclarada`/`forcaNoVocabulario` pela tabela fixa — ligação determinística pelo
+ * número, não tabela nova (base 3.7.0-literal-2026-10-15: 45 títulos, 38 `recommended` → `recomendado` e 7 `prohibited`
+ * → `obrigatorio`, os títulos "Não …"). O LEIAME 1.3.0 ganha LEIAME_EMAG na seção `norma`, depois da tabela de forças, só
+ * quando a base liga alguma recomendação (`emagComForca` > 0; o padrão de `leiameCampanha13` é o texto da 1.4.5, byte a
+ * byte). Formatos do lote, do manifesto e das respostas iguais; esquema, ingestão e derivação iguais (`forcasDaCitada` passa
+ * a trazer a força do título, que nunca é `nenhuma`: `soPermite` igual). A 1.2.0 não muda (cartão, LEIAME e esquema).
  */
 export const E14_CAMPANHA_VERSAO = "nat78-primeira-passada-1.3.1";
 /** [D-156] Versão da passada preparada na política 1.3.0 (referências secundárias). A 1.2.0 continua 1.3.1. */
-export const E14_CAMPANHA_VERSAO_1_4 = "nat78-primeira-passada-1.4.5";
+export const E14_CAMPANHA_VERSAO_1_4 = "nat78-primeira-passada-1.4.6";
 /** Política das campanhas novas (D-156). `--politica 1.2.0` reproduz o histórico. */
 export const POLITICA_CAMPANHA_PADRAO: VersaoPolitica = "1.3.0";
 
@@ -251,7 +263,8 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
   const baseUrl = o.baseUrl === undefined ? BASE_URL_PADRAO : baseUrlValida(o.baseUrl);
   const datas = [...new Set(analises.flatMap(d => dataDoOraculo(lerJson(join(d, "entradas", "campanha.json")))))];
   if (datas.length !== 1) throw new Error(`E14 campanha: esperado 1 dataSha256 de oráculo nas campanhas das análises, achei ${datas.length} (${datas.map(x => x.slice(0, 12)).join(", ")})`);
-  const nr = normasDaCampanha({ dataSha256: datas[0], validador: resolve(o.validador ?? VALIDADOR_PADRAO), checkerAliases: o.checkerAliases });
+  // [1.4.6] Só na 1.3.0: a norma `emag:N.N` com a força que a base declara para a recomendação.
+  const nr = normasDaCampanha({ dataSha256: datas[0], validador: resolve(o.validador ?? VALIDADOR_PADRAO), checkerAliases: o.checkerAliases, ...(v13 ? { emagPelaBase: true } : {}) });
   const itens: { item: ItemChave; card: Card; cartao: CartaoCego }[] = [];
   const telas: Record<string, { nome: string; versao: string; endereco: string; paradas?: Record<string, Parada>; defeitos: unknown[] }> = {};
   const fontes: Record<string, string> = { ...nr.fontes };
@@ -330,7 +343,9 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
   const nomes = Object.values(telas).map(t => t.nome).join(", ");
   // [1.4.5] Linhas condicionais da tabela de forças pelas forças da base da campanha (sem elas, o LEIAME de sempre).
   const forcas = nr.forcas ?? [];
-  const leiame = v13 ? leiameCampanha13(ord.length, lotes.length, nomes, baseUrl, forcas) : leiameCampanha(ord.length, lotes.length, nomes, forcas);
+  // [1.4.6] Na 1.3.0, a frase do e-MAG só quando a base dá força a alguma recomendação.
+  const leiame = v13 ? leiameCampanha13(ord.length, lotes.length, nomes, baseUrl, forcas, (nr.emagComForca ?? 0) > 0)
+    : leiameCampanha(ord.length, lotes.length, nomes, forcas);
   // [1.4.2] Na 1.3.0, `vinculo.spec` = os ids dos defeitos das telas da passada (os mesmos que os lotes publicam em
   // `referencias`); a 1.2.0 publica o esquema histórico, byte a byte.
   const esquema = jsonTexto(v13 ? esquemaDaPassada(ESQUEMA_RESPOSTAS_CAMPANHA_1_3_1, Object.values(telas).flatMap(t => (t.defeitos as { id: string }[]).map(d => d.id)))
@@ -452,8 +467,11 @@ export function leiameCampanha(total: number, nLotes: number, nomes: string, for
 /**
  * [D-156] LEIAME da política 1.3.0: o da 1.2.0 (`leiameCampanha`, que não muda) com o título, o formato das respostas,
  * a seção das referências secundárias e as linhas da tabela de classes. Só procedimento de julgamento: nenhuma regra.
+ * [1.4.6] `emagPelaBase`: os cartões trazem a força da recomendação e-MAG pela base → LEIAME_EMAG depois da tabela de
+ * forças. Padrão `false`: o texto da 1.4.5, byte a byte.
  */
-export function leiameCampanha13(total: number, nLotes: number, nomes: string, baseUrl = BASE_URL_PADRAO, forcasDaBase: readonly string[] = []): string {
+export function leiameCampanha13(total: number, nLotes: number, nomes: string, baseUrl = BASE_URL_PADRAO, forcasDaBase: readonly string[] = [],
+  emagPelaBase = false): string {
   const NL = "\n";
   let t = leiameCampanha(total, nLotes, nomes, forcasDaBase);
   // [1.4.2] Endereço da página congelada (--base-url); com o padrão, nada muda.
@@ -461,6 +479,8 @@ export function leiameCampanha13(total: number, nLotes: number, nomes: string, b
   // [1.4.2, C2] Cabeçalho vazio × WCAG 1.3.1, logo depois do vocabulário de `violada`; [1.4.4, C3] e, logo depois, o atributo
   // ARIA preso × estado nativo.
   t = trocar(t, "- `violada`: `sim` · `nao` · `incerto`." + NL, "- `violada`: `sim` · `nao` · `incerto`." + NL + LEIAME_CABECALHO_VAZIO + NL + LEIAME_ARIA_ESTADO + NL);
+  // [1.4.6] Recomendação do e-MAG citada direto: logo depois da tabela de forças (antes de `aplicabilidade`).
+  if (emagPelaBase) t = trocar(t, NL + "- `aplicabilidade`: `aplica`", NL + LEIAME_EMAG + NL + "- `aplicabilidade`: `aplica`");
   // [1.4.2, C1] Registro × template, no fim da seção `vinculo`; [1.4.3] e, logo depois, de onde se lê o registro da referência;
   // [1.4.4, C4] e, por último, o motivo do "sem vínculo".
   t = trocar(t, "- Nunca pelo id da regra nem por semelhança de texto (R7): só pelo fato." + NL,
@@ -627,6 +647,18 @@ const leiameForcas = (forcasDaBase: readonly string[] = []) => [
   "  | `forcaDeclarada` (base) | `forcaNoVocabulario` |",
   "  |---|---|",
   ...tabelaForcasDaBase(forcasDaBase).map(f => `  | ${f.rotulo} | ${f.vocabulario === null ? "`null` (sem correspondência)" : `\`${f.vocabulario}\``} |`),
+].join("\n");
+
+/**
+ * [1.4.6, passada dev-374-b-01] Recomendação do e-MAG citada direto (`emag:N.N`), na seção `norma`, logo depois da tabela
+ * de forças: a força é a que a base declara para o título da recomendação (no cartão, em `regrasDaBase`); o "deve"/"must"
+ * do texto não a muda. Só na 1.3.0 e só quando a base liga a recomendação (`emagComForca`).
+ */
+export const LEIAME_EMAG = [
+  "- **Recomendação do e-MAG citada direto** (`emag:N.N`, como `regra`, numa referência ou num defeito). A norma traz em",
+  "  `regrasDaBase` o registro da base para o título da recomendação (\"Recomendação N.N – …\"), e a `forca` é a",
+  "  `forcaNoVocabulario` dele, como na tabela acima: `recomendado`, como a base a declara (`obrigatorio` só nos títulos",
+  "  que a base declara proibição, \"Não …\"). Um \"deve\" ou \"must\" no `texto` da recomendação não a sobe a `obrigatorio`.",
 ].join("\n");
 
 /** [N] Estado alcançado: resposta fechada, não só a justificativa. */

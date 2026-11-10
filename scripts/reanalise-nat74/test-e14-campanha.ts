@@ -20,7 +20,7 @@ import {
   type CartaoCego, type Resposta,
 } from "./e14-comum";
 import {
-  BASE_URL_PADRAO, LEIAME_ARIA_ESTADO, LEIAME_CABECALHO_VAZIO, LEIAME_IDENTIDADE_REGISTRO, LEIAME_MOTIVO_SEM_VINCULO, LEIAME_PARADAS, baseUrlValida, bracoDoRun, dominioDoDefeito, enderecoDaTela, leiameCampanha,
+  BASE_URL_PADRAO, LEIAME_ARIA_ESTADO, LEIAME_CABECALHO_VAZIO, LEIAME_EMAG, LEIAME_IDENTIDADE_REGISTRO, LEIAME_MOTIVO_SEM_VINCULO, LEIAME_PARADAS, baseUrlValida, bracoDoRun, dominioDoDefeito, enderecoDaTela, leiameCampanha,
   leiameCampanha13, mascararTrio, paradasDaReferencia, passosLegiveis, prepararCampanha, registroDaRota,
 } from "./e14-campanha";
 import { FORCAS_SO_COM_A_BASE, FORCA_NO_VOCABULARIO, normasDaCampanha } from "./e14-fila";
@@ -604,7 +604,7 @@ try {
     assert.deepEqual(esq.properties.respostas.items.properties.motivoSemVinculo, { enum: [...MOTIVO_SEM_VINCULO] });
     assert.equal(esq.properties.formato.const, FORMATO_RESPOSTAS_CAMPANHA_1_3_1);
     const m = JSON.parse(pA.arquivosInternos.get("lotes/manifesto.json")!) as { formato: string; versao: string; respostas: { formato: string } };
-    assert.deepEqual([m.formato, m.versao, m.respostas.formato], [FORMATO_MANIFESTO_CAMPANHA_1_3_1, "nat78-primeira-passada-1.4.5", FORMATO_RESPOSTAS_CAMPANHA_1_3_1]);
+    assert.deepEqual([m.formato, m.versao, m.respostas.formato], [FORMATO_MANIFESTO_CAMPANHA_1_3_1, "nat78-primeira-passada-1.4.6", FORMATO_RESPOSTAS_CAMPANHA_1_3_1]);
     const ajv = compilar(esq);
     const base = { id: "T3-0123456789", verdadeFactual: "verdadeira", norma: { id: "citada", forca: "obrigatorio", aplicabilidade: "aplica", violada: "sim" },
       vinculo: "nenhum", sugestao: NAO_PERGUNTADO, forcaDoVeredito: "medido", evidencias: ["MEDIDA"], justificativa: "MEDIDA mostra o fato fora dos defeitos da tela.", estadoAlcancado: "receita" };
@@ -704,7 +704,7 @@ try {
   const optsE = { validador: valE, checkerAliases: aliasesAbs };
   const pE = prepararCampanha([dirE], optsE), pE12 = prepararCampanha([dirE], { ...optsE, politica: "1.2.0" });
   const totalDe = (p_: typeof pE) => JSON.parse(p_.arquivosInternos.get("lotes/manifesto.json")!) as { total: number; versao: string; formato: string; lotes: unknown[] };
-  t("base com especificacao prepara: forcaNoVocabulario null no cartão, linha na tabela do LEIAME (1.3.0 e 1.2.0) e nada mais, versão 1.4.5, cegueira OK", () => {
+  t("base com especificacao prepara: forcaNoVocabulario null no cartão, linha na tabela do LEIAME (1.3.0 e 1.2.0) e nada mais, versão da 1.3.0 (1.4.6), cegueira OK", () => {
     assert.ok(FORCAS_SO_COM_A_BASE.has("especificacao"));
     assert.deepEqual(normasDaCampanha({ dataSha256: dataE, validador: valE, checkerAliases: aliasesAbs }).forcas, ["especificacao", "permitted", "recommended", "required"]);
     const lE = JSON.parse(pE.arquivosDoJuiz.get("lotes/lote-01.json")!) as { cartoes: CartaoCego[] };
@@ -721,7 +721,7 @@ try {
     const m = totalDe(pE);
     assert.equal(pE.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!.replace(LINHA_ESP + "\n", ""), leiameCampanha13(m.total, m.lotes.length, "Tela X"));
     assert.equal(pE12.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!.replace(LINHA_ESP + "\n", ""), leiameCampanha(m.total, m.lotes.length, "Tela X"));
-    assert.deepEqual([m.versao, m.formato], ["nat78-primeira-passada-1.4.5", FORMATO_MANIFESTO_CAMPANHA_1_3_1]);
+    assert.deepEqual([m.versao, m.formato], ["nat78-primeira-passada-1.4.6", FORMATO_MANIFESTO_CAMPANHA_1_3_1]);
     assert.equal(totalDe(pE12).versao, "nat78-primeira-passada-1.3.1", "a 1.2.0 não muda de versão");
     assert.deepEqual(pE.cegueira.falhas, []); assert.deepEqual(pE.falhasTrio, []);
   });
@@ -748,6 +748,127 @@ try {
     for (const p_ of [p, pA]) assert.ok(!p_.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!.includes("especificação"), "base sem a força: sem a linha");
     const m = totalDe(pA);
     assert.equal(pA.arquivosDoJuiz.get("lotes/LEIAME-juiz.md"), leiameCampanha13(m.total, m.lotes.length, "Tela X"));
+  });
+  // ── passada 1.4.6 (passada dev-374-b-01): força da recomendação e-MAG citada direto, pela base
+  console.log("E14 campanha 1.4.6: emag:N.N com a força que a base declara para o título da recomendação (só 1.3.0)");
+  /** sha256 de leiameCampanha13(10, 2, "Tela X", BASE_URL_PADRAO, ["especificacao"]) no gerador 1.4.5 (commit 9f615c1). */
+  const LEIAME13_1_4_5_ESP = "b58a4212ac0d75847003ab72d62517d7689a247ba33ba4ebe29163145896b4bb";
+  // Validador sintético com o título da recomendação 2.2 (recommended), uma frase do corpo dela (required: não entra) e o
+  // título de uma recomendação escrita como proibição (prohibited); a análise com C-aaaa → REF1 emag-2.2 e o defeito com emag:2.2.
+  const regraEmag = (id: string, title: string, force: string, refs: string[]) => ({ ...regra(id, title, force), standard: "e-MAG", emagReferences: refs });
+  const valM = join(tmp, "validador-emag"), dM = join(valM, "data");
+  cpSync(vData, dM, { recursive: true });
+  gravar(dM, `${vNorm}/rules.jsonl`, readFileSync(join(vData, vNorm, "rules.jsonl"), "utf8") + [
+    regraEmag("govbr-3.7.0-accessibility-global-e22e22e22e22", "Recomendação 2.2 – Garantir que os objetos programáveis sejam acessíveis", "recommended", ["2.2"]),
+    regraEmag("govbr-3.7.0-accessibility-global-e22c0c0c0c0c", "Os scripts devem ser acessíveis", "required", ["2.2"]),
+    regraEmag("govbr-3.7.0-accessibility-global-e16e16e16e16", "Recomendação 1.6 – Não utilizar tabelas para diagramação", "prohibited", ["1.6"]),
+  ].map(x => JSON.stringify(x)).join("\n") + "\n");
+  gravarJson(dM, "emag.json", { sections: { s1: { title: "Marcação", rules: [{ id: "1.6", title: "Não utilizar tabelas para diagramação", description: "Tables must not be used for layout." }] },
+    s2: { title: "Comportamento", rules: [{ id: "2.2", title: "Garantir que os objetos programáveis sejam acessíveis", description: "Scripts must be accessible." }] } } });
+  const dataM = sha256Tree(dM)!.sha256, dirM = join(tmp, "trio-emag");
+  cpSync(dir, dirM, { recursive: true });
+  gravar(dirM, "entradas/campanha.json", readFileSync(join(dir, "entradas", "campanha.json"), "utf8").split(dataSha).join(dataM));
+  const pkM = JSON.parse(readFileSync(join(dir, "revisao", "package.json"), "utf8")) as { cards: { id: string; rule: string | null; reportedEvidence: unknown }[]; runs: { cardIds: string[] }[] };
+  pkM.cards.find(c => c.id === "C-aaaa")!.reportedEvidence = { finding: { references: ["emag-2.2"] } };
+  pkM.cards.push({ ...pkM.cards.find(c => c.id === "C-eeee")!, id: "C-kkkk", rule: "emag-1.6" });
+  pkM.runs[2].cardIds.push("C-kkkk");
+  gravarJson(dirM, "revisao/package.json", pkM);
+  const refM = JSON.parse(readFileSync(join(dir, "entradas", "referencia.json"), "utf8")) as { violations: { rules: string[] }[] };
+  refM.violations[0].rules.push("emag:2.2");
+  gravarJson(dirM, "entradas/referencia.json", refM);
+  const optsM = { validador: valM, checkerAliases: aliasesAbs };
+  const pM = prepararCampanha([dirM], optsM), pM12 = prepararCampanha([dirM], { ...optsM, politica: "1.2.0" });
+  const vistaM = (p_: typeof pM) => {
+    const l = JSON.parse(p_.arquivosDoJuiz.get("lotes/lote-01.json")!) as { cartoes: CartaoCego[]; referencias: Record<string, { defeitos: { normas: CartaoCego["normaCitada"][] }[] }> };
+    const ch = JSON.parse(p_.arquivosInternos.get("chave/fila-t3-chave.json")!) as { itens: { id: string; cardIdOriginal: string }[] };
+    const it = (o: string) => ch.itens.find(i => i.cardIdOriginal === o)!;
+    return { l, it, c: (o: string) => l.cartoes.find(x => x.id === it(o).id)! };
+  };
+  const RECOMENDADO = { titulo: "Recomendação 2.2 – Garantir que os objetos programáveis sejam acessíveis",
+    texto: "Recomendação 2.2 – Garantir que os objetos programáveis sejam acessíveis.", forcaDeclarada: "recomendado", forcaNoVocabulario: "recomendado" };
+  t("1.3.0: emag:N.N citado (regra, REF1, defeito) traz em regrasDaBase o título da recomendação com a força da base (recomendado; prohibited → obrigatorio); frase do corpo não entra", () => {
+    const { l, c } = vistaM(pM);
+    const e = c("C-eeee").normaCitada!;
+    assert.deepEqual([e.id, e.fonte, e.titulo, e.texto], ["emag:2.2", "e-MAG 3.1", "Garantir que os objetos programáveis sejam acessíveis", "Scripts must be accessible."], "o resto da norma igual");
+    assert.deepEqual(e.regrasDaBase, [RECOMENDADO]);
+    assert.deepEqual(c("C-aaaa").referencias!.map(r => [r.id, r.regra, r.norma!.regrasDaBase]), [["REF1", "emag:2.2", [RECOMENDADO]]]);
+    assert.deepEqual(l.referencias.x.defeitos[0].normas.find(n => n!.id === "emag:2.2")!.regrasDaBase, [RECOMENDADO]);
+    assert.deepEqual(c("C-kkkk").normaCitada!.regrasDaBase!.map(r => [r.forcaDeclarada, r.forcaNoVocabulario]), [["obrigatorio (proibição)", "obrigatorio"]]);
+    assert.ok(!pM.arquivosDoJuiz.get("lotes/lote-01.json")!.includes("Os scripts devem ser acessíveis"), "frase do corpo da recomendação fora");
+    assert.ok(!pM.arquivosDoJuiz.get("lotes/lote-01.json")!.includes("e22e22e22e22"), "id da base fora do lote");
+    assert.deepEqual(normasDaCampanha({ dataSha256: dataM, validador: valM, checkerAliases: aliasesAbs, emagPelaBase: true }).emagComForca, 2);
+    assert.equal(normasDaCampanha({ dataSha256: dataM, validador: valM, checkerAliases: aliasesAbs }).emagComForca, undefined, "sem a opção, nada");
+  });
+  t("1.3.0: cegueira e máscara iguais (falhas 0, resíduo do cartão e-MAG vazio); versão 1.4.6; formatos iguais", () => {
+    assert.deepEqual(pM.cegueira.falhas, []); assert.deepEqual(pM.falhasTrio, []);
+    const { it } = vistaM(pM);
+    const r = JSON.parse(pM.arquivosInternos.get("residuo-de-braco.json")!) as { porCartao: { id: string; categorias: string[] }[] };
+    for (const o of ["C-eeee", "C-kkkk", "C-aaaa"]) assert.deepEqual(r.porCartao.find(x => x.id === it(o).id)!.categorias, [], o);
+    const m = JSON.parse(pM.arquivosInternos.get("lotes/manifesto.json")!) as { versao: string; formato: string; respostas: { formato: string } };
+    assert.deepEqual([m.versao, m.formato, m.respostas.formato], ["nat78-primeira-passada-1.4.6", FORMATO_MANIFESTO_CAMPANHA_1_3_1, FORMATO_RESPOSTAS_CAMPANHA_1_3_1]);
+  });
+  t("LEIAME 1.4.6 (1.3.0, base com títulos e-MAG): a frase do e-MAG uma vez, logo depois da tabela de forças, e nada mais; padrão = 1.4.5 byte a byte", () => {
+    const l = pM.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!;
+    assert.equal(l.split(LEIAME_EMAG).length - 1, 1);
+    assert.ok(l.includes("  | não declarada | `null` (sem correspondência) |\n" + LEIAME_EMAG + "\n- `aplicabilidade`: `aplica`"), "logo depois da última linha da tabela");
+    assert.ok(l.indexOf(LEIAME_EMAG) > l.indexOf("### `norma`") && l.indexOf(LEIAME_EMAG) < l.indexOf("### `vinculo`"), "na seção norma");
+    for (const x of ["`emag:N.N`", "`regrasDaBase`", "\"Recomendação N.N – …\"", "`forcaNoVocabulario`", "`recomendado`, como a base a declara", "\"deve\"", "\"must\"", "não a sobe a `obrigatorio`"])
+      assert.ok(LEIAME_EMAG.includes(x), x);
+    for (const [nome, re] of proibidos(["sem", "ferramentas", "com"])) assert.ok(!re.test(LEIAME_EMAG), `${nome} no bloco novo`);
+    assert.ok(!/\b[ABPU]-\d{2}\b|[0-9a-f]{12}/.test(LEIAME_EMAG), "nenhuma spec nem id da base no bloco");
+    const m = totalDe(pM);
+    assert.equal(l, leiameCampanha13(m.total, m.lotes.length, "Tela X", BASE_URL_PADRAO, [], true));
+    assert.equal(l.replace(LEIAME_EMAG + "\n", ""), leiameCampanha13(m.total, m.lotes.length, "Tela X"), "sem a frase, o LEIAME de antes");
+    // Gerador com o padrão (emagPelaBase = false) = o da 1.4.5, byte a byte: base sem e com `especificacao`.
+    assert.equal(sha(leiameCampanha13(10, 2, "Tela X")), LEIAME13_1_4_4);
+    assert.equal(sha(leiameCampanha13(10, 2, "Tela X", BASE_URL_PADRAO, ["especificacao"])), LEIAME13_1_4_5_ESP);
+    assert.equal(sha(leiameCampanha13(10, 2, "Tela X", BASE_URL_PADRAO, ["especificacao"], false)), LEIAME13_1_4_5_ESP);
+    assert.equal(sha(leiameCampanha13(10, 2, "Tela X", BASE_URL_PADRAO, ["especificacao"], true).replace(LEIAME_EMAG + "\n", "")), LEIAME13_1_4_5_ESP);
+    // Base sem título e-MAG (a sintética de sempre): 1.3.0 sem a frase.
+    assert.ok(!pA.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!.includes(LEIAME_EMAG));
+    // Arquivo real (govbr-resultados), quando presente: a passada 1.4.5 da dev-374-b-01 sai igual pelo gerador com o padrão.
+    const arq = join(EVAL, "..", "govbr-resultados", "analises", "dev-374-b-01", "primeira-passada-20261109T1", "lotes", "LEIAME-juiz.md");
+    if (existsSync(arq)) {
+      const a = readFileSync(arq, "utf8"), mm = /fila de (\d+) alegações, dividida em (\d+) lotes?\.[^]*?congelada \(([^)]*)\)\. Você/.exec(a)!;
+      const url = /servida em `(http:\/\/127\.0\.0\.1:\d+)`/.exec(a)![1];
+      assert.equal(leiameCampanha13(Number(mm[1]), Number(mm[2]), mm[3], url, ["especificacao"]), a, "LEIAME 1.4.5 arquivado");
+      console.log("     (conferido contra o LEIAME 1.4.5 arquivado de dev-374-b-01)");
+    }
+  });
+  t("1.2.0 não muda: emag:N.N sem regrasDaBase (regra, defeito), LEIAME sem a frase, versão 1.3.1", () => {
+    const { l, c } = vistaM(pM12);
+    for (const o of ["C-eeee", "C-kkkk"]) assert.equal(c(o).normaCitada!.regrasDaBase, undefined, o);
+    assert.equal(l.referencias.x.defeitos[0].normas.find(n => n!.id === "emag:2.2")!.regrasDaBase, undefined);
+    const m = totalDe(pM12);
+    assert.equal(pM12.arquivosDoJuiz.get("lotes/LEIAME-juiz.md"), leiameCampanha(m.total, m.lotes.length, "Tela X"));
+    assert.equal(m.versao, "nat78-primeira-passada-1.3.1");
+    // O lote 1.2.0 é o da base sem os títulos, a menos das somas das fontes (a data/ é outra) e dos cartões novos.
+    assert.deepEqual(pM12.cegueira.falhas, []);
+  });
+  t("ingestão 1.4.6: cartão emag:N.N tem forcasDaCitada = [recomendado]; validação e derivação iguais às do cartão sem a força (nunca \"só permite\")", () => {
+    const { c, it } = vistaM(pM);
+    const ctx = contextoDe(c("C-eeee"), it("C-eeee") as never, ["A-01"], "1.3.0");
+    assert.deepEqual(ctx.forcasDaCitada, ["recomendado"]);
+    const sem = { ...ctx, forcasDaCitada: undefined };
+    const o131 = { normaNeutra: true, v12: true, v13: true, v131: true, candidatas: c("C-eeee").candidatas };
+    const base = { id: c("C-eeee").id, verdadeFactual: "verdadeira", vinculo: { spec: "A-01", relacao: "direta" }, sugestao: NAO_PERGUNTADO, forcaDoVeredito: "medido",
+      evidencias: ["MEDIDA"], justificativa: "MEDIDA mostra o fato.", estadoAlcancado: "receita" };
+    const nenhuma = { ...base, norma: { id: "citada", forca: "nenhuma", aplicabilidade: NAO_PERGUNTADO, violada: NAO_PERGUNTADO } };
+    assert.deepEqual(validarResposta(nenhuma, ctx, o131), validarResposta(nenhuma, sem, o131), "\"nenhuma\" recusado como antes");
+    for (const forca of ["obrigatorio", "recomendado", "indeterminado"]) for (const violada of ["sim", "nao"]) {
+      const rr = { ...base, norma: { id: "citada", forca, aplicabilidade: "aplica", violada } } as unknown as Resposta;
+      assert.deepEqual(validarResposta(rr, ctx, o131), validarResposta(rr, sem, o131), `${forca}/${violada}`);
+      assert.deepEqual(derivarClasse(rr, ctx), derivarClasse(rr, sem), `${forca}/${violada}`);
+    }
+  });
+  t("dois títulos para a mesma recomendação e-MAG na base: para (nunca se escolhe um)", () => {
+    const v3 = join(tmp, "validador-emag-dup"), d3 = join(v3, "data");
+    cpSync(dM, d3, { recursive: true });
+    gravar(d3, `${vNorm}/rules.jsonl`, readFileSync(join(dM, vNorm, "rules.jsonl"), "utf8")
+      + JSON.stringify(regraEmag("govbr-3.7.0-accessibility-global-e22d0d0d0d0d", "Recomendação 2.2 - Garantir de novo", "required", ["2.2"])) + "\n");
+    const o3 = { dataSha256: sha256Tree(d3)!.sha256, validador: v3, checkerAliases: aliasesAbs };
+    assert.throws(() => normasDaCampanha({ ...o3, emagPelaBase: true }), /dois registros de título para a recomendação e-MAG 2\.2/);
+    assert.doesNotThrow(() => normasDaCampanha(o3), "a 1.2.0 não lê os títulos");
   });
   await testesReferencias({ t, tmp, dir, valDir, aliasesAbs, prepararCampanha, cli });
 } finally { rmSync(tmp, { recursive: true, force: true }); }

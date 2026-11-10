@@ -104,12 +104,14 @@ export function extrairFila(raiz = DERIVADO, inv: Inventario = inventarioDeAtomo
 
 // ───────────────────────────────────────────────────────────────── normas (texto para o juiz)
 
-interface Kb { id: string; title: string; normalizedRule: string; force: string }
+interface Kb { id: string; title: string; normalizedRule: string; force: string; standard?: string; emagReferences?: string[] }
 const FORCA_KB: Record<string, string> = { required: "obrigatorio", recommended: "recomendado", optional: "opcional", example: "exemplo" };
 
 export interface Normas { resolver: (id: string | null) => NormaVista | null; fontes: Record<string, string>;
   /** [1.4.5] Forças declaradas na base da campanha (ordenadas); só `normasDaCampanha`. O LEIAME imprime por elas as linhas condicionais. */
-  forcas?: string[] }
+  forcas?: string[];
+  /** [1.4.6] Recomendações do e-MAG cuja força o cartão traz pela base (só com `emagPelaBase`); 0 = nenhuma: o LEIAME não fala delas. */
+  emagComForca?: number }
 
 export function normas(): Normas {
   const val = join(TCC, "govbr-ds-validator", "data");
@@ -185,7 +187,31 @@ export const tabelaForcasDaBase = (forcasDaBase: readonly string[] = []) =>
 const regraVista = (k: Kb) => ({ titulo: mascarar(k.title), texto: mascarar(k.normalizedRule), forcaDeclarada: FORCA_LITERAL[k.force] ?? k.force,
   forcaNoVocabulario: FORCA_NO_VOCABULARIO[k.force] ?? null });
 
-export interface OraculoDaCampanha { dataSha256: string; validador: string; /** só testes; padrão govbr-eval/checker-aliases.json */ checkerAliases?: string }
+export interface OraculoDaCampanha { dataSha256: string; validador: string; /** só testes; padrão govbr-eval/checker-aliases.json */ checkerAliases?: string;
+  /**
+   * [1.4.6] Norma `emag:N.N` com a força que a base declara para a recomendação (`regrasDaBase` = o registro do título
+   * "Recomendação N.N – …"). Só a política 1.3.0 liga: a 1.2.0 refaz o histórico byte a byte, sem ela.
+   */
+  emagPelaBase?: boolean }
+
+/** [1.4.6] Título de recomendação do e-MAG na base literal: "Recomendação N.N – …" (traço ou hífen). */
+const TITULO_EMAG = /^Recomendação (\d+\.\d+)\s*[–-]/;
+/**
+ * [1.4.6] Registro da base que dá a força de cada recomendação do e-MAG: o do título da recomendação (`standard: "e-MAG"`,
+ * título "Recomendação N.N – …", `emagReferences: ["N.N"]`), só do texto literal da base (`rules.jsonl`). Ligação
+ * determinística pelo número; dois registros para o mesmo número → para (nunca se escolhe um). Os demais registros e-MAG
+ * da base (frases do corpo da recomendação, cada uma com a sua força) não entram: a recomendação citada é o título.
+ */
+function titulosEmagDaBase(regras: readonly Kb[]): Map<string, Kb> {
+  const out = new Map<string, Kb>();
+  for (const k of regras) {
+    const m = k.standard === "e-MAG" ? TITULO_EMAG.exec(k.title) : null;
+    if (!m || k.emagReferences?.length !== 1 || k.emagReferences[0] !== m[1]) continue;
+    if (out.has(m[1])) throw new Error(`E14 campanha: dois registros de título para a recomendação e-MAG ${m[1]} na base (${out.get(m[1])!.id}, ${k.id})`);
+    out.set(m[1], k);
+  }
+  return out;
+}
 
 /**
  * [1b, achado H] Normas para a primeira passada de campanha nova: o texto das regras do DS vem da base que o oráculo DA
@@ -194,6 +220,10 @@ export interface OraculoDaCampanha { dataSha256: string; validador: string; /** 
  * `data/knowledge/manifest.json`. Do validador só se leem arquivos de `data/` (nunca `src/`). Id de verificação
  * automática (ds:token-*, ds:page-*) passa por `govbr-eval/checker-aliases.json` (como no histórico) até os ids de regra,
  * e o texto deles sai da mesma base da campanha (decisão do coordenador, 19/10). `emag-N.N` (forma em que o validador cita o e-MAG) é lido como `emag:N.N`. Máscara D-87 igual.
+ * [1.4.6, passada dev-374-b-01: 5 lotes `recomendado` × 3 `obrigatorio` na mesma `emag:N.N`] Com `emagPelaBase` (política
+ * 1.3.0), a norma `emag:N.N` traz em `regrasDaBase` o registro do título da recomendação na base (`titulosEmagDaBase`), com
+ * a força que a base declara; sem o título na base, como antes. Na base 3.7.0-literal-2026-10-15: 45 títulos para as 45
+ * recomendações do emag.json, 38 `recommended` e 7 `prohibited` (os títulos "Não …": 1.6, 1.9, 2.3, 2.4, 2.6, 4.2, 6.4).
  */
 export function normasDaCampanha(o: OraculoDaCampanha): Normas {
   const val = join(o.validador, "data");
@@ -207,7 +237,10 @@ export function normasDaCampanha(o: OraculoDaCampanha): Normas {
   if (!existsSync(regrasAbs)) throw new Error(`E14 campanha: base ativa sem ${relTcc(regrasAbs)}`);
   const jsonl = (p: string) => (existsSync(p) ? readFileSync(p, "utf8").split("\n").filter(l => l.trim()).map(l => JSON.parse(l) as Kb) : []);
   const kb = new Map<string, { k: Kb; tipo: string }>();
-  for (const k of jsonl(regrasAbs)) kb.set(k.id, { k, tipo: "texto literal" });
+  const literais = jsonl(regrasAbs);
+  for (const k of literais) kb.set(k.id, { k, tipo: "texto literal" });
+  // [1.4.6] Força da recomendação e-MAG citada direto: o registro do título dela (só na política 1.3.0).
+  const titulosEmag = o.emagPelaBase ? titulosEmagDaBase(literais) : new Map<string, Kb>();
   for (const k of jsonl(herdadasAbs)) if (!kb.has(k.id)) kb.set(k.id, { k, tipo: "excerto herdado da base anterior" });
   if (existsSync(legadoAbs)) for (const e of lerJson<{ entries: { id: string; record?: Kb }[] }>(legadoAbs).entries)
     if (e.record && !kb.has(e.id)) kb.set(e.id, { k: e.record, tipo: "id antigo, fora do contexto normativo da base" });
@@ -230,7 +263,11 @@ export function normasDaCampanha(o: OraculoDaCampanha): Normas {
     let m = /^wcag:(\d+\.\d+\.\d+)$/.exec(n);
     if (m) { const c = wcag.get(m[1]); return { id: `wcag:${m[1]}`, fonte: "WCAG 2.2", titulo: c?.handle ?? null, texto: null, nivel: c?.level ?? null }; }
     m = /^emag:(\d+\.\d+)$/.exec(n);
-    if (m) { const r = emag.get(m[1]); return { id: `emag:${m[1]}`, fonte: "e-MAG 3.1", titulo: r?.title ?? null, texto: r?.description ?? null }; }
+    if (m) {
+      const r = emag.get(m[1]), tit = titulosEmag.get(m[1]);
+      // [1.4.6] Com o título na base: `regrasDaBase` = esse registro (forcaDeclarada + forcaNoVocabulario, pela tabela fixa).
+      return { id: `emag:${m[1]}`, fonte: "e-MAG 3.1", titulo: r?.title ?? null, texto: r?.description ?? null, ...(tit ? { regrasDaBase: [regraVista(tit)] } : {}) };
+    }
     const axeId = n.replace(/^axe:/, "");
     if (axeRegras.has(axeId) && (n.startsWith("axe:") || !/:/.test(n))) {
       const r = axeRegras.get(axeId)!;
@@ -257,7 +294,7 @@ export function normasDaCampanha(o: OraculoDaCampanha): Normas {
   if (existsSync(legadoAbs)) fontes[relTcc(legadoAbs)] = shaArquivo(legadoAbs);
   Object.assign(fontes, { [relTcc(chkAbs)]: shaArquivo(chkAbs), [relTcc(wcagAbs)]: shaArquivo(wcagAbs), [relTcc(emagAbs)]: shaArquivo(emagAbs),
     [`axe-core@${axe.version}`]: sha(JSON.stringify([...axeRegras.keys()].sort())) });
-  return { resolver, fontes, forcas };
+  return { resolver, fontes, forcas, ...(o.emagPelaBase ? { emagComForca: titulosEmag.size } : {}) };
 }
 
 // ───────────────────────────────────────────────────────────────── referências e fatos medidos
