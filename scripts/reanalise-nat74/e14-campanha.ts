@@ -34,6 +34,8 @@
  * do LEIAME só sai quando a base da campanha a traz (base sem ela: LEIAME byte a byte, nas duas políticas).
  * 1.4.6 (passada dev-374-b-01): na 1.3.0, a norma `emag:N.N` traz a força que a base declara para a recomendação
  * (`regrasDaBase` = registro do título "Recomendação N.N – …") e o LEIAME diz que é essa a `forca`. A 1.2.0 não muda.
+ * 1.4.7 (leitura dev-374-a2-01 §5 item 6): na 1.3.0, o LEIAME fixa de qual árvore se mede a estrutura de papéis (a da
+ * marcação, como o axe-core e o snapshot ARIA do Playwright; não a árvore reparada do navegador). A 1.2.0 não muda.
  */
 import { existsSync, readFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
@@ -104,10 +106,19 @@ import { leiameJuiz, tamanhosDosLotes } from "./e14-preparar";
  * quando a base liga alguma recomendação (`emagComForca` > 0; o padrão de `leiameCampanha13` é o texto da 1.4.5, byte a
  * byte). Formatos do lote, do manifesto e das respostas iguais; esquema, ingestão e derivação iguais (`forcasDaCitada` passa
  * a trazer a força do título, que nunca é `nenhuma`: `soPermite` igual). A 1.2.0 não muda (cartão, LEIAME e esquema).
+ * 1.4.7 (leitura dev-374-a2-01 §5 item 6: o `li` sem papel dentro de `ul role="tablist"` julgado `sim`, `incerto` e uma
+ * vez `falsa` conforme o juiz mediu na árvore do Chromium (CDP, que ignora o `li`) ou no snapshot ARIA do Playwright
+ * (`tablist > listitem > tab`)): o LEIAME 1.3.0 ganha LEIAME_ARVORE_PAPEIS na seção `norma`, logo depois de
+ * LEIAME_ARIA_ESTADO — a estrutura de papéis se mede na árvore da marcação (papel explícito ou implícito do HTML, como o
+ * axe-core e o snapshot ARIA do Playwright a calculam); o reparo da árvore do navegador não torna o fato falso nem
+ * indeterminado; com a regra do axe-core ou a WCAG 1.3.1, `aplica` + `sim`. Entra em toda passada nova da 1.3.0
+ * (`arvorePapeis`, padrão `false` em `leiameCampanha13`: o texto da 1.4.6 byte a byte, e as passadas 1.4.6 arquivadas se
+ * refazem iguais). Formatos do lote, do manifesto e das respostas iguais; esquema, ingestão e derivação iguais. A 1.2.0
+ * não muda.
  */
 export const E14_CAMPANHA_VERSAO = "nat78-primeira-passada-1.3.1";
 /** [D-156] Versão da passada preparada na política 1.3.0 (referências secundárias). A 1.2.0 continua 1.3.1. */
-export const E14_CAMPANHA_VERSAO_1_4 = "nat78-primeira-passada-1.4.6";
+export const E14_CAMPANHA_VERSAO_1_4 = "nat78-primeira-passada-1.4.7";
 /** Política das campanhas novas (D-156). `--politica 1.2.0` reproduz o histórico. */
 export const POLITICA_CAMPANHA_PADRAO: VersaoPolitica = "1.3.0";
 
@@ -344,7 +355,8 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
   // [1.4.5] Linhas condicionais da tabela de forças pelas forças da base da campanha (sem elas, o LEIAME de sempre).
   const forcas = nr.forcas ?? [];
   // [1.4.6] Na 1.3.0, a frase do e-MAG só quando a base dá força a alguma recomendação.
-  const leiame = v13 ? leiameCampanha13(ord.length, lotes.length, nomes, baseUrl, forcas, (nr.emagComForca ?? 0) > 0)
+  // [1.4.7] Na 1.3.0, a fonte da árvore de papéis (LEIAME_ARVORE_PAPEIS) em toda passada nova.
+  const leiame = v13 ? leiameCampanha13(ord.length, lotes.length, nomes, baseUrl, forcas, (nr.emagComForca ?? 0) > 0, true)
     : leiameCampanha(ord.length, lotes.length, nomes, forcas);
   // [1.4.2] Na 1.3.0, `vinculo.spec` = os ids dos defeitos das telas da passada (os mesmos que os lotes publicam em
   // `referencias`); a 1.2.0 publica o esquema histórico, byte a byte.
@@ -469,9 +481,11 @@ export function leiameCampanha(total: number, nLotes: number, nomes: string, for
  * a seção das referências secundárias e as linhas da tabela de classes. Só procedimento de julgamento: nenhuma regra.
  * [1.4.6] `emagPelaBase`: os cartões trazem a força da recomendação e-MAG pela base → LEIAME_EMAG depois da tabela de
  * forças. Padrão `false`: o texto da 1.4.5, byte a byte.
+ * [1.4.7] `arvorePapeis`: LEIAME_ARVORE_PAPEIS logo depois de LEIAME_ARIA_ESTADO. Padrão `false`: o texto da 1.4.6, byte a
+ * byte (as passadas 1.4.6 arquivadas se refazem iguais); a preparação de uma passada nova passa `true`.
  */
 export function leiameCampanha13(total: number, nLotes: number, nomes: string, baseUrl = BASE_URL_PADRAO, forcasDaBase: readonly string[] = [],
-  emagPelaBase = false): string {
+  emagPelaBase = false, arvorePapeis = false): string {
   const NL = "\n";
   let t = leiameCampanha(total, nLotes, nomes, forcasDaBase);
   // [1.4.2] Endereço da página congelada (--base-url); com o padrão, nada muda.
@@ -479,6 +493,8 @@ export function leiameCampanha13(total: number, nLotes: number, nomes: string, b
   // [1.4.2, C2] Cabeçalho vazio × WCAG 1.3.1, logo depois do vocabulário de `violada`; [1.4.4, C3] e, logo depois, o atributo
   // ARIA preso × estado nativo.
   t = trocar(t, "- `violada`: `sim` · `nao` · `incerto`." + NL, "- `violada`: `sim` · `nao` · `incerto`." + NL + LEIAME_CABECALHO_VAZIO + NL + LEIAME_ARIA_ESTADO + NL);
+  // [1.4.7] De qual árvore se mede a estrutura de papéis: logo depois do atributo ARIA preso.
+  if (arvorePapeis) t = trocar(t, NL + LEIAME_ARIA_ESTADO + NL, NL + LEIAME_ARIA_ESTADO + NL + LEIAME_ARVORE_PAPEIS + NL);
   // [1.4.6] Recomendação do e-MAG citada direto: logo depois da tabela de forças (antes de `aplicabilidade`).
   if (emagPelaBase) t = trocar(t, NL + "- `aplicabilidade`: `aplica`", NL + LEIAME_EMAG + NL + "- `aplicabilidade`: `aplica`");
   // [1.4.2, C1] Registro × template, no fim da seção `vinculo`; [1.4.3] e, logo depois, de onde se lê o registro da referência;
@@ -584,6 +600,31 @@ export const LEIAME_ARIA_ESTADO = [
   "  falso: medido, `verdadeFactual` fica `verdadeira`, nunca `falsa`. Não é este caso o atributo ausente, o atributo",
   "  igual ao estado nativo (sem contradição, a norma não se aplica a ela: `nao-aplica`) nem o estado que a receita não",
   "  alcança (`nao-alcancado` e `indisponivel`, como acima).",
+].join("\n");
+
+/**
+ * [1.4.7, leitura dev-374-a2-01 §5 item 6] De qual árvore se mede a estrutura de papéis, na seção `norma`, logo depois de
+ * LEIAME_ARIA_ESTADO. Motivou: 24 cartões sobre `li` sem papel dentro de `ul role="tablist"` (axe-core `listitem` /
+ * `aria-required-*`, WCAG 1.3.1) julgados `sim` por uns lotes e `incerto` por outros, e um `falsa` (erro factual), porque a
+ * árvore do Chromium (CDP) ignora o `li` e o snapshot ARIA do Playwright mostra `tablist > listitem > tab`. Fonte fixada: a
+ * árvore de papéis da marcação (papel explícito ou implícito do HTML), a mesma que o axe-core e o snapshot ARIA do
+ * Playwright calculam; o reparo do navegador não decide o fato (como o estado nativo em LEIAME_ARIA_ESTADO). Regra geral
+ * de fato e de aplicabilidade; nenhuma spec, componente ou id da base citados.
+ */
+export const LEIAME_ARVORE_PAPEIS = [
+  "- **Estrutura de papéis: de qual árvore.** Quando o fato é de estrutura de papéis (que papel um elemento tem e dentro",
+  "  de qual outro ele está; ex.: `li` dentro de `ul role=\"tablist\"`, regras do axe-core `listitem`,",
+  "  `aria-required-children`, `aria-required-parent`), meça na árvore de papéis da **marcação**: o `role` explícito do",
+  "  elemento ou, sem ele, o papel implícito do elemento HTML (`li` → `listitem`), como o axe-core o calcula. Com o",
+  "  Playwright, use o snapshot ARIA (`locator.ariaSnapshot()`), que calcula os papéis assim, e cite-o como `MEDIDA`. A",
+  "  árvore de acessibilidade do navegador (CDP, `Accessibility.getFullAXTree`) não decide esse fato: ela pode ignorar ou",
+  "  reparar o elemento do meio (o `li` sem `role` dentro de `ul role=\"tablist\"` some dela), e o reparo é do navegador,",
+  "  não da página. Medido `ul role=\"tablist\"` > `li` sem `role` > elemento `role=\"tab\"`, o fato que o axe-core acusa",
+  "  (o `listitem` fora de lista, entre a `tablist` e as `tab`) é `verdadeira`, nunca `falsa` nem `indeterminado` porque",
+  "  a árvore do navegador ignora o `li`. Com a regra do axe-core (`listitem`, `aria-required-children`) ou a WCAG 1.3.1",
+  "  citada, ou com a WCAG 1.3.1 implicada num cartão sem regra, responda `aplica` e violada `sim`; a `forca` é a de",
+  "  sempre. Não é este caso o `li` com `role=\"none\"` ou `role=\"presentation\"`, nem o próprio `li` com `role=\"tab\"`: aí a",
+  "  marcação não tem o elemento do meio (`nao-aplica`).",
 ].join("\n");
 
 /**

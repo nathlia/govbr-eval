@@ -20,7 +20,7 @@ import {
   type CartaoCego, type Resposta,
 } from "./e14-comum";
 import {
-  BASE_URL_PADRAO, LEIAME_ARIA_ESTADO, LEIAME_CABECALHO_VAZIO, LEIAME_EMAG, LEIAME_IDENTIDADE_REGISTRO, LEIAME_MOTIVO_SEM_VINCULO, LEIAME_PARADAS, baseUrlValida, bracoDoRun, dominioDoDefeito, enderecoDaTela, leiameCampanha,
+  BASE_URL_PADRAO, LEIAME_ARIA_ESTADO, LEIAME_ARVORE_PAPEIS, LEIAME_CABECALHO_VAZIO, LEIAME_EMAG, LEIAME_IDENTIDADE_REGISTRO, LEIAME_MOTIVO_SEM_VINCULO, LEIAME_PARADAS, baseUrlValida, bracoDoRun, dominioDoDefeito, enderecoDaTela, leiameCampanha,
   leiameCampanha13, mascararTrio, paradasDaReferencia, passosLegiveis, prepararCampanha, registroDaRota,
 } from "./e14-campanha";
 import { FORCAS_SO_COM_A_BASE, FORCA_NO_VOCABULARIO, normasDaCampanha } from "./e14-fila";
@@ -604,7 +604,7 @@ try {
     assert.deepEqual(esq.properties.respostas.items.properties.motivoSemVinculo, { enum: [...MOTIVO_SEM_VINCULO] });
     assert.equal(esq.properties.formato.const, FORMATO_RESPOSTAS_CAMPANHA_1_3_1);
     const m = JSON.parse(pA.arquivosInternos.get("lotes/manifesto.json")!) as { formato: string; versao: string; respostas: { formato: string } };
-    assert.deepEqual([m.formato, m.versao, m.respostas.formato], [FORMATO_MANIFESTO_CAMPANHA_1_3_1, "nat78-primeira-passada-1.4.6", FORMATO_RESPOSTAS_CAMPANHA_1_3_1]);
+    assert.deepEqual([m.formato, m.versao, m.respostas.formato], [FORMATO_MANIFESTO_CAMPANHA_1_3_1, "nat78-primeira-passada-1.4.7", FORMATO_RESPOSTAS_CAMPANHA_1_3_1]);
     const ajv = compilar(esq);
     const base = { id: "T3-0123456789", verdadeFactual: "verdadeira", norma: { id: "citada", forca: "obrigatorio", aplicabilidade: "aplica", violada: "sim" },
       vinculo: "nenhum", sugestao: NAO_PERGUNTADO, forcaDoVeredito: "medido", evidencias: ["MEDIDA"], justificativa: "MEDIDA mostra o fato fora dos defeitos da tela.", estadoAlcancado: "receita" };
@@ -704,7 +704,7 @@ try {
   const optsE = { validador: valE, checkerAliases: aliasesAbs };
   const pE = prepararCampanha([dirE], optsE), pE12 = prepararCampanha([dirE], { ...optsE, politica: "1.2.0" });
   const totalDe = (p_: typeof pE) => JSON.parse(p_.arquivosInternos.get("lotes/manifesto.json")!) as { total: number; versao: string; formato: string; lotes: unknown[] };
-  t("base com especificacao prepara: forcaNoVocabulario null no cartão, linha na tabela do LEIAME (1.3.0 e 1.2.0) e nada mais, versão da 1.3.0 (1.4.6), cegueira OK", () => {
+  t("base com especificacao prepara: forcaNoVocabulario null no cartão, linha na tabela do LEIAME (1.3.0 e 1.2.0) e nada mais, versão da 1.3.0 (1.4.7), cegueira OK", () => {
     assert.ok(FORCAS_SO_COM_A_BASE.has("especificacao"));
     assert.deepEqual(normasDaCampanha({ dataSha256: dataE, validador: valE, checkerAliases: aliasesAbs }).forcas, ["especificacao", "permitted", "recommended", "required"]);
     const lE = JSON.parse(pE.arquivosDoJuiz.get("lotes/lote-01.json")!) as { cartoes: CartaoCego[] };
@@ -719,9 +719,9 @@ try {
     }
     // O LEIAME com a linha = o de sempre + a linha, e nada mais (nas duas políticas).
     const m = totalDe(pE);
-    assert.equal(pE.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!.replace(LINHA_ESP + "\n", ""), leiameCampanha13(m.total, m.lotes.length, "Tela X"));
+    assert.equal(pE.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!.replace(LINHA_ESP + "\n", ""), leiameCampanha13(m.total, m.lotes.length, "Tela X", BASE_URL_PADRAO, [], false, true));
     assert.equal(pE12.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!.replace(LINHA_ESP + "\n", ""), leiameCampanha(m.total, m.lotes.length, "Tela X"));
-    assert.deepEqual([m.versao, m.formato], ["nat78-primeira-passada-1.4.6", FORMATO_MANIFESTO_CAMPANHA_1_3_1]);
+    assert.deepEqual([m.versao, m.formato], ["nat78-primeira-passada-1.4.7", FORMATO_MANIFESTO_CAMPANHA_1_3_1]);
     assert.equal(totalDe(pE12).versao, "nat78-primeira-passada-1.3.1", "a 1.2.0 não muda de versão");
     assert.deepEqual(pE.cegueira.falhas, []); assert.deepEqual(pE.falhasTrio, []);
   });
@@ -747,7 +747,7 @@ try {
     assert.equal(sha(leiameCampanha13(10, 2, "Tela X", BASE_URL_PADRAO, ["especificacao"]).replace(LINHA_ESP + "\n", "")), LEIAME13_1_4_4);
     for (const p_ of [p, pA]) assert.ok(!p_.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!.includes("especificação"), "base sem a força: sem a linha");
     const m = totalDe(pA);
-    assert.equal(pA.arquivosDoJuiz.get("lotes/LEIAME-juiz.md"), leiameCampanha13(m.total, m.lotes.length, "Tela X"));
+    assert.equal(pA.arquivosDoJuiz.get("lotes/LEIAME-juiz.md"), leiameCampanha13(m.total, m.lotes.length, "Tela X", BASE_URL_PADRAO, [], false, true));
   });
   // ── passada 1.4.6 (passada dev-374-b-01): força da recomendação e-MAG citada direto, pela base
   console.log("E14 campanha 1.4.6: emag:N.N com a força que a base declara para o título da recomendação (só 1.3.0)");
@@ -799,13 +799,13 @@ try {
     assert.deepEqual(normasDaCampanha({ dataSha256: dataM, validador: valM, checkerAliases: aliasesAbs, emagPelaBase: true }).emagComForca, 2);
     assert.equal(normasDaCampanha({ dataSha256: dataM, validador: valM, checkerAliases: aliasesAbs }).emagComForca, undefined, "sem a opção, nada");
   });
-  t("1.3.0: cegueira e máscara iguais (falhas 0, resíduo do cartão e-MAG vazio); versão 1.4.6; formatos iguais", () => {
+  t("1.3.0: cegueira e máscara iguais (falhas 0, resíduo do cartão e-MAG vazio); versão 1.4.7; formatos iguais", () => {
     assert.deepEqual(pM.cegueira.falhas, []); assert.deepEqual(pM.falhasTrio, []);
     const { it } = vistaM(pM);
     const r = JSON.parse(pM.arquivosInternos.get("residuo-de-braco.json")!) as { porCartao: { id: string; categorias: string[] }[] };
     for (const o of ["C-eeee", "C-kkkk", "C-aaaa"]) assert.deepEqual(r.porCartao.find(x => x.id === it(o).id)!.categorias, [], o);
     const m = JSON.parse(pM.arquivosInternos.get("lotes/manifesto.json")!) as { versao: string; formato: string; respostas: { formato: string } };
-    assert.deepEqual([m.versao, m.formato, m.respostas.formato], ["nat78-primeira-passada-1.4.6", FORMATO_MANIFESTO_CAMPANHA_1_3_1, FORMATO_RESPOSTAS_CAMPANHA_1_3_1]);
+    assert.deepEqual([m.versao, m.formato, m.respostas.formato], ["nat78-primeira-passada-1.4.7", FORMATO_MANIFESTO_CAMPANHA_1_3_1, FORMATO_RESPOSTAS_CAMPANHA_1_3_1]);
   });
   t("LEIAME 1.4.6 (1.3.0, base com títulos e-MAG): a frase do e-MAG uma vez, logo depois da tabela de forças, e nada mais; padrão = 1.4.5 byte a byte", () => {
     const l = pM.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!;
@@ -817,8 +817,8 @@ try {
     for (const [nome, re] of proibidos(["sem", "ferramentas", "com"])) assert.ok(!re.test(LEIAME_EMAG), `${nome} no bloco novo`);
     assert.ok(!/\b[ABPU]-\d{2}\b|[0-9a-f]{12}/.test(LEIAME_EMAG), "nenhuma spec nem id da base no bloco");
     const m = totalDe(pM);
-    assert.equal(l, leiameCampanha13(m.total, m.lotes.length, "Tela X", BASE_URL_PADRAO, [], true));
-    assert.equal(l.replace(LEIAME_EMAG + "\n", ""), leiameCampanha13(m.total, m.lotes.length, "Tela X"), "sem a frase, o LEIAME de antes");
+    assert.equal(l, leiameCampanha13(m.total, m.lotes.length, "Tela X", BASE_URL_PADRAO, [], true, true));
+    assert.equal(l.replace(LEIAME_EMAG + "\n", ""), leiameCampanha13(m.total, m.lotes.length, "Tela X", BASE_URL_PADRAO, [], false, true), "sem a frase, o LEIAME de antes");
     // Gerador com o padrão (emagPelaBase = false) = o da 1.4.5, byte a byte: base sem e com `especificacao`.
     assert.equal(sha(leiameCampanha13(10, 2, "Tela X")), LEIAME13_1_4_4);
     assert.equal(sha(leiameCampanha13(10, 2, "Tela X", BASE_URL_PADRAO, ["especificacao"])), LEIAME13_1_4_5_ESP);
@@ -869,6 +869,62 @@ try {
     const o3 = { dataSha256: sha256Tree(d3)!.sha256, validador: v3, checkerAliases: aliasesAbs };
     assert.throws(() => normasDaCampanha({ ...o3, emagPelaBase: true }), /dois registros de título para a recomendação e-MAG 2\.2/);
     assert.doesNotThrow(() => normasDaCampanha(o3), "a 1.2.0 não lê os títulos");
+  });
+  // ── passada 1.4.7 (leitura dev-374-a2-01 §5 item 6): de qual árvore se mede a estrutura de papéis
+  console.log("E14 campanha 1.4.7: estrutura de papéis medida na árvore da marcação (li em tablist), só 1.3.0, passadas 1.4.6 iguais");
+  t("LEIAME 1.4.7 (1.3.0): o bloco da árvore de papéis uma vez, logo depois do atributo ARIA preso, na seção norma; sem ele, o LEIAME 1.4.6 byte a byte", () => {
+    for (const p_ of [pA, pM, pE]) {
+      const l = p_.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!;
+      assert.equal(l.split(LEIAME_ARVORE_PAPEIS).length - 1, 1);
+      assert.ok(l.includes(LEIAME_ARIA_ESTADO + "\n" + LEIAME_ARVORE_PAPEIS + "\n"), "logo depois do atributo ARIA preso");
+      assert.ok(l.indexOf(LEIAME_ARVORE_PAPEIS) > l.indexOf("### `norma`") && l.indexOf(LEIAME_ARVORE_PAPEIS) < l.indexOf("### `vinculo`"), "na seção norma");
+      const m = totalDe(p_);
+      assert.equal(m.versao, "nat78-primeira-passada-1.4.7");
+      const forcas = l.includes("especificação") ? ["especificacao"] : [], emag = l.includes(LEIAME_EMAG);
+      assert.equal(l.replace(LEIAME_ARVORE_PAPEIS + "\n", ""), leiameCampanha13(m.total, m.lotes.length, "Tela X", BASE_URL_PADRAO, forcas, emag), "sem o bloco, o gerador 1.4.6");
+      assert.equal(l, leiameCampanha13(m.total, m.lotes.length, "Tela X", BASE_URL_PADRAO, forcas, emag, true));
+    }
+    // Padrão do gerador (arvorePapeis = false) = 1.4.6 byte a byte: os sha fixados das versões anteriores continuam valendo.
+    assert.equal(sha(leiameCampanha13(10, 2, "Tela X")), LEIAME13_1_4_4);
+    assert.equal(sha(leiameCampanha13(10, 2, "Tela X", BASE_URL_PADRAO, [], false, false)), LEIAME13_1_4_4);
+    assert.equal(sha(leiameCampanha13(10, 2, "Tela X", BASE_URL_PADRAO, ["especificacao"], false, false)), LEIAME13_1_4_5_ESP);
+    assert.equal(sha(leiameCampanha13(10, 2, "Tela X", BASE_URL_PADRAO, ["especificacao"], false, true).replace(LEIAME_ARVORE_PAPEIS + "\n", "")), LEIAME13_1_4_5_ESP);
+  });
+  t("bloco 1.4.7: fonte fixada (marcação, axe-core, snapshot ARIA), reparo do navegador não decide, veredito do li em tablist, exclusões; sem braço, spec nem id da base", () => {
+    for (const x of ["árvore de papéis da **marcação**", "`li` → `listitem`", "axe-core", "`locator.ariaSnapshot()`", "`MEDIDA`", "`Accessibility.getFullAXTree`",
+      "o reparo é do navegador", "`ul role=\"tablist\"` > `li` sem `role` > elemento `role=\"tab\"`", "é `verdadeira`, nunca `falsa` nem `indeterminado`",
+      "`listitem`, `aria-required-children`", "WCAG 1.3.1", "`aplica` e violada `sim`", "`role=\"none\"`", "`role=\"presentation\"`", "`nao-aplica`"])
+      assert.ok(LEIAME_ARVORE_PAPEIS.includes(x), x);
+    for (const [nome, re] of proibidos(["sem", "ferramentas", "com"])) assert.ok(!re.test(LEIAME_ARVORE_PAPEIS), `${nome} no bloco novo`);
+    assert.ok(!/\b[ABPU]-\d{2}\b|[0-9a-f]{12}|\bbr-[a-z]/.test(LEIAME_ARVORE_PAPEIS), "nenhuma spec, id da base ou componente no bloco");
+  });
+  t("1.2.0 não muda com a 1.4.7: LEIAME histórico sem o bloco, versão 1.3.1", () => {
+    for (const p_ of [pM12, pE12]) {
+      assert.ok(!p_.arquivosDoJuiz.get("lotes/LEIAME-juiz.md")!.includes(LEIAME_ARVORE_PAPEIS));
+      assert.equal(totalDe(p_).versao, "nat78-primeira-passada-1.3.1");
+    }
+    assert.ok(!leiameCampanha(10, 2, "Tela X").includes("Estrutura de papéis"));
+  });
+  t("passadas 1.4.6 arquivadas (govbr-resultados): o gerador padrão refaz o LEIAME byte a byte; com a 1.4.7, só o bloco a mais", () => {
+    let conferidas = 0;
+    for (const rel of [["dev-374-a-01", "primeira-passada-20261110T1"], ["dev-374-a2-01", "primeira-passada-20261110T1"]]) {
+      const dirP = join(EVAL, "..", "govbr-resultados", "analises", ...rel, "lotes");
+      if (!existsSync(join(dirP, "LEIAME-juiz.md"))) continue;
+      assert.equal((JSON.parse(readFileSync(join(dirP, "manifesto.json"), "utf8")) as { versao: string }).versao, "nat78-primeira-passada-1.4.6", rel.join("/"));
+      const a = readFileSync(join(dirP, "LEIAME-juiz.md"), "utf8");
+      const mm = /fila de (\d+) alegações, dividida em (\d+) lotes?\.[^]*?congelada \(([^)]*)\)\. Você/.exec(a)!;
+      const url = /servida em `(http:\/\/127\.0\.0\.1:\d+)`/.exec(a)![1];
+      const forcas = a.includes("especificação") ? ["especificacao"] : [], emag = a.includes(LEIAME_EMAG);
+      assert.ok(!a.includes(LEIAME_ARVORE_PAPEIS), `${rel.join("/")}: a 1.4.6 não tem o bloco`);
+      assert.equal(leiameCampanha13(Number(mm[1]), Number(mm[2]), mm[3], url, forcas, emag), a, `LEIAME 1.4.6 arquivado de ${rel.join("/")}`);
+      const novo = leiameCampanha13(Number(mm[1]), Number(mm[2]), mm[3], url, forcas, emag, true);
+      assert.equal(novo.replace(LEIAME_ARVORE_PAPEIS + "\n", ""), a, `${rel.join("/")}: a 1.4.7 é a 1.4.6 mais o bloco`);
+      // o sha que os lotes arquivados registram é o deste LEIAME
+      const lote = JSON.parse(readFileSync(join(dirP, "lote-01.json"), "utf8")) as { instrucoes: { sha256: string } };
+      assert.equal(lote.instrucoes.sha256, sha(a), `${rel.join("/")}: lote-01 aponta este LEIAME`);
+      conferidas += 1;
+    }
+    console.log(`     (conferidas ${conferidas} passada(s) 1.4.6 arquivada(s))`);
   });
   await testesReferencias({ t, tmp, dir, valDir, aliasesAbs, prepararCampanha, cli });
 } finally { rmSync(tmp, { recursive: true, force: true }); }

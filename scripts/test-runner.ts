@@ -283,7 +283,7 @@ async function testesSemDocker(): Promise<void> {
     assert.equal(limpas.inventario.status, "ok", JSON.stringify(limpas.inventario));
     assert.equal(limpas.semExplicacao.length, 0, JSON.stringify(limpas.semExplicacao));
     assert.equal(limpas.porClasse.pagina, 7, JSON.stringify(limpas.porClasse));
-    assert.ok(limpas.canarios.every((c) => c.ok) && limpas.canarios.length === 59, JSON.stringify(limpas.canarios));
+    assert.ok(limpas.canarios.every((c) => c.ok) && limpas.canarios.length === 72, JSON.stringify(limpas.canarios));
     // falha fechada: as mesmas formas sem a tela (sem inventário do DOM) não são perdoadas
     const semTela = await varrerPayloadsDoOraculo({ ...base, tela: null, eventos: formas });
     assert.equal(semTela.inventario.status, "sem-tela");
@@ -363,7 +363,7 @@ async function testesSemDocker(): Promise<void> {
     const vinculado = await varrerPayloadsDoOraculo({ ...base, eventos: [scan(1, "S-page-003", sel), ledger(2, { scanId: "S-page-003", view: "families" }, "S-page-003")] });
     assert.equal(vinculado.semExplicacao.length, 0, JSON.stringify(vinculado.semExplicacao));
     assert.ok(vinculado.perdoadas.some((p) => p.tool === "get_finding_details" && p.path === "$.ledger.state.recipe.actions[*].selector" && p.class === "eco"), JSON.stringify(vinculado.perdoadas));
-    assert.ok(vinculado.canarios.every((c) => c.ok) && vinculado.canarios.length === 59, JSON.stringify(vinculado.canarios));
+    assert.ok(vinculado.canarios.every((c) => c.ok) && vinculado.canarios.length === 72, JSON.stringify(vinculado.canarios));
     // estrito: ledger pedido ANTES do scan, de outro scanId, sem scanId (ids) e com o seletor reescrito continuam sem explicação
     const conta = async (eventos: unknown[]) => (await varrerPayloadsDoOraculo({ ...base, eventos: eventos as Record<string, unknown>[] })).semExplicacao.filter((u) => u.tool === "get_finding_details").reduce((n, u) => n + u.count, 0);
     assert.ok(await conta([ledger(1, { scanId: "S-page-003" }, "S-page-003"), scan(2, "S-page-003", sel)]) > 0, "ledger antes do scan que o criou");
@@ -394,7 +394,7 @@ async function testesSemDocker(): Promise<void> {
     assert.equal(limpa.inventario.status, "ok", JSON.stringify(limpa.inventario));
     assert.equal(limpa.semExplicacao.length, 0, JSON.stringify(limpa.semExplicacao));
     assert.ok(limpa.perdoadas.some((p) => p.class === "pagina" && p.term === "br-button" && p.path === "$.verification.binding.context.trace[*].active" && /1\.3\.3/.test(p.why)), JSON.stringify(limpa.perdoadas));
-    assert.ok(limpa.canarios.every((c) => c.ok) && limpa.canarios.length === 59, JSON.stringify(limpa.canarios.filter((c) => !c.ok)));
+    assert.ok(limpa.canarios.every((c) => c.ok) && limpa.canarios.length === 72, JSON.stringify(limpa.canarios.filter((c) => !c.ok)));
     // falha fechada: sem tela (sem inventário do DOM) a mesma forma fica sem explicação
     const semTela = await varrerPayloadsDoOraculo({ ...base, tela: null, eventos: real });
     assert.ok(semTela.semExplicacao.some((u) => u.term === "br-button" && u.path === "$.verification.binding.context.trace[*].active"), JSON.stringify(semTela.semExplicacao));
@@ -437,7 +437,7 @@ async function testesSemDocker(): Promise<void> {
     assert.equal(limpa.semExplicacao.length, 0, JSON.stringify(limpa.semExplicacao));
     const NM = "$.checksRun.pageLevel.notMeasured[*]";
     assert.equal(limpa.perdoadas.find((p) => p.class === "pagina" && p.term === "br-button" && p.path === NM && /1\.3\.5/.test(p.why))?.count, 2, JSON.stringify(limpa.perdoadas));
-    assert.ok(limpa.canarios.every((c) => c.ok) && limpa.canarios.length === 59, JSON.stringify(limpa.canarios.filter((c) => !c.ok)));
+    assert.ok(limpa.canarios.every((c) => c.ok) && limpa.canarios.length === 72, JSON.stringify(limpa.canarios.filter((c) => !c.ok)));
     // falha fechada: sem tela (sem inventário do DOM) a mesma forma fica sem explicação
     const semTela = await varrerPayloadsDoOraculo({ ...base, tela: null, eventos: real });
     assert.equal(semTela.semExplicacao.find((u) => u.term === "br-button" && u.path === NM)?.count, 2, JSON.stringify(semTela.semExplicacao));
@@ -465,6 +465,53 @@ async function testesSemDocker(): Promise<void> {
     assert.ok(sujas.semExplicacao.some((u) => u.path === NM && u.term === "br-carousel"), "componente que a Vistorias não renderiza");
     assert.ok(sem("$.sessionPending.ids[*]", "specs:rootClass"), "mesma linha noutro caminho");
     assert.ok(sem(NM, "specs:rootClass", "verify_finding"), "mesmo caminho noutra ferramenta");
+    assert.equal(sujas.porClasse.pagina ?? 0, 0, `nada perdoado como página: ${JSON.stringify(sujas.porClasse)}`);
+  });
+  await test("varredura 1.3.6 (dev-375-b-01): localizador medido da pendência de página cortado pelo servidor (…) é página pelo inventário nos compostos inteiros; composto cortado, campo não-localizador, base, outro caminho e outra ferramenta não", async () => {
+    if (!existsSync(join(DEFAULT_VALIDATOR_DIR, "dist", "checkers", "grounding.js"))) { console.log("     · validator sem dist/: varredura não exercitada"); return; }
+    const call = (seq: number, tool: string, result: unknown) => ({ kind: "call", seq, tool, args: { text: "{}", truncated: false }, result: { text: JSON.stringify(result), truncated: false } });
+    const base = { validatorDir: DEFAULT_VALIDATOR_DIR, telasDir: DEFAULT_TELAS_DIR, tela: "vistorias", toolsList: null, ler: () => null };
+    const medido = (locator: string, reason: string | null = "bgGradient") => ({ checksRun: { pageLevel: { notMeasured: [{ measured: [{ locator, fg: null, bg: null, ratio: null, reason }] }] } } });
+    // a folha real da p01-ferramentas (payload oracle-000008, 120 caracteres com o … do clip() do validator)
+    const real = '.my-3:nth-child(8) > .align-items-center.row > .col-auto:nth-child(3) > br-button[label="Ocultar"][icon="chevron-up"] >…';
+    assert.equal(real.length, 120);
+    const limpa = await varrerPayloadsDoOraculo({ ...base, eventos: [call(1, "scan_page", medido(real))] });
+    assert.equal(limpa.inventario.status, "ok", JSON.stringify(limpa.inventario));
+    assert.equal(limpa.semExplicacao.length, 0, JSON.stringify(limpa.semExplicacao));
+    const LOC = "$.checksRun.pageLevel.notMeasured[*].measured[*].locator";
+    assert.equal(limpa.perdoadas.find((p) => p.class === "pagina" && p.term === "br-button" && p.path === LOC && /1\.3\.6/.test(p.why))?.count, 1, JSON.stringify(limpa.perdoadas));
+    assert.ok(limpa.canarios.every((c) => c.ok) && limpa.canarios.length === 72, JSON.stringify(limpa.canarios.filter((c) => !c.ok)));
+    // falha fechada: sem tela (sem inventário do DOM) a mesma folha fica sem explicação
+    const semTela = await varrerPayloadsDoOraculo({ ...base, tela: null, eventos: [call(1, "scan_page", medido(real))] });
+    assert.equal(semTela.semExplicacao.find((u) => u.term === "br-button" && u.path === LOC)?.count, 1, JSON.stringify(semTela.semExplicacao));
+    // estrito: texto da base no campo NÃO-localizador do mesmo objeto (o caso que nunca pode passar), o localizador copiado
+    // para esse campo, o termo no composto cortado, base plantada, componente não renderizado, corte no meio, sem corte,
+    // outro caminho e outra ferramenta
+    const dict = await import("./vazamento/conhecimento").then((m) => m.dicionarioDoValidator(DEFAULT_VALIDATOR_DIR));
+    const titulo = [...dict.phrases.values()].find((t) => t.source === "kb:title")!.term;
+    const id = [...dict.exact.values()].find((t) => t.source === "kb:id")!.term;
+    const REASON = "$.checksRun.pageLevel.notMeasured[*].measured[*].reason";
+    const sujas = await varrerPayloadsDoOraculo({ ...base, eventos: [
+      call(1, "scan_page", medido("div > span", titulo)),
+      call(2, "scan_page", medido("div > span", `${id} br-button`)),
+      call(3, "scan_page", medido("div > span", real)),
+      call(4, "scan_page", medido('.col-auto:nth-child(3) > br-button[label="Ocul…')),
+      call(5, "scan_page", medido(`#${id} > span >…`)),
+      call(6, "scan_page", medido('.col-auto > br-carousel[label="x"] >…')),
+      call(7, "scan_page", medido('br-button[label="Ocultar"]… > span >…')),
+      call(8, "scan_page", medido('.col-auto > br-button[label="Ocultar"] >')),
+      call(9, "scan_page", { checksRun: { pageLevel: { notMeasured: [{ ariaPairs: [{ locator: real }] }] } } }),
+      call(10, "verify_finding", medido(real)),
+    ] });
+    const sem = (path: string, source: string, tool = "scan_page") => sujas.semExplicacao.some((u) => u.path === path && u.source === source && u.tool === tool);
+    assert.ok(sem(REASON, "kb:title"), "título da base no campo não-localizador");
+    assert.ok(sem(REASON, "kb:id"), "id da base no campo não-localizador");
+    assert.equal(sujas.semExplicacao.find((u) => u.path === REASON && u.term === "br-button")?.count, 2, `nome e localizador cortado no campo não-localizador: ${JSON.stringify(sujas.semExplicacao)}`);
+    assert.equal(sujas.semExplicacao.find((u) => u.path === LOC && u.term === "br-button" && u.tool === "scan_page")?.count, 3, `composto cortado + corte no meio + sem corte: ${JSON.stringify(sujas.semExplicacao)}`);
+    assert.ok(sem(LOC, "kb:id"), "id da base plantado no localizador cortado");
+    assert.ok(sujas.semExplicacao.some((u) => u.path === LOC && u.term === "br-carousel"), "componente que a Vistorias não renderiza");
+    assert.ok(sem("$.checksRun.pageLevel.notMeasured[*].ariaPairs[*].locator", "specs:rootClass"), "mesmo localizador cortado noutro caminho");
+    assert.ok(sem(LOC, "specs:rootClass", "verify_finding"), "mesmo caminho noutra ferramenta");
     assert.equal(sujas.porClasse.pagina ?? 0, 0, `nada perdoado como página: ${JSON.stringify(sujas.porClasse)}`);
   });
   await test("inventário do DOM 1.3.4 (rodada 3.7.2): vários sites medidos com conteúdo idêntico; site fora da lista diverge; forma inválida é recusada", async () => {
