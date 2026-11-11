@@ -162,6 +162,13 @@ import { argValues, buildDictionary, classify, exactTokens, hitsInText, leaves, 
  * inventário, o termo no composto cortado, outro código na forma só-ids (`P-NN:contrast-incomplete@…`), folha fora do formato
  * do servidor, e os mesmos caminhos noutra ferramenta. O núcleo (cópia do validator) não muda. Canários novos dos dois lados
  * para cada caminho.
+ * Remedido na 3.7.9 (c3d6dde, mesmas telas e receitas, tetos padrão, 20 000, 4 000 e 2 000): 0 sem explicação, mas três
+ * formas que o servidor de fato devolve carregam seletor da página e entram na mesma regra (nenhuma regra nova): o campo de
+ * arquivo na forma só-ids (`P-NN:upload-paths@<seletor>`), o rótulo do item da sessão (`$.sessionPending.items[*].ids[*]` =
+ * `P-NN[×n]@<seletor≤60>`) e a linha na forma norma (`$.checksRun.pageLevel.notMeasured[*]` =
+ * `P-NN:código[:n][⇒normas]@<seletor>[ · expectedCondition x]`, só state-unscanned e upload-paths); o termo fora do seletor
+ * (id, código, normas, condição) fica sem explicação. `statesScanned[*]`/`statesIncomplete[*].id` (`P-NN@<rota>`) e
+ * `idsNote` não carregam seletor e não mudam. 127 canários.
  */
 export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.7";
 
@@ -448,16 +455,21 @@ function lugarDaPagina(hit: Hit, lugar: string, prov: Provenance, cache: Map<str
 }
 
 /** 1.3.7: formas da pendência de estado recolhido, por ferramenta e caminho inteiro. */
-export type FormaDeEstado = "seletor" | "observado" | "nota" | "id";
+export type FormaDeEstado = "seletor" | "observado" | "nota" | "id" | "rotulo" | "linha-norma";
 export const PENDENCIA_DE_ESTADO: Record<string, Array<{ path: string; forma: FormaDeEstado }>> = {
   scan_page: [
     { path: `${RECEITA_DE_ESTADO}.actions[*].selector`, forma: "seletor" },
     { path: `${RECEITA_DE_ESTADO}.arrival.visible`, forma: "seletor" },
     { path: `${RECEITA_DE_ESTADO}.arrival.expanded`, forma: "seletor" },
     { path: "$.checksRun.pageLevel.notMeasured[*].observed", forma: "observado" },
-    // 3.7.9: a forma só-ids guarda o gatilho do estado recolhido (`P-NN[×n]:state-unscanned@<seletor>`)
+    // 3.7.9: a forma só-ids guarda o 1º seletor do estado recolhido e do campo de arquivo
+    // (`P-NN[×n]:state-unscanned@<seletor>`, `P-NN:upload-paths@<seletor>`; idLabelOf/sessionPendingCodes do validator)
     { path: "$.checksRun.pageLevel.ids[*]", forma: "id" },
     { path: "$.sessionPending.ids[*]", forma: "id" },
+    // 3.7.9: o rótulo do item da sessão leva o 1º localizador (`P-NN[×n]@<seletor≤60>`, sessionPendingBlock)
+    { path: "$.sessionPending.items[*].ids[*]", forma: "rotulo" },
+    // 3.7.9: a linha na forma norma (`P-NN:código[:n][⇒normas]@<seletor>[ · expectedCondition x]`, pendingLineNorm)
+    { path: "$.checksRun.pageLevel.notMeasured[*]", forma: "linha-norma" },
   ],
   get_finding_details: [
     { path: `${RECEITA_DO_LEDGER}.actions[*].selector`, forma: "seletor" },
@@ -468,7 +480,9 @@ export const PENDENCIA_DE_ESTADO: Record<string, Array<{ path: string; forma: Fo
   ],
 };
 const NOTA_DE_ESTADO = /^state-unscanned: (.+) \(\d+\)$/;
-const ID_DE_ESTADO = /^P-\d+(?:×\d+)?:state-unscanned@(.+)$/;
+const ID_DE_ESTADO = /^[PO]-\d+(?:×\d+)?:(?:state-unscanned|upload-paths)@(.+)$/;
+const ROTULO_DE_ESTADO = /^[PO]-\d+(?:×\d+)?@(.+)$/;
+const LINHA_NORMA = /^[PO]-\d+(?:×\d+)?:(?:state-unscanned|upload-paths)(?::\d+)?(?:⇒[^@\s]*)?@(.+?)(?: · expectedCondition [a-z][a-z0-9-]*)?$/;
 
 function pendenciaDeEstado(hit: Hit, folha: string, prov: Provenance, cache: Map<string, string>): { class: Classification; why: string } | null {
   const decl = (PENDENCIA_DE_ESTADO[prov.tool] ?? []).find((d) => d.path === hit.path);
@@ -480,8 +494,12 @@ function pendenciaDeEstado(hit: Hit, folha: string, prov: Provenance, cache: Map
     const m = NOTA_DE_ESTADO.exec(folha);
     c = m ? observadoDeEstado(hit, m[1], prov, cache) : null;
   } else {
-    const m = ID_DE_ESTADO.exec(folha);
-    c = m ? seletorDaPagina(hit, m[1], prov, cache) : null;
+    const m = (decl.forma === "id" ? ID_DE_ESTADO : decl.forma === "rotulo" ? ROTULO_DE_ESTADO : LINHA_NORMA).exec(folha);
+    // o termo só no seletor depois do @ (fora dele — id, código, normas, condição — fica sem explicação)
+    // (nas três formas a cabeça não tem @: o seletor começa logo depois do 1º @)
+    const inicio = folha.indexOf("@") + 1;
+    const fora = m ? `${folha.slice(0, inicio)} ${folha.slice(inicio + m[1].length)}` : "";
+    c = m && !exactTokens(fora).includes(hit.term) ? seletorDaPagina(hit, m[1], prov, cache) : null;
   }
   return c ? { class: "pagina", why: `${c.why}; seletor gerado pelo servidor na pendência de estado recolhido (${decl.forma}), termo só no seletor (1.3.7)` } : null;
 }
@@ -815,6 +833,17 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
     { nome: "forma só-ids do estado sem inventário (falha fechada)", tool: "scan_page", texto: JSON.stringify({ sessionPending: { ids: [`P-07:state-unscanned@${gatilho}`] } }), args: {}, page: pageComTag, elements: null, espera: "sem-explicacao" },
     { nome: "id da base plantado na forma só-ids do estado", tool: "scan_page", texto: JSON.stringify({ checksRun: { pageLevel: { ids: [`P-07:state-unscanned@#${kbId}`] } } }), args: {}, page: `${pageComTag}<!-- ${kbId} -->`, elements: doEstado, espera: "sem-explicacao" },
     { nome: "forma só-ids do estado noutra ferramenta (verify_finding)", tool: "verify_finding", texto: JSON.stringify({ sessionPending: { ids: [`P-07:state-unscanned@${gatilho}`] } }), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    // 1.3.7 (medido na 3.7.9 c3d6dde): campo de arquivo na forma só-ids, rótulo do item da sessão e linha na forma norma
+    { nome: "forma só-ids do campo de arquivo com tag renderizada (upload-paths@…, 3.7.9)", tool: "scan_page", texto: JSON.stringify({ checksRun: { pageLevel: { ids: [`P-01:upload-paths@${rootClass} > input`] } } }), args: {}, page: pageComTag, elements: { tags: new Set([...doEstado.tags, "input"]), classes: doEstado.classes }, espera: "pagina" },
+    { nome: "forma só-ids do campo de arquivo com componente que a tela NÃO renderiza", tool: "scan_page", texto: JSON.stringify({ sessionPending: { ids: [`P-01:upload-paths@${rootClass} > input`] } }), args: {}, page: pageComTag, elements: { tags: new Set(["html", "body", "input"]), classes: doEstado.classes }, espera: "sem-explicacao" },
+    { nome: "rótulo do item da sessão com o 1º localizador (sessionPending.items[*].ids[*], P-NN×n@…)", tool: "scan_page", texto: JSON.stringify({ sessionPending: { items: [{ code: "state-unscanned", ids: [`P-07×2@${gatilho}`] }] } }), args: {}, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "rótulo do item da sessão cortado, termo só no composto cortado", tool: "scan_page", texto: JSON.stringify({ sessionPending: { items: [{ ids: [`P-07@div > ${rootClass}[label="Me…`] }] } }), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "rótulo do item da sessão sem inventário (falha fechada)", tool: "scan_page", texto: JSON.stringify({ sessionPending: { items: [{ ids: [`P-07@${gatilho}`] }] } }), args: {}, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    { nome: "rótulo do item da sessão com o nome no lugar do id (fora do formato)", tool: "scan_page", texto: JSON.stringify({ sessionPending: { items: [{ ids: [`${rootClass}@${gatilho}`] }] } }), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "linha na forma norma do estado com tag renderizada (notMeasured[*], …@seletor)", tool: "scan_page", texto: pendencia(`P-07:state-unscanned:1@${gatilho}`), args: {}, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "linha na forma norma do upload com normas e condição", tool: "scan_page", texto: pendencia(`P-02:upload-paths:1⇒wcag-3.3.1@${rootClass} > input · expectedCondition upload-refused`), args: {}, page: pageComTag, elements: { tags: new Set([...doEstado.tags, "input"]), classes: doEstado.classes }, espera: "pagina" },
+    { nome: "linha na forma norma com o nome também na condição", tool: "scan_page", texto: pendencia(`P-07:state-unscanned:1@${gatilho} · expectedCondition ${rootClass}`), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "linha na forma norma de OUTRO código (contrast-incomplete@…)", tool: "scan_page", texto: pendencia(`P-01:contrast-incomplete:2⇒wcag-1.4.3@${gatilho}`), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
   ];
   return casos.map((c) => {
     const { hits } = varrerResposta(dict, c.texto, { tool: c.tool, args: c.args, page: c.page, axe, elements: c.elements ?? null }, { argsDoScan: c.scans ?? new Map() });
