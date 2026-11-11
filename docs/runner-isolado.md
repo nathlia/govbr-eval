@@ -139,6 +139,20 @@ skill nova (`GOVBR_TELAS_DIR`, cópia local com commit de teste, sem tocar no `g
 `skill`, como deve), `test:avaliar-tela` 14/14, `lint:protocol` e `lint:skills` ok, portão de vazamento PASSA 0/6
 (canários 72/72, trava 0). `promptSha256` a 1 800 s: solicitação `f0bb391d…`, vistorias `7488c746…`, acompanhamento
 `ca797ac8…`.
+Detector de vazamento 1.3.7 (oráculo 3.7.8 `a14201d`/3.7.9, pendências de estado recolhido também no knowledge-free,
+D-190): medido antes de mudar, com respostas REAIS do build no perfil knowledge-free (A, A2 e B, estados da referência,
+receitas seguidas, registro paginado; tetos padrão e 20 000), a 1.3.6 acusava 2 ocorrências por sessão na B: `br-button`
+na receita do estado (`…notMeasured[*].recipe.arguments.actions[*].selector` e o mesmo no registro), que é a ação do
+próprio agente (a que abriu a modal) repetida como base da receita. A 1.3.7 trata a receita como eco das ações do scan
+(no registro, pelo `scanId` pedido) e o seletor que o servidor gera para o gatilho, a chegada, o alvo do sinal e a forma
+só-ids da 3.7.9 (`P-NN:state-unscanned@<seletor>` em `checksRun.pageLevel.ids[*]` e `sessionPending.ids[*]`) como fato da
+página pelo inventário do DOM; rótulo, texto de apoio do upload, `url`, base, componente não renderizado e outra
+ferramenta continuam sem explicação (cabeçalho de `scripts/vazamento/conhecimento.ts`). Canários 117/117 (45 novos).
+Portão de vazamento contra o build 3.7.8 (`--site http://127.0.0.1:3302`): PASSA 0 sem explicação em 39 sessões / 585
+respostas (as 6 da reexecução 3.7.0, as 18 chamadas reais de ferramentas e com da `dev-374-a-01`, `dev-374-a2-01` e
+`dev-375-b-01`, e 15 sessões de sondagem com as receitas seguidas), trava 0; controle positivo no perfil evaluation (B e
+A2 com receitas): milhares sem explicação, e a 1.3.7 não perdoa nada além do eco da ação do agente. O portão aceita
+`screen: "A2"` (acompanhamento).
 Antes dela, a da rodada 3.7.5 (lock de 2026-11-10T03:18): `govbr-runner-oracle:3.7.5-9d894a704c97` (`sha256:a791ef0f…`,
 commit `a202245`, dist `9d894a704c97…`, `dataSha256` `b4b2eceb…` igual ao da 3.7.4; novo: cláusulas adiadas com caminho
 e leitura obrigatória das regras de uso, pendência `usage-unread` com ids `L-NN`, D-186; tools/list e instructions iguais

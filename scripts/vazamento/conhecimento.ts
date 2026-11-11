@@ -132,8 +132,38 @@ import { argValues, buildDictionary, classify, exactTokens, hitsInText, leaves, 
  * ferramenta continuam sem explicação. A linha curta (1.3.5) não muda: lá o localizador cortado segue sem explicação. O
  * núcleo (cópia do validator) não muda. Treze canários novos marcam os dois lados (72 no total).
  * Rechecagem offline (`--revarrer`): p01-ferramentas 1 → 0 sem explicação.
+ *
+ * 1.3.7 (oráculo 3.7.8/3.7.9, pendências de estado recolhido `state-unscanned` e de campo de arquivo `upload-paths` também
+ * no perfil knowledge-free): a 3.7.8 põe na resposta do scan_page e no ledger (`get_finding_details view:observations`)
+ * a RECEITA do estado aberto (`recipe.arguments.{url, actions[*].selector, arrival.visible|expanded}`: as ações do scan
+ * que viu o controle + o clique no gatilho, e a chegada que prova o estado aberto), o `observed` do gatilho
+ * (`sinal; arrival visible <seletor≤40> (casca) "rótulo≤30"`), a `note` do ledger (`state-unscanned: <observed> (n)`) e a
+ * linha curta com esses lugares; a 3.7.9 acrescenta à forma só-ids `P-NN[×n]:state-unscanned@<seletor>` em
+ * `checksRun.pageLevel.ids[*]` e `sessionPending.ids[*]`. Medido antes de mudar (respostas REAIS do build a14201d no perfil
+ * knowledge-free, telas A, A2 e B, estados da referência e receitas seguidas, ledger paginado; tetos padrão e 20 000): A e
+ * A2 0 sem explicação; B 2 por sessão, `br-button` em scan_page `$.checksRun.pageLevel.notMeasured[*].recipe.arguments.
+ * actions[*].selector` e no mesmo campo do ledger (`$.observations[*].data.recipe…`) = `br-button[label="Trocar embarcação
+ * da vistoria"] button`: a ação do PRÓPRIO AGENTE que abriu a modal, repetida como base da receita de um gatilho dentro
+ * dela. O núcleo deixa todo caminho de receita fora da regra do seletor de elemento (condição 5) e a 1.2.0/1.3.2 só
+ * declarava `state.recipe`. Duas regras, só do eval:
+ *   (1) eco: os mesmos caminhos entram em ECO_SELETOR_DE_ACAO (`actions[*].selector` e `actions[*].value`, folha inteira
+ *       idêntica a um valor do argumento da mesma chamada do scan_page; no ledger, do scan_page que devolveu o scanId pedido);
+ *   (2) seletor da página (PENDENCIA_DE_ESTADO): o seletor que o SERVIDOR gerou para o gatilho e para a chegada (folha inteira
+ *       em `…recipe.arguments.actions[*].selector`/`arrival.visible`/`arrival.expanded`; o seletor da chegada e o alvo do sinal
+ *       `aria-controls|href|data-target→<seletor> oculto` dentro do `observed`/`note` no formato do servidor; o seletor depois
+ *       de `@` na forma só-ids) é fato da página quando o núcleo, chamado com ESSE seletor como folha (sem a chave como prova:
+ *       sintaxe de seletor e todo nome em posição de tipo renderizado), classifica `pagina` pelo inventário do DOM da tela;
+ *       cortado pelo servidor (`…` no fim), lê só os compostos inteiros antes da última fronteira, como a 1.3.6.
+ * A linha curta (1.3.5) passa a ler cada lugar do mesmo jeito: localizador cortado (`…`, antes sem explicação), a chegada
+ * `arrival visible <seletor>` e o alvo do sinal. O corte da 1.3.6 vale também para os exemplos e localizadores medidos do
+ * ledger (`$.observations[*].data.examples[*]`, `…data.measured[*].locator`). Continuam sem explicação: o termo no RÓTULO
+ * (texto do gatilho, `"…"`) e no texto de apoio do upload (o inventário não prova texto; a regra não lê prosa), o termo no
+ * sinal fixo, na cabeça ou na tarefa, a `url` da receita, base plantada no seletor, componente não renderizado, sem
+ * inventário, o termo no composto cortado, outro código na forma só-ids (`P-NN:contrast-incomplete@…`), folha fora do formato
+ * do servidor, e os mesmos caminhos noutra ferramenta. O núcleo (cópia do validator) não muda. Canários novos dos dois lados
+ * para cada caminho.
  */
-export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.6";
+export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.7";
 
 /**
  * 1.2.0 (D-154): eco do SELETOR DE AÇÃO da mesma chamada. Desde o validator 3.4.3 a resposta encolhida do
@@ -150,6 +180,9 @@ export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.6";
  * em `scanId` nesta chamada (igual ao `$.scanId` desta resposta), não dos argumentos desta chamada.
  */
 export interface EcoDeSeletorDeclarado { arg: string; paths: string[]; lista?: boolean; citado?: boolean; vinculo?: "scanId" }
+/** 1.3.7: a receita da pendência de estado recolhido na resposta do scan_page e no ledger. */
+const RECEITA_DE_ESTADO = "$.checksRun.pageLevel.notMeasured[*].recipe.arguments";
+const RECEITA_DO_LEDGER = "$.observations[*].data.recipe.arguments";
 export const ECO_SELETOR_DE_ACAO: Record<string, EcoDeSeletorDeclarado[]> = {
   scan_page: [
     { arg: "actions[*].selector", paths: ["$.state.recipe.actions[*].selector", "$.state.replay.steps[*].selector", "$.state.replay.failure.selector", "$.coverage.actionsApplied[*].selector"] },
@@ -162,6 +195,9 @@ export const ECO_SELETOR_DE_ACAO: Record<string, EcoDeSeletorDeclarado[]> = {
     // o texto da falha do replay CITA entre aspas o seletor do passo que falhou ("'.br-tag.interaction:first-of-type'
     // resolveu 4 elementos…"): eco só se TODA ocorrência do termo está entre aspas idênticas a um seletor do agente
     { arg: "actions[*].selector", paths: ["$.state.replay.failure.detail", "$.state.replay.steps[*].detail"], citado: true },
+    // 1.3.7: a receita do estado recolhido parte das ações DESTE scan (a base) + o clique no gatilho
+    { arg: "actions[*].selector", paths: [`${RECEITA_DE_ESTADO}.actions[*].selector`] },
+    { arg: "actions[*].value", paths: [`${RECEITA_DE_ESTADO}.actions[*].value`] },
   ],
   verify_finding: [
     // 1.3.2: na 3.7.1 a falha do replay vem em `binding.state.failure` (sem o nível `replay`)
@@ -179,6 +215,9 @@ export const ECO_SELETOR_DE_ACAO: Record<string, EcoDeSeletorDeclarado[]> = {
     { arg: "selectors[*]", vinculo: "scanId", paths: ["$.ledger.state.recipe.selectors[*]", "$.ledger.coverage.selectors[*]"] },
     { arg: "selectors[*]", vinculo: "scanId", paths: ["$.ledger.coverage.axeScope"], lista: true },
     { arg: "actions[*].selector", vinculo: "scanId", paths: ["$.ledger.state.replay.failure.detail", "$.ledger.state.replay.steps[*].detail"], citado: true },
+    // 1.3.7: a receita do estado recolhido no ledger (view:observations) do scan pedido parte das ações daquele scan
+    { arg: "actions[*].selector", vinculo: "scanId", paths: [`${RECEITA_DO_LEDGER}.actions[*].selector`] },
+    { arg: "actions[*].value", vinculo: "scanId", paths: [`${RECEITA_DO_LEDGER}.actions[*].value`] },
   ],
 };
 
@@ -271,9 +310,11 @@ function linhaDePendencia(hit: Hit, folha: string, prov: Provenance, cache: Map<
   if (exactTokens(fora).includes(hit.term)) return null;
   const comTermo = lugares.map((l) => l[1]).filter((loc) => exactTokens(loc).includes(hit.term));
   if (!comTermo.length) return null;
-  const cs = comTermo.map((loc) => classify(hit, prov, cache, loc));
-  if (!cs.every((c) => c.class === "pagina")) return null;
-  return { class: "pagina", why: `${cs[0].why}; localizador medido na linha curta da pendência de página (@lugar), termo só no localizador (1.3.5)` };
+  // 1.3.7: cada lugar pelo seu formato — a chegada `arrival visible <seletor>` e o alvo do sinal do estado recolhido, ou o
+  // localizador (inteiro, ou cortado pelo servidor: só os compostos antes da última fronteira)
+  const cs = comTermo.map((loc) => lugarDaPagina(hit, loc, prov, cache));
+  if (!cs.every((c): c is { class: Classification; why: string } => c !== null)) return null;
+  return { class: "pagina", why: `${cs[0].why}; localizador medido na linha curta da pendência de página (@lugar), termo só no localizador (1.3.5; lugar pelo formato, 1.3.7)` };
 }
 
 /**
@@ -282,6 +323,8 @@ function linhaDePendencia(hit: Hit, folha: string, prov: Provenance, cache: Map<
  */
 export const LOCALIZADOR_CORTADO: Record<string, string[]> = {
   scan_page: ["$.checksRun.pageLevel.notMeasured[*].measured[*].locator", "$.checksRun.pageLevel.notMeasured[*].examples[*]"],
+  // 1.3.7: os mesmos campos da pendência no ledger (view:observations), cortados pelo mesmo clip()
+  get_finding_details: ["$.observations[*].data.measured[*].locator", "$.observations[*].data.examples[*]"],
 };
 const CORTE = "…";
 const FRONTEIRA = /[\s>+~,]/;
@@ -330,6 +373,119 @@ function localizadorCortado(hit: Hit, folha: string, prov: Provenance, cache: Ma
   return { class: "pagina", why: `${c.why}; localizador cortado pelo servidor (…): lidos só os compostos inteiros antes da última fronteira, termo fora do composto cortado (1.3.6)` };
 }
 
+/**
+ * 1.3.7: caminho neutro com que o núcleo lê um seletor EXTRAÍDO de uma folha (sem a chave `…locator`/`…selector` como prova
+ * e fora dos caminhos de receita): sintaxe de seletor obrigatória e todo nome em posição de tipo renderizado pela tela.
+ */
+const SELETOR_EXTRAIDO = "$.<seletor-extraido-1.3.7>";
+
+/**
+ * 1.3.7: o termo num seletor da página, inteiro ou cortado pelo servidor (`…` único, no fim: lidos só os compostos inteiros
+ * antes da última fronteira de topo; o termo no composto cortado fica sem explicação). O núcleo decide pelo inventário.
+ */
+function seletorDaPagina(hit: Hit, seletor: string, prov: Provenance, cache: Map<string, string>): { class: Classification; why: string } | null {
+  if (hit.kind !== "exact") return null;
+  let alvo = seletor.trim();
+  let cortado = false;
+  if (alvo.includes(CORTE)) {
+    if (!alvo.endsWith(CORTE) || alvo.indexOf(CORTE) !== alvo.length - CORTE.length) return null;
+    const resto = alvo.slice(0, -CORTE.length);
+    const f = ultimaFronteira(resto);
+    if (f <= 0 || exactTokens(resto.slice(f)).includes(hit.term)) return null;
+    alvo = resto.slice(0, f).trim();
+    cortado = true;
+  }
+  if (!alvo || !exactTokens(alvo).includes(hit.term)) return null;
+  const c = classify({ ...hit, path: SELETOR_EXTRAIDO }, prov, cache, alvo);
+  if (c.class !== "pagina") return null;
+  return { class: "pagina", why: `${c.why.replace(SELETOR_EXTRAIDO, hit.path)}${cortado ? "; seletor cortado pelo servidor (…), lidos só os compostos inteiros" : ""}` };
+}
+
+/** 1.3.7: sinais do gatilho recolhido (evidence/disclosures.ts do validator); o com alvo traz o seletor do conteúdo controlado. */
+const SINAL_FIXO = /^(?:aria-expanded=false|aba não selecionada|details fechado|aria-haspopup=[a-z]+|(?:aria-controls|href|data-target)→oculto)$/;
+const SINAL_COM_ALVO = /^(?:aria-controls|href|data-target)→(.+) oculto$/;
+/** A chegada do `observed` (arrivalText): `arrival visible <seletor>` ou fixa, depois ` (casca)` e ` "rótulo"`, opcionais. */
+const CHEGADA_VISIVEL = /^arrival visible (.+?)( \(casca\))?(?: "(.*))?$/;
+const CHEGADA_FIXA = /^(?:arrival expanded \(o próprio @\)|arrival dialogOpen|sem arrival: confira o estado no scan)( \(casca\))?(?: "(.*))?$/;
+
+/** Partes de um pedaço do observed: seletores (lidos pelo núcleo) e texto (o termo ali fica sem explicação), ou null. */
+function partesDoObservado(pedaco: string): { seletores: string[]; texto: string[] } | null {
+  const alvo = SINAL_COM_ALVO.exec(pedaco);
+  if (alvo) return { seletores: [alvo[1]], texto: [] };
+  if (SINAL_FIXO.test(pedaco)) return { seletores: [], texto: [pedaco] };
+  const vis = CHEGADA_VISIVEL.exec(pedaco);
+  if (vis) return { seletores: [vis[1]], texto: [vis[3] ?? ""] };
+  const fixa = CHEGADA_FIXA.exec(pedaco);
+  if (fixa) return { seletores: [], texto: [pedaco] };
+  return null;
+}
+
+/** O termo só em seletores das partes, e todos eles fatos da página; senão null. */
+function partesDaPagina(hit: Hit, partes: { seletores: string[]; texto: string[] }, prov: Provenance, cache: Map<string, string>): { class: Classification; why: string } | null {
+  if (hit.kind !== "exact" || exactTokens(partes.texto.join(" ")).includes(hit.term)) return null;
+  const com = partes.seletores.filter((s) => exactTokens(s).includes(hit.term));
+  if (!com.length) return null;
+  const cs = com.map((s) => seletorDaPagina(hit, s, prov, cache));
+  return cs.every((c) => c !== null) ? cs[0] : null;
+}
+
+/** `observed` da pendência state-unscanned: `sinal; chegada[ (casca)][ "rótulo"]` (statePendings do validator). */
+function observadoDeEstado(hit: Hit, folha: string, prov: Provenance, cache: Map<string, string>): { class: Classification; why: string } | null {
+  const k = folha.indexOf("; ");
+  if (k <= 0) return null;
+  const sinal = partesDoObservado(folha.slice(0, k));
+  const chegada = partesDoObservado(folha.slice(k + 2));
+  // o sinal tem de ser sinal e a chegada, chegada (um sinal fixo no lugar da chegada é outro formato)
+  if (!sinal || !chegada || !/^(?:arrival |sem arrival)/.test(folha.slice(k + 2)) || /^(?:arrival |sem arrival)/.test(folha.slice(0, k))) return null;
+  return partesDaPagina(hit, { seletores: [...sinal.seletores, ...chegada.seletores], texto: [...sinal.texto, ...chegada.texto] }, prov, cache);
+}
+
+/** 1.3.7: um lugar da linha curta — chegada, sinal com alvo, ou localizador (inteiro ou cortado). */
+function lugarDaPagina(hit: Hit, lugar: string, prov: Provenance, cache: Map<string, string>): { class: Classification; why: string } | null {
+  const partes = partesDoObservado(lugar);
+  if (partes) return partesDaPagina(hit, partes, prov, cache);
+  return seletorDaPagina(hit, lugar, prov, cache);
+}
+
+/** 1.3.7: formas da pendência de estado recolhido, por ferramenta e caminho inteiro. */
+export type FormaDeEstado = "seletor" | "observado" | "nota" | "id";
+export const PENDENCIA_DE_ESTADO: Record<string, Array<{ path: string; forma: FormaDeEstado }>> = {
+  scan_page: [
+    { path: `${RECEITA_DE_ESTADO}.actions[*].selector`, forma: "seletor" },
+    { path: `${RECEITA_DE_ESTADO}.arrival.visible`, forma: "seletor" },
+    { path: `${RECEITA_DE_ESTADO}.arrival.expanded`, forma: "seletor" },
+    { path: "$.checksRun.pageLevel.notMeasured[*].observed", forma: "observado" },
+    // 3.7.9: a forma só-ids guarda o gatilho do estado recolhido (`P-NN[×n]:state-unscanned@<seletor>`)
+    { path: "$.checksRun.pageLevel.ids[*]", forma: "id" },
+    { path: "$.sessionPending.ids[*]", forma: "id" },
+  ],
+  get_finding_details: [
+    { path: `${RECEITA_DO_LEDGER}.actions[*].selector`, forma: "seletor" },
+    { path: `${RECEITA_DO_LEDGER}.arrival.visible`, forma: "seletor" },
+    { path: `${RECEITA_DO_LEDGER}.arrival.expanded`, forma: "seletor" },
+    { path: "$.observations[*].data.observed", forma: "observado" },
+    { path: "$.observations[*].note", forma: "nota" },
+  ],
+};
+const NOTA_DE_ESTADO = /^state-unscanned: (.+) \(\d+\)$/;
+const ID_DE_ESTADO = /^P-\d+(?:×\d+)?:state-unscanned@(.+)$/;
+
+function pendenciaDeEstado(hit: Hit, folha: string, prov: Provenance, cache: Map<string, string>): { class: Classification; why: string } | null {
+  const decl = (PENDENCIA_DE_ESTADO[prov.tool] ?? []).find((d) => d.path === hit.path);
+  if (!decl || hit.kind !== "exact") return null;
+  let c: { class: Classification; why: string } | null = null;
+  if (decl.forma === "seletor") c = seletorDaPagina(hit, folha, prov, cache);
+  else if (decl.forma === "observado") c = observadoDeEstado(hit, folha, prov, cache);
+  else if (decl.forma === "nota") {
+    const m = NOTA_DE_ESTADO.exec(folha);
+    c = m ? observadoDeEstado(hit, m[1], prov, cache) : null;
+  } else {
+    const m = ID_DE_ESTADO.exec(folha);
+    c = m ? seletorDaPagina(hit, m[1], prov, cache) : null;
+  }
+  return c ? { class: "pagina", why: `${c.why}; seletor gerado pelo servidor na pendência de estado recolhido (${decl.forma}), termo só no seletor (1.3.7)` } : null;
+}
+
 /** scanId de topo de uma resposta JSON (o do lote: scan_page devolve o novo, get_finding_details o pedido), ou null. */
 export function scanIdDaResposta(text: string): string | null {
   try {
@@ -370,6 +526,8 @@ export function varrerResposta(dict: Dictionary, text: string, prov: Provenance,
       if (c.class === "sem-explicacao") c = linhaDePendencia(hit, leaf.text, prov, cache) ?? c;
       // 1.3.6: o localizador medido da pendência de página cortado pelo servidor (…)
       if (c.class === "sem-explicacao") c = localizadorCortado(hit, leaf.text, prov, cache) ?? c;
+      // 1.3.7: o seletor gerado pelo servidor na pendência de estado recolhido (receita, observed, nota, forma só-ids)
+      if (c.class === "sem-explicacao") c = pendenciaDeEstado(hit, leaf.text, prov, cache) ?? c;
       hits.push({ ...hit, ...c, folha: leaf.text });
     }
   }
@@ -523,6 +681,14 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
   // 1.3.6: localizador medido da pendência de página (forma objeto) cortado pelo servidor; a forma real da p01-ferramentas
   const medido = (locator: string, reason: string | null = "bgGradient") => JSON.stringify({ checksRun: { pageLevel: { notMeasured: [{ measured: [{ locator, fg: null, bg: null, ratio: null, reason }] }] } } });
   const cortadoReal = `.my-3:nth-child(8) > .align-items-center.row > .col-auto:nth-child(3) > ${rootClass}[label="Ocultar"][icon="chevron-up"] >…`;
+  // 1.3.7: pendência de estado recolhido (formas do validator 3.7.8/3.7.9)
+  const doEstado: PageElements = { tags: new Set(["html", "body", "div", "span", "button", rootClass]), classes: new Set([rootClass, "menu", "content"]) };
+  const gatilho = `div > ${rootClass}[label="Menu"] > button`;
+  const acaoDoAgente = { action: "click", selector: `${rootClass}[label="Trocar"] button` };
+  const receitaDeEstado = (actions: unknown[], arrival?: unknown) => JSON.stringify({ checksRun: { pageLevel: { notMeasured: [{ code: "state-unscanned", recipe: { tool: "scan_page", arguments: { url: "http://x/", actions, ...(arrival ? { arrival } : {}) } } }] } } });
+  const ledgerDeEstado = (scanId: string, args: unknown) => JSON.stringify({ scanId, view: "observations", observations: [{ data: { code: "state-unscanned", recipe: { tool: "scan_page", arguments: args } } }] });
+  const observadoEm = (observed: string) => JSON.stringify({ checksRun: { pageLevel: { notMeasured: [{ code: "state-unscanned", observed }] } } });
+  const notaEm = (note: string) => JSON.stringify({ scanId: "S-page-001", observations: [{ kind: "not-judged", note }] });
   const prosa = JSON.stringify({ reasons: [{ detail: `Limitação: ${falhou}` }], verification: { detail: `Limitação: ${falhou}`, binding: { state: { failure: { detail: falhou }, limitation: { detail: `Passo 4 (fill) falhou. ${falhou}` } } } } });
   const casos: { nome: string; tool: string; texto: string; args: unknown; page: string | null; espera: Classification; elements?: PageElements | null; scans?: Map<string, unknown> }[] = [
     { nome: "título da base numa nota do servidor", tool: "verify_finding", texto: JSON.stringify({ note: `Veja ${kbTitle}.` }), args: {}, page, espera: "sem-explicacao" },
@@ -603,6 +769,52 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
     { nome: "localizador cortado noutro caminho …locator não declarado (ariaPairs)", tool: "scan_page", texto: JSON.stringify({ checksRun: { pageLevel: { notMeasured: [{ ariaPairs: [{ locator: cortadoReal }] }] } } }), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
     { nome: "localizador cortado no mesmo caminho, noutra ferramenta (verify_finding)", tool: "verify_finding", texto: medido(cortadoReal), args: {}, page: pageComTag, elements: doLocalizador, espera: "sem-explicacao" },
     { nome: "variante usada como tag no localizador cortado", tool: "scan_page", texto: medido(`div > ${variante}[x] >…`), args: {}, page: pageComTag, elements: { tags: new Set([...doLocalizador.tags, variante]), classes: doLocalizador.classes }, espera: "sem-explicacao" },
+    // 1.3.7 (oráculo 3.7.8/3.7.9): pendência de estado recolhido — receita, observed, nota do ledger, linha curta e forma só-ids
+    { nome: "ação do agente repetida como base da receita do estado (scan_page notMeasured[*].recipe, eco)", tool: "scan_page", texto: receitaDeEstado([acaoDoAgente, { action: "click", selector: "#menu-trigger" }]), args: { url: "http://x/", actions: [acaoDoAgente] }, page: pageComTag, elements: null, espera: "eco" },
+    { nome: "ação do agente repetida na receita do estado no ledger, vinculada pelo scanId pedido (eco)", tool: "get_finding_details", texto: ledgerDeEstado("S-page-004", { url: "http://x/", actions: [acaoDoAgente, { action: "click", selector: "#menu-trigger" }] }), args: { scanId: "S-page-004", view: "observations" }, page: pageComTag, elements: null, scans: scans(["S-page-004", { url: "http://x/", actions: [acaoDoAgente] }]), espera: "eco" },
+    { nome: "receita do estado no ledger com a ação vinda de OUTRO scan_page, sem inventário", tool: "get_finding_details", texto: ledgerDeEstado("S-page-004", { url: "http://x/", actions: [acaoDoAgente] }), args: { scanId: "S-page-004", view: "observations" }, page: pageComTag, elements: null, scans: scans(["S-page-003", { url: "http://x/", actions: [acaoDoAgente] }], ["S-page-004", { url: "http://x/" }]), espera: "sem-explicacao" },
+    { nome: "texto digitado pelo agente (fill value) repetido na receita do estado (eco)", tool: "scan_page", texto: receitaDeEstado([{ action: "fill", selector: "#campo", value: `nota ${rootClass}` }, { action: "click", selector: "#menu-trigger" }]), args: { url: "http://x/", actions: [{ action: "fill", selector: "#campo", value: `nota ${rootClass}` }] }, page: pageComTag, elements: doEstado, espera: "eco" },
+    { nome: "texto na receita do estado que o agente NÃO digitou (value reescrito)", tool: "scan_page", texto: receitaDeEstado([{ action: "fill", selector: "#campo", value: `nota ${rootClass}` }]), args: { url: "http://x/", actions: [{ action: "fill", selector: "#campo", value: "nota" }] }, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "gatilho gerado pelo servidor com tag renderizada na receita do estado (actions[*].selector)", tool: "scan_page", texto: receitaDeEstado([{ action: "click", selector: gatilho }]), args: { url: "http://x/" }, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "gatilho na receita do estado com componente que a tela NÃO renderiza", tool: "scan_page", texto: receitaDeEstado([{ action: "click", selector: gatilho }]), args: { url: "http://x/" }, page: pageComTag, elements: { tags: new Set(["html", "body", "div", "button"]), classes: doEstado.classes }, espera: "sem-explicacao" },
+    { nome: "gatilho na receita do estado sem inventário da tela (falha fechada)", tool: "scan_page", texto: receitaDeEstado([{ action: "click", selector: gatilho }]), args: { url: "http://x/" }, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    { nome: "id da base plantado como gatilho da receita do estado", tool: "scan_page", texto: receitaDeEstado([{ action: "click", selector: `#${kbId} > button` }]), args: { url: "http://x/" }, page: `${pageComTag}<!-- ${kbId} -->`, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "nome do componente solto (sem sintaxe de seletor) como gatilho da receita", tool: "scan_page", texto: receitaDeEstado([{ action: "click", selector: rootClass }]), args: { url: "http://x/" }, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "chegada da receita do estado com classe renderizada (arrival.visible)", tool: "scan_page", texto: receitaDeEstado([{ action: "click", selector: "#menu-trigger" }], { visible: `.${rootClass}.menu, .${rootClass}.menu *` }), args: { url: "http://x/" }, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "chegada da receita do estado no próprio gatilho (arrival.expanded)", tool: "scan_page", texto: receitaDeEstado([{ action: "click", selector: gatilho }], { expanded: gatilho }), args: { url: "http://x/" }, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "chegada da receita do estado em prosa (não é seletor)", tool: "scan_page", texto: receitaDeEstado([{ action: "click", selector: "#menu-trigger" }], { visible: `o ${rootClass} aberto` }), args: { url: "http://x/" }, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "url da receita do estado com o nome (campo não-seletor)", tool: "scan_page", texto: JSON.stringify({ checksRun: { pageLevel: { notMeasured: [{ recipe: { tool: "scan_page", arguments: { url: `http://x/${rootClass}.html` } } }] } } }), args: { url: "http://x/" }, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "mesma receita do estado no mesmo caminho, noutra ferramenta (verify_finding)", tool: "verify_finding", texto: receitaDeEstado([{ action: "click", selector: gatilho }]), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "gatilho renderizado na receita do estado no ledger (data.recipe)", tool: "get_finding_details", texto: ledgerDeEstado("S-page-001", { url: "http://x/", actions: [{ action: "click", selector: gatilho }], arrival: { expanded: gatilho } }), args: { scanId: "S-page-001", view: "observations" }, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "chegada com classe renderizada no observed do estado (notMeasured[*].observed)", tool: "scan_page", texto: observadoEm(`aria-expanded=false; arrival visible .${rootClass}.menu, .${rootClass}.menu * (casca) "Avatar com dropdown"`), args: {}, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "alvo do sinal com classe renderizada no observed do estado (aria-controls→… oculto)", tool: "scan_page", texto: observadoEm(`aria-controls→.${rootClass}.menu oculto; arrival visible #painel "Abrir"`), args: {}, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "chegada cortada pelo servidor no observed, termo antes do corte", tool: "scan_page", texto: observadoEm(`aria-expanded=false; arrival visible #m > .${rootClass}.menu > .it…`), args: {}, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "chegada cortada no observed com o termo só no composto cortado", tool: "scan_page", texto: observadoEm(`aria-expanded=false; arrival visible #m > .${rootClass}…`), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "nome do componente no RÓTULO do gatilho (observed, texto)", tool: "scan_page", texto: observadoEm(`aria-expanded=false; arrival expanded (o próprio @) "Abrir ${rootClass}"`), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "título da base no rótulo do gatilho (observed)", tool: "scan_page", texto: observadoEm(`aria-expanded=false; arrival dialogOpen "${kbTitle}"`), args: {}, page, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "chegada do observed com componente que a tela NÃO renderiza", tool: "scan_page", texto: observadoEm(`aria-expanded=false; arrival visible .${rootClass}.menu "Menu"`), args: {}, page: pageComTag, elements: { tags: doEstado.tags, classes: new Set(["menu"]) }, espera: "sem-explicacao" },
+    { nome: "observed fora do formato do estado (sem sinal conhecido)", tool: "scan_page", texto: observadoEm(`menu fechado; arrival visible .${rootClass}.menu "Menu"`), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "nome do componente no texto de apoio do upload (observed upload-paths)", tool: "scan_page", texto: observadoEm(`sem accept; apoio: "Envie pelo ${rootClass}."`), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "observed do estado no mesmo caminho, noutra ferramenta (verify_finding)", tool: "verify_finding", texto: observadoEm(`aria-expanded=false; arrival visible .${rootClass}.menu "Menu"`), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "chegada com classe renderizada no observed do ledger (data.observed)", tool: "get_finding_details", texto: JSON.stringify({ scanId: "S-page-001", observations: [{ data: { observed: `aria-expanded=false; arrival visible .${rootClass}.menu "Menu"` } }] }), args: { scanId: "S-page-001" }, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "chegada com classe renderizada na nota do ledger (state-unscanned: … (n))", tool: "get_finding_details", texto: notaEm(`state-unscanned: aria-expanded=false; arrival visible .${rootClass}.menu (casca) "Menu" (1)`), args: { scanId: "S-page-001" }, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "nome do componente na nota do upload no ledger (upload-paths: …)", tool: "get_finding_details", texto: notaEm(`upload-paths: sem accept; apoio: "Envie pelo ${rootClass}." (1)`), args: { scanId: "S-page-001" }, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "nota do ledger com o nome no rótulo", tool: "get_finding_details", texto: notaEm(`state-unscanned: aria-expanded=false; arrival expanded (o próprio @) "${rootClass}" (1)`), args: { scanId: "S-page-001" }, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "exemplo cortado no ledger (data.examples[*], …)", tool: "get_finding_details", texto: JSON.stringify({ observations: [{ data: { examples: [`div > ${rootClass}[label="Menu"] >>> but…`] } }] }), args: { scanId: "S-page-001" }, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "localizador medido cortado no ledger (data.measured[*].locator, …)", tool: "get_finding_details", texto: JSON.stringify({ observations: [{ data: { measured: [{ locator: cortadoReal, reason: null }] } }] }), args: { scanId: "S-page-001" }, page: pageComTag, elements: doLocalizador, espera: "pagina" },
+    { nome: "exemplo cortado no ledger com o termo só no composto cortado", tool: "get_finding_details", texto: JSON.stringify({ observations: [{ data: { examples: [`div > ${rootClass}[label="Me…`] } }] }), args: { scanId: "S-page-001" }, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "linha curta do estado: gatilho cortado (…) com tag renderizada", tool: "scan_page", texto: pendencia(`P-07:state-unscanned:1 @div > ${rootClass}[label="Menu"] > button > sp…; aria-expanded=false; arrival expanded (o próprio @) "Menu" · escaneie o estado aberto`), args: {}, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "linha curta do estado: chegada com classe renderizada", tool: "scan_page", texto: pendencia(`P-07:state-unscanned:1 @#menu-trigger; aria-expanded=false; arrival visible .${rootClass}.menu, #menu-li… · escaneie o estado aberto`), args: {}, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "linha curta do estado: chegada cortada com o termo no composto cortado", tool: "scan_page", texto: pendencia(`P-07:state-unscanned:1 @#menu-trigger; aria-expanded=false; arrival visible #menu, .${rootClass}.m… · escaneie o estado aberto`), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "linha curta do estado: nome no rótulo", tool: "scan_page", texto: pendencia(`P-07:state-unscanned:1 @#menu-trigger; aria-expanded=false; arrival expanded (o próprio @) "Abrir ${rootClass}" · escaneie o estado aberto`), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "forma só-ids com o gatilho do estado (checksRun.pageLevel.ids[*], 3.7.9)", tool: "scan_page", texto: JSON.stringify({ checksRun: { pageLevel: { ids: ["P-01", `P-07:state-unscanned@${gatilho}`], count: 2 } } }), args: {}, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "forma só-ids da sessão com o gatilho do estado (sessionPending.ids[*], ×n, 3.7.9)", tool: "scan_page", texto: JSON.stringify({ sessionPending: { count: 1, ids: [`P-07×2:state-unscanned@${gatilho}`] } }), args: {}, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "forma só-ids com gatilho cortado, termo antes do corte", tool: "scan_page", texto: JSON.stringify({ sessionPending: { ids: [`P-07:state-unscanned@div > ${rootClass}[label="Menu"] > but…`] } }), args: {}, page: pageComTag, elements: doEstado, espera: "pagina" },
+    { nome: "forma só-ids de OUTRO código com seletor (contrast-incomplete@…)", tool: "scan_page", texto: JSON.stringify({ checksRun: { pageLevel: { ids: [`P-01:contrast-incomplete@${gatilho}`] } } }), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "forma só-ids do estado com componente que a tela NÃO renderiza", tool: "scan_page", texto: JSON.stringify({ sessionPending: { ids: [`P-07:state-unscanned@${gatilho}`] } }), args: {}, page: pageComTag, elements: { tags: new Set(["html", "body", "div", "button"]), classes: doEstado.classes }, espera: "sem-explicacao" },
+    { nome: "forma só-ids do estado sem inventário (falha fechada)", tool: "scan_page", texto: JSON.stringify({ sessionPending: { ids: [`P-07:state-unscanned@${gatilho}`] } }), args: {}, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    { nome: "id da base plantado na forma só-ids do estado", tool: "scan_page", texto: JSON.stringify({ checksRun: { pageLevel: { ids: [`P-07:state-unscanned@#${kbId}`] } } }), args: {}, page: `${pageComTag}<!-- ${kbId} -->`, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "forma só-ids do estado noutra ferramenta (verify_finding)", tool: "verify_finding", texto: JSON.stringify({ sessionPending: { ids: [`P-07:state-unscanned@${gatilho}`] } }), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
   ];
   return casos.map((c) => {
     const { hits } = varrerResposta(dict, c.texto, { tool: c.tool, args: c.args, page: c.page, axe, elements: c.elements ?? null }, { argsDoScan: c.scans ?? new Map() });

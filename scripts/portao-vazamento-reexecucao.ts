@@ -31,7 +31,7 @@
  *   --controle-positivo <pacote>  idem para um pacote do perfil evaluation (braço com), escolhido de propósito: passa só
  *                        se o detector ACHA conteúdo da base (> 0 sem explicação), como o controle positivo do run-once.
  *
- * A tela de cada sessão (pacote: run.json → screen.id; calls/*.json: screen "A" → solicitacao, "B" → vistorias) escolhe o
+ * A tela de cada sessão (pacote: run.json → screen.id; calls/*.json: screen "A" → solicitacao, "A2" → acompanhamento, "B" → vistorias) escolhe o
  * inventário do DOM renderizado (scripts/vazamento/inventario-dom/<tela>.json); tela desconhecida = sem inventário = a
  * regra do seletor de elemento da página não perdoa nada.
  *
@@ -106,7 +106,7 @@ function eventosDoPacote(pacote: string): Evento[] {
   return lerNdjson(join(pacote, "evidence", "raw", "oracle", "tool-events.ndjson")).map((e) => rebaseToolPayloads(e, "evidence/raw/oracle"));
 }
 
-const TELA_DA_LETRA: Record<string, string> = { A: "solicitacao", B: "vistorias" };
+const TELA_DA_LETRA: Record<string, string> = { A: "solicitacao", A2: "acompanhamento", B: "vistorias" };
 /** Tela de um pacote (run.json → screen.id), ou null. */
 function telaDoPacote(pacote: string): string | null {
   const f = join(pacote, "run.json");
