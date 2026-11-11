@@ -180,7 +180,7 @@ await teste("workflow: checkouts por SHA, sem credencial persistida; coleta sem 
   const evalCk = coleta.find((s) => s.uses?.startsWith("actions/checkout@") && s.with?.path === "govbr-eval")!;
   assert.equal(String(evalCk.with?.["sparse-checkout-cone-mode"]), "false");
   const pats = String(evalCk.with?.["sparse-checkout"]).split("\n").map((l) => l.trim()).filter(Boolean);
-  for (const p of ["!/ground-truth*.json", "!/adjudications.json", "!/results/", "!/reports/", "!/tela-a/", "!/tela-b/"]) assert.ok(pats.includes(p), `coleta sem exclusão ${p}`);
+  for (const p of ["!/ground-truth*.json", "!/adjudications.json", "!/results/", "!/reports/", "!/tela-a/", "!/tela-a2/", "!/tela-b/", "!/tela-c/", "!/tela-d/", "!/controles/"]) assert.ok(pats.includes(p), `coleta sem exclusão ${p}`);
   assert.ok(!coleta.some((s) => s.uses?.startsWith("actions/download-artifact@")), "a coleta não baixa artefato nenhum (o manifesto traz o plano de estados)");
   assert.ok(!coleta.some((s) => ["nathlia/govbr-corpus", "nathlia/govbr-resultados"].includes(String(s.with?.repository))));
   const val = coleta.find((s) => s.with?.repository === "nathlia/govbr-ds-validator")!;
