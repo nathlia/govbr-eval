@@ -153,6 +153,12 @@ respostas (as 6 da reexecução 3.7.0, as 18 chamadas reais de ferramentas e com
 `dev-375-b-01`, e 15 sessões de sondagem com as receitas seguidas), trava 0; controle positivo no perfil evaluation (B e
 A2 com receitas): milhares sem explicação, e a 1.3.7 não perdoa nada além do eco da ação do agente. O portão aceita
 `screen: "A2"` (acompanhamento).
+Agente roteirizado (cenário `honesto`, agente `…-c90c12ac81308`): segue a 1ª pendência `state-unscanned` com receita —
+a da resposta do `scan_page` ou, se a forma compacta a cortou, a do registro pelo ponteiro `pageLevel.full`/`next`
+(com continuação) — e grava em `fake-agent.json` o `estado` (origem, `pendingId`, `status`, `statesScanned`). Com o
+oráculo ≥ 3.7.8 o `test:runner` exige, no `com` e no `ferramentas`, receita seguida, `status: "scanned"` e a pendência
+em `statesScanned`, com isolamento comprovado (medido com uma imagem temporária da 3.7.8: no `ferramentas` a receita
+vem do próprio scan, `P-02`; no `com`, do registro, `P-07`; vazamento 0 sem explicação, trava 0).
 Antes dela, a da rodada 3.7.5 (lock de 2026-11-10T03:18): `govbr-runner-oracle:3.7.5-9d894a704c97` (`sha256:a791ef0f…`,
 commit `a202245`, dist `9d894a704c97…`, `dataSha256` `b4b2eceb…` igual ao da 3.7.4; novo: cláusulas adiadas com caminho
 e leitura obrigatória das regras de uso, pendência `usage-unread` com ids `L-NN`, D-186; tools/list e instructions iguais

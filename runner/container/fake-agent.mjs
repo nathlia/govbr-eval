@@ -113,6 +113,45 @@ async function submit(bodyText, headers = {}) {
 function report(findings, vp, extra = {}) {
   return { timestamp: new Date().toISOString(), model: "agente-roteirizado", appUrl: URL_TELA, scope: ["janela inicial"], notes: `cenário ${SCENARIO}; agente roteirizado sem modelo`, findings, ...extra };
 }
+/** A 1ª pendência state-unscanned com receita (objeto) de uma resposta, ou null. */
+function receitaDeEstado(text) {
+  let d;
+  try { d = JSON.parse(text); } catch { return null; }
+  // notMeasured: objetos (ou linhas curtas, que não trazem receita); observations: a lista do registro (view:observations)
+  // — na resposta do scan_page o campo é outro bloco ({ items, … }), não uma lista
+  const lista = (v) => (Array.isArray(v) ? v : []);
+  const itens = [...lista(d?.checksRun?.pageLevel?.notMeasured), ...lista(d?.observations).map((o) => ({ ...(o?.data ?? {}) }))];
+  const i = itens.find((x) => x && typeof x === "object" && x.code === "state-unscanned" && x.recipe?.tool && x.recipe?.arguments);
+  return i ? { pendingId: i.pendingId ?? null, recipe: i.recipe } : null;
+}
+async function seguirEstadoRecolhido(scanText, scanId) {
+  let achado = receitaDeEstado(scanText);
+  let origem = "scan_page";
+  if (!achado && scanId && oracleTools.includes("get_finding_details")) {
+    // onde a resposta do scan diz que as pendências inteiras estão (pageLevel.full/next: o cursor delas no registro);
+    // sem ponteiro, o registro do começo. Segue a continuação (nextCursor) por algumas páginas.
+    let pl = null;
+    try { pl = JSON.parse(scanText)?.checksRun?.pageLevel ?? null; } catch { /* texto */ }
+    const ptr = [pl?.full, pl?.next].find((p) => p?.tool === "get_finding_details" && p.arguments?.scanId === scanId);
+    let args = ptr ? { ...ptr.arguments, view: "observations" } : { scanId, view: "observations" };
+    origem = "get_finding_details";
+    for (let pagina = 0; pagina < 5 && args && !achado; pagina += 1) {
+      const led = await call("oracle", "get_finding_details", args);
+      step({ kind: "oracle", tool: "get_finding_details", view: "observations", cursor: args.cursor ?? 0, isError: led.isError, bytes: led.text.length });
+      if (led.isError) break;
+      achado = receitaDeEstado(led.text);
+      let nx = null;
+      try { nx = JSON.parse(led.text)?.nextCursor ?? null; } catch { /* texto */ }
+      args = typeof nx === "number" ? { scanId, view: "observations", cursor: nx } : null;
+    }
+  }
+  if (!achado || !oracleTools.includes(achado.recipe.tool)) { out.estado = { seguido: false }; save(); return; }
+  const r = await call("oracle", achado.recipe.tool, achado.recipe.arguments);
+  let d = null;
+  try { d = JSON.parse(r.text); } catch { /* erro em texto */ }
+  out.estado = { seguido: true, origem, pendingId: achado.pendingId, isError: r.isError, status: d?.status ?? null, statesScanned: d?.statesScanned ?? null };
+  step({ kind: "oracle", tool: achado.recipe.tool, receitaDe: achado.pendingId, origem, isError: r.isError, statesScanned: d?.statesScanned ?? null, bytes: r.text.length });
+}
 async function honestFinding() {
   await pw("browser_navigate", { url: URL_TELA });
   const vp = await viewport();
@@ -139,6 +178,9 @@ async function honestFinding() {
       const det = await call("oracle", full.tool, full.arguments ?? {});
       step({ kind: "oracle", tool: full.tool, isError: det.isError, bytes: det.text.length });
     }
+    // >= 3.7.8 (D-190): pendência de estado recolhido com receita pronta. O agente diligente a segue: a receita da resposta
+    // do scan ou, se a forma compacta a cortou, a do registro de observações (get_finding_details view:observations).
+    await seguirEstadoRecolhido(scan.text, id);
   }
   const v = subject.value ?? { sel: "body", text: "" };
   return {

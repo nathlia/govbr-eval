@@ -1,16 +1,16 @@
 {
   "lockVersion": 1,
-  "builtAt": "2026-11-10T23:55:27.570Z",
+  "builtAt": "2026-11-11T04:24:07.651Z",
   "base": {
     "ref": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
     "node": "24.21.0"
   },
   "images": {
     "agent": {
-      "tag": "govbr-runner-agent:1.0.0-mcp0.0.70-cc2.1.288-c594890d2b248",
-      "id": "sha256:9b690882a26a491421d883f7e601d48f20faab80cd28f0fd502f1054bbe7ba7d",
+      "tag": "govbr-runner-agent:1.0.0-mcp0.0.70-cc2.1.288-c90c12ac81308",
+      "id": "sha256:dc7e3fdedbbd66eb6122d9966f52496e9182c2d39e31d82c25d94477a9393d4f",
       "labels": {
-        "govbr.agent.content-sha256": "594890d2b248689005fdce30db9e6b5d3f46e02b427c36f4f0e7e437cd82cafd",
+        "govbr.agent.content-sha256": "90c12ac81308a89ee2856cba219dab73728133498a96814d794eee344ac7f192",
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
         "govbr.claude-code": "2.1.288",
         "govbr.playwright-mcp": "0.0.70",
