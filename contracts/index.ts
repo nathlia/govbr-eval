@@ -193,7 +193,7 @@ export interface Findings extends Doc<"findings.v1"> {
  */
 export type InspectionOrigin = "browser" | "validation-tool";
 export interface InspectionStep {
-  action: "load" | "navigate" | "click" | "fill" | "press" | "select" | "hover" | "focus" | "scroll" | "wait" | "other";
+  action: "load" | "navigate" | "click" | "fill" | "press" | "select" | "hover" | "focus" | "scroll" | "wait" | "upload" | "drop" | "other";
   target?: string; value?: string; note?: string;
 }
 export interface InspectionLedger {

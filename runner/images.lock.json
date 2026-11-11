@@ -1,6 +1,6 @@
 {
   "lockVersion": 1,
-  "builtAt": "2026-11-11T06:51:26.635Z",
+  "builtAt": "2026-11-11T19:55:03.870Z",
   "base": {
     "ref": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
     "node": "24.21.0"
@@ -51,10 +51,10 @@
     },
     "collector": {
       "tag": "govbr-runner-collector:1.0.0",
-      "id": "sha256:b6b5259d6175b2b8932cfafa250e761ce13afc580915e421bdb926037d3b8201",
+      "id": "sha256:115ffcb8082647fec64c41226aba7eb5b33549a8766cb36dc5c1cc3e0e1be2f7",
       "labels": {
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
-        "govbr.collector.contracts-sha256": "11484e688cfbac38676a0252e515e8c41af5d851d261b06f6177f60fbbfb1186",
+        "govbr.collector.contracts-sha256": "68e9691a51ada266bf1cfe407bcf79de4cbdfa6b6f3760432ce366b9e89db3d2",
         "govbr.collector.findings-contracts": "findings.v1,findings.v2",
         "govbr.collector.inspection-revision": "inspection.v1+clauses-1",
         "govbr.collector.relogio": "relogio-2",

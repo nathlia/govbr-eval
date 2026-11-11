@@ -18,7 +18,7 @@ import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, write
 import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { CONTRACTS_DIR, type Findings, type FindingsV2, type InspectionLedger } from "../contracts/index";
+import { CONTRACTS_DIR, validateContract, type Findings, type FindingsV2, type InspectionLedger } from "../contracts/index";
 import { coletorAceitaClausulas, collectorFindingsContract, skillPedeClausulas, coletorConfereRotas } from "../runner/run-once";
 import { MIXED_ROUTES_MESSAGE, mixedRouteErrors, routeKey, ROUTE_GUARD_VERSION } from "../runner/container/route-guard.mjs";
 import { collectorInspectionRevisionOf } from "../runner/build-images";
@@ -359,6 +359,27 @@ await test("resumo: v1 → registro indisponível (não zero); v2 sem registro �
   assert.equal(r3.estado, "invalido");
   assert.equal(r3.declarado, null, "nada é contado de registro inválido");
   assert.match(r3.texto, /registro inválido .* achados aceitos normalmente; não é zero cobertura/);
+  // as limitações que o agente declarou continuam no bruto: contadas por tipo, e a linha "Limitações declaradas" as mostra
+  const comBruto = { ...readJson<FindingsV2>(join(EX, "valid", "findings--v2-registro-invalido.json")),
+    inspectionRaw: { limitations: [{ kind: "budget", detail: "tempo" }, { kind: "tool-failure", detail: "scan falhou" }, { kind: "budget", detail: "x" }] } };
+  const r4 = resumirInspecao(comBruto, null);
+  assert.deepEqual(r4.limitacoesNoBruto, { total: 3, porTipo: { budget: 2, "tool-failure": 1 } });
+  assert.match(r4.texto, /3 limitação\(ões\) declarada\(s\) no registro bruto/);
+  assert.equal(r4.declarado, null, "o resto do registro inválido continua sem contar");
+  assert.equal(resumirInspecao({ ...comBruto, inspectionRaw: { limitations: "x" } }, null).limitacoesNoBruto, undefined, "bruto sem lista de limitations: nada contado");
+});
+
+await test("registro: receita com as ações de arquivo do scan_page (upload, drop) é válida; ação fora do enum continua inválida", () => {
+  const comPassos = (...acoes: string[]) => {
+    const f = clone(v2Ex) as FindingsV2;
+    const st = f.report.inspection!.states[0];
+    st.recipe = [st.recipe[0], ...acoes.map((action) => ({ action, target: "#arquivo", value: "teste.pdf" }))] as typeof st.recipe;
+    return f;
+  };
+  assert.equal(validateContract(comPassos("upload", "drop")).valid, true, JSON.stringify(validateContract(comPassos("upload", "drop")).errors));
+  const ruim = validateContract(comPassos("interact"));
+  assert.equal(ruim.valid, false);
+  assert.ok(ruim.errors.some((e) => /recipe\/1\/action/.test(e.path)), JSON.stringify(ruim.errors));
 });
 
 /**

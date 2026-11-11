@@ -1462,7 +1462,16 @@ export function renderResumo(r: Resumo): string {
   L.push(`| Erros de ferramenta | ${col(e => e.mcpIsolamento.errosDeFerramenta.estado === "medido" ? `${e.mcpIsolamento.errosDeFerramenta.valor} (${seguro(e.mcpIsolamento.errosDeFerramenta.fonte, 80)})` : `desconhecido (${seguro(e.mcpIsolamento.errosDeFerramenta.fonte, 80)})`)} |`);
   L.push(`| Checks negativos | ${col(e => e.mcpIsolamento.checks ? `${e.mcpIsolamento.checks.aprovados} aprovado(s); falhos: ${seguro(e.mcpIsolamento.checks.falhos.join("; ") || "nenhum", 300)}; não exercitados: ${seguro(e.mcpIsolamento.checks.naoExercitados.join(", ") || "nenhum", 200)}` : "sem isolation.json")} |`);
   L.push(`| Controles positivos | ${col(e => e.mcpIsolamento.controlesPositivos ? `${e.mcpIsolamento.controlesPositivos.aprovados} aprovado(s); falhos: ${seguro(e.mcpIsolamento.controlesPositivos.falhos.join(", ") || "nenhum")}` : "—")} |`);
-  L.push(`| Limitações declaradas | ${col(e => seguro(e.mcpIsolamento.limitacoes.join("; ") || "nenhuma", 300))} |`);
+  // as do isolamento (harness) e as que o agente declarou no registro de inspeção — do registro aceito ou, se inválido, do bruto
+  L.push(`| Limitações declaradas | ${col(e => {
+    const partes = e.mcpIsolamento.limitacoes.length ? [e.mcpIsolamento.limitacoes.join("; ")] : [];
+    const ag = e.inspecao?.declarado?.limitacoes ?? e.inspecao?.limitacoesNoBruto ?? null;
+    if (ag && ag.total) {
+      const onde = e.inspecao?.declarado ? "registro de inspeção" : "registro de inspeção inválido, lido do bruto";
+      partes.push(`agente (${onde}): ${ag.total} — ${Object.entries(ag.porTipo).map(([k, n]) => `${k} ${n}`).join(", ")}`);
+    }
+    return seguro(partes.join("; ") || "nenhuma", 300);
+  })} |`);
   L.push(`| Registro de inspeção | ${col(e => seguro(e.inspecao?.texto ?? "registro indisponível (resumo anterior ao registro)", 400))} |`);
   // NAT-84: a linha só aparece quando alguma execução tem auditoria (resumos de pacotes v1 ficam iguais).
   if (execs.some(e => e.inspecao?.auditoria)) L.push(`| Auditoria do registro (processo, não pontua) | ${col(e => seguro(e.inspecao?.auditoria?.texto ?? "—", 400))} |`);

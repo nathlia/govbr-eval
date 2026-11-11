@@ -43,6 +43,8 @@ export interface ResumoInspecao {
   contrato: "inspection.v1" | null;
   /** Só quando `invalido`: os erros de contrato que o coletor registrou. */
   erros?: string[];
+  /** Só quando `invalido` e o registro bruto traz `limitations`: as limitações que o agente declarou, por tipo (não validadas). */
+  limitacoesNoBruto?: { total: number; porTipo: Record<string, number> };
   /** Só quando `registrado`. */
   declarado: {
     completude: InspectionLedger["completion"];
@@ -136,8 +138,13 @@ export function resumirInspecao(findings: AnyFindings | null, toolEvents: string
   }
   if (findings.inspectionStatus === "invalid") {
     const erros = findings.inspectionErrors ?? [];
+    // as limitações que o agente declarou continuam no registro bruto (inspectionRaw): contadas por tipo, sem validar o resto
+    const brutas = (findings.inspectionRaw as { limitations?: unknown } | undefined)?.limitations;
+    const tipos = Array.isArray(brutas) ? brutas.map(x => (x && typeof x === "object" && typeof (x as { kind?: unknown }).kind === "string" ? (x as { kind: string }).kind : "sem-tipo")) : [];
     return { ...vazio, estado: "invalido", contrato: findings.inspectionContract, erros,
-      texto: `registro inválido (${erros.length} erro(s) de contrato; guardado à parte) — achados aceitos normalmente; não é zero cobertura` };
+      ...(tipos.length ? { limitacoesNoBruto: { total: tipos.length, porTipo: contar(tipos) } } : {}),
+      texto: `registro inválido (${erros.length} erro(s) de contrato; guardado à parte) — achados aceitos normalmente; não é zero cobertura` +
+        (tipos.length ? `; ${tipos.length} limitação(ões) declarada(s) no registro bruto` : "") };
   }
   const l = findings.report.inspection;
   if (!l) return { ...vazio, estado: "nao-enviado", texto: "registro não enviado pelo agente (findings.v2 sem inspection) — não é zero cobertura" };
