@@ -29,6 +29,22 @@ A base é a revisão `thesis-workspace/planejamento/atual/revisao-prompt-ab-2026
 Revisão, item 1 (o roteiro comum ensina o método): mantido. O procedimento de inspeção (árvore de
 acessibilidade, DOM, estilos, teclado, foco, nomes, papéis, mensagens) continua igual nos dois braços.
 
+## Série 3.7.8 (11/11/2026): template `8139bb0c…`
+
+Linha de base nova de harness e skill, igual nos três braços (decisão do assistente de 11/11; D-18: só
+procedimento). O rastreio da `dev-375-b-01` mostrou que as pendências abertas devolvidas pelas ferramentas ficavam
+sem decisão em 3 de 3 execuções do `com`: nada no texto impedia encerrar com elas abertas. Passo novo:
+
+> 9. Antes de encerrar, releia a última resposta de cada ferramenta em cada rota: toda pendência que ela ainda der como
+> aberta é decidida pelo caminho que a ferramenta indicar ou registrada em `limitations`, com o motivo.
+
+Não nomeia ferramenta, pendência, regra nem componente; no `sem` nenhuma ferramenta devolve pendência e a frase não
+pede nada. O `lint:skills` passa a exigir o trecho; a skill tem 1655 palavras (teto 1700). A mesma série muda o
+relógio (renderizador 1.3.0, frase do `{{LIMITES}}`: ler sem sair da página) e a mensagem da recusa `rotas-misturadas`
+do coletor (`collector-route-guard-1.0.1`: fato de outra rota ou estado é achado próprio, enviado à parte). Exige
+reexportar o pacote `govbr-telas` antes da primeira campanha; campanhas congeladas não mudam. `sha256`
+`8139bb0cd71d273e1f63294b2523478fd54fc2e05033cfc58f58bda174d83e3c`.
+
 ## Continuação B2 da lista 3.7.3 (06/11/2026): template `860feacb…`
 
 O template atual explicita o tempo em segundos, calculado de `limites.tempoMinutos` pelo renderizador

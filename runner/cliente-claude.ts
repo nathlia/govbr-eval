@@ -103,6 +103,11 @@ function submitCall(path: string, report: unknown): StubCall {
   return pw("browser_evaluate", { function: `async () => { const r = await fetch(${JSON.stringify(path)}, { method: 'POST', headers: { 'content-type': 'application/json' }, body: ${body} }); return JSON.stringify({ status: r.status, body: await r.text() }); }` });
 }
 
+/** Leitura do relógio real pela página em que o agente está (série 3.7.8): nada de navegação. */
+export function relogioCall(url: string): StubCall {
+  return pw("browser_evaluate", { function: `async () => { const r = await fetch(${JSON.stringify(url)}, { cache: 'no-store' }); return JSON.stringify({ status: r.status, body: await r.json(), href: location.href }); }` });
+}
+
 const reportOf = (url: string, findings: unknown[], notes: string): unknown => ({
   timestamp: "2026-10-03T00:00:00Z", model: "roteiro-do-duble", appUrl: url, scope: ["janela inicial"], notes, findings,
 });
@@ -140,8 +145,9 @@ export function stubRoteiro(cenario: string, braco: Braco, inputs: TaskInputs, p
           ...(braco === "com" ? [{ calls: [or("get_emag_rules", { section: 1 })] }, { calls: [or("scan_page", { url })] }] : []),
           // NAT-61: o braço ferramentas mede e verifica (sem consulta normativa, que não existe nele)
           ...(braco === "ferramentas" ? [{ calls: [or("scan_page", { url })] }, { calls: [verifyCall(url)] }] : []),
-          // NAT-111 A: com o relógio real anunciado no texto, o roteiro o consulta pelo navegador (mesmo passo nos três braços)
-          ...(inputs.limites.relogio ? [{ calls: [pw("browser_navigate", { url: inputs.limites.relogio })] }] : []),
+          // NAT-111 A / relogio-2: com o relógio real anunciado no texto, o roteiro o consulta como o texto manda, por `fetch`
+          // de dentro da página da tela, sem navegar (mesmo passo nos três braços)
+          ...(inputs.limites.relogio ? [{ calls: [relogioCall(inputs.limites.relogio)] }] : []),
           { calls: [pw("browser_navigate", { url: origem })] },
           { calls: [submitCall(caminho, reportOf(url, [finding], `roteiro honesto, braço ${braco}`))] },
           { text: "Relatório enviado." },

@@ -110,6 +110,8 @@ test("relógio real (NAT-111 A): frase constante nos LIMITES; template intacto; 
     assert.equal(rs[0].prompt.replace(` ${relogioTexto(URL_RELOGIO)}`, ""), antes.prompt, "a única diferença é a frase do relógio");
     assert.deepEqual(scanForbidden(rs[0].prompt).filter((h) => h.text.includes(URL_RELOGIO)), [], "frase do relógio com vocabulário proibido");
     assert.match(rs[0].prompt, /Limites da execução: até \d+ minutos[^\n]*O relógio da página pode não ser o real[^\n]*decorridoS[^\n]*restanteS[^\n]*Tempo máximo: \d+ segundos desde o início\./);
+    // render 1.3.0 (série 3.7.8): ler o relógio sem sair da página; navegar até ele desfaz o estado
+    assert.match(rs[0].prompt, /restanteS`\), em segundos\. Consulte-o sem sair da página em que está, com `fetch` executado dentro dela: navegar até esse endereço recarrega a tela e desfaz o estado em que ela estava\. Tempo máximo/);
     assert.deepEqual(pair(run("sem", clone(comRel)), run("com", clone(comRel))), []);
     // relógio num braço e não no outro é diferença fora da allowlist
     assert.ok(pair(run("sem", clone(task)), run("com", clone(comRel))).some((e) => e.includes("fora da allowlist")));
@@ -117,6 +119,15 @@ test("relógio real (NAT-111 A): frase constante nos LIMITES; template intacto; 
   for (const ruim of ["ftp://collector/tempo", "", 3, "http://collector:8080/tempo com espaço"]) {
     assert.throws(() => renderTaskPrompt(template, { ...clone(EXAMPLE_INPUTS), limites: { ...EXAMPLE_INPUTS.limites, relogio: ruim as string } }), /relogio/, String(ruim));
   }
+});
+
+test("série 3.7.8: passo 9 (pendência aberta decidida ou declarada antes de encerrar), igual nos três braços e sem nome de ferramenta", () => {
+  const linha = /^9\. Antes de encerrar, releia a última resposta de cada ferramenta em cada rota: toda pendência que ela ainda der como\n   aberta é decidida pelo caminho que a ferramenta indicar ou registrada em `limitations`, com o motivo\.$/m;
+  assert.match(normalizeNewlines(template), linha);
+  const rs = (["sem", "ferramentas", "com"] as const).map((arm) => renderRun(template, run(arm, clone(EXAMPLE_INPUTS))));
+  assert.equal(new Set(rs.map((x) => x.promptSha256)).size, 1);
+  assert.match(rs[0].prompt, linha);
+  assert.deepEqual(scanForbidden(rs[0].prompt.match(linha)![0]), [], "a linha nova não traz vocabulário proibido");
 });
 
 test("paridade: diferença fora da allowlist falha", () => {

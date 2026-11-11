@@ -11,7 +11,11 @@ import { fileURLToPath } from "node:url";
 export const RUNNER_DIR = dirname(fileURLToPath(import.meta.url));
 export const EVAL_ROOT = resolve(RUNNER_DIR, "..");
 export const TCC_ROOT = resolve(EVAL_ROOT, "..");
-export const DEFAULT_TELAS_DIR = join(TCC_ROOT, "govbr-telas");
+/**
+ * `GOVBR_TELAS_DIR` aponta outra cópia do pacote de coleta (ex.: uma cópia de teste com a skill nova antes da
+ * reexportação), sem mexer no checkout irmão que outra frente pode estar usando. Padrão: o irmão.
+ */
+export const DEFAULT_TELAS_DIR = process.env.GOVBR_TELAS_DIR ? resolve(process.env.GOVBR_TELAS_DIR) : join(TCC_ROOT, "govbr-telas");
 /**
  * NAT-61: `GOVBR_VALIDATOR_DIR` aponta outro checkout do validator (ex.: uma worktree com o dist/ de outra
  * versão) sem mexer no dist/ do checkout irmão, que outra frente pode estar usando. Padrão: o irmão.
@@ -37,8 +41,9 @@ export const ISOLATION_POLICY_VERSION = "isolamento-runner-1.1.0";
 /**
  * NAT-111 A: revisão do relógio real do coletor (`GET /tempo`). Vai no rótulo `govbr.collector.relogio` da imagem
  * (build-images) e é a mesma string fixa em container/collector.mjs (test:runner confere).
+ * relogio-2 (série 3.7.8): `/tempo` com CORS, lido por `fetch` de dentro da página da tela, sem navegar até ele.
  */
-export const RELOGIO_REVISION = "relogio-1";
+export const RELOGIO_REVISION = "relogio-2";
 
 export const sha256 = (data: string | Buffer): string => createHash("sha256").update(data).digest("hex");
 

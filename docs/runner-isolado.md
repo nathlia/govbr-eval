@@ -126,6 +126,19 @@ falha da 1ª tentativa (`proibido sem`, sob falta de memória no host) não era 
 oráculo, e coletor e egress são as mesmas imagens (scripts iguais aos da fonte); o 3º POST morreu no proxy do
 navegador com `ECONNRESET` → 502 antes de chegar ao coletor (nenhum evento no `events.ndjson` dele), e o agente
 roteirizado conta todo status ≠ 409 como "alcançou". O caso sozinho passou 3/3.
+Linha de base de harness da série 3.7.8 (lock de 2026-11-10T23:55, oráculo ainda 3.7.7, mesma imagem
+`sha256:593c22a6…`): coletor `sha256:b6b5259d…` (`relogio-2`: `/tempo` com CORS; `collector-route-guard-1.0.1`: só a
+mensagem da recusa `mixed-routes` muda) e agente `govbr-runner-agent:…-c594890d2b248` (`sha256:9b690882…`; só o agente
+roteirizado mudou: lê o relógio pela página e confere o estado), construídos com `--so agent,collector`; tela e egress
+com os ids anteriores. A etiqueta fixa `govbr-runner-collector:1.0.0` foi movida; a imagem anterior ficou em
+`govbr-runner-collector:1.0.0-pre378` (`sha256:2eb16d43…`, a do lock da main). A imagem do oráculo continua com a base
+do agente anterior (rótulo `govbr.agent.content-sha256` `3cadbde2…`): o que o oráculo usa da base (ponte, Node,
+Playwright MCP) não mudou. Skill `8139bb0c…` (passo 9). Os testes do runner usaram uma cópia do pacote de coleta com a
+skill nova (`GOVBR_TELAS_DIR`, cópia local com commit de teste, sem tocar no `govbr-telas`): `test:runner` 43/43,
+`test:pipeline-t4` 37/37 (com o pacote `govbr-telas` atual, sem a skill nova, a coleta roteirizada para no preflight
+`skill`, como deve), `test:avaliar-tela` 14/14, `lint:protocol` e `lint:skills` ok, portão de vazamento PASSA 0/6
+(canários 72/72, trava 0). `promptSha256` a 1 800 s: solicitação `f0bb391d…`, vistorias `7488c746…`, acompanhamento
+`ca797ac8…`.
 Antes dela, a da rodada 3.7.5 (lock de 2026-11-10T03:18): `govbr-runner-oracle:3.7.5-9d894a704c97` (`sha256:a791ef0f…`,
 commit `a202245`, dist `9d894a704c97…`, `dataSha256` `b4b2eceb…` igual ao da 3.7.4; novo: cláusulas adiadas com caminho
 e leitura obrigatória das regras de uso, pendência `usage-unread` com ids `L-NN`, D-186; tools/list e instructions iguais
@@ -256,6 +269,19 @@ texto: isso tornaria cada `promptSha256` único e quebraria a paridade byte a by
 exige `versions.promptSha256` igual), e o `promptSha256` muda uma vez, igual para os três braços (solicitação
 1360d1dd… → 4881c868…, vistorias 9948858f… → 684235b9…, acompanhamento 55a56598… → 8c1bdf49…, a 1 800 s). Como a
 chave de agregação contém o `promptSha256`, execuções com e sem relógio nunca se misturam numa análise.
+**`relogio-2` (série 3.7.8, linha de base de harness igual nos três braços).** Na `dev-375-b-01` o agente lia o
+relógio navegando até `/tempo` e voltava à tela com outra navegação, que recarregava a aplicação e desfazia o estado
+montado (3 a 5 vezes por execução). Agora (i) o `/tempo` responde com CORS aberto (`Access-Control-Allow-Origin: *`,
+sem credenciais; `OPTIONS` = pré-voo 204), e só ele: o envio continua sem CORS; (ii) o evento `tempo` do coletor
+registra a origem que pediu (`origem`); (iii) o renderizador 1.3.0 troca a frase: "um `GET` em … devolve em JSON …
+Consulte-o sem sair da página em que está, com `fetch` executado dentro dela: navegar até esse endereço recarrega a
+tela e desfaz o estado em que ela estava." O `fetch` sai do navegador do Playwright (o mesmo nos três braços, pela
+ferramenta de avaliar código na página) pelo proxy do site, para o mesmo `collector:8080` da allowlist: nada novo é
+alcançável e nada conta como violação de isolamento. O `test:runner` prova nos três braços, com o agente roteirizado,
+que a leitura pela página devolve o JSON e deixa a página como estava (endereço, `performance.timeOrigin`, histórico,
+variável global, atributo e campo digitado), que o coletor viu o GET vindo de `http://screens:3300` e que ninguém
+navegou até o relógio; com o cliente real contra o dublê, que a resposta chegou à página. O `promptSha256` muda igual
+nos três braços (nova chave de comparação).
 Imagem sem o rótulo (as travadas hoje): texto, coletor e pacote exatamente como antes. Ligar exige
 reconstruir só a imagem do coletor (`npm run runner:imagens -- --so collector`) e travar o lock novo. Atenção: a etiqueta do coletor é fixa (`govbr-runner-collector:1.0.0`), então reconstruir numa worktree move a etiqueta que o lock de outro checkout confere (`imagem-collector` falha lá); reconstrua sem campanha em curso.
 

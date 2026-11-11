@@ -28,6 +28,10 @@
 // partir o agente: o restante nunca passa do que o limite do harness deixa); antes disso, 503. O agente não
 // alcança esse arquivo (outro contêiner). A resposta não depende de braço, oráculo, run nem referência: só
 // do relógio e do limite, que já está no texto da tarefa. Sem COLLECTOR_LIMITE_SEG, /tempo é 404 como antes.
+// relogio-2 (série 3.7.8): `/tempo` responde com CORS aberto (`*`, sem credenciais; OPTIONS = pré-voo 204), para
+// que o agente leia o relógio com `fetch` de DENTRO da página da tela (outra origem) sem sair dela: navegar até
+// /tempo recarregava a aplicação e desfazia o estado montado (dev-375-b-01: 3 a 5 vezes por execução). A resposta
+// é a mesma de antes; o evento registra a origem que pediu (`origem`), para o harness provar a leitura na página.
 import { createServer } from "node:http";
 import { createHash } from "node:crypto";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -55,7 +59,9 @@ if (CONTRACT !== "findings.v1" && CONTRACT !== "findings.v2") {
 }
 const V2 = CONTRACT === "findings.v2";
 const ROUTE_CONTEXT = process.env.COLLECTOR_ROUTE_CONTEXT;
-const RELOGIO_REVISION = "relogio-1";
+const RELOGIO_REVISION = "relogio-2";
+/** Cabeçalhos do relógio: qualquer origem lê, sem credenciais; nada além de GET. */
+const CORS_TEMPO = { "access-control-allow-origin": "*", "access-control-allow-methods": "GET", "access-control-allow-headers": "*", "access-control-max-age": "600" };
 const LIMITE_S = process.env.COLLECTOR_LIMITE_SEG ? Number(process.env.COLLECTOR_LIMITE_SEG) : null;
 if (LIMITE_S !== null && !(Number.isInteger(LIMITE_S) && LIMITE_S > 0)) {
   console.error(`COLLECTOR_LIMITE_SEG inválido: ${process.env.COLLECTOR_LIMITE_SEG}`);
@@ -82,8 +88,8 @@ const isoS = (ms) => new Date(ms).toISOString().replace(/\.\d+Z$/, "Z");
 function event(e) {
   appendFileSync(join(OUT, "events.ndjson"), JSON.stringify({ seq: seq++, at: new Date().toISOString(), ...e }) + "\n");
 }
-function send(res, status, body) {
-  res.writeHead(status, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store", "x-content-type-options": "nosniff" });
+function send(res, status, body, extra = {}) {
+  res.writeHead(status, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store", "x-content-type-options": "nosniff", ...extra });
   res.end(JSON.stringify(body));
 }
 function refuse(reason, body) {
@@ -147,19 +153,25 @@ createServer(async (req, res) => {
     return send(res, 200, { ok: true });
   }
   if (rawPath === "/tempo" && LIMITE_S !== null) {
+    const origem = typeof req.headers.origin === "string" ? req.headers.origin.slice(0, 200) : null;
+    if (req.method === "OPTIONS") {
+      event({ ...base, status: 204, reason: "tempo-pre-voo", origem });
+      res.writeHead(204, { ...CORS_TEMPO, "cache-control": "no-store" });
+      return res.end();
+    }
     if (req.method !== "GET") {
       event({ ...base, status: 405 });
-      return send(res, 405, { ok: false, error: "use GET" });
+      return send(res, 405, { ok: false, error: "use GET" }, CORS_TEMPO);
     }
     if (relogioInicio === null) {
-      event({ ...base, status: 503, reason: "relogio-parado" });
-      return send(res, 503, { ok: false, error: "o relógio começa com a execução" });
+      event({ ...base, status: 503, reason: "relogio-parado", origem });
+      return send(res, 503, { ok: false, error: "o relógio começa com a execução" }, CORS_TEMPO);
     }
     const agora = Date.now();
     const decorridoS = Math.max(0, Math.floor((agora - relogioInicio) / 1000));
     const restanteS = Math.max(0, LIMITE_S - decorridoS);
-    event({ ...base, status: 200, reason: "tempo", decorridoS });
-    return send(res, 200, { ok: true, inicio: isoS(relogioInicio), agora: isoS(agora), decorridoS, restanteS, limiteS: LIMITE_S });
+    event({ ...base, status: 200, reason: "tempo", decorridoS, origem });
+    return send(res, 200, { ok: true, inicio: isoS(relogioInicio), agora: isoS(agora), decorridoS, restanteS, limiteS: LIMITE_S }, CORS_TEMPO);
   }
   if (rawPath !== "/api/submit") {
     event({ ...base, status: 404, reason: "sem-rota" });

@@ -61,6 +61,8 @@ projeto a consultar.
    isoladamente. Compare as instâncias do mesmo componente em estados ou regiões diferentes pela
    ordem dos filhos e pela geometria medida: diferença entre elas é candidato. Confira cada
    seletor na página e monte o relatório a partir do registro.
+9. Antes de encerrar, releia a última resposta de cada ferramenta em cada rota: toda pendência que ela ainda der como
+   aberta é decidida pelo caminho que a ferramenta indicar ou registrada em `limitations`, com o motivo.
 
 Orçamento: não repita uma verificação cujo resultado ainda vale para o estado atual; agrupe
 consultas e peça somente as propriedades necessárias. Depois de 12 investigações detalhadas no mesmo

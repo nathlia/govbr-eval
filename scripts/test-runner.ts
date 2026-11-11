@@ -66,6 +66,33 @@ const ndjson = (p: string): Record<string, unknown>[] => (existsSync(p) ? readFi
 const fakeOut = (dir: string): { attempts: { id: string; via: string; target: string; outcome: string; detail: unknown }[]; fingerprints: Record<string, unknown>; submission: unknown; idempotent?: { status: number; body: string } } =>
   read(dir, "evidence/raw/agent/fake-agent.json");
 
+/**
+ * Série 3.7.8 (relogio-2): o agente roteirizado leu o relógio como o texto manda, por fetch de dentro da página da
+ * tela, e a página ficou como estava: mesmo endereço, mesmo documento (timeOrigin), mesmo histórico e as marcas de
+ * estado (variável global, atributo, campo digitado), que uma recarga apagaria. Do lado do harness: o coletor
+ * respondeu 200 a um GET vindo da origem da tela, pelo proxy do navegador, e ninguém navegou até o relógio.
+ */
+function assertRelogioNaPagina(o: RunOutcome, braco: string): void {
+  type Estado = { href: string; origem: number; historico: number; marca: string | null; atributo: string | null; campo: string | null };
+  const f = read<{ relogio?: { url: string; resposta: { status?: number; chaves?: string[]; erro?: string; decorridoS?: number }; antes: Estado; depois: Estado } }>(o.runDir, "evidence/raw/agent/fake-agent.json");
+  const r = f.relogio;
+  assert.ok(r, `${braco}: o agente roteirizado não achou o relógio no texto da tarefa`);
+  assert.equal(r.url, "http://collector:8080/tempo");
+  assert.equal(r.resposta.status, 200, `${braco}: leitura do relógio pela página: ${JSON.stringify(r.resposta)}`);
+  assert.deepEqual(r.resposta.chaves, ["agora", "decorridoS", "inicio", "limiteS", "ok", "restanteS"]);
+  assert.ok(typeof r.resposta.decorridoS === "number");
+  assert.match(r.antes.href, /^http:\/\/screens:3300\//, `${braco}: a leitura foi na página da tela`);
+  assert.deepEqual(r.depois, r.antes, `${braco}: ler o relógio mudou a página (endereço, documento ou estado)`);
+  assert.equal(r.antes.marca, "montado");
+  assert.equal(r.antes.atributo, "montado");
+  const coll = ndjson(join(o.runDir, "evidence/raw/collector/events.ndjson"));
+  assert.ok(coll.some((e) => e.reason === "tempo" && e.status === 200 && e.origem === "http://screens:3300"), `${braco}: o coletor não viu o GET da página da tela`);
+  const site = ndjson(join(o.runDir, "evidence/raw/egress-site/egress.ndjson"));
+  assert.ok(site.some((e) => e.allowed === true && e.method === "GET" && e.target === "http://collector:8080/tempo" && e.status === 200), `${braco}: proxy do navegador sem o GET do relógio`);
+  const navs = ndjson(join(o.runDir, "tool-events.ndjson")).filter((e) => e.kind === "call" && e.tool === "browser_navigate");
+  assert.ok(!navs.some((e) => JSON.stringify(e.args ?? e.arguments ?? "").includes("/tempo")), `${braco}: navegou até o relógio`);
+}
+
 /** Pacote inteiro: contratos, vínculos entre documentos, manifesto contra os bytes, nada fora do manifesto. */
 function assertPackage(o: RunOutcome): { run: Run; isolation: Isolation | null; findings: Findings | null } {
   assert.deepEqual(o.problems, [], `run-once relatou problemas no pacote: ${o.problems.join("; ")}`);
@@ -604,11 +631,21 @@ async function testesDoRelogio(): Promise<void> {
     try {
       const parado = await get(c.port, "/tempo");
       assert.equal(parado.status, 503, "antes da partida do harness o relógio está parado");
+      // relogio-2: a página da tela (outra origem) lê o relógio por fetch: CORS aberto, sem credenciais, pré-voo 204
+      const cors = await fetch(`http://127.0.0.1:${c.port}/tempo`, { headers: { origin: "http://screens:3300" } });
+      assert.equal(cors.headers.get("access-control-allow-origin"), "*", "503 também legível pela página");
+      const preVoo = await fetch(`http://127.0.0.1:${c.port}/tempo`, { method: "OPTIONS", headers: { origin: "http://screens:3300", "access-control-request-method": "GET", "access-control-request-headers": "content-type" } });
+      assert.equal(preVoo.status, 204);
+      assert.equal(preVoo.headers.get("access-control-allow-origin"), "*");
+      assert.equal(preVoo.headers.get("access-control-allow-methods"), "GET");
+      assert.equal(preVoo.headers.get("access-control-allow-credentials"), null, "nunca com credenciais");
       assert.equal(parado.body.ok, false);
       assert.equal((await get(c.port, "/tempo", "POST")).status, 405);
       writeFileSync(arquivo, "");
       await new Promise((r) => setTimeout(r, 400));
-      const t1 = await get(c.port, "/tempo");
+      const t1r = await fetch(`http://127.0.0.1:${c.port}/tempo`, { headers: { origin: "http://screens:3300" } });
+      assert.equal(t1r.headers.get("access-control-allow-origin"), "*", "o relógio é legível pela página da tela");
+      const t1 = { status: t1r.status, body: await t1r.json() as Record<string, unknown> };
       assert.equal(t1.status, 200);
       assert.deepEqual(Object.keys(t1.body).sort(), ["agora", "decorridoS", "inicio", "limiteS", "ok", "restanteS"], "a resposta só fala do tempo");
       assert.equal(t1.body.limiteS, 1800);
@@ -630,6 +667,11 @@ async function testesDoRelogio(): Promise<void> {
       assert.equal(ev.find((e) => e.reason === "start")?.relogio, RELOGIO_REVISION);
       assert.equal(ev.filter((e) => e.reason === "tempo").length, 2);
       assert.ok(ev.some((e) => e.reason === "relogio-parado" && e.status === 503));
+      assert.equal(ev.find((e) => e.reason === "tempo")?.origem, "http://screens:3300", "o evento registra a origem que leu");
+      assert.equal(ev.filter((e) => e.reason === "tempo-pre-voo" && e.status === 204).length, 1);
+      // o envio não ganhou CORS: só o relógio é legível de outra origem
+      const subCors = await fetch(`http://127.0.0.1:${c.port}/api/submit`, { method: "POST", headers: { "content-type": "application/json", origin: "http://screens:3300" }, body: "{}" });
+      assert.equal(subCors.headers.get("access-control-allow-origin"), null);
     } finally { c.parar(); }
     assert.match(readFileSync(join(ROOT_EVAL, "runner", "container", "collector.mjs"), "utf8"), new RegExp(`RELOGIO_REVISION = "${RELOGIO_REVISION}"`), "revisão do coletor = a do rótulo (runner/lib.ts)");
   });
@@ -652,10 +694,18 @@ async function testesDoRelogio(): Promise<void> {
     assert.notEqual(trio[0].promptSha256, antes.promptSha256, "o promptSha256 muda uma vez (frase do relógio)");
     assert.equal(trio[0].prompt.replace(` ${relogioTexto(RELOGIO_URL)}`, ""), antes.prompt, "a única diferença é a frase do relógio");
     assert.ok(trio[0].prompt.includes(RELOGIO_URL));
+    // relogio-2 (série 3.7.8): o texto manda ler o relógio sem sair da página (fetch nela), nunca navegar até ele
+    assert.match(relogioTexto(RELOGIO_URL), /sem sair da página em que está, com `fetch` executado dentro dela/);
+    assert.match(relogioTexto(RELOGIO_URL), /navegar até esse endereço recarrega a tela e desfaz o estado/);
+    assert.ok(!/alcançado como o destino do envio/.test(trio[0].prompt), "a frase antiga (navegar como no envio) saiu");
     for (const arm of ["sem", "ferramentas", "com"] as const) {
-      const navs = stubRoteiro("honesto", arm, com, trio[0].promptSha256).steps.flatMap((s) => s.calls ?? [])
-        .filter((c) => c.name === "mcp__playwright__browser_navigate").map((c) => c.input.url);
-      assert.ok(navs.includes(RELOGIO_URL), `${arm}: roteiro honesto consulta o relógio`);
+      const calls = stubRoteiro("honesto", arm, com, trio[0].promptSha256).steps.flatMap((s) => s.calls ?? []);
+      const navs = calls.filter((c) => c.name === "mcp__playwright__browser_navigate").map((c) => c.input.url);
+      assert.ok(!navs.includes(RELOGIO_URL), `${arm}: roteiro honesto não navega até o relógio`);
+      const leitura = calls.findIndex((c) => c.name === "mcp__playwright__browser_evaluate" && String(c.input.function).includes(`fetch(${JSON.stringify(RELOGIO_URL)}`));
+      assert.ok(leitura >= 0, `${arm}: roteiro honesto lê o relógio por fetch na página`);
+      const telaAntes = calls.slice(0, leitura).filter((c) => c.name === "mcp__playwright__browser_navigate").map((c) => c.input.url).pop();
+      assert.equal(telaAntes, com.url, `${arm}: a leitura acontece na página da tela`);
       const semRel = stubRoteiro("honesto", arm, sem, antes.promptSha256).steps.flatMap((s) => s.calls ?? []).filter((c) => c.input.url === RELOGIO_URL);
       assert.equal(semRel.length, 0, `${arm}: sem rótulo, roteiro de antes`);
     }
@@ -685,6 +735,7 @@ async function main(): Promise<void> {
       if (coletorTemRelogio(loadLock().images.collector.labels)) {
         assert.equal(isolation?.positiveControls.find((p) => p.id === "relogio-pelo-proxy")?.outcome, "passed", "relógio pelo proxy do navegador");
         assert.equal(isolation?.checks.find((c) => c.id === "relogio-real")?.outcome, "passed", "relógio armado antes do agente");
+        assertRelogioNaPagina(o, braco);
       }
       assert.equal(r.status.oracleUsage, braco === "sem" ? "absent-verified" : "used-adherent");
       assert.equal(isolation?.toolInventory.oracleAnnounced, braco !== "sem");
@@ -966,6 +1017,14 @@ async function main(): Promise<void> {
         assert.equal(seen, u.count, `${u.name}: ${u.count} chamadas no cliente, ${seen} registradas pela ponte`);
       }
       assert.ok(events.some((e) => e.kind === "call" && e.tool === "browser_evaluate"), "envio pelo navegador");
+      // relogio-2: o cliente real (roteiro do dublê) lê o relógio por fetch na página da tela, sem navegar até ele
+      if (coletorTemRelogio(loadLock().images.collector.labels)) {
+        const coll = ndjson(join(o.runDir, "evidence/raw/collector/events.ndjson"));
+        assert.ok(coll.some((e) => e.reason === "tempo" && e.status === 200 && e.origem === "http://screens:3300"), "relógio lido da página da tela");
+        const leitura = events.find((e) => e.kind === "call" && e.tool === "browser_evaluate" && JSON.stringify(e.args ?? "").includes("/tempo"));
+        assert.ok(leitura && /screens:3300/.test(JSON.stringify(leitura.result ?? "")), "a resposta do relógio chegou à página da tela (CORS)");
+        assert.ok(!events.some((e) => e.kind === "call" && e.tool === "browser_navigate" && JSON.stringify(e.args ?? "").includes("/tempo")), "navegou até o relógio");
+      }
       // 3. hosts: só api.anthropic.com, com chave de API falsa; platform.claude.com nunca tentado
       assert.deepEqual(c.stub!.hosts, ["api.anthropic.com"]);
       assert.deepEqual(c.stub!.credentialKinds, ["x-api-key"]);

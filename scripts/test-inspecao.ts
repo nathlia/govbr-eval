@@ -20,7 +20,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { CONTRACTS_DIR, type Findings, type FindingsV2, type InspectionLedger } from "../contracts/index";
 import { coletorAceitaClausulas, collectorFindingsContract, skillPedeClausulas, coletorConfereRotas } from "../runner/run-once";
-import { mixedRouteErrors, routeKey, ROUTE_GUARD_VERSION } from "../runner/container/route-guard.mjs";
+import { MIXED_ROUTES_MESSAGE, mixedRouteErrors, routeKey, ROUTE_GUARD_VERSION } from "../runner/container/route-guard.mjs";
 import { collectorInspectionRevisionOf } from "../runner/build-images";
 import { INSPECTION_CLAUSES_REVISION } from "../contracts/index";
 import { ROOT } from "./adjudication";
@@ -400,6 +400,13 @@ await test("B1: coletor recusa mistura antes de aceitar, preserva recusa e aceit
     const refused = await post(r);
     assert.equal(refused.status, 400);
     assert.ok(JSON.stringify(refused.body).includes("mixed-routes"));
+    // 1.0.1: a recusa diz o que fazer com o fato da outra rota (achado próprio, enviado à parte), não só "separe"
+    const msg = (refused.body as { errors: { message: string }[] }).errors[0].message;
+    assert.equal(msg, MIXED_ROUTES_MESSAGE);
+    assert.match(msg, /outra rota ou estado é um achado próprio dessa rota ou estado/);
+    assert.match(msg, /envie-o como achado separado/);
+    assert.match(msg, /em vez de juntá-lo ao texto de um achado de outra rota/);
+    assert.equal(ROUTE_GUARD_VERSION, "collector-route-guard-1.0.1");
     assert.equal(existsSync(join(out, "findings.json")), false);
     assert.ok(readFileSync(join(out, "refused/001.json"), "utf8").includes("S-two"));
     r.findings[0].evidence = ["S-one"];

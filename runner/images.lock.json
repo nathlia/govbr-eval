@@ -1,16 +1,16 @@
 {
   "lockVersion": 1,
-  "builtAt": "2026-11-10T21:29:07.215Z",
+  "builtAt": "2026-11-10T23:55:27.570Z",
   "base": {
     "ref": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
     "node": "24.21.0"
   },
   "images": {
     "agent": {
-      "tag": "govbr-runner-agent:1.0.0-mcp0.0.70-cc2.1.288-c3cadbde2650f",
-      "id": "sha256:6646f57e13cb4935f5abaf7548f20452606fbf6e0339aaed8552804b87bce3ab",
+      "tag": "govbr-runner-agent:1.0.0-mcp0.0.70-cc2.1.288-c594890d2b248",
+      "id": "sha256:9b690882a26a491421d883f7e601d48f20faab80cd28f0fd502f1054bbe7ba7d",
       "labels": {
-        "govbr.agent.content-sha256": "3cadbde2650f2f12b9fc67f90d93357a71498d79cb9e38168edf5a17887fb2c1",
+        "govbr.agent.content-sha256": "594890d2b248689005fdce30db9e6b5d3f46e02b427c36f4f0e7e437cd82cafd",
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
         "govbr.claude-code": "2.1.288",
         "govbr.playwright-mcp": "0.0.70",
@@ -51,14 +51,14 @@
     },
     "collector": {
       "tag": "govbr-runner-collector:1.0.0",
-      "id": "sha256:2eb16d438db7d8ea86c6f91ab1cec1f42d383f267bfe160d04298726c18e4ff6",
+      "id": "sha256:b6b5259d6175b2b8932cfafa250e761ce13afc580915e421bdb926037d3b8201",
       "labels": {
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
         "govbr.collector.contracts-sha256": "11484e688cfbac38676a0252e515e8c41af5d851d261b06f6177f60fbbfb1186",
         "govbr.collector.findings-contracts": "findings.v1,findings.v2",
         "govbr.collector.inspection-revision": "inspection.v1+clauses-1",
-        "govbr.collector.relogio": "relogio-1",
-        "govbr.collector.route-guard": "collector-route-guard-1.0.0",
+        "govbr.collector.relogio": "relogio-2",
+        "govbr.collector.route-guard": "collector-route-guard-1.0.1",
         "govbr.collector.schemas": "44b8a0f21fae0b3bc55ba6eba10e8c937db47e37f82121b1c3c26537df233326",
         "govbr.runner.image": "collector",
         "govbr.runner.version": "runner-isolado-1.0.0"

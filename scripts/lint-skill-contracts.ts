@@ -71,6 +71,9 @@ requireText("avaliar-tela", avaliar, [
   "cada situação distinta", "ler um estado não é medi-lo", "sem elas, meça-o pelo navegador",
   "registre o resultado em `clauses`", "`medida`: cumprida", "`violada`: não cumprida", "`nao-se-aplica`",
   "Compare as instâncias do mesmo componente", "não encerre enquanto houver", "horário de início",
+  // Série 3.7.8 (decisão do assistente de 11/11, D-18): pendência aberta devolvida por ferramenta é decidida ou vira
+  // limitação com motivo antes de encerrar; só procedimento, igual nos três braços (o sem não recebe pendência).
+  "toda pendência que ela ainda der como", "registrada em `limitations`, com o motivo",
 ]);
 for (const forbidden of ["../_shared/", "evaluation-protocol.md", "leia o arquivo", "Antes de agir, leia"]) {
   if (avaliar.includes(forbidden)) failures.push(`avaliar-tela: não pode pedir leitura de arquivo ('${forbidden}')`);
@@ -87,6 +90,7 @@ const avaliarWords = words(avaliar);
 // Lista única 3.7.2 (B1–B4): registro de cada situação, estado lido = estado medido, `clauses` (procedimento + contrato +
 // exemplo), comparação entre instâncias e encerramento pelo tempo; ~200 palavras, iguais nos três braços; meta 1400 → 1600.
 // Lista única 3.7.3 B2: orçamento de resposta condicional e tipo do identificador da cláusula, sem conhecimento normativo.
+// Série 3.7.8: passo 9 (pendência aberta decidida ou declarada antes de encerrar), ~40 palavras; cabe na meta 1700.
 if (avaliarWords < 800 || avaliarWords > 1700) failures.push(`avaliar-tela: ${avaliarWords} palavras; meta 800–1700`);
 
 const screenWords = words(shared) + words(screen);

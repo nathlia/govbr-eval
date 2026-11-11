@@ -4,6 +4,9 @@
  *   estado da análise · por execução: braço, técnico, submissão, isolamento, uso do oráculo, cartões gerados, janelas
  *   declaradas nos cartões, pontuação preparada · cenas do pacote · unidades sem nenhum cartão NA CENA DELAS (0 por
  *   construção, o defeito de 02/10: agente em 1440 e unidades em 1280).
+ * Série 3.7.8 (dev-375-b-01 p01, cena `detalhe-menu`): unidade cuja cena não tem cartão resolvido, mas tem cartão de
+ * agente `a-decidir` cujo seletor resolve nela (`segmentos[].scene`, a cena que o juiz pode escolher), não é zero por
+ * construção: sai à parte (`unidadesSoComCartaoADecidir`), sem defeito. O defeito fica para a unidade sem nenhum dos dois.
  * Nunca imprime texto de achado, unidades confirmadas, recall, precisão nem comparações. Código 2 = defeito técnico.
  *
  *   npx tsx scripts/sinais-tecnicos.ts PASTA_DA_ANALISE [--json SAIDA.json]
@@ -18,8 +21,11 @@ interface Exec { braco: string; tecnico: { status: string; submissao: string }; 
   /** D-164: isolamento `failed` resgatado na análise (campanha dev-*); só aparece quando houve resgate. */
   isolamentoResgatado?: { decisao: string } }
 interface Pkg { scenes: { id: string }[]; units: { id: string; scene: string }[]; runs: { kind: string; config: { oracleProfile?: string } | null; cardIds: string[] }[];
-  cards: { id: string; origin: string; scene: string; state?: { viewport?: { width: number; height: number } | null } | null }[] }
-export interface Sinais { analise: string; execucoes: Record<string, unknown>[]; cenas: string[]; unidadesZeroPorConstrucao: number; defeitos: string[] }
+  cards: { id: string; origin: string; scene: string; state?: { viewport?: { width: number; height: number } | null } | null;
+    segmentos?: { scene: string }[] }[] }
+export interface Sinais { analise: string; execucoes: Record<string, unknown>[]; cenas: string[]; unidadesZeroPorConstrucao: number;
+  /** Unidades sem cartão resolvido na cena delas, mas com cartão `a-decidir` ligável a ela: informativo, não é defeito. */
+  unidadesSoComCartaoADecidir: number; cenasSoComCartaoADecidir: string[]; defeitos: string[] }
 
 const PERFIL: Record<string, string> = { none: "sem", "knowledge-free": "ferramentas", evaluation: "com" };
 
@@ -46,15 +52,23 @@ export function sinaisTecnicos(dir: string): Sinais {
   });
   const cenas = pkg?.scenes.map(c => c.id) ?? [];
   for (const c of cenas) if (!c.startsWith(JANELA)) defeitos.push(`cena ${c} fora da janela ${JANELA}`);
-  const cenasComCartao = new Set(pkg?.cards.filter(c => c.origin === "agente").map(c => c.scene) ?? []);
-  const zero = pkg ? pkg.units.filter(u => !cenasComCartao.has(u.scene)).length : 0;
+  const doAgente = pkg?.cards.filter(c => c.origin === "agente") ?? [];
+  const cenasComCartao = new Set(doAgente.map(c => c.scene));
+  // cartão `a-decidir`: o seletor resolve em mais de uma cena da janela e o juiz escolhe a cena na decisão
+  const cenasADecidir = new Set(doAgente.filter(c => c.scene.startsWith("a-decidir:")).flatMap(c => (c.segmentos ?? []).map(x => x.scene)));
+  const semResolvido = pkg ? pkg.units.filter(u => !cenasComCartao.has(u.scene)) : [];
+  const soADecidir = semResolvido.filter(u => cenasADecidir.has(u.scene));
+  const zero = semResolvido.length - soADecidir.length;
   if (pkg && zero) defeitos.push(`${zero} unidade(s) sem nenhum cartão de agente na cena delas (0 por construção)`);
-  return { analise: s.analise.estado, execucoes, cenas, unidadesZeroPorConstrucao: zero, defeitos };
+  return { analise: s.analise.estado, execucoes, cenas, unidadesZeroPorConstrucao: zero, unidadesSoComCartaoADecidir: soADecidir.length,
+    cenasSoComCartaoADecidir: [...new Set(soADecidir.map(u => u.scene))].sort(), defeitos };
 }
 
 /** As linhas que o terminal mostra (as mesmas no CLI daqui e no `coleta:trio`); nada além dos sinais. */
 export function linhasDosSinais(r: Sinais): string[] {
-  return [`análise ${r.analise} · cenas ${r.cenas.join(", ") || "—"} · unidades 0 por construção: ${r.unidadesZeroPorConstrucao}`,
+  return [`análise ${r.analise} · cenas ${r.cenas.join(", ") || "—"} · unidades 0 por construção: ${r.unidadesZeroPorConstrucao}` +
+    (r.unidadesSoComCartaoADecidir ? ` · unidades só com cartão a-decidir ligável (não é defeito): ${r.unidadesSoComCartaoADecidir} ` +
+      `(${r.cenasSoComCartaoADecidir.join(", ")})` : ""),
     ...r.execucoes.map(e => `  ${JSON.stringify(e)}`),
     r.defeitos.length ? `DEFEITO TÉCNICO (${r.defeitos.length}):\n  ${r.defeitos.join("\n  ")}` : "sinais técnicos ok"];
 }

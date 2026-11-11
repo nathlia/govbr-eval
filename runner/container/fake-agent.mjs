@@ -31,6 +31,8 @@ const URL_TELA = entrada("URL da tela");
 const envio = /navegue até (\S+) e, a partir dessa página, faça `POST` em `([^`]+)`/.exec(prompt);
 if (!envio) throw new Error("destino de envio ausente no texto da tarefa");
 const [ORIGEM, CAMINHO] = [envio[1], envio[2]];
+/** Relógio real (relogio-2): o endereço que o texto da tarefa anuncia, lido como o texto manda (fetch na página). */
+const RELOGIO = /relógio real desta execução: um `GET` em (https?:\/\/\S+) /.exec(prompt)?.[1] ?? null;
 
 // ── MCP
 const clients = {};
@@ -74,6 +76,30 @@ const FINGERPRINT = `async () => {
   return JSON.stringify({ local: Object.keys(localStorage).sort(), session: Object.keys(sessionStorage).sort(), cookie: document.cookie,
     idb, sw, cache, w: innerWidth, h: innerHeight, title: document.title, marker: localStorage.getItem('govbr-marcador') });
 }`;
+/** Estado da página da tela: endereço, origem do documento (muda a cada carga), histórico e marcas que só uma
+ * recarga apaga (variável global, atributo no DOM, valor digitado num campo). */
+const ESTADO = `() => { const c = document.querySelector('input:not([type=hidden]):not([type=checkbox]):not([type=radio]):not([type=submit]), textarea');
+  return JSON.stringify({ href: location.href, origem: performance.timeOrigin, historico: history.length, marca: window.__govbrEstado ?? null,
+    atributo: document.documentElement.getAttribute('data-govbr-estado'), campo: c ? c.value : null }); }`;
+/**
+ * Lê o relógio real como o texto da tarefa manda (série 3.7.8): `fetch` de dentro da página da tela, sem navegar.
+ * Antes, marca o estado da aplicação; depois, confere que nada mudou (nem endereço, nem documento, nem as marcas).
+ */
+async function relogioNaPagina() {
+  if (!RELOGIO) return null;
+  await evaluate(`() => { window.__govbrEstado = 'montado'; document.documentElement.setAttribute('data-govbr-estado', 'montado');
+    const c = document.querySelector('input:not([type=hidden]):not([type=checkbox]):not([type=radio]):not([type=submit]), textarea');
+    if (c) c.value = 'estado-montado'; return 'ok'; }`);
+  const antes = (await evaluate(ESTADO)).value;
+  const r = await evaluate(`async () => { try { const x = await fetch(${JSON.stringify(RELOGIO)}, { cache: 'no-store' }); const b = await x.json();
+    return JSON.stringify({ status: x.status, chaves: Object.keys(b).sort(), decorridoS: b.decorridoS, restanteS: b.restanteS, limiteS: b.limiteS }); }
+    catch (e) { return JSON.stringify({ erro: String(e) }); } }`);
+  const depois = (await evaluate(ESTADO)).value;
+  const leitura = { url: RELOGIO, resposta: r.value ?? { erro: r.text.slice(0, 200) }, antes, depois };
+  out.relogio = leitura;
+  step({ kind: "relogio", ...leitura });
+  return leitura;
+}
 async function viewport() {
   const r = await evaluate("() => JSON.stringify({ width: innerWidth, height: innerHeight })");
   return r.value;
@@ -92,6 +118,7 @@ async function honestFinding() {
   const vp = await viewport();
   step({ kind: "viewport", vp });
   await pw("browser_snapshot", {});
+  await relogioNaPagina();
   const subject = await evaluate("() => { const h = document.querySelector('h1'); return JSON.stringify({ sel: h ? 'h1' : 'body', text: ((h ? h.textContent : document.title) || '').trim().slice(0, 80) }); }");
   const evidence = [];
   if (clients.oracle) {

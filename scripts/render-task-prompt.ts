@@ -28,8 +28,12 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-/** 1.2.0: `limites.relogio` opcional (endereço do relógio real da execução); sem ele, o texto é byte a byte o da 1.1.0. */
-export const RENDERER_VERSION = "render-task-prompt-1.2.0";
+/**
+ * 1.2.0: `limites.relogio` opcional (endereço do relógio real da execução); sem ele, o texto é byte a byte o da 1.1.0.
+ * 1.3.0 (série 3.7.8): a frase do relógio manda lê-lo sem sair da página (`fetch` executado nela); navegar até ele
+ * recarregava a tela e desfazia o estado. Sem relógio, o texto continua o da 1.1.0.
+ */
+export const RENDERER_VERSION = "render-task-prompt-1.3.0";
 export const SKILL_NAME = "avaliar-tela";
 export const SKILL_PATH = join(dirname(fileURLToPath(import.meta.url)), "..", "skills", SKILL_NAME, "SKILL.md");
 
@@ -198,9 +202,10 @@ export function validateTaskInputs(value: unknown): string[] {
  * que as campanhas congelam não muda). Só procedimento: onde perguntar e o que volta; nenhuma pista da tela.
  */
 export function relogioTexto(url: string): string {
-  return `O relógio da página pode não ser o real; para medir o tempo, use o relógio real desta execução: \`GET\` em ${url}, ` +
-    "alcançado como o destino do envio, devolve em JSON o início (`inicio`), o momento atual (`agora`), o tempo decorrido " +
-    "(`decorridoS`) e o restante (`restanteS`), em segundos.";
+  return `O relógio da página pode não ser o real; para medir o tempo, use o relógio real desta execução: um \`GET\` em ${url} ` +
+    "devolve em JSON o início (`inicio`), o momento atual (`agora`), o tempo decorrido (`decorridoS`) e o restante " +
+    "(`restanteS`), em segundos. Consulte-o sem sair da página em que está, com `fetch` executado dentro dela: navegar " +
+    "até esse endereço recarrega a tela e desfaz o estado em que ela estava.";
 }
 
 function formatInputs(t: TaskInputs): Record<(typeof ALL_PLACEHOLDERS)[number], string> {

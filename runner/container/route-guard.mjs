@@ -4,7 +4,14 @@ import { createHash } from "node:crypto";
 import { readFileSync, realpathSync, statSync } from "node:fs";
 import { isAbsolute, join, relative } from "node:path";
 
-export const ROUTE_GUARD_VERSION = "collector-route-guard-1.0.0";
+// 1.0.1 (série 3.7.8): só a mensagem da recusa muda (a regra é a mesma): o fato de outra rota ou estado é achado
+// próprio dela, enviado à parte, e não texto a dobrar num achado de outra rota (dev-375-b-01 p03-com: fatos do
+// detalhe dobrados num achado da lista depois da recusa).
+export const ROUTE_GUARD_VERSION = "collector-route-guard-1.0.1";
+/** Mensagem da recusa `mixed-routes`, exportada para os testes. */
+export const MIXED_ROUTES_MESSAGE = "O mesmo achado cita evidência de rotas diferentes. Um fato observado em outra rota ou estado é um achado " +
+  "próprio dessa rota ou estado: envie-o como achado separado, com a evidência e os passos dele, em vez de juntá-lo ao " +
+  "texto de um achado de outra rota. Depois envie o relatório novamente.";
 const MAX_EVENTS = 16 * 1024 * 1024;
 const MAX_PAYLOAD = 2 * 1024 * 1024;
 const TOOLS = new Set(["scan_page", "get_finding_details"]);
@@ -125,7 +132,7 @@ export function mixedRouteErrors(report, directory) {
       }
     }
     if (routes.size > 1) errors.push({ path: `/report/findings/${i}/evidence`, code: "mixed-routes",
-      message: "O mesmo achado cita evidência de rotas diferentes; separe um achado por rota e envie novamente.",
+      message: MIXED_ROUTES_MESSAGE,
       routes: [...routes].map(([route, cited]) => ({ route, refs: [...cited] })) });
   });
   return { errors: errors.slice(0, 10), checked: true, unavailable };
