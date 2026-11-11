@@ -1,6 +1,6 @@
 {
   "lockVersion": 1,
-  "builtAt": "2026-11-11T04:24:07.651Z",
+  "builtAt": "2026-11-11T05:58:06.083Z",
   "base": {
     "ref": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
     "node": "24.21.0"
@@ -19,20 +19,20 @@
       }
     },
     "oracle": {
-      "tag": "govbr-runner-oracle:3.7.7-e9f7fc6facdb",
-      "id": "sha256:593c22a6596e41c967b6efd0c9557401c3b54eeb6b12fa447726e2b0703a6234",
+      "tag": "govbr-runner-oracle:3.7.10-baaf4932a72f",
+      "id": "sha256:86f916f2f61fdc580fe74c47c0fb56b20e6c934fa5fdb297457cb9f12a8e40f8",
       "labels": {
-        "govbr.agent.content-sha256": "3cadbde2650f2f12b9fc67f90d93357a71498d79cb9e38168edf5a17887fb2c1",
+        "govbr.agent.content-sha256": "90c12ac81308a89ee2856cba219dab73728133498a96814d794eee344ac7f192",
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
         "govbr.claude-code": "2.1.288",
-        "govbr.oracle.commit": "d7644ea84904711c14d891b9ab5079839984a64e",
+        "govbr.oracle.commit": "edb10cde3e56b4b24f8b02fb6b0339cdc957e88b",
         "govbr.oracle.data-sha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
-        "govbr.oracle.dist-sha256": "e9f7fc6facdb59e8cf360a3de314a3a6e39394a9c323b255b8f15d24b7a33759",
+        "govbr.oracle.dist-sha256": "baaf4932a72f59152e680a639a6ef140a6ef3d1c660b5b42b63e5b5ee11684c1",
         "govbr.oracle.image-data-excluded": "retrieval/embeddings/",
         "govbr.oracle.image-data-sha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
         "govbr.oracle.package": "govbr-ds-validator-server",
         "govbr.oracle.retrieval-mode": "lexical-default",
-        "govbr.oracle.version": "3.7.7",
+        "govbr.oracle.version": "3.7.10",
         "govbr.playwright-mcp": "0.0.70",
         "govbr.runner.image": "oracle",
         "govbr.runner.version": "runner-isolado-1.0.0"
@@ -82,8 +82,8 @@
     "claudeCode": "2.1.288 (Claude Code)",
     "oracle": {
       "package": "govbr-ds-validator-server",
-      "version": "3.7.7",
-      "distSha256": "e9f7fc6facdb59e8cf360a3de314a3a6e39394a9c323b255b8f15d24b7a33759",
+      "version": "3.7.10",
+      "distSha256": "baaf4932a72f59152e680a639a6ef140a6ef3d1c660b5b42b63e5b5ee11684c1",
       "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637"
     },
     "telas": {

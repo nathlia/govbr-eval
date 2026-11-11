@@ -111,6 +111,22 @@ foi construída de um clone limpo no commit `e15b1b1` (3.4.1; tools/list igual a
 `data/`), o mesmo estado que o checkout por SHA do CI produz: `GOVBR_VALIDATOR_DIR=<clone>` no build e no
 `run-once`/testes. O checkout de trabalho do validator só serve ao preflight se o `dist/` e o `data/` dele
 forem os do commit (sem arquivos de builds antigos nem `data/models/`).
+Rodada 3.7.10 (lock de 2026-11-11T05:58, a das campanhas `dev-3710-*`): `govbr-runner-oracle:3.7.10-baaf4932a72f`
+(`sha256:86f916f2…`, commit `edb10cd`, dist `baaf4932…`, `dataSha256` `b4b2eceb…` igual; da 3.7.8 à 3.7.10 nenhuma foi a
+campanha: D-190 estados recolhidos com receita e upload-paths também no knowledge-free; 3.7.9 forma só-ids com código e
+seletor, estado já visto nasce fechado, scan parcial não fecha, nada atrás de diálogo modal; 3.7.10 checks do mesmo estado
+somados e `omitted[].alreadyMeasuredIn`), sobre a base do agente `…-c90c12ac81308`, construída com `--so oracle` de uma
+worktree destacada limpa (`.tmp-eval/validator-3710r`, `npm ci` + `tsc` com `dist/` apagado antes) por
+`.tmp-eval/trocar-oraculo.sh <sha>` (worktree, build, tools/list contra os pins, imagem, gerador e scripts, sondagem e portão).
+tools/list e instructions iguais nos seis perfis (a 3.7.8, a 3.7.9 e a 3.7.10 medidas lado a lado), pins
+`TOOLS_LIST_SHA256_3_7_3` seguem e conferidos dentro da imagem. Detector 1.3.7 remedido em respostas reais knowledge-free
+da 3.7.10 (A, A2, B, receitas seguidas, tetos padrão/20 000/4 000/2 000): 0 sem explicação; `statesIncomplete` e
+`alreadyMeasuredIn` só aparecem no perfil evaluation (no knowledge-free o scan roda só o axe e `omitted` é vazio) e trazem
+ids, checks e scanIds, sem seletor. Portão de vazamento PASSA 0 em 46 sessões / 655 respostas, trava 0, canários 127/127.
+`test:runner` 44/44 em três pedaços `--so`, um de cada vez e sozinho na máquina (por falta de memória: 21 + 11 + 12),
+`test:pipeline-t4` 37/37, `test:avaliar-tela` 14/14, `test:inspecao` 28/28, `test:sinais-tecnicos` 5/5,
+`test:coleta-trio` 7/7, `tsc` e `lint:protocol`/`lint:skills` ok (com a cópia de teste do pacote de coleta com a skill
+`8139bb0c` em `GOVBR_TELAS_DIR`).
 Rodada 3.7.7 (lock de 2026-11-10T21:29): `govbr-runner-oracle:3.7.7-e9f7fc6facdb` (`sha256:593c22a6…`,
 commit `d7644ea`, dist `e9f7fc6facdb…`, `dataSha256` `b4b2eceb…` igual ao da 3.7.5; novo desde a 3.7.5: bloco
 `specification` no 1º `scan_page`, check `spec-part-token` e pendência `observed-required` com ids `O-NN`, D-188, e os

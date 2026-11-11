@@ -24,7 +24,7 @@ export const temOraculo = (b: Braco): boolean => PERFIL_DO_BRACO[b] !== null;
 /**
  * Ferramentas que cada perfil registra, em ordem alfabética, e o sha256 de `JSON.stringify(tools)` do
  * tools/list (cliente MCP 1.29.0, o mesmo da ponte). Os pins VIGENTES (só para campanhas NOVAS) são os da 3.7.3
- * (TOOLS_LIST_SHA256_3_7_3, acima da tabela da 3.6.1), vigentes também na 3.7.4 (844b43c), na 3.7.5 (a202245), na 3.7.6 (8603d78) e na 3.7.7 (d7644ea); antes, os do validator 3.6.1 (3e0897b), medidos em 2026-10-31; vigentes também na 3.6.2 (3801924), que não muda tools/list nem instructions contra o dist/ construído de 3e0897b com o
+ * (TOOLS_LIST_SHA256_3_7_3, acima da tabela da 3.6.1), vigentes também na 3.7.4 (844b43c), na 3.7.5 (a202245), na 3.7.6 (8603d78), na 3.7.7 (d7644ea), na 3.7.8 (a14201d), na 3.7.9 (c3d6dde) e na 3.7.10 (edb10cd); antes, os do validator 3.6.1 (3e0897b), medidos em 2026-10-31; vigentes também na 3.6.2 (3801924), que não muda tools/list nem instructions contra o dist/ construído de 3e0897b com o
  * SDK 1.29.0 da ponte (stdio, GOVBR_VALIDATOR_TOOL_PROFILE=<perfil>, sem GOVBR_RETRIEVAL_MODE = busca
  * léxica padrão, sha256 de JSON.stringify(tools)) e de novo dentro da imagem do oráculo travada.
  * Da 3.6.0 para a 3.6.1 mudaram evaluation, full, normative e deterministic; knowledge-free e evidence
@@ -54,6 +54,10 @@ export const temOraculo = (b: Braco): boolean => PERFIL_DO_BRACO[b] !== null;
  * medida e não decidida, D-32, e do token por parte; a O-NN fecha pelo caminho que nomeia, D-189): tools/list e instructions
  * iguais nos seis perfis (medidos em 2026-11-10 pelo stdio com o SDK 1.29.0 contra os dist/ construídos de 8603d78 e
  * d7644ea, lado a lado com o de a202245) e de novo dentro da imagem do oráculo travada (evaluation e knowledge-free).
+ * Vigentes também na 3.7.8 (a14201d, D-190), na 3.7.9 (c3d6dde, D1–D4 do teste à mão da 3.7.8; as duas sem campanha) e na
+ * 3.7.10 (edb10cd, D5: checks do mesmo estado somados, alreadyMeasuredIn): tools/list
+ * e instructions iguais nos seis perfis (medidos em 2026-11-11 pelo stdio com o SDK 1.29.0 contra os dist/ construídos de
+ * a14201d, c3d6dde e edb10cd, lado a lado com o de d7644ea) e de novo dentro da imagem do oráculo travada (evaluation e knowledge-free).
  */
 export const TOOLS_LIST_SHA256_3_7_3 = {
   "knowledge-free": "5b9c59aaa490f5de2a4a497eda8a2e3dbedd25b2a8288fed8eb049f7233d40dc",
