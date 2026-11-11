@@ -317,7 +317,7 @@ async function testesSemDocker(): Promise<void> {
     assert.equal(limpas.inventario.status, "ok", JSON.stringify(limpas.inventario));
     assert.equal(limpas.semExplicacao.length, 0, JSON.stringify(limpas.semExplicacao));
     assert.equal(limpas.porClasse.pagina, 7, JSON.stringify(limpas.porClasse));
-    assert.ok(limpas.canarios.every((c) => c.ok) && limpas.canarios.length === 127, JSON.stringify(limpas.canarios));
+    assert.ok(limpas.canarios.every((c) => c.ok) && limpas.canarios.length === 132, JSON.stringify(limpas.canarios));
     // falha fechada: as mesmas formas sem a tela (sem inventário do DOM) não são perdoadas
     const semTela = await varrerPayloadsDoOraculo({ ...base, tela: null, eventos: formas });
     assert.equal(semTela.inventario.status, "sem-tela");
@@ -397,7 +397,7 @@ async function testesSemDocker(): Promise<void> {
     const vinculado = await varrerPayloadsDoOraculo({ ...base, eventos: [scan(1, "S-page-003", sel), ledger(2, { scanId: "S-page-003", view: "families" }, "S-page-003")] });
     assert.equal(vinculado.semExplicacao.length, 0, JSON.stringify(vinculado.semExplicacao));
     assert.ok(vinculado.perdoadas.some((p) => p.tool === "get_finding_details" && p.path === "$.ledger.state.recipe.actions[*].selector" && p.class === "eco"), JSON.stringify(vinculado.perdoadas));
-    assert.ok(vinculado.canarios.every((c) => c.ok) && vinculado.canarios.length === 127, JSON.stringify(vinculado.canarios));
+    assert.ok(vinculado.canarios.every((c) => c.ok) && vinculado.canarios.length === 132, JSON.stringify(vinculado.canarios));
     // estrito: ledger pedido ANTES do scan, de outro scanId, sem scanId (ids) e com o seletor reescrito continuam sem explicação
     const conta = async (eventos: unknown[]) => (await varrerPayloadsDoOraculo({ ...base, eventos: eventos as Record<string, unknown>[] })).semExplicacao.filter((u) => u.tool === "get_finding_details").reduce((n, u) => n + u.count, 0);
     assert.ok(await conta([ledger(1, { scanId: "S-page-003" }, "S-page-003"), scan(2, "S-page-003", sel)]) > 0, "ledger antes do scan que o criou");
@@ -428,7 +428,7 @@ async function testesSemDocker(): Promise<void> {
     assert.equal(limpa.inventario.status, "ok", JSON.stringify(limpa.inventario));
     assert.equal(limpa.semExplicacao.length, 0, JSON.stringify(limpa.semExplicacao));
     assert.ok(limpa.perdoadas.some((p) => p.class === "pagina" && p.term === "br-button" && p.path === "$.verification.binding.context.trace[*].active" && /1\.3\.3/.test(p.why)), JSON.stringify(limpa.perdoadas));
-    assert.ok(limpa.canarios.every((c) => c.ok) && limpa.canarios.length === 127, JSON.stringify(limpa.canarios.filter((c) => !c.ok)));
+    assert.ok(limpa.canarios.every((c) => c.ok) && limpa.canarios.length === 132, JSON.stringify(limpa.canarios.filter((c) => !c.ok)));
     // falha fechada: sem tela (sem inventário do DOM) a mesma forma fica sem explicação
     const semTela = await varrerPayloadsDoOraculo({ ...base, tela: null, eventos: real });
     assert.ok(semTela.semExplicacao.some((u) => u.term === "br-button" && u.path === "$.verification.binding.context.trace[*].active"), JSON.stringify(semTela.semExplicacao));
@@ -471,7 +471,7 @@ async function testesSemDocker(): Promise<void> {
     assert.equal(limpa.semExplicacao.length, 0, JSON.stringify(limpa.semExplicacao));
     const NM = "$.checksRun.pageLevel.notMeasured[*]";
     assert.equal(limpa.perdoadas.find((p) => p.class === "pagina" && p.term === "br-button" && p.path === NM && /1\.3\.5/.test(p.why))?.count, 2, JSON.stringify(limpa.perdoadas));
-    assert.ok(limpa.canarios.every((c) => c.ok) && limpa.canarios.length === 127, JSON.stringify(limpa.canarios.filter((c) => !c.ok)));
+    assert.ok(limpa.canarios.every((c) => c.ok) && limpa.canarios.length === 132, JSON.stringify(limpa.canarios.filter((c) => !c.ok)));
     // falha fechada: sem tela (sem inventário do DOM) a mesma forma fica sem explicação
     const semTela = await varrerPayloadsDoOraculo({ ...base, tela: null, eventos: real });
     assert.equal(semTela.semExplicacao.find((u) => u.term === "br-button" && u.path === NM)?.count, 2, JSON.stringify(semTela.semExplicacao));
@@ -514,7 +514,7 @@ async function testesSemDocker(): Promise<void> {
     assert.equal(limpa.semExplicacao.length, 0, JSON.stringify(limpa.semExplicacao));
     const LOC = "$.checksRun.pageLevel.notMeasured[*].measured[*].locator";
     assert.equal(limpa.perdoadas.find((p) => p.class === "pagina" && p.term === "br-button" && p.path === LOC && /1\.3\.6/.test(p.why))?.count, 1, JSON.stringify(limpa.perdoadas));
-    assert.ok(limpa.canarios.every((c) => c.ok) && limpa.canarios.length === 127, JSON.stringify(limpa.canarios.filter((c) => !c.ok)));
+    assert.ok(limpa.canarios.every((c) => c.ok) && limpa.canarios.length === 132, JSON.stringify(limpa.canarios.filter((c) => !c.ok)));
     // falha fechada: sem tela (sem inventário do DOM) a mesma folha fica sem explicação
     const semTela = await varrerPayloadsDoOraculo({ ...base, tela: null, eventos: [call(1, "scan_page", medido(real))] });
     assert.equal(semTela.semExplicacao.find((u) => u.term === "br-button" && u.path === LOC)?.count, 1, JSON.stringify(semTela.semExplicacao));
@@ -577,7 +577,7 @@ async function testesSemDocker(): Promise<void> {
     assert.equal(perd("pagina", "$.checksRun.pageLevel.notMeasured[*].recipe.arguments.arrival.expanded"), 1, "chegada no próprio gatilho");
     assert.equal(perd("pagina", "$.checksRun.pageLevel.ids[*]") + perd("pagina", "$.sessionPending.ids[*]"), 2, "forma só-ids da 3.7.9");
     assert.ok(limpa.perdoadas.some((p) => p.class === "pagina" && p.term === "br-list" && p.path === "$.checksRun.pageLevel.notMeasured[*].observed" && /1\.3\.7/.test(p.why)), "alvo do sinal no observed");
-    assert.ok(limpa.canarios.every((c) => c.ok) && limpa.canarios.length === 127, JSON.stringify(limpa.canarios.filter((c) => !c.ok)));
+    assert.ok(limpa.canarios.every((c) => c.ok) && limpa.canarios.length === 132, JSON.stringify(limpa.canarios.filter((c) => !c.ok)));
     // falha fechada: sem tela o gatilho gerado e a forma só-ids ficam sem explicação (o eco da ação do agente continua eco)
     const semTela = await varrerPayloadsDoOraculo({ ...base, tela: null, eventos: [call(1, "scan_page", argsScan, { scanId: "S-page-001", checksRun: { pageLevel: { notMeasured: [{ recipe: receita }, { recipe: receitaGerada }], ids: [`P-07:state-unscanned@${gatilho}`] } } })] });
     assert.equal(semTela.semExplicacao.filter((u) => u.term === "br-button").reduce((n, u) => n + u.count, 0), 3, JSON.stringify(semTela.semExplicacao));

@@ -169,8 +169,19 @@ import { argValues, buildDictionary, classify, exactTokens, hitsInText, leaves, 
  * `P-NN:código[:n][⇒normas]@<seletor>[ · expectedCondition x]`, só state-unscanned e upload-paths); o termo fora do seletor
  * (id, código, normas, condição) fica sem explicação. `statesScanned[*]`/`statesIncomplete[*].id` (`P-NN@<rota>`) e
  * `idsNote` não carregam seletor e não mudam. 127 canários.
+ *
+ * 1.3.8 (dev-3710-b-01 p03-ferramentas, oráculo 3.7.10, tela B vistorias): uma execução falhou o isolamento por UMA
+ * ocorrência, `br-button` em scan_page `$.limitation.detail` = `Passo 6 (click) da receita falhou: not-found. Nenhum elemento
+ * para 'pnip-propesc-detalhes-vistoria br-button[label="Mostrar"] >> nth=0' no passo 6.`: o scan cujo replay falha antes de
+ * medir (status state-not-reached, scanId null) devolve a falha no `limitation` de topo, citando entre aspas o seletor que o
+ * PRÓPRIO AGENTE mandou em `actions[5].selector` (valor inteiro, byte a byte). A regra de citação da 1.3.2 já perdoa a mesma
+ * frase em `$.state.replay.failure.detail`; o caminho de topo não estava declarado. Esta camada declara
+ * `$.limitation.detail` do scan_page na mesma regra (`citado`: o termo só some se TODA ocorrência estiver dentro de um
+ * `actions[*].selector` inteiro desta chamada entre aspas idênticas). O termo também fora da citação, só um prefixo do
+ * seletor citado, um seletor que esta chamada não mandou, e o mesmo caminho noutra ferramenta continuam sem explicação.
+ * Nada da base `data/`. O núcleo (cópia do validator) não muda. Cinco canários novos (132).
  */
-export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.7";
+export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.8";
 
 /**
  * 1.2.0 (D-154): eco do SELETOR DE AÇÃO da mesma chamada. Desde o validator 3.4.3 a resposta encolhida do
@@ -202,6 +213,8 @@ export const ECO_SELETOR_DE_ACAO: Record<string, EcoDeSeletorDeclarado[]> = {
     // o texto da falha do replay CITA entre aspas o seletor do passo que falhou ("'.br-tag.interaction:first-of-type'
     // resolveu 4 elementos…"): eco só se TODA ocorrência do termo está entre aspas idênticas a um seletor do agente
     { arg: "actions[*].selector", paths: ["$.state.replay.failure.detail", "$.state.replay.steps[*].detail"], citado: true },
+    // 1.3.8 (dev-3710-b-01 p03-ferramentas): replay que falha antes de medir devolve a falha no limitation de topo
+    { arg: "actions[*].selector", paths: ["$.limitation.detail"], citado: true },
     // 1.3.7: a receita do estado recolhido parte das ações DESTE scan (a base) + o clique no gatilho
     { arg: "actions[*].selector", paths: [`${RECEITA_DE_ESTADO}.actions[*].selector`] },
     { arg: "actions[*].value", paths: [`${RECEITA_DE_ESTADO}.actions[*].value`] },
@@ -706,6 +719,9 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
   const receitaDeEstado = (actions: unknown[], arrival?: unknown) => JSON.stringify({ checksRun: { pageLevel: { notMeasured: [{ code: "state-unscanned", recipe: { tool: "scan_page", arguments: { url: "http://x/", actions, ...(arrival ? { arrival } : {}) } } }] } } });
   const ledgerDeEstado = (scanId: string, args: unknown) => JSON.stringify({ scanId, view: "observations", observations: [{ data: { code: "state-unscanned", recipe: { tool: "scan_page", arguments: args } } }] });
   const observadoEm = (observed: string) => JSON.stringify({ checksRun: { pageLevel: { notMeasured: [{ code: "state-unscanned", observed }] } } });
+  // 1.3.8: o limitation de topo do scan_page cujo replay falhou (forma real da dev-3710-b-01 p03-ferramentas)
+  const limitacao = (detail: string) => JSON.stringify({ kind: "scan", status: "state-not-reached", scanId: null, limitation: { kind: "action-error", detail } });
+  const selMostrar = `pnip-propesc-detalhes-vistoria ${rootClass}[label="Mostrar"] >> nth=0`;
   const notaEm = (note: string) => JSON.stringify({ scanId: "S-page-001", observations: [{ kind: "not-judged", note }] });
   const prosa = JSON.stringify({ reasons: [{ detail: `Limitação: ${falhou}` }], verification: { detail: `Limitação: ${falhou}`, binding: { state: { failure: { detail: falhou }, limitation: { detail: `Passo 4 (fill) falhou. ${falhou}` } } } } });
   const casos: { nome: string; tool: string; texto: string; args: unknown; page: string | null; espera: Classification; elements?: PageElements | null; scans?: Map<string, unknown> }[] = [
@@ -844,6 +860,12 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
     { nome: "linha na forma norma do upload com normas e condição", tool: "scan_page", texto: pendencia(`P-02:upload-paths:1⇒wcag-3.3.1@${rootClass} > input · expectedCondition upload-refused`), args: {}, page: pageComTag, elements: { tags: new Set([...doEstado.tags, "input"]), classes: doEstado.classes }, espera: "pagina" },
     { nome: "linha na forma norma com o nome também na condição", tool: "scan_page", texto: pendencia(`P-07:state-unscanned:1@${gatilho} · expectedCondition ${rootClass}`), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
     { nome: "linha na forma norma de OUTRO código (contrast-incomplete@…)", tool: "scan_page", texto: pendencia(`P-01:contrast-incomplete:2⇒wcag-1.4.3@${gatilho}`), args: {}, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    // 1.3.8 (dev-3710-b-01 p03-ferramentas): falha do replay citada no limitation de topo do scan_page
+    { nome: "seletor do agente citado no limitation de topo do scan_page (replay falhou antes de medir)", tool: "scan_page", texto: limitacao(`Passo 6 (click) da receita falhou: not-found. Nenhum elemento para '${selMostrar}' no passo 6.`), args: { url: "http://x/", actions: [{ action: "click", selector: "#a" }, { action: "click", selector: selMostrar }] }, page: pageComTag, elements: null, espera: "eco" },
+    { nome: "nome do componente também fora da citação no limitation de topo", tool: "scan_page", texto: limitacao(`O ${rootClass} não apareceu: '${selMostrar}'.`), args: { url: "http://x/", actions: [{ action: "click", selector: selMostrar }] }, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    { nome: "seletor citado no limitation de topo que esta chamada NÃO mandou", tool: "scan_page", texto: limitacao(`Nenhum elemento para '${selMostrar}' no passo 6.`), args: { url: "http://x/", actions: [{ action: "click", selector: "#outro" }] }, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    { nome: "só um prefixo do seletor do agente citado no limitation de topo", tool: "scan_page", texto: limitacao(`Nenhum elemento para '${rootClass}[label="Mostrar"]' no passo 6.`), args: { url: "http://x/", actions: [{ action: "click", selector: selMostrar }] }, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    { nome: "limitation de topo com o seletor do agente citado, noutra ferramenta (verify_finding)", tool: "verify_finding", texto: limitacao(`Nenhum elemento para '${selMostrar}' no passo 6.`), args: { actions: [{ action: "click", selector: selMostrar }] }, page: pageComTag, elements: null, espera: "sem-explicacao" },
   ];
   return casos.map((c) => {
     const { hits } = varrerResposta(dict, c.texto, { tool: c.tool, args: c.args, page: c.page, axe, elements: c.elements ?? null }, { argsDoScan: c.scans ?? new Map() });
