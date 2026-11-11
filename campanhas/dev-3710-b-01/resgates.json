@@ -1,0 +1,28 @@
+{
+  "contract": "resgates.v1",
+  "fixture": false,
+  "campaignId": "dev-3710-b-01",
+  "resgates": [
+    {
+      "slot": "p03-ferramentas",
+      "runId": "20261111-183657-vistorias-ferramentas-4bd1",
+      "pacoteSha256": "5ae9e6daaa97344033fb16e79ede5c41a4cddaa5ac652c995d0e7e8cc96675ad",
+      "detectorQueAcusou": "vazamento-conhecimento-1.3.7",
+      "motivo": "o scan_page cujo replay falha antes de medir (status state-not-reached, scanId null) devolve a falha em $.limitation.detail citando entre aspas o seletor que o próprio agente mandou no passo 6 (actions[5].selector = pnip-propesc-detalhes-vistoria br-button[label=\"Mostrar\"] >> nth=0), valor inteiro, byte a byte: é eco do argumento da mesma chamada, nada da base data/. A regra de citação da 1.3.2 cobria a mesma frase em $.state.replay.failure.detail, não no limitation de topo, e o detector vazamento-conhecimento-1.3.7 leu a tag br-button como vazamento (1 sem explicação)",
+      "rechecagem": {
+        "detectorVersao": "vazamento-conhecimento-1.3.8",
+        "evalCommit": "448e570a92519aa94c6f3afc33add828badf1fbb",
+        "validatorBuild": {
+          "version": "3.7.10",
+          "commit": "edb10cde3e56b4b24f8b02fb6b0339cdc957e88b"
+        },
+        "relatorio": "resgates/p03-ferramentas.json",
+        "relatorioSha256": "36f353b35fb820fae37360163fd107361a4f4ebb81e5d14d51e5ba8876d8f731",
+        "semExplicacao": 0
+      },
+      "decisao": "D-164",
+      "escopo": "desenvolvimento",
+      "data": "2026-11-11T19:43:56Z"
+    }
+  ]
+}
