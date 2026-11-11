@@ -19,12 +19,22 @@
  * (ordem `sequencial`): a ordem de `design.arms`. Nunca se troca pela de outro slot; sem ela, só a ausência
  * planejada que a campanha declara para a tela; senão a coleta recusa. A escolha fica gravada em `coleta-trio.json`.
  *
+ * Empréstimo de linha de base do trio (só campanha dev-*, declarado na chamada): `--linha-de-base-do-trio SLOT` vale só quando
+ * o disparo do PRIMEIRO slot não arquivou linha de base (ex.: o job de linha de base caiu por rede do runner) e usa a do
+ * slot SLOT do MESMO trio, gravada pelo mesmo disparo da tentativa escolhida dele — e só se os manifestos de coleta dos dois
+ * disparos têm a mesma identidade executável (referência, site, plano, oráculo), o mesmo site (sha256 do site e do
+ * manifesto), o mesmo build do validator (versão, dist, data, commit), os mesmos commits do govbr-eval e do govbr-telas e o
+ * mesmo lock de imagens. A linha de base não chama modelo: é medida determinística do mesmo site com o mesmo build. O
+ * empréstimo fica gravado em `coleta-trio.json` (slot doador, ids e shas conferidos). Fora de campanha dev-*, com o primeiro
+ * slot tendo a sua, com doador de fora do trio ou com qualquer identidade diferente: recusa. Sem a opção, nada muda.
+ *
  * Resgate de isolamento (D-164, só campanha dev-*): se o govbr-eval tem `campanhas/<id>/resgates.json`, um slot sem
  * tentativa válida cuja tentativa em quarentena de isolamento está resgatada ali entra com ela (anotada `resgate` em
  * `coleta-trio.json`), e o `analisar` recebe o arquivo e faz toda a conferência (pacote e relatório por sha256). Uma
  * tentativa válida sempre ganha. Sem o arquivo, nada muda.
  *
  *   npm run coleta:trio -- --campanha ID --trio GRUPO [--arquivo CLONE] [--carimbo AAAAMMDDTn] [--anexos DIR] [--sem-download]
+ *     [--linha-de-base-do-trio SLOT]
  *
  * GRUPO = o `par` do índice (ex.: trio-01) ou o id do grupo na agenda (p01). Código 0 = análise pronta e sinais ok;
  * 2 = defeito técnico nos sinais; 1 = recusa (nada analisado) ou erro. Nenhum modelo é chamado.
@@ -48,6 +58,9 @@ export const COLETA_TRIO_VERSAO = "coleta-trio-1.0.0";
 export const REGRA_LINHA_DE_BASE = "linha de base do PRIMEIRO slot do trio na ordem da agenda (sem agenda: a ordem de design.arms, campanha sequencial), " +
   "gravada pelo mesmo disparo da tentativa escolhida desse slot (vínculo pelo sha256 do manifesto de coleta); nunca a de outro slot; " +
   "sem ela, só a ausência planejada que a campanha declara para a tela (plano de revisão 19/10, achado E)";
+/** Exceção declarada (só campanha dev-*): ver o cabeçalho, `--linha-de-base-do-trio`. */
+export const REGRA_EMPRESTIMO_LINHA_DE_BASE = "desenvolvimento (dev-*), declarado na chamada: sem a linha de base do primeiro slot, a do slot nomeado do MESMO trio, " +
+  "gravada pelo mesmo disparo da tentativa escolhida dele, só com identidade executável, site, build do validator, commits do govbr-eval e do govbr-telas e lock de imagens iguais nos dois manifestos de coleta";
 
 const RAIZ = resolve(fileURLToPath(import.meta.url), "..", "..");
 const ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
@@ -84,7 +97,8 @@ export interface SlotDoTrio { slot: string; braco: ArmV2; posicao: number; escol
   resgatada?: true }
 export type EscolhaLinhaDeBase =
   | { slot: string; tipo: "registro"; entrada: EntradaIndice }
-  | { slot: string; tipo: "ausencia-planejada"; justificativa: string; declaradaEm: string };
+  | { slot: string; tipo: "ausencia-planejada"; justificativa: string; declaradaEm: string }
+  | { slot: string; tipo: "emprestada-do-trio"; doador: string; entrada: EntradaIndice };
 export interface PlanoTrio {
   campanha: string;
   /** O id do grupo como o índice o grava (`par`), que nomeia a pasta da análise. */
@@ -100,7 +114,7 @@ export interface PlanoTrio {
  * resgatado em resgates.json; só vale para slot sem tentativa válida, e só para uma quarentena de isolamento.
  */
 export function planoDoTrio(entradas: EntradaIndice[], campanha: AnyCampaign, agenda: Agenda | null, trio: string,
-  resgatados: ReadonlyMap<string, string> = new Map()): PlanoTrio {
+  resgatados: ReadonlyMap<string, string> = new Map(), emprestimoDe?: string): PlanoTrio {
   const c = campanha.campaignId;
   const execs = entradas.filter(e => e.tipo === "execucao" && e.campanha === c);
   let slots: { slot: string; braco: ArmV2; posicao: number }[];
@@ -162,7 +176,18 @@ export function planoDoTrio(entradas: EntradaIndice[], campanha: AnyCampaign, ag
   const lbs = entradas.filter(e => e.tipo === "linha-de-base" && e.campanha === c && e.slot === primeiro.slot && e.manifestoColeta?.sha256 === mc);
   if (lbs.length > 1) recusar(`o slot ${primeiro.slot} tem ${lbs.length} linhas de base do mesmo disparo (${lbs.map(e => e.chave).join(", ")}): ambíguo, nada analisado`);
   let linhaDeBase: EscolhaLinhaDeBase;
-  if (lbs.length === 1) linhaDeBase = { slot: primeiro.slot, tipo: "registro", entrada: lbs[0] };
+  if (emprestimoDe !== undefined) {
+    // exceção declarada, só desenvolvimento: a linha de base de outro slot do MESMO trio (identidades conferidas na coleta)
+    if (!c.startsWith("dev-")) recusar(`--linha-de-base-do-trio só vale em campanha de desenvolvimento (dev-*); ${c} segue a regra fixa`);
+    if (lbs.length === 1) recusar(`o primeiro slot (${primeiro.slot}) tem a sua linha de base (${lbs[0].chave}); não há o que emprestar`);
+    const doador = escolhidos.find(s => s.slot === emprestimoDe);
+    if (!doador) recusar(`o slot ${emprestimoDe} não é do trio ${nome} (${escolhidos.map(s => s.slot).join(", ")})`);
+    if (doador!.slot === primeiro.slot) recusar(`o doador não pode ser o próprio primeiro slot (${primeiro.slot})`);
+    const mcD = doador!.escolhida.manifestoColeta?.sha256 ?? recusar(`a tentativa ${doador!.escolhida.chave} não registra manifesto de coleta`);
+    const lbsD = entradas.filter(e => e.tipo === "linha-de-base" && e.campanha === c && e.slot === doador!.slot && e.manifestoColeta?.sha256 === mcD);
+    if (lbsD.length !== 1) recusar(`o slot doador ${doador!.slot} tem ${lbsD.length} linha(s) de base do disparo da tentativa escolhida (${doador!.escolhida.chave}); precisa de exatamente uma`);
+    linhaDeBase = { slot: primeiro.slot, tipo: "emprestada-do-trio", doador: doador!.slot, entrada: lbsD[0] };
+  } else if (lbs.length === 1) linhaDeBase = { slot: primeiro.slot, tipo: "registro", entrada: lbs[0] };
   else {
     const aus = campanha.baselinePolicy.plannedAbsences.find(a => a.screenId === primeiro.escolhida.tela);
     if (!aus) recusar(`linha de base ausente: o disparo ${primeiro.escolhida.chave} do primeiro slot (${primeiro.slot}) não arquivou linha de base, e a campanha não declara ausência planejada para a tela; a regra não aceita a de outro slot`);
@@ -288,6 +313,29 @@ export function proximoCarimbo(dirTrio: string, agora = new Date()): string {
 
 // ───────────────────────────────────────────────────────────────── coleta
 
+/**
+ * Empréstimo de linha de base (dev-*): o que tem de ser IGUAL nos manifestos de coleta do primeiro slot e do doador.
+ * Devolve os valores conferidos (gravados em coleta-trio.json); qualquer diferença recusa.
+ */
+export function identidadeDoEmprestimo(a: IsolatedCollectionManifest, b: IsolatedCollectionManifest): Record<string, unknown> {
+  const campos: [string, unknown, unknown][] = [
+    ["identity", a.identity, b.identity],
+    ["site.siteSha256", a.site.siteSha256, b.site.siteSha256],
+    ["site.manifestSha256", a.site.manifestSha256, b.site.manifestSha256],
+    ["oracle", a.oracle, b.oracle],
+    ["repos.govbr-ds-validator", a.repos["govbr-ds-validator"], b.repos["govbr-ds-validator"]],
+    ["repos.govbr-eval", a.repos["govbr-eval"], b.repos["govbr-eval"]],
+    ["repos.govbr-telas", a.repos["govbr-telas"], b.repos["govbr-telas"]],
+    ["imagesLock.sha256", a.imagesLock.sha256, b.imagesLock.sha256],
+  ];
+  const dif = campos.filter(([, x, y]) => JSON.stringify(x) !== JSON.stringify(y)).map(([k]) => k);
+  if (dif.length) recusar(`empréstimo de linha de base recusado: os manifestos de coleta do primeiro slot e do doador divergem em ${dif.join(", ")}`);
+  const sujo = (["govbr-ds-validator", "govbr-eval", "govbr-telas"] as const).filter(r => a.repos[r]?.dirty !== false || !a.repos[r]?.commit);
+  if (sujo.length) recusar(`empréstimo de linha de base recusado: commit ausente ou árvore suja em ${sujo.join(", ")}`);
+  return { siteSha256: a.site.siteSha256, siteManifestSha256: a.site.manifestSha256, oracle: a.oracle, validatorCommit: a.repos["govbr-ds-validator"].commit,
+    evalCommit: a.repos["govbr-eval"].commit, telasCommit: a.repos["govbr-telas"].commit, imagesLockSha256: a.imagesLock.sha256, identity: a.identity };
+}
+
 export interface OpcoesColeta {
   /** Clone do govbr-resultados. */
   arquivo: string;
@@ -300,6 +348,8 @@ export interface OpcoesColeta {
   baixar: Baixador | null;
   /** Raiz do govbr-eval (onde está `campanhas/<id>/`); padrão: este repositório. */
   raizEval?: string;
+  /** Só campanha dev-*: slot do MESMO trio cuja linha de base entra quando o primeiro slot não arquivou a sua (cabeçalho). */
+  linhaDeBaseDoTrio?: string;
 }
 
 export interface ResultadoColeta { saida: string; estado: string; sinais: Sinais; registro: string }
@@ -323,7 +373,7 @@ export async function coletarTrio(o: OpcoesColeta): Promise<ResultadoColeta> {
   // D-164: resgates da campanha (govbr-eval), se houver; o analisar recebe o mesmo arquivo e confere tudo
   const resgatesPath = join(raizEval, "campanhas", o.campanha, "resgates.json");
   const resgates = existsSync(resgatesPath) ? lerResgatesDaCampanha(resgatesPath, o.campanha) : null;
-  const plano = planoDoTrio(entradas, camp.campanha, agenda, o.trio, resgates?.porSlot);
+  const plano = planoDoTrio(entradas, camp.campanha, agenda, o.trio, resgates?.porSlot, o.linhaDeBaseDoTrio);
 
   // manifestos de coleta: mesma campanha, referência, plano e site em todos os slots
   const manifestos = plano.slots.map(s => lerManifesto(arquivo, s.escolhida));
@@ -366,6 +416,17 @@ export async function coletarTrio(o: OpcoesColeta): Promise<ResultadoColeta> {
     linhaDeBase = reg;
     registroLb = { slot: plano.linhaDeBase.slot, tipo: "registro", baselineId: e.chave, estado: e.estado.linhaDeBase, caminho: `${e.caminho}/baseline.json`,
       registroSha256: sha(readFileSync(reg)), manifestoColeta: e.manifestoColeta?.sha256 ?? null, dataUtc: e.dataUtc };
+  } else if (plano.linhaDeBase.tipo === "emprestada-do-trio") {
+    const lb = plano.linhaDeBase;
+    const iD = plano.slots.findIndex(s => s.slot === lb.doador);
+    const conferida = identidadeDoEmprestimo(manifestos[0].manifest, manifestos[iD].manifest);
+    const e = lb.entrada;
+    const reg = join(dentro(arquivo, e.caminho), "baseline.json");
+    if (!existsSync(reg)) recusar(`registro da linha de base ausente: ${e.caminho}/baseline.json`);
+    linhaDeBase = reg;
+    registroLb = { slot: lb.slot, tipo: "emprestada-do-trio", regra: REGRA_EMPRESTIMO_LINHA_DE_BASE, doador: lb.doador, baselineId: e.chave, estado: e.estado.linhaDeBase,
+      caminho: `${e.caminho}/baseline.json`, registroSha256: sha(readFileSync(reg)), manifestoColeta: e.manifestoColeta?.sha256 ?? null, dataUtc: e.dataUtc,
+      manifestoColetaDoPrimeiro: manifestos[0].sha256, disparoDoPrimeiro: plano.slots[0].escolhida.chave, identidadeConferida: conferida };
   } else {
     registroLb = { slot: plano.linhaDeBase.slot, tipo: "ausencia-planejada", justificativa: plano.linhaDeBase.justificativa, declaradaEm: plano.linhaDeBase.declaradaEm };
   }
@@ -408,7 +469,7 @@ export async function coletarTrio(o: OpcoesColeta): Promise<ResultadoColeta> {
 
 // ───────────────────────────────────────────────────────────────── CLI (stdout = só os sinais técnicos)
 
-const USO = "Uso: npm run coleta:trio -- --campanha ID --trio GRUPO [--arquivo CLONE_GOVBR_RESULTADOS] [--carimbo AAAAMMDDTn] [--anexos DIR] [--sem-download]";
+const USO = "Uso: npm run coleta:trio -- --campanha ID --trio GRUPO [--arquivo CLONE_GOVBR_RESULTADOS] [--carimbo AAAAMMDDTn] [--anexos DIR] [--sem-download] [--linha-de-base-do-trio SLOT]";
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const argv = process.argv.slice(2);
@@ -420,7 +481,8 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     const log = console.log, info = console.info, warn = console.warn;
     console.log = console.info = console.warn = (...a: unknown[]) => console.error(...a);
     coletarTrio({ arquivo: val("arquivo") ?? join(RAIZ, "..", "govbr-resultados"), campanha, trio, carimbo: val("carimbo"),
-      anexos: argv.flatMap((a, i) => (a === "--anexos" && argv[i + 1] ? [argv[i + 1]] : [])), baixar: argv.includes("--sem-download") ? null : baixarComGh })
+      anexos: argv.flatMap((a, i) => (a === "--anexos" && argv[i + 1] ? [argv[i + 1]] : [])), baixar: argv.includes("--sem-download") ? null : baixarComGh,
+      ...(val("linha-de-base-do-trio") ? { linhaDeBaseDoTrio: val("linha-de-base-do-trio") } : {}) })
       .then(r => {
         console.log = log; console.info = info; console.warn = warn;
         for (const l of linhasDosSinais(r.sinais)) console.log(l);

@@ -76,6 +76,16 @@ Nesse caso todos os arquivos são gravados, o resumo técnico fica completo e as
 | Registro ou bruto com `status: failed` | `blocked` / `baseline-failed`. O bruto parcial não é tocado. |
 | Bruto com outro hash, versão ilegível, escopo `dev-global`, outra campanha ou tela, outra identidade (referência, site, plano, oráculo, coleta), vínculos fora do conjunto de snapshots, passadas diferentes das cenas do plano | `blocked` / `incompatible`, com a lista do que divergiu. |
 
+Qual registro entra é decidido antes, pelo `coleta:trio`: a linha de base gravada pelo disparo do PRIMEIRO slot do
+trio na ordem da agenda, e nenhuma outra. Exceção declarada, só em campanha de desenvolvimento (`dev-*`), para o caso
+em que o job de linha de base do primeiro disparo caiu (ex.: `dev-3710-b-01` p02, rede do runner ao instalar o
+Chromium): `--linha-de-base-do-trio SLOT` usa a linha de base de outro slot do MESMO trio, gravada pelo disparo da
+tentativa escolhida dele, se os manifestos de coleta dos dois disparos têm a mesma identidade executável, o mesmo site,
+o mesmo build do validator, os mesmos commits do `govbr-eval` e do `govbr-telas` e o mesmo lock de imagens. A linha de
+base não chama modelo: é a mesma medida determinística do mesmo site. O `coleta-trio.json` grava `tipo:
+"emprestada-do-trio"`, o slot doador, o `baselineId` e o que foi conferido. Fora de `dev-*`, com o primeiro slot tendo a
+sua, com doador de fora do trio ou qualquer identidade diferente: recusa.
+
 "A identidade da coleta" é montada a partir das próprias entradas: o sha256 da referência, o do site,
 o hash do plano de estados, o oráculo fixado na campanha e `FLOW_INSTRUMENT_VERSION`. O registro é
 comparado com ela, e o bruto com o registro (`compareIdentities`). Falha ou incompatibilidade

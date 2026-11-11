@@ -22,7 +22,8 @@ import type { AnyCampaign } from "../contracts/index";
 import { ROOT } from "./adjudication";
 import type { Agenda } from "./agenda-campanha";
 import type { EntradaIndice } from "./arquivo-resultados";
-import { RecusaColeta, coletarTrio, planoDoTrio, proximoCarimbo, type Baixador } from "./coleta-trio";
+import { RecusaColeta, coletarTrio, identidadeDoEmprestimo, planoDoTrio, proximoCarimbo, type Baixador } from "./coleta-trio";
+import type { IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
 import { construirArquivoT4 } from "./painel/fixture";
 import { linhasDosSinais, type Sinais } from "./sinais-tecnicos";
 
@@ -213,6 +214,56 @@ await teste("sem agenda (sequencial): ordem de design.arms; preflight recusado n
   assert.throws(() => planoDoTrio([sem, lbDe(sem), fe], campanha(), null, "trio-01"), /falta o braço com/);
   // duas linhas de base do mesmo disparo: ambíguo
   assert.throws(() => planoDoTrio([sem, lbDe(sem), lbDe(sem, "lb-outra"), fe, com], campanha(), null, "trio-01"), /ambíguo/);
+});
+
+await teste("empréstimo de linha de base do trio (dev-*, declarado): sem a do primeiro slot, a de outro slot do MESMO trio; fora de dev-*, com a do primeiro, de fora do trio ou ambíguo: recusa", () => {
+  const dev = (e: EntradaIndice): EntradaIndice => ({ ...e, campanha: "dev-x" });
+  const camp = { ...campanha({ order: "quadrado-latino" }), campaignId: "dev-x" } as AnyCampaign;
+  const sem = dev(exec("p02-sem", "sem", { par: "p02" })), fe = dev(exec("p02-ferramentas", "ferramentas", { par: "p02" })), com = dev(exec("p02-com", "com", { par: "p02" }));
+  const ag = { ...agendaCom([["p02-com", "com"], ["p02-sem", "sem"], ["p02-ferramentas", "ferramentas"]]), campaignId: "dev-x" } as Agenda;
+  ag.slots.forEach(s => { (s as { pairId: string }).pairId = "p02"; });
+  const entradas = [com, sem, dev(lbDe(sem)), fe, dev(lbDe(fe))];
+  // sem a opção: a regra fixa recusa (como na dev-3710-b-01 p02)
+  assert.throws(() => planoDoTrio(entradas, camp, ag, "p02"), (e: Error) => e instanceof RecusaColeta && /primeiro slot \(p02-com\)/.test(e.message));
+  const p = planoDoTrio(entradas, camp, ag, "p02", new Map(), "p02-sem");
+  assert.equal(p.linhaDeBase.tipo, "emprestada-do-trio");
+  assert.equal(p.linhaDeBase.slot, "p02-com", "a linha de base continua sendo a do primeiro slot do trio, emprestada");
+  assert.equal(p.linhaDeBase.tipo === "emprestada-do-trio" && p.linhaDeBase.doador, "p02-sem");
+  assert.equal(p.linhaDeBase.tipo === "emprestada-do-trio" && p.linhaDeBase.entrada.chave, `lb-${sem.chave}`);
+  // campanha que não é de desenvolvimento: nunca
+  const naoDev = (e: EntradaIndice): EntradaIndice => ({ ...e, campanha: "camp-x" });
+  assert.throws(() => planoDoTrio(entradas.map(naoDev), campanha({ order: "quadrado-latino" }), { ...ag, campaignId: "camp-x" } as Agenda, "p02", new Map(), "p02-sem"),
+    (e: Error) => e instanceof RecusaColeta && /só vale em campanha de desenvolvimento/.test(e.message));
+  // o primeiro slot tem a sua: nada a emprestar
+  assert.throws(() => planoDoTrio([...entradas, dev(lbDe(com))], camp, ag, "p02", new Map(), "p02-sem"), (e: Error) => e instanceof RecusaColeta && /não há o que emprestar/.test(e.message));
+  // doador de fora do trio, o próprio primeiro, ou sem linha de base do disparo da tentativa escolhida
+  assert.throws(() => planoDoTrio(entradas, camp, ag, "p02", new Map(), "p03-sem"), (e: Error) => e instanceof RecusaColeta && /não é do trio/.test(e.message));
+  assert.throws(() => planoDoTrio(entradas, camp, ag, "p02", new Map(), "p02-com"), (e: Error) => e instanceof RecusaColeta && /próprio primeiro slot/.test(e.message));
+  const outroDisparo = { ...dev(lbDe(sem)), manifestoColeta: { sha256: "mc-outro", caminho: "x" } } as EntradaIndice;
+  assert.throws(() => planoDoTrio([com, sem, outroDisparo, fe], camp, ag, "p02", new Map(), "p02-sem"), (e: Error) => e instanceof RecusaColeta && /precisa de exatamente uma/.test(e.message));
+});
+
+await teste("empréstimo de linha de base: identidade dos manifestos de coleta igual (site, build do validator, commits, lock) ou recusa", () => {
+  const m = (o: Record<string, unknown> = {}): IsolatedCollectionManifest => ({
+    identity: { collection: "fluxo-1.3.0", referenceSha256: "r", siteManifestSha256: "s", oracleDistSha256: "d", oracleDataSha256: "a", statePlanSha256: "p" },
+    site: { manifestSha256: "s", manifestBytes: 1, siteSha256: "site", packageVersion: "1.0.0", corpusCommit: null, screenVersion: "v" },
+    oracle: { package: "govbr-ds-validator-server", version: "3.7.10", distSha256: "d", dataSha256: "a" },
+    repos: { "govbr-eval": { commit: "e", dirty: false }, "govbr-telas": { commit: "t", dirty: false }, "govbr-ds-validator": { commit: "v", dirty: false } },
+    imagesLock: { sha256: "l", versions: {} }, ...o,
+  } as unknown as IsolatedCollectionManifest);
+  const ok = identidadeDoEmprestimo(m(), m());
+  assert.equal(ok.validatorCommit, "v");
+  assert.equal(ok.evalCommit, "e");
+  for (const [nome, dif] of [
+    ["oracle", { oracle: { package: "govbr-ds-validator-server", version: "3.7.10", distSha256: "outro", dataSha256: "a" } }],
+    ["repos.govbr-eval", { repos: { "govbr-eval": { commit: "e2", dirty: false }, "govbr-telas": { commit: "t", dirty: false }, "govbr-ds-validator": { commit: "v", dirty: false } } }],
+    ["site.siteSha256", { site: { manifestSha256: "s", manifestBytes: 1, siteSha256: "outro", packageVersion: "1.0.0", corpusCommit: null, screenVersion: "v" } }],
+    ["imagesLock.sha256", { imagesLock: { sha256: "l2", versions: {} } }],
+  ] as const) {
+    assert.throws(() => identidadeDoEmprestimo(m(), m(dif as Record<string, unknown>)), (e: Error) => e instanceof RecusaColeta && e.message.includes(nome), nome);
+  }
+  const sujo = { repos: { "govbr-eval": { commit: "e", dirty: true }, "govbr-telas": { commit: "t", dirty: false }, "govbr-ds-validator": { commit: "v", dirty: false } } };
+  assert.throws(() => identidadeDoEmprestimo(m(sujo), m(sujo)), (e: Error) => e instanceof RecusaColeta && /árvore suja em govbr-eval/.test(e.message));
 });
 
 await teste("carimbo: AAAAMMDDT<n>, n = 1 + o maior do dia", () => {
