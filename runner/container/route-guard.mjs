@@ -7,17 +7,49 @@ import { isAbsolute, join, relative } from "node:path";
 // 1.0.1 (série 3.7.8): só a mensagem da recusa muda (a regra é a mesma): o fato de outra rota ou estado é achado
 // próprio dela, enviado à parte, e não texto a dobrar num achado de outra rota (dev-375-b-01 p03-com: fatos do
 // detalhe dobrados num achado da lista depois da recusa).
-export const ROUTE_GUARD_VERSION = "collector-route-guard-1.0.1";
+// 1.0.2 (leitura dev-3710-b § 7 item 2): a regra e a mensagem de cada erro são as mesmas; a resposta de recusa ganha
+// `avisos`, só de procedimento. (1) Toda recusa `mixed-routes` diz quantas referências de evidência estão nos achados
+// que juntam rotas e que o primeiro relatório aceito é final. (2) Depois de uma recusa `mixed-routes`, toda recusa
+// seguinte compara as referências daquela recusa com as do novo envio e diz quantas sumiram de todos os achados
+// (dev-3710-b-01 p02-com: cortou F-148/F-159/F-147/F-270 e o reenvio foi aceito em silêncio). O aceite continua
+// mínimo e final ({ ok, receipt }; sem sobrescrita): o corte que chega a ser aceito fica só no evento do coletor.
+export const ROUTE_GUARD_VERSION = "collector-route-guard-1.0.2";
 /** Mensagem da recusa `mixed-routes`, exportada para os testes. */
 export const MIXED_ROUTES_MESSAGE = "O mesmo achado cita evidência de rotas diferentes. Um fato observado em outra rota ou estado é um achado " +
   "próprio dessa rota ou estado: envie-o como achado separado, com a evidência e os passos dele, em vez de juntá-lo ao " +
   "texto de um achado de outra rota. Depois envie o relatório novamente.";
+/** Aviso da própria recusa `mixed-routes` (1.0.2). `n` = referências citadas nos achados que juntam rotas. */
+export const avisoMistura = (n) => `Este envio cita ${n} referência(s) de evidência em achados que juntam rotas diferentes. ` +
+  "No reenvio, uma referência retirada sem ir para um achado próprio da rota dela deixa esse fato fora do relatório, e o " +
+  "primeiro relatório aceito é final: depois dele o coletor não aceita outro.";
+/** Aviso de corte (1.0.2), numa recusa seguinte a uma recusa `mixed-routes`. `n` = referências que sumiram. */
+export const avisoCorte = (n) => `${n} referência(s) de evidência de outra rota, citada(s) num envio recusado por juntar rotas ` +
+  "diferentes, não aparece(m) em nenhum achado deste envio. Cada fato de outra rota pode ser enviado como achado próprio " +
+  "dessa rota, com a evidência dele, enquanto houver tempo; o primeiro relatório aceito é final.";
+/** Referências que a recusa atribuiu a uma rota (o `routes[].refs` de cada erro `mixed-routes`). */
+export function refsDosErros(errors) {
+  const out = new Set();
+  for (const e of Array.isArray(errors) ? errors : []) for (const r of Array.isArray(e?.routes) ? e.routes : [])
+    for (const ref of Array.isArray(r?.refs) ? r.refs : []) if (id(ref)) out.add(ref);
+  return out;
+}
+/** Identificadores inteiros citados na evidência de qualquer achado (mesma tokenização da conferência). */
+export function evidenceTokens(report) {
+  const out = new Set();
+  if (Array.isArray(report?.findings)) for (const finding of report.findings) {
+    if (!Array.isArray(finding?.evidence)) continue;
+    for (const evidence of finding.evidence) if (typeof evidence === "string")
+      for (const token of evidence.match(TOKEN) ?? []) out.add(token);
+  }
+  return out;
+}
 const MAX_EVENTS = 16 * 1024 * 1024;
 const MAX_PAYLOAD = 2 * 1024 * 1024;
 const TOOLS = new Set(["scan_page", "get_finding_details"]);
 const record = (x) => x !== null && typeof x === "object" && !Array.isArray(x);
 const sha = (b) => createHash("sha256").update(b).digest("hex");
 const id = (x) => typeof x === "string" && x.length > 0 && x.length <= 200 ? x : null;
+const TOKEN = /[A-Za-z0-9][A-Za-z0-9._-]*/g;
 
 export function routeKey(value) {
   try {
@@ -124,7 +156,7 @@ export function mixedRouteErrors(report, directory) {
     for (const evidence of finding.evidence) {
       if (typeof evidence !== "string") continue;
       // Identificadores inteiros, nunca uma busca por substring.
-      for (const token of evidence.match(/[A-Za-z0-9][A-Za-z0-9._-]*/g) ?? []) {
+      for (const token of evidence.match(TOKEN) ?? []) {
         const known = refs.get(token);
         if (known?.size !== 1) continue;
         const route = [...known][0];

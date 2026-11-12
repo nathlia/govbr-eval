@@ -19,8 +19,8 @@ import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { CONTRACTS_DIR, validateContract, type Findings, type FindingsV2, type InspectionLedger } from "../contracts/index";
-import { coletorAceitaClausulas, collectorFindingsContract, skillPedeClausulas, coletorConfereRotas } from "../runner/run-once";
-import { MIXED_ROUTES_MESSAGE, mixedRouteErrors, routeKey, ROUTE_GUARD_VERSION } from "../runner/container/route-guard.mjs";
+import { coletorAceitaClausulas, collectorFindingsContract, skillPedeClausulas, coletorConfereRotas, coletorRotasAtual } from "../runner/run-once";
+import { avisoCorte, avisoMistura, MIXED_ROUTES_MESSAGE, mixedRouteErrors, routeKey, ROUTE_GUARD_VERSION } from "../runner/container/route-guard.mjs";
 import { collectorInspectionRevisionOf } from "../runner/build-images";
 import { INSPECTION_CLAUSES_REVISION } from "../contracts/index";
 import { ROOT } from "./adjudication";
@@ -427,13 +427,104 @@ await test("B1: coletor recusa mistura antes de aceitar, preserva recusa e aceit
     assert.match(msg, /outra rota ou estado é um achado próprio dessa rota ou estado/);
     assert.match(msg, /envie-o como achado separado/);
     assert.match(msg, /em vez de juntá-lo ao texto de um achado de outra rota/);
-    assert.equal(ROUTE_GUARD_VERSION, "collector-route-guard-1.0.1");
+    assert.equal(ROUTE_GUARD_VERSION, "collector-route-guard-1.0.2");
     assert.equal(existsSync(join(out, "findings.json")), false);
     assert.ok(readFileSync(join(out, "refused/001.json"), "utf8").includes("S-two"));
     r.findings[0].evidence = ["S-one"];
     assert.equal((await post(r)).status, 200);
     assert.deepEqual(readJson<FindingsV2>(join(out, "findings.json")).report.findings[0].evidence, ["S-one"]);
   }, dir);
+});
+
+// ── 1.0.2: aviso de procedimento quando um reenvio corta fatos de outra rota (leitura dev-3710-b § 7 item 2) ──
+// Rota /a: S-one; rota /b: S-two com os fatos F-b1 e F-b2. O 1º envio junta as duas rotas num achado.
+const corteDir = () => routeContext([scanEvent("S-one", "http://screens:3300/a"),
+  scanEvent("S-two", "http://screens:3300/b", { findings: [{ id: "F-b1" }, { id: "F-b2" }] })]);
+const semRegistro = (...evidencias: string[][]) => {
+  const { inspection: _i, ...r } = report();
+  return { ...r, findings: evidencias.map((evidence) => ({ ...clone(v2Ex.report.findings[0]), evidence })) };
+};
+const eventos = (out: string) => readFileSync(join(out, "events.ndjson"), "utf8").trim().split("\n").map((l) => JSON.parse(l) as Record<string, unknown>);
+type Resposta = { ok: boolean; errors?: unknown[]; avisos?: string[]; receipt?: string };
+
+await test("1.0.2: a recusa rotas-misturadas avisa quantas referências estão em jogo e que o 1º aceite é final", async () => {
+  await withCollector("findings.v2", async (post, out) => {
+    const recusa = (await post(semRegistro(["S-one", "F-b1", "F-b2"]))).body as Resposta;
+    assert.equal(recusa.ok, false);
+    assert.deepEqual(recusa.avisos, [avisoMistura(3)]);
+    assert.match(recusa.avisos![0], /^Este envio cita 3 referência\(s\) de evidência em achados que juntam rotas diferentes\./);
+    assert.match(recusa.avisos![0], /primeiro relatório aceito é final/);
+    assert.equal((recusa.errors as { message: string }[])[0].message, MIXED_ROUTES_MESSAGE, "a mensagem do erro não muda");
+    assert.equal(eventos(out).find((e) => e.reason === "rotas-misturadas")!.referenciasEmMistura, 3);
+  }, corteDir());
+});
+
+await test("1.0.2: reenvio que CORTA os fatos de outra rota — aceite igual ao de antes (mínimo e final); o corte fica no evento", async () => {
+  await withCollector("findings.v2", async (post, out) => {
+    assert.equal((await post(semRegistro(["S-one", "F-b1", "F-b2"]))).status, 400);
+    const aceite = await post(semRegistro(["S-one"]));
+    assert.equal(aceite.status, 200);
+    assert.deepEqual(Object.keys(aceite.body).sort(), ["ok", "receipt"], "o que conta como aceito e a resposta de aceite não mudam");
+    const ev = eventos(out).find((e) => e.reason === "aceito")!;
+    assert.deepEqual(ev.rotasCortadas, { referencias: 2, refs: ["F-b1", "F-b2"] });
+    // regra existente intacta: depois do aceite, outro relatório é 409 sem sobrescrita (o fato cortado não volta)
+    const tarde = await post(semRegistro(["S-one"], ["F-b1", "F-b2"]));
+    assert.equal(tarde.status, 409);
+    assert.deepEqual(readJson<FindingsV2>(join(out, "findings.json")).report.findings.map((f) => f.evidence), [["S-one"]]);
+  }, corteDir());
+});
+
+await test("1.0.2: corte que cai numa recusa seguinte (contrato) recebe o aviso com a contagem; depois separa e é aceito", async () => {
+  await withCollector("findings.v2", async (post, out) => {
+    assert.equal((await post(semRegistro(["S-one", "F-b1", "F-b2"]))).status, 400);
+    const cortado = semRegistro(["S-one"]);
+    (cortado.findings[0] as Record<string, unknown>).observed = 7; // erro de contrato no mesmo envio que cortou
+    const recusa = (await post(cortado)).body as Resposta;
+    assert.deepEqual(recusa.avisos, [avisoCorte(2)]);
+    assert.match(recusa.avisos![0], /^2 referência\(s\) de evidência de outra rota, citada\(s\) num envio recusado por juntar rotas diferentes, não aparece\(m\) em nenhum achado deste envio\./);
+    assert.match(recusa.avisos![0], /pode ser enviado como achado próprio dessa rota, com a evidência dele, enquanto houver tempo/);
+    const aceite = await post(semRegistro(["S-one"], ["F-b1", "F-b2"]));
+    assert.equal(aceite.status, 200);
+    assert.deepEqual(Object.keys(aceite.body).sort(), ["ok", "receipt"]);
+    assert.deepEqual(eventos(out).find((e) => e.reason === "aceito")!.rotasCortadas, { referencias: 0, refs: [] });
+  }, corteDir());
+});
+
+await test("1.0.2: reenvio que SEPARA os fatos em achado próprio — aceito, sem aviso, nada cortado", async () => {
+  await withCollector("findings.v2", async (post, out) => {
+    assert.equal((await post(semRegistro(["S-one", "F-b1", "F-b2"]))).status, 400);
+    const aceite = await post(semRegistro(["S-one"], ["S-two", "F-b1", "F-b2"]));
+    assert.equal(aceite.status, 200, JSON.stringify(aceite.body));
+    assert.deepEqual(Object.keys(aceite.body).sort(), ["ok", "receipt"]);
+    assert.deepEqual(eventos(out).find((e) => e.reason === "aceito")!.rotasCortadas, { referencias: 0, refs: [] });
+  }, corteDir());
+});
+
+await test("1.0.2: braço sem oráculo (só eventos do navegador) — nenhuma recusa de rota, nenhum aviso, aceite como antes", async () => {
+  const dir = routeContext([evento("playwright", "browser_snapshot", "{}", SNAPSHOT)]);
+  await withCollector("findings.v2", async (post, out) => {
+    const aceite = await post(semRegistro(["e12", "e123"], ["e12"]));
+    assert.equal(aceite.status, 200);
+    assert.deepEqual(Object.keys(aceite.body).sort(), ["ok", "receipt"]);
+    const ev = eventos(out);
+    assert.equal(ev.some((e) => e.reason === "rotas-misturadas"), false);
+    assert.equal("rotasCortadas" in ev.find((e) => e.reason === "aceito")!, false, "sem recusa de rotas, nada a comparar");
+  }, dir);
+  // recusa de contrato sem recusa de rotas antes: sem aviso (a resposta é a de antes)
+  await withCollector("findings.v2", async (post) => {
+    const ruim = semRegistro(["e12"]); (ruim.findings[0] as Record<string, unknown>).observed = 7;
+    const recusa = (await post(ruim)).body as Resposta;
+    assert.equal(recusa.avisos, undefined);
+  }, dir);
+});
+
+await test("1.0.2: harness — qualquer revisão 1.x do route guard monta o contexto; o lock diz se a imagem é a deste working tree", () => {
+  for (const v of ["collector-route-guard-1.0.0", "collector-route-guard-1.0.1", ROUTE_GUARD_VERSION]) assert.equal(coletorConfereRotas({ "govbr.collector.route-guard": v }), true, v);
+  assert.equal(coletorConfereRotas({ "govbr.collector.route-guard": "collector-route-guard-2.0.0" }), false);
+  assert.equal(coletorRotasAtual({ "govbr.collector.route-guard": "collector-route-guard-1.0.1" }), false);
+  assert.equal(coletorRotasAtual({ "govbr.collector.route-guard": ROUTE_GUARD_VERSION }), true);
+  const lock = readJson<{ images: { collector: { labels: Record<string, string> } } }>(join(ROOT, "runner", "images.lock.json"));
+  console.log(`   lock atual: coletor ${lock.images.collector.labels["govbr.collector.route-guard"]} ${coletorRotasAtual(lock.images.collector.labels) ? "= working tree" : `≠ ${ROUTE_GUARD_VERSION} (reconstruir a imagem do coletor antes da 1ª campanha com o aviso)`}`);
 });
 
 await test("B1: estados/filtros da mesma rota passam; rota SPA diferente conflita; norma não vincula rota", () => {

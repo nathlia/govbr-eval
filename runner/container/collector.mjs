@@ -32,13 +32,20 @@
 // que o agente leia o relógio com `fetch` de DENTRO da página da tela (outra origem) sem sair dela: navegar até
 // /tempo recarregava a aplicação e desfazia o estado montado (dev-375-b-01: 3 a 5 vezes por execução). A resposta
 // é a mesma de antes; o evento registra a origem que pediu (`origem`), para o harness provar a leitura na página.
+// collector-route-guard-1.0.2: o primeiro aceite continua final (diferente do aceito → 409 sem sobrescrita), então o aviso
+// de procedimento sobre fatos de outra rota vem ANTES do aceite, na resposta de recusa (`avisos`): a recusa
+// `rotas-misturadas` diz quantas referências estão nos achados que juntam rotas e que o primeiro aceite é final; e toda
+// recusa seguinte a uma `rotas-misturadas` diz quantas dessas referências sumiram de todos os achados do novo envio. O que
+// conta como relatório aceito não muda (mesmos critérios, mesma resposta { ok, receipt }); quando o corte chega a ser
+// aceito, ele só fica no evento `aceito` (`rotasCortadas`), para o harness e a leitura. Igual nos três braços: sem
+// evidência do oráculo não há recusa `rotas-misturadas`, logo nenhum aviso.
 import { createServer } from "node:http";
 import { createHash } from "node:crypto";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
-import { mixedRouteErrors, ROUTE_GUARD_VERSION } from "./route-guard.mjs";
+import { avisoCorte, avisoMistura, evidenceTokens, mixedRouteErrors, refsDosErros, ROUTE_GUARD_VERSION } from "./route-guard.mjs";
 
 const RUN_ID = process.env.COLLECTOR_RUN_ID ?? "";
 const CAMPAIGN_ID = process.env.COLLECTOR_CAMPAIGN_ID ?? "";
@@ -80,6 +87,16 @@ const sha256 = (s) => createHash("sha256").update(s).digest("hex");
 let seq = 0;
 let refusedCount = 0;
 let accepted = null; // { sha, receipt }
+/** Referências atribuídas a uma rota nas recusas `rotas-misturadas` desta execução (união). */
+const refsEmMistura = new Set();
+/** Referências de recusa `rotas-misturadas` anterior que não aparecem em nenhum achado de `report`; null sem recusa anterior. */
+function cortadas(report) {
+  if (!refsEmMistura.size) return null;
+  const citadas = evidenceTokens(report);
+  return [...refsEmMistura].filter((r) => !citadas.has(r)).sort();
+}
+const corteEvento = (lost) => lost === null ? {} : { rotasCortadas: { referencias: lost.length, refs: lost.slice(0, 50) } };
+const avisosCorte = (lost) => lost?.length ? [avisoCorte(lost.length)] : [];
 const FINDINGS = join(OUT, "findings.json");
 /** Início do relógio real (ms, relógio deste contêiner); null até o harness armá-lo. */
 let relogioInicio = null;
@@ -241,16 +258,20 @@ createServer(async (req, res) => {
     errors = validateFindings(envelope) ? [] : (validateFindings.errors ?? []).map((e) => `${e.instancePath || "/"} ${e.message}`);
   }
   errors = errors.slice(0, 10);
+  const lost = cortadas(report);
   if (errors.length) {
     const file = refuse(`contrato: ${errors.join("; ")}`, body);
-    event({ ...base, status: 400, reason: "contrato", refused: file });
-    return send(res, 400, { ok: false, errors });
+    event({ ...base, status: 400, reason: "contrato", refused: file, ...corteEvento(lost) });
+    const avisos = avisosCorte(lost);
+    return send(res, 400, { ok: false, errors, ...(avisos.length ? { avisos } : {}) });
   }
   const routeCheck = mixedRouteErrors(report, ROUTE_CONTEXT);
   if (routeCheck.errors.length) {
     const file = refuse(`rotas: ${JSON.stringify(routeCheck.errors)}`, body);
-    event({ ...base, status: 400, reason: "rotas-misturadas", refused: file, routeGuard: ROUTE_GUARD_VERSION });
-    return send(res, 400, { ok: false, errors: routeCheck.errors });
+    const emMistura = refsDosErros(routeCheck.errors);
+    for (const r of emMistura) refsEmMistura.add(r);
+    event({ ...base, status: 400, reason: "rotas-misturadas", refused: file, routeGuard: ROUTE_GUARD_VERSION, referenciasEmMistura: emMistura.size, ...corteEvento(lost) });
+    return send(res, 400, { ok: false, errors: routeCheck.errors, avisos: [...avisosCorte(lost), avisoMistura(emMistura.size)] });
   }
   if (existsSync(FINDINGS)) {
     event({ ...base, status: 409, reason: "arquivo-existente" });
@@ -261,7 +282,7 @@ createServer(async (req, res) => {
   accepted = { sha, receipt };
   event({ ...base, status: 200, reason: "aceito", receipt, contract: CONTRACT, findings: Array.isArray(report.findings) ? report.findings.length : null,
     ...(ROUTE_CONTEXT ? { routeGuard: { version: ROUTE_GUARD_VERSION, checked: routeCheck.checked, unavailable: routeCheck.unavailable } } : {}),
-    ...(V2 ? { inspection: envelope.inspectionStatus } : {}) });
+    ...(V2 ? { inspection: envelope.inspectionStatus } : {}), ...corteEvento(lost) });
   return send(res, 200, { ok: true, receipt });
 }).listen(PORT, "0.0.0.0", () => {
   event({ method: "-", path: "-", status: null, reason: "start", contract: CONTRACT, ...(LIMITE_S !== null ? { relogio: RELOGIO_REVISION, limiteS: LIMITE_S } : {}) });

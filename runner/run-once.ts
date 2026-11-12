@@ -77,8 +77,17 @@ export function skillPedeClausulas(skill: string): boolean { return skill.includ
 export function coletorAceitaClausulas(labels: Record<string, string> | undefined): boolean {
   return labels?.["govbr.collector.inspection-revision"] === INSPECTION_CLAUSES_REVISION;
 }
-/** Imagem histórica sem capacidade declarada conserva o comportamento anterior. */
+/**
+ * Imagem histórica sem capacidade declarada conserva o comportamento anterior. Qualquer revisão 1.x do route guard usa
+ * o mesmo contexto montado (a regra é a mesma desde a 1.0.0; 1.0.1 e 1.0.2 mudam só o que a recusa diz): exigir a
+ * revisão exata do working tree desligaria a conferência em silêncio numa imagem travada de revisão anterior. Qual
+ * revisão rodou fica no rótulo da imagem travada (images.lock.json) e no evento do coletor.
+ */
 export function coletorConfereRotas(labels: Record<string, string> | undefined): boolean {
+  return /^collector-route-guard-1\.\d+\.\d+$/.test(labels?.["govbr.collector.route-guard"] ?? "");
+}
+/** O travado no lock é a revisão do route guard deste working tree? (preflight/aviso; não decide a montagem). */
+export function coletorRotasAtual(labels: Record<string, string> | undefined): boolean {
   return labels?.["govbr.collector.route-guard"] === ROUTE_GUARD_VERSION;
 }
 /** Arquivo no tmpfs do PRÓPRIO coletor que o harness cria (docker exec) para dar a partida no relógio. */
