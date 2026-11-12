@@ -526,12 +526,17 @@ um slot, use uma campanha congelada com `fixed.provider.authMethod: "api-key"` e
   Em produção vale o padrão do cliente; as tentativas aparecem na telemetria.
 - `model` desconhecido gera só um aviso no stderr (`unrecognized_model`).
 
-## Emendas às regras de falha (proposta de 12/11/2026; código pronto, adoção pela autora)
+## Emenda (a) às regras de falha (proposta de 12/11/2026; código pronto, adoção pela autora)
 
-Proposta: `thesis-workspace/planejamento/atual/emenda-regras-de-falha-2026-11-12.md`. O código abaixo só muda alguma
-coisa quando o arquivo da campanha existe (`campanhas/<id>/linha-de-base.json`) ou quando o slot é coletado/analisado
-com a emenda; sem isso, coleta, análise e arquivamento seguem byte a byte como antes. O texto do protocolo (§ 7.2) não
-é deste repositório.
+Proposta: `thesis-workspace/planejamento/atual/emenda-regras-de-falha-2026-11-12.md`. Só a emenda (a) está aqui. A
+emenda (b), reconferência do isolamento reprovado por falso positivo, foi proposta e **não foi adotada**: a revisão
+adversarial de 12/11 achou que o critério de eco perdoava casos que os canários do próprio detector exigem sem
+explicação, que o passo 1 não reproduzia a falha da coleta e que a análise confiava nos campos do relatório. Na
+campanha selada, isolamento reprovado continua sendo slot perdido.
+
+O código abaixo só muda a coleta e a análise quando `campanhas/<id>/linha-de-base.json` existe; sem ele, seguem byte a
+byte como antes. A exceção é o arquivar, que passa a escrever o motivo explícito quando a coleta concluiu e o pacote
+não chegou (ver abaixo). O texto do protocolo (§ 7.2) não é deste repositório.
 
 ### (a) Falha de infraestrutura fora do agente
 
@@ -563,6 +568,11 @@ A conferência:
   site, referência e plano desse conjunto têm os mesmos sha256 dos do trio. O instrumento difere só pelo registro, o
   que o git já conferiu. As cópias ficam em `entradas/linha-de-base-da-campanha.json` e
   `entradas/snapshots-da-linha-de-base.json`, e os hashes em `hashes.entradas`.
+- **Pelo CLI do `analisar`**: `--linha-de-base-da-campanha` exige `--arquivo` (e aceita `--raiz-eval`). Antes de
+  analisar, ele roda a MESMA conferência do `coleta:trio` (`conferirLinhaDeBaseCongelada`, em
+  `linha-de-base-campanha.ts`): índice, manifesto do disparo da linha de base, identidade contra o manifesto de coleta
+  de cada pacote, git, sha256 do `baseline.json` e o conjunto da linha de base. Também confere que `--linha-de-base` e
+  `--snapshots-da-linha-de-base` são esses bytes. Recusa = nada analisado.
 
 O empréstimo dev-* (`--linha-de-base-do-trio`) continua igual e não combina com a congelada.
 
@@ -583,18 +593,25 @@ O comando é sempre `--job` do job de infraestrutura. Segundo a documentação, 
 coleta. Com a coleta concluída, isso equivale ao `--failed` da proposta. Com a coleta falha, o `--failed` rodaria o
 agente de novo, e por isso não é usado.
 
-**Variante conservadora do arquivar.** A documentação do GitHub não diz se o `download-artifact` de um job reexecutado
-vê os artifacts que a tentativa anterior do mesmo run subiu. Ela diz só que o padrão é "o run atual" e que os jobs
-fora da reexecução guardam as saídas. Por isso o `arquivar-execucao.ts execucao` **recusa** (código 4, nada gravado) quando
-o job `coleta` concluiu `success` e o pacote não chegou (`run.json` ausente). Antes, esse caso virava "interrompida sem
-pacote", uma tentativa do slot sem o pacote que existe. Se o artifact não aparecer na reexecução, o job falha de novo
-sem gravar nada, e o `conclusao-disparo` manda o caso para a autora na 3ª tentativa. A reexecução do arquivar reproduz
-os mesmos bytes: o tar é determinístico, e o anexo já subido é aceito pelo sha256.
+**Pacote ausente no arquivar: a tentativa conta.** A documentação do GitHub não diz se o `download-artifact` de um job
+reexecutado vê os artifacts que a tentativa anterior do mesmo run subiu. Ela diz só que o padrão é "o run atual" e que
+os jobs fora da reexecução guardam as saídas. Se o job `coleta` concluiu `success` e o pacote não chegou ao arquivar
+(`run.json` ausente), o modelo foi chamado. Por isso a tentativa **entra no índice** como `sem-pacote-gh-<run>`, presa
+ao manifesto de coleta, com o motivo "coleta concluída, pacote ausente no arquivamento" e slot, braço e tentativa. Ela
+conta nas regras de falha (`tentativasDoSlot`; técnica se a política repete `vm-lost`/`harness-error`, senão
+inelegível). Nenhum pacote, pasta `pacote/` ou anexo é fabricado.
+
+Um arquivar posterior do MESMO disparo que traga o pacote é recusado (código 4, nada gravado), para a chamada nunca
+contar duas vezes. A revisão de 12/11 (MED 6) recusou a variante anterior, que só recusava sem gravar e deixava a
+tentativa sumir da conta. A reexecução do arquivar com o pacote reproduz os mesmos bytes: o tar é determinístico, e o
+anexo já subido é aceito pelo sha256.
 
 Testes: `test:coleta-trio` (planoDoTrio congelada: aceito, posterior ao 1º slot, não utilizável, de outro disparo,
 com empréstimo; identidade com outro `distSha256`/site/lock/árvore suja; git; ponta a ponta no arquivo T4 com o
-`analisar`), `test:pipeline-t4` (recusa sem pacote sem gravar; arquivar reexecutado num clone novo = um slot, mesmo
-anexo, entrega confirmada; decisões do `conclusao-disparo` e nomes dos jobs do YAML), `test:contracts`. **Não testado
+`analisar`, e a mesma conferência pelo CLI do `analisar`), `test:pipeline-t4` (pacote ausente com coleta `success` = uma
+tentativa no índice que conta, sem pacote fabricado, e o mesmo disparo com pacote depois é recusado; arquivar
+reexecutado num clone novo = um slot, mesmo anexo, entrega confirmada; decisões do `conclusao-disparo` e nomes dos jobs
+do YAML), `test:contracts`. **Não testado
 localmente:** um run de verdade com o arquivar forçado a falhar e `gh run rerun --job` (proposta: um disparo
 `roteirizado`). É a prova de que o `download-artifact` da tentativa 2 vê o `pacote` da tentativa 1.
 
