@@ -180,8 +180,24 @@ import { argValues, buildDictionary, classify, exactTokens, hitsInText, leaves, 
  * `actions[*].selector` inteiro desta chamada entre aspas idênticas). O termo também fora da citação, só um prefixo do
  * seletor citado, um seletor que esta chamada não mandou, e o mesmo caminho noutra ferramenta continuam sem explicação.
  * Nada da base `data/`. O núcleo (cópia do validator) não muda. Cinco canários novos (132).
+ *
+ * 1.3.9 (oráculo 3.7.11 `73913ec`, portão de vazamento da rodada 3.7.11, sessão dev-374-a-01 rep-02-ferramentas, tela A):
+ * o portão falhou por UMA ocorrência, `br-pagination` em scan_page
+ * `$.checksRun.pageLevel.notMeasured[*].dropRecipe.arguments.actions[*].selector` = `.br-pagination a[aria-label='Página 2']`,
+ * o seletor que o PRÓPRIO AGENTE mandou em `actions[0].selector` da mesma chamada. A 3.7.11 (R4) acrescenta à pendência
+ * `upload-paths` a receita de arrasto `dropRecipe` = `{ tool: "scan_page", arguments: { url, actions: [...ações DESTE scan sem
+ * os drop, { action: "drop", selector: <zona achada>, files: [amostra] }] } }` (`uploadPathsPending` em
+ * src/scan/notJudged.ts; a base é `{ url: request.url, actions: request.actions }` do próprio scan_page, nos dois perfis,
+ * pageScan.ts). Mesma origem que a receita do estado recolhido da 1.3.7: as ações DA MESMA CHAMADA (não de outra da
+ * sessão). Esta camada declara `…dropRecipe.arguments.actions[*].selector` e `.value` do scan_page como eco das ações desta
+ * chamada (folha inteira idêntica) e, no ledger (`$.observations[*].data.dropRecipe.arguments`, a observação guarda o item
+ * inteiro), como eco do scan_page que devolveu o scanId pedido. Não há outra receita que copie `actions` do agente na 3.7.11
+ * (`recipe` do estado recolhido, já declarada, e `dropRecipe`). A zona de soltar gerada pelo servidor no mesmo campo NÃO é
+ * declarada como página: um seletor que o agente não mandou continua sem explicação, como o id da base, o seletor reescrito,
+ * o do agente fora desses campos e o mesmo caminho noutra ferramenta. Nada da base `data/`. O núcleo não muda. Nove
+ * canários novos (141).
  */
-export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.8";
+export const VARREDURA_VERSAO = "vazamento-conhecimento-1.3.9";
 
 /**
  * 1.2.0 (D-154): eco do SELETOR DE AÇÃO da mesma chamada. Desde o validator 3.4.3 a resposta encolhida do
@@ -201,6 +217,9 @@ export interface EcoDeSeletorDeclarado { arg: string; paths: string[]; lista?: b
 /** 1.3.7: a receita da pendência de estado recolhido na resposta do scan_page e no ledger. */
 const RECEITA_DE_ESTADO = "$.checksRun.pageLevel.notMeasured[*].recipe.arguments";
 const RECEITA_DO_LEDGER = "$.observations[*].data.recipe.arguments";
+/** 1.3.9: a receita de arrasto da pendência de campo de arquivo (validator 3.7.11 R4) na resposta do scan_page e no ledger. */
+const RECEITA_DE_ARRASTO = "$.checksRun.pageLevel.notMeasured[*].dropRecipe.arguments";
+const ARRASTO_DO_LEDGER = "$.observations[*].data.dropRecipe.arguments";
 export const ECO_SELETOR_DE_ACAO: Record<string, EcoDeSeletorDeclarado[]> = {
   scan_page: [
     { arg: "actions[*].selector", paths: ["$.state.recipe.actions[*].selector", "$.state.replay.steps[*].selector", "$.state.replay.failure.selector", "$.coverage.actionsApplied[*].selector"] },
@@ -218,6 +237,9 @@ export const ECO_SELETOR_DE_ACAO: Record<string, EcoDeSeletorDeclarado[]> = {
     // 1.3.7: a receita do estado recolhido parte das ações DESTE scan (a base) + o clique no gatilho
     { arg: "actions[*].selector", paths: [`${RECEITA_DE_ESTADO}.actions[*].selector`] },
     { arg: "actions[*].value", paths: [`${RECEITA_DE_ESTADO}.actions[*].value`] },
+    // 1.3.9: a receita de arrasto (3.7.11) também parte das ações DESTE scan (sem os drop) + o drop na zona achada
+    { arg: "actions[*].selector", paths: [`${RECEITA_DE_ARRASTO}.actions[*].selector`] },
+    { arg: "actions[*].value", paths: [`${RECEITA_DE_ARRASTO}.actions[*].value`] },
   ],
   verify_finding: [
     // 1.3.2: na 3.7.1 a falha do replay vem em `binding.state.failure` (sem o nível `replay`)
@@ -238,6 +260,9 @@ export const ECO_SELETOR_DE_ACAO: Record<string, EcoDeSeletorDeclarado[]> = {
     // 1.3.7: a receita do estado recolhido no ledger (view:observations) do scan pedido parte das ações daquele scan
     { arg: "actions[*].selector", vinculo: "scanId", paths: [`${RECEITA_DO_LEDGER}.actions[*].selector`] },
     { arg: "actions[*].value", vinculo: "scanId", paths: [`${RECEITA_DO_LEDGER}.actions[*].value`] },
+    // 1.3.9: a receita de arrasto no ledger (a observação not-judged guarda o item inteiro em data) do scan pedido
+    { arg: "actions[*].selector", vinculo: "scanId", paths: [`${ARRASTO_DO_LEDGER}.actions[*].selector`] },
+    { arg: "actions[*].value", vinculo: "scanId", paths: [`${ARRASTO_DO_LEDGER}.actions[*].value`] },
   ],
 };
 
@@ -722,6 +747,11 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
   // 1.3.8: o limitation de topo do scan_page cujo replay falhou (forma real da dev-3710-b-01 p03-ferramentas)
   const limitacao = (detail: string) => JSON.stringify({ kind: "scan", status: "state-not-reached", scanId: null, limitation: { kind: "action-error", detail } });
   const selMostrar = `pnip-propesc-detalhes-vistoria ${rootClass}[label="Mostrar"] >> nth=0`;
+  // 1.3.9: a receita de arrasto da pendência upload-paths (forma real da 3.7.11 na dev-374-a-01 rep-02-ferramentas)
+  const amostra = { name: "amostra.pdf", mimeType: "application/pdf" };
+  const arrasto = (actions: unknown[]) => JSON.stringify({ checksRun: { pageLevel: { notMeasured: [{ code: "upload-paths", dropRecipe: { tool: "scan_page", arguments: { url: "http://x/", actions: [...actions, { action: "drop", selector: "#zona", files: [amostra] }] } } }] } } });
+  const arrastoNoLedger = (scanId: string, actions: unknown[]) => JSON.stringify({ scanId, view: "observations", observations: [{ kind: "not-judged", data: { code: "upload-paths", dropRecipe: { tool: "scan_page", arguments: { url: "http://x/", actions: [...actions, { action: "drop", selector: "#zona", files: [amostra] }] } } } }] });
+  const selPagina = `.${rootClass} a[aria-label='Página 2']`;
   const notaEm = (note: string) => JSON.stringify({ scanId: "S-page-001", observations: [{ kind: "not-judged", note }] });
   const prosa = JSON.stringify({ reasons: [{ detail: `Limitação: ${falhou}` }], verification: { detail: `Limitação: ${falhou}`, binding: { state: { failure: { detail: falhou }, limitation: { detail: `Passo 4 (fill) falhou. ${falhou}` } } } } });
   const casos: { nome: string; tool: string; texto: string; args: unknown; page: string | null; espera: Classification; elements?: PageElements | null; scans?: Map<string, unknown> }[] = [
@@ -866,6 +896,16 @@ export function canarios(dict: Dictionary, axe: string): { nome: string; ok: boo
     { nome: "seletor citado no limitation de topo que esta chamada NÃO mandou", tool: "scan_page", texto: limitacao(`Nenhum elemento para '${selMostrar}' no passo 6.`), args: { url: "http://x/", actions: [{ action: "click", selector: "#outro" }] }, page: pageComTag, elements: null, espera: "sem-explicacao" },
     { nome: "só um prefixo do seletor do agente citado no limitation de topo", tool: "scan_page", texto: limitacao(`Nenhum elemento para '${rootClass}[label="Mostrar"]' no passo 6.`), args: { url: "http://x/", actions: [{ action: "click", selector: selMostrar }] }, page: pageComTag, elements: null, espera: "sem-explicacao" },
     { nome: "limitation de topo com o seletor do agente citado, noutra ferramenta (verify_finding)", tool: "verify_finding", texto: limitacao(`Nenhum elemento para '${selMostrar}' no passo 6.`), args: { actions: [{ action: "click", selector: selMostrar }] }, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    // 1.3.9 (oráculo 3.7.11, dev-374-a-01 rep-02-ferramentas): receita de arrasto da pendência upload-paths
+    { nome: "ação do agente repetida na receita de arrasto (scan_page notMeasured[*].dropRecipe, eco)", tool: "scan_page", texto: arrasto([{ action: "click", selector: selPagina }]), args: { url: "http://x/", actions: [{ action: "click", selector: selPagina }] }, page: pageComTag, elements: null, espera: "eco" },
+    { nome: "texto digitado pelo agente (fill value) repetido na receita de arrasto (eco)", tool: "scan_page", texto: arrasto([{ action: "fill", selector: "#campo", value: `nota ${rootClass}` }]), args: { url: "http://x/", actions: [{ action: "fill", selector: "#campo", value: `nota ${rootClass}` }] }, page: pageComTag, elements: null, espera: "eco" },
+    { nome: "ação do agente na receita de arrasto do ledger, vinculada pelo scanId pedido (eco)", tool: "get_finding_details", texto: arrastoNoLedger("S-page-005", [{ action: "click", selector: selPagina }]), args: { scanId: "S-page-005", view: "observations" }, page: pageComTag, elements: null, scans: scans(["S-page-005", { url: "http://x/", actions: [{ action: "click", selector: selPagina }] }]), espera: "eco" },
+    { nome: "classe do DS na receita de arrasto que esta chamada NÃO mandou (tela com a classe renderizada)", tool: "scan_page", texto: arrasto([{ action: "click", selector: selPagina }]), args: { url: "http://x/", actions: [{ action: "click", selector: "#outro" }] }, page: pageComTag, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "id da base plantado na receita de arrasto (actions[*].selector)", tool: "scan_page", texto: arrasto([{ action: "click", selector: `#${kbId} > a` }]), args: { url: "http://x/", actions: [{ action: "click", selector: "#outro" }] }, page: `${pageComTag}<!-- ${kbId} -->`, elements: doEstado, espera: "sem-explicacao" },
+    { nome: "seletor do agente reescrito pelo servidor na receita de arrasto", tool: "scan_page", texto: arrasto([{ action: "click", selector: `${selPagina} >>> span` }]), args: { url: "http://x/", actions: [{ action: "click", selector: selPagina }] }, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    { nome: "seletor do agente noutro campo da pendência, sem regra (notMeasured[*].measure)", tool: "scan_page", texto: JSON.stringify({ checksRun: { pageLevel: { notMeasured: [{ code: "upload-paths", measure: selPagina }] } } }), args: { url: "http://x/", actions: [{ action: "click", selector: selPagina }] }, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    { nome: "receita de arrasto com o seletor do agente, noutra ferramenta (verify_finding)", tool: "verify_finding", texto: arrasto([{ action: "click", selector: selPagina }]), args: { actions: [{ action: "click", selector: selPagina }] }, page: pageComTag, elements: null, espera: "sem-explicacao" },
+    { nome: "receita de arrasto no ledger com a ação vinda de OUTRO scan_page", tool: "get_finding_details", texto: arrastoNoLedger("S-page-005", [{ action: "click", selector: selPagina }]), args: { scanId: "S-page-005", view: "observations" }, page: pageComTag, elements: null, scans: scans(["S-page-004", { url: "http://x/", actions: [{ action: "click", selector: selPagina }] }], ["S-page-005", { url: "http://x/" }]), espera: "sem-explicacao" },
   ];
   return casos.map((c) => {
     const { hits } = varrerResposta(dict, c.texto, { tool: c.tool, args: c.args, page: c.page, axe, elements: c.elements ?? null }, { argsDoScan: c.scans ?? new Map() });
