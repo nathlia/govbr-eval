@@ -111,6 +111,53 @@ foi construída de um clone limpo no commit `e15b1b1` (3.4.1; tools/list igual a
 `data/`), o mesmo estado que o checkout por SHA do CI produz: `GOVBR_VALIDATOR_DIR=<clone>` no build e no
 `run-once`/testes. O checkout de trabalho do validator só serve ao preflight se o `dist/` e o `data/` dele
 forem os do commit (sem arquivos de builds antigos nem `data/models/`).
+Rodada 3.7.12 (lock de 2026-11-12T17:03, a das campanhas `dev-3712-*`): `govbr-runner-oracle:3.7.12-cd1aaf354b9d`
+(`sha256:e8c4fc7b…`, commit `816f4ba`, dist `cd1aaf35…`, `dataSha256` `b4b2eceb…` igual; a 3.7.11 mais duas mudanças só nas
+respostas do `verify_finding` e no fechamento das pendências da sessão: no perfil evaluation o verify que não decide não
+fecha pendência nenhuma; no knowledge-free a pendência sem fato medido fecha como na 3.7.11, salvo recusa do payload
+(evidence-incomplete, evidence-inconsistent, invalid-locator, locator-ambiguous), que não fecha nada; conselhos
+`judge-fact` e `fix-evidence-data` reescritos), construída com `--so oracle` de um clone limpo (`.tmp-eval/validator-3712r`,
+mesmo procedimento da 3.7.11 abaixo), sobre a base do agente `…-c90c12ac81308`; coletor (`sha256:cbed63ad…`,
+`collector-route-guard-1.0.2`), agente, tela e egress os da 3.7.11. tools/list e instructions iguais nos seis perfis
+(3.7.11 e 3.7.12 lado a lado pelo stdio com o SDK 1.29.0) e de novo dentro da imagem, também nos seis perfis; pins
+`TOOLS_LIST_SHA256_3_7_3` seguem. Detector 1.3.9: canários 141/141; sondagem knowledge-free da 3.7.12 (21 sessões, 201
+respostas) 0 sem explicação, revarredura 0; portão de vazamento PASSA 0 sem explicação em 46 sessões / 658 respostas,
+trava 0 (as respostas reescritas do `verify_finding` não trouxeram caminho novo acusado). `test:runner` 44/44 em três
+pedaços `--so`, um de cada vez (21 + 11 + 12), `test:pipeline-t4` 37/37, `test:inspecao` 35/35, `tsc` ok. Lock com a
+3.7.12; a imagem da 3.7.11 continua no Docker local com a etiqueta dela.
+A 3.7.11 (`73913ec`) foi construída e passou pelos portões antes, no mesmo dia, e foi substituída pela 3.7.12 sem
+campanha: `govbr-runner-oracle:3.7.11-c110a9f64cfb`
+(`sha256:53f60aad…`, commit `73913ec`, dist `c110a9f6…`, `dataSha256` `b4b2eceb…` igual; rodada das leituras dev-3710:
+pendência de fato já medido não fecha em `verify` sem decisão, observações do scan para marcação inválida em botão nativo,
+antecedentes revistos à mão, erro do campo de arquivo só conta visível), sobre a base do agente `…-c90c12ac81308`,
+construída com `--so collector,oracle` de um clone limpo (`.tmp-eval/validator-3711r`, `git clone` + checkout destacado
+no sha, `npm ci` + `tsc` com `dist/` apagado antes; o checkout de trabalho do validator não foi tocado), no checkout `main`
+do eval. Coletor reconstruído junto: `sha256:cbed63ad…` (`collector-route-guard-1.0.2`: a recusa `mixed-routes` ganha
+`avisos`; regra e aceite iguais; contratos `68e9691a…` iguais); a imagem anterior (`sha256:115ffcb8…`) ficou em
+`govbr-runner-collector:1.0.0-pre-3711`. Agente, tela (manifesto `ea0426ac`, skill `8139bb0c` sem mudança: sem
+reexportação) e egress com os ids anteriores. tools/list e instructions iguais nos seis perfis (3.7.10 e 3.7.11 medidas
+lado a lado pelo stdio com o SDK 1.29.0), pins `TOOLS_LIST_SHA256_3_7_3` seguem (evaluation `04ae1437…`, knowledge-free
+`5b9c59aa…`) e conferidos dentro da imagem. Detector 1.3.8 remedido em respostas reais knowledge-free da 3.7.11 (A, A2,
+B, receitas seguidas, tetos padrão/20 000/4 000/2 000; 21 sessões, 201 respostas): 0 sem explicação; revarredura 0;
+canários 132/132. Portão de vazamento FALHA 1 em 46 sessões / 655 respostas (45 + a `parcial-knowledge-free` da rodada
+3.7.10 repassada à parte), trava 0: em `dev-374-a-01__rep-02-ferramentas`, `br-pagination` (specs:rootClass) em
+`scan_page $.checksRun.pageLevel.notMeasured[*].dropRecipe.arguments.actions[*].selector` ×1,
+`".br-pagination a[aria-label='Página 2']"` — o seletor que o próprio agente mandou no `actions` daquela chamada,
+reposto pela receita de arrasto nova da 3.7.11 (`dropRecipe` da pendência `upload-paths`); resolvido pelo detector 1.3.9
+(abaixo). `test:runner` 44/44 em três pedaços `--so`, um de cada vez (21 + 11 + 12), `test:pipeline-t4` 37/37,
+`test:inspecao` 35/35, `tsc` ok.
+Detector de vazamento 1.3.9 (oráculo 3.7.11 `73913ec`, receita de arrasto da pendência `upload-paths`): a 3.7.11 monta
+`dropRecipe` com as ações DO PRÓPRIO `scan_page` (sem os `drop`) mais o `drop` na zona achada (`uploadPathsPending`, base
+`{ url, actions }` da mesma chamada, nos dois perfis), e a observação `not-judged` do registro guarda o item inteiro. A
+1.3.9 trata `…notMeasured[*].dropRecipe.arguments.actions[*].selector`/`.value` como eco das ações desta chamada (folha
+inteira idêntica) e `$.observations[*].data.dropRecipe.arguments.actions[*].selector`/`.value` do `get_finding_details`
+como eco do scan pedido pelo `scanId`, as mesmas regras da receita do estado recolhido (1.3.7). A zona gerada pelo servidor
+não é declarada página; seletor que o agente não mandou, id da base, seletor reescrito, o do agente noutro campo
+(`measure`), outra ferramenta e o ledger de outro scan continuam sem explicação (cabeçalho de
+`scripts/vazamento/conhecimento.ts`). Canários 141/141 (9 novos). Sondagem knowledge-free remedida (21 sessões, 200
+respostas): 0 sem explicação, revarredura 0. Portão de vazamento contra a 3.7.11: PASSA 0 sem explicação em 46 sessões /
+657 respostas, trava 0 (a `dev-374-a-01__rep-02-ferramentas` passa com a ocorrência como eco). `test:runner` sem Docker
+(detector, varredura, inventário e afins) 14/14, `tsc` ok.
 Rodada 3.7.10 (lock de 2026-11-11T05:58, a das campanhas `dev-3710-*`): `govbr-runner-oracle:3.7.10-baaf4932a72f`
 (`sha256:86f916f2…`, commit `edb10cd`, dist `baaf4932…`, `dataSha256` `b4b2eceb…` igual; da 3.7.8 à 3.7.10 nenhuma foi a
 campanha: D-190 estados recolhidos com receita e upload-paths também no knowledge-free; 3.7.9 forma só-ids com código e
