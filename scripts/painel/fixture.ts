@@ -214,7 +214,7 @@ const COMMIT_FIXTURE = { telas: "e".repeat(40), validator: "d".repeat(40) };
  * Manifesto de coleta 1.1.0 SINTÉTICO para um braço da fixture da análise, como o `preparar` do T4
  * gravaria (modo roteirizado). A referência é a fixture versionada dentro do govbr-eval, como no T4.
  */
-function manifestoDaFixture(fx: ReturnType<typeof construirFixture>, run: Run, refRel = "scripts/fixtures/analise/referencia-fixture.json"): IsolatedCollectionManifest {
+function manifestoDaFixture(fx: ReturnType<typeof construirFixture>, run: Run, refRel = "scripts/fixtures/analise/referencia-fixture.json", evalLimpo = false): IsolatedCollectionManifest {
   const registro = JSON.parse(readFileSync(fx.linhaDeBase, "utf8")) as Baseline;
   const refBytes = readFileSync(join(ROOT, refRel));
   if (sha(refBytes) !== registro.identity.referenceSha256) throw new Error("fixture: referência versionada ≠ a da fixture construída");
@@ -230,7 +230,7 @@ function manifestoDaFixture(fx: ReturnType<typeof construirFixture>, run: Run, r
     statePlan,
     site: { manifestSha256: sha(siteText), manifestBytes: siteText.length, siteSha256: sha(siteText), packageVersion: "fixture", corpusCommit: null, screenVersion: run.screen.version },
     oracle: { package: ORACULO.package, version: ORACULO.version, distSha256: ORACULO.distSha256, dataSha256: ORACULO.dataSha256 },
-    repos: { "govbr-eval": { commit: head, dirty: true }, "govbr-telas": { commit: COMMIT_FIXTURE.telas, dirty: false }, "govbr-ds-validator": { commit: COMMIT_FIXTURE.validator, dirty: false } },
+    repos: { "govbr-eval": { commit: head, dirty: !evalLimpo }, "govbr-telas": { commit: COMMIT_FIXTURE.telas, dirty: false }, "govbr-ds-validator": { commit: COMMIT_FIXTURE.validator, dirty: false } },
     imagesLock: { sha256: "c".repeat(64), versions: { fixture: true } },
     // 1.2.0 (NAT-63): a execução efetiva da fixture — o que os run.json sintéticos registram
     execution: { effort: run.effort, timeoutSeconds: run.limits.timeoutSeconds!, client: run.client, protocolSha256: run.versions.protocolSha256 },
@@ -276,7 +276,11 @@ function fixtureVistorias(telas: string): NonNullable<OpcoesFixture["telaReal"]>
  * partida do botão "Preparar análise". Pares: `par-t4` (tela que não navega) e, com `vistorias` (clone do
  * govbr-telas), `par-vist` (Vistorias, referência que navega — no alcance da análise desde o D-98).
  */
-export function construirArquivoT4(out: string, o: { vistorias?: string | null } = {}): ArquivoT4 {
+export function construirArquivoT4(out: string, o: {
+  vistorias?: string | null;
+  /** Emenda (a), testes da linha de base congelada: o manifesto grava o govbr-eval com árvore limpa (padrão: suja, como sempre). */
+  evalLimpo?: boolean;
+} = {}): ArquivoT4 {
   const arquivo = resolve(out);
   if (existsSync(arquivo)) throw new Error(`Pasta já existe: ${out}. O arquivo é montado sempre numa pasta nova.`);
   mkdirSync(arquivo, { recursive: true });
@@ -296,7 +300,7 @@ export function construirArquivoT4(out: string, o: { vistorias?: string | null }
       for (const arm of ["sem", "com"] as const) {
         const dir = fx[arm];
         const run = JSON.parse(readFileSync(join(dir, "run.json"), "utf8")) as Run;
-        const m = manifestoDaFixture(fx, run, c.vistorias ? "ground-truth-vistorias.json" : undefined);
+        const m = manifestoDaFixture(fx, run, c.vistorias ? "ground-truth-vistorias.json" : undefined, o.evalLimpo ?? false);
         const mPath = join(trabalho, `${c.par}-${arm}-manifesto-coleta.json`);
         writeFileSync(mPath, JSON.stringify(m, null, 2) + "\n");
         const mBytes = readFileSync(mPath);

@@ -149,6 +149,15 @@ export function arquivarExecucao(o: {
 }): { gravacoes: Gravacao[]; problemas: string[] } {
   const gravacoes: Gravacao[] = [];
   const problemas: string[] = [];
+  // Emenda (a), variante conservadora: o job coleta CONCLUIU, mas o pacote não chegou a este job (artifact não baixado,
+  // p. ex. num job arquivar reexecutado). Antes daqui isso virava "interrompida sem pacote", uma tentativa do slot sem o
+  // pacote que existe. Agora é falha de infraestrutura: nada é gravado, o job falha e é reexecutado (gh run rerun --failed),
+  // sem rodar o agente de novo. A documentação do GitHub não diz se o download-artifact de um job reexecutado vê os
+  // artifacts da tentativa anterior do mesmo run; se não vir, este job falha de novo, sempre sem gravar nada.
+  if (o.entradas.etapas !== "so-linha-de-base" && o.jobs.coleta?.result === "success" && !(o.pacote && existsSync(join(o.pacote, "run.json")))) {
+    throw new Recusa("o job coleta concluiu (success), mas o pacote não chegou ao arquivar: falha de infraestrutura fora do agente, nada gravado. " +
+      "Reexecute só os jobs que falharam (gh run rerun <id> --failed); o agente não roda de novo e não é nova tentativa do slot");
+  }
   garantirGitattributes(o.arquivo); // * -text: o checkout nunca converte finais de linha dos arquivos com sha256
   const gh = github();
   let m: IsolatedCollectionManifest | null = null, msha: string | null = null, mcaminho: string | null = null, conjunto: SnapshotManifest | null = null;

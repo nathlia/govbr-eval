@@ -25,6 +25,10 @@
  * só por falso positivo de forma do detector de vazamento, resgatados por uma revarredura offline com o detector
  * seguinte (0 sem explicação). A análise confere e registra o resgate (`isolationRescue` no analysis-binding.v2); a
  * avaliação final continua no D-157 (failed = morta). O pacote imutável nunca muda.
+ *
+ * Emenda (a) às regras de falha (proposta de 12/11/2026, § 7.2): `linha-de-base-campanha.v1`
+ * (campanhas/<id>/linha-de-base.json) — a linha de base medida e congelada UMA vez, antes do primeiro slot, que todo
+ * trio da campanha usa (coleta-trio.ts, tipo `congelada-da-campanha`; scripts/linha-de-base-campanha.ts).
  */
 import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -39,7 +43,7 @@ export const SCHEMA_BASE = "https://govbr-eval.invalid/contracts/";
 export const CONTRACT_NAMES = [
   "campaign.v1", "run.v1", "findings.v1", "findings.v2", "isolation.v1", "artifact-manifest.v1", "artifact-manifest.v2",
   "baseline.v1", "snapshot-manifest.v1", "analysis-binding.v1", "inspection-audit.v1",
-  "run.v2", "campaign.v2", "analysis-binding.v2", "resgates.v1",
+  "run.v2", "campaign.v2", "analysis-binding.v2", "resgates.v1", "linha-de-base-campanha.v1",
 ] as const;
 export type ContractName = typeof CONTRACT_NAMES[number];
 
@@ -371,10 +375,17 @@ export interface ResgateIsolamento {
   decisao: "D-164"; escopo: "desenvolvimento"; data: UtcTimestamp;
 }
 export interface Resgates extends Doc<"resgates.v1"> { campaignId: string; resgates: ResgateIsolamento[] }
+/** linha-de-base-campanha.v1 (emenda (a)): a linha de base da campanha, congelada antes do primeiro slot. */
+export interface LinhaDeBaseCampanha extends Doc<"linha-de-base-campanha.v1"> {
+  campaignId: string; screen: { id: string; version: string }; baselineId: string;
+  registro: { caminho: string; sha256: Sha256 }; medidaEm: UtcTimestamp; manifestoColeta: { caminho: string; sha256: Sha256 };
+  snapshotSetId: string; site: { siteSha256: Sha256; manifestSha256: Sha256 }; oracle: { version: string; distSha256: Sha256; dataSha256: Sha256 };
+  repos: { "govbr-eval": string; "govbr-telas": string; "govbr-ds-validator": string }; imagesLockSha256: Sha256; regra: string; geradoEm: UtcTimestamp;
+}
 export type AnyAnalysisBinding = AnalysisBinding | AnalysisBindingV2;
 
 export type ContractDocument = Campaign | CampaignV2 | Run | RunV2 | Findings | FindingsV2 | Isolation | ArtifactManifest | ArtifactManifestV2 | Baseline | SnapshotManifest
-  | AnalysisBinding | AnalysisBindingV2 | InspectionAudit | Resgates;
+  | AnalysisBinding | AnalysisBindingV2 | InspectionAudit | Resgates | LinhaDeBaseCampanha;
 
 // ───────────────────────────────────────────────────────────────── validador
 
@@ -490,6 +501,12 @@ function semanticErrors(doc: ContractDocument): ContractError[] {
       });
       break;
     }
+    case "linha-de-base-campanha.v1":
+      // emenda (a): o registro da campanha é gerado depois da medição, nunca antes
+      if (!(Date.parse(doc.medidaEm) <= Date.parse(doc.geradoEm))) {
+        errors.push({ path: "/geradoEm", keyword: "x-generated-before-measured", message: "o registro da campanha é gerado depois da medição da linha de base" });
+      }
+      break;
     case "baseline.v1": {
       const pairs: [keyof Baseline["links"], keyof Baseline["identity"]][] = [
         ["site", "siteManifestSha256"], ["reference", "referenceSha256"], ["statePlan", "statePlanSha256"],

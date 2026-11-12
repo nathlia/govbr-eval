@@ -526,6 +526,78 @@ um slot, use uma campanha congelada com `fixed.provider.authMethod: "api-key"` e
   Em produção vale o padrão do cliente; as tentativas aparecem na telemetria.
 - `model` desconhecido gera só um aviso no stderr (`unrecognized_model`).
 
+## Emendas às regras de falha (proposta de 12/11/2026; código pronto, adoção pela autora)
+
+Proposta: `thesis-workspace/planejamento/atual/emenda-regras-de-falha-2026-11-12.md`. O código abaixo só muda alguma
+coisa quando o arquivo da campanha existe (`campanhas/<id>/linha-de-base.json`) ou quando o slot é coletado/analisado
+com a emenda; sem isso, coleta, análise e arquivamento seguem byte a byte como antes. O texto do protocolo (§ 7.2) não
+é deste repositório.
+
+### (a) Falha de infraestrutura fora do agente
+
+**Linha de base congelada da campanha.** Antes do slot 1, um disparo `etapas: so-linha-de-base` da campanha (com o slot
+do primeiro da agenda; nenhum modelo) mede e arquiva a linha de base. Depois:
+
+```bash
+npm run campanha:linha-de-base -- --campanha <id> --linha-de-base <baselineId> [--arquivo ../govbr-resultados]
+```
+
+grava `campanhas/<id>/linha-de-base.json` (contrato `linha-de-base-campanha.v1`): `baselineId`, caminho e sha256 do
+`baseline.json`, quando foi medida, manifesto de coleta do disparo, conjunto de snapshots, site, build do validator,
+commits do `govbr-eval`/`govbr-telas`/`govbr-ds-validator` e lock de imagens. O gerador recusa registro não
+`utilizavel` e campanha que já tem qualquer execução iniciada. O arquivo é commitado **antes** do slot 1, e os slots
+disparam com `etapas: so-coleta` (`campanha:agenda comando` já imprime assim quando o arquivo existe).
+
+O `coleta:trio` acha o arquivo e escolhe a linha de base `congelada-da-campanha` para todo trio
+(`coleta-trio.ts › planoDoTrio`). As do disparo de cada slot, se houver, são ignoradas e listadas em `coleta-trio.json`.
+A conferência:
+
+- **Contra o manifesto de coleta de cada slot**, com `identidadeDoEmprestimo(…, { semEval: true })`: identidade
+  executável, site, oráculo, commits do validator e do `govbr-telas`, lock de imagens iguais; árvore limpa nos dois.
+- **Pelo git do `govbr-eval`**: o commit de cada slot contém o `linha-de-base.json` byte a byte, ou seja, ele foi
+  commitado antes do disparo. E esse commit só difere do commit do disparo da linha de base por esse arquivo.
+- **Pelo índice**: a linha de base foi medida, registrada e gerada antes da primeira execução iniciada da campanha (o
+  preflight recusado não conta). Se não, é "registro posterior ao 1º slot" e a coleta recusa.
+- **Na análise**: o `analisar` recebe `linhaDeBaseDaCampanha` (o registro e o conjunto de snapshots da linha de base).
+  O `baseline.json` tem de ter o sha256 congelado. Os vínculos dele apontam o conjunto da linha de base, e os itens
+  site, referência e plano desse conjunto têm os mesmos sha256 dos do trio. O instrumento difere só pelo registro, o
+  que o git já conferiu. As cópias ficam em `entradas/linha-de-base-da-campanha.json` e
+  `entradas/snapshots-da-linha-de-base.json`, e os hashes em `hashes.entradas`.
+
+O empréstimo dev-* (`--linha-de-base-do-trio`) continua igual e não combina com a congelada.
+
+**Job de infraestrutura reexecutado sem contar como tentativa.** `scripts/ci/conclusao-disparo.ts --run <id>` lê o run
+com `gh run view`/`gh api` (só leitura) e decide pela conclusão do **job** `coleta`, não pela do workflow:
+
+| Situação | Decisão (código) | Comando impresso, nunca executado |
+|---|---|---|
+| tudo `success` | `concluido` (0) | — |
+| coleta `success`/`skipped`, arquivar caiu, artifacts `manifesto-coleta` (+ `pacote`) no run e não expirados | `reexecutar-infra` (10) | `gh run rerun <id> --job <arquivar>` |
+| coleta `failure`/`cancelled` | `tentativa-do-agente` (11): o arquivo decide se é falha técnica | só o arquivar, se ele também caiu |
+| preparar caiu | `recusado-no-preparo` (12): nenhum modelo, não é tentativa | só o arquivar, se ele também caiu |
+| artifact ausente/expirado, sem lista, 3ª tentativa do run, job desconhecido | `caso-da-autora` (13) | — |
+| só `linhas-de-base` caiu | `concluido`: a execução está arquivada. Sem congelada, o caminho de sempre (`so-linha-de-base` + `refazer_linha_de_base_de`) | — |
+
+O comando é sempre `--job` do job de infraestrutura. Segundo a documentação, o GitHub reexecuta junto os dependentes
+(o arquivar não tem nenhum) e mantém as saídas dos jobs que não reexecuta. Assim nunca reexecuta o preparar nem a
+coleta. Com a coleta concluída, isso equivale ao `--failed` da proposta. Com a coleta falha, o `--failed` rodaria o
+agente de novo, e por isso não é usado.
+
+**Variante conservadora do arquivar.** A documentação do GitHub não diz se o `download-artifact` de um job reexecutado
+vê os artifacts que a tentativa anterior do mesmo run subiu. Ela diz só que o padrão é "o run atual" e que os jobs
+fora da reexecução guardam as saídas. Por isso o `arquivar-execucao.ts execucao` **recusa** (código 4, nada gravado) quando
+o job `coleta` concluiu `success` e o pacote não chegou (`run.json` ausente). Antes, esse caso virava "interrompida sem
+pacote", uma tentativa do slot sem o pacote que existe. Se o artifact não aparecer na reexecução, o job falha de novo
+sem gravar nada, e o `conclusao-disparo` manda o caso para a autora na 3ª tentativa. A reexecução do arquivar reproduz
+os mesmos bytes: o tar é determinístico, e o anexo já subido é aceito pelo sha256.
+
+Testes: `test:coleta-trio` (planoDoTrio congelada: aceito, posterior ao 1º slot, não utilizável, de outro disparo,
+com empréstimo; identidade com outro `distSha256`/site/lock/árvore suja; git; ponta a ponta no arquivo T4 com o
+`analisar`), `test:pipeline-t4` (recusa sem pacote sem gravar; arquivar reexecutado num clone novo = um slot, mesmo
+anexo, entrega confirmada; decisões do `conclusao-disparo` e nomes dos jobs do YAML), `test:contracts`. **Não testado
+localmente:** um run de verdade com o arquivar forçado a falhar e `gh run rerun --job` (proposta: um disparo
+`roteirizado`). É a prova de que o `download-artifact` da tentativa 2 vê o `pacote` da tentativa 1.
+
 ## Testes
 
 `npm run test:runner` (Docker obrigatório; sem Docker, pula com aviso). **Agente roteirizado (T3a)**,

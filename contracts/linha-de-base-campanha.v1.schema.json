@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://govbr-eval.invalid/contracts/linha-de-base-campanha.v1.schema.json",
+  "title": "linha-de-base.json — linha de base da campanha medida e congelada UMA vez, antes do primeiro slot (emenda (a) às regras de falha, § 7.2; proposta de 12/11/2026)",
+  "description": "Mora em govbr-eval/campanhas/<campaignId>/linha-de-base.json, ao lado do campaign.json. Gerado por `npm run campanha:linha-de-base` a partir do registro baseline.v1 que um disparo `etapas: so-linha-de-base` da campanha arquivou no govbr-resultados, e commitado ANTES do primeiro slot. Com ele, todo trio da campanha usa esta linha de base (coleta-trio.ts › planoDoTrio, tipo congelada-da-campanha), conferida contra o manifesto de coleta de CADA slot: identidade executável, site, oráculo, commits do govbr-ds-validator e do govbr-telas e lock de imagens iguais; o commit do govbr-eval do slot só pode diferir do da linha de base por este arquivo, e tem de contê-lo byte a byte. Registro medido depois de qualquer execução da campanha é recusado. A análise confere o registro baseline.v1 pelo sha256 daqui e os itens do conjunto de snapshots da linha de base contra os do trio (analisar-execucao.ts, linhaDeBaseDaCampanha).",
+  "type": "object",
+  "required": ["contract", "fixture", "campaignId", "screen", "baselineId", "registro", "medidaEm", "manifestoColeta", "snapshotSetId", "site", "oracle", "repos", "imagesLockSha256", "regra", "geradoEm"],
+  "properties": {
+    "contract": { "const": "linha-de-base-campanha.v1" },
+    "fixture": { "$ref": "common.v1.schema.json#/$defs/fixture" },
+    "campaignId": { "$ref": "common.v1.schema.json#/$defs/id" },
+    "screen": {
+      "type": "object",
+      "required": ["id", "version"],
+      "properties": {
+        "id": { "$ref": "common.v1.schema.json#/$defs/id" },
+        "version": { "$ref": "common.v1.schema.json#/$defs/text" }
+      },
+      "additionalProperties": false
+    },
+    "baselineId": { "description": "Chave da entrada linha-de-base do índice do govbr-resultados (= baselineId do registro).", "$ref": "common.v1.schema.json#/$defs/id" },
+    "registro": {
+      "description": "O registro baseline.v1 arquivado: caminho no govbr-resultados e sha256 dos bytes.",
+      "type": "object",
+      "required": ["caminho", "sha256"],
+      "properties": {
+        "caminho": { "type": "string", "pattern": "^linhas-de-base/[A-Za-z0-9][A-Za-z0-9._-]{0,127}/[A-Za-z0-9][A-Za-z0-9._-]{0,127}/[A-Za-z0-9][A-Za-z0-9._-]{0,127}/baseline\\.json$" },
+        "sha256": { "$ref": "common.v1.schema.json#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "medidaEm": { "description": "timestamps.startedAt do registro baseline.v1.", "$ref": "common.v1.schema.json#/$defs/utcTimestamp" },
+    "manifestoColeta": {
+      "description": "O manifesto de coleta do disparo so-linha-de-base (caminho no govbr-resultados e sha256).",
+      "type": "object",
+      "required": ["caminho", "sha256"],
+      "properties": {
+        "caminho": { "type": "string", "pattern": "^coletas/[A-Za-z0-9][A-Za-z0-9._-]{0,127}/[a-f0-9]{64}/manifesto-coleta\\.json$" },
+        "sha256": { "$ref": "common.v1.schema.json#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "snapshotSetId": { "description": "Conjunto de snapshots a que o registro está vinculado (links.site.snapshotSetId).", "type": "string", "pattern": "^snapshots-[a-f0-9]{16}$" },
+    "site": {
+      "type": "object",
+      "required": ["siteSha256", "manifestSha256"],
+      "properties": {
+        "siteSha256": { "$ref": "common.v1.schema.json#/$defs/sha256" },
+        "manifestSha256": { "$ref": "common.v1.schema.json#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "oracle": {
+      "description": "Build do validator que mediu (o mesmo do manifesto de coleta).",
+      "type": "object",
+      "required": ["version", "distSha256", "dataSha256"],
+      "properties": {
+        "version": { "$ref": "common.v1.schema.json#/$defs/text" },
+        "distSha256": { "$ref": "common.v1.schema.json#/$defs/sha256" },
+        "dataSha256": { "$ref": "common.v1.schema.json#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "repos": {
+      "type": "object",
+      "required": ["govbr-eval", "govbr-telas", "govbr-ds-validator"],
+      "properties": {
+        "govbr-eval": { "$ref": "common.v1.schema.json#/$defs/gitCommit" },
+        "govbr-telas": { "$ref": "common.v1.schema.json#/$defs/gitCommit" },
+        "govbr-ds-validator": { "$ref": "common.v1.schema.json#/$defs/gitCommit" }
+      },
+      "additionalProperties": false
+    },
+    "imagesLockSha256": { "$ref": "common.v1.schema.json#/$defs/sha256" },
+    "regra": { "description": "A regra em palavras (texto fixo do gerador).", "$ref": "common.v1.schema.json#/$defs/text" },
+    "geradoEm": { "$ref": "common.v1.schema.json#/$defs/utcTimestamp" }
+  },
+  "additionalProperties": false
+}

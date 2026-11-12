@@ -28,6 +28,14 @@
  * empréstimo fica gravado em `coleta-trio.json` (slot doador, ids e shas conferidos). Fora de campanha dev-*, com o primeiro
  * slot tendo a sua, com doador de fora do trio ou com qualquer identidade diferente: recusa. Sem a opção, nada muda.
  *
+ * Linha de base congelada da campanha (emenda (a) às regras de falha, § 7.2; vale em qualquer campanha): se o govbr-eval
+ * tem `campanhas/<id>/linha-de-base.json` (linha-de-base-campanha.v1, scripts/linha-de-base-campanha.ts), TODO trio usa
+ * essa linha de base, e as do disparo de cada slot são ignoradas (listadas em `coleta-trio.json`). Ela é conferida contra
+ * o manifesto de coleta de cada slot com `identidadeDoEmprestimo` (menos o commit do govbr-eval) e pelo git: o commit do
+ * govbr-eval de cada slot contém o registro byte a byte e só difere do commit da linha de base por ele. Medida, registrada
+ * ou gerada depois da primeira execução da campanha: recusa. Não combina com `--linha-de-base-do-trio`. Sem o arquivo,
+ * nada muda.
+ *
  * Resgate de isolamento (D-164, só campanha dev-*): se o govbr-eval tem `campanhas/<id>/resgates.json`, um slot sem
  * tentativa válida cuja tentativa em quarentena de isolamento está resgatada ali entra com ela (anotada `resgate` em
  * `coleta-trio.json`), e o `analisar` recebe o arquivo e faz toda a conferência (pacote e relatório por sha256). Uma
@@ -43,13 +51,17 @@ import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { basename, delimiter, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { validateContract, type AnyCampaign, type ArmV2, type Resgates, type SnapshotManifest } from "../contracts/index";
+import { validateContract, type AnyCampaign, type ArmV2, type LinhaDeBaseCampanha, type Resgates, type SnapshotManifest } from "../contracts/index";
 import { analisar } from "./analisar-execucao";
 import { bytesDaCampanha, lerAgenda, lerEntradasDoIndice, tentativaSelecionada, tentativasDoSlot, type Agenda, type Tentativa } from "./agenda-campanha";
 import {
   REPOS, Recusa, caminhoCampanha, caminhoReferencia, caminhoSite, problemasDoPacote, resolverConjunto, restaurar, sha, type EntradaIndice,
 } from "./arquivo-resultados";
 import { readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
+import {
+  REGRA_LINHA_DE_BASE_CONGELADA, RecusaLinhaDeBaseDaCampanha, caminhoNoEval, conferirCongelamentoNoGit, conferirRegistroContraManifesto,
+  escolherLinhaDeBaseCongelada, leitorGit, lerRegistroDaCampanha, type LeitorGit,
+} from "./linha-de-base-campanha";
 import { loadSite } from "./measurement-surface";
 import { lerAgendaDoArquivo } from "./painel/agenda-painel";
 import { linhasDosSinais, sinaisTecnicos, type Sinais } from "./sinais-tecnicos";
@@ -70,6 +82,10 @@ const curto = (s: string | null | undefined): string => (s ?? "").slice(0, 12);
 /** Recusa: nada é analisado (e nenhuma pasta de análise é criada). */
 export class RecusaColeta extends Error {}
 const recusar = (m: string): never => { throw new RecusaColeta(m); };
+/** As recusas da linha de base congelada (scripts/linha-de-base-campanha.ts) saem como recusa da coleta. */
+function comoRecusa<T>(fn: () => T): T {
+  try { return fn(); } catch (e) { if (e instanceof RecusaLinhaDeBaseDaCampanha) return recusar(e.message); throw e; }
+}
 
 /** Como o anexo que falta chega a `destinoDir` (os testes trocam por uma cópia local; nunca a rede). */
 export type Baixador = (e: EntradaIndice, destinoDir: string) => { ok: true } | { ok: false; erro: string };
@@ -98,7 +114,9 @@ export interface SlotDoTrio { slot: string; braco: ArmV2; posicao: number; escol
 export type EscolhaLinhaDeBase =
   | { slot: string; tipo: "registro"; entrada: EntradaIndice }
   | { slot: string; tipo: "ausencia-planejada"; justificativa: string; declaradaEm: string }
-  | { slot: string; tipo: "emprestada-do-trio"; doador: string; entrada: EntradaIndice };
+  | { slot: string; tipo: "emprestada-do-trio"; doador: string; entrada: EntradaIndice }
+  /** Emenda (a): a linha de base congelada da campanha (campanhas/<id>/linha-de-base.json); `ignoradas` = as do disparo do 1º slot. */
+  | { slot: string; tipo: "congelada-da-campanha"; entrada: EntradaIndice; ignoradas: string[] };
 export interface PlanoTrio {
   campanha: string;
   /** O id do grupo como o índice o grava (`par`), que nomeia a pasta da análise. */
@@ -112,9 +130,11 @@ export interface PlanoTrio {
  * Slots do trio na ordem da agenda, a tentativa que entra de cada um e a linha de base pela regra fixa.
  * Puro: só lê as entradas do índice, a campanha e a agenda (ou a falta dela). `resgatados` (D-164): slot → runId
  * resgatado em resgates.json; só vale para slot sem tentativa válida, e só para uma quarentena de isolamento.
+ * `extras.congelada` (emenda (a)): o registro da linha de base congelada da campanha; com ele, todo trio usa essa linha
+ * de base (a identidade contra os manifestos e o git são conferidos na coleta, fora daqui).
  */
 export function planoDoTrio(entradas: EntradaIndice[], campanha: AnyCampaign, agenda: Agenda | null, trio: string,
-  resgatados: ReadonlyMap<string, string> = new Map(), emprestimoDe?: string): PlanoTrio {
+  resgatados: ReadonlyMap<string, string> = new Map(), emprestimoDe?: string, extras: { congelada?: LinhaDeBaseCampanha } = {}): PlanoTrio {
   const c = campanha.campaignId;
   const execs = entradas.filter(e => e.tipo === "execucao" && e.campanha === c);
   let slots: { slot: string; braco: ArmV2; posicao: number }[];
@@ -174,6 +194,12 @@ export function planoDoTrio(entradas: EntradaIndice[], campanha: AnyCampaign, ag
   const primeiro = escolhidos[0];
   const mc = primeiro.escolhida.manifestoColeta?.sha256 ?? recusar(`a tentativa ${primeiro.escolhida.chave} não registra manifesto de coleta`);
   const lbs = entradas.filter(e => e.tipo === "linha-de-base" && e.campanha === c && e.slot === primeiro.slot && e.manifestoColeta?.sha256 === mc);
+  if (extras.congelada) {
+    // emenda (a): a linha de base congelada da campanha vale para todo trio; as do disparo ficam de fora (e registradas)
+    if (emprestimoDe !== undefined) recusar(`--linha-de-base-do-trio não vale com a linha de base congelada da campanha (campanhas/${c}/linha-de-base.json): todo trio usa a congelada`);
+    const e = comoRecusa(() => escolherLinhaDeBaseCongelada(entradas, c, extras.congelada!));
+    return { campanha: c, trio: nome, ordem, slots: escolhidos, linhaDeBase: { slot: primeiro.slot, tipo: "congelada-da-campanha", entrada: e, ignoradas: lbs.map(x => x.chave) } };
+  }
   if (lbs.length > 1) recusar(`o slot ${primeiro.slot} tem ${lbs.length} linhas de base do mesmo disparo (${lbs.map(e => e.chave).join(", ")}): ambíguo, nada analisado`);
   let linhaDeBase: EscolhaLinhaDeBase;
   if (emprestimoDe !== undefined) {
@@ -317,21 +343,30 @@ export function proximoCarimbo(dirTrio: string, agora = new Date()): string {
  * Empréstimo de linha de base (dev-*): o que tem de ser IGUAL nos manifestos de coleta do primeiro slot e do doador.
  * Devolve os valores conferidos (gravados em coleta-trio.json); qualquer diferença recusa.
  */
-export function identidadeDoEmprestimo(a: IsolatedCollectionManifest, b: IsolatedCollectionManifest): Record<string, unknown> {
+export function identidadeDoEmprestimo(a: IsolatedCollectionManifest, b: IsolatedCollectionManifest,
+  /**
+   * Emenda (a), linha de base congelada da campanha: `semEval` não compara o commit do govbr-eval (o registro da campanha é
+   * commitado depois da medição; o git confere que só ele difere) e exige árvore limpa nos DOIS manifestos.
+   */
+  opcoes: { semEval?: boolean; rotulo?: string } = {}): Record<string, unknown> {
+  const rotulo = opcoes.rotulo ?? "empréstimo de linha de base";
   const campos: [string, unknown, unknown][] = [
     ["identity", a.identity, b.identity],
     ["site.siteSha256", a.site.siteSha256, b.site.siteSha256],
     ["site.manifestSha256", a.site.manifestSha256, b.site.manifestSha256],
     ["oracle", a.oracle, b.oracle],
     ["repos.govbr-ds-validator", a.repos["govbr-ds-validator"], b.repos["govbr-ds-validator"]],
-    ["repos.govbr-eval", a.repos["govbr-eval"], b.repos["govbr-eval"]],
+    ...(opcoes.semEval ? [] : [["repos.govbr-eval", a.repos["govbr-eval"], b.repos["govbr-eval"]] as [string, unknown, unknown]]),
     ["repos.govbr-telas", a.repos["govbr-telas"], b.repos["govbr-telas"]],
     ["imagesLock.sha256", a.imagesLock.sha256, b.imagesLock.sha256],
   ];
   const dif = campos.filter(([, x, y]) => JSON.stringify(x) !== JSON.stringify(y)).map(([k]) => k);
-  if (dif.length) recusar(`empréstimo de linha de base recusado: os manifestos de coleta do primeiro slot e do doador divergem em ${dif.join(", ")}`);
-  const sujo = (["govbr-ds-validator", "govbr-eval", "govbr-telas"] as const).filter(r => a.repos[r]?.dirty !== false || !a.repos[r]?.commit);
-  if (sujo.length) recusar(`empréstimo de linha de base recusado: commit ausente ou árvore suja em ${sujo.join(", ")}`);
+  if (dif.length) {
+    recusar(opcoes.semEval ? `${rotulo} recusada: o manifesto de coleta da linha de base e o do slot divergem em ${dif.join(", ")}`
+      : `${rotulo} recusado: os manifestos de coleta do primeiro slot e do doador divergem em ${dif.join(", ")}`);
+  }
+  const sujo = (["govbr-ds-validator", "govbr-eval", "govbr-telas"] as const).filter(r => [a, ...(opcoes.semEval ? [b] : [])].some(m => m.repos[r]?.dirty !== false || !m.repos[r]?.commit));
+  if (sujo.length) recusar(`${rotulo} ${opcoes.semEval ? "recusada" : "recusado"}: commit ausente ou árvore suja em ${sujo.join(", ")}`);
   return { siteSha256: a.site.siteSha256, siteManifestSha256: a.site.manifestSha256, oracle: a.oracle, validatorCommit: a.repos["govbr-ds-validator"].commit,
     evalCommit: a.repos["govbr-eval"].commit, telasCommit: a.repos["govbr-telas"].commit, imagesLockSha256: a.imagesLock.sha256, identity: a.identity };
 }
@@ -350,6 +385,8 @@ export interface OpcoesColeta {
   raizEval?: string;
   /** Só campanha dev-*: slot do MESMO trio cuja linha de base entra quando o primeiro slot não arquivou a sua (cabeçalho). */
   linhaDeBaseDoTrio?: string;
+  /** Emenda (a): leitura do git do govbr-eval para a linha de base congelada (padrão: o repositório em raizEval). */
+  git?: LeitorGit;
 }
 
 export interface ResultadoColeta { saida: string; estado: string; sinais: Sinais; registro: string }
@@ -373,7 +410,10 @@ export async function coletarTrio(o: OpcoesColeta): Promise<ResultadoColeta> {
   // D-164: resgates da campanha (govbr-eval), se houver; o analisar recebe o mesmo arquivo e confere tudo
   const resgatesPath = join(raizEval, "campanhas", o.campanha, "resgates.json");
   const resgates = existsSync(resgatesPath) ? lerResgatesDaCampanha(resgatesPath, o.campanha) : null;
-  const plano = planoDoTrio(entradas, camp.campanha, agenda, o.trio, resgates?.porSlot, o.linhaDeBaseDoTrio);
+  // emenda (a): linha de base congelada da campanha (govbr-eval), se houver
+  const congeladaPath = join(raizEval, caminhoNoEval(o.campanha));
+  const congelada = existsSync(congeladaPath) ? comoRecusa(() => lerRegistroDaCampanha(congeladaPath, o.campanha)) : null;
+  const plano = planoDoTrio(entradas, camp.campanha, agenda, o.trio, resgates?.porSlot, o.linhaDeBaseDoTrio, congelada ? { congelada: congelada.doc } : {});
 
   // manifestos de coleta: mesma campanha, referência, plano e site em todos os slots
   const manifestos = plano.slots.map(s => lerManifesto(arquivo, s.escolhida));
@@ -408,8 +448,35 @@ export async function coletarTrio(o: OpcoesColeta): Promise<ResultadoColeta> {
 
   // linha de base pela regra fixa: o registro do primeiro slot, conferido contra o bruto
   let linhaDeBase: string | undefined;
+  let linhaDeBaseDaCampanha: { registro: string; snapshots: string } | undefined;
   let registroLb: Record<string, unknown>;
-  if (plano.linhaDeBase.tipo === "registro") {
+  if (plano.linhaDeBase.tipo === "congelada-da-campanha") {
+    // emenda (a): o registro da campanha contra o manifesto do disparo da linha de base, contra o de CADA slot, e pelo git
+    const lb = plano.linhaDeBase;
+    const reg = congelada!;
+    const e = lb.entrada;
+    const mLb = lerManifesto(arquivo, e);
+    comoRecusa(() => conferirRegistroContraManifesto(reg.doc, mLb.manifest));
+    const conferida = Object.fromEntries(plano.slots.map((s, i) => [s.slot,
+      identidadeDoEmprestimo(mLb.manifest, manifestos[i].manifest, { semEval: true, rotulo: "linha de base congelada da campanha" })]));
+    const git = comoRecusa(() => conferirCongelamentoNoGit(o.campanha, reg.sha256, mLb.manifest.repos["govbr-eval"].commit!,
+      manifestos.map(m => m.manifest.repos["govbr-eval"].commit!), o.git ?? leitorGit(raizEval)));
+    const regPath = join(dentro(arquivo, e.caminho), "baseline.json");
+    if (!existsSync(regPath)) recusar(`registro da linha de base ausente: ${e.caminho}/baseline.json`);
+    const regSha = sha(readFileSync(regPath));
+    if (regSha !== reg.doc.registro.sha256) recusar(`hash divergente: ${e.caminho}/baseline.json tem sha256 ${curto(regSha)}…, o registro da campanha congelou ${curto(reg.doc.registro.sha256)}…`);
+    let snapsLbRel = "";
+    try { snapsLbRel = resolverConjunto(arquivo, reg.doc.snapshotSetId, camp.campanha.fixture).caminho; } catch (err) {
+      if (err instanceof Recusa) recusar(err.message);
+      throw err;
+    }
+    linhaDeBase = regPath;
+    linhaDeBaseDaCampanha = { registro: congeladaPath, snapshots: dentro(arquivo, snapsLbRel) };
+    registroLb = { slot: lb.slot, tipo: "congelada-da-campanha", regra: REGRA_LINHA_DE_BASE_CONGELADA, baselineId: e.chave, estado: e.estado.linhaDeBase,
+      caminho: `${e.caminho}/baseline.json`, registroSha256: regSha, manifestoColeta: e.manifestoColeta?.sha256 ?? null, dataUtc: e.dataUtc,
+      registroDaCampanha: { caminho: caminhoNoEval(o.campanha), repositorio: "govbr-eval", sha256: reg.sha256, medidaEm: reg.doc.medidaEm, geradoEm: reg.doc.geradoEm },
+      snapshotsDaLinhaDeBase: snapsLbRel, identidadeConferida: conferida, git, ignoradasDoDisparo: lb.ignoradas };
+  } else if (plano.linhaDeBase.tipo === "registro") {
     const e = plano.linhaDeBase.entrada;
     const reg = join(dentro(arquivo, e.caminho), "baseline.json");
     if (!existsSync(reg)) recusar(`registro da linha de base ausente: ${e.caminho}/baseline.json`);
@@ -448,7 +515,8 @@ export async function coletarTrio(o: OpcoesColeta): Promise<ResultadoColeta> {
 
   const r = await analisar({
     ...pacotes, campanha: dentro(arquivo, camp.rel), snapshots: dentro(arquivo, snapsRel), referencia: dentro(arquivo, refRel), site: dentro(arquivo, siteRel),
-    ...(linhaDeBase ? { linhaDeBase } : { semLinhaDeBase: true }), arquivo, saida, ...(resgates ? { resgates: resgatesPath } : {}),
+    ...(linhaDeBase ? { linhaDeBase } : { semLinhaDeBase: true }), ...(linhaDeBaseDaCampanha ? { linhaDeBaseDaCampanha } : {}),
+    arquivo, saida, ...(resgates ? { resgates: resgatesPath } : {}),
   });
   const sinais = sinaisTecnicos(saida);
   writeFileSync(join(saida, "sinais-tecnicos.json"), json(sinais), { flag: "wx" });

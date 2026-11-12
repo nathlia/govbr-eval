@@ -1,0 +1,37 @@
+{
+  "contract": "linha-de-base-campanha.v1",
+  "fixture": true,
+  "campaignId": "fixture-campanha-congelada-01",
+  "screen": {
+    "id": "tela-fixture",
+    "version": "1.0.0"
+  },
+  "baselineId": "lb-fixture-01",
+  "registro": {
+    "caminho": "execucoes/x/baseline.json",
+    "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+  },
+  "medidaEm": "2026-01-01T00:00:00Z",
+  "manifestoColeta": {
+    "caminho": "coletas/fixture-campanha-congelada-01/2222222222222222222222222222222222222222222222222222222222222222/manifesto-coleta.json",
+    "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+  },
+  "snapshotSetId": "snapshots-0123456789abcdef",
+  "site": {
+    "siteSha256": "3333333333333333333333333333333333333333333333333333333333333333",
+    "manifestSha256": "4444444444444444444444444444444444444444444444444444444444444444"
+  },
+  "oracle": {
+    "version": "0.0.0-fixture",
+    "distSha256": "5555555555555555555555555555555555555555555555555555555555555555",
+    "dataSha256": "6666666666666666666666666666666666666666666666666666666666666666"
+  },
+  "repos": {
+    "govbr-eval": "7777777777777777777777777777777777777777",
+    "govbr-telas": "8888888888888888888888888888888888888888",
+    "govbr-ds-validator": "9999999999999999999999999999999999999999"
+  },
+  "imagesLockSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "regra": "fixture: linha de base da campanha congelada antes do primeiro slot",
+  "geradoEm": "2026-01-01T01:00:00Z"
+}
