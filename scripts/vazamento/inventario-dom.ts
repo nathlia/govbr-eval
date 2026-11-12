@@ -5,18 +5,21 @@
  * que a tela de fato RENDERIZA, não um termo que exista em algum byte servido (os bundles do DS core e dos web
  * components trazem quase todos os nomes de componente: 124 de 126 termos `specs:*` estavam "na página" assim).
  *
- * Para cada tela do runner (solicitacao, vistorias), sobre o site congelado servido pelo `server.mjs` do govbr-telas:
- * abre a entrada da referência (`_meta.url` + `waitFor`, janela `_meta.viewport`), percorre o `_meta.setup` com o mesmo
- * executor da conferência da referência (`anchors.ts`: click, fill, wait, navigate sem recarga) e, em cada parada
- * declarada em `_meta.states` (depois do passo `afterStep`), coleta `localName` e `classList` de TODO elemento do
- * documento, atravessando shadow roots abertos. Só o setup e as paradas da referência são lidos (nenhuma spec).
+ * 1.2.0 (NAT-118): o gerador NUNCA abre a referência. Lê só o manifesto de navegação da tela (`manifesto-navegacao.ts`,
+ * extraído antes por outro processo: entrada, janela, setup e paradas, com o sha256 da referência de origem e do próprio
+ * conteúdo, conferido aqui) e o site congelado. Sobre o site servido pelo `server.mjs` do govbr-telas: abre a entrada
+ * (`url` + `waitFor`, janela `viewport`), percorre o `setup` com o mesmo executor da conferência da referência
+ * (`anchors.ts`: click, fill, wait, navigate sem recarga) e, em cada parada do manifesto (depois do passo `afterStep`),
+ * coleta `localName` e `classList` de TODO elemento do documento, atravessando shadow roots abertos.
  *
- * Saída: `scripts/vazamento/inventario-dom/<tela>.json` com o sha256 do site (`site-manifest.json` → item.sha256, o mesmo
- * `telas.siteSha256` que o images.lock.json fixa) e do manifesto; o detector só usa um inventário cujo siteSha256 é o do
- * site em `telasDir` (senão: sem inventário → a regra não perdoa nada, falha fechada).
+ * Saída: `<saida>/<tela>.json` com o vínculo ao site (`site`: sha256 do site, `site-manifest.json` → item.sha256, o mesmo
+ * `telas.siteSha256` que o images.lock.json fixa, e o sha256 do site-manifest.json) e ao manifesto de navegação
+ * (`manifestoNavegacao`: o sha256 do conteúdo e as paradas). O detector só usa um inventário cujo siteSha256 é o do site
+ * em `telasDir` (senão: sem inventário → a regra não perdoa nada, falha fechada). O contrato do arquivo é conferido por
+ * `conferir-inventario.ts` (esquema, vínculo, cobertura das paradas), que só imprime contagens e hashes.
  *
- *   npx tsx scripts/vazamento/inventario-dom.ts [--telas ../govbr-telas] [--tela vistorias]... [--site http://127.0.0.1:PORTA]
- *                                              [--vincular] [--saida <pasta>]
+ *   npx tsx scripts/vazamento/inventario-dom.ts --manifesto <manifesto.json> [--manifesto <outro>]... [--telas ../govbr-telas]
+ *                                              [--site http://127.0.0.1:PORTA] [--vincular] [--saida <pasta>]
  *
  * Sem --site, sobe `node <telas>/server.mjs` numa porta livre e o encerra no fim.
  *
@@ -37,10 +40,10 @@ import type { FlowSetupStep } from "../../types";
 import { openPage, runSetupSteps } from "../anchors";
 import { DEFAULT_TELAS_DIR } from "../../runner/lib";
 import { sitesDoInventario, type InventarioDom, type VinculoDeSite } from "./conhecimento";
+import { lerManifesto } from "./manifesto-navegacao";
 
-export const INVENTARIO_VERSAO = "inventario-dom-1.1.0";
+export const INVENTARIO_VERSAO = "inventario-dom-1.2.0";
 export const INVENTARIO_DIR = join(fileURLToPath(new URL(".", import.meta.url)), "inventario-dom");
-const ROOT_EVAL = join(fileURLToPath(new URL(".", import.meta.url)), "..", "..");
 const sha256 = (b: Buffer | string) => createHash("sha256").update(b).digest("hex");
 
 /** Coleta no documento + shadow roots abertos. */
@@ -65,12 +68,12 @@ async function portaLivre(): Promise<number> {
   });
 }
 
-async function servir(telasDir: string): Promise<{ url: string; filho: ChildProcess }> {
+async function servir(telasDir: string, sonda: string): Promise<{ url: string; filho: ChildProcess }> {
   const porta = await portaLivre();
   const filho = spawn(process.execPath, [join(telasDir, "server.mjs"), "--port", String(porta)], { cwd: telasDir, stdio: "ignore" });
   const url = `http://127.0.0.1:${porta}`;
   for (let i = 0; i < 100; i += 1) {
-    if (await fetch(url + "/solicitacao.html").then((r) => r.ok).catch(() => false)) return { url, filho };
+    if (await fetch(url + sonda).then((r) => r.ok).catch(() => false)) return { url, filho };
     await new Promise((r) => setTimeout(r, 100));
   }
   filho.kill();
@@ -162,24 +165,24 @@ async function main(): Promise<void> {
   const argv = process.argv.slice(2);
   const muitos = (k: string) => argv.flatMap((a, i) => (a === `--${k}` && argv[i + 1] ? [argv[i + 1]] : []));
   const telasDir = resolve(muitos("telas")[0] ?? DEFAULT_TELAS_DIR);
-  const telas = muitos("tela").length ? muitos("tela") : ["solicitacao", "vistorias"];
+  if (muitos("tela").length || argv.includes("--tela")) throw new Error("--tela não existe desde o inventário 1.2.0 (NAT-118): passe --manifesto <manifesto.json> (manifesto-navegacao.ts); o gerador não lê referência nem telas.json");
+  const manifestosNav = muitos("manifesto").map((a) => ({ m: lerManifesto(resolve(a)) }));
+  if (!manifestosNav.length) throw new Error("uso: inventario-dom.ts --manifesto <manifesto.json> [--manifesto <outro>]... [--telas <govbr-telas>] [--site URL] [--vincular] [--saida <pasta>]");
+  if (new Set(manifestosNav.map((x) => x.m.tela)).size !== manifestosNav.length) throw new Error("dois manifestos da mesma tela");
   const vincular = argv.includes("--vincular");
   const saida = muitos("saida")[0] ? resolve(muitos("saida")[0]) : INVENTARIO_DIR;
   const manifestoTexto = readFileSync(join(telasDir, "site-manifest.json"));
   const manifesto = JSON.parse(manifestoTexto.toString("utf8")) as { item: { sha256: string } };
-  const telasJson = JSON.parse(readFileSync(join(ROOT_EVAL, "telas.json"), "utf8")) as Record<string, { reference?: string | null }>;
-  const servido = muitos("site")[0] ? { url: muitos("site")[0].replace(/\/+$/, ""), filho: null } : await servir(telasDir);
+  const entrada = (u: string) => (u.startsWith("/") ? u : `/${u}`);
+  const servido = muitos("site")[0] ? { url: muitos("site")[0].replace(/\/+$/, ""), filho: null } : await servir(telasDir, entrada(manifestosNav[0].m.entrada.url));
   const browser = await chromium.launch({ headless: true });
   mkdirSync(saida, { recursive: true });
   let divergentes = 0;
   try {
-    for (const tela of telas) {
-      const ref = telasJson[tela]?.reference;
-      if (!ref) throw new Error(`telas.json: ${tela} sem referência (o setup e as paradas vêm dela)`);
-      const refTexto = readFileSync(join(ROOT_EVAL, ref));
-      const meta = (JSON.parse(refTexto.toString("utf8")) as { _meta: Meta })._meta;
-      const url = meta.url.startsWith("/") ? meta.url : `/${meta.url}`;
-      const estados = await inventariar(browser, servido.url, { ...meta, url });
+    for (const { m: nav } of manifestosNav) {
+      const tela = nav.tela;
+      const meta: Meta = { url: entrada(nav.entrada.url), waitFor: nav.entrada.waitFor, viewport: nav.viewport, setup: nav.setup, states: nav.paradas };
+      const estados = await inventariar(browser, servido.url, meta);
       const tags = [...new Set(estados.flatMap((e) => e.tags))].sort();
       const classes = [...new Set(estados.flatMap((e) => e.classes))].sort();
       // dinâmicas: vistas pelo MutationObserver e fora do retrato estático de todas as paradas; guarda a 1ª fase
@@ -189,8 +192,8 @@ async function main(): Promise<void> {
       const doc = {
         contrato: INVENTARIO_VERSAO, tela,
         site: { siteSha256: manifesto.item.sha256, manifestSha256: sha256(manifestoTexto) },
-        referencia: { arquivo: ref, sha256: sha256(refTexto), paradas: estados.map((e) => e.id) },
-        viewport: meta.viewport ?? { width: 1280, height: 900 },
+        manifestoNavegacao: { sha256: nav.sha256, paradas: estados.map((e) => e.id) },
+        viewport: nav.viewport,
         nota: "nomes de tag (localName) e de classe (classList) presentes no DOM renderizado nas paradas declaradas da referência, shadow roots abertos atravessados; o detector de vazamento só perdoa nome de componente que esteja aqui, na posição certa",
         tags, classes,
         notaDinamicas: "classes que o DOM ganhou em tempo de execução e que não estão no retrato estático das paradas, com a fase em que o MutationObserver (documento + shadow roots) as viu primeiro: setup = durante a carga e o setup da referência; foco = Tab por todos os focáveis da parada; hover = mouse sobre cada elemento interativo da parada. O detector aceita classe em posição de classe de qualquer dos dois conjuntos; tags só do retrato estático",

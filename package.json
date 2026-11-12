@@ -107,6 +107,7 @@
     "comparadores": "tsx comparadores/executar.ts",
     "comparadores:tokens": "node comparadores/lint/gerar-tokens.mjs",
     "test:comparadores": "tsx comparadores/testes.ts",
+    "test:inventario": "tsx scripts/test-inventario-manifesto.ts",
     "portao:matriz": "tsx portao-nat86/matriz.ts",
     "portao:oraculo": "tsx portao-nat86/oraculo.ts",
     "portao:integridade": "tsx portao-nat86/integridade.ts",

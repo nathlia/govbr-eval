@@ -409,6 +409,20 @@ perfis fixados (nomes + sha256 do `tools/list`) ficam em `runner/perfis-oraculo.
   aceito quando o site em `telasDir` está na lista; o arquivo de um site só (`site`) continua válido. Forma inválida
   (os dois campos, lista vazia, repetida, sha fora do formato) é erro. Nenhuma regra de classificação muda; canários
   iguais (45).
+  **Inventário em dois passos (inventário 1.2.0, NAT-118):** o gerador não abre mais a referência. (1)
+  `scripts/vazamento/manifesto-navegacao.ts --tela <nome> --saida <manifesto.json>` lê a referência e grava só a
+  navegação (`entrada` = `url` + `waitFor`, `viewport`, `setup`, `paradas` com `id`/`afterStep`/`path`), com o sha256 da
+  referência de origem e do próprio conteúdo; lista fechada: campo de `_meta` que não é operacional nem documental
+  conhecido (ou campo estranho num passo, parada ou janela) PARA a extração, que relata só o nome. (2)
+  `scripts/vazamento/inventario-dom.ts --manifesto <manifesto.json> --telas <govbr-telas> --saida <pasta>` lê só o
+  manifesto (confere o sha256 dele) e o site congelado, e grava o inventário preso ao `siteSha256` + sha256 do
+  `site-manifest.json` (`site`) e ao sha256 do manifesto (`manifestoNavegacao`), sem hash nem nome da referência. (3)
+  `scripts/vazamento/conferir-inventario.ts --inventario <tela.json> --manifesto <manifesto.json> --telas <govbr-telas>`
+  confere esquema, vínculo e cobertura de todas as paradas, imprimindo só contagens e hashes. **Na tela selada**, a
+  extração roda num processo que não é o agente que ajusta o oráculo; o inventário é gerado por um agente novo, que recebe só o manifesto e o site congelado; a conferência
+  do contrato pode rodar em qualquer lado, porque não mostra conteúdo. Os inventários 1.1.0 de A, A2 e B ficam como
+  estão (o detector lê os dois formatos; `--vincular` não mistura 1.1.0 com 1.2.0: remedir do zero). Testes:
+  `test:inventario` (o gerador roda numa cópia do govbr-eval sem nenhum `ground-truth-*`).
 - **Aderência:** no `ferramentas` a consulta normativa é "não aplicável"; o gate é scan + verificação
   quando há candidato com regra.
 - **Texto da tarefa:** o mesmo sha256 nos três braços (`test:avaliar-tela`, `test:runner`).
