@@ -1,0 +1,167 @@
+{
+  "contract": "campaign.v2",
+  "fixture": false,
+  "campaignId": "dev-3712-a2-02",
+  "kind": "pilot",
+  "title": "Desenvolvimento do oráculo na tela A2 (Acompanhar requerimento), validator 3.7.12, rodada 2 (D-155/D-160/D-162) — 1 trio sem/ferramentas/com em quadrado latino, Opus 5.5 high; MEDIÇÃO DE DESENVOLVIMENTO fora de qualquer número da tese",
+  "objective": "Modo desenvolvimento (D-155): A, B, A2 e os controles são telas de desenvolvimento, iteradas como num produto; a meta é o braço com achar pelo menos o que o sem e o ferramentas acham e achar defeitos específicos do DS que só ele pega. Ciclo: trio → rastrear cada perda até a chamada → consertar → trio. Esta campanha mede uma rodada desse ciclo na terceira tela de desenvolvimento (A2, irmã da A, construída do sorteio da revisão formal 2, D-160), o validator 3.7.12 (816f4ba: a 3.7.10 edb10cd — a 3.7.7 d7644ea — a 3.7.5 a202245, que já somava à 3.7.4 844b43c a D-186, cláusulas adiadas com caminho e leitura obrigatória das regras de uso, pendência usage-unread com ids próprios L-NN; mais a D-188, a 3.7.6 8603d78 sem campanha: bloco specification no 1º scan_page, check spec-part-token e observação com norma obrigatória como pendência observed-required, com ids próprios O-NN; e a D-189: os predicados font-size-on-ds-scale, que mede e não decide (D-32), e part-value-matches-spec-token no verify_finding, e a O-NN fecha pelo caminho que nomeia —; mais a D-190, a 3.7.8 a14201d sem campanha: controle com conteúdo recolhido no estado medido (aria-expanded=false, aria-haspopup, aria-controls→oculto, aba não selecionada, details fechado) vira pendência state-unscanned com a receita pronta de scan_page (as ações do scan que viu o controle, o clique no controle e a chegada que prova o estado aberto), fechada só por um scan do estado aberto ou por \"não se aplica\" com motivo, casca primeiro, padrão repetido (3 ou mais instâncias de mesma estrutura) fechado por uma instância escaneada; desvio com norma obrigatória medido em conteúdo oculto vira O-NN com a receita do gatilho; pendência upload-paths (exercer arquivo que o campo deve recusar e arrasto, com chegada, e as cláusulas que mandam informar o usuário ao lado do texto de apoio visível); icon-only-embedded em texto neutro (o exemplo oficial tem força example, não é norma); investigate pela visibilidade no estado, parte aninhada depois do hospedeiro; toda pendência com pendingId no registro de observações, o next da forma compacta alcança todos os ids e o nome exato da condição do verify sobrevive à compactação; state-unscanned e a parte de procedimento de upload-paths saem também no perfil knowledge-free, por serem só fatos da página; mais a 3.7.9 c3d6dde, que conserta os quatro defeitos do teste à mão da 3.7.8: na forma só-ids (o teto padrão em A e B) as pendências state-unscanned e upload-paths guardam o código e o 1º seletor curto (P-NN:state-unscanned@<seletor>; seletor estrutural longo, só o código), com a frase \"receita pronta no next\", também em sessionPending.ids, e vêm primeiro na linha e no registro (D1); controle já visto aberto num scan da rota, o estado inicial inclusive, não vira pendência nova e nasce fechado (D2); o scan do estado aberto com checks a menos que o scan que abriu a pendência não a fecha e devolve statesIncomplete com os checks que faltam (D3); com diálogo modal aberto só os controles dentro dele viram pendência de estado, e controle inerte ou coberto não ganha receita, que voltaria state-not-reached (D4); e a 3.7.10 edb10cd, que conserta o defeito do teste à mão da 3.7.9: os checks de scans do mesmo estado aberto se somam, e o scan que completa os que faltavam fecha a pendência (statesIncomplete diz os que ainda faltam); completeOmitted não sugere de novo um check já medido com escopo inteiro naquele estado, e o omitted[] dele aponta o scan que o mediu (alreadyMeasuredIn) (D5); mais a 3.7.11 73913ec, rodada das leituras dev-3710: verify sem decisão numa pendência de fato já medido (cláusula que obriga) não a fecha e volta em pendingUndecided com o observed e o conselho judge-fact; marcação inválida em button nativo vira observação e pendência; icon-only-embedded com a frase da exceção circular; scan com selectors avisa a pendência de estado que deixa aberta; foco medido com transições assentadas; receita de arrasto (dropRecipe) na pendência upload-paths; antecedentes das regras revistos à mão; erro do campo de arquivo só conta se o texto está visível; e a 3.7.12 816f4ba: no perfil evaluation o verify que não decide não fecha pendência nenhuma; no knowledge-free a pendência sem fato medido fecha como na 3.7.11, salvo recusa do payload (evidence-incomplete, evidence-inconsistent, invalid-locator, locator-ambiguous), que não fecha nada; conselhos judge-fact e fix-evidence-data reescritos; o tools/list e as instructions ficam iguais aos da 3.7.3 até a 3.7.12 nos seis perfis e o data/ não muda), com a skill avaliar-tela 8139bb0c (a 860feacb da 3.7.4/3.7.5 mais o passo 9: antes de encerrar, toda pendência que a última resposta de uma ferramenta ainda der como aberta é decidida pelo caminho que ela indicar ou registrada em limitations com o motivo; sem conhecimento do DS, D-18), o coletor que recusa achado com evidências de rotas distintas e diz que o fato de outra rota ou estado é achado próprio, enviado à parte (collector-route-guard-1.0.2, D-173: a recusa também avisa quantas referências estão em jogo e que o primeiro aceite é final; regra e aceite iguais aos da 1.0.1), o relógio real lido sem sair da página (relogio-2: o /tempo do coletor consultado por fetch dentro da tela, renderizador 1.3.0, D-187) e o LEIAME-juiz da passada cega 1.4.7, política 1.3.0 (a 1.4.6 mais a estrutura de papéis medida na árvore da marcação), na tela A2 (acompanhamento, Acompanhar requerimento; referência ground-truth-acompanhamento.json 1.0.0, congelada antes de qualquer execução de agente na tela, D-162: 14 specs / 16 unidades, 13 / 15 sem a exposta U-11, que é a mesma variante da A-06 da A e é lida à parte), com 1 trio por tela nesta rodada (decisão da coordenação de 12/11: ciclo rápido da D-155, um trio cego por tela), não 3 como na D-156 ii, na mesma forma das rodadas anteriores (quadrado latino, semente declarada, agenda v2; os 3 grupos p01..p03 cobrem as 3 linhas do quadrado). Contra a rodada 3.7.10 na A2 (dev-3710-a2-01) mudam juntos o oráculo (3.7.11 e 3.7.12 juntas; a 3.7.11 não foi a campanha) e a mensagem da recusa de rotas misturadas (collector-route-guard-1.0.2); skill 8139bb0c, relógio relogio-2, site e LEIAME-juiz 1.4.7 iguais, nos três braços: a diferença não se atribui a um deles sozinho, e com um trio só a leitura é de um trio, sem mediana. É medição de desenvolvimento do 3.7.12: FICA FORA DE QUALQUER NÚMERO DA TESE (a D continua lacrada, D-138/D-155). Diferente dos ensaios anteriores, as saídas destes trios PODEM motivar mudanças na ferramenta (oráculo, skill, protocolo): é o ciclo de desenvolvimento da D-155. Toda mudança motivada por eles tem de ser genérica e validada fora da spec que a inspirou (controles, outra tela de desenvolvimento), entra em versão nova do validator e é medida em campanha nova; nada muda dentro desta campanha congelada. Técnico: os 3 slots rodam com isolamento passed e identidade igual à campanha congelada. Leitura (D-156): duas colunas, detecção e detecção fundamentada, separadas por classe de spec (específica do DS × acessibilidade geral, pela categories da referência), no trio, comparadas aos 3 trios do 3.7.10 na A2 (dev-3710-a2-01, detecção por trio p01/p02/p03: sem 8/8/7 · ferramentas 10/7/9 · com 12/12/10 das 14 specs; medianas 8/9/12), só como descrição: um trio contra a mediana de três não forma série nem diferença medida.",
+  "hypotheses": [
+    "Desenvolvimento, sem inferência: meta de produto da D-155 — no trio, com ≥ sem e com ≥ ferramentas em detecção e em detecção fundamentada, e com acha specs específicas do DS que sem e ferramentas não acham. A leitura orienta a próxima rodada do ciclo e não decide nada na tese. Técnico: passa se os 3 slots rodam com isolamento passed e identidade igual à campanha congelada."
+  ],
+  "createdAt": "2026-11-12T17:59:46Z",
+  "frozenAt": "2026-11-12T17:59:46Z",
+  "design": {
+    "screens": [
+      {
+        "id": "acompanhamento",
+        "label": "Acompanhar requerimento",
+        "version": "govbr-telas-site-88076aec26e9"
+      }
+    ],
+    "arms": [
+      "sem",
+      "ferramentas",
+      "com"
+    ],
+    "models": [
+      {
+        "family": "Opus",
+        "requested": "claude-opus-5-5"
+      }
+    ],
+    "effort": "high",
+    "repetitions": 1,
+    "order": "quadrado-latino",
+    "seed": 20261135,
+    "comparisons": [
+      {
+        "id": "ferramentas-x-com",
+        "arms": [
+          "ferramentas",
+          "com"
+        ],
+        "role": "primary",
+        "question": "Desenvolvimento (sem inferência): o que a base de conhecimento do oráculo 3.7.12 acrescenta às ferramentas de medição na tela A2 — detecção e fundamentada, por classe de spec, no trio. Fora de qualquer número da tese."
+      },
+      {
+        "id": "sem-x-ferramentas",
+        "arms": [
+          "sem",
+          "ferramentas"
+        ],
+        "role": "secondary",
+        "question": "Desenvolvimento (sem inferência): o que as ferramentas de medição do 3.7.12 acrescentam ao navegador sozinho na tela A2. Fora de qualquer número da tese."
+      },
+      {
+        "id": "sem-x-com",
+        "arms": [
+          "sem",
+          "com"
+        ],
+        "role": "secondary",
+        "question": "Desenvolvimento (sem inferência): o oráculo 3.7.12 inteiro contra o navegador sozinho na tela A2. Fora de qualquer número da tese."
+      }
+    ]
+  },
+  "fixed": {
+    "protocolSha256": "8139bb0cd71d273e1f63294b2523478fd54fc2e05033cfc58f58bda174d83e3c",
+    "client": {
+      "name": "claude-code",
+      "version": "2.1.288 (Claude Code)"
+    },
+    "provider": {
+      "name": "anthropic",
+      "authMethod": "api-key"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "147.0.7727.15"
+    },
+    "playwrightMcp": "@playwright/mcp@0.0.70",
+    "isolationPolicyVersion": "isolamento-runner-1.1.0",
+    "oracleProfiles": {
+      "com": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.12",
+        "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "evaluation",
+        "tools": [
+          "get_component_spec",
+          "get_design_tokens",
+          "get_ds_rules",
+          "get_emag_rules",
+          "get_finding_details",
+          "get_page_rules",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "04ae14378db09bd4cdef48841e3d1a9388b701e18279fe08a04267af3c74614c"
+      },
+      "ferramentas": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.12",
+        "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "knowledge-free",
+        "tools": [
+          "get_finding_details",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "5b9c59aaa490f5de2a4a497eda8a2e3dbedd25b2a8288fed8eb049f7233d40dc"
+      }
+    },
+    "scorerVersion": "flow-semantic-1.8.2"
+  },
+  "limits": {
+    "timeoutSeconds": 1800,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 6,
+    "retryOn": [
+      "rate-limited",
+      "model-unavailable",
+      "auth-failed",
+      "preflight-failed",
+      "vm-lost",
+      "harness-error",
+      "archive-unavailable",
+      "cancelled"
+    ],
+    "attemptSelection": "Desenvolvimento: vale a primeira tentativa sem falha técnica de cada slot, na ordem da agenda. Nova tentativa só por falha técnica (protocolo §7.2, D-88), no máximo 1 por slot (3 slots, teto 6). Nada desta campanha entra em número da tese."
+  },
+  "failurePolicy": "Protocolo NAT-78 §7.2/§7.4: nova tentativa só por falha técnica (429, queda, modelo indisponível, autenticação, preflight, VM perdida, erro do harness ou do arquivo, cancelamento); tempo esgotado no teto de 30 min é resultado do agente, fica registrado e não se repete. Falha técnica de isolamento, inventário, trava ou crash leva a conserto e campanha nova. Mudanças na ferramenta motivadas pelas saídas (ciclo da D-155) vão para versão nova do validator, medida em campanha nova; esta campanha congelada não muda.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": []
+  },
+  "analysisPlan": {
+    "primaryOutcome": "Nenhum desfecho da tese (desenvolvimento). Técnico: isolamento passed e identidade congelada nos 3 slots (oráculo 3.7.12, perfis evaluation e knowledge-free medidos). Desenvolvimento (D-155/D-156): por braço, specs achadas das 14 da A2 em duas colunas — detecção e detecção fundamentada —, também das 13 sem a exposta U-11 (lado a lado, nunca uma no lugar da outra), separadas por classe (específica do DS × acessibilidade geral, pela categories da referência 1.0.0), no trio (sem mediana).",
+    "secondaryOutcomes": [
+      "Comparação descritiva com os 3 trios do 3.7.10 na A2 (dev-3710-a2-01, detecção por trio p01/p02/p03: sem 8/8/7 · ferramentas 10/7/9 · com 12/12/10 das 14 specs; medianas 8/9/12), mesmo escopo, só como descrição (um trio contra a mediana de três); o que olhar nesta rodada: as perdas que a leitura dev-3710-a2 atribuiu ao oráculo e que a 3.7.11/3.7.12 mira — pendências de fato medido que o verify sem decisão fechava, receita de arrasto do upload, marcação de button nativo.",
+      "Rastreamento de cada perda do braço com até a chamada do oráculo (como no mecanismo da B-03), que alimenta a próxima rodada do ciclo da D-155.",
+      "Medidas de recurso (tempo, tokens, custo estimado, fração da janela de 5 h), só registradas."
+    ],
+    "uncertaintyMethod": null,
+    "exclusionRules": "A campanha inteira fica fora de qualquer número da tese (regra 5 da Metodologia §5.7.5; D lacrada, D-138/D-155). Os números são lidos e PODEM motivar mudanças genéricas na ferramenta (ciclo da D-155), validadas fora da spec que as inspirou; nunca ajustam a referência (A2 1.0.0 congelada, D-162), o scorer, a política do juiz nem N."
+  },
+  "budget": {
+    "approved": false,
+    "amount": null,
+    "currency": null,
+    "approvedBy": null,
+    "approvedAt": null
+  },
+  "pendingDecisions": []
+}
