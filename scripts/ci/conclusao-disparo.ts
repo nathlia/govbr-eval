@@ -23,7 +23,8 @@
  *   - coleta success (ou skipped por `so-linha-de-base`) e falha em arquivar → reexecutar o arquivar, se os artifacts que
  *     ele baixa existem no run e não expiraram (manifesto-coleta; pacote quando a coleta rodou). Variante conservadora: a
  *     documentação do GitHub não diz se o download-artifact de um job reexecutado vê os artifacts da tentativa anterior;
- *     se não vir, o arquivar recusa (pacote ausente com coleta success) sem gravar nada e o run volta aqui;
+ *     se não vir, o arquivar grava a tentativa SEM pacote no índice (o modelo foi chamado: conta nas regras de falha,
+ *     nada fabricado), e um arquivar posterior do mesmo disparo com o pacote é recusado (revisão de 12/11, MED 6);
  *   - falha em linhas-de-base: a linha de base do disparo nunca é reexecutada no mesmo run (o upload do artifact
  *     `linha-de-base` da tentativa anterior pode colidir: upload-artifact v4 falha se o nome já existe); com a linha de
  *     base congelada da campanha ela não é usada, e sem ela o caminho é o de sempre (novo disparo `so-linha-de-base` com

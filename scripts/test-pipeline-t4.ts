@@ -18,7 +18,8 @@ import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, 
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import yaml from "js-yaml";
-import { validateContract, type Run } from "../contracts/index";
+import { validateContract, type AnyCampaign, type Run } from "../contracts/index";
+import { tentativasDoSlot } from "./agenda-campanha";
 import { avaliar, interpolar, type Workflow } from "./ci/emular-workflow";
 import { CODIGO, decidirDisparo } from "./ci/conclusao-disparo";
 import { CONTAS, CREDENCIAL_DA_CONTA, cartaoSaude, conferirAmbienteDosConteineres, conferirCheckouts, conferirEntradas, conferirImagens, credencialPermitida, resumoArquivo, resumoColeta, situacaoDoPar } from "./pipeline-t4";
@@ -674,22 +675,46 @@ await teste("arquivo: valor de credencial dentro do pacote → nada publicado, e
   assert.deepEqual(comToken, [], "valor do token em algum arquivo do arquivo");
 });
 
-await teste("emenda (a): coleta success e pacote ausente no arquivar = recusa SEM gravar nada (nunca vira tentativa sem pacote)", () => {
+await teste("emenda (a), revisão MED 6: coleta success e pacote ausente = tentativa NO índice (conta nas regras de falha), nenhum pacote fabricado; o mesmo disparo com pacote depois = recusa", () => {
   const limpo = repoDeArquivo("govbr-resultados-sem-artifact");
-  const antes = todosOsArquivos(limpo);
-  for (const etapas of ["so-coleta", "coleta+linha-de-base"]) {
-    assert.throws(() => arquivarExecucao({ arquivo: limpo, evidenciasSaida: join(TMP, "anexos-sem-artifact"), pacote: null, manifesto: manifestoPath, linhaDeBase: null, segredos: [],
-      entradas: { ...ENT, etapas }, jobs: JOBS }), (e: Error) => e instanceof Recusa && /o job coleta concluiu \(success\), mas o pacote não chegou/.test(e.message));
-    // pasta do pacote sem run.json (download parcial) também
-    const vazio = join(TMP, "pacote-vazio");
+  const antes = { repo: process.env.GITHUB_REPOSITORY, id: process.env.GITHUB_RUN_ID };
+  process.env.GITHUB_REPOSITORY = "dono/govbr-eval";
+  process.env.GITHUB_RUN_ID = "777001";
+  try {
+    const vazio = join(TMP, "pacote-vazio"); // download parcial: pasta sem run.json
     mkdirSync(vazio, { recursive: true });
-    assert.throws(() => arquivarExecucao({ arquivo: limpo, evidenciasSaida: join(TMP, "anexos-sem-artifact"), pacote: vazio, manifesto: manifestoPath, linhaDeBase: null, segredos: [],
-      entradas: { ...ENT, etapas }, jobs: JOBS }), Recusa);
+    const r = arquivarExecucao({ arquivo: limpo, evidenciasSaida: join(TMP, "anexos-sem-artifact"), pacote: vazio, manifesto: manifestoPath, linhaDeBase: null, segredos: [],
+      entradas: { ...ENT, etapas: "so-coleta" }, jobs: { ...JOBS, "linhas-de-base": { result: "skipped" } } });
+    const g = r.gravacoes.find(x => x.tipo === "execucao")!;
+    assert.equal(g.chave, "sem-pacote-gh-777001");
+    assert.ok(r.problemas.some(p => /pacote não chegou ao arquivar/.test(p)));
+    const e = JSON.parse(readFileSync(join(limpo, "indice", "entradas", `${g.chave}.json`), "utf8")) as EntradaIndice;
+    assert.equal(e.slot, ENT.slot);
+    assert.match(e.motivo!, /^coleta concluída, pacote ausente no arquivamento: o modelo foi chamado \(slot slot-01, braço \w+, tentativa \d+\)/);
+    assert.equal(e.manifestoColeta!.sha256, msha, "a tentativa fica presa ao disparo");
+    // nenhum pacote fabricado: sem pacote no índice, sem pasta pacote/, sem anexo
+    assert.equal(e.pacote, null);
+    assert.equal(e.evidencias!.estado, "nao-se-aplica");
+    assert.ok(!existsSync(join(limpo, e.caminho, "pacote")));
+    assert.ok(!existsSync(join(TMP, "anexos-sem-artifact")) || readdirSync(join(TMP, "anexos-sem-artifact")).length === 0, "nenhum tar.gz");
+    // entra na contagem: é tentativa do slot (não "nao-conta"); com a política padrão, técnica
+    const camp = { campaignId: e.campanha, retryPolicy: { maxAttemptsPerSlot: 2, campaignAttemptCeiling: 9, retryOn: ["vm-lost", "harness-error"] } } as unknown as AnyCampaign;
+    const ts = tentativasDoSlot([e], camp, ENT.slot);
+    assert.equal(ts.length, 1, "a chamada de modelo conta como tentativa");
+    assert.equal(ts[0].classe, "tecnica");
+    const semRepetir = { ...camp, retryPolicy: { ...camp.retryPolicy, retryOn: [] } } as unknown as AnyCampaign;
+    assert.equal(tentativasDoSlot([e], semRepetir, ENT.slot)[0].classe, "inelegivel", "política sem repetição: conta e não abre outra");
+    // o arquivar reexecutado do MESMO disparo, agora com o pacote: recusa (a chamada nunca conta duas vezes), nada gravado
+    const depois = todosOsArquivos(limpo);
+    assert.throws(() => arquivarExecucao({ arquivo: limpo, evidenciasSaida: join(TMP, "anexos-sem-artifact-2"), pacote, manifesto: manifestoPath, linhaDeBase: null, segredos: [],
+      entradas: { ...ENT, etapas: "so-coleta" }, jobs: JOBS }), (x: Error) => x instanceof Recusa && /já está no índice como tentativa sem pacote/.test(x.message));
+    assert.deepEqual(todosOsArquivos(limpo), depois);
+    // e o arquivar reexecutado ainda sem pacote é idempotente (a mesma entrada)
+    assert.equal(arquivarExecucao({ arquivo: limpo, evidenciasSaida: join(TMP, "anexos-sem-artifact"), pacote: null, manifesto: manifestoPath, linhaDeBase: null, segredos: [],
+      entradas: { ...ENT, etapas: "so-coleta" }, jobs: JOBS }).gravacoes.find(x => x.tipo === "execucao")!.chave, g.chave);
+  } finally {
+    for (const [k, v] of [["GITHUB_REPOSITORY", antes.repo], ["GITHUB_RUN_ID", antes.id]] as const) if (v === undefined) delete process.env[k]; else process.env[k] = v;
   }
-  assert.deepEqual(todosOsArquivos(limpo), antes, "nada gravado no clone");
-  // so-linha-de-base (a coleta não roda) e coleta que não concluiu seguem como antes
-  assert.ok(arquivarExecucao({ arquivo: limpo, evidenciasSaida: join(TMP, "anexos-sem-artifact"), pacote: null, manifesto: manifestoPath, linhaDeBase: lbDir, segredos: [],
-    entradas: { ...ENT, etapas: "so-linha-de-base" }, jobs: { ...JOBS, coleta: { result: "skipped" } } }).gravacoes.some(g => g.tipo === "linha-de-base"));
 });
 
 await teste("emenda (a): arquivar reexecutado (rerun do job, clone novo do arquivo) grava o MESMO slot uma vez, com o mesmo anexo; a entrega é confirmada", () => {
