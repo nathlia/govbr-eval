@@ -28,7 +28,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validateContract, type Baseline, type LinhaDeBaseCampanha } from "../contracts/index";
 import { lerEntradasDoIndice } from "./agenda-campanha";
-import { sha, type EntradaIndice } from "./arquivo-resultados";
+import { Recusa, resolverConjunto, sha, type EntradaIndice } from "./arquivo-resultados";
 import { readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
 
 export const REGRA_LINHA_DE_BASE_CONGELADA = "emenda (a) às regras de falha (§ 7.2): a linha de base da campanha é medida e congelada uma vez, antes do " +
@@ -143,6 +143,75 @@ export function conferirCongelamentoNoGit(campanha: string, registroSha256: stri
     diferencas[c] = dif;
   }
   return { caminho, commitDaLinhaDeBase, commitsDosSlots: [...new Set(commitsDosSlots)], diferencas };
+}
+
+export function identidadeIgual(a: IsolatedCollectionManifest, b: IsolatedCollectionManifest,
+  /**
+   * Emenda (a), linha de base congelada da campanha: `semEval` não compara o commit do govbr-eval (o registro da campanha é
+   * commitado depois da medição; o git confere que só ele difere) e exige árvore limpa nos DOIS manifestos.
+   */
+  opcoes: { semEval?: boolean; rotulo?: string } = {}): Record<string, unknown> {
+  const rotulo = opcoes.rotulo ?? "empréstimo de linha de base";
+  const campos: [string, unknown, unknown][] = [
+    ["identity", a.identity, b.identity],
+    ["site.siteSha256", a.site.siteSha256, b.site.siteSha256],
+    ["site.manifestSha256", a.site.manifestSha256, b.site.manifestSha256],
+    ["oracle", a.oracle, b.oracle],
+    ["repos.govbr-ds-validator", a.repos["govbr-ds-validator"], b.repos["govbr-ds-validator"]],
+    ...(opcoes.semEval ? [] : [["repos.govbr-eval", a.repos["govbr-eval"], b.repos["govbr-eval"]] as [string, unknown, unknown]]),
+    ["repos.govbr-telas", a.repos["govbr-telas"], b.repos["govbr-telas"]],
+    ["imagesLock.sha256", a.imagesLock.sha256, b.imagesLock.sha256],
+  ];
+  const dif = campos.filter(([, x, y]) => JSON.stringify(x) !== JSON.stringify(y)).map(([k]) => k);
+  if (dif.length) {
+    recusar(opcoes.semEval ? `${rotulo} recusada: o manifesto de coleta da linha de base e o do slot divergem em ${dif.join(", ")}`
+      : `${rotulo} recusado: os manifestos de coleta do primeiro slot e do doador divergem em ${dif.join(", ")}`);
+  }
+  const sujo = (["govbr-ds-validator", "govbr-eval", "govbr-telas"] as const).filter(r => [a, ...(opcoes.semEval ? [b] : [])].some(m => m.repos[r]?.dirty !== false || !m.repos[r]?.commit));
+  if (sujo.length) recusar(`${rotulo} ${opcoes.semEval ? "recusada" : "recusado"}: commit ausente ou árvore suja em ${sujo.join(", ")}`);
+  return { siteSha256: a.site.siteSha256, siteManifestSha256: a.site.manifestSha256, oracle: a.oracle, validatorCommit: a.repos["govbr-ds-validator"].commit,
+    evalCommit: a.repos["govbr-eval"].commit, telasCommit: a.repos["govbr-telas"].commit, imagesLockSha256: a.imagesLock.sha256, identity: a.identity };
+}
+
+/**
+ * Toda a conferência da linha de base congelada contra um trio, num lugar só (coleta:trio e o CLI analisar com
+ * --linha-de-base-da-campanha): a entrada do índice que o registro congela (escolherLinhaDeBaseCongelada, inclusive o
+ * "antes do 1º slot"), o manifesto de coleta do disparo dela por sha256, o registro contra esse manifesto, a identidade
+ * contra o manifesto de CADA slot (identidadeIgual sem o govbr-eval), o git (conferirCongelamentoNoGit), o baseline.json
+ * pelo sha256 congelado e o conjunto de snapshots da linha de base no arquivo.
+ */
+export function conferirLinhaDeBaseCongelada(o: {
+  arquivo: string; campanha: string; registro: { doc: LinhaDeBaseCampanha; sha256: string }; entradas: EntradaIndice[]; fixture: boolean;
+  slots: { slot: string; manifest: IsolatedCollectionManifest }[]; git: LeitorGit;
+}): { entrada: EntradaIndice; registroPath: string; registroSha256: string; snapshotsRel: string; snapshotsPath: string;
+  identidadeConferida: Record<string, unknown>; git: ReturnType<typeof conferirCongelamentoNoGit> } {
+  const arquivo = resolve(o.arquivo);
+  const dentro = (rel: string): string => {
+    const abs = resolve(arquivo, rel);
+    if (!abs.startsWith(arquivo)) recusar(`caminho escapa do arquivo: ${rel}`);
+    return abs;
+  };
+  if (!o.slots.length) recusar("nenhum slot para conferir contra a linha de base congelada");
+  const e = escolherLinhaDeBaseCongelada(o.entradas, o.campanha, o.registro.doc);
+  const mc = e.manifestoColeta ?? recusar(`a linha de base ${e.chave} não registra manifesto de coleta`);
+  const mPath = dentro(mc.caminho);
+  if (!existsSync(mPath) || sha(readFileSync(mPath)) !== mc.sha256) recusar(`manifesto de coleta da linha de base ausente ou divergente: ${mc.caminho}`);
+  const mLb = readIsolatedManifest(mPath).manifest;
+  conferirRegistroContraManifesto(o.registro.doc, mLb);
+  const identidadeConferida = Object.fromEntries(o.slots.map(s => [s.slot, identidadeIgual(mLb, s.manifest, { semEval: true, rotulo: "linha de base congelada da campanha" })]));
+  const git = conferirCongelamentoNoGit(o.campanha, o.registro.sha256, mLb.repos["govbr-eval"].commit!, o.slots.map(s => s.manifest.repos["govbr-eval"].commit!), o.git);
+  const registroPath = join(dentro(e.caminho), "baseline.json");
+  if (!existsSync(registroPath)) recusar(`registro da linha de base ausente: ${e.caminho}/baseline.json`);
+  const registroSha256 = sha(readFileSync(registroPath));
+  if (registroSha256 !== o.registro.doc.registro.sha256) {
+    recusar(`hash divergente: ${e.caminho}/baseline.json tem sha256 ${registroSha256.slice(0, 12)}…, o registro da campanha congelou ${o.registro.doc.registro.sha256.slice(0, 12)}…`);
+  }
+  let snapshotsRel = "";
+  try { snapshotsRel = resolverConjunto(arquivo, o.registro.doc.snapshotSetId, o.fixture).caminho; } catch (err) {
+    if (err instanceof Recusa) recusar(err.message);
+    throw err;
+  }
+  return { entrada: e, registroPath, registroSha256, snapshotsRel, snapshotsPath: dentro(snapshotsRel), identidadeConferida, git };
 }
 
 /** Gera o registro da campanha a partir do índice e do arquivo (só antes da primeira execução). */

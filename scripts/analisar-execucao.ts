@@ -61,6 +61,9 @@ import type { EvidenceIndex } from "./flow-contract";
 import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION } from "./instrument";
 import { divergenciasDaCampanha, divergenciasDoOraculo, identidadeDoRun } from "./identidade-campanha";
 import { contarComFerramentas } from "./painel/mascara";
+import { lerEntradasDoIndice } from "./agenda-campanha";
+import { RecusaLinhaDeBaseDaCampanha, conferirLinhaDeBaseCongelada, leitorGit, lerRegistroDaCampanha, type LeitorGit } from "./linha-de-base-campanha";
+import { readIsolatedManifest } from "./manifesto-coleta-isolada";
 import {
   FUSO_DA_CAPTURA, REGRA_IDS_GERADOS, REGRA_RELOGIO, mapearDecisoes, navegadorComRelogio, normalizarIdsGerados, presenteNoSite,
   type IdGerado, type MapaCartoes, type RelogioDaCaptura,
@@ -1605,12 +1608,50 @@ const USO_CLI = `Uso: npm run analisar -- (--pacote DIR | --sem DIR --com DIR | 
          [--decisoes reviews.json [--pacote-decisoes package.json]] [--anterior PASTA_DA_REVISAO_ANTERIOR] [--orcamento-revisao TEXTO] [--revisao-completa]
          [--derivado-retrospectivo manifesto.json]  (NAT-74: só sob derivados/; aceita campanha de outro scorer)
          [--resgates resgates.json]  (D-164: só campanha dev-*; padrão = o resgates.json ao lado do campaign.json)
-         [--linha-de-base-da-campanha linha-de-base.json --snapshots-da-linha-de-base snapshot-manifest.json]  (emenda (a): linha de base congelada)`;
+         [--linha-de-base-da-campanha linha-de-base.json --snapshots-da-linha-de-base snapshot-manifest.json --arquivo CLONE [--raiz-eval GOVBR_EVAL]]
+           (emenda (a): linha de base congelada, conferida como no coleta:trio: índice, manifestos, identidade, git)`;
+
+/**
+ * Emenda (a), revisão de 12/11 (LOW 3): pelo CLI, `--linha-de-base-da-campanha` só entra depois da MESMA conferência que o
+ * coleta:trio faz (conferirLinhaDeBaseCongelada: índice, manifesto do disparo da linha de base, identidade contra o
+ * manifesto de coleta de cada pacote, git do govbr-eval, sha256 do baseline.json e o conjunto da linha de base). Exige
+ * `--arquivo` (clone do govbr-resultados, de onde saem o índice e os manifestos). `--linha-de-base` e
+ * `--snapshots-da-linha-de-base` têm de ser os bytes conferidos. Recusa = RecusaLinhaDeBaseDaCampanha, nada analisado.
+ */
+export function conferirLinhaDeBaseDaCampanhaNoCli(o: OpcoesAnalise, raizEval: string = ROOT, git: LeitorGit = leitorGit(raizEval)): void {
+  const lb = o.linhaDeBaseDaCampanha;
+  if (!lb) return;
+  const falha = (m: string): never => { throw new RecusaLinhaDeBaseDaCampanha(m); };
+  if (!o.arquivo) falha("--linha-de-base-da-campanha exige --arquivo (o clone do govbr-resultados, com o índice e os manifestos de coleta)");
+  if (!o.linhaDeBase) falha("--linha-de-base-da-campanha exige --linha-de-base (o baseline.json congelado)");
+  const campanha = JSON.parse(readFileSync(resolve(o.campanha), "utf8")) as { campaignId: string; fixture: boolean };
+  const registro = lerRegistroDaCampanha(resolve(lb.registro), campanha.campaignId);
+  const entradas = lerEntradasDoIndice(resolve(o.arquivo!));
+  const dirs = [o.pacote, o.sem, o.ferramentas, o.com].filter((d): d is string => Boolean(d));
+  const slots = dirs.map(d => {
+    const run = JSON.parse(readFileSync(join(resolve(d), "run.json"), "utf8")) as { runId: string; slotId: string };
+    const e = entradas.find(x => x.tipo === "execucao" && x.campanha === campanha.campaignId && x.chave === run.runId) ?? falha(`a execução ${run.runId} não está no índice de ${campanha.campaignId}`);
+    const mc = e.manifestoColeta ?? falha(`a execução ${run.runId} não registra manifesto de coleta`);
+    const mPath = resolve(o.arquivo!, mc.caminho);
+    if (!existsSync(mPath) || sha(readFileSync(mPath)) !== mc.sha256) falha(`manifesto de coleta ausente ou divergente: ${mc.caminho}`);
+    return { slot: run.slotId, manifest: readIsolatedManifest(mPath).manifest };
+  });
+  const c = conferirLinhaDeBaseCongelada({ arquivo: o.arquivo!, campanha: campanha.campaignId, registro, entradas, fixture: campanha.fixture, slots, git });
+  if (sha(readFileSync(resolve(o.linhaDeBase!))) !== c.registroSha256) falha(`--linha-de-base não é o baseline.json congelado (${c.registroPath})`);
+  if (sha(readFileSync(resolve(lb.snapshots))) !== sha(readFileSync(c.snapshotsPath))) falha(`--snapshots-da-linha-de-base não é o conjunto da linha de base (${c.snapshotsRel})`);
+}
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   (async () => {
     let o: OpcoesAnalise;
     try { o = lerArgs(process.argv.slice(2)); } catch (e) { console.error(`${e instanceof Error ? e.message : e}\n${USO_CLI}`); process.exitCode = 1; return; }
+    try {
+      const i = process.argv.indexOf("--raiz-eval");
+      conferirLinhaDeBaseDaCampanhaNoCli(o, i > 0 ? resolve(process.argv[i + 1]) : ROOT);
+    } catch (e) {
+      if (!(e instanceof RecusaLinhaDeBaseDaCampanha)) throw e;
+      console.error(`RECUSADA (linha de base congelada da campanha): ${e.message}`); process.exitCode = 1; return;
+    }
     const r = await analisar(o);
     const execs = r.resumo.execucoes.map(e => `${e.braco}: técnico ${e.tecnico.status}, pontuação ${e.pontuacao.estado}`).join(" · ");
     console.log(`Análise ${r.estado}${r.motivo ? ` — ${r.motivo}` : ""}${execs ? `\n${execs}` : ""}\n→ ${posix(relative(process.cwd(), r.saida))}/summary.md`);

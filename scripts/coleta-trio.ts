@@ -59,8 +59,8 @@ import {
 } from "./arquivo-resultados";
 import { readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
 import {
-  REGRA_LINHA_DE_BASE_CONGELADA, RecusaLinhaDeBaseDaCampanha, caminhoNoEval, conferirCongelamentoNoGit, conferirRegistroContraManifesto,
-  escolherLinhaDeBaseCongelada, leitorGit, lerRegistroDaCampanha, type LeitorGit,
+  REGRA_LINHA_DE_BASE_CONGELADA, RecusaLinhaDeBaseDaCampanha, caminhoNoEval, conferirLinhaDeBaseCongelada,
+  escolherLinhaDeBaseCongelada, identidadeIgual, leitorGit, lerRegistroDaCampanha, type LeitorGit,
 } from "./linha-de-base-campanha";
 import { loadSite } from "./measurement-surface";
 import { lerAgendaDoArquivo } from "./painel/agenda-painel";
@@ -344,31 +344,9 @@ export function proximoCarimbo(dirTrio: string, agora = new Date()): string {
  * Devolve os valores conferidos (gravados em coleta-trio.json); qualquer diferença recusa.
  */
 export function identidadeDoEmprestimo(a: IsolatedCollectionManifest, b: IsolatedCollectionManifest,
-  /**
-   * Emenda (a), linha de base congelada da campanha: `semEval` não compara o commit do govbr-eval (o registro da campanha é
-   * commitado depois da medição; o git confere que só ele difere) e exige árvore limpa nos DOIS manifestos.
-   */
+  /** Emenda (a): `semEval` para a linha de base congelada da campanha (ver identidadeIgual em linha-de-base-campanha.ts). */
   opcoes: { semEval?: boolean; rotulo?: string } = {}): Record<string, unknown> {
-  const rotulo = opcoes.rotulo ?? "empréstimo de linha de base";
-  const campos: [string, unknown, unknown][] = [
-    ["identity", a.identity, b.identity],
-    ["site.siteSha256", a.site.siteSha256, b.site.siteSha256],
-    ["site.manifestSha256", a.site.manifestSha256, b.site.manifestSha256],
-    ["oracle", a.oracle, b.oracle],
-    ["repos.govbr-ds-validator", a.repos["govbr-ds-validator"], b.repos["govbr-ds-validator"]],
-    ...(opcoes.semEval ? [] : [["repos.govbr-eval", a.repos["govbr-eval"], b.repos["govbr-eval"]] as [string, unknown, unknown]]),
-    ["repos.govbr-telas", a.repos["govbr-telas"], b.repos["govbr-telas"]],
-    ["imagesLock.sha256", a.imagesLock.sha256, b.imagesLock.sha256],
-  ];
-  const dif = campos.filter(([, x, y]) => JSON.stringify(x) !== JSON.stringify(y)).map(([k]) => k);
-  if (dif.length) {
-    recusar(opcoes.semEval ? `${rotulo} recusada: o manifesto de coleta da linha de base e o do slot divergem em ${dif.join(", ")}`
-      : `${rotulo} recusado: os manifestos de coleta do primeiro slot e do doador divergem em ${dif.join(", ")}`);
-  }
-  const sujo = (["govbr-ds-validator", "govbr-eval", "govbr-telas"] as const).filter(r => [a, ...(opcoes.semEval ? [b] : [])].some(m => m.repos[r]?.dirty !== false || !m.repos[r]?.commit));
-  if (sujo.length) recusar(`${rotulo} ${opcoes.semEval ? "recusada" : "recusado"}: commit ausente ou árvore suja em ${sujo.join(", ")}`);
-  return { siteSha256: a.site.siteSha256, siteManifestSha256: a.site.manifestSha256, oracle: a.oracle, validatorCommit: a.repos["govbr-ds-validator"].commit,
-    evalCommit: a.repos["govbr-eval"].commit, telasCommit: a.repos["govbr-telas"].commit, imagesLockSha256: a.imagesLock.sha256, identity: a.identity };
+  return comoRecusa(() => identidadeIgual(a, b, opcoes));
 }
 
 export interface OpcoesColeta {
@@ -452,24 +430,14 @@ export async function coletarTrio(o: OpcoesColeta): Promise<ResultadoColeta> {
   let registroLb: Record<string, unknown>;
   if (plano.linhaDeBase.tipo === "congelada-da-campanha") {
     // emenda (a): o registro da campanha contra o manifesto do disparo da linha de base, contra o de CADA slot, e pelo git
+    // a MESMA conferência do CLI analisar com --linha-de-base-da-campanha (linha-de-base-campanha.ts)
     const lb = plano.linhaDeBase;
     const reg = congelada!;
     const e = lb.entrada;
-    const mLb = lerManifesto(arquivo, e);
-    comoRecusa(() => conferirRegistroContraManifesto(reg.doc, mLb.manifest));
-    const conferida = Object.fromEntries(plano.slots.map((s, i) => [s.slot,
-      identidadeDoEmprestimo(mLb.manifest, manifestos[i].manifest, { semEval: true, rotulo: "linha de base congelada da campanha" })]));
-    const git = comoRecusa(() => conferirCongelamentoNoGit(o.campanha, reg.sha256, mLb.manifest.repos["govbr-eval"].commit!,
-      manifestos.map(m => m.manifest.repos["govbr-eval"].commit!), o.git ?? leitorGit(raizEval)));
-    const regPath = join(dentro(arquivo, e.caminho), "baseline.json");
-    if (!existsSync(regPath)) recusar(`registro da linha de base ausente: ${e.caminho}/baseline.json`);
-    const regSha = sha(readFileSync(regPath));
-    if (regSha !== reg.doc.registro.sha256) recusar(`hash divergente: ${e.caminho}/baseline.json tem sha256 ${curto(regSha)}…, o registro da campanha congelou ${curto(reg.doc.registro.sha256)}…`);
-    let snapsLbRel = "";
-    try { snapsLbRel = resolverConjunto(arquivo, reg.doc.snapshotSetId, camp.campanha.fixture).caminho; } catch (err) {
-      if (err instanceof Recusa) recusar(err.message);
-      throw err;
-    }
+    const c = comoRecusa(() => conferirLinhaDeBaseCongelada({ arquivo, campanha: o.campanha, registro: reg, entradas, fixture: camp.campanha.fixture,
+      slots: plano.slots.map((s, i) => ({ slot: s.slot, manifest: manifestos[i].manifest })), git: o.git ?? leitorGit(raizEval) }));
+    const { identidadeConferida: conferida, git, registroSha256: regSha, snapshotsRel: snapsLbRel } = c;
+    const regPath = c.registroPath;
     linhaDeBase = regPath;
     linhaDeBaseDaCampanha = { registro: congeladaPath, snapshots: dentro(arquivo, snapsLbRel) };
     registroLb = { slot: lb.slot, tipo: "congelada-da-campanha", regra: REGRA_LINHA_DE_BASE_CONGELADA, baselineId: e.chave, estado: e.estado.linhaDeBase,

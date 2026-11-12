@@ -26,6 +26,7 @@ import { ROOT } from "./adjudication";
 import type { Agenda } from "./agenda-campanha";
 import { sha, type EntradaIndice } from "./arquivo-resultados";
 import { conferirCongelamentoNoGit, conferirRegistroContraManifesto, gerarRegistroDaCampanha, leitorGit, type LeitorGit } from "./linha-de-base-campanha";
+import { conferirLinhaDeBaseDaCampanhaNoCli, type OpcoesAnalise } from "./analisar-execucao";
 import { RecusaColeta, coletarTrio, identidadeDoEmprestimo, planoDoTrio, proximoCarimbo, type Baixador } from "./coleta-trio";
 import type { IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
 import { construirArquivoT4 } from "./painel/fixture";
@@ -419,6 +420,20 @@ await teste("emenda (a), de ponta a ponta (arquivo T4): registro gerado, 1º slo
   assert.equal(s.linhaDeBase.baselineId, lbCom.e.chave);
   assert.equal(s.hashes.entradas.linhaDeBaseDaCampanha, sha(regBytes));
   assert.equal(sha(readFileSync(join(r.saida, "entradas", "linha-de-base-da-campanha.json"))), sha(regBytes));
+  // revisão LOW 3: o CLI analisar com --linha-de-base-da-campanha faz a MESMA conferência (manifestos, identidade, git)
+  const reg2 = lerJson<{ campanha: { caminho: string }; slots: { braco: string; escolhida: string }[]; linhaDeBase: { caminho: string; snapshotsDaLinhaDeBase: string } }>(r.registro);
+  const pacoteDe = (runId: string) => { const d = join(arquivo, "restauracoes", runId); return join(d, readdirSync(d).filter(n => !n.startsWith("."))[0]); };
+  const cli = (o: Partial<OpcoesAnalise> = {}): OpcoesAnalise => ({
+    sem: pacoteDe(reg2.slots.find(x => x.braco === "sem")!.escolhida), com: pacoteDe(reg2.slots.find(x => x.braco === "com")!.escolhida),
+    campanha: join(arquivo, reg2.campanha.caminho), snapshots: "x", referencia: "x", site: "x", saida: "x", arquivo,
+    linhaDeBase: join(arquivo, reg2.linhaDeBase.caminho), linhaDeBaseDaCampanha: { registro: regPath, snapshots: join(arquivo, reg2.linhaDeBase.snapshotsDaLinhaDeBase) }, ...o,
+  });
+  conferirLinhaDeBaseDaCampanhaNoCli(cli(), raizEval, gitOk);
+  assert.throws(() => conferirLinhaDeBaseDaCampanhaNoCli(cli(), raizEval, { ...gitOk, blob: () => null }), /disparado antes de o registro da linha de base ser commitado/);
+  assert.throws(() => conferirLinhaDeBaseDaCampanhaNoCli(cli(), raizEval, { ...gitOk, diferenca: () => ["scripts/vazamento/conhecimento.ts"] }), /fora do registro da campanha/);
+  assert.throws(() => conferirLinhaDeBaseDaCampanhaNoCli(cli({ arquivo: undefined }), raizEval, gitOk), /exige --arquivo/);
+  assert.throws(() => conferirLinhaDeBaseDaCampanhaNoCli(cli({ linhaDeBase: regPath }), raizEval, gitOk), /não é o baseline\.json congelado/);
+  assert.throws(() => conferirLinhaDeBaseDaCampanhaNoCli(cli({ linhaDeBaseDaCampanha: { registro: regPath, snapshots: regPath } }), raizEval, gitOk), /não é o conjunto da linha de base/);
   // registro estragado (outro sha256 do baseline.json): recusa
   writeFileSync(regPath, JSON.stringify({ ...reg, registro: { ...reg.registro, sha256: "0".repeat(64) } }, null, 2) + "\n");
   const regRuim = readFileSync(regPath);
