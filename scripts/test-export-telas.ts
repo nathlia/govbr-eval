@@ -6,14 +6,14 @@
  *      e nome da usuária, hashes do manifesto; a auditoria pega cada violação plantada numa cópia;
  *   2. manifesto: forma de site-manifest.v1, e o `item` encaixa num snapshot-manifest.v1 válido
  *      (validateContract);
- *   3. paridade byte a byte: tela B = manifesto do congelamento do corpus; telas A e B = os sites que
- *      a superfície de medida congelou na última coleta de cada uma (pipeline/logs/*-superficie);
+ *   3. paridade byte a byte: telas B e D = manifesto do congelamento do corpus (pnip/, pnip-d/); cada tela =
+ *      o site que a superfície de medida congelou na última coleta dela, se houver (pipeline/logs/*-superficie);
  *   4. vazamento do gabarito: ids, regras e frases de 6+ palavras de todo ground-truth-*.json,
  *      organic-ground-truth.json e adjudications.json não podem aparecer em nenhum arquivo de texto
  *      exportado; vocabulário que descreveria uma violação plantada é RELATADO (não falha, salvo nos
  *      arquivos que o exportador escreve);
- *   5. pasta limpa (telas A, B e A2): cópia do pacote num diretório novo, `server.mjs` numa porta livre com ambiente
- *      mínimo; bytes servidos = manifesto; travessia de caminho → 400/404; Playwright abre A e B,
+ *   5. pasta limpa (telas A, B, A2 e D): cópia do pacote num diretório novo, `server.mjs` numa porta livre com ambiente
+ *      mínimo; bytes servidos = manifesto; rotas de cada SPA → o próprio índice; travessia de caminho → 400/404; Playwright abre cada tela,
  *      executa os passos `setup` das referências (lidos aqui, nunca copiados para o pacote) e a
  *      interação de `telas.json`; nenhum pedido sai da origem; console comparado com o do mesmo site
  *      servido pela superfície de medida.
@@ -29,7 +29,7 @@ import { chromium, type Browser, type Page, type Request } from "playwright";
 import { validateContract } from "../contracts/index";
 import { ROOT } from "./adjudication";
 import {
-  KNOWN_SOURCE_MAP_DIRECTIVES, PACKAGE_NODE_VERSION, PACKAGE_SKILLS, ROOT_FILES, machineText, SCREEN_A, SCREEN_A2, SCREEN_B, SCREENS, SITE_DIR, TEXT_EXTENSIONS, auditPackage, exportTelas, listTree,
+  KNOWN_SOURCE_MAP_DIRECTIVES, PACKAGE_NODE_VERSION, PACKAGE_SKILLS, ROOT_FILES, machineText, SCREEN_A, SCREEN_A2, SCREEN_B, SCREEN_D, SCREENS, SPA_SCREENS, SITE_DIR, TEXT_EXTENSIONS, auditPackage, exportTelas, listTree,
   type SiteManifestDoc,
 } from "./export-telas";
 import { assetClosure, createSiteServer, loadSite } from "./measurement-surface";
@@ -336,6 +336,7 @@ async function main(): Promise<void> {
     assert.ok(manifest.files.some((f) => f.path === "solicitacao.html"));
     assert.ok(manifest.files.some((f) => f.path === "pnip/index.html"));
     assert.ok(manifest.files.some((f) => f.path === "acompanhamento.html"));
+    assert.ok(manifest.files.some((f) => f.path === "pnip-d/index.html"));
     console.log(`   ${result.files} arquivos servidos, ${result.bytes} bytes; corpus ${manifest.origin.corpus.commit}${manifest.origin.corpus.dirty ? " (sujo)" : ""}`);
   });
 
@@ -406,10 +407,20 @@ async function main(): Promise<void> {
     assert.equal(manifest.contract, "site-manifest.v1");
     assert.equal(manifest.subsetOf, "snapshot-manifest.v1");
     assert.equal(manifest.fixture, false);
-    assert.deepEqual(manifest.screens.map((s) => s.id), [SCREEN_A, SCREEN_B, SCREEN_A2]);
-    assert.deepEqual([...SCREENS], [SCREEN_A, SCREEN_B, SCREEN_A2]);
+    assert.deepEqual(manifest.screens.map((s) => s.id), [SCREEN_A, SCREEN_B, SCREEN_A2, SCREEN_D]);
+    assert.deepEqual([...SCREENS], [SCREEN_A, SCREEN_B, SCREEN_A2, SCREEN_D]);
     for (const [i, nome] of SCREENS.entries()) assert.equal(manifest.screens[i].entry, `/${telaOf(nome).entry}`);
+    // 1.4.0: `spas` = as duas SPAs (B, D); `spa` continua a da B, com a forma de até 1.3.0.
+    const spaDe = (nome: string) => { const s = telaOf(nome).isolamento.site!; return { prefix: `/${s.arvore.replace(/\/+$/, "")}/`, index: s.indice }; };
+    assert.deepEqual(manifest.routing.spas, SPA_SCREENS.map(spaDe));
+    assert.deepEqual(manifest.routing.spa, spaDe(SCREEN_B));
+    // Aliases: os da B; um alias da D com a mesma chave só entra por ter os mesmos bytes do destino da B.
     assert.deepEqual(manifest.routing.aliases, telaOf(SCREEN_B).isolamento.site!.aliases);
+    const shaDe = (p: string) => manifest.files.find((f) => f.path === p)?.sha256;
+    for (const [from, to] of Object.entries(telaOf(SCREEN_D).isolamento.site!.aliases ?? {})) {
+      assert.ok(manifest.routing.aliases[from], `alias ${from} da D ausente`);
+      assert.equal(shaDe(manifest.routing.aliases[from]), shaDe(to), `alias ${from}: destino servido difere do da D`);
+    }
     // Os outros três itens obrigatórios (referência, plano, instrumento) não pertencem ao site: aqui são
     // marcadores sintéticos, e o documento composto é fixture.
     const placeholder = (kind: string) => ({
@@ -437,24 +448,29 @@ async function main(): Promise<void> {
     assert.ok(!("dependencies" in pkg) && !("devDependencies" in pkg), "o pacote não tem dependências");
   });
 
-  await test("paridade: tela B = manifesto do congelamento; A e B = última superfície de medida", () => {
-    const freeze = JSON.parse(readFileSync(join(CORPUS, "public", "pnip", "manifesto.json"), "utf8")) as { arquivos: Record<string, string> };
-    const exportedB = Object.fromEntries(manifest.files.filter((f) => f.path.startsWith("pnip/")).map((f) => [f.path.slice(5), f.sha256]));
-    assert.deepEqual(exportedB, freeze.arquivos);
-    // Arquivos de cada tela no pacote: B = a árvore pnip/ (SPA); A e A2 = o fechamento da entrada sobre o site
-    // exportado SEM a árvore pnip/ (o fechamento casa por nome de arquivo e o bundle do DS cita nomes como
-    // collapse.js, que a SPA também tem — a mesma razão por que o exportador tira public/ do build). As duas
-    // dividem as fontes do DS. Juntas, as três cobrem exatamente files[].
-    const siteDir = join(WORK, "site-sem-pnip");
-    cpSync(join(OUT, SITE_DIR), siteDir, { recursive: true, filter: (from) => !/[\\/]site[\\/]pnip([\\/]|$)/.test(from) });
-    const doPacote = (nome: string): Set<string> => nome === SCREEN_B
-      ? new Set(manifest.files.filter((f) => f.path.startsWith("pnip/")).map((f) => f.path))
+  await test("paridade: telas B e D = manifesto do congelamento; A, B, A2 e D = última superfície de medida", () => {
+    const arvoreDe = (nome: string) => telaOf(nome).isolamento.site!.arvore.replace(/\/+$/, "");
+    for (const nome of SPA_SCREENS) {
+      const arvore = arvoreDe(nome);
+      const freeze = JSON.parse(readFileSync(join(CORPUS, "public", arvore, "manifesto.json"), "utf8")) as { arquivos: Record<string, string> };
+      const exported = Object.fromEntries(manifest.files.filter((f) => f.path.startsWith(`${arvore}/`)).map((f) => [f.path.slice(arvore.length + 1), f.sha256]));
+      assert.deepEqual(exported, freeze.arquivos, `${nome}: pacote ≠ manifesto do congelamento de public/${arvore}/`);
+    }
+    // Arquivos de cada tela no pacote: B e D = as árvores pnip/ e pnip-d/ (SPAs); A e A2 = o fechamento da entrada
+    // sobre o site exportado SEM essas árvores (o fechamento casa por nome de arquivo e o bundle do DS cita nomes
+    // como collapse.js, que a SPA também tem — a mesma razão por que o exportador tira public/ do build). A e A2
+    // dividem as fontes do DS. Juntas, as quatro cobrem exatamente files[].
+    const siteDir = join(WORK, "site-sem-spas");
+    const spaDir = new RegExp(`[\\\\/]site[\\\\/](${SPA_SCREENS.map(arvoreDe).join("|")})([\\\\/]|$)`);
+    cpSync(join(OUT, SITE_DIR), siteDir, { recursive: true, filter: (from) => !spaDir.test(from) });
+    const doPacote = (nome: string): Set<string> => (SPA_SCREENS as readonly string[]).includes(nome)
+      ? new Set(manifest.files.filter((f) => f.path.startsWith(`${arvoreDe(nome)}/`)).map((f) => f.path))
       : new Set(assetClosure(siteDir, telaOf(nome).entry));
     const porTela = new Map(SCREENS.map((nome) => [nome, doPacote(nome)]));
     const cobertos = new Set([...porTela.values()].flatMap((s) => [...s]));
-    assert.deepEqual([...cobertos].sort(), manifest.files.map((f) => f.path).sort(), "files[] ≠ união das três telas");
-    for (const f of porTela.get(SCREEN_A2)!) assert.ok(!f.startsWith("pnip/") && !/solicitacao/.test(f), `A2 trouxe ${f}`);
-    for (const f of porTela.get(SCREEN_A)!) assert.ok(!f.startsWith("pnip/") && !/acompanhamento|inicio\.html|meus-requerimentos/.test(f), `A trouxe ${f}`);
+    assert.deepEqual([...cobertos].sort(), manifest.files.map((f) => f.path).sort(), "files[] ≠ união das quatro telas");
+    for (const f of porTela.get(SCREEN_A2)!) assert.ok(!/^pnip(-d)?\//.test(f) && !/solicitacao/.test(f), `A2 trouxe ${f}`);
+    for (const f of porTela.get(SCREEN_A)!) assert.ok(!/^pnip(-d)?\//.test(f) && !/acompanhamento|inicio\.html|meus-requerimentos/.test(f), `A trouxe ${f}`);
     console.log(`   por tela: ${SCREENS.map((n) => `${n} ${porTela.get(n)!.size}`).join(" · ")} (${cobertos.size} no total)`);
     for (const nome of SCREENS) {
       const tela = telaOf(nome);
@@ -535,17 +551,26 @@ async function main(): Promise<void> {
     assert.ok(!existsSync(join(clean, "node_modules")));
     assert.match(server.output(), /Solicitar serviço: http:\/\/127\.0\.0\.1:\d+\/solicitacao\.html/);
     assert.match(server.output(), /Acompanhar requerimento: http:\/\/127\.0\.0\.1:\d+\/acompanhamento\.html/);
+    assert.match(server.output(), /Processos: http:\/\/127\.0\.0\.1:\d+\/pnip-d\/portal-mpa\/processos\?mock-perfil=mpa/);
     const { createHash } = await import("node:crypto");
     for (const f of manifest.files) {
       const res = await fetch(`${server.origin}/${f.path.split("/").map(encodeURIComponent).join("/")}`);
       assert.equal(res.status, 200, f.path);
       assert.equal(createHash("sha256").update(Buffer.from(await res.arrayBuffer())).digest("hex"), f.sha256, f.path);
     }
+    // Cada SPA responde às próprias rotas com o próprio índice (os dois índices têm bytes diferentes: base href).
     const index = manifest.files.find((f) => f.path === "pnip/index.html")!;
-    for (const route of ["/pnip/portal-mpa/vistorias", "/pnip/portal-mpa/vistorias/agendar-vistoria/x", "/pnip/"]) {
-      const res = await fetch(server.origin + route);
-      assert.equal(res.status, 200, route);
-      assert.equal(createHash("sha256").update(Buffer.from(await res.arrayBuffer())).digest("hex"), index.sha256, route);
+    const indexD = manifest.files.find((f) => f.path === "pnip-d/index.html")!;
+    assert.notEqual(index.sha256, indexD.sha256);
+    for (const [routes, idx] of [
+      [["/pnip/portal-mpa/vistorias", "/pnip/portal-mpa/vistorias/agendar-vistoria/x", "/pnip/"], index],
+      [["/pnip-d/portal-mpa/processos", "/pnip-d/portal-mpa/processos/x", "/pnip-d/"], indexD],
+    ] as const) {
+      for (const route of routes) {
+        const res = await fetch(server.origin + route);
+        assert.equal(res.status, 200, route);
+        assert.equal(createHash("sha256").update(Buffer.from(await res.arrayBuffer())).digest("hex"), idx.sha256, route);
+      }
     }
     const alias = await fetch(server.origin + "/assets/images/exit-icon.png");
     assert.equal(alias.status, 200);
@@ -562,6 +587,7 @@ async function main(): Promise<void> {
       ["/index.html", [404]], ["/src/solicitacao.tsx", [404]], ["/@fs/etc/passwd", [404]], ["/solicitacao.html", [405], "POST"],
       ["/acompanhamento/", [404]], ["/acompanhamento", [404]], ["/acompanhamento/core.min.js.map", [404]], ["/src/acompanhamento/acompanhamento.css", [404]], ["/acompanhamento/../server.mjs", [400]],
       ["/controles/", [404]], ["/pnip-c/index.html", [404]], ["/acompanhamento.html", [405], "PUT"],
+      ["/pnip-d/manifesto.json", [404]], ["/pnip-d/../server.mjs", [400]], ["/pnip-dx/portal-mpa/processos", [404]], ["/pnip-d", [404]],
     ];
     for (const [path, expected, method] of cases) {
       const status = await rawStatus(server.origin, path, method);

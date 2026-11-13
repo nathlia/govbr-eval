@@ -28,6 +28,7 @@ diretório temporário apagado no fim.
 | `site/solicitacao.html` + `site/assets/*` | build de produção do corpus (`vite build --outDir <temporário>`) | `assetClosure` da superfície de medida a partir de `solicitacao.html`, depois de tirar do build o que o Vite copiou de `public/`. O fechamento tem de caber no padrão da tela (a página e `assets/`); um arquivo de outra entrada (`index.html`, `fluxo*`, `main-*`) faz a exportação parar. |
 | `site/acompanhamento.html` + `site/acompanhamento/*` + `site/inicio.html` + `site/meus-requerimentos.html` + `site/assets/*` (tela A2, desde `export-telas-1.3.0`) | o mesmo build da tela A, mais `public/acompanhamento/`, `public/inicio.html` e `public/meus-requerimentos.html` do corpus | `assetClosure` a partir de `acompanhamento.html`, depois de devolver ao build SÓ essas três entradas de `public/` (`SCREEN_A2_PUBLIC`: os scripts clássicos e as marcas da página e as duas páginas de destino da trilha). O fechamento tem de caber no padrão da A2 (a página, as duas páginas de destino, `acompanhamento/*.js|svg`, CSS e fontes de `assets/`; nenhum JS do build). As fontes do DS são os mesmos arquivos da A. Hoje: 34 arquivos, 26 novos. |
 | `site/pnip/**` | `govbr-corpus/public/pnip/` (build Angular congelado) | Exatamente a lista do manifesto do congelamento (`manifesto.json`), cada arquivo conferido por sha256; árvore com arquivo a mais ou a menos faz a exportação parar. O manifesto do congelamento fica de fora (telas.json `isolamento.site.excluir`). |
+| `site/pnip-d/**` (tela D `processos`, desde `export-telas-1.4.0`) | `govbr-corpus/public/pnip-d/` (build Angular congelado, `base href /pnip-d/`) | A mesma regra da `pnip/`: a lista do manifesto do congelamento da ala, conferida por sha256; o manifesto da ala fica de fora. |
 | `server.mjs`, `README.md` | modelos em `scripts/export-telas/` | copiados como estão |
 | `package.json`, `.node-version`, `.gitattributes`, `site-manifest.json` | gerados pelo exportador | — |
 | `skills/avaliar-tela/SKILL.md` | `govbr-eval/skills/avaliar-tela/SKILL.md` (T2) | `PACKAGE_SKILLS`, lista fechada de uma entrada; fins de linha normalizados para LF; hash em `skills[]` do manifesto. Nada mais de `skills/` entra (o protocolo antigo `evaluate-screen` + `_shared/` e `evaluate-all` ficam fora). O servidor não o serve (404). Ver [`skill-avaliar-tela.md`](skill-avaliar-tela.md). |
@@ -64,12 +65,24 @@ exportador não faz nenhuma.
 
 - caminho exato de um arquivo: 200; o alias declarado em telas.json
   (`/assets/images/exit-icon.png` → `pnip/assets/images/exit-icon.png`): 200;
-- GET sem extensão sob `/pnip/`: 200 com `pnip/index.html` (rotas da SPA, mesma regra da superfície);
+- GET sem extensão sob `/pnip/`: 200 com `pnip/index.html`; sob `/pnip-d/`: 200 com `pnip-d/index.html`
+  (rotas das SPAs, mesma regra da superfície; lista em `routing.spas`, desde 1.4.0);
+- alias com a mesma chave em duas telas (o ícone do "Sair" da B e da D, que sob `<base href>` sai do
+  prefixo nas duas): o servidor responde com um arquivo só, então o exportador exige que os dois destinos
+  tenham o mesmo sha256 e mantém o da B (`routing.aliases` igual ao da 1.3.0); bytes diferentes, a
+  exportação para;
 - `..`, `.`, barra invertida, `%2e`/`%2f`/`%5c`/`%00`, letra de unidade: 400;
 - qualquer outro caminho: 404, sem listagem de diretório; método diferente de GET/HEAD: 405.
 
 Escuta em `127.0.0.1:3300` por padrão (`--port`/`PORT`, `--host`/`HOST`). Endereços: A =
-`/solicitacao.html`, B = `/pnip/portal-mpa/vistorias?mock-perfil=mpa`, A2 = `/acompanhamento.html`.
+`/solicitacao.html`, B = `/pnip/portal-mpa/vistorias?mock-perfil=mpa`, A2 = `/acompanhamento.html`, D =
+`/pnip-d/portal-mpa/processos?mock-perfil=mpa`.
+
+**1.4.0 (tela D).** `routing.spa` continua a SPA da B, com a forma de até 1.3.0, para quem lê só uma;
+`routing.spas` lista as duas (B, D) e é a que `server.mjs`, `normalizarManifestoDoSite` (superfície e
+análise) e `comparadores/comum.ts` usam quando existe. Um leitor antigo serve A, B e A2 como antes e
+responde 404 às rotas da D (falha visível, nunca a página errada). Na raiz mudam `server.mjs`, `README.md`
+(quatro telas) e `package.json` (descrição); `site/` de A, B e A2 fica byte a byte igual.
 
 ## O manifesto (`site-manifest.json`)
 

@@ -1,6 +1,6 @@
 # govbr-telas
 
-Três páginas web prontas para abrir no navegador, servidas por um servidor mínimo que usa só o
+Quatro páginas web prontas para abrir no navegador, servidas por um servidor mínimo que usa só o
 Node.js. Não há código-fonte a compilar nem dependência a instalar: a pasta `site/` já traz os
 arquivos finais.
 
@@ -26,7 +26,7 @@ ou, sem npm:
 node server.mjs
 ```
 
-O servidor escuta em `http://127.0.0.1:3300` e imprime os endereços das três telas. `Ctrl+C`
+O servidor escuta em `http://127.0.0.1:3300` e imprime os endereços das quatro telas. `Ctrl+C`
 encerra.
 
 Outra porta: `node server.mjs --port 8080` (ou a variável de ambiente `PORT`). O servidor só aceita
@@ -39,6 +39,7 @@ conexões da própria máquina; para escutar em outra interface, use `--host` (o
 | Solicitar serviço | <http://127.0.0.1:3300/solicitacao.html> |
 | Vistorias | <http://127.0.0.1:3300/pnip/portal-mpa/vistorias?mock-perfil=mpa> |
 | Acompanhar requerimento | <http://127.0.0.1:3300/acompanhamento.html> |
+| Processos | <http://127.0.0.1:3300/pnip-d/portal-mpa/processos?mock-perfil=mpa> |
 
 **Solicitar serviço** é uma página única: um formulário de solicitação com o histórico de pedidos
 anteriores.
@@ -51,15 +52,19 @@ página estiver aberta; recarregar volta ao estado inicial.
 
 **Acompanhar requerimento** é uma página única com abas (andamento e documentos de um requerimento
 fictício) e um formulário de envio de documento. Os dois links da trilha de navegação levam a duas
-páginas simples do mesmo site. Nenhuma das telas faz pedidos a outros
-endereços.
+páginas simples do mesmo site.
+
+**Processos** é outra tela da mesma aplicação de página única, numa cópia própria servida sob
+`/pnip-d/`, aberta na lista de processos; vale o que foi dito de **Vistorias** sobre dados fictícios, `?mock-perfil=mpa`
+e recarregar. Nenhuma das telas faz pedidos a outros endereços.
 
 ## O que o servidor faz
 
 - Serve somente os arquivos listados em `site-manifest.json`, a partir de `site/`. Se algum
   arquivo diferir do sha256 registrado no manifesto, o servidor não sobe.
-- Sob `/pnip/`, um endereço sem extensão recebe `site/pnip/index.html` (rotas da aplicação de
-  página única). O único endereço fora de `/pnip/` que aponta para dentro dela é o declarado em
+- Sob `/pnip/`, um endereço sem extensão recebe `site/pnip/index.html`, e sob `/pnip-d/`,
+  `site/pnip-d/index.html` (rotas das aplicações de página única, `routing.spas` do manifesto). O
+  único endereço fora desses prefixos que aponta para dentro deles é o declarado em
   `routing.aliases` do manifesto.
 - Qualquer outro endereço responde 404, sem listagem de pasta. Caminhos com `..`, barra invertida ou
   equivalentes codificados respondem 400. Métodos diferentes de GET e HEAD respondem 405.
@@ -69,7 +74,7 @@ endereços.
 | Arquivo | Papel |
 |---|---|
 | `server.mjs` | Servidor estático (somente módulos nativos do Node.js). |
-| `site/` | Os arquivos servidos: `solicitacao.html` + `assets/`, a aplicação em `pnip/`, e `acompanhamento.html` + `acompanhamento/` (com as páginas `inicio.html` e `meus-requerimentos.html`). |
+| `site/` | Os arquivos servidos: `solicitacao.html` + `assets/`, a aplicação em `pnip/` e a cópia dela em `pnip-d/`, e `acompanhamento.html` + `acompanhamento/` (com as páginas `inicio.html` e `meus-requerimentos.html`). |
 | `site-manifest.json` | Origem dos arquivos, rotas e sha256 + tamanho de cada arquivo. |
 | `skills/avaliar-tela/SKILL.md` | Procedimento genérico para avaliar uma tela em execução pela interface e enviar um relatório JSON. Os marcadores `{{...}}` da seção Entradas são preenchidos por quem prepara a execução. O servidor não o serve. |
 | `package.json` | Só o script `npm start`; sem dependências. |

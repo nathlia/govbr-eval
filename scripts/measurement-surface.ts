@@ -61,6 +61,11 @@ export interface SiteManifest {
   files: Record<string, string>;
   /** Só em SPA: GET sem extensão sob `prefixo` recebe os bytes de `indice` (caminho servido). */
   spa?: { prefixo: string; indice: string };
+  /**
+   * Só com mais de uma SPA no site (govbr-telas `export-telas-1.4.0`: B e D): todas, na ordem do manifesto; `spa` é a
+   * primeira. Ausente = só `spa`, como sempre (nenhum manifesto anterior muda).
+   */
+  spas?: { prefixo: string; indice: string }[];
   /** Só em SPA: caminho pedido fora da árvore → caminho servido que responde por ele. */
   aliases?: Record<string, string>;
 }
@@ -175,7 +180,7 @@ interface SiteManifestV1 {
   contract: "site-manifest.v1";
   package?: { name: string; version: string };
   screens: { id: string; entry: string }[];
-  routing?: { spa?: { prefix: string; index: string } | null; aliases?: Record<string, string> };
+  routing?: { spa?: { prefix: string; index: string } | null; spas?: { prefix: string; index: string }[]; aliases?: Record<string, string> };
   origin?: { corpus?: { commit: string | null; dirty: boolean | null } };
   files: { path: string; sha256: string; bytes: number }[];
 }
@@ -197,7 +202,9 @@ export function normalizarManifestoDoSite(raw: unknown): SiteManifest {
     }
     files[`/${f.path}`] = f.sha256;
   }
-  const spa = v1.routing?.spa ? { prefixo: v1.routing.spa.prefix, indice: `/${v1.routing.spa.index}` } : undefined;
+  const lista = (v1.routing?.spas ?? (v1.routing?.spa ? [v1.routing.spa] : [])).map((s) => ({ prefixo: s.prefix, indice: `/${s.index}` }));
+  const spa = lista[0];
+  const spas = lista.length > 1 ? lista : undefined;
   const aliases = v1.routing?.aliases ? Object.fromEntries(Object.entries(v1.routing.aliases).map(([from, to]) => [from, `/${to}`])) : undefined;
   return {
     version: `site-manifest.v1:${v1.package?.name ?? "?"}@${v1.package?.version ?? "?"}`,
@@ -207,6 +214,7 @@ export function normalizarManifestoDoSite(raw: unknown): SiteManifest {
     corpusDirty: v1.origin?.corpus?.dirty ?? null,
     files,
     ...(spa ? { spa } : {}),
+    ...(spas ? { spas } : {}),
     ...(aliases ? { aliases } : {}),
   };
 }
@@ -262,11 +270,12 @@ function requestPath(url: string | undefined): string | null {
 export function resolveSitePath(site: LoadedSite, path: string): { body: Buffer; type: string } | undefined {
   const exact = site.files.get(path);
   if (exact) return exact;
-  const { spa, aliases } = site.manifest;
+  const { spa, spas, aliases } = site.manifest;
   if (!spa) return undefined;
   if (aliases?.[path]) return site.files.get(aliases[path]);
-  if (path.startsWith(spa.prefixo) && !extname(path)) return site.files.get(spa.indice);
-  return undefined;
+  if (extname(path)) return undefined;
+  const dona = (spas ?? [spa]).find((s) => path.startsWith(s.prefixo));
+  return dona ? site.files.get(dona.indice) : undefined;
 }
 
 export function createSiteServer(site: LoadedSite): Server {

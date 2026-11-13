@@ -8,7 +8,8 @@
 // Regras de resposta:
 //   - caminho exato de um arquivo do manifesto: 200 com os bytes dele;
 //   - caminho declarado em `routing.aliases`: 200 com os bytes do arquivo de destino;
-//   - GET sem extensão sob `routing.spa.prefix`: 200 com `routing.spa.index` (aplicação de página única);
+//   - GET sem extensão sob o `prefix` de uma das `routing.spas`: 200 com o `index` dela (aplicação de
+//     página única; sem `spas`, vale `routing.spa`);
 //   - caminho com "..", "." , barra invertida, %2e/%2f/%5c/%00 ou letra de unidade: 400;
 //   - qualquer outro caminho: 404 (não há listagem de diretório);
 //   - método diferente de GET/HEAD: 405.
@@ -63,13 +64,13 @@ function loadSite() {
     }
     files.set(`/${entry.path}`, { body, type: CONTENT_TYPES[extname(entry.path).toLowerCase()] ?? "application/octet-stream" });
   }
-  const spa = manifest.routing?.spa ?? null;
+  const spas = manifest.routing?.spas ?? (manifest.routing?.spa ? [manifest.routing.spa] : []);
   const aliases = manifest.routing?.aliases ?? {};
   for (const [from, to] of Object.entries(aliases)) {
     if (!files.has(`/${to}`)) throw new Error(`Alias ${from} aponta para ${to}, que não está no manifesto.`);
   }
-  if (spa && !files.has(`/${spa.index}`)) throw new Error(`Índice ${spa.index} não está no manifesto.`);
-  return { manifest, files, spa, aliases };
+  for (const spa of spas) if (!files.has(`/${spa.index}`)) throw new Error(`Índice ${spa.index} não está no manifesto.`);
+  return { manifest, files, spas, aliases };
 }
 
 /** Caminho decodificado e seguro, ou o status de recusa. */
@@ -93,8 +94,9 @@ function resolveFile(site, path) {
   if (exact) return exact;
   const alias = site.aliases[path];
   if (alias) return site.files.get(`/${alias}`);
-  if (site.spa && path.startsWith(site.spa.prefix) && !extname(path)) return site.files.get(`/${site.spa.index}`);
-  return undefined;
+  if (extname(path)) return undefined;
+  const spa = site.spas.find((s) => path.startsWith(s.prefix));
+  return spa ? site.files.get(`/${spa.index}`) : undefined;
 }
 
 function reply(res, status, extra = {}) {

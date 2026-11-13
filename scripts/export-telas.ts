@@ -15,6 +15,10 @@
  *                       lista do manifesto do congelamento (`manifesto.json`), conferidos por sha256.
  *                       Árvore com arquivo a mais ou a menos que o manifesto: para. O manifesto do
  *                       congelamento fica de fora (telas.json `isolamento.site.excluir`).
+ *   tela `processos`    (D, desde 1.4.0) a mesma regra da `vistorias` sobre `govbr-corpus/public/pnip-d/`.
+ *                       Segunda SPA do pacote: `routing.spas` lista as duas (`routing.spa` continua a da B,
+ *                       para leitores anteriores). O alias da D tem a mesma chave do alias da B; só entra
+ *                       se os dois destinos tiverem o mesmo sha256 (fica o da B), senão a exportação para.
  *   raiz                `server.mjs`, `README.md` (modelos em scripts/export-telas/), `package.json`,
  *                       `.node-version`, `.gitattributes` e `site-manifest.json` (gerados aqui).
  *   skill               `skills/avaliar-tela/SKILL.md` (T2) — e nada mais de `skills/`: a skill
@@ -46,7 +50,8 @@ import { telaOf, type TelaSite } from "./telas";
 
 // 1.2.0: Node do pacote fixado em 24.21.0 (LTS), o mesmo da imagem da coleta (runner T3a); site/ inalterado.
 // 1.3.0: terceira tela, A2 `acompanhamento` (NAT-110, D-160); os arquivos de A e B não mudam.
-export const EXPORTER_VERSION = "export-telas-1.3.0";
+// 1.4.0: quarta tela, D `processos` (ala pnip-d/, NAT-78 CONG-10); `routing.spas`; os arquivos de A, B e A2 não mudam.
+export const EXPORTER_VERSION = "export-telas-1.4.0";
 /** Nome provisório do projeto exportado (pendente NAT-45). */
 export const PACKAGE_NAME = "govbr-telas";
 export const PACKAGE_VERSION = "1.0.0";
@@ -64,8 +69,12 @@ export const SCREEN_A = "solicitacao";
 export const SCREEN_B = "vistorias";
 /** Tela A2 (NAT-110, D-160): entrada Vite com HTML escrito à mão e scripts clássicos de `public/acompanhamento/`. */
 export const SCREEN_A2 = "acompanhamento";
+/** Tela D (NAT-78, estudo complementar): SPA congelada em `public/pnip-d/`, mesmas regras da tela B. */
+export const SCREEN_D = "processos";
 /** As telas do pacote, na ordem de `screens[]` do manifesto. */
-export const SCREENS = [SCREEN_A, SCREEN_B, SCREEN_A2] as const;
+export const SCREENS = [SCREEN_A, SCREEN_B, SCREEN_A2, SCREEN_D] as const;
+/** As telas servidas como SPA congelada (árvore do corpus + manifesto do congelamento), na ordem de `routing.spas`. */
+export const SPA_SCREENS = [SCREEN_B, SCREEN_D] as const;
 /**
  * O que a A2 carrega de `public/` (o Vite copia `public/` sem processar, e o exportador tira essas cópias do
  * build antes do fechamento): os scripts clássicos e as marcas da página e as duas páginas de destino da
@@ -107,7 +116,7 @@ const SCREEN_A_FILE = /^(solicitacao\.html|assets\/[A-Za-z0-9_.-]+\.(js|css|woff
  */
 const SCREEN_A2_FILE = /^(acompanhamento\.html|inicio\.html|meus-requerimentos\.html|acompanhamento\/[A-Za-z0-9_.-]+\.(js|svg)|assets\/[A-Za-z0-9_.-]+\.(css|woff2?|ttf|eot|svg|png))$/;
 /** Nomes do build que pertencem a OUTRAS entradas do corpus e nunca podem entrar. */
-const FOREIGN_BUILD = /(^|\/)(index\.html|fluxo\.html|main-[^/]+\.js|fluxo-[^/]+\.(js|css)|real\/|static\/|pnip\/)/;
+const FOREIGN_BUILD = /(^|\/)(index\.html|fluxo\.html|main-[^/]+\.js|fluxo-[^/]+\.(js|css)|real\/|static\/|pnip(-[a-z0-9]+)?\/)/;
 
 /** Diretiva de source map de verdade: no início de linha, como os bundlers a escrevem. */
 export const SOURCE_MAP_DIRECTIVE = /^[ \t]*(\/\/|\/\*)[#@][ \t]*sourceMappingURL[ \t]*=/m;
@@ -133,6 +142,12 @@ export const sha256 = (data: string | Buffer): string => createHash("sha256").up
 
 export interface ManifestFile { path: string; sha256: string; bytes: number }
 
+/** Proveniência de uma tela SPA congelada (B, D). */
+export interface SpaOrigin {
+  freezeManifestSha256: string; selection: string;
+  upstream: { app: string; commit: string; fork: string; forkCommit: string; buildCommand: string; node: string; framework: string };
+}
+
 export interface SiteManifestDoc {
   contract: "site-manifest.v1";
   /**
@@ -151,16 +166,18 @@ export interface SiteManifestDoc {
     immutable: true; exposedToAgent: false; version: string;
   };
   screens: { id: string; title: string; entry: string }[];
-  routing: { spa: { prefix: string; index: string }; aliases: Record<string, string> };
+  /**
+   * `spa` = a SPA da tela B (forma até 1.3.0, mantida para leitores que só conhecem uma); `spas` (1.4.0) = todas,
+   * na ordem de `SPA_SCREENS`. Quem conhece `spas` usa só ela.
+   */
+  routing: { spa: { prefix: string; index: string }; spas: { prefix: string; index: string }[]; aliases: Record<string, string> };
   origin: {
     corpus: { commit: string | null; dirty: boolean | null; dirtyAllowed: boolean };
     [SCREEN_A]: { build: { command: string; tool: string; node: string }; selection: string };
     /** Mesmo build da tela A; `public` = o que voltou de `public/` ao build para o fechamento. */
     [SCREEN_A2]: { build: { command: string; tool: string; node: string }; public: string[]; selection: string };
-    [SCREEN_B]: {
-      freezeManifestSha256: string; selection: string;
-      upstream: { app: string; commit: string; fork: string; forkCommit: string; buildCommand: string; node: string; framework: string };
-    };
+    [SCREEN_B]: SpaOrigin;
+    [SCREEN_D]: SpaOrigin;
   };
   /** Arquivos servidos, relativos a `site/` — ordenados. */
   files: ManifestFile[];
@@ -231,7 +248,7 @@ interface FreezeManifest {
   arquivos: Record<string, string>;
 }
 
-/** Arquivos da tela B: exatamente a lista do manifesto do congelamento, conferida contra a árvore. */
+/** Arquivos de uma tela SPA congelada (B, D): exatamente a lista do manifesto do congelamento, conferida contra a árvore. */
 export function screenBFiles(corpus: string, site: TelaSite): { files: { rel: string; abs: string }[]; freezeSha256: string; freeze: FreezeManifest } {
   const tree = site.arvore.replace(/\/+$/, "");
   const treeDir = join(corpus, "public", tree);
@@ -277,11 +294,22 @@ function packageJson(): string {
     name: PACKAGE_NAME,
     version: PACKAGE_VERSION,
     private: true,
-    description: "Três telas web estáticas e um servidor mínimo (somente módulos nativos do Node.js).",
+    description: "Quatro telas web estáticas e um servidor mínimo (somente módulos nativos do Node.js).",
     type: "module",
     scripts: { start: "node server.mjs" },
     engines: { node: ">=20.19.0" },
   }, null, 2) + "\n";
+}
+
+function spaOrigin(s: ReturnType<typeof screenBFiles>, site: TelaSite): SpaOrigin {
+  return {
+    freezeManifestSha256: s.freezeSha256,
+    selection: `lista de arquivos do manifesto do congelamento de public/${site.arvore}, conferida por sha256`,
+    upstream: {
+      app: s.freeze.origem.app, commit: s.freeze.origem.commit, fork: s.freeze.origem.fork, forkCommit: s.freeze.origem.forkCommit,
+      buildCommand: s.freeze.build.comando, node: s.freeze.build.node, framework: `angular ${s.freeze.build.angular}`,
+    },
+  };
 }
 
 export interface ExportOptions { out: string; corpus?: string; allowDirty?: boolean; createdAt?: string; log?: (line: string) => void }
@@ -301,8 +329,12 @@ export function exportTelas(options: ExportOptions): ExportResult {
   const telaA = telaOf(SCREEN_A);
   const telaB = telaOf(SCREEN_B);
   const telaA2 = telaOf(SCREEN_A2);
+  const telaD = telaOf(SCREEN_D);
   const siteB = telaB.isolamento.site;
   if (!siteB) throw new Error(`A tela ${SCREEN_B} não declara isolamento.site em telas.json`);
+  const siteD = telaD.isolamento.site;
+  if (!siteD) throw new Error(`A tela ${SCREEN_D} não declara isolamento.site em telas.json`);
+  const spaSites: [string, TelaSite][] = [[SCREEN_B, siteB], [SCREEN_D, siteD]];
 
   const plan = new Map<string, string>(); // caminho em site/ → arquivo de origem
   log(`build de produção do corpus (${corpus}) em diretório temporário…`);
@@ -326,14 +358,35 @@ export function exportTelas(options: ExportOptions): ExportResult {
       if (plan.has(rel) && plan.get(rel) !== abs) throw new Error(`Colisão de caminho entre as telas: ${rel}`);
       plan.set(rel, abs);
     }
-    const b = screenBFiles(corpus, siteB);
-    for (const { rel, abs } of b.files) {
-      if (plan.has(rel)) throw new Error(`Colisão de caminho entre as telas: ${rel}`);
-      plan.set(rel, abs);
+    const spaFiles = new Map<string, ReturnType<typeof screenBFiles>>();
+    for (const [nome, site] of spaSites) {
+      const s = screenBFiles(corpus, site);
+      for (const { rel, abs } of s.files) {
+        if (plan.has(rel)) throw new Error(`Colisão de caminho entre as telas: ${rel}`);
+        plan.set(rel, abs);
+      }
+      spaFiles.set(nome, s);
     }
-    for (const [from, to] of Object.entries(siteB.aliases ?? {})) {
-      if (!plan.has(to)) throw new Error(`Alias ${from} aponta para ${to}, fora do pacote`);
-      if (plan.has(from.slice(1))) throw new Error(`Alias ${from} colide com um arquivo servido`);
+    const b = spaFiles.get(SCREEN_B)!;
+    const d = spaFiles.get(SCREEN_D)!;
+    // Aliases das SPAs num só mapa (o servidor responde a um caminho com um arquivo). Mesma chave em duas telas
+    // (o ícone do "Sair", que sob <base href> sai do prefixo nas duas): só se os destinos tiverem os mesmos bytes;
+    // fica o destino da tela que veio antes em SPA_SCREENS. Bytes diferentes: para.
+    const aliases: Record<string, string> = {};
+    for (const [nome, site] of spaSites) {
+      for (const [from, to] of Object.entries(site.aliases ?? {})) {
+        if (!plan.has(to)) throw new Error(`Alias ${from} (${nome}) aponta para ${to}, fora do pacote`);
+        if (plan.has(from.slice(1))) throw new Error(`Alias ${from} (${nome}) colide com um arquivo servido`);
+        const prev = aliases[from];
+        if (prev === undefined) aliases[from] = to;
+        else if (prev !== to && sha256(readFileSync(plan.get(prev)!)) !== sha256(readFileSync(plan.get(to)!))) {
+          throw new Error(`Alias ${from}: ${prev} e ${to} (${nome}) têm bytes diferentes; o servidor só responde com um`);
+        }
+      }
+    }
+    const spas = spaSites.map(([, site]) => ({ prefix: `/${site.arvore.replace(/\/+$/, "")}/`, index: site.indice }));
+    for (const [i, s] of spas.entries()) {
+      if (spas.some((o, j) => j !== i && (o.prefix.startsWith(s.prefix) || s.prefix.startsWith(o.prefix)))) throw new Error(`Prefixos de SPA sobrepostos: ${s.prefix}`);
     }
 
     prepareOut(out);
@@ -382,7 +435,7 @@ export function exportTelas(options: ExportOptions): ExportResult {
       item: {
         id: `${PACKAGE_NAME}-site-${listingSha256(files).slice(0, 12)}`,
         kind: "site",
-        description: `Arquivos servidos das telas ${SCREEN_A}, ${SCREEN_B} e ${SCREEN_A2}; sha256 = hash da listagem 'sha256  caminho' ordenada de files[].`,
+        description: `Arquivos servidos das telas ${SCREEN_A}, ${SCREEN_B}, ${SCREEN_A2} e ${SCREEN_D}; sha256 = hash da listagem 'sha256  caminho' ordenada de files[].`,
         sha256: listingSha256(files),
         bytes,
         location: { kind: "package-path", path: SITE_DIR, note: "pasta site/ deste pacote; destino de arquivo durável pendente" },
@@ -394,11 +447,9 @@ export function exportTelas(options: ExportOptions): ExportResult {
         { id: SCREEN_A, title: "Solicitar serviço", entry: `/${telaA.entry}` },
         { id: SCREEN_B, title: "Vistorias", entry: `/${telaB.entry}` },
         { id: SCREEN_A2, title: "Acompanhar requerimento", entry: `/${telaA2.entry}` },
+        { id: SCREEN_D, title: "Processos", entry: `/${telaD.entry}` },
       ],
-      routing: {
-        spa: { prefix: `/${siteB.arvore.replace(/\/+$/, "")}/`, index: siteB.indice },
-        aliases: { ...(siteB.aliases ?? {}) },
-      },
+      routing: { spa: spas[0], spas, aliases },
       origin: {
         corpus: { commit: git.commit, dirty: git.dirty, dirtyAllowed: Boolean(options.allowDirty) },
         [SCREEN_A]: {
@@ -410,14 +461,8 @@ export function exportTelas(options: ExportOptions): ExportResult {
           public: SCREEN_A2_PUBLIC.map((e) => `public/${e}`),
           selection: `fechamento de arquivos citados a partir de ${telaA2.entry} no build, com ${SCREEN_A2_PUBLIC.map((e) => `public/${e}`).join(", ")} devolvidos ao build`,
         },
-        [SCREEN_B]: {
-          freezeManifestSha256: b.freezeSha256,
-          selection: `lista de arquivos do manifesto do congelamento de public/${siteB.arvore}, conferida por sha256`,
-          upstream: {
-            app: b.freeze.origem.app, commit: b.freeze.origem.commit, fork: b.freeze.origem.fork, forkCommit: b.freeze.origem.forkCommit,
-            buildCommand: b.freeze.build.comando, node: b.freeze.build.node, framework: `angular ${b.freeze.build.angular}`,
-          },
-        },
+        [SCREEN_B]: spaOrigin(b, siteB),
+        [SCREEN_D]: spaOrigin(d, siteD),
       },
       files,
       runtime,

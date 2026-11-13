@@ -198,7 +198,9 @@ export interface Servidor { base: string; fechar: () => Promise<void> }
  * os arquivos listados, confere o sha256 de cada um ANTES de subir e aplica o roteamento de SPA e os
  * aliases declarados — o mesmo contrato do `server.mjs` do pacote.
  */
-export async function servir(raiz: string, site?: { files: { path: string; sha256: string }[]; routing?: { spa?: { prefix: string; index: string }; aliases?: Record<string, string> } }): Promise<Servidor> {
+export async function servir(raiz: string, site?: { files: { path: string; sha256: string }[]; routing?: { spa?: { prefix: string; index: string }; spas?: { prefix: string; index: string }[]; aliases?: Record<string, string> } }): Promise<Servidor> {
+  // export-telas 1.4.0: `spas` lista todas as SPAs do pacote; sem ela, vale `spa` (até 1.3.0).
+  const spas = site?.routing?.spas ?? (site?.routing?.spa ? [site.routing.spa] : []);
   const raizAbs = resolve(raiz);
   let permitidos: Set<string> | null = null;
   if (site) {
@@ -213,7 +215,7 @@ export async function servir(raiz: string, site?: { files: { path: string; sha25
     try {
       let caminho = decodeURIComponent(new URL(req.url ?? "/", "http://x").pathname);
       if (site?.routing?.aliases?.[caminho]) caminho = "/" + site.routing.aliases[caminho];
-      else if (site?.routing?.spa && caminho.startsWith(site.routing.spa.prefix) && !extname(caminho)) caminho = "/" + site.routing.spa.index;
+      else if (!extname(caminho)) { const spa = spas.find((s) => caminho.startsWith(s.prefix)); if (spa) caminho = "/" + spa.index; }
       const rel = caminho.replace(/^\/+/, "");
       if (permitidos && !permitidos.has(rel)) throw new Error("fora do manifesto");
       const alvo = resolve(raizAbs, rel);
