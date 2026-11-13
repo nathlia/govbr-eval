@@ -29,7 +29,8 @@
  * unidade). Decisão que o scorer recusa fica pendente e listada, nunca forçada.
  *
  * Desfecho por tela (protocolo §5.1 + D-102: desfecho por spec, não por instância; fixo aqui): tela D (`processos`,
- * referência 1.0.0) por SPEC, primário = as specs não expostas (`_meta.exposto`), sensibilidade = todas; tela A
+ * referência 1.0.0 ou 1.1.0) por SPEC, primário = as specs não expostas (`_meta.exposto`), sensibilidade = todas e as unidades
+ * das não expostas (por unidade); tela A
  * (`solicitacao`, 2.0.0) por SPEC, primário = as specs sorteadas A-*, sensibilidade = as unidades A-* (por instância),
  * camada de página P-* à parte (nunca somada). δ = 2 specs. Outra tela: recusa.
  *
@@ -81,12 +82,17 @@ export interface Referencia { _meta: { version: string; suite?: string; exposto?
 /** Regra fixa do protocolo §5.1 para as duas telas da coleta; qualquer outra tela (ou versão de referência) é recusada. */
 export function regraDaTela(tela: string, ref: Referencia): RegraDesfecho {
   const ids = ref.violations.map(v => v.id);
-  if (tela === "processos" && ref._meta.version === "1.0.0") {
+  // processos 1.1.0 (D-196, N5): só os ids de norma migram para a base literal; specs, unidades e `_meta.exposto` iguais aos da
+  // 1.0.0, então a regra é a mesma. Unidades das não expostas como sensibilidade (§5.1, "a mesma comparação contada por unidade").
+  if (tela === "processos" && (ref._meta.version === "1.0.0" || ref._meta.version === "1.1.0")) {
     const exp = ref._meta.exposto?.specs ?? [];
-    if (!exp.length) throw new Error("referência processos 1.0.0 sem _meta.exposto.specs");
+    if (!exp.length) throw new Error(`referência processos ${ref._meta.version} sem _meta.exposto.specs`);
+    const nao = ref.violations.filter(v => !exp.includes(v.id));
+    const nu = nao.reduce((n, v) => n + (v.expectedCount ?? 1), 0);
     return { tela, referencia: ref._meta.version, unidadeDelta: "specs", conjuntos: [
-      { id: "primario", rotulo: `specs não expostas (${ids.length - exp.length})`, specs: ids.filter(i => !exp.includes(i)), modo: "spec", tipo: "primario" },
-      { id: "com-expostas", rotulo: `com as expostas (${ids.length} specs; sensibilidade)`, specs: ids, modo: "spec", tipo: "sensibilidade" }] };
+      { id: "primario", rotulo: `specs não expostas (${ids.length - exp.length})`, specs: nao.map(v => v.id), modo: "spec", tipo: "primario" },
+      { id: "com-expostas", rotulo: `com as expostas (${ids.length} specs; sensibilidade)`, specs: ids, modo: "spec", tipo: "sensibilidade" },
+      { id: "unidades", rotulo: `unidades das specs não expostas (${nu}; por unidade, sensibilidade)`, specs: nao.map(v => v.id), modo: "unidade", tipo: "sensibilidade" }] };
   }
   if (tela === "solicitacao" && ref._meta.version === "2.0.0") {
     const a = ref.violations.filter(v => v.id.startsWith("A-")), pp = ref.violations.filter(v => v.id.startsWith("P-"));
@@ -96,7 +102,7 @@ export function regraDaTela(tela: string, ref: Referencia): RegraDesfecho {
       { id: "unidades", rotulo: `unidades sorteadas A-* (${nu(a)}; por instância, sensibilidade)`, specs: a.map(v => v.id), modo: "unidade", tipo: "sensibilidade" },
       { id: "pagina", rotulo: `camada de página P-* (${pp.length} specs; à parte, nunca somada)`, specs: pp.map(v => v.id), modo: "spec", tipo: "a-parte" }] };
   }
-  throw new Error(`tela ${tela} (referência ${ref._meta.version}) sem regra de desfecho pré-registrada (só processos 1.0.0 e solicitacao 2.0.0)`);
+  throw new Error(`tela ${tela} (referência ${ref._meta.version}) sem regra de desfecho pré-registrada (só processos 1.0.0/1.1.0 e solicitacao 2.0.0)`);
 }
 
 /** Conta o conjunto de unidades confirmadas no modo da tela, restrito às specs do conjunto. */

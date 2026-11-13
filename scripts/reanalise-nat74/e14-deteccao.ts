@@ -2,8 +2,12 @@
  * [D-156] Tabulação da leitura de campanha: specs achadas por braço em DUAS colunas, e cada uma por classe de spec.
  *
  *   npx tsx scripts/reanalise-nat74/e14-deteccao.ts --passada PASTA_DA_PASSADA [--julgamentos ARQ] --saida PASTA
- *       [--analise DIR] [--coluna-principal deteccao|fundamentada] [--sensibilidade-regra ADJ/adjudicacao/sensibilidade-regra.json]
+ *       [--analise DIR] [--coluna-principal deteccao|fundamentada] [--sem-expostas] [--sensibilidade-regra ADJ/adjudicacao/sensibilidade-regra.json]
  *     → PASTA/deteccao.json + deteccao.md (recusa se já existirem: versão nova = arquivo novo)
+ *
+ * - **`--sem-expostas`** (protocolo NAT-78 §5.1, A16; tela D): a contagem fica nas specs não expostas da referência
+ *   (`_meta.exposto.specs` saem das duas colunas e das classes; o JSON grava `excluidas`). Sem a opção, todas as specs
+ *   (na D, a sensibilidade "com as expostas"), byte a byte como antes. A tela D roda as duas.
  *
  * - **detecção**: o crédito elegível de detecção — `derivado.spec` com `violacao-pagina`/`violacao-origem-indeterminada` e
  *   fundamentação (R7, R15, Q1), a mesma regra do recálculo. Fora: origem DS (`violacao-ds`, P3), pendente, vínculo sem
@@ -110,11 +114,16 @@ export interface Tabela {
   nenhumBraco: string[];
   /** Coluna principal da tese, da configuração; `null` = ainda não fixada pela autora. */
   colunaPrincipal: Coluna | null;
+  /** Só com `excluir` (protocolo NAT-78 §5.1, A16: primário sem as specs expostas): as specs tiradas da contagem. */
+  excluidas?: string[];
 }
 
-export function tabular(julgs: Julgamento[], bracoDe: (chave: string) => string, specs: { id: string; categories: string[] }[], politica: string,
-  bracosDoDesenho: string[], o: { estado?: Record<string, EstadoBraco>; colunaPrincipal?: Coluna | null } = {}): Tabela {
-  const cls = new Map(specs.map(s => [s.id, classeDaSpec(s.categories)]));
+export function tabular(julgs: Julgamento[], bracoDe: (chave: string) => string, specs0: { id: string; categories: string[] }[], politica: string,
+  bracosDoDesenho: string[], o: { estado?: Record<string, EstadoBraco>; colunaPrincipal?: Coluna | null; excluir?: string[] } = {}): Tabela {
+  const cls = new Map(specs0.map(s => [s.id, classeDaSpec(s.categories)]));
+  const fora = new Set(o.excluir ?? []);
+  for (const s of fora) if (!cls.has(s)) throw new Error(`excluir: spec ${s} fora da referência`);
+  const specs = specs0.filter(s => !fora.has(s.id));
   const comCitacao = julgs.find(j => j.derivado.citacaoPor);
   if (comCitacao && !/1\.3\.0$/.test(politica)) throw new Error(`política ${politica} com citacaoPor (${comCitacao.id}): só a 1.3.0 resgata pela referência`);
   const colunaPrincipal = colunaDe(o.colunaPrincipal);
@@ -140,13 +149,15 @@ export function tabular(julgs: Julgamento[], bracoDe: (chave: string) => string,
     }
     for (const s of [...det, ...fun]) if (!cls.has(s)) throw new Error(`spec ${s} fora da referência`);
     for (const s of fun) if (!det.has(s)) throw new Error(`braço ${b}: ${s} fundamentada sem detecção (fundamentada ⊆ detecção violada)`);
+    for (const s of fora) { det.delete(s); fun.delete(s); }
+    for (let i = via.length - 1; i >= 0; i--) if (fora.has(via[i].spec)) via.splice(i, 1);
     const conta = (xs: Set<string>, c: ClasseSpec) => [...xs].filter(s => cls.get(s) === c).length;
     porBraco[b] = { cartoes: js.length, deteccao: [...det].sort(), fundamentada: [...fun].sort(), viaReferencia: via.sort((x, y) => x.spec.localeCompare(y.spec) || x.cartao.localeCompare(y.cartao)),
       porClasse: { ds: { deteccao: conta(det, "ds"), fundamentada: conta(fun, "ds") }, geral: { deteccao: conta(det, "geral"), fundamentada: conta(fun, "geral") } } };
   }
   const alguma = new Set(Object.values(porBraco).flatMap(x => x?.deteccao ?? []));
   return { formato: DETECCAO_VERSAO, politica, specs: specs.map(s => ({ id: s.id, classe: cls.get(s.id)!, categorias: s.categories })), bracos, estado, porBraco,
-    nenhumBraco: specs.map(s => s.id).filter(s => !alguma.has(s)), colunaPrincipal };
+    nenhumBraco: specs.map(s => s.id).filter(s => !alguma.has(s)), colunaPrincipal, ...(fora.size ? { excluidas: [...fora].sort() } : {}) };
 }
 
 // ───────────────────────────────────────────── [D-165] sensibilidade do gatilho (d): contagem por leitura da regra
@@ -298,6 +309,7 @@ export function tabelaMd(t: Tabela, titulo: string): string {
   return [
     `# ${titulo}`, "",
     `Política do juiz: \`${t.politica}\`. Specs da referência: ${t.specs.length} (específicas do DS ${n.ds} · acessibilidade geral ${n.geral}).`,
+    ...(t.excluidas ? [`Conjunto: sem as specs expostas (\`_meta.exposto\`; fora da contagem: ${t.excluidas.join(", ")}).`] : []),
     `Coluna principal: ${t.colunaPrincipal === null ? "**ainda não fixada** (decisão da autora: `--coluna-principal` ou `design.colunaPrincipal` na campanha)" : `**${t.colunaPrincipal === "deteccao" ? "detecção" : "detecção fundamentada"}**`}.`, "",
     "**Detecção** = a classe derivada credita a spec (crédito elegível: violação de origem página ou indeterminada, com vínculo e fundamentação; R7, R15, Q1). Origem DS (P3), pendente e vínculo sem crédito ficam fora.",
     "**Fundamentada** = subconjunto da detecção: do crédito elegível, só o cartão em que a norma que deu a classe (a citada, ou, na 1.3.0, a referência secundária que deu a classe) foi julgada aplicável (`aplica`) e violada (`sim`), com o vínculo à mesma spec. Não exige força obrigatória: norma mais fraca aplicável e violada com vínculo (R15) conta como fundamentada, como a autora decidiu; Q1 (sem norma aplicada) não conta.",
@@ -345,7 +357,7 @@ export function estadoDosBracos(runs: { id: string; braco: string }[], slots: { 
 if (process.argv[1] && /(?:^|[\\/])e14-deteccao\.ts$/.test(process.argv[1])) {
   const a = process.argv.slice(2), val = (k: string) => (a.includes(k) ? a[a.indexOf(k) + 1] : undefined);
   const passada = val("--passada"), saida = val("--saida");
-  if (!passada || !saida) { console.error("Uso: --passada PASTA [--julgamentos ARQ] [--analise DIR] --saida PASTA [--coluna-principal deteccao|fundamentada] [--sensibilidade-regra ARQ]"); process.exit(1); }
+  if (!passada || !saida) { console.error("Uso: --passada PASTA [--julgamentos ARQ] [--analise DIR] --saida PASTA [--coluna-principal deteccao|fundamentada] [--sem-expostas] [--sensibilidade-regra ARQ]"); process.exit(1); }
   const jAbs = resolve(val("--julgamentos") ?? join(passada, "julgamentos.json"));
   for (const f of ["deteccao.json", "deteccao.md"]) if (existsSync(join(saida, f))) { console.error(`${join(saida, f)} já existe (versão nova = pasta nova)`); process.exit(1); }
   const ler = <T>(p: string): T => JSON.parse(readFileSync(p, "utf8").replace(/^﻿/, "")) as T;
@@ -386,7 +398,9 @@ if (process.argv[1] && /(?:^|[\\/])e14-deteccao\.ts$/.test(process.argv[1])) {
   const coletaAbs = join(anal, "coleta-trio.json");
   if (refSha && sha(readFileSync(refAbs)) !== refSha) { console.error("análises de telas/referências diferentes: uma tela por tabulação"); process.exit(1); }
   refSha = sha(readFileSync(refAbs));
-  const ref = ler<{ violations: { id: string; categories: string[] }[] }>(refAbs);
+  const ref = ler<{ _meta?: { exposto?: { specs?: string[] } }; violations: { id: string; categories: string[] }[] }>(refAbs);
+  const excluir = a.includes("--sem-expostas") ? ref._meta?.exposto?.specs ?? [] : undefined;
+  if (excluir && !excluir.length) { console.error("--sem-expostas: a referência não declara _meta.exposto.specs"); process.exit(1); }
   const camp = ler<{ design: { arms?: string[]; colunaPrincipal?: string } }>(campAbs);
   const arms = camp.design.arms ?? ["sem", "com"];
   const pkg = ler<SemanticPackage>(pkgAbs);
@@ -396,7 +410,7 @@ if (process.argv[1] && /(?:^|[\\/])e14-deteccao\.ts$/.test(process.argv[1])) {
   try { colunaPrincipal = colunaDe(cli ?? camp.design.colunaPrincipal); } catch (e) { console.error((e as Error).message); process.exit(1); }
   const js = multi ? j.julgamentos.filter(x => x.chave.split("|")[1] === a0.dir) : j.julgamentos;
   const t = tabular(js, k => { const b = chave.get(k); if (!b) throw new Error(`cartão fora da chave: ${k}`); return b; }, ref.violations, j.politica, arms,
-    { estado, colunaPrincipal });
+    { estado, colunaPrincipal, ...(excluir ? { excluir } : {}) });
   const lidos = [jAbs, cAbs, mAbs, refAbs, campAbs, pkgAbs, ...(slots ? [coletaAbs] : []), ...(sAbs ? [sAbs] : []), ...(primeira ? [p1Abs] : [])];
   const entradas = Object.fromEntries(lidos.map(p => [p.replace(/\\/g, "/"), sha(readFileSync(p))]));
   const bracoDe = (k: string) => { const b = chave.get(k); if (!b) throw new Error(`cartão fora da chave: ${k}`); return b; };

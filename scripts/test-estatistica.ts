@@ -5,7 +5,7 @@
  */
 import assert from "node:assert/strict";
 import {
-  analisePareada, desvioPadrao, icBootstrapMedia, mediana, mulberry32, postosMedios, quantil, testePermutacaoSinal, testeSinal, testeWilcoxon,
+  analisePareada, desvioPadrao, holmTelas, icBootstrapMedia, leituraSobHolm, mediana, mulberry32, postosMedios, quantil, testePermutacaoSinal, testeSinal, testeWilcoxon,
 } from "./estatistica-pareada";
 
 let ok = 0, falhas = 0;
@@ -113,6 +113,48 @@ teste("leitura do protocolo congelado §4: p < 0,05 e MÉDIA de D > 0 → vantag
   assert.equal(analisePareada(Array(10).fill(-1), "s").leitura, "vantagem-sem");
   assert.equal(analisePareada([1, -1, 0, 2, -2, 1], "s").leitura, "sem-diferenca-detectavel");
   assert.equal(analisePareada([], "s").leitura, "indisponivel");
+});
+
+teste("Holm D × E (§6.3): menor p contra 0,025; só se passar, o outro contra 0,05; senão nenhuma é declarada", () => {
+  const a = holmTelas(0.004, 0.03);
+  assert.deepEqual(a.ordem, ["D", "E"]);
+  assert.deepEqual(a.D, { p: 0.004, limiar: 0.025, declarada: true });
+  assert.deepEqual(a.E, { p: 0.03, limiar: 0.05, declarada: true });
+  const b = holmTelas(0.2, 0.01);
+  assert.deepEqual(b.ordem, ["E", "D"]);
+  assert.deepEqual(b.E, { p: 0.01, limiar: 0.025, declarada: true });
+  assert.deepEqual(b.D, { p: 0.2, limiar: 0.05, declarada: false });
+  // o menor não passa (0,03 ≥ 0,025): nenhuma declarada, nem a que ficaria abaixo de 0,05 sozinha
+  const c = holmTelas(0.03, 0.04);
+  assert.equal(c.D.declarada, false); assert.equal(c.E!.declarada, false); assert.equal(c.E!.limiar, null);
+  // estrito: p igual ao limiar não passa
+  assert.equal(holmTelas(0.025, 0.5).D.declarada, false);
+  assert.equal(holmTelas(0.01, 0.05).E!.declarada, false);
+  // empate: a D primeiro, o resultado é o mesmo
+  const e = holmTelas(0.02, 0.02);
+  assert.deepEqual(e.ordem, ["D", "E"]); assert.ok(e.D.declarada && e.E!.declarada);
+});
+
+teste("Holm D × E (§6.3): E fora antes de qualquer coleta → família só com a D, limiar 0,05; p indisponível recusa", () => {
+  const s = holmTelas(0.03, "fora-antes-da-coleta");
+  assert.deepEqual(s.familia, ["D"]); assert.equal(s.E, null);
+  assert.deepEqual(s.D, { p: 0.03, limiar: 0.05, declarada: true });
+  assert.equal(holmTelas(0.05, "fora-antes-da-coleta").D.declarada, false);
+  assert.throws(() => holmTelas(null, 0.01), /tela D indisponível/);
+  assert.throws(() => holmTelas(0.01, null), /tela E indisponível/);
+  assert.throws(() => holmTelas(1.2, 0.01), /inválido/);
+});
+
+teste("leitura sob Holm: vantagem só se declarada, na direção da média; p trocado recusa", () => {
+  const com = analisePareada(Array(9).fill(1), "s"), semD = analisePareada(Array(9).fill(-1), "s");
+  perto(com.principal.p, 2 / 512);
+  const h = holmTelas(com.principal.p, 0.5);
+  assert.equal(leituraSobHolm(com, h.D), "vantagem-com");
+  assert.equal(leituraSobHolm(semD, holmTelas(semD.principal.p, 0.5).D), "vantagem-sem");
+  assert.equal(leituraSobHolm(com, holmTelas(com.principal.p, 0.001).D), "vantagem-com", "a D passa em 0,05 depois da E passar em 0,025");
+  const nula = analisePareada([1, -1, 0, 2, -2, 1], "s");
+  assert.equal(leituraSobHolm(nula, holmTelas(nula.principal.p, 0.001).D), "sem-diferenca-detectavel");
+  assert.throws(() => leituraSobHolm(com, { p: 0.5, limiar: 0.05, declarada: false }), /não é o p dado ao Holm/);
 });
 
 console.log(`\n${ok} ok, ${falhas} falha(s)`);

@@ -329,6 +329,19 @@ t("[D-165] cenários da regra publicada: número por braço em cada leitura, re-
   assert.equal(cf.porCenario["identidade-demonstrada"].sem!.deteccao, 1); assert.equal(cf.porCenario["identidade-nao-demonstrada"].sem!.deteccao, 0);
 });
 
+t("[NAT-78 §5.1 A16] --sem-expostas: a spec excluída sai das duas colunas, das classes e da lista de specs; sem excluir nada muda", () => {
+  const { resp, j, braco } = fixD165();
+  const specs = [{ id: "B-01", categories: ["token"] }, { id: "B-02", categories: ["acessibilidade"] }, { id: "B-03", categories: ["acessibilidade"] }];
+  const js = [j("T3-1", "k1", resp("T3-1", { spec: "B-01" })), j("T3-4", "k4", resp("T3-4", { spec: "B-02" }))];
+  const est = { estado: { sem: "valida", com: "valida", ferramentas: "ausente" } as Record<string, "valida" | "ausente"> };
+  const todas = tabular(js, k => braco[k], specs, "politica-normativa-1.3.0", ["sem", "com", "ferramentas"], est);
+  const sem = tabular(js, k => braco[k], specs, "politica-normativa-1.3.0", ["sem", "com", "ferramentas"], { ...est, excluir: ["B-01"] });
+  assert.deepEqual(todas.porBraco.com!.deteccao, ["B-01", "B-02"]); assert.equal(todas.porBraco.com!.porClasse.ds.deteccao, 1); assert.equal(todas.excluidas, undefined);
+  assert.deepEqual(sem.porBraco.com!.deteccao, ["B-02"]); assert.equal(sem.porBraco.com!.porClasse.ds.deteccao, 0);
+  assert.deepEqual(sem.specs.map(s => s.id), ["B-02", "B-03"]); assert.deepEqual(sem.excluidas, ["B-01"]); assert.deepEqual(sem.nenhumBraco, ["B-03"]);
+  assert.throws(() => tabular(js, k => braco[k], specs, "politica-normativa-1.3.0", ["sem", "com", "ferramentas"], { ...est, excluir: ["X-99"] }), /fora da referência/);
+});
+
 t("[Codex d0d554fa P1] cenários: a leitura nunca resgata exclusão de crédito nem credita spec alheia ao fato (recusa, nada sai)", () => {
   const { resp, j, fato, braco, tab, cart, sens } = fixD165();
   const casos: [string, Resposta, Partial<ContextoDerivacao>, RegExp][] = [

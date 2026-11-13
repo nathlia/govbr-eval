@@ -54,10 +54,21 @@ try {
     assert.ok(!pd.specs.some(s => ["D-11", "D-12", "D-13", "D-14"].includes(s)));
     assert.equal(pa.modo, "spec"); assert.equal(pa.specs.length, 12);
     assert.equal(conjuntoDe(a, "unidades").modo, "unidade"); assert.deepEqual(conjuntoDe(a, "pagina").specs, ["P-01", "P-02"]);
-    assert.deepEqual(d.conjuntos.map(c => c.id), ["primario", "com-expostas"]); assert.deepEqual(a.conjuntos.map(c => c.id), ["primario", "unidades", "pagina"]);
+    assert.deepEqual(d.conjuntos.map(c => c.id), ["primario", "com-expostas", "unidades"]); assert.deepEqual(a.conjuntos.map(c => c.id), ["primario", "unidades", "pagina"]);
+    assert.equal(conjuntoDe(d, "unidades").modo, "unidade"); assert.deepEqual(conjuntoDe(d, "unidades").specs, pd.specs);
+    assert.match(conjuntoDe(d, "unidades").rotulo, /^unidades das specs não expostas \(53;/);
     assert.throws(() => conjuntoDe(d, "pagina"), /fora da regra/);
     assert.throws(() => regraDaTela("vistorias", refD), /sem regra de desfecho/);
     assert.throws(() => regraDaTela("processos", { ...refD, _meta: { ...refD._meta, version: "0.9.0" } }), /sem regra/);
+  });
+
+  // D-196 (N5): a 1.1.0 só migra ids de norma; a regra de desfecho tem de dar os MESMOS conjuntos que a 1.0.0.
+  t("desfecho da tela D na referência 1.1.0 (telas.json): mesmos conjuntos e specs da 1.0.0", () => {
+    const refD11 = lerJson<Parameters<typeof regraDaTela>[1]>(join(EVAL, "ground-truth-processos-1.1.0.json"));
+    assert.equal(refD11._meta.version, "1.1.0");
+    const d10 = regraDaTela("processos", refD), d11 = regraDaTela("processos", refD11);
+    assert.equal(d11.referencia, "1.1.0");
+    assert.deepEqual(d11.conjuntos, d10.conjuntos);
   });
 
   t("contagem: modo spec conta specs distintas; modo unidade conta unidades; só o conjunto pedido", () => {

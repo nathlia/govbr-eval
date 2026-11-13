@@ -185,3 +185,39 @@ export function analisePareada(d: number[], sementeOrigem: string, o: { alfa?: n
   return { versao: ESTATISTICA_VERSAO, n: d.length, d: [...d], media: m, mediana: mediana(d), desvioPadrao: desvioPadrao(d),
     ic: icBootstrapMedia(d, sementeOrigem, o.reamostragens), principal, robustez: { wilcoxon: testeWilcoxon(d), sinal: testeSinal(d) }, leitura, alfa };
 }
+
+// ───────────────────────────────────────────────────────────────── Holm entre as telas D e E (protocolo NAT-78 §6.3)
+
+/**
+ * QP (tela D) e QP-E (tela E) formam uma família com α = 0,05, controlada por Holm: o menor dos dois p (permutação exata
+ * de cada tela, `analisePareada(...).principal.p`) é comparado a α/2 = 0,025; só se passar, o outro é comparado a α = 0,05;
+ * se o menor não passar, nenhuma das duas é declarada. Se a E saiu pelos cortes da §3.8 ANTES de qualquer coleta da E, a
+ * família tem só a D, e o limiar da D é α. "Abaixo do limiar" é estrito (p < limiar), como em `analisePareada`. Empate de p:
+ * a D vem primeiro (o resultado não muda). p indisponível (null) não está previsto pela regra: recusa.
+ */
+export const HOLM_VERSAO = "holm-telas-d-e-1.0.0";
+export type TelaHolm = "D" | "E";
+export interface HolmTela { p: number; limiar: number | null; declarada: boolean }
+export interface HolmResultado { versao: typeof HOLM_VERSAO; alfaFamilia: number; familia: TelaHolm[]; ordem: TelaHolm[]; D: HolmTela; E: HolmTela | null }
+
+export function holmTelas(pD: number | null, pE: number | null | "fora-antes-da-coleta", alfa = 0.05): HolmResultado {
+  const valido = (p: unknown): p is number => typeof p === "number" && Number.isFinite(p) && p >= 0 && p <= 1;
+  if (!valido(pD)) throw new Error(`p da tela D indisponível ou inválido (${String(pD)}): a regra de Holm do §6.3 não prevê`);
+  if (pE === "fora-antes-da-coleta") return { versao: HOLM_VERSAO, alfaFamilia: alfa, familia: ["D"], ordem: ["D"], D: { p: pD, limiar: alfa, declarada: pD < alfa }, E: null };
+  if (!valido(pE)) throw new Error(`p da tela E indisponível ou inválido (${String(pE)}): a regra só tira a E da família quando ela sai antes de qualquer coleta`);
+  const ordem: TelaHolm[] = pE < pD ? ["E", "D"] : ["D", "E"];
+  const p = { D: pD, E: pE };
+  const primeira = p[ordem[0]] < alfa / 2;
+  const t: Record<TelaHolm, HolmTela> = {
+    [ordem[0]]: { p: p[ordem[0]], limiar: alfa / 2, declarada: primeira },
+    [ordem[1]]: { p: p[ordem[1]], limiar: primeira ? alfa : null, declarada: primeira && p[ordem[1]] < alfa },
+  } as Record<TelaHolm, HolmTela>;
+  return { versao: HOLM_VERSAO, alfaFamilia: alfa, familia: ["D", "E"], ordem, D: t.D, E: t.E };
+}
+
+/** Leitura congelada de uma tela sob o Holm (§6.3): vantagem só se declarada pelo Holm, na direção da média de D. */
+export function leituraSobHolm(a: Pick<AnalisePareada, "principal" | "media">, t: HolmTela): Leitura {
+  if (a.principal.p === null || a.media === null) return "indisponivel";
+  if (a.principal.p !== t.p) throw new Error(`o p da análise (${a.principal.p}) não é o p dado ao Holm (${t.p})`);
+  return !t.declarada ? "sem-diferenca-detectavel" : a.media > 0 ? "vantagem-com" : a.media < 0 ? "vantagem-sem" : "sem-diferenca-detectavel";
+}

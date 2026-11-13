@@ -230,8 +230,9 @@ cegos, que recebem só os arquivos indicados.
    os sujeitos; as unidades da spec do vínculo saem da ancoragem estrita, com vínculo de revisão pela árvore medida onde
    ela não chega — a regra do E8), e as unidades confirmadas por execução são as do `scoreSemanticPackage` (crédito por
    unidade, scorer 1.8.2). D por comparação do `design.comparisons` (D = 2º braço − 1º: D_fc = com − ferramentas, D_sc =
-   com − sem, D_sf = ferramentas − sem), sempre por spec no primário (D-102): na tela D sobre as 9 não expostas (13
-   como sensibilidade), na tela A sobre as 12 A-* (as 14 unidades A-* como sensibilidade por instância; P-* à parte); política 1.2.0 e, ao lado, 1.1.0 (sem R15 nem Q1 a); S4' sem os créditos de
+   com − sem, D_sf = ferramentas − sem), sempre por spec no primário (D-102): na tela D (referência 1.0.0 ou 1.1.0, a
+   mesma regra) sobre as 9 não expostas (13 como sensibilidade, e as 53 unidades das não expostas como sensibilidade por
+   unidade), na tela A sobre as 12 A-* (as 14 unidades A-* como sensibilidade por instância; P-* à parte); política 1.2.0 e, ao lado, 1.1.0 (sem R15 nem Q1 a); S4' sem os créditos de
    cartões de `contestados.json` que a autora não ratificou (sem `--ratificacoes`, nenhum), nos dois braços; checagem S4
    por braço com o resíduo de braço (`residuo-de-braco.json` da passada ou de `--residuo-passada`, casado pelo cartão).
    Permutação, Wilcoxon-Pratt, sinal, IC bootstrap e a leitura com δ = 2 pela `estatistica-pareada.ts`. Toda entrada lida
@@ -239,7 +240,11 @@ cegos, que recebem só os arquivos indicados.
    sha256 dos julgamentos), a classe de cada violação sai da derivação da ingestão com a origem medida (`violacao-origem-
    indeterminada` → página/DS/indeterminada; origem DS tira o crédito do vínculo, P3/R5 da política 1.2.0) e a tabela
    ganha a seção "Origem medida" (violações por braço e origem, mudanças, crédito retirado, candidatos do estrato 4 do
-   §8.4); sem `--origem`, a saída é byte a byte a de antes. Testes: `npm run test:revisao-recalculo` (inclui a equivalência da vinculação copiada de `montar.ts` contra o próprio
+   §8.4); sem `--origem`, a saída é byte a byte a de antes. **Holm entre as telas D e E (§6.3):** depois dos dois
+   recálculos, `holmTelas(pD, pE)` de `scripts/estatistica-pareada.ts` (p = `tabelas['principal|1.2.0|primario']` ›
+   `ferramentas-x-com` › `estatistica.principal.p` de cada tela; `"fora-antes-da-coleta"` no lugar de pE se a E saiu antes de
+   qualquer coleta) dá o limiar de cada tela, e `leituraSobHolm` a leitura congelada (testes em `npm run test:estatistica`).
+   A configuração pré-registrada da D está em `campanhas/nat78-tela-d-01/analise-preregistrada.json`. Testes: `npm run test:revisao-recalculo` (inclui a equivalência da vinculação copiada de `montar.ts` contra o próprio
    `montarDecisoes`, em todo cartão × spec de pacotes reais: deriva da cópia falha o teste).
 
 7. Material da autora (§8.4; sem modelo): `npm run revisao:material-autora -- preparar --passada <passada adjudicada>
@@ -349,7 +354,10 @@ cegos, que recebem só os arquivos indicados.
 - **braços**: todos os do desenho aparecem, na ordem dele, com o estado da coleta (`coleta-trio.json` + runs do pacote):
   `válida` (zero achados = 0), `ausente` ou `incompleta` (sem número; nunca 0). Os da linha de base vêm depois.
 - **coluna principal**: `--coluna-principal deteccao|fundamentada`, senão `design.colunaPrincipal` da campanha; sem ela, o
-  relatório diz "ainda não fixada". A escolha é da autora (D-156 1).
+  relatório diz "ainda não fixada". A escolha é da autora (D-156 1). O contrato `campaign.v2` não tem
+  `design.colunaPrincipal`; para a campanha `nat78-tela-d-01` a coluna vai pela opção (detecção, D-157 item 4).
+- **`--sem-expostas`** (protocolo NAT-78 §5.1, A16): as specs de `_meta.exposto` saem das duas colunas e das classes (o
+  JSON grava `excluidas`). Na tela D a tabulação roda duas vezes: com a opção (as 9 do primário) e sem (as 13).
 - **classe da spec**, fixada pelo vocabulário de `categories` da referência antes de ver número de braço:
 
   | `categories` da spec | classe |
