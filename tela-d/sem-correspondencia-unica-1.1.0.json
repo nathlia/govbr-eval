@@ -1,0 +1,56 @@
+{
+  "formato": "d169-sem-correspondencia-1.0.0",
+  "titulo": "sem correspondência única",
+  "referenciaBase": {
+    "arquivo": "ground-truth-processos.json",
+    "version": "1.0.0",
+    "sha256": "f719db686c86a6ee333cfd29bdfe9c16d85486306661d2ed85eb27660ec183ac"
+  },
+  "referenciaNova": {
+    "arquivo": "ground-truth-processos-1.1.0.json",
+    "version": "1.1.0",
+    "sha256": "2eacba80efb373c4923f7f85593c684647e6b5ec58ad5a341329d96a44632569"
+  },
+  "validador": {
+    "versao": "3.7.12",
+    "commit": "816f4ba",
+    "fontes": {
+      "data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/rules.jsonl": "ca8f428a52063ac8c208cca96432a40c84af8e75b4742744367a47717f9f28b8",
+      "data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/carried-over.jsonl": "16e0a764e4a0f05b3f116df83f1400598a95173f5dec34f775c0a9b843cade19",
+      "data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/legacy-ids.json": "3f85974355af8b4f402666f20c35a732478c5988dfd2e39aa739d457a883ef8b"
+    }
+  },
+  "gerador": {
+    "script": "tela-d/migrar-ids-literal.ts",
+    "sha256": "decde94eed95a6bbce81cbb922ae6e6ef9076efe3e2717492a996fc9160589ee",
+    "biblioteca": {
+      "script": "scripts/rules-legado.ts",
+      "sha256": "657365e710541ec34df824b6c1c6de3519b11d9ddb92c42ddc63127eb8e21b4e"
+    }
+  },
+  "nota": "Ids legados da 1.0.0 para os quais a base literal não tem exatamente uma unidade (ou um par consecutivo) com a mesma cláusula. Saem de `rules` na 1.1.0 e ficam em `rulesLegado`; NADA foi escolhido por semelhança. Decisão pendente da autora: deixar sem id (como A-06/A-09 na A 2.1.0 e B-04/B-05/B-06/B-24 na B 1.1.0) ou indicar a unidade, em versão nova.",
+  "decisao": "pendente (autora)",
+  "total": 4,
+  "itens": [
+    {
+      "spec": "D-02",
+      "de": "govbr-3.7.0-accessibility-global-2f22b7245ef9",
+      "motivo": "descartado em legacy-ids.json (a página-fonte foi coletada literalmente e o texto antigo não está nela (excerto de índice de busca/paráfrase)); nenhuma unidade literal (nem par consecutivo) com o mesmo texto"
+    },
+    {
+      "spec": "D-03",
+      "de": "govbr-3.7.0-accessibility-global-2f22b7245ef9",
+      "motivo": "descartado em legacy-ids.json (a página-fonte foi coletada literalmente e o texto antigo não está nela (excerto de índice de busca/paráfrase)); nenhuma unidade literal (nem par consecutivo) com o mesmo texto"
+    },
+    {
+      "spec": "D-04",
+      "de": "govbr-3.7.0-accessibility-global-b5fad7ce076d",
+      "motivo": "descartado em legacy-ids.json (o texto está no corpus, mas a extração o classificou como descritivo (não é regra)); nenhuma unidade literal (nem par consecutivo) com o mesmo texto"
+    },
+    {
+      "spec": "D-05",
+      "de": "govbr-3.7.0-accessibility-global-b5fad7ce076d",
+      "motivo": "descartado em legacy-ids.json (o texto está no corpus, mas a extração o classificou como descritivo (não é regra)); nenhuma unidade literal (nem par consecutivo) com o mesmo texto"
+    }
+  ]
+}
