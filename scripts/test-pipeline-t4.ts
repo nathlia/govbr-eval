@@ -14,12 +14,14 @@
  */
 import assert from "node:assert/strict";
 import { execFileSync, spawn } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import yaml from "js-yaml";
-import { validateContract, type Run } from "../contracts/index";
+import { validateContract, type AnyCampaign, type Run } from "../contracts/index";
+import { tentativasDoSlot } from "./agenda-campanha";
 import { avaliar, interpolar, type Workflow } from "./ci/emular-workflow";
+import { CODIGO, decidirDisparo } from "./ci/conclusao-disparo";
 import { CONTAS, CREDENCIAL_DA_CONTA, cartaoSaude, conferirAmbienteDosConteineres, conferirCheckouts, conferirEntradas, conferirImagens, credencialPermitida, resumoArquivo, resumoColeta, situacaoDoPar } from "./pipeline-t4";
 import { buildIsolatedManifest, documentoDaCampanha, isolatedManifestProblems, problemasDaCampanha, readIsolatedManifest, type IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
 import {
@@ -671,6 +673,110 @@ await teste("arquivo: valor de credencial dentro do pacote → nada publicado, e
   assert.ok(!existsSync(join(TMP, "anexos-vazado", `${e.caminho.split("/").pop()}.tar.gz`)), "nenhum anexo gerado");
   const comToken = todosOsArquivos(arquivo).filter((f) => readFileSync(join(arquivo, f)).includes(Buffer.from(SENTINELAS.GOVBR_RESULTADOS_TOKEN)));
   assert.deepEqual(comToken, [], "valor do token em algum arquivo do arquivo");
+});
+
+await teste("emenda (a), revisão MED 6: coleta success e pacote ausente = tentativa NO índice (conta nas regras de falha), nenhum pacote fabricado; o mesmo disparo com pacote depois = recusa", () => {
+  const limpo = repoDeArquivo("govbr-resultados-sem-artifact");
+  const antes = { repo: process.env.GITHUB_REPOSITORY, id: process.env.GITHUB_RUN_ID };
+  process.env.GITHUB_REPOSITORY = "dono/govbr-eval";
+  process.env.GITHUB_RUN_ID = "777001";
+  try {
+    const vazio = join(TMP, "pacote-vazio"); // download parcial: pasta sem run.json
+    mkdirSync(vazio, { recursive: true });
+    const r = arquivarExecucao({ arquivo: limpo, evidenciasSaida: join(TMP, "anexos-sem-artifact"), pacote: vazio, manifesto: manifestoPath, linhaDeBase: null, segredos: [],
+      entradas: { ...ENT, etapas: "so-coleta" }, jobs: { ...JOBS, "linhas-de-base": { result: "skipped" } } });
+    const g = r.gravacoes.find(x => x.tipo === "execucao")!;
+    assert.equal(g.chave, "sem-pacote-gh-777001");
+    assert.ok(r.problemas.some(p => /pacote não chegou ao arquivar/.test(p)));
+    const e = JSON.parse(readFileSync(join(limpo, "indice", "entradas", `${g.chave}.json`), "utf8")) as EntradaIndice;
+    assert.equal(e.slot, ENT.slot);
+    assert.match(e.motivo!, /^coleta concluída, pacote ausente no arquivamento: o modelo foi chamado \(slot slot-01, braço \w+, tentativa \d+\)/);
+    assert.equal(e.manifestoColeta!.sha256, msha, "a tentativa fica presa ao disparo");
+    // nenhum pacote fabricado: sem pacote no índice, sem pasta pacote/, sem anexo
+    assert.equal(e.pacote, null);
+    assert.equal(e.evidencias!.estado, "nao-se-aplica");
+    assert.ok(!existsSync(join(limpo, e.caminho, "pacote")));
+    assert.ok(!existsSync(join(TMP, "anexos-sem-artifact")) || readdirSync(join(TMP, "anexos-sem-artifact")).length === 0, "nenhum tar.gz");
+    // entra na contagem: é tentativa do slot (não "nao-conta"); com a política padrão, técnica
+    const camp = { campaignId: e.campanha, retryPolicy: { maxAttemptsPerSlot: 2, campaignAttemptCeiling: 9, retryOn: ["vm-lost", "harness-error"] } } as unknown as AnyCampaign;
+    const ts = tentativasDoSlot([e], camp, ENT.slot);
+    assert.equal(ts.length, 1, "a chamada de modelo conta como tentativa");
+    assert.equal(ts[0].classe, "tecnica");
+    const semRepetir = { ...camp, retryPolicy: { ...camp.retryPolicy, retryOn: [] } } as unknown as AnyCampaign;
+    assert.equal(tentativasDoSlot([e], semRepetir, ENT.slot)[0].classe, "inelegivel", "política sem repetição: conta e não abre outra");
+    // o arquivar reexecutado do MESMO disparo, agora com o pacote: recusa (a chamada nunca conta duas vezes), nada gravado
+    const depois = todosOsArquivos(limpo);
+    assert.throws(() => arquivarExecucao({ arquivo: limpo, evidenciasSaida: join(TMP, "anexos-sem-artifact-2"), pacote, manifesto: manifestoPath, linhaDeBase: null, segredos: [],
+      entradas: { ...ENT, etapas: "so-coleta" }, jobs: JOBS }), (x: Error) => x instanceof Recusa && /já está no índice como tentativa sem pacote/.test(x.message));
+    assert.deepEqual(todosOsArquivos(limpo), depois);
+    // e o arquivar reexecutado ainda sem pacote é idempotente (a mesma entrada)
+    assert.equal(arquivarExecucao({ arquivo: limpo, evidenciasSaida: join(TMP, "anexos-sem-artifact"), pacote: null, manifesto: manifestoPath, linhaDeBase: null, segredos: [],
+      entradas: { ...ENT, etapas: "so-coleta" }, jobs: JOBS }).gravacoes.find(x => x.tipo === "execucao")!.chave, g.chave);
+  } finally {
+    for (const [k, v] of [["GITHUB_REPOSITORY", antes.repo], ["GITHUB_RUN_ID", antes.id]] as const) if (v === undefined) delete process.env[k]; else process.env[k] = v;
+  }
+});
+
+await teste("emenda (a): arquivar reexecutado (rerun do job, clone novo do arquivo) grava o MESMO slot uma vez, com o mesmo anexo; a entrega é confirmada", () => {
+  // tentativa 1 do job: arquivou no clone do runner, mas o publicar falhou (o clone some com a VM)
+  const clone1 = repoDeArquivo("govbr-resultados-rerun-1");
+  const r1 = arquivarExecucao({ arquivo: clone1, evidenciasSaida: join(TMP, "anexos-rerun-1"), pacote, manifesto: manifestoPath, linhaDeBase: null, segredos: [],
+    entradas: { ...ENT, etapas: "so-coleta" }, jobs: { ...JOBS, "linhas-de-base": { result: "skipped" } } });
+  // tentativa 2 do job (gh run rerun --job): mesmas entradas, mesmos needs, artifact do mesmo run, clone novo
+  const clone2 = repoDeArquivo("govbr-resultados-rerun-2");
+  const r2 = arquivarExecucao({ arquivo: clone2, evidenciasSaida: join(TMP, "anexos-rerun-2"), pacote, manifesto: manifestoPath, linhaDeBase: null, segredos: [],
+    entradas: { ...ENT, etapas: "so-coleta" }, jobs: { ...JOBS, "linhas-de-base": { result: "skipped" } } });
+  const g1 = r1.gravacoes.find(g => g.tipo === "execucao")!, g2 = r2.gravacoes.find(g => g.tipo === "execucao")!;
+  assert.equal(g2.chave, g1.chave);
+  assert.equal(g2.caminho, g1.caminho);
+  assert.equal(sha(readFileSync(g2.anexoLocal!)), sha(readFileSync(g1.anexoLocal!)), "o anexo é o mesmo byte a byte: o anexar aceita o que a tentativa 1 já subiu");
+  const doSlot = (dir: string) => readdirSync(join(dir, "indice", "entradas")).map(f => JSON.parse(readFileSync(join(dir, "indice", "entradas", f), "utf8")) as EntradaIndice)
+    .filter(e => e.tipo === "execucao" && e.slot === ENT.slot);
+  assert.equal(doSlot(clone2).length, 1, "uma tentativa só no índice");
+  assert.equal(doSlot(clone2)[0].manifestoColeta!.sha256, msha);
+  // o anexo da tentativa 1 já está na Release: a conferência por download aceita o mesmo sha256
+  assert.equal(confirmarEvidencias(clone2, g2.chave, { baixado: g1.anexoLocal!, url: "fixture://release/anexo" }).evidencias!.estado, "confirmado");
+  // e se a tentativa 1 chegou a publicar, a 2 sobre o mesmo clone é idempotente (nenhuma entrada nova)
+  const r3 = arquivarExecucao({ arquivo: clone1, evidenciasSaida: join(TMP, "anexos-rerun-3"), pacote, manifesto: manifestoPath, linhaDeBase: null, segredos: [],
+    entradas: { ...ENT, etapas: "so-coleta" }, jobs: { ...JOBS, "linhas-de-base": { result: "skipped" } } });
+  assert.equal(r3.gravacoes.find(g => g.tipo === "execucao")!.chave, g1.chave);
+  assert.equal(doSlot(clone1).length, 1);
+});
+
+await teste("emenda (a): conclusão do disparo pelo job coleta — infraestrutura reexecuta só o job dela (--job), nunca o preparar nem a coleta", () => {
+  const job = (name: string, conclusion: string | null, databaseId: number) => ({ name, conclusion, databaseId, status: "completed" });
+  const run = (o: { coleta?: string; lb?: string; arquivar?: string; preparar?: string; attempt?: number; conclusion?: string }) => ({
+    databaseId: 99, attempt: o.attempt ?? 1, status: "completed", conclusion: o.conclusion ?? "failure",
+    jobs: [job("Preparar (entradas, commits, identidade)", o.preparar ?? "success", 1), job("Coleta (uma execução isolada)", o.coleta ?? "success", 2),
+      job("Linhas de base (mesmo site, mesmo manifesto)", o.lb ?? "skipped", 3), job("Arquivar no govbr-resultados", o.arquivar ?? "success", 4)],
+  });
+  const art = [{ name: "manifesto-coleta", expired: false }, { name: "pacote", expired: false }];
+  assert.equal(decidirDisparo(run({ conclusion: "success" }), art).decisao, "concluido");
+  const infra = decidirDisparo(run({ arquivar: "failure" }), art);
+  assert.equal(infra.decisao, "reexecutar-infra");
+  assert.equal("comando" in infra && infra.comando, "gh run rerun 99 --repo nathlia/govbr-eval --job 4", "só o arquivar (o GitHub reexecuta os dependentes; ele não tem)");
+  assert.equal(CODIGO[infra.decisao], 10);
+  // a coleta falhou: tentativa do agente; se o arquivar também caiu, reexecuta só o arquivar (nunca --failed, que rodaria a coleta)
+  const ag = decidirDisparo(run({ coleta: "failure", arquivar: "failure" }), art);
+  assert.equal(ag.decisao, "tentativa-do-agente");
+  assert.equal("comando" in ag && ag.comando, "gh run rerun 99 --repo nathlia/govbr-eval --job 4");
+  assert.equal(decidirDisparo(run({ coleta: "cancelled" }), art).decisao, "tentativa-do-agente");
+  // preparar falhou: nenhum modelo chamado
+  assert.equal(decidirDisparo(run({ preparar: "failure", coleta: "skipped" }), art).decisao, "recusado-no-preparo");
+  // artifact ausente ou expirado, sem lista, ou reexecuções esgotadas: caso da autora (nada reexecutado)
+  assert.equal(decidirDisparo(run({ arquivar: "failure" }), [art[0]]).decisao, "caso-da-autora");
+  assert.equal(decidirDisparo(run({ arquivar: "failure" }), [art[0], { name: "pacote", expired: true }]).decisao, "caso-da-autora");
+  assert.equal(decidirDisparo(run({ arquivar: "failure" }), null).decisao, "caso-da-autora");
+  assert.equal(decidirDisparo(run({ arquivar: "failure", attempt: 3 }), art).decisao, "caso-da-autora");
+  // só a linha de base do disparo falhou: a execução está arquivada (com a congelada da campanha, nada falta)
+  assert.equal(decidirDisparo(run({ lb: "failure" }), art).decisao, "concluido");
+  // so-linha-de-base (coleta skipped) com o arquivar caído: reexecuta o arquivar, que só precisa do manifesto
+  assert.equal(decidirDisparo(run({ coleta: "skipped", lb: "success", arquivar: "failure" }), [art[0]]).decisao, "reexecutar-infra");
+  assert.equal(decidirDisparo({ ...run({}), status: "in_progress" }, art).decisao, "em-andamento");
+  // o workflow tem os quatro jobs com esses nomes
+  const wf = yaml.load(readFileSync(join(ROOT, ".github", "workflows", "execucao-isolada.yml"), "utf8")) as Workflow;
+  const nomes = Object.values(wf.jobs).map(j => (j as { name: string }).name);
+  assert.equal(decidirDisparo({ ...run({}), conclusion: "success", jobs: nomes.map((n, i) => job(n, "success", i + 1)) }, art).decisao, "concluido", nomes.join(" | "));
 });
 
 await teste("arquivo: execução interrompida sem pacote fica visível no índice (nada inventado)", () => {

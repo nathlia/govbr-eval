@@ -11,17 +11,22 @@
  * segunda coleta reaproveita o cache numa pasta nova; (3) anexo baixado com sha256 diferente do índice = recusa,
  * nenhuma pasta de análise; anexo já presente e divergente = recusa sem baixar nem tocar nele; (4) regra fixa da
  * linha de base (achado E) e escolha da tentativa, sobre entradas sintéticas: a do PRIMEIRO slot na ordem da
- * agenda, nunca a de outro slot; ausência planejada; slot sem tentativa elegível; preflight recusado não conta.
+ * agenda, nunca a de outro slot; ausência planejada; slot sem tentativa elegível; preflight recusado não conta;
+ * (5) emenda (a): a linha de base congelada da campanha — aceita com identidade igual e registro anterior ao 1º slot;
+ * recusada com outro distSha256, outro site, registro posterior, ou slot cujo commit não contém o registro; de ponta a
+ * ponta sobre o arquivo T4 (registro gerado, 1º slot sem linha de base do disparo, análise com o registro conferido).
  */
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { AnyCampaign } from "../contracts/index";
+import { validateContract, type AnyCampaign, type LinhaDeBaseCampanha } from "../contracts/index";
 import { ROOT } from "./adjudication";
 import type { Agenda } from "./agenda-campanha";
-import type { EntradaIndice } from "./arquivo-resultados";
+import { sha, type EntradaIndice } from "./arquivo-resultados";
+import { conferirCongelamentoNoGit, conferirRegistroContraManifesto, gerarRegistroDaCampanha, leitorGit, type LeitorGit } from "./linha-de-base-campanha";
+import { conferirLinhaDeBaseDaCampanhaNoCli, type OpcoesAnalise } from "./analisar-execucao";
 import { RecusaColeta, coletarTrio, identidadeDoEmprestimo, planoDoTrio, proximoCarimbo, type Baixador } from "./coleta-trio";
 import type { IsolatedCollectionManifest } from "./manifesto-coleta-isolada";
 import { construirArquivoT4 } from "./painel/fixture";
@@ -264,6 +269,176 @@ await teste("empréstimo de linha de base: identidade dos manifestos de coleta i
   }
   const sujo = { repos: { "govbr-eval": { commit: "e", dirty: true }, "govbr-telas": { commit: "t", dirty: false }, "govbr-ds-validator": { commit: "v", dirty: false } } };
   assert.throws(() => identidadeDoEmprestimo(m(sujo), m(sujo)), (e: Error) => e instanceof RecusaColeta && /árvore suja em govbr-eval/.test(e.message));
+});
+
+// ── emenda (a): linha de base congelada da campanha ─────────────────────────────────────────
+
+const registroCampanha = (lb: EntradaIndice, o: Partial<LinhaDeBaseCampanha> = {}): LinhaDeBaseCampanha => ({
+  contract: "linha-de-base-campanha.v1", fixture: true, campaignId: lb.campanha, screen: { id: "tela", version: "v" }, baselineId: lb.chave,
+  registro: { caminho: `${lb.caminho}/baseline.json`, sha256: "1".repeat(64) }, medidaEm: lb.dataUtc,
+  manifestoColeta: { caminho: lb.manifestoColeta!.caminho, sha256: lb.manifestoColeta!.sha256 }, snapshotSetId: "snapshots-0123456789abcdef",
+  site: { siteSha256: "2".repeat(64), manifestSha256: "3".repeat(64) }, oracle: { version: "x", distSha256: "4".repeat(64), dataSha256: "5".repeat(64) },
+  repos: { "govbr-eval": "6".repeat(40), "govbr-telas": "7".repeat(40), "govbr-ds-validator": "8".repeat(40) }, imagesLockSha256: "9".repeat(64),
+  regra: "teste", geradoEm: lb.dataUtc, ...o,
+});
+
+await teste("emenda (a): trio sem linha de base do disparo + registro da campanha anterior ao 1º slot = aceito; posterior, não utilizável, de outro disparo ou com empréstimo = recusa", () => {
+  // disparo so-linha-de-base ANTES de qualquer slot (00:00); slots depois (exec gera 00:NN com NN ≥ 1)
+  const lbCamp: EntradaIndice = { ...lbDe(exec("p01-sem", "sem", { par: "p01", dataUtc: "2025-12-31T23:00:00Z" }), "lb-campanha"), dataUtc: "2025-12-31T23:00:00Z" };
+  const sem = exec("p01-sem", "sem", { par: "p01" }), fe = exec("p01-ferramentas", "ferramentas", { par: "p01" }), com = exec("p01-com", "com", { par: "p01" });
+  const ag = agendaCom([["p01-sem", "sem"], ["p01-ferramentas", "ferramentas"], ["p01-com", "com"]]);
+  const camp = campanha({ order: "quadrado-latino" });
+  const reg = registroCampanha(lbCamp);
+  // sem o registro: a regra fixa recusa (o disparo do 1º slot não tem linha de base)
+  assert.throws(() => planoDoTrio([lbCamp, sem, fe, com], camp, ag, "p01"), (e: Error) => e instanceof RecusaColeta && /primeiro slot \(p01-sem\)/.test(e.message));
+  const p = planoDoTrio([lbCamp, sem, fe, com], camp, ag, "p01", new Map(), undefined, { congelada: reg });
+  assert.equal(p.linhaDeBase.tipo, "congelada-da-campanha");
+  assert.equal(p.linhaDeBase.tipo === "congelada-da-campanha" && p.linhaDeBase.entrada.chave, "lb-campanha");
+  assert.equal(p.linhaDeBase.slot, "p01-sem");
+  // a do disparo do 1º slot, se existir, é ignorada (e listada); vale a da campanha
+  const comA = planoDoTrio([lbCamp, sem, lbDe(sem), fe, com], camp, ag, "p01", new Map(), undefined, { congelada: reg });
+  assert.equal(comA.linhaDeBase.tipo === "congelada-da-campanha" && comA.linhaDeBase.entrada.chave, "lb-campanha");
+  assert.deepEqual(comA.linhaDeBase.tipo === "congelada-da-campanha" && comA.linhaDeBase.ignoradas, [`lb-${sem.chave}`]);
+  // vale fora de dev-* (é a regra da campanha formal) e também numa dev-*
+  const dev = (e: EntradaIndice): EntradaIndice => ({ ...e, campanha: "dev-x" });
+  const pDev = planoDoTrio([lbCamp, sem, fe, com].map(dev), { ...camp, campaignId: "dev-x" } as AnyCampaign, { ...ag, campaignId: "dev-x" } as Agenda, "p01", new Map(), undefined,
+    { congelada: { ...reg, campaignId: "dev-x" } });
+  assert.equal(pDev.linhaDeBase.tipo, "congelada-da-campanha");
+  // registro posterior ao 1º slot: medida, registrada no índice ou gerada depois da primeira execução iniciada
+  const tarde = { ...lbCamp, dataUtc: "2026-01-02T00:00:00Z" };
+  assert.throws(() => planoDoTrio([tarde, sem, fe, com], camp, ag, "p01", new Map(), undefined, { congelada: registroCampanha(tarde) }),
+    (e: Error) => e instanceof RecusaColeta && /registro posterior ao 1º slot/.test(e.message));
+  assert.throws(() => planoDoTrio([lbCamp, sem, fe, com], camp, ag, "p01", new Map(), undefined, { congelada: { ...reg, geradoEm: "2026-01-03T00:00:00Z" } }),
+    (e: Error) => e instanceof RecusaColeta && /gerada no registro da campanha .* registro posterior/.test(e.message));
+  // a execução que conta é qualquer tentativa iniciada da campanha (também de outro trio, também falha técnica)
+  const outraAntes = exec("p09-com", "com", { par: "p09", dataUtc: "2025-12-31T22:00:00Z", estado: { tecnico: "failed" } as EntradaIndice["estado"] });
+  assert.throws(() => planoDoTrio([lbCamp, outraAntes, sem, fe, com], camp, ag, "p01", new Map(), undefined, { congelada: reg }), /p09-com/);
+  // preflight recusado (sem manifesto) não começou: não conta
+  const preflight = exec("p09-com", "com", { par: "p09", dataUtc: "2025-12-31T22:00:00Z", mc: null, estado: { arquivo: "sem-pacote", tecnico: "interrupted" } as EntradaIndice["estado"] });
+  assert.equal(planoDoTrio([lbCamp, preflight, sem, fe, com], camp, ag, "p01", new Map(), undefined, { congelada: reg }).linhaDeBase.tipo, "congelada-da-campanha");
+  // não utilizável, ausente, de outro disparo, outro caminho
+  const ruim = { ...lbCamp, estado: { ...lbCamp.estado, linhaDeBase: "nao-utilizavel" as const }, motivo: "identidade divergente" };
+  assert.throws(() => planoDoTrio([ruim, sem, fe, com], camp, ag, "p01", new Map(), undefined, { congelada: reg }), /não é utilizável/);
+  assert.throws(() => planoDoTrio([sem, fe, com], camp, ag, "p01", new Map(), undefined, { congelada: reg }), /aparece 0 vez/);
+  assert.throws(() => planoDoTrio([lbCamp, sem, fe, com], camp, ag, "p01", new Map(), undefined, { congelada: { ...reg, manifestoColeta: { ...reg.manifestoColeta, sha256: "f".repeat(64) } } }), /de outro disparo/);
+  assert.throws(() => planoDoTrio([lbCamp, sem, fe, com], camp, ag, "p01", new Map(), undefined, { congelada: { ...reg, registro: { ...reg.registro, caminho: "linhas-de-base/camp-x/tela/outra/baseline.json" } } }), /aponta linhas-de-base/);
+  // não combina com o empréstimo dev-*
+  assert.throws(() => planoDoTrio([lbCamp, sem, fe, com], camp, ag, "p01", new Map(), "p01-com", { congelada: reg }), /não vale com a linha de base congelada/);
+});
+
+const manifesto = (o: Record<string, unknown> = {}): IsolatedCollectionManifest => ({
+  identity: { collection: "fluxo-1.3.0", referenceSha256: "r", siteManifestSha256: "s", oracleDistSha256: "d", oracleDataSha256: "a", statePlanSha256: "p" },
+  site: { manifestSha256: "s", manifestBytes: 1, siteSha256: "site", packageVersion: "1.0.0", corpusCommit: null, screenVersion: "v" },
+  oracle: { package: "govbr-ds-validator-server", version: "3.7.10", distSha256: "d", dataSha256: "a" },
+  repos: { "govbr-eval": { commit: "e", dirty: false }, "govbr-telas": { commit: "t", dirty: false }, "govbr-ds-validator": { commit: "v", dirty: false } },
+  imagesLock: { sha256: "l", versions: {} }, ...o,
+} as unknown as IsolatedCollectionManifest);
+
+await teste("emenda (a): identidade do registro da campanha contra o manifesto do slot (identidadeDoEmprestimo sem o govbr-eval): outro distSha256, outro site, lock ou árvore suja = recusa", () => {
+  const opc = { semEval: true, rotulo: "linha de base congelada da campanha" };
+  const outroEval = manifesto({ repos: { "govbr-eval": { commit: "e2", dirty: false }, "govbr-telas": { commit: "t", dirty: false }, "govbr-ds-validator": { commit: "v", dirty: false } } });
+  assert.equal(identidadeDoEmprestimo(manifesto(), outroEval, opc).validatorCommit, "v", "o commit do govbr-eval pode diferir (o git confere o quê)");
+  assert.throws(() => identidadeDoEmprestimo(manifesto(), outroEval), /repos\.govbr-eval/, "o empréstimo dev-* continua exigindo o mesmo commit");
+  for (const [nome, dif] of [
+    ["oracle", { oracle: { package: "govbr-ds-validator-server", version: "3.7.10", distSha256: "outro", dataSha256: "a" } }],
+    ["site.siteSha256", { site: { manifestSha256: "s", manifestBytes: 1, siteSha256: "outro", packageVersion: "1.0.0", corpusCommit: null, screenVersion: "v" } }],
+    ["imagesLock.sha256", { imagesLock: { sha256: "l2", versions: {} } }],
+  ] as const) {
+    assert.throws(() => identidadeDoEmprestimo(manifesto(), manifesto(dif as Record<string, unknown>), opc),
+      (e: Error) => e instanceof RecusaColeta && e.message.includes(nome) && /linha de base congelada da campanha recusada/.test(e.message), nome);
+  }
+  const sujoNoSlot = manifesto({ repos: { "govbr-eval": { commit: "e", dirty: true }, "govbr-telas": { commit: "t", dirty: false }, "govbr-ds-validator": { commit: "v", dirty: false } } });
+  assert.throws(() => identidadeDoEmprestimo(manifesto(), sujoNoSlot, opc), /árvore suja em govbr-eval/, "árvore suja no slot também recusa");
+  // o registro tem de dizer o mesmo que o manifesto do disparo da linha de base
+  const m = { ...manifesto({ site: { manifestSha256: "3".repeat(64), siteSha256: "2".repeat(64) }, oracle: { version: "x", distSha256: "4".repeat(64), dataSha256: "5".repeat(64) },
+    repos: { "govbr-eval": { commit: "6".repeat(40) }, "govbr-telas": { commit: "7".repeat(40) }, "govbr-ds-validator": { commit: "8".repeat(40) } }, imagesLock: { sha256: "9".repeat(64) } }),
+    dispatch: { campaignId: "camp-x", screenId: "tela" } } as unknown as IsolatedCollectionManifest;
+  const lb = lbDe(exec("p01-sem", "sem"));
+  conferirRegistroContraManifesto(registroCampanha(lb), m);
+  assert.throws(() => conferirRegistroContraManifesto(registroCampanha(lb, { oracle: { version: "x", distSha256: "0".repeat(64), dataSha256: "5".repeat(64) } }), m), /oracle\.distSha256/);
+});
+
+await teste("emenda (a): o git prova o congelamento — o commit de cada slot contém o registro e só difere do da linha de base por ele", () => {
+  const caminho = "campanhas/camp-x/linha-de-base.json";
+  const bytes = Buffer.from("{\"registro\":1}\n");
+  const git = (o: { blob?: Record<string, Buffer | null>; dif?: Record<string, string[]> } = {}): LeitorGit => ({
+    blob: (c, p) => (p !== caminho ? null : c in (o.blob ?? {}) ? o.blob![c] : bytes),
+    diferenca: (_a, b) => o.dif?.[b] ?? [caminho],
+  });
+  const ok = conferirCongelamentoNoGit("camp-x", sha(bytes), "lb", ["s1", "s1", "s2"], git());
+  assert.deepEqual(ok.commitsDosSlots, ["s1", "s2"]);
+  assert.throws(() => conferirCongelamentoNoGit("camp-x", sha(bytes), "lb", ["s1"], git({ blob: { s1: null } })), /não contém campanhas\/camp-x\/linha-de-base\.json: o slot foi disparado antes/);
+  assert.throws(() => conferirCongelamentoNoGit("camp-x", sha(bytes), "lb", ["s1"], git({ blob: { s1: Buffer.from("outro") } })), /não é o registro conferido/);
+  assert.throws(() => conferirCongelamentoNoGit("camp-x", sha(bytes), "lb", ["s1"], git({ dif: { s1: [caminho, "scripts/vazamento/conhecimento.ts"] } })), /fora do registro da campanha: scripts\/vazamento\/conhecimento\.ts/);
+  // o leitor de verdade, sobre este repositório: commit desconhecido = recusa
+  assert.throws(() => conferirCongelamentoNoGit("camp-x", sha(bytes), "0".repeat(40), ["0".repeat(40)], leitorGit(ROOT)), /não está no govbr-eval/);
+});
+
+await teste("emenda (a), de ponta a ponta (arquivo T4): registro gerado, 1º slot sem linha de base do disparo, o trio fecha com a congelada; análise usa o registro conferido", async () => {
+  // arquivo T4 com o govbr-eval limpo nos manifestos; a linha de base do com é a "da campanha", a do sem (1º slot) some
+  const base = join(TMP, "arquivo-congelada");
+  const t4c = construirArquivoT4(base, { evalLimpo: true });
+  const arquivo = join(TMP, "congelada");
+  cpSync(t4c.arquivo, arquivo, { recursive: true });
+  const dirE = join(arquivo, "indice", "entradas");
+  const idx = readdirSync(dirE).map(f => ({ f, e: lerJson<EntradaIndice>(join(dirE, f)) }));
+  const lbSem = idx.find(x => x.e.tipo === "linha-de-base" && (x.e.slot ?? "").endsWith("-sem"))!;
+  const lbCom = idx.find(x => x.e.tipo === "linha-de-base" && (x.e.slot ?? "").endsWith("-com"))!;
+  rmSync(join(dirE, lbSem.f));
+  // as execuções da fixture começam às 00:00 do dia e as linhas de base às 01:00: aqui as execuções vêm depois (02:00)
+  const execs = idx.filter(x => x.e.tipo === "execucao");
+  for (const x of execs) writeFileSync(join(dirE, x.f), JSON.stringify({ ...x.e, dataUtc: x.e.dataUtc.replace("T00:00:00Z", "T02:00:00Z") }, null, 2) + "\n");
+  // o gerador recusa com execução iniciada; num arquivo ainda sem execuções, grava
+  assert.throws(() => gerarRegistroDaCampanha({ arquivo, campanha: t4c.campanha, baselineId: lbCom.e.chave }), /já tem 2 execução\(ões\) iniciada/);
+  const semExec = join(TMP, "congelada-antes-do-slot-1");
+  cpSync(arquivo, semExec, { recursive: true });
+  for (const x of execs) rmSync(join(semExec, "indice", "entradas", x.f));
+  const reg = gerarRegistroDaCampanha({ arquivo: semExec, campanha: t4c.campanha, baselineId: lbCom.e.chave, agora: new Date("2026-02-01T01:30:00Z") });
+  assert.ok(validateContract(reg).valid);
+  assert.equal(reg.registro.sha256, sha(readFileSync(join(arquivo, lbCom.e.caminho, "baseline.json"))));
+  const raizEval = join(TMP, "eval-congelada");
+  mkdirSync(join(raizEval, "campanhas", t4c.campanha), { recursive: true });
+  const regPath = join(raizEval, "campanhas", t4c.campanha, "linha-de-base.json");
+  writeFileSync(regPath, JSON.stringify(reg, null, 2) + "\n");
+  const regBytes = readFileSync(regPath);
+  const gitOk: LeitorGit = { blob: (_c, p) => (p === `campanhas/${t4c.campanha}/linha-de-base.json` ? regBytes : null), diferenca: () => [`campanhas/${t4c.campanha}/linha-de-base.json`] };
+  // sem o registro, a regra fixa recusa (o disparo do 1º slot não arquivou linha de base)
+  await assert.rejects(coletarTrio({ arquivo, campanha: t4c.campanha, trio: "par-t4", anexos: [t4c.anexos], baixar: null, raizEval: semEval }),
+    (e: Error) => e instanceof RecusaColeta && /linha de base ausente/.test(e.message));
+  // o slot cujo commit não contém o registro: recusa sem analisar
+  await assert.rejects(coletarTrio({ arquivo, campanha: t4c.campanha, trio: "par-t4", anexos: [t4c.anexos], baixar: null, raizEval, git: { ...gitOk, blob: () => null } }),
+    (e: Error) => e instanceof RecusaColeta && /disparado antes de o registro da linha de base ser commitado/.test(e.message));
+  assert.ok(!existsSync(join(arquivo, "analises", t4c.campanha, "par-t4")), "nada analisado");
+  const r = await coletarTrio({ arquivo, campanha: t4c.campanha, trio: "par-t4", anexos: [t4c.anexos], baixar: null, raizEval, git: gitOk });
+  const ct = lerJson<{ linhaDeBase: { tipo: string; baselineId: string; registroDaCampanha: { sha256: string }; identidadeConferida: Record<string, unknown> } }>(r.registro);
+  assert.equal(ct.linhaDeBase.tipo, "congelada-da-campanha");
+  assert.equal(ct.linhaDeBase.baselineId, lbCom.e.chave);
+  assert.equal(ct.linhaDeBase.registroDaCampanha.sha256, sha(regBytes));
+  assert.equal(Object.keys(ct.linhaDeBase.identidadeConferida).length, 2, "conferida contra o manifesto de cada slot");
+  const s = lerJson<{ linhaDeBase: { modo: string; baselineId: string }; hashes: { entradas: Record<string, string> } }>(join(r.saida, "summary.json"));
+  assert.equal(s.linhaDeBase.modo, "used", JSON.stringify(s.linhaDeBase));
+  assert.equal(s.linhaDeBase.baselineId, lbCom.e.chave);
+  assert.equal(s.hashes.entradas.linhaDeBaseDaCampanha, sha(regBytes));
+  assert.equal(sha(readFileSync(join(r.saida, "entradas", "linha-de-base-da-campanha.json"))), sha(regBytes));
+  // revisão LOW 3: o CLI analisar com --linha-de-base-da-campanha faz a MESMA conferência (manifestos, identidade, git)
+  const reg2 = lerJson<{ campanha: { caminho: string }; slots: { braco: string; escolhida: string }[]; linhaDeBase: { caminho: string; snapshotsDaLinhaDeBase: string } }>(r.registro);
+  const pacoteDe = (runId: string) => { const d = join(arquivo, "restauracoes", runId); return join(d, readdirSync(d).filter(n => !n.startsWith("."))[0]); };
+  const cli = (o: Partial<OpcoesAnalise> = {}): OpcoesAnalise => ({
+    sem: pacoteDe(reg2.slots.find(x => x.braco === "sem")!.escolhida), com: pacoteDe(reg2.slots.find(x => x.braco === "com")!.escolhida),
+    campanha: join(arquivo, reg2.campanha.caminho), snapshots: "x", referencia: "x", site: "x", saida: "x", arquivo,
+    linhaDeBase: join(arquivo, reg2.linhaDeBase.caminho), linhaDeBaseDaCampanha: { registro: regPath, snapshots: join(arquivo, reg2.linhaDeBase.snapshotsDaLinhaDeBase) }, ...o,
+  });
+  conferirLinhaDeBaseDaCampanhaNoCli(cli(), raizEval, gitOk);
+  assert.throws(() => conferirLinhaDeBaseDaCampanhaNoCli(cli(), raizEval, { ...gitOk, blob: () => null }), /disparado antes de o registro da linha de base ser commitado/);
+  assert.throws(() => conferirLinhaDeBaseDaCampanhaNoCli(cli(), raizEval, { ...gitOk, diferenca: () => ["scripts/vazamento/conhecimento.ts"] }), /fora do registro da campanha/);
+  assert.throws(() => conferirLinhaDeBaseDaCampanhaNoCli(cli({ arquivo: undefined }), raizEval, gitOk), /exige --arquivo/);
+  assert.throws(() => conferirLinhaDeBaseDaCampanhaNoCli(cli({ linhaDeBase: regPath }), raizEval, gitOk), /não é o baseline\.json congelado/);
+  assert.throws(() => conferirLinhaDeBaseDaCampanhaNoCli(cli({ linhaDeBaseDaCampanha: { registro: regPath, snapshots: regPath } }), raizEval, gitOk), /não é o conjunto da linha de base/);
+  // registro estragado (outro sha256 do baseline.json): recusa
+  writeFileSync(regPath, JSON.stringify({ ...reg, registro: { ...reg.registro, sha256: "0".repeat(64) } }, null, 2) + "\n");
+  const regRuim = readFileSync(regPath);
+  await assert.rejects(coletarTrio({ arquivo, campanha: t4c.campanha, trio: "par-t4", anexos: [t4c.anexos], baixar: null, raizEval,
+    git: { blob: () => regRuim, diferenca: () => [] } }), (e: Error) => e instanceof RecusaColeta && /o registro da campanha congelou/.test(e.message));
 });
 
 await teste("carimbo: AAAAMMDDT<n>, n = 1 + o maior do dia", () => {

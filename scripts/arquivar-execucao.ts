@@ -149,6 +149,15 @@ export function arquivarExecucao(o: {
 }): { gravacoes: Gravacao[]; problemas: string[] } {
   const gravacoes: Gravacao[] = [];
   const problemas: string[] = [];
+  // Emenda (a), revisão de 12/11 (MED 6): se o job coleta concluiu e o pacote não chegou a este job, o modelo FOI chamado.
+  // A tentativa fica no índice (entrada sem pacote, abaixo, com o motivo explícito) e conta nas regras de falha; nenhum
+  // pacote é fabricado. Um arquivar reexecutado do MESMO disparo que depois traga o pacote é recusado, para a mesma
+  // chamada de modelo nunca contar duas vezes.
+  const ghCedo = github();
+  if (o.pacote && existsSync(join(o.pacote, "run.json")) && ghCedo && entradaExistente(o.arquivo, `sem-pacote-gh-${ghCedo.execucao}`)) {
+    throw new Recusa(`o disparo ${ghCedo.execucao} já está no índice como tentativa sem pacote (sem-pacote-gh-${ghCedo.execucao}); ` +
+      "a tentativa conta uma vez só e o arquivo nunca é reescrito: nada gravado");
+  }
   garantirGitattributes(o.arquivo); // * -text: o checkout nunca converte finais de linha dos arquivos com sha256
   const gh = github();
   let m: IsolatedCollectionManifest | null = null, msha: string | null = null, mcaminho: string | null = null, conjunto: SnapshotManifest | null = null;
@@ -208,9 +217,14 @@ export function arquivarExecucao(o: {
     // cada segmento válido no Windows (o clone da autora): braço desconhecido é "sem-braco", nunca "?"
     const caminho = [raiz, base.campanha, `${quando.slice(0, 10)}__${base.tela}__${base.braco ?? "sem-braco"}__${chave}`].map((x) => segmentoSeguro(x)).join("/");
     // sem manifesto = recusado no preflight: nenhum modelo chamado, não é tentativa (agenda-campanha.ts, protocolo §7)
-    const motivo = m ? `execução sem pacote: jobs ${JSON.stringify(jobsResumo)}`
+    const pacoteAusente = Boolean(m) && o.jobs.coleta?.result === "success";
+    const motivo = pacoteAusente
+      ? `coleta concluída, pacote ausente no arquivamento: o modelo foi chamado (slot ${base.slot}, braço ${base.braco ?? "?"}, tentativa ${m!.dispatch.attempt}); ` +
+        `conta como tentativa do agente, nenhum pacote fabricado: jobs ${JSON.stringify(jobsResumo)}`
+      : m ? `execução sem pacote: jobs ${JSON.stringify(jobsResumo)}`
       : `disparo recusado no preflight (sem manifesto de coleta; nenhum modelo chamado, não é tentativa do slot): jobs ${JSON.stringify(jobsResumo)}`;
-    gravarImutavel(join(o.arquivo, caminho, "despacho.json"), json({ arquivo: ARCHIVE_VERSION, estado: "interrompida-sem-pacote", motivo, github: gh, entradas: o.entradas, jobs: jobsResumo, manifestoColeta: msha }));
+    if (pacoteAusente) problemas.push("o job coleta concluiu, mas o pacote não chegou ao arquivar: a tentativa ficou no índice sem pacote");
+    gravarImutavel(join(o.arquivo, caminho, "despacho.json"), json({ arquivo: ARCHIVE_VERSION, estado: pacoteAusente ? "pacote-ausente-no-arquivamento" : "interrompida-sem-pacote", motivo, github: gh, entradas: o.entradas, jobs: jobsResumo, manifestoColeta: msha }));
     const e: EntradaIndice = {
       indice: ARCHIVE_VERSION, chave, tipo: "execucao", ...base, dataUtc: quando, caminho,
       estado: { arquivo: "sem-pacote", tecnico: "interrupted", isolamento: null, oraculo: null, submissao: null, pontuacao: null, linhaDeBase: null },

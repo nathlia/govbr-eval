@@ -28,6 +28,13 @@
  * com o pacote ou o relatório por outro hash, ou com sobra sem explicação, a análise para (RecusaDeResgate) sem gravar
  * nada. Sem resgates.json, nada muda (saída byte a byte a de sempre).
  *
+ * Linha de base congelada da campanha (emenda (a) às regras de falha, § 7.2): com `linhaDeBaseDaCampanha` (o
+ * campanhas/<id>/linha-de-base.json e o conjunto de snapshots da linha de base, passados pelo coleta-trio), a linha de
+ * base pode vir de outro disparo, medido antes do 1º slot: o registro baseline.v1 tem de ter o sha256 congelado, os seus
+ * vínculos apontam o conjunto da linha de base, e os itens site, referência e plano desse conjunto têm de ter os mesmos
+ * sha256 dos itens do trio (o instrumento difere só pelo registro da campanha, conferido no git pelo coleta-trio). As
+ * cópias vão para entradas/. Sem a opção, nada muda.
+ *
  * Método: docs/analise-execucao.md.
  */
 import { createHash } from "node:crypto";
@@ -42,7 +49,7 @@ import {
   type AnalysisBinding, type AnalysisMetrics, type AnyAnalysisBinding, type AnyArtifactManifest, type AnyCampaign, type AnyFindings, type AnyRun, type ArmV2,
   type ArtifactManifest, type Baseline, type BaselineBinding, type ComparisonV2,
   type Isolation, type Location, type Run, type ContractName, type ScoreStatus, type SnapshotManifest,
-  type IsolationRescue, type ResgateIsolamento, type Resgates,
+  type IsolationRescue, type ResgateIsolamento, type Resgates, type LinhaDeBaseCampanha,
 } from "../contracts/index";
 import { auditarInspecao } from "./inspection-audit";
 import { resumirInspecao, type ResumoInspecao } from "./inspection-ledger";
@@ -54,6 +61,9 @@ import type { EvidenceIndex } from "./flow-contract";
 import { FLOW_INSTRUMENT_VERSION, FLOW_SCORING_VERSION } from "./instrument";
 import { divergenciasDaCampanha, divergenciasDoOraculo, identidadeDoRun } from "./identidade-campanha";
 import { contarComFerramentas } from "./painel/mascara";
+import { lerEntradasDoIndice } from "./agenda-campanha";
+import { RecusaLinhaDeBaseDaCampanha, conferirLinhaDeBaseCongelada, leitorGit, lerRegistroDaCampanha, type LeitorGit } from "./linha-de-base-campanha";
+import { readIsolatedManifest } from "./manifesto-coleta-isolada";
 import {
   FUSO_DA_CAPTURA, REGRA_IDS_GERADOS, REGRA_RELOGIO, mapearDecisoes, navegadorComRelogio, normalizarIdsGerados, presenteNoSite,
   type IdGerado, type MapaCartoes, type RelogioDaCaptura,
@@ -135,6 +145,11 @@ export interface OpcoesAnalise {
    * resgate (a saída é a de sempre); presente fora de campanha dev-* = recusa.
    */
   resgates?: string;
+  /**
+   * Emenda (a): a linha de base congelada da campanha — `registro` = campanhas/<id>/linha-de-base.json
+   * (linha-de-base-campanha.v1) e `snapshots` = o conjunto de snapshots a que o registro baseline.v1 está vinculado.
+   */
+  linhaDeBaseDaCampanha?: { registro: string; snapshots: string };
 }
 
 // ───────────────────────────────────────────────────────────────── resgate de isolamento (D-164)
@@ -544,6 +559,8 @@ interface LinhaDeBaseAvaliada {
   registroBytes: Buffer | null;
   brutoBytes: Buffer | null;
   registro: Baseline | null;
+  /** Emenda (a): bytes do registro da campanha e do conjunto de snapshots da linha de base congelada. */
+  daCampanha?: { registroBytes: Buffer; snapshotsBytes: Buffer };
 }
 
 function resolverLocal(loc: Location, baseDir: string, arquivo: string | undefined): string | null {
@@ -596,6 +613,41 @@ function avaliarLinhaDeBase(o: OpcoesAnalise, ctx: {
   if (bruto.scope !== "bateria") problemas.push("linha de base dev-global nunca é confrontável com uma coleta");
   if (bruto.baselineVersion !== registro.producer.baselineVersion) problemas.push("versão do bruto difere da do registro");
   if (registro.campaignId !== ctx.campaign.campaignId) problemas.push(`registro é da campanha ${registro.campaignId}`);
+  // emenda (a): a linha de base congelada da campanha aponta o conjunto de snapshots do disparo dela
+  let conjuntoDaLb: SnapshotManifest = ctx.snapshots;
+  let daCampanha: LinhaDeBaseAvaliada["daCampanha"];
+  if (o.linhaDeBaseDaCampanha) {
+    const regCampBytes = readFileSync(resolve(o.linhaDeBaseDaCampanha.registro));
+    const snapsBytes = readFileSync(resolve(o.linhaDeBaseDaCampanha.snapshots));
+    daCampanha = { registroBytes: regCampBytes, snapshotsBytes: snapsBytes };
+    let regCamp: LinhaDeBaseCampanha | null = null;
+    try {
+      const doc = JSON.parse(regCampBytes.toString("utf8")) as unknown;
+      const v = validateContract(doc);
+      if (v.contract === "linha-de-base-campanha.v1" && v.valid) regCamp = doc as LinhaDeBaseCampanha;
+      else problemas.push(`registro da linha de base da campanha fora do contrato linha-de-base-campanha.v1: ${v.errors.map(e => `${e.path || "/"} ${e.keyword}`).join("; ")}`);
+    } catch { problemas.push("registro da linha de base da campanha ilegível"); }
+    let conj: SnapshotManifest | null = null;
+    try {
+      const doc = JSON.parse(snapsBytes.toString("utf8")) as unknown;
+      if (validateContract(doc).valid && (doc as { contract?: unknown }).contract === "snapshot-manifest.v1") conj = doc as SnapshotManifest;
+      else problemas.push("o conjunto de snapshots da linha de base da campanha está fora do contrato snapshot-manifest.v1");
+    } catch { problemas.push("conjunto de snapshots da linha de base da campanha ilegível"); }
+    if (regCamp) {
+      if (regCamp.campaignId !== ctx.campaign.campaignId) problemas.push(`o registro da linha de base congelada é da campanha ${regCamp.campaignId}`);
+      if (regCamp.baselineId !== registro.baselineId) problemas.push(`o registro da campanha congela ${regCamp.baselineId}, não ${registro.baselineId}`);
+      if (regCamp.registro.sha256 !== sha(registroBytes)) problemas.push("o registro baseline.v1 não tem o sha256 que a campanha congelou");
+      if (conj && conj.snapshotSetId !== regCamp.snapshotSetId) problemas.push(`o conjunto da linha de base é ${conj.snapshotSetId}, a campanha congelou ${regCamp.snapshotSetId}`);
+    }
+    if (conj) {
+      if (conj.fixture !== ctx.snapshots.fixture) problemas.push("fixture misturada com dado real (conjunto da linha de base × do trio)");
+      for (const kind of ["site", "reference", "state-plan"] as const) {
+        const a = conj.items.filter(i => i.kind === kind), b = ctx.snapshots.items.filter(i => i.kind === kind);
+        if (a.length !== 1 || b.length !== 1 || a[0].sha256 !== b[0].sha256) problemas.push(`o item ${kind} do conjunto da linha de base congelada não é o do trio`);
+      }
+      conjuntoDaLb = conj;
+    }
+  }
   if (registro.screen.id !== ctx.screenId || registro.screen.version !== ctx.screenVersion) problemas.push(`registro é da tela ${registro.screen.id}@${registro.screen.version}`);
   if (bruto.provenance.collectionManifest?.sha256 !== registro.links.collectionManifest.sha256) problemas.push("o bruto aponta outro manifesto de coleta que o registro");
   problemas.push(...compareIdentities(registro.identity, bruto.provenance.identity, { expected: "registro", actual: "bruto" }));
@@ -604,13 +656,13 @@ function avaliarLinhaDeBase(o: OpcoesAnalise, ctx: {
   problemas.push(...compareIdentities(esperado, registro.identity, { expected: "coleta", actual: "linha de base" }));
   for (const [link, kind] of [["site", "site"], ["reference", "reference"], ["statePlan", "state-plan"]] as const) {
     const l = registro.links[link];
-    const item = ctx.snapshots.items.find(i => i.id === l.itemId);
-    if (l.snapshotSetId !== ctx.snapshots.snapshotSetId || !item || item.kind !== kind) problemas.push(`vínculo ${link} aponta fora do conjunto de snapshots ${ctx.snapshots.snapshotSetId}`);
+    const item = conjuntoDaLb.items.find(i => i.id === l.itemId);
+    if (l.snapshotSetId !== conjuntoDaLb.snapshotSetId || !item || item.kind !== kind) problemas.push(`vínculo ${link} aponta fora do conjunto de snapshots ${conjuntoDaLb.snapshotSetId}`);
   }
   if (JSON.stringify(bruto.passes.map(p => p.id)) !== JSON.stringify(ctx.cenas)) problemas.push(`passadas ${bruto.passes.map(p => p.id).join(",")} diferem das cenas do plano ${ctx.cenas.join(",")}`);
   if (problemas.length) return bloqueio("incompatible", `linha de base incompatível com a coleta: ${problemas.join("; ")}`, keep2);
   const composta = ctx.tipo === "composta";
-  return { binding: { mode: "used", baselineId: registro.baselineId,
+  return { ...(daCampanha ? { daCampanha } : {}), binding: { mode: "used", baselineId: registro.baselineId,
     record: { sha256: sha(registroBytes), bytes: registroBytes.length, location: { kind: "package-path", path: "entradas/linha-de-base-registro.json" } },
     designatedBattery: composta ? o.bateriaDesignada! : null, choiceJustification: composta ? o.justificativa! : null },
   bruto, registroBytes, brutoBytes, registro };
@@ -930,6 +982,7 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
     ...Object.fromEntries(pacotes.map(p => [`artifactManifest.${p.run.arm}`, sha(p.manifestBytes)])),
     ...(lb.registroBytes ? { linhaDeBaseRegistro: sha(lb.registroBytes) } : {}),
     ...(lb.brutoBytes ? { linhaDeBaseBruta: sha(lb.brutoBytes) } : {}),
+    ...(lb.daCampanha ? { linhaDeBaseDaCampanha: sha(lb.daCampanha.registroBytes), snapshotsDaLinhaDeBase: sha(lb.daCampanha.snapshotsBytes) } : {}),
     ...(manifestoAnaliseBytes ? { manifestoAnalise: sha(manifestoAnaliseBytes) } : {}),
     ...(resgates.size ? { resgates: sha(resgatesLidos!.bytes),
       ...Object.fromEntries([...resgates].map(([arm, r]) => [`relatorioResgate.${arm}`, sha(r.relatorioBytes)])) } : {}),
@@ -1073,6 +1126,10 @@ async function analisarValidado(o: OpcoesAnalise, saida: string, par: boolean, t
   for (const p of pacotes) put(`entradas/${p.run.arm}/artifact-manifest.json`, p.manifestBytes);
   if (lb.registroBytes) put("entradas/linha-de-base-registro.json", lb.registroBytes);
   if (lb.brutoBytes) put("entradas/linha-de-base-bruta.json", lb.brutoBytes);
+  if (lb.daCampanha) {
+    put("entradas/linha-de-base-da-campanha.json", lb.daCampanha.registroBytes);
+    put("entradas/snapshots-da-linha-de-base.json", lb.daCampanha.snapshotsBytes);
+  }
   if (manifestoAnaliseBytes) put("entradas/manifesto-analise.json", manifestoAnaliseBytes);
   if (decisoes) put("entradas/decisoes.json", readFileSync(resolve(o.decisoes!)));
   if (resgates.size) {
@@ -1540,6 +1597,8 @@ function lerArgs(argv: string[]): OpcoesAnalise {
     justificativa: val("justificativa"), arquivo: val("arquivo"), decisoes: val("decisoes"), pacoteDecisoes: val("pacote-decisoes"), anterior: val("anterior"),
     orcamentoRevisao: val("orcamento-revisao"), revisaoCompleta: argv.includes("--revisao-completa"), saida: req("saida"),
     derivadoRetrospectivo: val("derivado-retrospectivo"), resgates: val("resgates"),
+    ...(val("linha-de-base-da-campanha") || val("snapshots-da-linha-de-base")
+      ? { linhaDeBaseDaCampanha: { registro: req("linha-de-base-da-campanha"), snapshots: req("snapshots-da-linha-de-base") } } : {}),
   };
 }
 
@@ -1548,12 +1607,51 @@ const USO_CLI = `Uso: npm run analisar -- (--pacote DIR | --sem DIR --com DIR | 
          [--tipo individual|composta --manifesto-analise F --bateria-designada ID --justificativa TEXTO] [--arquivo RAIZ_DO_ARQUIVO]
          [--decisoes reviews.json [--pacote-decisoes package.json]] [--anterior PASTA_DA_REVISAO_ANTERIOR] [--orcamento-revisao TEXTO] [--revisao-completa]
          [--derivado-retrospectivo manifesto.json]  (NAT-74: só sob derivados/; aceita campanha de outro scorer)
-         [--resgates resgates.json]  (D-164: só campanha dev-*; padrão = o resgates.json ao lado do campaign.json)`;
+         [--resgates resgates.json]  (D-164: só campanha dev-*; padrão = o resgates.json ao lado do campaign.json)
+         [--linha-de-base-da-campanha linha-de-base.json --snapshots-da-linha-de-base snapshot-manifest.json --arquivo CLONE [--raiz-eval GOVBR_EVAL]]
+           (emenda (a): linha de base congelada, conferida como no coleta:trio: índice, manifestos, identidade, git)`;
+
+/**
+ * Emenda (a), revisão de 12/11 (LOW 3): pelo CLI, `--linha-de-base-da-campanha` só entra depois da MESMA conferência que o
+ * coleta:trio faz (conferirLinhaDeBaseCongelada: índice, manifesto do disparo da linha de base, identidade contra o
+ * manifesto de coleta de cada pacote, git do govbr-eval, sha256 do baseline.json e o conjunto da linha de base). Exige
+ * `--arquivo` (clone do govbr-resultados, de onde saem o índice e os manifestos). `--linha-de-base` e
+ * `--snapshots-da-linha-de-base` têm de ser os bytes conferidos. Recusa = RecusaLinhaDeBaseDaCampanha, nada analisado.
+ */
+export function conferirLinhaDeBaseDaCampanhaNoCli(o: OpcoesAnalise, raizEval: string = ROOT, git: LeitorGit = leitorGit(raizEval)): void {
+  const lb = o.linhaDeBaseDaCampanha;
+  if (!lb) return;
+  const falha = (m: string): never => { throw new RecusaLinhaDeBaseDaCampanha(m); };
+  if (!o.arquivo) falha("--linha-de-base-da-campanha exige --arquivo (o clone do govbr-resultados, com o índice e os manifestos de coleta)");
+  if (!o.linhaDeBase) falha("--linha-de-base-da-campanha exige --linha-de-base (o baseline.json congelado)");
+  const campanha = JSON.parse(readFileSync(resolve(o.campanha), "utf8")) as { campaignId: string; fixture: boolean };
+  const registro = lerRegistroDaCampanha(resolve(lb.registro), campanha.campaignId);
+  const entradas = lerEntradasDoIndice(resolve(o.arquivo!));
+  const dirs = [o.pacote, o.sem, o.ferramentas, o.com].filter((d): d is string => Boolean(d));
+  const slots = dirs.map(d => {
+    const run = JSON.parse(readFileSync(join(resolve(d), "run.json"), "utf8")) as { runId: string; slotId: string };
+    const e = entradas.find(x => x.tipo === "execucao" && x.campanha === campanha.campaignId && x.chave === run.runId) ?? falha(`a execução ${run.runId} não está no índice de ${campanha.campaignId}`);
+    const mc = e.manifestoColeta ?? falha(`a execução ${run.runId} não registra manifesto de coleta`);
+    const mPath = resolve(o.arquivo!, mc.caminho);
+    if (!existsSync(mPath) || sha(readFileSync(mPath)) !== mc.sha256) falha(`manifesto de coleta ausente ou divergente: ${mc.caminho}`);
+    return { slot: run.slotId, manifest: readIsolatedManifest(mPath).manifest };
+  });
+  const c = conferirLinhaDeBaseCongelada({ arquivo: o.arquivo!, campanha: campanha.campaignId, registro, entradas, fixture: campanha.fixture, slots, git });
+  if (sha(readFileSync(resolve(o.linhaDeBase!))) !== c.registroSha256) falha(`--linha-de-base não é o baseline.json congelado (${c.registroPath})`);
+  if (sha(readFileSync(resolve(lb.snapshots))) !== sha(readFileSync(c.snapshotsPath))) falha(`--snapshots-da-linha-de-base não é o conjunto da linha de base (${c.snapshotsRel})`);
+}
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   (async () => {
     let o: OpcoesAnalise;
     try { o = lerArgs(process.argv.slice(2)); } catch (e) { console.error(`${e instanceof Error ? e.message : e}\n${USO_CLI}`); process.exitCode = 1; return; }
+    try {
+      const i = process.argv.indexOf("--raiz-eval");
+      conferirLinhaDeBaseDaCampanhaNoCli(o, i > 0 ? resolve(process.argv[i + 1]) : ROOT);
+    } catch (e) {
+      if (!(e instanceof RecusaLinhaDeBaseDaCampanha)) throw e;
+      console.error(`RECUSADA (linha de base congelada da campanha): ${e.message}`); process.exitCode = 1; return;
+    }
     const r = await analisar(o);
     const execs = r.resumo.execucoes.map(e => `${e.braco}: técnico ${e.tecnico.status}, pontuação ${e.pontuacao.estado}`).join(" · ");
     console.log(`Análise ${r.estado}${r.motivo ? ` — ${r.motivo}` : ""}${execs ? `\n${execs}` : ""}\n→ ${posix(relative(process.cwd(), r.saida))}/summary.md`);

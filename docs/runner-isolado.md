@@ -583,6 +583,95 @@ um slot, use uma campanha congelada com `fixed.provider.authMethod: "api-key"` e
   Em produção vale o padrão do cliente; as tentativas aparecem na telemetria.
 - `model` desconhecido gera só um aviso no stderr (`unrecognized_model`).
 
+## Emenda (a) às regras de falha (proposta de 12/11/2026; adotada em 13/11/2026, N11, antes do primeiro disparo medido)
+
+Proposta: `thesis-workspace/planejamento/atual/emenda-regras-de-falha-2026-11-12.md`. Só a emenda (a) está aqui. A
+emenda (b), reconferência do isolamento reprovado por falso positivo, foi proposta e **não foi adotada**: a revisão
+adversarial de 12/11 achou que o critério de eco perdoava casos que os canários do próprio detector exigem sem
+explicação, que o passo 1 não reproduzia a falha da coleta e que a análise confiava nos campos do relatório. Na
+campanha selada, isolamento reprovado continua sendo slot perdido.
+
+O código abaixo só muda a coleta e a análise quando `campanhas/<id>/linha-de-base.json` existe; sem ele, seguem byte a
+byte como antes. A exceção é o arquivar, que passa a escrever o motivo explícito quando a coleta concluiu e o pacote
+não chegou (ver abaixo). O texto do protocolo (§ 7.2) não é deste repositório.
+
+### (a) Falha de infraestrutura fora do agente
+
+**Linha de base congelada da campanha.** Antes do slot 1, um disparo `etapas: so-linha-de-base` da campanha (com o slot
+do primeiro da agenda; nenhum modelo) mede e arquiva a linha de base. Depois:
+
+```bash
+npm run campanha:linha-de-base -- --campanha <id> --linha-de-base <baselineId> [--arquivo ../govbr-resultados]
+```
+
+grava `campanhas/<id>/linha-de-base.json` (contrato `linha-de-base-campanha.v1`): `baselineId`, caminho e sha256 do
+`baseline.json`, quando foi medida, manifesto de coleta do disparo, conjunto de snapshots, site, build do validator,
+commits do `govbr-eval`/`govbr-telas`/`govbr-ds-validator` e lock de imagens. O gerador recusa registro não
+`utilizavel` e campanha que já tem qualquer execução iniciada. O arquivo é commitado **antes** do slot 1, e os slots
+disparam com `etapas: so-coleta` (`campanha:agenda comando` já imprime assim quando o arquivo existe).
+
+O `coleta:trio` acha o arquivo e escolhe a linha de base `congelada-da-campanha` para todo trio
+(`coleta-trio.ts › planoDoTrio`). As do disparo de cada slot, se houver, são ignoradas e listadas em `coleta-trio.json`.
+A conferência:
+
+- **Contra o manifesto de coleta de cada slot**, com `identidadeDoEmprestimo(…, { semEval: true })`: identidade
+  executável, site, oráculo, commits do validator e do `govbr-telas`, lock de imagens iguais; árvore limpa nos dois.
+- **Pelo git do `govbr-eval`**: o commit de cada slot contém o `linha-de-base.json` byte a byte, ou seja, ele foi
+  commitado antes do disparo. E esse commit só difere do commit do disparo da linha de base por esse arquivo.
+- **Pelo índice**: a linha de base foi medida, registrada e gerada antes da primeira execução iniciada da campanha (o
+  preflight recusado não conta). Se não, é "registro posterior ao 1º slot" e a coleta recusa.
+- **Na análise**: o `analisar` recebe `linhaDeBaseDaCampanha` (o registro e o conjunto de snapshots da linha de base).
+  O `baseline.json` tem de ter o sha256 congelado. Os vínculos dele apontam o conjunto da linha de base, e os itens
+  site, referência e plano desse conjunto têm os mesmos sha256 dos do trio. O instrumento difere só pelo registro, o
+  que o git já conferiu. As cópias ficam em `entradas/linha-de-base-da-campanha.json` e
+  `entradas/snapshots-da-linha-de-base.json`, e os hashes em `hashes.entradas`.
+- **Pelo CLI do `analisar`**: `--linha-de-base-da-campanha` exige `--arquivo` (e aceita `--raiz-eval`). Antes de
+  analisar, ele roda a MESMA conferência do `coleta:trio` (`conferirLinhaDeBaseCongelada`, em
+  `linha-de-base-campanha.ts`): índice, manifesto do disparo da linha de base, identidade contra o manifesto de coleta
+  de cada pacote, git, sha256 do `baseline.json` e o conjunto da linha de base. Também confere que `--linha-de-base` e
+  `--snapshots-da-linha-de-base` são esses bytes. Recusa = nada analisado.
+
+O empréstimo dev-* (`--linha-de-base-do-trio`) continua igual e não combina com a congelada.
+
+**Job de infraestrutura reexecutado sem contar como tentativa.** `scripts/ci/conclusao-disparo.ts --run <id>` lê o run
+com `gh run view`/`gh api` (só leitura) e decide pela conclusão do **job** `coleta`, não pela do workflow:
+
+| Situação | Decisão (código) | Comando impresso, nunca executado |
+|---|---|---|
+| tudo `success` | `concluido` (0) | — |
+| coleta `success`/`skipped`, arquivar caiu, artifacts `manifesto-coleta` (+ `pacote`) no run e não expirados | `reexecutar-infra` (10) | `gh run rerun <id> --job <arquivar>` |
+| coleta `failure`/`cancelled` | `tentativa-do-agente` (11): o arquivo decide se é falha técnica | só o arquivar, se ele também caiu |
+| preparar caiu | `recusado-no-preparo` (12): nenhum modelo, não é tentativa | só o arquivar, se ele também caiu |
+| artifact ausente/expirado, sem lista, 3ª tentativa do run, job desconhecido | `caso-da-autora` (13) | — |
+| só `linhas-de-base` caiu | `concluido`: a execução está arquivada. Sem congelada, o caminho de sempre (`so-linha-de-base` + `refazer_linha_de_base_de`) | — |
+
+O comando é sempre `--job` do job de infraestrutura. Segundo a documentação, o GitHub reexecuta junto os dependentes
+(o arquivar não tem nenhum) e mantém as saídas dos jobs que não reexecuta. Assim nunca reexecuta o preparar nem a
+coleta. Com a coleta concluída, isso equivale ao `--failed` da proposta. Com a coleta falha, o `--failed` rodaria o
+agente de novo, e por isso não é usado.
+
+**Pacote ausente no arquivar: a tentativa conta.** A documentação do GitHub não diz se o `download-artifact` de um job
+reexecutado vê os artifacts que a tentativa anterior do mesmo run subiu. Ela diz só que o padrão é "o run atual" e que
+os jobs fora da reexecução guardam as saídas. Se o job `coleta` concluiu `success` e o pacote não chegou ao arquivar
+(`run.json` ausente), o modelo foi chamado. Por isso a tentativa **entra no índice** como `sem-pacote-gh-<run>`, presa
+ao manifesto de coleta, com o motivo "coleta concluída, pacote ausente no arquivamento" e slot, braço e tentativa. Ela
+conta nas regras de falha (`tentativasDoSlot`; técnica se a política repete `vm-lost`/`harness-error`, senão
+inelegível). Nenhum pacote, pasta `pacote/` ou anexo é fabricado.
+
+Um arquivar posterior do MESMO disparo que traga o pacote é recusado (código 4, nada gravado), para a chamada nunca
+contar duas vezes. A revisão de 12/11 (MED 6) recusou a variante anterior, que só recusava sem gravar e deixava a
+tentativa sumir da conta. A reexecução do arquivar com o pacote reproduz os mesmos bytes: o tar é determinístico, e o
+anexo já subido é aceito pelo sha256.
+
+Testes: `test:coleta-trio` (planoDoTrio congelada: aceito, posterior ao 1º slot, não utilizável, de outro disparo,
+com empréstimo; identidade com outro `distSha256`/site/lock/árvore suja; git; ponta a ponta no arquivo T4 com o
+`analisar`, e a mesma conferência pelo CLI do `analisar`), `test:pipeline-t4` (pacote ausente com coleta `success` = uma
+tentativa no índice que conta, sem pacote fabricado, e o mesmo disparo com pacote depois é recusado; arquivar
+reexecutado num clone novo = um slot, mesmo anexo, entrega confirmada; decisões do `conclusao-disparo` e nomes dos jobs
+do YAML), `test:contracts`. **Não testado
+localmente:** um run de verdade com o arquivar forçado a falhar e `gh run rerun --job` (proposta: um disparo
+`roteirizado`). É a prova de que o `download-artifact` da tentativa 2 vê o `pacote` da tentativa 1.
+
 ## Testes
 
 `npm run test:runner` (Docker obrigatório; sem Docker, pula com aviso). **Agente roteirizado (T3a)**,

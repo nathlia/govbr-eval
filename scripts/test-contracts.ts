@@ -83,6 +83,9 @@ const EXPECTED: Record<string, { path: string; keyword: string; missingProperty?
   "resgates--detector-nao-mais-novo.json": { path: "/resgates/0/rechecagem/detectorVersao", keyword: "x-detector-not-newer" },
   "resgates--slot-repetido.json": { path: "/resgates/1/slot", keyword: "x-unique" },
   "analysis-binding--v2-resgate-sem-zero.json": { path: "/isolationRescue/recheck/unexplained", keyword: "const" },
+  // emenda (a) — linha de base da campanha, congelada antes do primeiro slot
+  "linha-de-base-campanha--gerado-antes-da-medida.json": { path: "/geradoEm", keyword: "x-generated-before-measured" },
+  "linha-de-base-campanha--registro-fora-de-linhas-de-base.json": { path: "/registro/caminho", keyword: "pattern" },
 };
 
 const show = (errors: ContractError[]): string => errors.map(e => `${e.path || "/"} ${e.keyword}${e.missingProperty ? `(${e.missingProperty})` : ""}`).join("; ");

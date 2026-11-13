@@ -38,7 +38,7 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { AnyCampaign, Arm, ArmV2, Campaign, CampaignV2 } from "../contracts/index";
 import type { EntradaIndice } from "./arquivo-resultados";
@@ -453,7 +453,10 @@ function main(): void {
       if (!d.ok) throw new Error(d.motivo);
       tentativa = ` -f tentativa=${d.tentativa}`;
     }
-    console.log(`gh workflow run execucao-isolada.yml --repo nathlia/govbr-eval -f modo=${modo} -f tela=${c.design.screens[0].id} -f campanha=${campanha} -f slot=${slot.slotId}${tentativa} -f telas_sha=<40 hex> -f validator_sha=<40 hex>`);
+    // emenda (a): com a linha de base congelada da campanha (campanhas/<id>/linha-de-base.json), o slot não mede a sua
+    const congelada = existsSync(join(dirname(agPath), "linha-de-base.json"));
+    console.log(`gh workflow run execucao-isolada.yml --repo nathlia/govbr-eval -f modo=${modo} -f tela=${c.design.screens[0].id} -f campanha=${campanha} -f slot=${slot.slotId}${tentativa}${congelada ? " -f etapas=so-coleta" : ""} -f telas_sha=<40 hex> -f validator_sha=<40 hex>`);
+    if (congelada) console.log("# linha de base congelada da campanha (emenda (a)): o slot dispara com etapas = so-coleta; depois do disparo, scripts/ci/conclusao-disparo.ts --run <id> diz se só um job de infraestrutura falhou");
     console.log(`# o preparar resolve da agenda: ${a.contract === AGENDA_CONTRATO ? "par" : "grupo"} ${slot.pairId}, braço ${slot.arm}, repetição ${slot.repetition}; da campanha: modelo, esforço, tempo limite; do índice: a tentativa`);
     return;
   }
