@@ -7,14 +7,16 @@
  *      recálculo, material cego (sem vazamento de braço; vazamento injetado é pego), máscara 1.3.0 regenerada igual à da
  *      passada T5, determinismo, e o S4' consumindo respostas SINTÉTICAS (pasta temporária). Pula se o ensaio não existir.
  *   [VALIDADOR_ENSAIO=<checkout com a data/ do oráculo do ensaio>] npx tsx scripts/reanalise-nat74/test-material-autora.ts
+ *   (sem VALIDADOR_ENSAIO: a data/ do 2.14.3 é extraída do histórico do validador para a pasta temporária)
  */
 import assert from "node:assert/strict";
-import { existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { desfechoDaAutora, desfechoDaPassada, lerTextoDaAutora, ratifica, type RespostaAutora } from "./autora-respostas";
 import { RESULTADOS, lerJson, sha } from "./comum";
-import { prepararCampanha } from "./e14-campanha";
+import { VALIDADOR_PADRAO, prepararCampanha } from "./e14-campanha";
 import { COTAS, estratoDe, executar, gravarArquivos, ordemDoEstrato, prepararMaterial, responder, selecionar, type Candidato } from "./material-autora";
 import { lerPasso } from "./material-imagens";
 import { recalcular, type TabelaComparacao } from "./recalculo-campanha";
@@ -23,6 +25,24 @@ import { gravarImutavel } from "./revisao-campanha";
 let n = 0, falhas = 0, pulados = 0;
 const t = async (nome: string, f: () => void | Promise<void>) => { n++; try { await f(); console.log(`  ok  ${nome}`); } catch (e) { falhas++; console.log(`  FALHA ${nome}\n       ${e instanceof Error ? e.stack?.split("\n").slice(0, 3).join(" | ") : e}`); } };
 const silencioso = async <T>(f: () => T | Promise<T>): Promise<T> => { const e = console.error, l = console.log; console.error = () => {}; console.log = () => {}; try { return await f(); } finally { console.error = e; console.log = l; } };
+
+/**
+ * Commit do validador 2.14.3 = oráculo dos ensaios trio-real-01..03 e trio-b-01 (campaign.json: dataSha256 ed68152ebc96…).
+ * O validador vivo avançou (a data/ dele não é mais essa), e o preparo de campanha recusa data/ que não confere.
+ */
+const COMMIT_ORACULO_ENSAIO = "338ca968e5815dad720e195e59cdc0aaed51aa16";
+/** Extrai `data/` desse commit para `destino` (git archive + tar; nada é escrito no repositório do validador). */
+function dataDoOraculoDoEnsaio(destino: string): string {
+  mkdirSync(destino, { recursive: true });
+  try {
+    execFileSync("git", ["-C", VALIDADOR_PADRAO, "archive", "--format=tar", "-o", join(destino, "data.tar"), COMMIT_ORACULO_ENSAIO, "data"], { stdio: "pipe" });
+    execFileSync("tar", ["-xf", "data.tar"], { cwd: destino, stdio: "pipe" });
+  } catch (e) {
+    throw new Error(`não consegui extrair data/ do validador ${COMMIT_ORACULO_ENSAIO.slice(0, 7)} de ${VALIDADOR_PADRAO} (${e instanceof Error ? e.message.split("\n")[0] : e}); aponte VALIDADOR_ENSAIO para um checkout com a data/ do oráculo do ensaio`);
+  }
+  rmSync(join(destino, "data.tar"));
+  return destino;
+}
 
 const PAR: [string, string] = ["ferramentas", "com"];
 let k = 0;
@@ -148,7 +168,9 @@ try {
   if (![ADJ, T5, ORIG].every(d => existsSync(d))) { pulados++; console.log("  PULADO ensaio ausente"); }
   else {
     // VALIDADOR_ENSAIO: checkout cuja data/ é a do oráculo da campanha do ensaio (o validador vivo pode ter avançado).
-    const validador = process.env.VALIDADOR_ENSAIO ? resolve(process.env.VALIDADOR_ENSAIO) : undefined;
+    // Sem ele, a data/ do oráculo do ensaio (2.14.3) sai do histórico do validador, só leitura; a conferência
+    // do dataSha256 da campanha continua em normasDaCampanha (nada aqui a dispensa).
+    const validador = process.env.VALIDADOR_ENSAIO ? resolve(process.env.VALIDADOR_ENSAIO) : dataDoOraculoDoEnsaio(join(tmp, "validador-ensaio"));
     const base = { analises: [join(T, "analisar-20261019T1")], coletas: [join(T, "analisar-20261019T3", "coleta-trio.json")], validador };
     const m = await prepararMaterial({ passadas: [ADJ], origens: [ORIG], ...base });
     const sel = m.selecao as { estratos: { n: number; candidatos: number; porBraco: Record<string, number>; selecionados: string[]; repassadoAo1: number; recebido: number }[];
@@ -210,7 +232,15 @@ try {
       assert.throws(() => recalcular({ passadas: [ADJ], ...base, reamostragens: 200, ratificacoes: join(rd, "respostas-autora.json") }), /outra origem medida|nada usado/);
     });
     await t("máscara 1.3.0: o preparo das análises regenera os 40 cartões iguais aos do lote da passada T5 (1.3.0); determinismo", async () => {
-      const prep = prepararCampanha([join(T, "analisar-20261019T3")], { politica: "1.2.0", validador }); // a análise sobre a qual a T5 foi preparada (mesmo pacote)
+      // A T5 foi preparada com o checker-aliases.json de 6a6ef6a (sha nas fontes do manifesto dos lotes); o regerado em
+      // 0baae06 (validator 3.6.1) muda o `basis` de ds:page-header/footer, que vai ao texto da norma no cartão. Reproduzir
+      // a passada é usar a entrada dela: o arquivo daquele commit, conferido pelo sha que a passada gravou (como em
+      // test-referencias-revisao).
+      const chkCongelado = execFileSync("git", ["show", "6a6ef6a:checker-aliases.json"], { cwd: resolve(RESULTADOS, "..", "govbr-eval") });
+      assert.equal(sha(chkCongelado), lerJson<{ fontes: Record<string, string> }>(join(T5, "lotes", "manifesto.json")).fontes["govbr-eval/checker-aliases.json"],
+        "checker-aliases.json de 6a6ef6a não é o que a passada T5 gravou");
+      const checkerAliases = join(tmp, "checker-aliases-6a6ef6a.json"); writeFileSync(checkerAliases, chkCongelado);
+      const prep = prepararCampanha([join(T, "analisar-20261019T3")], { politica: "1.2.0", validador, checkerAliases }); // a análise sobre a qual a T5 foi preparada (mesmo pacote)
       const reg = new Map<string, string>();
       for (const [rel, x] of prep.arquivosDoJuiz) if (/^lotes\/lote-\d+\.json$/.test(rel)) for (const c of (JSON.parse(x) as { cartoes: { id: string }[] }).cartoes) reg.set(c.id, JSON.stringify(c));
       const l5 = lerJson<{ cartoes: { id: string }[] }>(join(T5, "lotes", "lote-01.json")).cartoes;
