@@ -1,6 +1,6 @@
 {
   "lockVersion": 1,
-  "builtAt": "2026-11-12T17:03:34.438Z",
+  "builtAt": "2026-11-13T13:11:14.317Z",
   "base": {
     "ref": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
     "node": "24.21.0"
@@ -39,14 +39,14 @@
       }
     },
     "screens": {
-      "tag": "govbr-runner-screens:telas1.0.0-88076aec26e9",
-      "id": "sha256:41dee9406fa18844915ce976076fed5e1c9b4887dc1aec3e6b90072558a34060",
+      "tag": "govbr-runner-screens:telas1.0.0-9f4b936f2859",
+      "id": "sha256:bb388146a27abb83d48d9c2d08cdb7ff8d5c8010772910fe89de493f29d35405",
       "labels": {
         "govbr.base": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
         "govbr.runner.image": "screens",
         "govbr.runner.version": "runner-isolado-1.0.0",
-        "govbr.telas.manifest-sha256": "ea0426ac0b0fffaec7c518697ef9ef8623d9cfdb297e6871120e26df79fb4c82",
-        "govbr.telas.site-sha256": "88076aec26e9b144831330bf76c35b5c38ed139f1c4305f16c08ec905dada8f8"
+        "govbr.telas.manifest-sha256": "427051e631aa63826ed2cab17dea510d7b340822074718287aaeacdc76bee889",
+        "govbr.telas.site-sha256": "9f4b936f2859c87ac46f0013a3b58c3eae356db6aa7b23cf50cb497ec24a1cfd"
       }
     },
     "collector": {
@@ -87,8 +87,8 @@
       "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637"
     },
     "telas": {
-      "siteSha256": "88076aec26e9b144831330bf76c35b5c38ed139f1c4305f16c08ec905dada8f8",
-      "manifestSha256": "ea0426ac0b0fffaec7c518697ef9ef8623d9cfdb297e6871120e26df79fb4c82"
+      "siteSha256": "9f4b936f2859c87ac46f0013a3b58c3eae356db6aa7b23cf50cb497ec24a1cfd",
+      "manifestSha256": "427051e631aa63826ed2cab17dea510d7b340822074718287aaeacdc76bee889"
     }
   }
 }

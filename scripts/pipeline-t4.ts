@@ -25,7 +25,7 @@ import { MODELO_ENSAIO } from "./manifesto-coleta-isolada";
 const ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
 const COMMIT = /^[a-f0-9]{40}$/;
 const MODELO = /^[A-Za-z0-9][A-Za-z0-9._:@\-[\]]{0,127}$/;
-export const TELAS = ["solicitacao", "vistorias", "acompanhamento"] as const;
+export const TELAS = ["solicitacao", "vistorias", "acompanhamento", "processos"] as const;
 export const MODOS = ["real", "duble", "roteirizado"] as const;
 export const ETAPAS = ["coleta+linha-de-base", "so-coleta", "so-linha-de-base"] as const;
 /**

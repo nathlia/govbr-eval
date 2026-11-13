@@ -111,6 +111,16 @@ foi construída de um clone limpo no commit `e15b1b1` (3.4.1; tools/list igual a
 `data/`), o mesmo estado que o checkout por SHA do CI produz: `GOVBR_VALIDATOR_DIR=<clone>` no build e no
 `run-once`/testes. O checkout de trabalho do validator só serve ao preflight se o `dist/` e o `data/` dele
 forem os do commit (sem arquivos de builds antigos nem `data/models/`).
+Tela D no lock (2026-11-13, NAT-78): `govbr-telas` `620f551` (`export-telas-1.4.0`, ala `pnip-d/`, `routing.spas`; site
+`9f4b936f…`, manifesto `427051e6…`, skill `8139bb0c` sem mudança). Só a imagem das telas foi refeita (`--so screens`):
+`govbr-runner-screens:telas1.0.0-9f4b936f2859` (`sha256:bb388146…`). Oráculo (`sha256:e8c4fc7b…`, 3.7.12 `816f4ba`),
+agente, coletor e egress com os mesmos ids do lock de 2026-11-12 (o validador nem é lido); pins
+`TOOLS_LIST_SHA256_3_7_3` seguem. `processos` entra em `telas-runner.json` (escopo genérico, 1280×900), `run-once`,
+`SCREEN_LABELS`, `pipeline-t4` e nas opções do workflow; o texto da tarefa da A, da A2 e da B não muda (sha256 igual
+antes e depois). Os inventários do DOM da A, da A2 e da B foram remedidos no site `9f4b936f…` (manifesto de navegação +
+gerador 1.2.0 numa pasta à parte) com tags, classes, dinâmicas e paradas idênticas campo a campo, e o site entrou na
+lista `sites` de cada um (o que `--vincular` faz; ele mesmo recusaria só pela diferença de contrato 1.1.0 × 1.2.0).
+Detector 1.3.9: canários 141/141. Portões (um por vez): `tsc` ok, `test:runner` 44/44 (rodada inteira; antes do vínculo dos inventários, 37/44: 5 testes da varredura e o `ferramentas`/trio caíam em `site-diverge`), `test:isolation` fluxo 59/59 e `--tela processos` 60/60 (headless), `test:pipeline-t4` 37/37, `test:agenda` 22/22, `test:identidade` 9/9, `test:export-telas` 17/17, `test:inventario` 8/8, `lint:protocol` e `lint:skills` ok.
 Rodada 3.7.12 (lock de 2026-11-12T17:03, a das campanhas `dev-3712-*`): `govbr-runner-oracle:3.7.12-cd1aaf354b9d`
 (`sha256:e8c4fc7b…`, commit `816f4ba`, dist `cd1aaf35…`, `dataSha256` `b4b2eceb…` igual; a 3.7.11 mais duas mudanças só nas
 respostas do `verify_finding` e no fechamento das pendências da sessão: no perfil evaluation o verify que não decide não
@@ -324,7 +334,7 @@ o agente não controla, e a tentativa tem de aparecer como dado (não some silen
 **Outras larguras (meio declarado).** Uma instância do Playwright MCP por largura declarada, cada uma
 com o próprio navegador de tamanho fixo; a ponte expõe `browser_select_window { width }` para trocar
 a instância ativa. `{{MEIO_LARGURAS}}` é preenchido pelo runner com esse meio quando há mais de uma
-largura (`runner/telas-runner.json` ou `--larguras`). As três telas (A, B e A2) declaram hoje só 1280×900.
+largura (`runner/telas-runner.json` ou `--larguras`). As quatro telas (A, B, A2 e D) declaram hoje só 1280×900.
 
 ## Coletor
 

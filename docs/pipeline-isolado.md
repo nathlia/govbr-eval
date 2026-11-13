@@ -86,6 +86,17 @@ presos aos DOIS sites (detector 1.3.4: `sites`, lista de vínculos): o `1a6e8daf
 acrescenta o site quando a medição é igual à do arquivo). A rechecagem das campanhas antigas e as campanhas novas
 nesse site aceitam o mesmo arquivo.
 
+**Tela D (`tela = processos`, NAT-78).** Mesmo caminho. A D é a segunda SPA do PNIP, na ala própria
+`pnip-d/` do site congelado desde `export-telas-1.4.0` (site `9f4b936f2859`, `routing.spas`; os arquivos das
+outras telas ficam byte a byte). Escopo em `runner/telas-runner.json`: o genérico ("a tela inteira, em todos os
+estados alcançáveis pela interface"), o mesmo da A e da A2. O escopo com "as rotas internas da aplicação" é da
+B, porque a referência dela tem specs na rota de detalhe (D-156 iv); a da D tem um segmento só, as duas paradas
+na rota de entrada (protocolo NAT-78 §4.3). Texto da tarefa com limite de 30 min e relógio: sha256
+`f7d82e70…` igual nos três braços. Não declara fonte: o ESLint não roda. O inventário do DOM é
+`scripts/vazamento/inventario-dom/processos.json`, preso ao site `9f4b936f2859`. Os inventários da A, da A2 e da
+B foram remedidos nesse site com conteúdo idêntico campo a campo e o declaram em `sites` (junto dos anteriores):
+sem isso o detector não perdoaria nome de elemento da página nelas com o lock novo.
+
 **Trio (NAT-61, `braco = ferramentas`).** O terceiro braço usa o mesmo contêiner do oráculo do `com`, no
 perfil `knowledge-free` (validator ≥ 2.14.0); o checkout e a compilação do validator rodam em `com` e em
 `ferramentas`. Ensaio de trio sem campanha commitada: use um id de campanha com o segmento `trio`

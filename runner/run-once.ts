@@ -1,7 +1,7 @@
 /**
  * run-once — UMA execução isolada (T3 do plano do benchmark isolado; T3a: agente roteirizado).
  *
- *   npm run run-once -- --tela solicitacao|vistorias|acompanhamento --braco sem|com|ferramentas --modelo <id> --esforco <nível>
+ *   npm run run-once -- --tela solicitacao|vistorias|acompanhamento|processos --braco sem|com|ferramentas --modelo <id> --esforco <nível>
  *        --limite-min 90 --saida <dir-novo> --agente fake|claude [--cenario honesto] [--permitir-modelo]
  *        [--campanha id] [--slot id] [--par id] [--tentativa 1] [--repeticao 1] [--run-id id]
  *        [--larguras 1280x900,390x844] [--egress stub|real] [--limite-seg N] [--telas dir] [--validator dir]
@@ -130,9 +130,9 @@ const SECRET_ENV_NAMES: readonly string[] = CREDENTIAL_ENV;
 /** Ferramenta adiada que o cliente 2.1.288 sempre anuncia, sem esquema, com a instrução de nunca chamá-la. */
 const DEFERRED_PLACEHOLDERS = ["DeferredToolPlaceholder"];
 
-export type Tela = "solicitacao" | "vistorias" | "acompanhamento";
+export type Tela = "solicitacao" | "vistorias" | "acompanhamento" | "processos";
 /** Rótulo neutro de cada tela no run.json (o mesmo título do site-manifest.json e de SCREEN_LABELS do manifesto de coleta). */
-export const TELA_LABELS: Record<Tela, string> = { solicitacao: "Solicitar serviço", vistorias: "Vistorias", acompanhamento: "Acompanhar requerimento" };
+export const TELA_LABELS: Record<Tela, string> = { solicitacao: "Solicitar serviço", vistorias: "Vistorias", acompanhamento: "Acompanhar requerimento", processos: "Processos" };
 export interface RunOptions {
   tela: Tela;
   braco: Braco;

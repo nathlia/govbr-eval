@@ -1,10 +1,16 @@
 {
  "contrato": "inventario-dom-1.1.0",
  "tela": "acompanhamento",
- "site": {
-  "siteSha256": "88076aec26e9b144831330bf76c35b5c38ed139f1c4305f16c08ec905dada8f8",
-  "manifestSha256": "83ef6508d383e29e69573532f3b754117011d71bf6a848c5389dee9f97d23de7"
- },
+ "sites": [
+  {
+   "siteSha256": "88076aec26e9b144831330bf76c35b5c38ed139f1c4305f16c08ec905dada8f8",
+   "manifestSha256": "83ef6508d383e29e69573532f3b754117011d71bf6a848c5389dee9f97d23de7"
+  },
+  {
+   "siteSha256": "9f4b936f2859c87ac46f0013a3b58c3eae356db6aa7b23cf50cb497ec24a1cfd",
+   "manifestSha256": "427051e631aa63826ed2cab17dea510d7b340822074718287aaeacdc76bee889"
+  }
+ ],
  "referencia": {
   "arquivo": "ground-truth-acompanhamento.json",
   "sha256": "1ed853e980c104bcc42a6dffe6dd61af69427ddf820bd52450998da73a2f03bc",
