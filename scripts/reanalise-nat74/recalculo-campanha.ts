@@ -34,6 +34,13 @@
  * (`solicitacao`, 2.0.0) por SPEC, primário = as specs sorteadas A-*, sensibilidade = as unidades A-* (por instância),
  * camada de página P-* à parte (nunca somada). δ = 2 specs. Outra tela: recusa.
  *
+ * `--por-protocolo` (NAT-78 §4.5): sensibilidade por protocolo AO LADO do primário. O estado do oráculo de cada slot vem da
+ * `summary.json` da análise (`mcpIsolamento.usoOraculo` = `run.status.oracleUsage`); o slot conta quando o estado é o que o
+ * braço exige (`ESTADO_POR_PROTOCOLO`, e14-deteccao.ts: `sem` → `absent-verified`; `ferramentas`/`com` → `used-adherent`).
+ * Trio com slot fora sai da comparação pareada pela regra `TRIO_COM_SLOT_FORA` e é listado; `used-with-errors` é mostrado à
+ * parte com a contagem do slot. Tudo numa chave própria (`sensibilidadePorProtocolo`, tabelas `sensibilidade-por-protocolo|…`,
+ * semente própria), nunca em `tabelas`. Sem a opção, nada muda (saída byte a byte igual; a `summary.json` nem é lida).
+ *
  * O caminho T7 (`pipeline.ts`, `montar.ts`) não muda: daqui só se importam funções puras dele. Determinístico: sem
  * carimbo de tempo, sem rede, sem modelo. Toda entrada lida entra com sha256 no manifesto da saída, senão nada é gravado.
  */
@@ -50,8 +57,13 @@ import {
   FORMATO_CHAVE_AUTORA, FORMATO_RESPOSTAS_AUTORA, desfechoDaAutora, desfechoDaPassada, ratifica, type ChaveAutora, type DocRespostasAutora,
 } from "./autora-respostas";
 import { POLITICA_SENSIBILIDADE, TCC, jsonTexto, ordenar, posix, rotuloPolitica, sha, type VersaoPolitica } from "./comum";
+import type { OracleUsage } from "../../contracts";
 import { bracoDoRun, referenciasDoAchado } from "./e14-campanha";
 import type { Derivado, Resposta } from "./e14-comum";
+import {
+  AVISO_POR_PROTOCOLO, FORMATO_POR_PROTOCOLO, LEITURA_POR_PROTOCOLO, TIPO_POR_PROTOCOLO, definicaoPorProtocolo, estadosDoOraculo, exclusoesMd,
+  exclusoesPorBraco, situacaoPorProtocolo, type ExclusaoDoBraco, type ExecucaoDoResumo, type PorProtocolo, type SituacaoProtocolo,
+} from "./e14-deteccao";
 import { relacaoMedida, relacaoNoDominioMedido } from "./montar";
 import { aplicarOrigem, lerOrigem, type AplicacaoOrigem } from "./origem-campanha";
 import { gravarImutavel, lerArgs, lerPassada, pastaDaAnalise, type Passada } from "./revisao-campanha";
@@ -315,6 +327,62 @@ export function tabelaDaComparacao(trios: TrioEntrada[], c: Comparacao, o: { var
     envoltoriaMedia: { min: r4(mediaDe(ef.map(x => x.dMin!))), max: r4(mediaDe(ef.map(x => x.dMax!))) } };
 }
 
+// ───────────────────────────────────────────────────────────────── sensibilidade por protocolo (NAT-78 §4.5)
+
+/**
+ * Como um trio com UM slot fora do conjunto por protocolo entra na estatística pareada desta leitura.
+ *
+ * - `trio-inteiro` (ADOTADO): o trio sai de TODAS as comparações por protocolo (D_fc, D_sc, D_sf) e é listado em cada uma.
+ *   Por quê: a unidade pareada é o trio (trocabilidade dentro do trio, §6.3), e o conjunto por protocolo é então um conjunto
+ *   de trios — as três comparações desta leitura falam dos MESMOS trios, e um `sem` sem ausência comprovada (ou um braço com
+ *   oráculo fora do protocolo) não deixa o trio "meio aderente" numa comparação e fora de outra. É a escolha mais
+ *   conservadora para uma sensibilidade; o custo é n menor.
+ * - `so-comparacoes-do-slot` (alternativa, não adotada; testada): o trio sai só das comparações que têm o braço do slot fora,
+ *   como a regra do trio incompleto do §6.3 para slot perdido.
+ *
+ * Slot PERDIDO (sem execução escolhida) não é "fora por protocolo": não tem estado do oráculo, e segue a regra do trio
+ * incompleto do primário (§6.3: entra só nas comparações que têm os dois braços).
+ */
+export type ModoTrioForaProtocolo = "trio-inteiro" | "so-comparacoes-do-slot";
+export const TRIO_COM_SLOT_FORA: ModoTrioForaProtocolo = "trio-inteiro";
+
+export interface SlotProtocolo { braco: string; runId: string; estado: OracleUsage; situacao: SituacaoProtocolo }
+export interface TrioProtocolo { trio: string; slots: SlotProtocolo[] }
+export interface TabelaPorProtocolo extends TabelaComparacao {
+  leitura: typeof LEITURA_POR_PROTOCOLO; trioComSlotFora: ModoTrioForaProtocolo;
+  /** Trios que saíram desta comparação por protocolo, com os slots fora que os tiraram. */
+  foraDaComparacao: { trio: string; slots: SlotProtocolo[] }[];
+}
+export const chavePorProtocolo = (v: Variante, p: Politica, conjunto: string): string => `${LEITURA_POR_PROTOCOLO}|${v}|${p}|${conjunto}`;
+
+/** O estado do oráculo e a situação por protocolo de cada slot com execução escolhida de um trio. */
+export function slotsPorProtocolo(trio: string, slots: { braco: string; escolhida: string | null }[], execucoes: ExecucaoDoResumo[]): TrioProtocolo {
+  const runs = slots.filter(s => s.escolhida).map(s => ({ id: s.escolhida!, braco: s.braco }));
+  const est = estadosDoOraculo(execucoes, runs);
+  return { trio, slots: runs.map(r => ({ braco: r.braco, runId: r.id, estado: est[r.braco], situacao: situacaoPorProtocolo(r.braco, est[r.braco]) })) };
+}
+
+/**
+ * A comparação pareada na leitura por protocolo: a MESMA `tabelaDaComparacao`, sobre os trios que ficam pela regra
+ * `modo` (padrão `TRIO_COM_SLOT_FORA`), com semente própria (`<base>|sensibilidade-por-protocolo|recalculo|…`). Todos
+ * os slots no conjunto → mesmos D por trio e mesma estatística do primário.
+ */
+export function tabelaPorProtocolo(trios: TrioEntrada[], estados: TrioProtocolo[], c: Comparacao, o: Parameters<typeof tabelaDaComparacao>[2] & { modo?: ModoTrioForaProtocolo }): TabelaPorProtocolo {
+  const modo = o.modo ?? TRIO_COM_SLOT_FORA;
+  const de = new Map(estados.map(e => [e.trio, e]));
+  const dentro: TrioEntrada[] = [], fora: TabelaPorProtocolo["foraDaComparacao"] = [];
+  for (const t of trios) {
+    const e = de.get(t.trio);
+    if (!e) throw new Error(`por protocolo: trio ${t.trio} sem o estado do oráculo dos slots`);
+    const foraDoConjunto = e.slots.filter(s => s.situacao !== "no-conjunto");
+    const tiram = modo === "trio-inteiro" ? foraDoConjunto : foraDoConjunto.filter(s => c.arms.includes(s.braco));
+    if (tiram.length) fora.push({ trio: t.trio, slots: tiram }); else dentro.push(t);
+  }
+  const { modo: _m, ...resto } = o;
+  void _m;
+  return { ...tabelaDaComparacao(dentro, c, { ...resto, sementeBase: `${o.sementeBase}|${LEITURA_POR_PROTOCOLO}` }), leitura: LEITURA_POR_PROTOCOLO, trioComSlotFora: modo, foraDaComparacao: fora };
+}
+
 // ───────────────────────────────────────────────────────────────── S4'
 
 export interface Contestado { id: string; chave: string; braco: string; motivos: string[]; creditoFinal: string; fundamentacaoFinal: string | null; creditoEnvolvido: boolean }
@@ -391,7 +459,9 @@ export class Entradas {
   conferir(man: Record<string, string>): void { const faltam = [...this.lidos].filter(k => !/^[0-9a-f]{64}$/.test(man[k] ?? "")); if (faltam.length) throw new Error(`entradas sem sha256 no manifesto: ${faltam.join(", ")}`); }
 }
 
-export interface OpcoesRecalculo { passadas: string[]; analises?: string[]; coletas?: string[]; residuoPassada?: string | null; ratificacoes?: string | null; reamostragens?: number; origens?: string[] }
+export interface OpcoesRecalculo { passadas: string[]; analises?: string[]; coletas?: string[]; residuoPassada?: string | null; ratificacoes?: string | null; reamostragens?: number; origens?: string[];
+  /** NAT-78 §4.5: sensibilidade por protocolo ao lado (lê a `summary.json` de cada análise). Sem ela, saída byte a byte a de antes. */
+  porProtocolo?: boolean }
 
 export interface Recalculo { json: Record<string, unknown>; md: string }
 
@@ -614,9 +684,74 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
     residuoDeBraco: residuoInfo, recusasDoScorer: recusas, tabelas,
   };
   if (o.origens?.length) json.origem = resumoDaOrigem(passadas, origemInfo, derivadoNa);
+  const pp = o.porProtocolo ? sensibilidadePorProtocolo(analises, trios, E, { regra, specDe, comps, nPlanejado, sementeBase, reamostragens: o.reamostragens }) : null;
+  if (pp) json.sensibilidadePorProtocolo = pp;
   json.entradas = E.manifesto();
   E.conferir(json.entradas as Record<string, string>);
-  return { json, md: tabelaMd(json, tabelas, regra, comps, s4.disponivel) };
+  return { json, md: tabelaMd(json, tabelas, regra, comps, s4.disponivel) + (pp ? porProtocoloMd(pp, regra) : "") };
+}
+
+export interface SensibilidadePorProtocolo {
+  formato: typeof FORMATO_POR_PROTOCOLO; leitura: typeof LEITURA_POR_PROTOCOLO; tipo: typeof TIPO_POR_PROTOCOLO; aviso: string;
+  /** A definição de aderência aplicada (versão + estado exigido por braço), de `DEFINICAO_POR_PROTOCOLO` (e14-deteccao.ts). */
+  definicao: PorProtocolo["definicao"];
+  trioComSlotFora: ModoTrioForaProtocolo; regra: string;
+  /** [D-198] Por braço: slots com estado do oráculo, no conjunto por protocolo, excluídos por estado que os tirou. */
+  exclusoesPorBraco: Record<string, ExclusaoDoBraco>;
+  /** Estado do oráculo e situação de cada slot, por trio. */
+  trios: TrioProtocolo[];
+  /** Slots `used-with-errors`, à parte: a contagem do slot no primário (política 1.2.0, conjunto primário), nunca somada ao conjunto. */
+  comErros: { trio: string; braco: string; runId: string; contagem: { min: number; max: number } | null }[];
+  /** Só a variante principal, a política principal e o conjunto primário; chave `sensibilidade-por-protocolo|principal|1.2.0|primario`. */
+  tabelas: Record<string, TabelaPorProtocolo[]>;
+}
+
+/** A leitura por protocolo do recálculo: estado do oráculo de cada slot (summary.json, registrada em `E`) e as comparações. */
+export function sensibilidadePorProtocolo(analises: AnaliseLida[], trios: TrioEntrada[], E: Entradas,
+  o: { regra: RegraDesfecho; specDe: (u: string) => string | undefined; comps: Comparacao[]; nPlanejado: number | null; sementeBase: string; reamostragens?: number }): SensibilidadePorProtocolo {
+  const estados: TrioProtocolo[] = ordenar(analises, x => x.coleta.trio).map(a => {
+    const resumo = JSON.parse(E.texto(join(a.dir, "summary.json"))) as { execucoes?: ExecucaoDoResumo[] };
+    if (!Array.isArray(resumo.execucoes)) throw new Error(`por protocolo: ${a.nome}/summary.json sem execucoes`);
+    return slotsPorProtocolo(a.coleta.trio, a.coleta.slots, resumo.execucoes);
+  });
+  const comErros: SensibilidadePorProtocolo["comErros"] = [];
+  const cnt = contar(o.regra, "primario", o.specDe);
+  for (const e of estados) for (const s of e.slots) {
+    if (s.situacao === "fora-com-erros") {
+      const cr = trios.find(t => t.trio === e.trio)?.creditos[chaveVariante("principal", "1.2.0")]?.[s.braco];
+      comErros.push({ trio: e.trio, braco: s.braco, runId: s.runId, contagem: cr ? { min: cnt(cr.confirmadas), max: cnt([...cr.confirmadas, ...cr.admissiveis]) } : null });
+    }
+  }
+  const tabelas = { [chavePorProtocolo("principal", "1.2.0", "primario")]: o.comps.map(c => tabelaPorProtocolo(trios, estados, c,
+    { variante: "principal", politica: "1.2.0", conjunto: "primario", regra: o.regra, specDe: o.specDe, nPlanejado: o.nPlanejado, sementeBase: o.sementeBase, reamostragens: o.reamostragens })) };
+  const bracos = [...new Set([...o.comps.flatMap(c => c.arms), ...estados.flatMap(e => e.slots.map(s => s.braco))])];
+  return { formato: FORMATO_POR_PROTOCOLO, leitura: LEITURA_POR_PROTOCOLO, tipo: TIPO_POR_PROTOCOLO, aviso: AVISO_POR_PROTOCOLO, definicao: definicaoPorProtocolo(), trioComSlotFora: TRIO_COM_SLOT_FORA,
+    regra: `slot no conjunto quando o estado do oráculo (summary.json › mcpIsolamento.usoOraculo = run.status.oracleUsage) é o exigido pelo braço; trio com slot fora: ${TRIO_COM_SLOT_FORA === "trio-inteiro" ? "sai de todas as comparações por protocolo" : "sai só das comparações com o braço do slot"} e é listado; slot perdido segue a regra do trio incompleto (§6.3); used-with-errors fora, à parte com a contagem do slot`,
+    exclusoesPorBraco: exclusoesPorBraco(estados.flatMap(e => e.slots), bracos), trios: estados, comErros: ordenar(comErros, x => `${x.trio}|${x.braco}`), tabelas };
+}
+
+function porProtocoloMd(pp: SensibilidadePorProtocolo, regra: RegraDesfecho): string {
+  const bs = [...new Set(pp.trios.flatMap(t => t.slots.map(s => s.braco)))];
+  const L = ["", "## ANÁLISE DE SENSIBILIDADE — por protocolo (NAT-78 §4.5); não é o primário, nunca no lugar dele", "",
+    `Leitura \`${pp.leitura}\` (tipo \`${pp.tipo}\`, \`${pp.formato}\`, definição \`${pp.definicao.versao}\`): ${pp.aviso}. Conjunto por protocolo: ${Object.entries(pp.definicao.estadoExigido).map(([b, e]) => `\`${b}\` com \`${e}\``).join("; ")}. ` +
+      `Trio com slot fora: **${pp.trioComSlotFora === "trio-inteiro" ? "sai de todas as comparações desta leitura" : "sai só das comparações com o braço do slot"}** (listado). ` +
+      `Desfecho: ${conjuntoDe(regra, "primario").rotulo}, política 1.2.0 (a chave do principal). Semente própria (\`…|${pp.leitura}|recalculo|…\`).`, "",
+    "### Exclusões por braço", "", ...exclusoesMd(pp.exclusoesPorBraco), "",
+    "### Estado do oráculo por trio e slot", "",
+    `| trio | ${bs.join(" | ")} |`, `|---|${bs.map(() => "---").join("|")}|`];
+  for (const t of pp.trios) L.push(`| ${t.trio} | ${bs.map(b => { const s = t.slots.find(x => x.braco === b); return !s ? "slot perdido" : s.situacao === "no-conjunto" ? `\`${s.estado}\`` : `**fora: \`${s.estado}\`**`; }).join(" | ")} |`);
+  L.push("");
+  for (const t of pp.tabelas[chavePorProtocolo("principal", "1.2.0", "primario")]) {
+    L.push(...blocoComparacao(t).map(x => x.replace(/^### (.*)$/, `### $1 — ${pp.leitura}`)));
+    L.push(`- Fora desta comparação por protocolo: ${t.foraDaComparacao.length ? t.foraDaComparacao.map(f => `${f.trio} (${f.slots.map(s => `${s.braco} \`${s.estado}\``).join(", ")})`).join("; ") : "nenhum trio"}.`, "");
+  }
+  L.push("### Usado com erros (`used-with-errors`): fora do conjunto por protocolo, à parte", "");
+  if (pp.comErros.length) {
+    L.push("| trio | braço | execução | contagem no primário (1.2.0) |", "|---|---|---|---|");
+    for (const x of pp.comErros) L.push(`| ${x.trio} | ${x.braco} | ${x.runId} | ${lim(x.contagem)} |`);
+  } else L.push("Nenhum slot com `used-with-errors`.");
+  L.push("");
+  return L.join("\n");
 }
 
 /** [D-156] As chaves `principal|1.2.0|…` continuam as de sempre; na política do juiz 1.3.0 elas leem o derivado 1.3.0. */
@@ -763,10 +898,11 @@ export function tabelaMd(j: Record<string, unknown>, tab: Record<string, TabelaC
 
 const USO = `uso:
   recalculo-campanha.ts --passada PASSADA [--passada OUTRA ...] --saida PASTA_NOVA
-      [--analise DIR ...] [--coleta coleta-trio.json ...] [--residuo-passada PASSADA] [--ratificacoes ARQ] [--reamostragens N] [--origem PASTA ...]`;
+      [--analise DIR ...] [--coleta coleta-trio.json ...] [--residuo-passada PASSADA] [--ratificacoes ARQ] [--reamostragens N] [--origem PASTA ...]
+      [--por-protocolo]`;
 
 export function executar(argv: string[]): number {
-  const a = lerArgs(argv, ["--passada", "--saida", "--analise", "--coleta", "--residuo-passada", "--ratificacoes", "--reamostragens", "--origem"], []);
+  const a = lerArgs(argv, ["--passada", "--saida", "--analise", "--coleta", "--residuo-passada", "--ratificacoes", "--reamostragens", "--origem"], ["--por-protocolo"]);
   if ("erro" in a) { console.error(`RECUSADO: ${a.erro}\n${USO}`); return 1; }
   try {
     if (a.modo.length) throw new Error(`argumento solto: ${a.modo.join(" ")}`);
@@ -781,11 +917,15 @@ export function executar(argv: string[]): number {
     const um = (k: string) => { const v = a.opts.get(k); if (v && v.length > 1) throw new Error(`${k} mais de uma vez`); return v?.[0] ?? null; };
     const ream = um("--reamostragens");
     const r = recalcular({ passadas, analises: a.opts.get("--analise"), coletas: a.opts.get("--coleta"), residuoPassada: um("--residuo-passada"),
-      ratificacoes: um("--ratificacoes"), reamostragens: ream ? Number(ream) : undefined, origens: (a.opts.get("--origem") ?? []).map(x => resolve(x)) });
+      ratificacoes: um("--ratificacoes"), reamostragens: ream ? Number(ream) : undefined, origens: (a.opts.get("--origem") ?? []).map(x => resolve(x)),
+      ...(a.flags.has("--por-protocolo") ? { porProtocolo: true } : {}) });
     const jTxt = jsonTexto(r.json);
     gravarImutavel(saida, [["recalculo.json", jTxt], ["recalculo.json.sha256", `${sha(jTxt)}  recalculo.json\n`], ["tabela.md", r.md]]);
     const tab = (r.json.tabelas as Record<string, TabelaComparacao[]>)["principal|1.2.0|primario"];
     for (const t of tab) console.log(`${t.nome} (${t.bracos.join(" × ")}): ${t.porTrio.map(x => `${x.trio} ${x.d ?? "—"}`).join(", ")}; leitura: ${t.estatistica.leitura}; δ: ${t.leituraDelta}`);
+    const pp = r.json.sensibilidadePorProtocolo as SensibilidadePorProtocolo | undefined;
+    if (pp) for (const t of pp.tabelas[chavePorProtocolo("principal", "1.2.0", "primario")])
+      console.log(`[${pp.leitura}] ${t.nome}: ${t.porTrio.map(x => `${x.trio} ${x.d ?? "—"}`).join(", ") || "nenhum trio"}; fora: ${t.foraDaComparacao.map(f => f.trio).join(", ") || "nenhum"}; leitura: ${t.estatistica.leitura}`);
     console.log(`gravado em ${saida} (recalculo.json sha256 ${sha(jTxt)})`);
     return 0;
   } catch (e) { console.error(e instanceof Error ? e.message : e); return 1; }

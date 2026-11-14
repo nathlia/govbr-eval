@@ -21,7 +21,10 @@ import { ingerir } from "./e14-ingerir";
 import { materiais } from "./e14-materiais";
 import { prepararFila } from "./e14-preparar";
 import { DERIVADO } from "./e14-comum";
-import { FORMATO_SENSIBILIDADE_REGRA, cenariosDaRegra, cenariosMd, derivarNaLeitura, tabular, type Julgamento, type SensibilidadeRegra } from "./e14-deteccao";
+import {
+  DEFINICAO_POR_PROTOCOLO, ESTADO_POR_PROTOCOLO, FORMATO_SENSIBILIDADE_REGRA, LEITURA_POR_PROTOCOLO, cenariosDaRegra, cenariosMd, derivarNaLeitura, estadosDoOraculo, porProtocolo, porProtocoloMd,
+  situacaoPorProtocolo, tabular, type Julgamento, type SensibilidadeRegra,
+} from "./e14-deteccao";
 
 let n = 0, falhas = 0;
 const t = (nome: string, f: () => void) => { n++; try { f(); console.log(`  ok  ${nome}`); } catch (e) { falhas++; console.log(`  FALHA ${nome}\n       ${e instanceof Error ? e.message : e}`); } };
@@ -370,6 +373,77 @@ t("[Codex d0d554fa P1] cenários: a leitura nunca resgata exclusão de crédito 
   // Vínculo não perguntado: nenhuma leitura cria a pergunta.
   const rn = { ...resp("T3-3"), vinculo: NAO_PERGUNTADO } as Resposta;
   assert.equal(derivarNaLeitura(rn, { tipo: "citacao", citaRegra: true, temEsperado: true, specsDaTela: ["B-02"], citaveis: [], origemMedida: null, classeRegistrada: null }, "B-02").spec, null);
+});
+
+// ───────────────────────────────────────────── [NAT-78 §4.5] sensibilidade por protocolo (fixtures sintéticas)
+console.log("E14: sensibilidade por protocolo (§4.5)");
+const fixPP = () => {
+  const { resp, j } = fixD165();
+  const bracoPP: Record<string, string> = { k1: "sem", k2: "ferramentas", k3: "com", k4: "com", k5: "lb-axe" };
+  const specs = [{ id: "B-01", categories: ["token"] }, { id: "B-02", categories: ["acessibilidade"] }, { id: "B-03", categories: ["acessibilidade"] }];
+  const js = [j("T3-1", "k1", resp("T3-1", { spec: "B-01" })), j("T3-2", "k2", resp("T3-2", { spec: "B-02" })), j("T3-3", "k3", resp("T3-3", { spec: "B-02" })),
+    j("T3-4", "k4", resp("T3-4", { spec: "B-01" })), j("T3-5", "k5", resp("T3-5", { spec: "B-03" }))];
+  const t = tabular(js, k => bracoPP[k], specs, "politica-normativa-1.3.0", ["sem", "ferramentas", "com"]);
+  return { t, ARMS: ["sem", "ferramentas", "com"] };
+};
+const ADERENTES = { sem: "absent-verified", ferramentas: "used-adherent", com: "used-adherent" } as const;
+t("[§4.5] todos aderentes: a leitura por protocolo é idêntica à primária nos braços do desenho; linha de base fora da leitura", () => {
+  const { t: tb, ARMS } = fixPP();
+  const p = porProtocolo(tb, ARMS, { ...ADERENTES });
+  for (const b of ARMS) assert.deepEqual(p.porBraco[b], tb.porBraco[b]);
+  assert.deepEqual(p.bracos.map(x => x.situacao), ["no-conjunto", "no-conjunto", "no-conjunto"]);
+  assert.deepEqual(p.comErros, {}); assert.ok(!("lb-axe" in p.porBraco), "linha de base não tem oráculo: fora desta leitura");
+  assert.deepEqual(p.nenhumBraco, ["B-03"], "B-03 só pela linha de base"); assert.equal(p.leitura, LEITURA_POR_PROTOCOLO);
+  assert.match(porProtocoloMd(p), /Nenhum braço com `used-with-errors`/);
+});
+t("[§4.5] um slot used-with-errors: fora do conjunto (sem número), mostrado à parte com a contagem; primária intocada", () => {
+  const { t: tb, ARMS } = fixPP();
+  const antes = JSON.stringify(tb);
+  const p = porProtocolo(tb, ARMS, { ...ADERENTES, ferramentas: "used-with-errors" });
+  assert.equal(p.porBraco.ferramentas, null); assert.deepEqual(p.comErros.ferramentas, tb.porBraco.ferramentas);
+  assert.equal(p.bracos.find(x => x.braco === "ferramentas")!.situacao, "fora-com-erros");
+  assert.deepEqual(p.porBraco.com, tb.porBraco.com); assert.equal(JSON.stringify(tb), antes, "a tabela primária não muda");
+  const md = porProtocoloMd(p);
+  assert.match(md, /\| ferramentas \| 1 \| 0 \| 1 \| 1 \| B-02 \|/); assert.match(md, /fora — usado com erros/);
+});
+t("[§4.5] sem não absent-verified: fora (listado, sem número); outros estados fora; estado fora do contrato, braço sem estado ou desconhecido param", () => {
+  const { t: tb, ARMS } = fixPP();
+  const p = porProtocolo(tb, ARMS, { ...ADERENTES, sem: "unverified" });
+  assert.equal(p.porBraco.sem, null); assert.deepEqual(p.comErros, {});
+  assert.deepEqual(p.bracos.find(x => x.braco === "sem"), { braco: "sem", coleta: "valida", estadoDoOraculo: "unverified", exigido: "absent-verified", situacao: "fora" });
+  assert.equal(situacaoPorProtocolo("com", "available-unused"), "fora"); assert.equal(situacaoPorProtocolo("com", "absent-verified"), "fora");
+  assert.equal(situacaoPorProtocolo("sem", "used-adherent"), "fora");
+  assert.throws(() => situacaoPorProtocolo("com", "used-nonadherent"), /fora do contrato/);
+  assert.throws(() => porProtocolo(tb, ARMS, { sem: "absent-verified", com: "used-adherent" } as never), /ferramentas com coleta válida e sem estado/);
+  assert.throws(() => porProtocolo(tb, [...ARMS, "outro"], { ...ADERENTES }), /braço outro sem estado exigido/);
+  assert.deepEqual(ESTADO_POR_PROTOCOLO, ADERENTES);
+});
+t("[D-198] tabela de exclusões por braço na saída; definição versionada única; rotulada como sensibilidade, nunca primário", () => {
+  const { t: tb, ARMS } = fixPP();
+  const p = porProtocolo(tb, ARMS, { ...ADERENTES, sem: "unverified", com: "used-with-errors" });
+  assert.deepEqual(p.exclusoesPorBraco, {
+    sem: { slots: 1, noConjunto: 0, excluidos: 1, porEstado: { unverified: 1 } },
+    ferramentas: { slots: 1, noConjunto: 1, excluidos: 0, porEstado: {} },
+    com: { slots: 1, noConjunto: 0, excluidos: 1, porEstado: { "used-with-errors": 1 } } });
+  // braço sem coleta válida não tem estado: fica com 0 slots (não é exclusão por protocolo).
+  const semCom = porProtocolo(tabular([], () => "sem", [{ id: "B-01", categories: ["token"] }], "politica-normativa-1.3.0", ARMS,
+    { estado: { sem: "valida", ferramentas: "valida", com: "ausente" } }), ARMS, { sem: "absent-verified", ferramentas: "used-adherent" } as never);
+  assert.deepEqual(semCom.exclusoesPorBraco.com, { slots: 0, noConjunto: 0, excluidos: 0, porEstado: {} });
+  assert.equal(semCom.bracos.find(x => x.braco === "com")!.situacao, "sem-coleta");
+  const md = porProtocoloMd(p);
+  assert.match(md, /### Exclusões por braço/); assert.match(md, /\| sem \| 1 \| 0 \| 1 \| `unverified` 1 \|/); assert.match(md, /\| com \| 1 \| 0 \| 1 \| `used-with-errors` 1 \|/);
+  assert.match(md, /^## ANÁLISE DE SENSIBILIDADE — por protocolo/m);
+  assert.equal(p.tipo, "sensibilidade"); assert.match(p.aviso, /^ANÁLISE DE SENSIBILIDADE/);
+  assert.equal(p.definicao.versao, "nat78-aderencia-por-protocolo-1.0.0"); assert.deepEqual(p.definicao.estadoExigido, ADERENTES);
+  assert.ok(Object.isFrozen(DEFINICAO_POR_PROTOCOLO) && Object.isFrozen(DEFINICAO_POR_PROTOCOLO.estadoExigido));
+  assert.equal(ESTADO_POR_PROTOCOLO, DEFINICAO_POR_PROTOCOLO.estadoExigido, "uma fonte só");
+});
+t("[§4.5] estado do oráculo pela summary.json: casado pelo runId; braço divergente, run ausente ou sem estado param", () => {
+  const ex = [{ runId: "r1", braco: "sem", mcpIsolamento: { usoOraculo: "absent-verified" } }, { runId: "r2", braco: "com", mcpIsolamento: { usoOraculo: "used-with-errors" } }];
+  assert.deepEqual(estadosDoOraculo(ex, [{ id: "r1", braco: "sem" }, { id: "r2", braco: "com" }]), { sem: "absent-verified", com: "used-with-errors" });
+  assert.throws(() => estadosDoOraculo(ex, [{ id: "r2", braco: "ferramentas" }]), /braço com na summary.json/);
+  assert.throws(() => estadosDoOraculo(ex, [{ id: "r9", braco: "sem" }]), /fora da summary.json/);
+  assert.throws(() => estadosDoOraculo([{ runId: "r1", braco: "sem" }], [{ id: "r1", braco: "sem" }]), /sem mcpIsolamento.usoOraculo/);
 });
 
 console.log(`\n${n - falhas}/${n} testes da E14 passaram`);

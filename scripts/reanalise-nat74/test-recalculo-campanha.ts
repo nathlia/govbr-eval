@@ -14,10 +14,12 @@ import { join } from "node:path";
 import type { SemanticPackage, SemanticReviews } from "../semantic-flow";
 import { EVAL, RESULTADOS, lerJson, sha } from "./comum";
 import { mapaRetrospectivo } from "./mapa";
+import { DEFINICAO_POR_PROTOCOLO, LEITURA_POR_PROTOCOLO, exclusoesPorBraco } from "./e14-deteccao";
 import { montarDecisoes } from "./montar";
 import type { AtomoClassificado } from "./politica";
 import {
-  Entradas, chaveVariante, conjuntoDe, contar, executar, leituraComDelta, recalcular, regraDaTela, removidosS4, tabelaDaComparacao, unidadesDaSpec, vereditoNaPolitica,
+  Entradas, TRIO_COM_SLOT_FORA, chavePorProtocolo, chaveVariante, conjuntoDe, contar, executar, leituraComDelta, recalcular, regraDaTela, removidosS4, slotsPorProtocolo,
+  tabelaDaComparacao, tabelaPorProtocolo, unidadesDaSpec, vereditoNaPolitica,
   type Comparacao, type Contestado, type TabelaComparacao, type TrioEntrada,
 } from "./recalculo-campanha";
 
@@ -159,6 +161,61 @@ try {
     assert.deepEqual(tab("principal", "1.2.0"), tab("principal", "1.2.0"));
     assert.match(tab("principal", "1.2.0").estatistica.ic.sementeOrigem, /^s\|recalculo\|ferramentas-x-com\|principal\|1\.2\.0\|primario$/);
   });
+  // [NAT-78 §4.5] sensibilidade por protocolo: os mesmos 3 trios sintéticos, com o estado do oráculo de cada slot.
+  const sc = { id: "sem-x-com", arms: ["sem", "com"], role: "secondary" } as Comparacao;
+  const ADERENTE: Record<string, string> = { sem: "absent-verified", ferramentas: "used-adherent", com: "used-adherent" };
+  const estadosPP = (desvio: Record<string, Record<string, string>> = {}) => trios.map(tr => slotsPorProtocolo(tr.trio,
+    tr.ordem.filter(b => tr.creditos[chaveVariante("principal", "1.2.0")][b]).map(b => ({ braco: b, escolhida: `${tr.trio}-${b}` })),
+    tr.ordem.map(b => ({ runId: `${tr.trio}-${b}`, braco: b, mcpIsolamento: { usoOraculo: desvio[tr.trio]?.[b] ?? ADERENTE[b] } }))));
+  const optsPP = { variante: "principal" as const, politica: "1.2.0" as const, conjunto: "primario", regra: regraD, specDe: (u: string) => specDe[u], nPlanejado: 3, sementeBase: "s", reamostragens: 200 };
+  t("[§4.5] por protocolo, todos aderentes: mesmos D por trio e mesma estatística do primário; só a semente e o rótulo mudam", () => {
+    for (const c of [fc, sc]) {
+      const pri = tabelaDaComparacao(trios, c, optsPP), pp = tabelaPorProtocolo(trios, estadosPP(), c, optsPP);
+      assert.deepEqual(pp.porTrio, pri.porTrio); assert.equal(pp.nEfetivo, pri.nEfetivo); assert.deepEqual(pp.estatistica.principal, pri.estatistica.principal);
+      assert.equal(pp.estatistica.media, pri.estatistica.media); assert.deepEqual(pp.foraDaComparacao, []);
+      assert.equal(pp.leitura, LEITURA_POR_PROTOCOLO); assert.equal(pp.trioComSlotFora, "trio-inteiro");
+      assert.match(pp.estatistica.ic.sementeOrigem, /^s\|sensibilidade-por-protocolo\|recalculo\|/);
+      assert.notEqual(pp.estatistica.ic.sementeOrigem, pri.estatistica.ic.sementeOrigem, "semente própria: nunca a mesma série do primário");
+    }
+    assert.equal(chavePorProtocolo("principal", "1.2.0", "primario"), "sensibilidade-por-protocolo|principal|1.2.0|primario");
+  });
+  t("[§4.5] um slot used-with-errors (ferramentas do p02): o trio sai de D_fc E de D_sc (trio inteiro, TRIO_COM_SLOT_FORA) e é listado", () => {
+    assert.equal(TRIO_COM_SLOT_FORA, "trio-inteiro");
+    const est = estadosPP({ p02: { ferramentas: "used-with-errors" } });
+    assert.deepEqual(est.find(e => e.trio === "p02")!.slots.find(s => s.braco === "ferramentas"), { braco: "ferramentas", runId: "p02-ferramentas", estado: "used-with-errors", situacao: "fora-com-erros" });
+    const f = tabelaPorProtocolo(trios, est, fc, optsPP), s = tabelaPorProtocolo(trios, est, sc, optsPP);
+    assert.deepEqual(f.porTrio.map(r => [r.trio, r.d]), [["p01", 1], ["p03", null]]); assert.equal(f.nEfetivo, 1);
+    assert.deepEqual(s.porTrio.map(r => r.trio), ["p01", "p03"], "D_sc não usa o ferramentas, mas o trio inteiro sai");
+    assert.deepEqual(f.foraDaComparacao, [{ trio: "p02", slots: [{ braco: "ferramentas", runId: "p02-ferramentas", estado: "used-with-errors", situacao: "fora-com-erros" }] }]);
+    assert.deepEqual(s.foraDaComparacao.map(x => x.trio), ["p02"]);
+    // Alternativa (não adotada): sai só das comparações com o braço do slot.
+    const alt = tabelaPorProtocolo(trios, est, sc, { ...optsPP, modo: "so-comparacoes-do-slot" });
+    assert.deepEqual(alt.porTrio.map(r => r.trio), ["p01", "p02", "p03"]); assert.deepEqual(alt.foraDaComparacao, []);
+    assert.deepEqual(tabelaPorProtocolo(trios, est, fc, { ...optsPP, modo: "so-comparacoes-do-slot" }).foraDaComparacao.map(x => x.trio), ["p02"]);
+    // A primária não muda: tabelaDaComparacao não conhece o estado do oráculo.
+    assert.deepEqual(tabelaDaComparacao(trios, fc, optsPP).porTrio.map(r => r.d), [1, -1, null]);
+  });
+  t("[§4.5] sem não absent-verified (p01 unverified): trio fora de todas as comparações por protocolo; slot perdido (p03 sem o com) segue o trio incompleto", () => {
+    const est = estadosPP({ p01: { sem: "unverified" } });
+    const f = tabelaPorProtocolo(trios, est, fc, optsPP);
+    assert.deepEqual(f.porTrio.map(r => [r.trio, r.d, r.estado]), [["p02", -1, "provisorio"], ["p03", null, "incompleto"]]);
+    assert.deepEqual(f.foraDaComparacao, [{ trio: "p01", slots: [{ braco: "sem", runId: "p01-sem", estado: "unverified", situacao: "fora" }] }]);
+    assert.deepEqual(est.find(e => e.trio === "p03")!.slots.map(s => s.braco), ["sem", "ferramentas"], "slot perdido não tem estado: não é 'fora por protocolo'");
+    assert.throws(() => tabelaPorProtocolo(trios, est.slice(1), fc, optsPP), /trio p01 sem o estado do oráculo/);
+    assert.throws(() => estadosPP({ p01: { com: "used-nonadherent" } }), /fora do contrato/);
+  });
+  t("[D-198] exclusões POR BRAÇO: slots, no conjunto e excluídos com o estado que excluiu, em cada braço (nada some em silêncio)", () => {
+    const est = estadosPP({ p01: { sem: "unverified", com: "used-with-errors" }, p02: { com: "available-unused" } });
+    const ex = exclusoesPorBraco(est.flatMap(e => e.slots), ["sem", "ferramentas", "com"]);
+    assert.deepEqual(ex, {
+      sem: { slots: 3, noConjunto: 2, excluidos: 1, porEstado: { unverified: 1 } },
+      ferramentas: { slots: 3, noConjunto: 3, excluidos: 0, porEstado: {} },
+      com: { slots: 2, noConjunto: 0, excluidos: 2, porEstado: { "available-unused": 1, "used-with-errors": 1 } },
+    }, "p03 perdeu o slot do com: não é exclusão por protocolo (2 slots, não 3)");
+    for (const x of Object.values(ex)) assert.equal(x.noConjunto + x.excluidos, x.slots);
+    assert.throws(() => exclusoesPorBraco(est.flatMap(e => e.slots), ["sem", "com"]), /fora dos braços do desenho/);
+  });
+
   t("manifesto: entrada lida sem sha256 no manifesto recusa", () => {
     const E = new Entradas();
     E.texto(join(EVAL, "package.json"));
@@ -273,6 +330,21 @@ try {
       const rb = recalcular({ passadas: [ADJ], analises: [join(T, "analisar-20261019T1")], ...base });
       assert.equal(JSON.stringify(rb.json), JSON.stringify(ra.json));
       assert.equal(rb.md, ra.md);
+    });
+    t("[§4.5] --por-protocolo no ensaio (3 slots aderentes pela summary.json): só ACRESCENTA a chave própria e a summary.json às entradas; mesmos D", () => {
+      const rp = recalcular({ passadas: [ADJ], analises: [join(T, "analisar-20261019T1")], ...base, porProtocolo: true });
+      const { sensibilidadePorProtocolo: pp, entradas: ep, ...resto } = rp.json as Record<string, unknown>;
+      const { entradas: e0, ...resto0 } = ra.json as Record<string, unknown>;
+      assert.equal(JSON.stringify(resto), JSON.stringify(resto0), "o primário (e tudo o mais) igual byte a byte");
+      const extra = Object.keys(ep as object).filter(k => !(k in (e0 as object)));
+      assert.deepEqual(extra.map(k => k.split("/").slice(-2).join("/")), ["analisar-20261019T1/summary.json"]);
+      assert.ok(rp.md.startsWith(ra.md)); assert.match(rp.md, /## ANÁLISE DE SENSIBILIDADE — por protocolo \(NAT-78 §4\.5\); não é o primário/);
+      const x = pp as { tipo: string; definicao: { versao: string }; exclusoesPorBraco: Record<string, unknown>; trios: { slots: { situacao: string }[] }[]; tabelas: Record<string, TabelaComparacao[]> };
+      assert.equal(x.tipo, "sensibilidade"); assert.equal(x.definicao.versao, DEFINICAO_POR_PROTOCOLO.versao);
+      assert.deepEqual(x.exclusoesPorBraco.com, { slots: 1, noConjunto: 1, excluidos: 0, porEstado: {} });
+      assert.deepEqual(x.trios[0].slots.map(s => s.situacao), ["no-conjunto", "no-conjunto", "no-conjunto"]);
+      assert.deepEqual(x.tabelas[chavePorProtocolo("principal", "1.2.0", "primario")].map(t => t.porTrio.map(r => r.d)), tb(ra, "principal|1.2.0|primario").map(t => t.porTrio.map(r => r.d)));
+      assert.ok(!Object.keys(rp.json.tabelas as object).some(k => k.startsWith(LEITURA_POR_PROTOCOLO)), "nunca dentro de `tabelas`");
     });
   }
 } finally { rmSync(tmp, { recursive: true, force: true }); }

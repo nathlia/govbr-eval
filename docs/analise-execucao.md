@@ -223,7 +223,7 @@ cegos, que recebem só os arquivos indicados.
    `npm run test:revisao-origem` (puros, navegador sobre site e pacote sintéticos, e a forma do ensaio).
 6. Recálculo (§8.5 + §6.3): `npm run revisao:recalculo -- --passada <passada adjudicada ou 1ª passada> [--passada …]
    --saida <pasta nova> [--analise DIR] [--coleta coleta-trio.json] [--residuo-passada P] [--ratificacoes ARQ]
-   [--origem <pasta da origem> …]` grava
+   [--origem <pasta da origem> …] [--por-protocolo]` grava
    `tabela.md`, `recalculo.json` e `recalculo.json.sha256`. Cada análise listada na passada é um trio (o trio, a ordem dos
    braços e a linha de base vêm do `coleta-trio.json` dela; análise anterior à `coleta:trio` exige `--coleta` cujas
    execuções escolhidas sejam as do pacote). Cada cartão julgado vira uma decisão do scorer do pacote (um átomo com todos
@@ -244,7 +244,22 @@ cegos, que recebem só os arquivos indicados.
    recálculos, `holmTelas(pD, pE)` de `scripts/estatistica-pareada.ts` (p = `tabelas['principal|1.2.0|primario']` ›
    `ferramentas-x-com` › `estatistica.principal.p` de cada tela; `"fora-antes-da-coleta"` no lugar de pE se a E saiu antes de
    qualquer coleta) dá o limiar de cada tela, e `leituraSobHolm` a leitura congelada (testes em `npm run test:estatistica`).
-   A configuração pré-registrada da D está em `campanhas/nat78-tela-d-01/analise-preregistrada.json`. Testes: `npm run test:revisao-recalculo` (inclui a equivalência da vinculação copiada de `montar.ts` contra o próprio
+   A configuração pré-registrada da D está em `campanhas/nat78-tela-d-01/analise-preregistrada.json`.
+   **`--por-protocolo` (NAT-78 §4.5; D-198): ANÁLISE DE SENSIBILIDADE, nunca o primário.** Lê o estado do oráculo de cada
+   slot na `summary.json` da análise (`execucoes[].mcpIsolamento.usoOraculo`, que é o `run.status.oracleUsage` do contrato;
+   casado pelo runId, braço conferido) e grava `recalculo.json › sensibilidadePorProtocolo` (`tipo: "sensibilidade"`,
+   `leitura: "sensibilidade-por-protocolo"`) mais uma seção no fim do `tabela.md`. A definição de aderência é uma constante
+   só, versionada e fixada antes da coleta: `DEFINICAO_POR_PROTOCOLO` (`nat78-aderencia-por-protocolo-1.0.0`, em
+   `e14-deteccao.ts`): `sem` → `absent-verified`; `ferramentas` e `com` → `used-adherent`; qualquer outro estado fica fora;
+   `used-with-errors` fica fora e aparece à parte, com a contagem do slot no primário. A saída traz sempre a tabela de
+   **exclusões por braço** (slots com estado, no conjunto, excluídos e o estado que excluiu), para que a leitura não
+   escolha em silêncio as execuções mais bem-comportadas. **Trio com um slot fora** (`TRIO_COM_SLOT_FORA = "trio-inteiro"`):
+   sai de todas as comparações desta leitura (D_fc, D_sc e D_sf ficam sobre os mesmos trios) e é listado em cada uma; a
+   alternativa `so-comparacoes-do-slot` existe e é testada, mas não foi adotada. Slot perdido não tem estado e segue a
+   regra do trio incompleto do §6.3. As tabelas ficam só em `sensibilidadePorProtocolo.tabelas['sensibilidade-por-protocolo|principal|1.2.0|primario']`
+   (nunca em `tabelas`), com semente própria (`<base>|sensibilidade-por-protocolo|recalculo|…`). Sem a opção, a
+   `summary.json` nem é lida e a saída é byte a byte a de antes (conferido contra o `7ab7b0c` no ensaio, T4 e adjudicada).
+   Testes: `npm run test:revisao-recalculo` (inclui a equivalência da vinculação copiada de `montar.ts` contra o próprio
    `montarDecisoes`, em todo cartão × spec de pacotes reais: deriva da cópia falha o teste).
 
 7. Material da autora (§8.4; sem modelo): `npm run revisao:material-autora -- preparar --passada <passada adjudicada>
@@ -358,6 +373,18 @@ cegos, que recebem só os arquivos indicados.
   `design.colunaPrincipal`; para a campanha `nat78-tela-d-01` a coluna vai pela opção (detecção, D-157 item 4).
 - **`--sem-expostas`** (protocolo NAT-78 §5.1, A16): as specs de `_meta.exposto` saem das duas colunas e das classes (o
   JSON grava `excluidas`). Na tela D a tabulação roda duas vezes: com a opção (as 9 do primário) e sem (as 13).
+- **`--por-protocolo`** (NAT-78 §4.5; D-198; **análise de sensibilidade, nunca o primário**): o estado do oráculo de cada
+  execução do desenho vem da `summary.json` da análise (`mcpIsolamento.usoOraculo` = `run.status.oracleUsage`), e a
+  definição é a constante versionada `DEFINICAO_POR_PROTOCOLO` (`nat78-aderencia-por-protocolo-1.0.0`): `sem` →
+  `absent-verified`; `ferramentas` e `com` → `used-adherent`. Braço no conjunto mostra a mesma contagem do primário; braço
+  fora não tem número nesta leitura; `used-with-errors` fica fora e é mostrado à parte com a própria contagem; linha de
+  base fica fora (não tem oráculo). O JSON ganha `sensibilidadePorProtocolo` (`tipo: "sensibilidade"`, a definição
+  aplicada, `exclusoesPorBraco`, `bracos`, `porBraco`, `comErros`, `nenhumBraco`) e o `.md` uma seção própria no fim, com a
+  tabela de exclusões por braço. Com várias análises, o `resumo.json` ganha `sensibilidadePorProtocolo` (mediana só sobre
+  as análises em que o slot está no conjunto, exclusões por braço somadas, `used-with-errors` listado por análise), ao
+  lado de `mediana`, nunca dentro dela. Combina com `--sem-expostas`. Estado fora do contrato, execução ausente da
+  `summary.json`, braço divergente ou braço do desenho sem estado exigido: para. Sem a opção, a saída é byte a byte a de
+  antes.
 - **classe da spec**, fixada pelo vocabulário de `categories` da referência antes de ver número de braço:
 
   | `categories` da spec | classe |

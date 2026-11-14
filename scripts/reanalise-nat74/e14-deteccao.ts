@@ -32,10 +32,19 @@
  *   falso, estado não alcançado, norma inaplicável ou não violada, origem DS, pendente…) ou que credita spec alheia ao
  *   fato (fora das specs da unidade e das `candidatas` do cartão) para a tabulação. Sem a opção, nada muda (byte a byte).
  *
+ * - **[NAT-78 §4.5, D-198] sensibilidade por protocolo** (só com `--por-protocolo`; ANÁLISE DE SENSIBILIDADE, nunca o
+ *   primário): a mesma tabulação restrita aos slots cujo estado do oráculo (`run.status.oracleUsage`, lido da
+ *   `summary.json` da análise) é o que o braço exige pela definição versionada `DEFINICAO_POR_PROTOCOLO` (`sem` →
+ *   `absent-verified`; `ferramentas`/`com` → `used-adherent`). `used-with-errors` fica FORA e é mostrado à parte, com a
+ *   contagem; os outros estados ficam fora, listados; a tabela de exclusões por braço sai sempre. Vai numa seção própria
+ *   (`sensibilidadePorProtocolo`, `tipo: "sensibilidade"`, rótulo `LEITURA_POR_PROTOCOLO`), nunca em `porBraco`: ao lado
+ *   do primário, nunca no lugar dele nem somada a ele. Sem a opção, nada muda (byte a byte; a `summary.json` nem é lida).
+ *
  * O braço vem da chave da passada (nunca vai ao juiz). Determinístico, sem rede, sem modelo. Entradas com sha256.
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
+import type { OracleUsage } from "../../contracts";
 import type { SemanticPackage } from "../semantic-flow";
 import { gravar, jsonTexto, sha, unicos, versaoDaPolitica } from "./comum";
 import { bracoDoRun } from "./e14-campanha";
@@ -354,10 +363,169 @@ export function estadoDosBracos(runs: { id: string; braco: string }[], slots: { 
   return e;
 }
 
+// ───────────────────────────────────────────── [NAT-78 §4.5] sensibilidade por protocolo (aderência ao oráculo por slot)
+
+/** Os estados de uso do oráculo do contrato (`OracleUsage`, contracts/index.ts; `run.status.oracleUsage`), nenhum inventado. */
+export const ESTADOS_DO_ORACULO = ["absent-verified", "used-adherent", "available-unused", "used-with-errors", "unverified", "not-applicable"] as const satisfies readonly OracleUsage[];
+// Se o contrato ganhar um estado, isto deixa de compilar: a leitura por protocolo tem de decidir onde ele fica.
+const _todosOsEstados: [Exclude<OracleUsage, (typeof ESTADOS_DO_ORACULO)[number]>] extends [never] ? true : never = true;
+void _todosOsEstados;
+
+/**
+ * Padrão adotado (decisoes-do-assistente, 13/11/2026, preparo da campanha D item 5; protocolo NAT-78 §4.5): o slot conta
+ * no conjunto por protocolo quando o estado do oráculo é o que o braço exige. `sem` → `absent-verified` (ausência
+ * comprovada); `ferramentas` e `com` → `used-adherent` (usado conforme o protocolo). Qualquer outro estado fica fora.
+ * `used-with-errors` não é perda de slot (§4.5: a execução fica no primário), mas fica fora DESTA leitura e é mostrado à
+ * parte, com a contagem, nunca descartado em silêncio. Braço do desenho fora deste mapa: a leitura para.
+ */
+export const DEFINICAO_POR_PROTOCOLO = Object.freeze({
+  /** Versão da definição de aderência (D-198: fixada antes da coleta; mudar qualquer campo = versão nova). Vai em toda saída. */
+  versao: "nat78-aderencia-por-protocolo-1.0.0",
+  estadoExigido: Object.freeze({ sem: "absent-verified", ferramentas: "used-adherent", com: "used-adherent" }) as Readonly<Record<string, OracleUsage>>,
+  /** `used-with-errors`: fora do conjunto, mostrado à parte com a contagem; qualquer outro estado não exigido: fora, listado. */
+  comErros: "fora-a-parte-com-contagem" as const,
+});
+/** O estado exigido por braço, da definição versionada acima (única fonte; nunca redefinido em outro lugar). */
+export const ESTADO_POR_PROTOCOLO: Readonly<Record<string, OracleUsage>> = DEFINICAO_POR_PROTOCOLO.estadoExigido;
+/** Rótulo da dimensão de análise: toda saída desta leitura o carrega, para nunca ser somada nem confundida com o primário. */
+export const LEITURA_POR_PROTOCOLO = "sensibilidade-por-protocolo";
+/** O papel desta leitura, no vocabulário dos conjuntos do recálculo (`Conjunto.tipo`): sensibilidade, nunca `primario`. */
+export const TIPO_POR_PROTOCOLO = "sensibilidade" as const;
+export const FORMATO_POR_PROTOCOLO = "nat78-deteccao-por-protocolo-1.0.0";
+export const AVISO_POR_PROTOCOLO = "ANÁLISE DE SENSIBILIDADE (por protocolo, NAT-78 §4.5), não o primário: ao lado do primário (intenção de tratar), nunca no lugar dele nem somada a ele";
+
+/**
+ * [D-198] Exclusões POR BRAÇO: para cada braço, slots com estado do oráculo, quantos ficam no conjunto por protocolo e
+ * quantos saem, por estado que os tirou. Publicada sempre, para que a leitura não selecione em silêncio as execuções mais
+ * bem-comportadas de um braço. Slot sem coleta válida (ou perdido) não entra aqui: não tem estado do oráculo.
+ */
+export interface ExclusaoDoBraco { slots: number; noConjunto: number; excluidos: number; porEstado: Record<string, number> }
+export function exclusoesPorBraco(slots: { braco: string; estado: OracleUsage; situacao: SituacaoProtocolo }[], bracos: string[]): Record<string, ExclusaoDoBraco> {
+  const out: Record<string, ExclusaoDoBraco> = Object.fromEntries(bracos.map(b => [b, { slots: 0, noConjunto: 0, excluidos: 0, porEstado: {} }]));
+  for (const s of slots) {
+    const x = out[s.braco];
+    if (!x) throw new Error(`por protocolo: slot do braço ${s.braco} fora dos braços do desenho (${bracos.join(", ")})`);
+    x.slots++;
+    if (s.situacao === "no-conjunto") { x.noConjunto++; continue; }
+    x.excluidos++; x.porEstado[s.estado] = (x.porEstado[s.estado] ?? 0) + 1;
+  }
+  for (const x of Object.values(out)) x.porEstado = Object.fromEntries(Object.entries(x.porEstado).sort(([a], [b]) => (a < b ? -1 : 1)));
+  return out;
+}
+
+/** A tabela de exclusões por braço em markdown (mesma forma nas duas saídas). */
+export function exclusoesMd(ex: Record<string, ExclusaoDoBraco>): string[] {
+  return ["| braço | slots com estado do oráculo | no conjunto por protocolo | excluídos | estado que excluiu |", "|---|---|---|---|---|",
+    ...Object.entries(ex).map(([b, x]) => `| ${b} | ${x.slots} | ${x.noConjunto} | ${x.excluidos} | ${Object.entries(x.porEstado).map(([e, n]) => `\`${e}\` ${n}`).join(", ") || "—"} |`)];
+}
+/** `no-conjunto`: estado exigido; `fora-com-erros`: `used-with-errors` (à parte, com contagem); `fora`: qualquer outro estado. */
+export type SituacaoProtocolo = "no-conjunto" | "fora-com-erros" | "fora";
+
+export function situacaoPorProtocolo(braco: string, estado: string): SituacaoProtocolo {
+  const exigido = ESTADO_POR_PROTOCOLO[braco];
+  if (!exigido) throw new Error(`por protocolo: braço ${braco} sem estado exigido (só ${Object.keys(ESTADO_POR_PROTOCOLO).join(", ")})`);
+  if (!(ESTADOS_DO_ORACULO as readonly string[]).includes(estado)) throw new Error(`por protocolo: estado do oráculo fora do contrato: ${JSON.stringify(estado)}`);
+  return estado === exigido ? "no-conjunto" : estado === "used-with-errors" ? "fora-com-erros" : "fora";
+}
+
+/** Uma execução da `summary.json` da análise (`analisar-execucao.ts`): `mcpIsolamento.usoOraculo` = `run.status.oracleUsage`. */
+export interface ExecucaoDoResumo { runId: string; braco: string; mcpIsolamento?: { usoOraculo?: string } | null }
+
+/**
+ * O estado do oráculo de cada execução do desenho, pela `summary.json` da análise, casado pelo runId. O braço do resumo
+ * (`run.arm`) tem de ser o do run (perfil do oráculo); execução ausente do resumo, sem estado, com estado fora do contrato
+ * ou braço repetido: para.
+ */
+export function estadosDoOraculo(execucoes: ExecucaoDoResumo[], runs: { id: string; braco: string }[]): Record<string, OracleUsage> {
+  const out: Record<string, OracleUsage> = {};
+  for (const r of runs) {
+    const e = execucoes.find(x => x.runId === r.id);
+    if (!e) throw new Error(`por protocolo: run ${r.id} (${r.braco}) fora da summary.json da análise: sem o estado do oráculo`);
+    if (e.braco !== r.braco) throw new Error(`por protocolo: run ${r.id}: braço ${e.braco} na summary.json, ${r.braco} pelo perfil do oráculo`);
+    const u = e.mcpIsolamento?.usoOraculo;
+    if (u === undefined || u === null) throw new Error(`por protocolo: run ${r.id} sem mcpIsolamento.usoOraculo na summary.json`);
+    if (!(ESTADOS_DO_ORACULO as readonly string[]).includes(u)) throw new Error(`por protocolo: run ${r.id}: estado do oráculo fora do contrato: ${JSON.stringify(u)}`);
+    if (out[r.braco]) throw new Error(`por protocolo: dois runs do braço ${r.braco}`);
+    out[r.braco] = u as OracleUsage;
+  }
+  return out;
+}
+
+export interface LinhaProtocolo { braco: string; coleta: EstadoBraco; estadoDoOraculo: OracleUsage | null; exigido: OracleUsage; situacao: SituacaoProtocolo | "sem-coleta" }
+export interface PorProtocolo {
+  formato: typeof FORMATO_POR_PROTOCOLO; leitura: typeof LEITURA_POR_PROTOCOLO; tipo: typeof TIPO_POR_PROTOCOLO; aviso: string;
+  /** A definição de aderência aplicada (versão + estado exigido por braço), copiada de `DEFINICAO_POR_PROTOCOLO`. */
+  definicao: { versao: string; estadoExigido: Record<string, OracleUsage>; comErros: string };
+  /** [D-198] Slots, no conjunto e excluídos (por estado), por braço do desenho. */
+  exclusoesPorBraco: Record<string, ExclusaoDoBraco>;
+  /** Um por braço do desenho (linha de base não tem oráculo e fica fora desta leitura). */
+  bracos: LinhaProtocolo[];
+  /** Contagem dos braços NO conjunto por protocolo (a mesma do primário); `null` = fora dele ou sem coleta válida. */
+  porBraco: Record<string, ContagemBraco | null>;
+  /** Braços `used-with-errors`: fora do conjunto, com a contagem à parte (nunca somada ao conjunto). */
+  comErros: Record<string, ContagemBraco>;
+  /** Specs que nenhum braço do conjunto por protocolo detectou. */
+  nenhumBraco: string[];
+}
+
+/**
+ * A tabulação na leitura por protocolo: a contagem de cada braço é a do primário (`t.porBraco`, a mesma tabela, as mesmas
+ * exclusões de spec); muda só QUEM entra. Braço de coleta válida sem estado do oráculo: para (o estado é medido por
+ * execução, nunca suposto). Todos aderentes → `porBraco` igual ao do primário nos braços do desenho.
+ */
+export function porProtocolo(t: Tabela, bracosDoDesenho: string[], estados: Record<string, OracleUsage>): PorProtocolo {
+  const bracos: LinhaProtocolo[] = [], porBraco: PorProtocolo["porBraco"] = {}, comErros: PorProtocolo["comErros"] = {};
+  for (const b of bracosDoDesenho) {
+    const exigido = ESTADO_POR_PROTOCOLO[b];
+    if (!exigido) throw new Error(`por protocolo: braço ${b} sem estado exigido (só ${Object.keys(ESTADO_POR_PROTOCOLO).join(", ")})`);
+    const coleta = t.estado[b], c = t.porBraco[b] ?? null, e = estados[b] ?? null;
+    if (c && e === null) throw new Error(`por protocolo: braço ${b} com coleta válida e sem estado do oráculo`);
+    const situacao = !c ? "sem-coleta" : situacaoPorProtocolo(b, e!);
+    bracos.push({ braco: b, coleta, estadoDoOraculo: e, exigido, situacao });
+    porBraco[b] = situacao === "no-conjunto" ? c : null;
+    if (situacao === "fora-com-erros") comErros[b] = c!;
+  }
+  const alguma = new Set(Object.values(porBraco).flatMap(x => x?.deteccao ?? []));
+  const comEstado = bracos.filter(x => x.situacao !== "sem-coleta").map(x => ({ braco: x.braco, estado: x.estadoDoOraculo!, situacao: x.situacao as SituacaoProtocolo }));
+  return { formato: FORMATO_POR_PROTOCOLO, leitura: LEITURA_POR_PROTOCOLO, tipo: TIPO_POR_PROTOCOLO, aviso: AVISO_POR_PROTOCOLO, definicao: definicaoPorProtocolo(),
+    exclusoesPorBraco: exclusoesPorBraco(comEstado, bracosDoDesenho), bracos, porBraco, comErros, nenhumBraco: t.specs.map(s => s.id).filter(s => !alguma.has(s)) };
+}
+
+/** Cópia simples (JSON) da definição versionada, para gravar em cada saída. */
+export function definicaoPorProtocolo(): PorProtocolo["definicao"] {
+  return { versao: DEFINICAO_POR_PROTOCOLO.versao, estadoExigido: { ...DEFINICAO_POR_PROTOCOLO.estadoExigido }, comErros: DEFINICAO_POR_PROTOCOLO.comErros };
+}
+
+const ROTULO_SITUACAO: Record<LinhaProtocolo["situacao"], string> = { "no-conjunto": "no conjunto", "fora-com-erros": "**fora — usado com erros** (à parte)", fora: "**fora**", "sem-coleta": "sem coleta válida" };
+
+export function porProtocoloMd(p: PorProtocolo): string {
+  const bs = p.bracos.map(x => x.braco);
+  const linha = (rot: string, f: (c: ContagemBraco) => string) => `| ${rot} | ${p.bracos.map(x => { const c = p.porBraco[x.braco]; return c ? f(c) : "—"; }).join(" | ")} |`;
+  const ce = Object.entries(p.comErros);
+  return ["", "## ANÁLISE DE SENSIBILIDADE — por protocolo (NAT-78 §4.5); não é o primário, nunca no lugar da tabela acima", "",
+    `Leitura \`${p.leitura}\` (tipo \`${p.tipo}\`, \`${p.formato}\`, definição \`${p.definicao.versao}\`): ${p.aviso}. Conjunto por protocolo: ${Object.entries(p.definicao.estadoExigido).map(([b, e]) => `\`${b}\` com \`${e}\``).join("; ")} (estado do oráculo da execução, \`summary.json\` › \`mcpIsolamento.usoOraculo\`). ` +
+      "Braço fora do conjunto não tem número nesta leitura; `used-with-errors` fica fora e é contado à parte, abaixo. A contagem de quem entra é a mesma do primário.", "",
+    "### Exclusões por braço", "", ...exclusoesMd(p.exclusoesPorBraco), "",
+    `| | ${bs.join(" | ")} |`, `|---|${bs.map(() => "---").join("|")}|`,
+    `| estado do oráculo | ${p.bracos.map(x => x.estadoDoOraculo ? `\`${x.estadoDoOraculo}\`` : "—").join(" | ")} |`,
+    `| exigido | ${p.bracos.map(x => `\`${x.exigido}\``).join(" | ")} |`,
+    `| situação | ${p.bracos.map(x => ROTULO_SITUACAO[x.situacao]).join(" | ")} |`,
+    linha("**detecção** (por protocolo)", c => `**${c.deteccao.length}**`),
+    linha("detecção · específica do DS", c => String(c.porClasse.ds.deteccao)),
+    linha("detecção · acessibilidade geral", c => String(c.porClasse.geral.deteccao)),
+    linha("**detecção fundamentada** (por protocolo)", c => `**${c.fundamentada.length}**`), "",
+    `- nenhum braço do conjunto por protocolo detectou: ${p.nenhumBraco.join(", ") || "—"}`, "",
+    "### Usado com erros (`used-with-errors`): fora do conjunto por protocolo, à parte", "",
+    ...(ce.length ? ["| braço | detecção | DS | geral | fundamentada | specs |", "|---|---|---|---|---|---|",
+      ...ce.map(([b, c]) => `| ${b} | ${c.deteccao.length} | ${c.porClasse.ds.deteccao} | ${c.porClasse.geral.deteccao} | ${c.fundamentada.length} | ${c.deteccao.join(", ") || "—"} |`)]
+      : ["Nenhum braço com `used-with-errors` nesta análise."]), ""].join("\n");
+}
+
 if (process.argv[1] && /(?:^|[\\/])e14-deteccao\.ts$/.test(process.argv[1])) {
   const a = process.argv.slice(2), val = (k: string) => (a.includes(k) ? a[a.indexOf(k) + 1] : undefined);
   const passada = val("--passada"), saida = val("--saida");
-  if (!passada || !saida) { console.error("Uso: --passada PASTA [--julgamentos ARQ] [--analise DIR] --saida PASTA [--coluna-principal deteccao|fundamentada] [--sem-expostas] [--sensibilidade-regra ARQ]"); process.exit(1); }
+  if (!passada || !saida) { console.error("Uso: --passada PASTA [--julgamentos ARQ] [--analise DIR] --saida PASTA [--coluna-principal deteccao|fundamentada] [--sem-expostas] [--sensibilidade-regra ARQ] [--por-protocolo]"); process.exit(1); }
+  const comProtocolo = a.includes("--por-protocolo");
   const jAbs = resolve(val("--julgamentos") ?? join(passada, "julgamentos.json"));
   for (const f of ["deteccao.json", "deteccao.md"]) if (existsSync(join(saida, f))) { console.error(`${join(saida, f)} já existe (versão nova = pasta nova)`); process.exit(1); }
   const ler = <T>(p: string): T => JSON.parse(readFileSync(p, "utf8").replace(/^﻿/, "")) as T;
@@ -377,6 +545,9 @@ if (process.argv[1] && /(?:^|[\\/])e14-deteccao\.ts$/.test(process.argv[1])) {
   const multi = m.analises.length > 1;
   const cli = val("--coluna-principal");
   const resumo: { analise: string; porBraco: Record<string, { deteccao: number; fundamentada: number; ds: number; geral: number } | null> }[] = [];
+  const resumoPP: { analise: string; bracos: LinhaProtocolo[]; porBraco: Record<string, { deteccao: number; fundamentada: number; ds: number; geral: number } | null>;
+    comErros: Record<string, { deteccao: number; fundamentada: number; ds: number; geral: number }> }[] = [];
+  const numeros = (c: ContagemBraco) => ({ deteccao: c.deteccao.length, fundamentada: c.fundamentada.length, ds: c.porClasse.ds.deteccao, geral: c.porClasse.geral.deteccao });
   let refSha: string | null = null;
   for (const a0 of m.analises) {
   // O rótulo da análise no manifesto é o nome da pasta (`analisar-<carimbo>`) e só ganha a pasta do trio quando os nomes
@@ -411,18 +582,27 @@ if (process.argv[1] && /(?:^|[\\/])e14-deteccao\.ts$/.test(process.argv[1])) {
   const js = multi ? j.julgamentos.filter(x => x.chave.split("|")[1] === a0.dir) : j.julgamentos;
   const t = tabular(js, k => { const b = chave.get(k); if (!b) throw new Error(`cartão fora da chave: ${k}`); return b; }, ref.violations, j.politica, arms,
     { estado, colunaPrincipal, ...(excluir ? { excluir } : {}) });
-  const lidos = [jAbs, cAbs, mAbs, refAbs, campAbs, pkgAbs, ...(slots ? [coletaAbs] : []), ...(sAbs ? [sAbs] : []), ...(primeira ? [p1Abs] : [])];
+  // [NAT-78 §4.5] Só com --por-protocolo: o estado do oráculo de cada execução do desenho, da summary.json da análise.
+  const resumoAbs = join(anal, "summary.json");
+  const pp = comProtocolo ? porProtocolo(t, arms, estadosDoOraculo(ler<{ execucoes: ExecucaoDoResumo[] }>(resumoAbs).execucoes,
+    pkg.runs.map(r => ({ id: r.id, braco: bracoDoRun(r, arms) })).filter(r => arms.includes(r.braco)))) : null;
+  const lidos = [jAbs, cAbs, mAbs, refAbs, campAbs, pkgAbs, ...(slots ? [coletaAbs] : []), ...(sAbs ? [sAbs] : []), ...(primeira ? [p1Abs] : []), ...(pp ? [resumoAbs] : [])];
   const entradas = Object.fromEntries(lidos.map(p => [p.replace(/\\/g, "/"), sha(readFileSync(p))]));
   const bracoDe = (k: string) => { const b = chave.get(k); if (!b) throw new Error(`cartão fora da chave: ${k}`); return b; };
   const cen = sens ? cenariosDaRegra(js, bracoDe, t, sens, { primeira: primeira ? (multi ? primeira.filter(x => x.chave.split("|")[1] === a0.dir) : primeira) : null,
     fato: fatoDaPassada(resolve(passada), j.politica) }) : null;
   const doc = { ...t, ...(multi ? { analise: a0.dir, cartoesDaAnalise: js.length } : {}), colunaPrincipalOrigem: cli ? "--coluna-principal" : camp.design.colunaPrincipal ? "campanha.design.colunaPrincipal" : null, entradas,
-    ...(cen ? { sensibilidadeDaRegra: cen } : {}) };
+    ...(cen ? { sensibilidadeDaRegra: cen } : {}), ...(pp ? { sensibilidadePorProtocolo: pp } : {}) };
   const dest = multi ? join(saida, a0.dir.split("/")[0]) : saida;
   const titulo = `Specs achadas por braço — ${basename(dirname(dirname(resolve(passada))))}/${basename(dirname(resolve(passada)))}/${basename(resolve(passada))}${multi ? ` · ${a0.dir}` : ""}`;
   gravar(dest, "deteccao.json", jsonTexto(doc));
-  gravar(dest, "deteccao.md", tabelaMd(t, titulo) + (cen ? cenariosMd(cen, t.bracos) : ""));
+  gravar(dest, "deteccao.md", tabelaMd(t, titulo) + (cen ? cenariosMd(cen, t.bracos) : "") + (pp ? porProtocoloMd(pp) : ""));
   if (cen) for (const [n, x] of Object.entries(cen.porCenario)) console.log(`cenário ${n}: ${t.bracos.map(b => `${b} ${x[b]?.deteccao ?? "—"}`).join(" · ")}`);
+  if (pp) {
+    console.log(`${LEITURA_POR_PROTOCOLO} (sensibilidade): ${pp.bracos.map(x => `${x.braco} ${x.estadoDoOraculo ?? "—"} → ${x.situacao}${pp.porBraco[x.braco] ? ` (detecção ${pp.porBraco[x.braco]!.deteccao.length})` : ""}`).join(" · ")}`);
+    resumoPP.push({ analise: a0.dir, bracos: pp.bracos, porBraco: Object.fromEntries(pp.bracos.map(x => { const c = pp.porBraco[x.braco]; return [x.braco, c ? numeros(c) : null]; })),
+      comErros: Object.fromEntries(Object.entries(pp.comErros).map(([b, c]) => [b, numeros(c)])) });
+  }
   if (multi) console.log(`— ${a0.dir} (${js.length} cartões)`);
   for (const b of t.bracos) {
     const c = t.porBraco[b];
@@ -437,7 +617,26 @@ if (process.argv[1] && /(?:^|[\\/])e14-deteccao\.ts$/.test(process.argv[1])) {
     const bracos = [...new Set(resumo.flatMap(r => Object.keys(r.porBraco)))];
     const med = Object.fromEntries(bracos.map(b => { const v = resumo.map(r => r.porBraco[b]).filter((x): x is NonNullable<typeof x> => !!x);
       return [b, { trios: v.length, deteccao: mediana(v.map(x => x.deteccao)), fundamentada: mediana(v.map(x => x.fundamentada)), ds: mediana(v.map(x => x.ds)), geral: mediana(v.map(x => x.geral)) }]; }));
-    gravar(saida, "resumo.json", jsonTexto({ politica: j.politica, nota: "mediana por braço sobre as análises com coleta válida; braço sem contagem fica fora da mediana e aparece com null na análise", porAnalise: resumo, mediana: med }));
+    // [NAT-78 §4.5] Só com --por-protocolo: mediana por braço sobre as análises em que o slot está no conjunto por protocolo,
+    // numa chave própria (nunca em `mediana`); `used-with-errors` à parte, com os números de cada análise; os outros estados
+    // fora, contados por braço × estado.
+    const sensPP = comProtocolo ? (() => {
+      const bs = [...new Set(resumoPP.flatMap(r => r.bracos.map(x => x.braco)))];
+      // [D-198] exclusões por braço sobre todas as análises: slots, no conjunto, excluídos por estado.
+      const exclusoes = exclusoesPorBraco(resumoPP.flatMap(r => r.bracos.filter(x => x.situacao !== "sem-coleta")
+        .map(x => ({ braco: x.braco, estado: x.estadoDoOraculo!, situacao: x.situacao as SituacaoProtocolo }))), bs);
+      return { leitura: LEITURA_POR_PROTOCOLO, tipo: TIPO_POR_PROTOCOLO, formato: FORMATO_POR_PROTOCOLO, aviso: AVISO_POR_PROTOCOLO, definicao: definicaoPorProtocolo(),
+        exclusoesPorBraco: exclusoes,
+        nota: "mediana por braço sobre as análises em que o slot está no conjunto por protocolo; fora dele (ou sem coleta válida) o braço não entra na mediana; used-with-errors listado à parte com os próprios números, nunca somado",
+        porAnalise: resumoPP.map(r => ({ analise: r.analise, situacao: Object.fromEntries(r.bracos.map(x => [x.braco, { estadoDoOraculo: x.estadoDoOraculo, situacao: x.situacao }])), porBraco: r.porBraco })),
+        mediana: Object.fromEntries(bs.map(b => { const v = resumoPP.map(r => r.porBraco[b]).filter((x): x is NonNullable<typeof x> => !!x);
+          return [b, { trios: v.length, deteccao: mediana(v.map(x => x.deteccao)), fundamentada: mediana(v.map(x => x.fundamentada)), ds: mediana(v.map(x => x.ds)), geral: mediana(v.map(x => x.geral)) }]; })),
+        comErros: resumoPP.flatMap(r => Object.entries(r.comErros).map(([b, x]) => ({ analise: r.analise, braco: b, ...x }))) };
+    })() : null;
+    gravar(saida, "resumo.json", jsonTexto({ politica: j.politica, nota: "mediana por braço sobre as análises com coleta válida; braço sem contagem fica fora da mediana e aparece com null na análise", porAnalise: resumo, mediana: med,
+      ...(sensPP ? { sensibilidadePorProtocolo: sensPP } : {}) }));
     for (const b of bracos) console.log(`mediana ${b}: detecção ${med[b].deteccao} · fundamentada ${med[b].fundamentada} · DS ${med[b].ds} · geral ${med[b].geral} (${med[b].trios} trios)`);
+    if (sensPP) for (const [b, x] of Object.entries(sensPP.mediana)) { const e = sensPP.exclusoesPorBraco[b];
+      console.log(`${LEITURA_POR_PROTOCOLO} (sensibilidade) · mediana ${b}: detecção ${x.deteccao} · fundamentada ${x.fundamentada} (${x.trios} trios no conjunto; slots ${e.slots}, excluídos ${e.excluidos}${e.excluidos ? `: ${Object.entries(e.porEstado).map(([s, n]) => `${s} ${n}`).join(", ")}` : ""})`); }
   }
 }
