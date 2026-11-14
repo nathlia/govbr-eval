@@ -1,0 +1,162 @@
+{
+  "contract": "campaign.v2",
+  "fixture": true,
+  "campaignId": "ensaio-emenda-a-duble-01",
+  "kind": "pilot",
+  "title": "ENSAIO DESCARTÁVEL, SEM MODELO (dublê): caminho da emenda (a) na tela A — linha de base congelada da campanha, slots so-coleta, reexecução do job de infraestrutura, coleta:trio e analisar pela linha de base congelada; 2 trios sem/ferramentas/com em quadrado latino; nunca dado científico",
+  "objective": "Ensaio N1 de 14/11/2026 (n1-cobertura-ensaio-2026-11-14.md): exercitar sem modelo as partes do pipeline da tela D que nunca rodaram — disparo so-linha-de-base, campanha:linha-de-base, slots so-coleta de um ramo congelado, recusa de slot de ramo com commit a mais, reexecução do arquivar com gh run rerun --job, coleta:trio pela linha de base congelada e analisar --linha-de-base-da-campanha. Tela A (solicitacao), nunca a D. Cliente real contra o dublê roteirizado da API Messages (credencial falsa, cenário honesto). Forma copiada da campanha rascunho nat78-tela-d-01. Nada daqui entra em número da tese.",
+  "hypotheses": [
+    "Ensaio de infraestrutura: nenhuma hipótese científica."
+  ],
+  "createdAt": "2026-11-14T20:00:00Z",
+  "frozenAt": "2026-11-14T20:00:00Z",
+  "design": {
+    "screens": [
+      {
+        "id": "solicitacao",
+        "label": "Solicitar serviço",
+        "version": "govbr-telas-site-9f4b936f2859"
+      }
+    ],
+    "arms": [
+      "sem",
+      "ferramentas",
+      "com"
+    ],
+    "models": [
+      {
+        "family": "claude",
+        "requested": "claude-opus-duble-teste"
+      }
+    ],
+    "effort": "high",
+    "repetitions": 2,
+    "order": "quadrado-latino",
+    "seed": 20261114,
+    "comparisons": [
+      {
+        "id": "ferramentas-x-com",
+        "arms": [
+          "ferramentas",
+          "com"
+        ],
+        "role": "primary",
+        "question": "Ensaio sem modelo (sem inferência): estrutura da comparação principal. Nada deste ensaio é comparado nem entra em número da tese."
+      },
+      {
+        "id": "sem-x-com",
+        "arms": [
+          "sem",
+          "com"
+        ],
+        "role": "secondary",
+        "question": "Ensaio sem modelo (sem inferência): o oráculo inteiro. Nada deste ensaio é comparado nem entra em número da tese."
+      },
+      {
+        "id": "sem-x-ferramentas",
+        "arms": [
+          "sem",
+          "ferramentas"
+        ],
+        "role": "secondary",
+        "question": "Ensaio sem modelo (sem inferência): as ferramentas de medição. Nada deste ensaio é comparado nem entra em número da tese."
+      }
+    ]
+  },
+  "fixed": {
+    "protocolSha256": "8139bb0cd71d273e1f63294b2523478fd54fc2e05033cfc58f58bda174d83e3c",
+    "client": {
+      "name": "claude-code",
+      "version": "2.1.288 (Claude Code)"
+    },
+    "provider": {
+      "name": "stub",
+      "authMethod": "unknown"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "147.0.7727.15"
+    },
+    "playwrightMcp": "@playwright/mcp@0.0.70",
+    "isolationPolicyVersion": "isolamento-runner-1.1.0",
+    "oracleProfiles": {
+      "com": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.12",
+        "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "evaluation",
+        "tools": [
+          "get_component_spec",
+          "get_design_tokens",
+          "get_ds_rules",
+          "get_emag_rules",
+          "get_finding_details",
+          "get_page_rules",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "04ae14378db09bd4cdef48841e3d1a9388b701e18279fe08a04267af3c74614c"
+      },
+      "ferramentas": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.12",
+        "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "knowledge-free",
+        "tools": [
+          "get_finding_details",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "5b9c59aaa490f5de2a4a497eda8a2e3dbedd25b2a8288fed8eb049f7233d40dc"
+      }
+    },
+    "scorerVersion": "flow-semantic-1.8.2"
+  },
+  "limits": {
+    "timeoutSeconds": 1800,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 8,
+    "retryOn": [
+      "rate-limited",
+      "model-unavailable",
+      "auth-failed",
+      "preflight-failed",
+      "vm-lost",
+      "harness-error",
+      "archive-unavailable",
+      "cancelled"
+    ],
+    "attemptSelection": "Ensaio: as regras da §7.2 do protocolo NAT-78 (primeira tentativa elegível de cada slot, na ordem da agenda); nada entra em resultado."
+  },
+  "failurePolicy": "Ensaio da emenda (a) às regras de falha (docs/runner-isolado.md): linha de base da campanha medida e congelada uma vez por um disparo so-linha-de-base, em campanhas/ensaio-emenda-a-duble-01/linha-de-base.json, commitado antes do slot 1; todo slot dispara com etapas = so-coleta; job de infraestrutura que cai é reexecutado no mesmo disparo sem contar como tentativa. Nenhum commit no govbr-eval entre o primeiro e o último slot de um trio, salvo o commit a mais proposital do ensaio de recusa.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": []
+  },
+  "analysisPlan": {
+    "primaryOutcome": "Nenhum (ensaio de infraestrutura, sem modelo).",
+    "secondaryOutcomes": [],
+    "uncertaintyMethod": null,
+    "exclusionRules": "Ensaio: nada entra em resultado científico."
+  },
+  "budget": {
+    "approved": false,
+    "amount": null,
+    "currency": null,
+    "approvedBy": null,
+    "approvedAt": null
+  }
+}
