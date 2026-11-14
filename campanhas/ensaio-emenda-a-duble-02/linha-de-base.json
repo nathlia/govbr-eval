@@ -1,0 +1,37 @@
+{
+  "contract": "linha-de-base-campanha.v1",
+  "fixture": true,
+  "campaignId": "ensaio-emenda-a-duble-02",
+  "screen": {
+    "id": "solicitacao",
+    "version": "govbr-telas-site-9f4b936f2859"
+  },
+  "baselineId": "lb-20261114-234313-solicitacao-91b5e5",
+  "registro": {
+    "caminho": "linhas-de-base/ensaio-emenda-a-duble-02/solicitacao/lb-20261114-234313-solicitacao-91b5e5/baseline.json",
+    "sha256": "06e0288e0eb0c858df5d5bf5030d20bab2d93ced1af5eed508bac2f5fcfff39a"
+  },
+  "medidaEm": "2026-11-14T23:43:13Z",
+  "manifestoColeta": {
+    "caminho": "coletas/ensaio-emenda-a-duble-02/e238ec7caac33530eddf772cd8c51feec159c1e57e02a5ff110530fe9503ecc7/manifesto-coleta.json",
+    "sha256": "e238ec7caac33530eddf772cd8c51feec159c1e57e02a5ff110530fe9503ecc7"
+  },
+  "snapshotSetId": "snapshots-31bf171bc9bd026c",
+  "site": {
+    "siteSha256": "9f4b936f2859c87ac46f0013a3b58c3eae356db6aa7b23cf50cb497ec24a1cfd",
+    "manifestSha256": "427051e631aa63826ed2cab17dea510d7b340822074718287aaeacdc76bee889"
+  },
+  "oracle": {
+    "version": "3.7.12",
+    "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+    "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637"
+  },
+  "repos": {
+    "govbr-eval": "a6aa6df7270f4ba4cb6631f95dfb534cd6cc6524",
+    "govbr-telas": "620f5517e6f467599125532b6c37bd5fc21e7419",
+    "govbr-ds-validator": "816f4bae41f4486b7055f0ac265167e87ce0d5e5"
+  },
+  "imagesLockSha256": "dabeada27e76be15e78363c472725fa0a9bf0fb0cbcd4dee900de78c8f534358",
+  "regra": "emenda (a) às regras de falha (§ 7.2): a linha de base da campanha é medida e congelada uma vez, antes do primeiro slot, por um disparo so-linha-de-base, registrada em campanhas/<id>/linha-de-base.json e commitada antes do slot 1; todo trio usa este registro, conferido contra o manifesto de coleta de cada slot (identidade executável, site, oráculo, commits do govbr-ds-validator e do govbr-telas, lock de imagens) e pelo git (o commit do govbr-eval de cada slot contém o registro e só difere do da linha de base por ele)",
+  "geradoEm": "2026-11-14T23:44:38Z"
+}
