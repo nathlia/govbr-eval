@@ -24,7 +24,7 @@
  *
  *   npm run campanha:agenda -- --campanha ID --pares N --semente <commit 40 hex> [--janelas "rótulo:k,rótulo:k"]
  *   npm run campanha:agenda -- conferir --campanha ID
- *   npm run campanha:agenda -- comando --campanha ID --slot p03-com [--modo real] [--arquivo CLONE]
+ *   npm run campanha:agenda -- comando --campanha ID --slot p03-com [--ref BRANCH|TAG] [--modo real] [--arquivo CLONE]
  *        imprime o `gh workflow run` do slot (só o slot + os commits; o resto vem da agenda/campanha)
  *
  * NAT-61 — TRIOS (agenda.v2, campanha `campaign.v2` com `design.order = "quadrado-latino"` e semente inteira
@@ -42,6 +42,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { AnyCampaign, Arm, ArmV2, Campaign, CampaignV2 } from "../contracts/index";
 import type { EntradaIndice } from "./arquivo-resultados";
+import { caminhoDoRegistro, conferirRefCongelado, gitDoRef, type GitDoRef } from "./ref-congelado";
 
 export const AGENDA_CONTRATO = "agenda.v1";
 export const AGENDA_GERADOR = "agenda-campanha-1.0.0";
@@ -409,6 +410,45 @@ export function situacaoDaAgenda(a: Agenda, c: AnyCampaign, entradas: EntradaInd
   };
 }
 
+// ───────────────────────────────────────────────────────────────── comando do slot (com --ref)
+
+/**
+ * As linhas que `campanha:agenda comando` imprime para um slot (emenda (a), D1b do ensaio de 14/11):
+ *   - com `campanhas/<id>/linha-de-base.json` no checkout, `--ref` é obrigatório e é conferido pela MESMA regra do
+ *     `preparar` (ref-congelado.ts): o ref tem o registro (os mesmos bytes do checkout) e só difere do commit da linha de
+ *     base por ele; o comando sai com `--ref <ref>` e `-f etapas=so-coleta`;
+ *   - sem o registro, campanha `formal` exige `--ref` (o slot nunca sai do ramo padrão por omissão); nas outras, `--ref` é
+ *     opcional e, quando dado, tem de resolver (e, se o ref tiver o registro, passa pela mesma regra).
+ * `--ref` é branch ou tag (o `gh workflow run --ref` não aceita sha). Recusa = exceção, nada impresso.
+ */
+export function comandoDoSlot(o: { raiz: string; campanha: string; c: AnyCampaign; a: Agenda; slot: SlotAgenda; modo: string; tentativa: number | null;
+  ref?: string; git?: GitDoRef }): string[] {
+  const git = o.git ?? gitDoRef(o.raiz);
+  const noDisco = join(o.raiz, caminhoDoRegistro(o.campanha));
+  const congeladaNoDisco = existsSync(noDisco);
+  if (o.ref !== undefined && (!o.ref || o.ref.startsWith("--"))) throw new Error("--ref exige um branch ou tag");
+  if (o.ref && /^[0-9a-f]{40}$/.test(o.ref)) throw new Error(`--ref ${o.ref}: o gh workflow run --ref aceita branch ou tag, não sha (crie uma tag no commit)`);
+  if (!o.ref && congeladaNoDisco) throw new Error(`a campanha ${o.campanha} tem a linha de base congelada (${caminhoDoRegistro(o.campanha)}): passe --ref com o branch ou tag que contém o registro; sem ele o slot sairia do ramo padrão`);
+  if (!o.ref && o.c.kind === "formal") throw new Error(`campanha formal ${o.campanha}: passe --ref com o branch ou tag do disparo (o slot nunca sai do ramo padrão por omissão)`);
+  let congelada = false, sha: string | null = null;
+  if (o.ref) {
+    const r = conferirRefCongelado({ campanha: o.campanha, ref: o.ref, git });
+    if (r.problemas.length) throw new Error(`--ref ${o.ref} recusado: ${r.problemas.join("; ")}`);
+    if (congeladaNoDisco && !r.congelada) throw new Error(`--ref ${o.ref} (commit ${r.commit!.slice(0, 12)}) não contém ${caminhoDoRegistro(o.campanha)}: commite e empurre o registro antes do slot`);
+    if (congeladaNoDisco && sha256(git.blob(r.commit!, caminhoDoRegistro(o.campanha))!) !== sha256(readFileSync(noDisco))) {
+      throw new Error(`--ref ${o.ref}: o ${caminhoDoRegistro(o.campanha)} do ref difere do deste checkout`);
+    }
+    congelada = r.congelada; sha = r.commit;
+  }
+  const ref = o.ref ? ` --ref ${o.ref}` : "";
+  const tent = o.tentativa !== null ? ` -f tentativa=${o.tentativa}` : "";
+  const linhas = [`gh workflow run execucao-isolada.yml --repo nathlia/govbr-eval${ref} -f modo=${o.modo} -f tela=${o.c.design.screens[0].id} -f campanha=${o.campanha} -f slot=${o.slot.slotId}${tent}${congelada ? " -f etapas=so-coleta" : ""} -f telas_sha=<40 hex> -f validator_sha=<40 hex>`];
+  if (o.ref) linhas.push(`# --ref ${o.ref} = ${sha!.slice(0, 12)} hoje: o branch/tag não pode andar até o último trio (prefira tag) e tem de estar no remoto; o preparar confere de novo o commit do disparo`);
+  if (congelada) linhas.push("# linha de base congelada da campanha (emenda (a)): o slot dispara com etapas = so-coleta; o preparar recusa outro ref ou outras etapas antes do agente; depois do disparo, scripts/ci/conclusao-disparo.ts --run <id> diz se só um job de infraestrutura falhou");
+  linhas.push(`# o preparar resolve da agenda: ${o.a.contract === AGENDA_CONTRATO ? "par" : "grupo"} ${o.slot.pairId}, braço ${o.slot.arm}, repetição ${o.slot.repetition}; da campanha: modelo, esforço, tempo limite; do índice: a tentativa`);
+  return linhas;
+}
+
 // ───────────────────────────────────────────────────────────────── CLI
 
 function main(): void {
@@ -446,21 +486,16 @@ function main(): void {
   if (comando === "comando") {
     const slot = a.slots.find(s => s.slotId === need("--slot"));
     if (!slot) throw new Error(`slot fora da agenda; slots: ${a.slots.map(s => s.slotId).join(", ")}`);
-    const modo = val("--modo") ?? "real";
-    let tentativa = "";
+    let tentativa: number | null = null;
     if (val("--arquivo")) {
       const d = proximaTentativa(a, c, lerEntradasDoIndice(resolve(need("--arquivo"))), slot.slotId);
       if (!d.ok) throw new Error(d.motivo);
-      tentativa = ` -f tentativa=${d.tentativa}`;
+      tentativa = d.tentativa;
     }
-    // emenda (a): com a linha de base congelada da campanha (campanhas/<id>/linha-de-base.json), o slot não mede a sua
-    const congelada = existsSync(join(dirname(agPath), "linha-de-base.json"));
-    console.log(`gh workflow run execucao-isolada.yml --repo nathlia/govbr-eval -f modo=${modo} -f tela=${c.design.screens[0].id} -f campanha=${campanha} -f slot=${slot.slotId}${tentativa}${congelada ? " -f etapas=so-coleta" : ""} -f telas_sha=<40 hex> -f validator_sha=<40 hex>`);
-    if (congelada) console.log("# linha de base congelada da campanha (emenda (a)): o slot dispara com etapas = so-coleta; depois do disparo, scripts/ci/conclusao-disparo.ts --run <id> diz se só um job de infraestrutura falhou");
-    console.log(`# o preparar resolve da agenda: ${a.contract === AGENDA_CONTRATO ? "par" : "grupo"} ${slot.pairId}, braço ${slot.arm}, repetição ${slot.repetition}; da campanha: modelo, esforço, tempo limite; do índice: a tentativa`);
+    for (const l of comandoDoSlot({ raiz: RAIZ, campanha, c, a, slot, modo: val("--modo") ?? "real", tentativa, ref: val("--ref") })) console.log(l);
     return;
   }
-  throw new Error("uso: campanha:agenda [gerar] --campanha ID --pares N --semente HEX | conferir --campanha ID | comando --campanha ID --slot S");
+  throw new Error("uso: campanha:agenda [gerar] --campanha ID --pares N --semente HEX | conferir --campanha ID | comando --campanha ID --slot S [--ref BRANCH|TAG] [--modo M] [--arquivo CLONE]");
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

@@ -215,9 +215,20 @@ export function holmTelas(pD: number | null, pE: number | null | "fora-antes-da-
   return { versao: HOLM_VERSAO, alfaFamilia: alfa, familia: ["D", "E"], ordem, D: t.D, E: t.E };
 }
 
-/** Leitura congelada de uma tela sob o Holm (§6.3): vantagem só se declarada pelo Holm, na direção da média de D. */
-export function leituraSobHolm(a: Pick<AnalisePareada, "principal" | "media">, t: HolmTela): Leitura {
+/**
+ * Leitura de uma tela sob o Holm (§6.3), com o BRAÇO nomeado (O3 do ensaio sem modelo de 14/11): vantagem só se declarada
+ * pelo Holm, na direção da média de D. `bracos` = os braços da comparação na ordem do desenho `[a, b]`, com D = b − a
+ * (ex.: primária `["ferramentas", "com"]`, D_fc = com − ferramentas): média > 0 → `vantagem-do-<b>`; média < 0 →
+ * `vantagem-do-<a>`. Nunca devolve o rótulo genérico `vantagem-sem` de `analisePareada` (que, na primária, seria a
+ * vantagem do ferramentas).
+ */
+export const HOLM_LEITURA_VERSAO = "holm-leitura-por-braco-1.0.0";
+export type LeituraSobHolm = `vantagem-do-${string}` | "sem-diferenca-detectavel" | "indisponivel";
+export function leituraSobHolm(a: Pick<AnalisePareada, "principal" | "media">, t: HolmTela, bracos: readonly [string, string]): LeituraSobHolm {
+  if (!Array.isArray(bracos) || bracos.length !== 2 || !bracos.every(b => typeof b === "string" && b.trim()) || bracos[0] === bracos[1]) {
+    throw new Error(`leituraSobHolm: dê os dois braços da comparação, na ordem [a, b] com D = b − a (recebido ${JSON.stringify(bracos)})`);
+  }
   if (a.principal.p === null || a.media === null) return "indisponivel";
   if (a.principal.p !== t.p) throw new Error(`o p da análise (${a.principal.p}) não é o p dado ao Holm (${t.p})`);
-  return !t.declarada ? "sem-diferenca-detectavel" : a.media > 0 ? "vantagem-com" : a.media < 0 ? "vantagem-sem" : "sem-diferenca-detectavel";
+  return !t.declarada ? "sem-diferenca-detectavel" : a.media > 0 ? `vantagem-do-${bracos[1]}` : a.media < 0 ? `vantagem-do-${bracos[0]}` : "sem-diferenca-detectavel";
 }

@@ -145,17 +145,23 @@ teste("Holm D × E (§6.3): E fora antes de qualquer coleta → família só com
   assert.throws(() => holmTelas(1.2, 0.01), /inválido/);
 });
 
-teste("leitura sob Holm: vantagem só se declarada, na direção da média; p trocado recusa", () => {
-  const com = analisePareada(Array(9).fill(1), "s"), semD = analisePareada(Array(9).fill(-1), "s");
+teste("leitura sob Holm: vantagem só se declarada, na direção da média, com o braço nomeado; p trocado recusa", () => {
+  const FC = ["ferramentas", "com"] as const, SC = ["sem", "com"] as const;
+  const com = analisePareada(Array(9).fill(1), "s"), menos = analisePareada(Array(9).fill(-1), "s");
   perto(com.principal.p, 2 / 512);
   const h = holmTelas(com.principal.p, 0.5);
-  assert.equal(leituraSobHolm(com, h.D), "vantagem-com");
-  assert.equal(leituraSobHolm(semD, holmTelas(semD.principal.p, 0.5).D), "vantagem-sem");
-  assert.equal(leituraSobHolm(com, holmTelas(com.principal.p, 0.001).D), "vantagem-com", "a D passa em 0,05 depois da E passar em 0,025");
+  assert.equal(leituraSobHolm(com, h.D, FC), "vantagem-do-com");
+  assert.equal(leituraSobHolm(menos, holmTelas(menos.principal.p, 0.5).D, FC), "vantagem-do-ferramentas", "primária com D < 0: o ferramentas, nunca 'sem'");
+  assert.equal(leituraSobHolm(menos, holmTelas(menos.principal.p, 0.5).D, SC), "vantagem-do-sem");
+  assert.equal(leituraSobHolm(com, holmTelas(com.principal.p, 0.001).D, FC), "vantagem-do-com", "a D passa em 0,05 depois da E passar em 0,025");
   const nula = analisePareada([1, -1, 0, 2, -2, 1], "s");
-  assert.equal(leituraSobHolm(nula, holmTelas(nula.principal.p, 0.001).D), "sem-diferenca-detectavel");
-  assert.throws(() => leituraSobHolm(com, { p: 0.5, limiar: 0.05, declarada: false }), /não é o p dado ao Holm/);
+  assert.equal(leituraSobHolm(nula, holmTelas(nula.principal.p, 0.001).D, FC), "sem-diferenca-detectavel");
+  assert.equal(leituraSobHolm(menos, { p: menos.principal.p!, limiar: 0.025, declarada: false }, FC), "sem-diferenca-detectavel");
+  assert.throws(() => leituraSobHolm(com, { p: 0.5, limiar: 0.05, declarada: false }, FC), /não é o p dado ao Holm/);
+  for (const ruim of [undefined, [], ["com"], ["com", "com"], ["", "com"]]) {
+    assert.throws(() => leituraSobHolm(com, h.D, ruim as never), /dê os dois braços/);
+  }
+  for (const l of [leituraSobHolm(com, h.D, FC), leituraSobHolm(menos, holmTelas(menos.principal.p, 0.5).D, FC)]) assert.notEqual(l, "vantagem-sem");
 });
 
-console.log(`\n${ok} ok, ${falhas} falha(s)`);
-process.exitCode = falhas ? 1 : 0;
+

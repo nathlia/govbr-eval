@@ -21,6 +21,7 @@ import { BRACOS, temOraculo, type Braco } from "../runner/perfis-oraculo";
 import { caminhoAgenda, recusadoNoPreflight, type Agenda } from "./agenda-campanha";
 import type { EntradaIndice } from "./arquivo-resultados";
 import { MODELO_ENSAIO } from "./manifesto-coleta-isolada";
+import { caminhoDoRegistro, conferirRefCongelado, gitDoRef, type GitDoRef } from "./ref-congelado";
 
 const ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
 const COMMIT = /^[a-f0-9]{40}$/;
@@ -157,6 +158,23 @@ export function conferirEntradas(e: Partial<Entradas>, ag: AgendaDoDisparo | nul
     agenda: String(Boolean(ag)),
   };
   return { problemas: p, saidas };
+}
+
+/**
+ * Emenda (a), D1 (ensaio sem modelo de 14/11): se o commit do disparo (HEAD do checkout do govbr-eval no `preparar`) tem
+ * `campanhas/<id>/linha-de-base.json`, ele só pode diferir do commit da linha de base por esse registro, e o disparo só
+ * pode ser `so-coleta`. Recusa aqui = nenhum manifesto de coleta, nenhum agente: o arquivar registra "recusado no
+ * preflight", que não é tentativa do slot. Campanha sem o registro: nada muda.
+ */
+export function problemasDoRefDoDisparo(raiz: string, e: Partial<Entradas>, git: GitDoRef = gitDoRef(raiz)): string[] {
+  const campanha = String(e.campanha ?? "").trim();
+  if (!ID.test(campanha)) return [];
+  const congeladaNoDisco = existsSync(join(raiz, caminhoDoRegistro(campanha)));
+  let r;
+  try { r = conferirRefCongelado({ campanha, ref: "HEAD", etapas: String(e.etapas ?? "").trim(), git }); }
+  catch (x) { return congeladaNoDisco ? [`linha de base congelada de ${campanha}: o git do checkout não pôde ser lido (${(x as Error).message})`] : []; }
+  if (congeladaNoDisco && !r.congelada) return [`linha de base congelada de ${campanha}: ${caminhoDoRegistro(campanha)} existe no checkout mas não no commit HEAD (árvore suja?)`];
+  return r.problemas;
 }
 
 /** Versões medidas de dentro das imagens construídas no CI × as do lock commitado. Ids diferem por construção. */
@@ -431,6 +449,9 @@ function main(): number {
       try { ag = agendaDaCampanha(resolve(fileURLToPath(import.meta.url), "..", ".."), String(ent.campanha ?? "")); } catch (x) { erro = (x as Error).message; }
       const { problemas, saidas } = conferirEntradas(ent, ag);
       if (erro) problemas.push(erro);
+      // emenda (a), D1: com a linha de base congelada no commit do disparo, o ref e as etapas são conferidos AQUI, antes
+      // de qualquer gasto (o coleta:trio só recusaria depois do slot pago)
+      problemas.push(...problemasDoRefDoDisparo(resolve(fileURLToPath(import.meta.url), "..", ".."), ent));
       if (problemas.length) {
         saida(`### Entradas recusadas\n\n${problemas.map((x) => `- ${x}`).join("\n")}\n\nNada foi executado.\n`);
         return 1;

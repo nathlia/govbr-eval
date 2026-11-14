@@ -127,12 +127,15 @@ jobs:
       repeticao: ${{ steps.entradas.outputs.repeticao }}
       tentativa: ${{ steps.manifesto.outputs.tentativa }}
     steps:
-      - name: Checkout govbr-eval (commit do disparo)
+      # Histórico inteiro (emenda (a), D1): com a linha de base congelada, as entradas conferem que o commit do disparo só
+      # difere do commit da linha de base pelo registro (git diff), o que exige ter esse commit no checkout.
+      - name: Checkout govbr-eval (commit do disparo, com histórico)
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           ref: ${{ github.sha }}
           path: govbr-eval
           persist-credentials: false
+          fetch-depth: 0
       - name: Node 24.21.0 (o mesmo das imagens)
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:

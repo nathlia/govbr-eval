@@ -608,7 +608,34 @@ grava `campanhas/<id>/linha-de-base.json` (contrato `linha-de-base-campanha.v1`)
 `baseline.json`, quando foi medida, manifesto de coleta do disparo, conjunto de snapshots, site, build do validator,
 commits do `govbr-eval`/`govbr-telas`/`govbr-ds-validator` e lock de imagens. O gerador recusa registro não
 `utilizavel` e campanha que já tem qualquer execução iniciada. O arquivo é commitado **antes** do slot 1, e os slots
-disparam com `etapas: so-coleta` (`campanha:agenda comando` já imprime assim quando o arquivo existe).
+disparam com `etapas: so-coleta` de um ref que só acrescenta o registro ao commit da linha de base.
+
+**Ref do slot conferido no disparo (D1 do ensaio sem modelo de 14/11/2026).** A regra do git abaixo era aplicada só
+depois da coleta (`coleta:trio`/`analisar`): um slot disparado de um ref com commit a mais rodava o agente, entrava no
+índice como tentativa válida e o trio inteiro era recusado depois (Actions 43652813338). Agora a mesma regra
+(`scripts/ref-congelado.ts › conferirRefCongelado`) roda também:
+
+- **no `preparar`** (fase `entradas`, `pipeline-t4.ts › problemasDoRefDoDisparo`), antes do manifesto de coleta e de
+  qualquer agente: se o commit do disparo tem `campanhas/<id>/linha-de-base.json`, o disparo é recusado quando
+  `git diff --name-only <repos.govbr-eval do registro> HEAD` tem qualquer arquivo além do registro (a mensagem nomeia
+  os arquivos, o commit do disparo e o da linha de base) ou quando `etapas ≠ so-coleta`. O checkout do govbr-eval no
+  `preparar` busca o histórico inteiro (`fetch-depth: 0`); checkout raso, commit da linha de base fora do histórico,
+  registro fora do contrato ou registro no disco e não no commit também recusam (fecha, nunca passa calado). Recusa
+  no `preparar` = sem manifesto de coleta: o arquivar grava "recusado no preflight", que não é tentativa do slot nem
+  execução iniciada da campanha (`conclusao-disparo` → 12);
+- **no `campanha:agenda comando`** (`agenda-campanha.ts › comandoDoSlot`): com o registro no checkout, `--ref BRANCH|TAG`
+  é obrigatório, o ref tem de conter o registro com os mesmos bytes e passar pela mesma regra, e o comando impresso
+  sai com `--ref <ref>` e `-f etapas=so-coleta`. Sem o registro, campanha `formal` também exige `--ref` (o slot
+  nunca sai do ramo padrão por omissão); nas outras, `--ref` é opcional. O `gh workflow run --ref` não aceita sha:
+  use um branch que não ande até o último trio, de preferência uma tag no commit do registro, empurrada para o remoto.
+
+```bash
+npm run campanha:agenda -- comando --campanha <id> --slot p01-ferramentas --ref <branch-ou-tag> [--modo real] [--arquivo ../govbr-resultados]
+```
+
+Testes: `test:ref-congelado` (git real num repositório temporário: aceito, commit a mais, etapas, sem registro, commit
+fora do histórico, checkout raso, registro fora do contrato, árvore suja; o `comando` com e sem `--ref`, sha, campanha
+formal). Nenhum desses arquivos entra em imagem, lock ou na identidade de campanha.
 
 O `coleta:trio` acha o arquivo e escolhe a linha de base `congelada-da-campanha` para todo trio
 (`coleta-trio.ts › planoDoTrio`). As do disparo de cada slot, se houver, são ignoradas e listadas em `coleta-trio.json`.
@@ -643,6 +670,7 @@ com `gh run view`/`gh api` (só leitura) e decide pela conclusão do **job** `co
 | coleta `failure`/`cancelled` | `tentativa-do-agente` (11): o arquivo decide se é falha técnica | só o arquivar, se ele também caiu |
 | preparar caiu | `recusado-no-preparo` (12): nenhum modelo, não é tentativa | só o arquivar, se ele também caiu |
 | artifact ausente/expirado, sem lista, 3ª tentativa do run, job desconhecido | `caso-da-autora` (13) | — |
+| run `cancelled` com todos os jobs `success` (o cancelamento chegou tarde: o arquivar terminou e publicou) | `caso-da-autora` (13): "sem job de infraestrutura falho" | — (a execução está arquivada; confira o índice) |
 | só `linhas-de-base` caiu | `concluido`: a execução está arquivada. Sem congelada, o caminho de sempre (`so-linha-de-base` + `refazer_linha_de_base_de`) | — |
 
 O comando é sempre `--job` do job de infraestrutura. Segundo a documentação, o GitHub reexecuta junto os dependentes
@@ -668,9 +696,17 @@ com empréstimo; identidade com outro `distSha256`/site/lock/árvore suja; git; 
 `analisar`, e a mesma conferência pelo CLI do `analisar`), `test:pipeline-t4` (pacote ausente com coleta `success` = uma
 tentativa no índice que conta, sem pacote fabricado, e o mesmo disparo com pacote depois é recusado; arquivar
 reexecutado num clone novo = um slot, mesmo anexo, entrega confirmada; decisões do `conclusao-disparo` e nomes dos jobs
-do YAML), `test:contracts`. **Não testado
-localmente:** um run de verdade com o arquivar forçado a falhar e `gh run rerun --job` (proposta: um disparo
-`roteirizado`). É a prova de que o `download-artifact` da tentativa 2 vê o `pacote` da tentativa 1.
+do YAML), `test:contracts`.
+
+**Provado no ensaio sem modelo de 14/11/2026** (`thesis-workspace/planejamento/atual/ensaio-sem-modelo-n1-2026-11-14.md`):
+`gh run rerun 43652069821 --job <arquivar>` rodou só o arquivar (preparar e coleta trazidos da tentativa 1, mesmos
+horários), e o `download-artifact` da tentativa 2 baixou o `pacote` e o `manifesto-coleta` subidos na tentativa 1; o
+anexo já na Release foi aceito pelo sha256, o publicar não achou nada novo e o slot ficou com uma tentativa só.
+**Cancelar o run não derruba o arquivar (O2):** `gh run cancel` aceito com o arquivar em execução não o interrompeu; o
+job terminou `success` e publicou, o run ficou `cancelled`, e o `conclusao-disparo` devolve 13 `caso-da-autora`
+(linha nova da tabela). Do lado seguro: confira o índice; a execução está arquivada e nada é reexecutado. **Ainda não
+visto num run real:** a decisão 10 `reexecutar-infra` com o arquivar de fato `failure` (não há como forçar sem mexer
+no código ou na rede).
 
 ## Testes
 
