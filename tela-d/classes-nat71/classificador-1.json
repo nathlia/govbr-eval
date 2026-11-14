@@ -1,0 +1,97 @@
+{
+ "classificador": 1,
+ "referenciaSha256": "2eacba80efb373c4923f7f85593c684647e6b5ec58ad5a341329d96a44632569",
+ "specs": [
+  {
+   "id": "D-01",
+   "classe": "sintático",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "Decidível olhando um elemento isolado num estado (br-button sem `circle` e sem texto/`label` visível), sem relacionar outro elemento nem interpretar significado; o predicado da norma do DS é determinístico, mas não há ferramenta testada que o implemente (nível b)."
+  },
+  {
+   "id": "D-02",
+   "classe": "sintático",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "Limítrofe entre sintático e contextual (ordem de teclado): classificado como sintático porque o defeito se decide pelos atributos de um único elemento (`a role=\"button\"` sem href nem tabindex), análogo ao exemplo `div role=\"button\"` da definição; predicado escrevível, sem regra testada conhecida (nível b)."
+  },
+  {
+   "id": "D-03",
+   "classe": "sintático",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "Limítrofe com contextual (a interatividade se observa pelo clique), mas a classe `interaction` do próprio elemento já declara o papel interativo, de modo que a decisão cabe a um elemento (span sem role, tabindex nem aria-pressed/expanded); predicado determinístico não implementado em ferramenta testada (nível b)."
+  },
+  {
+   "id": "D-04",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "a",
+   "limitrofe": true,
+   "motivo": "Limítrofe com sintático (ausência de aria-label/title no próprio input), mas o nome do controle exige relacionar rótulo↔controle (`<label>`/aria-labelledby), caso que a definição põe em contextual; a regra `label` do axe-core cobre exatamente essa ausência (nível a)."
+  },
+  {
+   "id": "D-05",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "Rótulo↔controle: decidir exige verificar que nenhum label associado nem aria-labelledby nomeia o input além do placeholder; predicado escrevível (placeholder como único nome), mas a regra `label` do axe-core aceita placeholder, logo não há nível a nas ferramentas conhecidas."
+  },
+  {
+   "id": "D-06",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "motivo": "Contraste insuficiente (WCAG 1.4.3) decidível sobre o estilo computado do elemento num estado, exemplo literal da classe layout/visual; a regra `color-contrast` do axe-core implementa o predicado (nível a)."
+  },
+  {
+   "id": "D-07",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "Relação contêiner↔item/anatomia (tabela sem caption e sem associação ao h2 que a nomeia), análoga a A-05 (caption removido) classificada como contextual; predicado determinístico escrevível, sem regra testada que exija caption (nível b)."
+  },
+  {
+   "id": "D-08",
+   "classe": "sintático",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "motivo": "Decidível num único elemento (`<th>` sem texto nem nome acessível); a regra `empty-table-header` do axe-core implementa esse predicado (nível a)."
+  },
+  {
+   "id": "D-10",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "Limítrofe com sintático (iframe sem title) e layout (outline none), mas a referência cobra sobretudo a transição de foco (é ponto de Tab e, focado, nada muda; ciclo iframe↔body), que a definição põe em contextual; só a parte do nome tem regra no axe (`frame-title`), o conjunto é escrevível (nível b)."
+  },
+  {
+   "id": "D-11",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "Ausência global na página (skip link), caso explícito da classe contextual (como B-01); predicado determinístico escrevível, mas a regra `bypass` do axe-core passa quando há títulos ou landmarks, então não há nível a para esta exigência."
+  },
+  {
+   "id": "D-12",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "motivo": "Presença/ausência global e hierarquia de títulos na página (nenhum h1 em light DOM e shadow roots), critério de contextual; a regra `page-has-heading-one` do axe-core implementa o predicado (nível a)."
+  },
+  {
+   "id": "D-13",
+   "classe": "semântico",
+   "automatizabilidade": "c",
+   "limitrofe": false,
+   "motivo": "O título existe (presença seria sintática), mas a referência cobra sua adequação ('nomeia só o sistema, não o conteúdo'), exemplo literal de semântico; decidir se descreve o conteúdo exige interpretar significado (nível c)."
+  },
+  {
+   "id": "D-14",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "motivo": "Contraste insuficiente (2,33:1) decidível sobre estilo computado de um elemento num estado, classe layout/visual; a regra `color-contrast` do axe-core implementa o predicado (nível a)."
+  }
+ ]
+}

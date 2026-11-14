@@ -1,0 +1,97 @@
+{
+ "classificador": 2,
+ "referenciaSha256": "2eacba80efb373c4923f7f85593c684647e6b5ec58ad5a341329d96a44632569",
+ "specs": [
+  {
+   "id": "D-01",
+   "classe": "sintático",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "Decidível olhando um elemento num estado (br-button sem `label` nem `circle` e sem texto visível); a geometria de pílula 72×40 só confirma o que o atributo `circle` ausente já decide, por isso fica em sintático e não em layout; predicado determinístico escrevível, mas a spec não cita predicado implementado e testado (nível b)."
+  },
+  {
+   "id": "D-02",
+   "classe": "sintático",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "Decidível por atributos de um elemento (a com role=\"button\" sem href nem tabindex, logo não focável), como o exemplo `div role=\"button\"` da definição; o efeito na ordem de teclado é relacional, mas a decisão não exige outro elemento nem transição, então desempata para sintático; nível b por não haver predicado testado citado."
+  },
+  {
+   "id": "D-03",
+   "classe": "sintático",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "O próprio elemento `.br-tag.interaction` se marca interativo e é decidível isoladamente (span sem role, sem tabindex, sem aria-pressed/aria-expanded onde a norma usa button ou input+label); a observação do clique (transição) só corrobora, por isso desempata para sintático e não contextual; nível b."
+  },
+  {
+   "id": "D-04",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "Exige relacionar rótulo↔controle (ausência de <label> associado, aria-labelledby ou equivalente), caso nomeado como contextual na definição 3.1; predicado determinístico escrevível, sem predicado testado citado (nível b)."
+  },
+  {
+   "id": "D-05",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "Relação rótulo↔controle: o input de pesquisa não tem rótulo associado e o nome vem só do placeholder, critério contextual da definição 3.1; determinístico e escrevível (nível b)."
+  },
+  {
+   "id": "D-06",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "Contraste insuficiente (WCAG 1.4.3) decidível sobre estilo computado de cor de texto e fundo, exemplo explícito de layout/visual; não é \"token certo para o contexto\" porque a norma cobrada é a razão de contraste; nível b, sem predicado testado citado na spec."
+  },
+  {
+   "id": "D-07",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "Caption é anatomia contêiner↔item e a spec também cobra a falta de associação do h2 com a tabela; poderia ser lida como ausência de atributo (sintático), mas segue o precedente A-05 (caption removido = contextual/anatomia) da seção 3.3; nível b."
+  },
+  {
+   "id": "D-08",
+   "classe": "sintático",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "Decidível olhando um elemento (th scope=\"col\" vazio, sem nome); a consequência para as células é relacional, mas a decisão não exige outro elemento, então desempata para sintático; nível b."
+  },
+  {
+   "id": "D-10",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "A regra listada primeiro (WCAG 2.4.7) é decidida pelo estilo computado no estado focado (outline none, sem sombra), como A-04; a ausência de title (4.1.2) seria sintática, e escolhi pela parte de foco visível que a descrição mais cobra; nível b."
+  },
+  {
+   "id": "D-11",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "Ausência global na página (skip link), caso nomeado como contextual na definição 3.1 (B-01, P-01/P-02); predicado determinístico escrevível (nível b)."
+  },
+  {
+   "id": "D-12",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "Ausência global de h1 e hierarquia de títulos na página inteira (light DOM e shadow roots), critério de presença/ausência global e hierarquia da classe contextual; nível b."
+  },
+  {
+   "id": "D-13",
+   "classe": "semântico",
+   "automatizabilidade": "c",
+   "limitrofe": false,
+   "motivo": "O <title> está presente; a referência cobra que ele não descreve o conteúdo principal, isto é, a adequação, exemplo explícito de semântico (\"título presente mas não descritivo\"); não há predicado fechado sem julgar significado (nível c)."
+  },
+  {
+   "id": "D-14",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "Contraste de texto branco sobre #ff8c00 (2,33:1, WCAG 1.4.3) decidível por estilo computado, exemplo explícito de layout/visual; nível b, sem predicado testado citado na spec."
+  }
+ ]
+}
