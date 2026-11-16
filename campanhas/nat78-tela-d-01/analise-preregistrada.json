@@ -1,0 +1,105 @@
+{
+  "formato": "nat78-analise-preregistrada-1.0.0",
+  "campanha": "nat78-tela-d-01",
+  "item": "Protocolo NAT-78 (revisão 6 congelada; aceita pela autora em 16/11/2026, D-202; errata do CONG-09 ratificada, D-204) §10 item 11: análise configurada ANTES da coleta. Só dados: nomes de conjunto, políticas, colunas, comandos e regras de leitura; nenhuma descrição, âncora ou regra de spec da referência. Commitado sozinho, antes do campaign.json, que cita o sha256 deste arquivo em analysisPlan.",
+  "protocolo": {
+    "documento": "thesis-workspace/planejamento/atual/protocolo-nat78-estudo-complementar-CONGELADO-2026-11-16.md (revisão 6 congelada)",
+    "secoes": ["§2.1", "§2.2", "§4.5", "§5.1", "§5.2", "§5.3", "§6.1", "§6.3", "§7.2", "§8", "§10 item 11"],
+    "commitCongelado": "a46ab3fb950edf55df2d00b5da33a2552e695485",
+    "notaCommit": "CONG-15: commit do thesis-workspace que carrega sozinho o protocolo congelado; sha256 do blob commitado be473ddf09a612c11497796dee956cd2f46506da81b31638c77e43c81d195727. Revisão 6 aceita pela autora em 16/11/2026 (D-202), com as erratas de 16/11 (§13); a errata do CONG-09 ratificada pela autora em 16/11 (D-204)."
+  },
+  "tela": {
+    "id": "processos",
+    "referencia": { "arquivo": "ground-truth-processos-1.1.0.json", "versao": "1.1.0", "sha256": "2eacba80efb373c4923f7f85593c684647e6b5ec58ad5a341329d96a44632569", "nota": "telas.json aponta para a 1.1.0 (D-196, N5): só ids de norma migrados; specs, unidades e _meta.exposto iguais aos da 1.0.0 (sha256 f719db686c86a6ee333cfd29bdfe9c16d85486306661d2ed85eb27660ec183ac). recalculo-campanha.ts aceita as duas com a mesma regra de desfecho (teste em test-recalculo-campanha.ts)." },
+    "classes": { "arquivo": "tela-d/classes-d156-1.1.0.json", "sha256": "17dd649477fa81c91665b340f4980306851ec779f1e6783ef2e2540a6c02f2d4", "naoExpostas": { "total": 9, "ds": 1, "geral": 8 }, "expostas": { "total": 4, "ds": 0, "geral": 4 }, "nota": "CONG-14; classe ds × geral da D-156 3.i, derivada da categories pela classeDaSpec de e14-deteccao.ts. O arquivo da 1.0.0 (tela-d/classes-d156.json, sha256 b2aeab610c43201f960024ccc296501be7e22c4721de594e6148af54610182fa) dá as mesmas contagens." },
+    "controlesConformes": { "arquivo": "tela-d/conformes.json", "sha256": "6bef1c8d9be18e819422a78750d38244d9fdb0b93d08cb1a71eea2b4cb5e90c2" }
+  },
+  "desfechoPrimario": {
+    "pergunta": "QP (§2.1)",
+    "comparacao": "ferramentas-x-com",
+    "nome": "D_fc",
+    "formula": "D_fc = specs confirmadas por com − specs confirmadas por ferramentas, por trio",
+    "conjunto": "primario",
+    "conjuntoDescricao": "as 9 specs não expostas da referência (_meta.exposto fora); por spec (D-102): spec confirmada = pelo menos uma unidade confirmada pela revisão fechada",
+    "decisao": "A16 (decidido pelo aceite de 16/11, D-202: 9 não expostas; 13 como sensibilidade)",
+    "politica": "1.3.0 (crédito da 1.2.0 + R16; D-156 item 2)",
+    "coluna": "deteccao",
+    "fonte": "revisao:recalculo › recalculo.json › tabelas['principal|1.2.0|primario'] (na passada 1.3.0 essas chaves leem o derivado 1.3.0: notaPolitica), comparação ferramentas-x-com"
+  },
+  "comparacoesSecundarias": [
+    { "pergunta": "QS1", "comparacao": "sem-x-com", "nome": "D_sc", "formula": "D_sc = com − sem" },
+    { "pergunta": "QS2", "comparacao": "sem-x-ferramentas", "nome": "D_sf", "formula": "D_sf = ferramentas − sem" }
+  ],
+  "politicas": {
+    "principal": "1.3.0",
+    "aoLado": ["1.1.0"],
+    "pura120": {
+      "decisao": "N7 (decidido pelo aceite de 16/11, D-202: sim)",
+      "como": "reingestão da passada final em pasta nova: npx tsx scripts/reanalise-nat74/e14-ingerir.ts --fila <passada final> --politica 1.2.0 --gravar-em <pasta nova>; a tabela de duas colunas lê esse julgamentos.json por e14-deteccao.ts --julgamentos <pasta nova>/julgamentos.json",
+      "limite": "revisao:recalculo lê só o julgamentos.json de dentro da passada (lerPassada): o D_fc na 1.2.0 pura exige uma cópia da passada reingerida na 1.2.0; o caminho não foi exercitado em ensaio"
+    }
+  },
+  "colunas": {
+    "principal": "deteccao",
+    "aoLado": "fundamentada",
+    "decisao": "D-157 item 4 (coluna principal = detecção); §5.1",
+    "testeNaFundamentada": false,
+    "decisaoTeste": "N8 (decidido pelo aceite de 16/11, D-202: não; descritiva, ao lado, por braço e trio, com mediana)",
+    "nota": "protocolo §4.2, linha \"Coluna principal\" (errata 5 de 16/11): a coluna principal deteccao é fixada aqui e pela opção --coluna-principal deteccao do e14-deteccao.ts; o contrato campaign.v2 não tem campo para ela (design com additionalProperties false); mantida pelo aceite de 16/11 (D-202)"
+  },
+  "sensibilidades": [
+    { "id": "com-expostas", "o-que": "as 13 specs (com as 4 expostas), por spec", "fonte": "recalculo.json › tabelas['…|com-expostas']; e14-deteccao.ts sem --sem-expostas" },
+    { "id": "unidades", "o-que": "a mesma comparação contada por unidade, nas unidades das 9 specs não expostas (53)", "fonte": "recalculo.json › tabelas['…|unidades'] (conjunto acrescentado em 13/11, §5.1)" },
+    { "id": "politica-1.1.0", "o-que": "sem R15 e sem Q1 a", "fonte": "recalculo.json › tabelas['…|1.1.0|…']" },
+    { "id": "S4'", "o-que": "sem crédito contestado não ratificado, no braço que o recebeu", "fonte": "recalculo.json › tabelas[\"S4'|…\"] (exige passada adjudicada com contestados.json; ratificações por --ratificacoes <respostas-autora.json>)" },
+    { "id": "por-protocolo", "o-que": "§4.5: as mesmas três comparações (D_fc, D_sc, D_sf) só com as execuções aderentes ao uso declarado do oráculo, ao lado da intenção de tratar. ANÁLISE DE SENSIBILIDADE, nunca o primário: não entra no Holm, não substitui nem se soma à leitura primária", "tipo": "sensibilidade", "decisao": "D-198 item 5 (autora, 14/11: aprovada como análise de sensibilidade; a análise primária fica intacta)", "opcao": "--por-protocolo (revisao:recalculo)", "definicao": { "versao": "nat78-aderencia-por-protocolo-1.0.0", "constante": "e14-deteccao.ts › DEFINICAO_POR_PROTOCOLO", "estadoExigido": { "sem": "absent-verified", "ferramentas": "used-adherent", "com": "used-adherent" }, "usedWithErrors": "fora do conjunto, mostrado à parte com a contagem do slot no primário", "outroEstado": "fora do conjunto, listado", "estadoDe": "summary.json da análise › execucoes[].mcpIsolamento.usoOraculo (= run.status.oracleUsage), casado pelo runId, braço conferido" }, "trioComSlotFora": { "regra": "trio-inteiro (recalculo-campanha.ts › TRIO_COM_SLOT_FORA): trio com um slot excluído sai das três comparações desta leitura (D_fc, D_sc e D_sf ficam sobre os mesmos trios) e é listado em cada uma", "naoAdotada": "so-comparacoes-do-slot" }, "slotPerdido": "não tem estado do oráculo: segue a regra do trio incompleto do primário (§6.3)", "exclusoes": "publicadas sempre POR BRAÇO (slots com estado, no conjunto, excluídos e o estado que excluiu), para a leitura não escolher em silêncio as execuções mais bem-comportadas de um braço", "fonte": "recalculo.json › sensibilidadePorProtocolo (tipo \"sensibilidade\", leitura \"sensibilidade-por-protocolo\") › tabelas['sensibilidade-por-protocolo|principal|1.2.0|primario'] (nunca em tabelas), semente própria <base>|sensibilidade-por-protocolo|recalculo|…; seção própria no fim do tabela.md" }
+  ],
+  "incerteza": {
+    "teste": "permutação exata por troca de sinais sobre a média de D, bicaudal, por tela (estatistica-pareada.ts › testePermutacaoSinal)",
+    "robustez": ["Wilcoxon-Pratt exato", "teste do sinal exato"],
+    "ic": "IC 95% bootstrap percentil, 10.000 reamostragens, mulberry32, semente = campanha.design.seed (recalculo: base|recalculo|<comparação>|<variante>|<política>|<conjunto>)",
+    "alfaSecundarias": 0.05,
+    "correcaoSecundarias": "nenhuma (§6.3)",
+    "trioIncompleto": "entra só nas comparações que têm os dois braços",
+    "publicar": ["D por trio", "média", "mediana", "DP", "n planejado (9)", "n efetivo"]
+  },
+  "leitura": {
+    "congelada": "vantagem do com exige p abaixo do limiar que o Holm der à tela D e média > 0; o simétrico é vantagem do ferramentas; o resto é nenhuma diferença detectável (§6.3)",
+    "delta": { "valor": 2, "unidade": "specs por trio", "decisao": "A8 (decidido pelo aceite de 16/11, D-202: adotar)", "regra": "IC inteiro em [−2, +2] → o IC estimado caiu dentro da faixa pré-especificada de ±δ; cruzou ±2 → inconclusivo para o efeito relevante (recalculo-campanha.ts › leituraComDelta)" }
+  },
+  "holm": {
+    "regra": "§6.3: QP (D) e QP-E (E) formam uma família com α = 0,05. O menor dos dois p (permutação exata) é comparado a 0,025; só se passar, o outro é comparado a 0,05; se o menor não passar, nenhuma das duas é declarada. Se a E sair pelos cortes da §3.8 antes de qualquer coleta da E, a família tem só a D, e o limiar da D é 0,05. Estrito (p < limiar).",
+    "implementacao": "scripts/estatistica-pareada.ts › holmTelas(pD, pE | \"fora-antes-da-coleta\") e leituraSobHolm(analise, tela, [\"ferramentas\", \"com\"]) (holm-leitura-por-braco-1.0.0, f376598: o braço é nomeado, D = 2º − 1º; devolve vantagem-do-com, vantagem-do-ferramentas, sem-diferenca-detectavel ou indisponivel); testes em npm run test:estatistica",
+    "entradas": "p da D = recalculo.json da D › tabelas['principal|1.2.0|primario'] › ferramentas-x-com › estatistica.principal.p; p da E = o mesmo campo do recalculo.json da E (passada própria); aplicado depois das duas tabelas (§8, tela E)",
+    "nota": "o recalculo de cada tela continua lendo com α = 0,05; a leitura primária publicada é a do Holm"
+  },
+  "tipoDeSpec": {
+    "pergunta": "QS4 (descritiva pré-registrada, sem teste)",
+    "regra": "ds × geral pela categories da referência (D-156 3.i; e14-deteccao.ts › classeDaSpec)",
+    "naD": "a classe ds tem 1 das 9 specs do primário (§3.7): o recall dela sai como resultado próprio pré-declarado, por braço e trio, sem teste",
+    "fonte": "e14-deteccao.ts › porClasse, rodado duas vezes: com --sem-expostas (as 9 do primário) e sem (as 13)"
+  },
+  "classesNat71": {
+    "pergunta": "§5.2 item 5 (recall por classe pré-registrada, §5.3: sintático, layout/visual, contextual/relacional, semântico; nível a/b/c)",
+    "arquivo": "tela-d/classes-nat71/classes-finais.json",
+    "sha256": "3b8eff65f9d473797d570bc0b566b907fc370a7e5c4be908dcf711b198febd54",
+    "commit": "94f8f6e",
+    "estado": "feito (CONG-14 ii; §5.3, §10 item 11): arquivo final com 13 specs, 7 por acordo das duas classificações cegas e 6 pela decisão da autora de 16/11 nos desacordos (D-202 item 2); níveis a 5, b 7, c 1 (D-203 item 5)",
+    "fontes": "duas classificações cegas e a comparação em eval 18bf831 (tela-d/classes-nat71/: classificador-1.json sha256 32d27889ff2693ba08edd4ce22a2f89a24240af51681496b2445c05f296f6b1c, classificador-2.json sha256 2cde59339fd23ef13e0ccd639bf3e23930afa0ef2544282153074308e70308ef, comparacao.md sha256 b1a3183b2ae5b336b3eea302d91cf2805c45962a6d34666fc022c3fd4f316a56; acordo de classe 12/13, de nível 8/13)"
+  },
+  "comandos": [
+    { "passo": "0", "o-que": "servir o site congelado (govbr-telas 620f5517e6f467599125532b6c37bd5fc21e7419, CONG-10)", "comando": "npx tsx scripts/reanalise-nat74/e14-campanha.ts --servir ../govbr-telas --porta <porta>" },
+    { "passo": "1", "o-que": "primeira passada cega (política 1.3.0, LEIAME nat78-primeira-passada-1.4.7 por padrão)", "comando": "npx tsx scripts/reanalise-nat74/e14-campanha.ts --analise <análise p01> … --analise <análise p09> --saida <passada> --base-url http://127.0.0.1:<porta> --validador <checkout do validator 816f4bae41f4486b7055f0ac265167e87ce0d5e5>; juiz por lote; npx tsx scripts/reanalise-nat74/e14-ingerir.ts --fila <passada>" },
+    { "passo": "3", "o-que": "confiabilidade (antes da adjudicação)", "comando": "npm run revisao:confiabilidade -- amostra --passada <passada> --saida <revisao>; npm run revisao:confiabilidade -- medir --passada <passada> --amostra <revisao>/confiabilidade" },
+    { "passo": "2", "o-que": "consistência e adjudicação (gatilho d --regra-publicada NÃO usado na D)", "comando": "npm run revisao:consistencia -- --passada <passada> --saida <revisao>; npm run revisao:adjudicacao -- preparar --passada <passada> --confiabilidade <revisao>/confiabilidade --saida <revisao>; … revelar …; npm run revisao:adjudicacao -- aplicar --passada <passada> --adjudicacao <revisao>/adjudicacao --saida <pasta nova>" },
+    { "passo": "6", "o-que": "origem medida", "comando": "npm run revisao:origem -- medir --passada <passada adjudicada> --site <site congelado> --ds <pacote DS> [--ds …] --saida <pasta nova>" },
+    { "passo": "4", "o-que": "material da autora (teto 10, 3/2/2/2/1; A14)", "comando": "npm run revisao:material-autora -- preparar --passada <passada adjudicada> --origem <origem> --site <site congelado> --saida <pasta nova> --teto 10 --validador <checkout congelado>; npm run revisao:material-autora -- responder --material <pasta> --texto <linhas> --saida <pasta nova>" },
+    { "passo": "5", "o-que": "recálculo: D_fc (primária), D_sc, D_sf; 1.3.0 + 1.1.0; S4'; com as expostas; unidades; leitura com δ", "comando": "npm run revisao:recalculo -- --passada <passada adjudicada> --saida <pasta nova> --origem <origem> --ratificacoes <respostas-autora.json>" },
+    { "passo": "5-pp", "o-que": "sensibilidade por protocolo (§4.5, D-198 item 5; nunca o primário): a mesma passada e as mesmas entradas do passo 5, com --por-protocolo, em pasta própria; o primário do passo 5 é o que vale", "comando": "npm run revisao:recalculo -- --passada <passada adjudicada> --saida <outra pasta nova> --origem <origem> --ratificacoes <respostas-autora.json> --por-protocolo" },
+    { "passo": "7", "o-que": "duas colunas por tipo de spec, primário (9) e com as expostas (13)", "comando": "npx tsx scripts/reanalise-nat74/e14-deteccao.ts --passada <passada final> --saida <pasta nova> --coluna-principal deteccao --sem-expostas; npx tsx scripts/reanalise-nat74/e14-deteccao.ts --passada <passada final> --saida <outra pasta nova> --coluna-principal deteccao" },
+    { "passo": "Holm", "o-que": "depois das tabelas da D e da E", "comando": "holmTelas(p da D, p da E | \"fora-antes-da-coleta\") de scripts/estatistica-pareada.ts; leituraSobHolm(análise da tela, holmTelas(…).D ou .E, [\"ferramentas\", \"com\"]) por tela" }
+  ],
+  "pendentes": [
+    { "item": "D_fc na política 1.2.0 pura (N7)", "proposta": "conferir no ensaio do §10 item 10 o caminho cópia da passada → e14-ingerir --politica 1.2.0 → revisao:recalculo", "estado": "ensaio sem modelo de 14/11 (thesis-workspace/planejamento/atual/ensaio-sem-modelo-n1-2026-11-14.md, passos 2.1 e 2.7): a reingestão 1.2.0 em pasta nova e a detecção sob ela passaram; o revisao:recalculo sobre uma cópia da passada reingerida na 1.2.0 não foi exercitado" }
+  ]
+}
