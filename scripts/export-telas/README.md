@@ -1,6 +1,6 @@
 # govbr-telas
 
-Quatro páginas web prontas para abrir no navegador, servidas por um servidor mínimo que usa só o
+Cinco páginas web prontas para abrir no navegador, servidas por um servidor mínimo que usa só o
 Node.js. Não há código-fonte a compilar nem dependência a instalar: a pasta `site/` já traz os
 arquivos finais.
 
@@ -26,7 +26,7 @@ ou, sem npm:
 node server.mjs
 ```
 
-O servidor escuta em `http://127.0.0.1:3300` e imprime os endereços das quatro telas. `Ctrl+C`
+O servidor escuta em `http://127.0.0.1:3300` e imprime os endereços das cinco telas. `Ctrl+C`
 encerra.
 
 Outra porta: `node server.mjs --port 8080` (ou a variável de ambiente `PORT`). O servidor só aceita
@@ -40,6 +40,7 @@ conexões da própria máquina; para escutar em outra interface, use `--host` (o
 | Vistorias | <http://127.0.0.1:3300/pnip/portal-mpa/vistorias?mock-perfil=mpa> |
 | Acompanhar requerimento | <http://127.0.0.1:3300/acompanhamento.html> |
 | Processos | <http://127.0.0.1:3300/pnip-d/portal-mpa/processos?mock-perfil=mpa> |
+| Cadastrar país importador | <http://127.0.0.1:3300/cadastro-pais.html> |
 
 **Solicitar serviço** é uma página única: um formulário de solicitação com o histórico de pedidos
 anteriores.
@@ -56,7 +57,11 @@ páginas simples do mesmo site.
 
 **Processos** é outra tela da mesma aplicação de página única, numa cópia própria servida sob
 `/pnip-d/`, aberta na lista de processos; vale o que foi dito de **Vistorias** sobre dados fictícios, `?mock-perfil=mpa`
-e recarregar. Nenhuma das telas faz pedidos a outros endereços.
+e recarregar.
+
+**Cadastrar país importador** é uma página única com um formulário de cadastro e a lista de países já
+cadastrados. Os links da trilha de navegação, da conta e o Cancelar levam a páginas simples do mesmo site.
+Nenhuma das telas faz pedidos a outros endereços.
 
 ## O que o servidor faz
 
@@ -74,7 +79,7 @@ e recarregar. Nenhuma das telas faz pedidos a outros endereços.
 | Arquivo | Papel |
 |---|---|
 | `server.mjs` | Servidor estático (somente módulos nativos do Node.js). |
-| `site/` | Os arquivos servidos: `solicitacao.html` + `assets/`, a aplicação em `pnip/` e a cópia dela em `pnip-d/`, e `acompanhamento.html` + `acompanhamento/` (com as páginas `inicio.html` e `meus-requerimentos.html`). |
+| `site/` | Os arquivos servidos: `solicitacao.html` + `assets/`, a aplicação em `pnip/` e a cópia dela em `pnip-d/`, `acompanhamento.html` + `acompanhamento/` (com as páginas `inicio.html` e `meus-requerimentos.html`), e `cadastro-pais.html` + `cadastro-pais/` (com as páginas `administracao.html`, `minha-conta.html`, `paises-importadores.html` e `servicos-defesa.html`). |
 | `site-manifest.json` | Origem dos arquivos, rotas e sha256 + tamanho de cada arquivo. |
 | `skills/avaliar-tela/SKILL.md` | Procedimento genérico para avaliar uma tela em execução pela interface e enviar um relatório JSON. Os marcadores `{{...}}` da seção Entradas são preenchidos por quem prepara a execução. O servidor não o serve. |
 | `package.json` | Só o script `npm start`; sem dependências. |

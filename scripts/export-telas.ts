@@ -15,6 +15,10 @@
  *                       lista do manifesto do congelamento (`manifesto.json`), conferidos por sha256.
  *                       Árvore com arquivo a mais ou a menos que o manifesto: para. O manifesto do
  *                       congelamento fica de fora (telas.json `isolamento.site.excluir`).
+ *   tela `cadastro-pais` (E, desde 1.5.0) do mesmo build, pela regra da A2: o fechamento de
+ *                       `cadastro-pais.html` depois de devolver ao build SÓ o que a página carrega de `public/`
+ *                       (`SCREEN_E_PUBLIC`: scripts clássicos e marcas de `public/cadastro-pais/` e as quatro
+ *                       páginas de destino); o fechamento tem de caber no padrão da tela.
  *   tela `processos`    (D, desde 1.4.0) a mesma regra da `vistorias` sobre `govbr-corpus/public/pnip-d/`.
  *                       Segunda SPA do pacote: `routing.spas` lista as duas (`routing.spa` continua a da B,
  *                       para leitores anteriores). O alias da D tem a mesma chave do alias da B; só entra
@@ -51,7 +55,8 @@ import { telaOf, type TelaSite } from "./telas";
 // 1.2.0: Node do pacote fixado em 24.21.0 (LTS), o mesmo da imagem da coleta (runner T3a); site/ inalterado.
 // 1.3.0: terceira tela, A2 `acompanhamento` (NAT-110, D-160); os arquivos de A e B não mudam.
 // 1.4.0: quarta tela, D `processos` (ala pnip-d/, NAT-78 CONG-10); `routing.spas`; os arquivos de A, B e A2 não mudam.
-export const EXPORTER_VERSION = "export-telas-1.4.0";
+// 1.5.0: quinta tela, E `cadastro-pais` (página construída, NAT-78 §3.8, D-201; CONG-17); os arquivos de A, B, A2 e D não mudam.
+export const EXPORTER_VERSION = "export-telas-1.5.0";
 /** Nome provisório do projeto exportado (pendente NAT-45). */
 export const PACKAGE_NAME = "govbr-telas";
 export const PACKAGE_VERSION = "1.0.0";
@@ -62,7 +67,8 @@ export const PACKAGE_VERSION = "1.0.0";
  * conferida pelo teste). Ver docs/exportacao-telas.md § Node.
  */
 export const PACKAGE_NODE_VERSION = "24.21.0";
-export const DEFAULT_CORPUS = resolve(ROOT, "..", "govbr-corpus");
+/** `GOVBR_CORPUS_DIR` aponta outro checkout do corpus (ex.: uma worktree), como `GOVBR_TELAS_DIR` no runner (1.5.0). */
+export const DEFAULT_CORPUS = process.env.GOVBR_CORPUS_DIR ? resolve(process.env.GOVBR_CORPUS_DIR) : resolve(ROOT, "..", "govbr-corpus");
 const TEMPLATES = join(dirname(fileURLToPath(import.meta.url)), "export-telas");
 
 export const SCREEN_A = "solicitacao";
@@ -71,8 +77,10 @@ export const SCREEN_B = "vistorias";
 export const SCREEN_A2 = "acompanhamento";
 /** Tela D (NAT-78, estudo complementar): SPA congelada em `public/pnip-d/`, mesmas regras da tela B. */
 export const SCREEN_D = "processos";
+/** Tela E (NAT-78 §3.8, D-201): página construída, entrada Vite com HTML escrito à mão e scripts clássicos de `public/cadastro-pais/`, como a A2. */
+export const SCREEN_E = "cadastro-pais";
 /** As telas do pacote, na ordem de `screens[]` do manifesto. */
-export const SCREENS = [SCREEN_A, SCREEN_B, SCREEN_A2, SCREEN_D] as const;
+export const SCREENS = [SCREEN_A, SCREEN_B, SCREEN_A2, SCREEN_D, SCREEN_E] as const;
 /** As telas servidas como SPA congelada (árvore do corpus + manifesto do congelamento), na ordem de `routing.spas`. */
 export const SPA_SCREENS = [SCREEN_B, SCREEN_D] as const;
 /**
@@ -81,6 +89,8 @@ export const SPA_SCREENS = [SCREEN_B, SCREEN_D] as const;
  * trilha de navegação. Só estas entradas voltam ao build para o fechamento da A2; nada mais de `public/`.
  */
 export const SCREEN_A2_PUBLIC = ["acompanhamento", "inicio.html", "meus-requerimentos.html"] as const;
+/** O que a E carrega de `public/`, pela mesma regra da A2: scripts clássicos e marcas da página e as quatro páginas de destino. */
+export const SCREEN_E_PUBLIC = ["cadastro-pais", "administracao.html", "minha-conta.html", "paises-importadores.html", "servicos-defesa.html"] as const;
 
 /** Arquivos da raiz do pacote — a lista completa. Qualquer outro arquivo na raiz é recusado. */
 export const ROOT_FILES = [".gitattributes", ".node-version", "README.md", "package.json", "server.mjs", "site-manifest.json"] as const;
@@ -115,6 +125,8 @@ const SCREEN_A_FILE = /^(solicitacao\.html|assets\/[A-Za-z0-9_.-]+\.(js|css|woff
  * usa scripts clássicos).
  */
 const SCREEN_A2_FILE = /^(acompanhamento\.html|inicio\.html|meus-requerimentos\.html|acompanhamento\/[A-Za-z0-9_.-]+\.(js|svg)|assets\/[A-Za-z0-9_.-]+\.(css|woff2?|ttf|eot|svg|png))$/;
+/** Padrão de arquivo da tela `cadastro-pais` dentro de `site/`: a mesma forma da A2 (página, destinos, `public/cadastro-pais/`, folha e fontes). */
+const SCREEN_E_FILE = /^(cadastro-pais\.html|administracao\.html|minha-conta\.html|paises-importadores\.html|servicos-defesa\.html|cadastro-pais\/[A-Za-z0-9_.-]+\.(js|svg)|assets\/[A-Za-z0-9_.-]+\.(css|woff2?|ttf|eot|svg|png))$/;
 /** Nomes do build que pertencem a OUTRAS entradas do corpus e nunca podem entrar. */
 const FOREIGN_BUILD = /(^|\/)(index\.html|fluxo\.html|main-[^/]+\.js|fluxo-[^/]+\.(js|css)|real\/|static\/|pnip(-[a-z0-9]+)?\/)/;
 
@@ -135,6 +147,12 @@ export const KNOWN_SOURCE_MAP_DIRECTIVES: { path: string; sha256: string; map: s
     sha256: "7fad494d8750e635ed0f94b1220466c682d248e2b7ce52932672939a008f45b4",
     map: "site/acompanhamento/core.min.js.map",
     reason: "@govbr-ds/core 3.7.0 dist/core.min.js sem alteração (tela A2); o .map citado não é exportado (404)",
+  },
+  {
+    path: "site/cadastro-pais/core.min.js",
+    sha256: "7fad494d8750e635ed0f94b1220466c682d248e2b7ce52932672939a008f45b4",
+    map: "site/cadastro-pais/core.min.js.map",
+    reason: "@govbr-ds/core 3.7.0 dist/core.min.js sem alteração (tela E, os mesmos bytes da A2); o .map citado não é exportado (404)",
   },
 ];
 
@@ -178,6 +196,8 @@ export interface SiteManifestDoc {
     [SCREEN_A2]: { build: { command: string; tool: string; node: string }; public: string[]; selection: string };
     [SCREEN_B]: SpaOrigin;
     [SCREEN_D]: SpaOrigin;
+    /** Mesmo build da tela A, pela regra da A2. */
+    [SCREEN_E]: { build: { command: string; tool: string; node: string }; public: string[]; selection: string };
   };
   /** Arquivos servidos, relativos a `site/` — ordenados. */
   files: ManifestFile[];
@@ -294,7 +314,7 @@ function packageJson(): string {
     name: PACKAGE_NAME,
     version: PACKAGE_VERSION,
     private: true,
-    description: "Quatro telas web estáticas e um servidor mínimo (somente módulos nativos do Node.js).",
+    description: "Cinco telas web estáticas e um servidor mínimo (somente módulos nativos do Node.js).",
     type: "module",
     scripts: { start: "node server.mjs" },
     engines: { node: ">=20.19.0" },
@@ -330,6 +350,7 @@ export function exportTelas(options: ExportOptions): ExportResult {
   const telaB = telaOf(SCREEN_B);
   const telaA2 = telaOf(SCREEN_A2);
   const telaD = telaOf(SCREEN_D);
+  const telaE = telaOf(SCREEN_E);
   const siteB = telaB.isolamento.site;
   if (!siteB) throw new Error(`A tela ${SCREEN_B} não declara isolamento.site em telas.json`);
   const siteD = telaD.isolamento.site;
@@ -339,6 +360,11 @@ export function exportTelas(options: ExportOptions): ExportResult {
   const plan = new Map<string, string>(); // caminho em site/ → arquivo de origem
   log(`build de produção do corpus (${corpus}) em diretório temporário…`);
   const buildDir = buildCorpus(corpus);
+  // E (1.5.0): fechamento numa cópia do build SEM o que a A2 devolve de public/. O fechamento casa por NOME de
+  // arquivo, e as duas páginas construídas têm scripts com o mesmo nome (comportamento.js, core.min.js) em pastas
+  // próprias: no mesmo diretório, o fechamento de uma traria os da outra.
+  const buildDirE = mkdtempSync(join(tmpdir(), "export-telas-build-e-"));
+  cpSync(buildDir, buildDirE, { recursive: true });
   try {
     for (const rel of assetClosure(buildDir, telaA.entry)) {
       if (!SCREEN_A_FILE.test(rel) || FOREIGN_BUILD.test(rel)) throw new Error(`Fechamento de ${telaA.entry} trouxe ${rel}, fora do padrão da tela`);
@@ -356,6 +382,23 @@ export function exportTelas(options: ExportOptions): ExportResult {
       if (!SCREEN_A2_FILE.test(rel) || FOREIGN_BUILD.test(rel)) throw new Error(`Fechamento de ${telaA2.entry} trouxe ${rel}, fora do padrão da tela`);
       const abs = join(buildDir, rel);
       if (plan.has(rel) && plan.get(rel) !== abs) throw new Error(`Colisão de caminho entre as telas: ${rel}`);
+      plan.set(rel, abs);
+    }
+    // E: a mesma regra da A2, na cópia do build sem a A2. Um caminho que a A ou a A2 também usam (folha e fontes do
+    // DS) fica com o arquivo já planejado se os bytes forem iguais; mesmo caminho com bytes diferentes: para.
+    for (const entry of SCREEN_E_PUBLIC) {
+      const from = join(corpus, "public", entry);
+      if (!existsSync(from)) throw new Error(`public/${entry} (tela ${SCREEN_E}) não existe no corpus`);
+      if (existsSync(join(buildDirE, entry))) throw new Error(`public/${entry} colide com um arquivo do build`);
+      cpSync(from, join(buildDirE, entry), { recursive: true });
+    }
+    for (const rel of assetClosure(buildDirE, telaE.entry)) {
+      if (!SCREEN_E_FILE.test(rel) || FOREIGN_BUILD.test(rel)) throw new Error(`Fechamento de ${telaE.entry} trouxe ${rel}, fora do padrão da tela`);
+      const abs = join(buildDirE, rel);
+      if (plan.has(rel)) {
+        if (sha256(readFileSync(plan.get(rel)!)) !== sha256(readFileSync(abs))) throw new Error(`Colisão de caminho entre as telas: ${rel}`);
+        continue;
+      }
       plan.set(rel, abs);
     }
     const spaFiles = new Map<string, ReturnType<typeof screenBFiles>>();
@@ -435,7 +478,7 @@ export function exportTelas(options: ExportOptions): ExportResult {
       item: {
         id: `${PACKAGE_NAME}-site-${listingSha256(files).slice(0, 12)}`,
         kind: "site",
-        description: `Arquivos servidos das telas ${SCREEN_A}, ${SCREEN_B}, ${SCREEN_A2} e ${SCREEN_D}; sha256 = hash da listagem 'sha256  caminho' ordenada de files[].`,
+        description: `Arquivos servidos das telas ${SCREEN_A}, ${SCREEN_B}, ${SCREEN_A2}, ${SCREEN_D} e ${SCREEN_E}; sha256 = hash da listagem 'sha256  caminho' ordenada de files[].`,
         sha256: listingSha256(files),
         bytes,
         location: { kind: "package-path", path: SITE_DIR, note: "pasta site/ deste pacote; destino de arquivo durável pendente" },
@@ -448,6 +491,7 @@ export function exportTelas(options: ExportOptions): ExportResult {
         { id: SCREEN_B, title: "Vistorias", entry: `/${telaB.entry}` },
         { id: SCREEN_A2, title: "Acompanhar requerimento", entry: `/${telaA2.entry}` },
         { id: SCREEN_D, title: "Processos", entry: `/${telaD.entry}` },
+        { id: SCREEN_E, title: "Cadastrar país importador", entry: `/${telaE.entry}` },
       ],
       routing: { spa: spas[0], spas, aliases },
       origin: {
@@ -463,6 +507,11 @@ export function exportTelas(options: ExportOptions): ExportResult {
         },
         [SCREEN_B]: spaOrigin(b, siteB),
         [SCREEN_D]: spaOrigin(d, siteD),
+        [SCREEN_E]: {
+          build: { command: BUILD_COMMAND, tool: `vite ${viteVersion(corpus)}`, node: process.version },
+          public: SCREEN_E_PUBLIC.map((e) => `public/${e}`),
+          selection: `fechamento de arquivos citados a partir de ${telaE.entry} no build, com ${SCREEN_E_PUBLIC.map((e) => `public/${e}`).join(", ")} devolvidos ao build`,
+        },
       },
       files,
       runtime,
@@ -474,6 +523,7 @@ export function exportTelas(options: ExportOptions): ExportResult {
     return { out, manifest, files: files.length, bytes };
   } finally {
     rmSync(buildDir, { recursive: true, force: true });
+    rmSync(buildDirE, { recursive: true, force: true });
   }
 }
 

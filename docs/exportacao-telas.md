@@ -27,6 +27,7 @@ diretório temporário apagado no fim.
 |---|---|---|
 | `site/solicitacao.html` + `site/assets/*` | build de produção do corpus (`vite build --outDir <temporário>`) | `assetClosure` da superfície de medida a partir de `solicitacao.html`, depois de tirar do build o que o Vite copiou de `public/`. O fechamento tem de caber no padrão da tela (a página e `assets/`); um arquivo de outra entrada (`index.html`, `fluxo*`, `main-*`) faz a exportação parar. |
 | `site/acompanhamento.html` + `site/acompanhamento/*` + `site/inicio.html` + `site/meus-requerimentos.html` + `site/assets/*` (tela A2, desde `export-telas-1.3.0`) | o mesmo build da tela A, mais `public/acompanhamento/`, `public/inicio.html` e `public/meus-requerimentos.html` do corpus | `assetClosure` a partir de `acompanhamento.html`, depois de devolver ao build SÓ essas três entradas de `public/` (`SCREEN_A2_PUBLIC`: os scripts clássicos e as marcas da página e as duas páginas de destino da trilha). O fechamento tem de caber no padrão da A2 (a página, as duas páginas de destino, `acompanhamento/*.js|svg`, CSS e fontes de `assets/`; nenhum JS do build). As fontes do DS são os mesmos arquivos da A. Hoje: 34 arquivos, 26 novos. |
+| `site/cadastro-pais.html` + `site/cadastro-pais/*` + `site/administracao.html` + `site/minha-conta.html` + `site/paises-importadores.html` + `site/servicos-defesa.html` + `site/assets/*` (tela E, desde `export-telas-1.5.0`) | o mesmo build, mais `public/cadastro-pais/` e as quatro páginas de destino de `public/` | A regra da A2 (`SCREEN_E_PUBLIC`), numa CÓPIA do build sem o que a A2 devolve de `public/`: o fechamento casa por nome, e as duas páginas construídas têm scripts com o mesmo nome (`comportamento.js`, `core.min.js`) em pastas próprias. Caminho que a A ou a A2 também usam (fontes do DS) fica com o arquivo já planejado se os bytes forem iguais; bytes diferentes param a exportação. Hoje: 36 arquivos, 10 novos. |
 | `site/pnip/**` | `govbr-corpus/public/pnip/` (build Angular congelado) | Exatamente a lista do manifesto do congelamento (`manifesto.json`), cada arquivo conferido por sha256; árvore com arquivo a mais ou a menos faz a exportação parar. O manifesto do congelamento fica de fora (telas.json `isolamento.site.excluir`). |
 | `site/pnip-d/**` (tela D `processos`, desde `export-telas-1.4.0`) | `govbr-corpus/public/pnip-d/` (build Angular congelado, `base href /pnip-d/`) | A mesma regra da `pnip/`: a lista do manifesto do congelamento da ala, conferida por sha256; o manifesto da ala fica de fora. |
 | `server.mjs`, `README.md` | modelos em `scripts/export-telas/` | copiados como estão |
@@ -76,13 +77,18 @@ exportador não faz nenhuma.
 
 Escuta em `127.0.0.1:3300` por padrão (`--port`/`PORT`, `--host`/`HOST`). Endereços: A =
 `/solicitacao.html`, B = `/pnip/portal-mpa/vistorias?mock-perfil=mpa`, A2 = `/acompanhamento.html`, D =
-`/pnip-d/portal-mpa/processos?mock-perfil=mpa`.
+`/pnip-d/portal-mpa/processos?mock-perfil=mpa`, E = `/cadastro-pais.html`.
 
 **1.4.0 (tela D).** `routing.spa` continua a SPA da B, com a forma de até 1.3.0, para quem lê só uma;
 `routing.spas` lista as duas (B, D) e é a que `server.mjs`, `normalizarManifestoDoSite` (superfície e
 análise) e `comparadores/comum.ts` usam quando existe. Um leitor antigo serve A, B e A2 como antes e
 responde 404 às rotas da D (falha visível, nunca a página errada). Na raiz mudam `server.mjs`, `README.md`
 (quatro telas) e `package.json` (descrição); `site/` de A, B e A2 fica byte a byte igual.
+
+**1.5.0 (tela E).** Página comum (sem SPA), pela regra da A2. Na raiz mudam `README.md` (cinco telas) e
+`package.json` (descrição); `site/` de A, B, A2 e D fica byte a byte igual (420 de 420 arquivos). `GOVBR_CORPUS_DIR`
+aponta outro checkout do corpus (uma worktree), no exportador e no teste. A diretiva de source map do `core.min.js`
+da E é aceita pelo mesmo hash da A2 (os mesmos bytes do pacote 3.7.0).
 
 ## O manifesto (`site-manifest.json`)
 

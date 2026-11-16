@@ -29,7 +29,7 @@ import { chromium, type Browser, type Page, type Request } from "playwright";
 import { validateContract } from "../contracts/index";
 import { ROOT } from "./adjudication";
 import {
-  KNOWN_SOURCE_MAP_DIRECTIVES, PACKAGE_NODE_VERSION, PACKAGE_SKILLS, ROOT_FILES, machineText, SCREEN_A, SCREEN_A2, SCREEN_B, SCREEN_D, SCREENS, SPA_SCREENS, SITE_DIR, TEXT_EXTENSIONS, auditPackage, exportTelas, listTree,
+  DEFAULT_CORPUS, KNOWN_SOURCE_MAP_DIRECTIVES, PACKAGE_NODE_VERSION, PACKAGE_SKILLS, ROOT_FILES, machineText, SCREEN_A, SCREEN_A2, SCREEN_A2_PUBLIC, SCREEN_B, SCREEN_E_PUBLIC, SCREEN_D, SCREEN_E, SCREENS, SPA_SCREENS, SITE_DIR, TEXT_EXTENSIONS, auditPackage, exportTelas, listTree,
   type SiteManifestDoc,
 } from "./export-telas";
 import { assetClosure, createSiteServer, loadSite } from "./measurement-surface";
@@ -42,7 +42,7 @@ async function test(name: string, fn: () => void | Promise<void>): Promise<void>
   console.log(`ok ${name}`);
 }
 
-const CORPUS = resolve(ROOT, "..", "govbr-corpus");
+const CORPUS = DEFAULT_CORPUS;
 const WORK = mkdtempSync(join(tmpdir(), "test-export-telas-"));
 const OUT = join(WORK, "pacote");
 const cleanups: (() => void | Promise<void>)[] = [];
@@ -117,6 +117,10 @@ pageSentence("Você também pode arrastar o arquivo até a área acima.", /^site
   "A2: texto de apoio do campo de envio (#arquivo-apoio), visível na página; a referência o cita entre aspas");
 pageSentence("O arquivo deve estar em PDF, JPG ou PNG e ter até 5 MB.", /^site\/acompanhamento\/comportamento\.js$/,
   "A2: mensagem de recusa do envio que a página mostra (comportamento.js); a referência a cita entre aspas");
+// Tela E (govbr-corpus bancada-e, página construída): ground-truth-cadastro-pais.json cita entre aspas o título da
+// mensagem de retorno que a página mostra depois do envio.
+pageSentence("Não foi possível salvar o país.", /^site\/cadastro-pais\.html$/,
+  "E: título da mensagem de retorno do envio, visível na página; a referência o cita entre aspas");
 
 interface LeakHit { file: string; kind: "id" | "regra" | "frase"; needle: string; context: string; found?: string }
 
@@ -407,8 +411,8 @@ async function main(): Promise<void> {
     assert.equal(manifest.contract, "site-manifest.v1");
     assert.equal(manifest.subsetOf, "snapshot-manifest.v1");
     assert.equal(manifest.fixture, false);
-    assert.deepEqual(manifest.screens.map((s) => s.id), [SCREEN_A, SCREEN_B, SCREEN_A2, SCREEN_D]);
-    assert.deepEqual([...SCREENS], [SCREEN_A, SCREEN_B, SCREEN_A2, SCREEN_D]);
+    assert.deepEqual(manifest.screens.map((s) => s.id), [SCREEN_A, SCREEN_B, SCREEN_A2, SCREEN_D, SCREEN_E]);
+    assert.deepEqual([...SCREENS], [SCREEN_A, SCREEN_B, SCREEN_A2, SCREEN_D, SCREEN_E]);
     for (const [i, nome] of SCREENS.entries()) assert.equal(manifest.screens[i].entry, `/${telaOf(nome).entry}`);
     // 1.4.0: `spas` = as duas SPAs (B, D); `spa` continua a da B, com a forma de até 1.3.0.
     const spaDe = (nome: string) => { const s = telaOf(nome).isolamento.site!; return { prefix: `/${s.arvore.replace(/\/+$/, "")}/`, index: s.indice }; };
@@ -448,7 +452,7 @@ async function main(): Promise<void> {
     assert.ok(!("dependencies" in pkg) && !("devDependencies" in pkg), "o pacote não tem dependências");
   });
 
-  await test("paridade: telas B e D = manifesto do congelamento; A, B, A2 e D = última superfície de medida", () => {
+  await test("paridade: telas B e D = manifesto do congelamento; A, B, A2, D e E = última superfície de medida", () => {
     const arvoreDe = (nome: string) => telaOf(nome).isolamento.site!.arvore.replace(/\/+$/, "");
     for (const nome of SPA_SCREENS) {
       const arvore = arvoreDe(nome);
@@ -459,18 +463,31 @@ async function main(): Promise<void> {
     // Arquivos de cada tela no pacote: B e D = as árvores pnip/ e pnip-d/ (SPAs); A e A2 = o fechamento da entrada
     // sobre o site exportado SEM essas árvores (o fechamento casa por nome de arquivo e o bundle do DS cita nomes
     // como collapse.js, que a SPA também tem — a mesma razão por que o exportador tira public/ do build). A e A2
-    // dividem as fontes do DS. Juntas, as quatro cobrem exatamente files[].
+    // dividem as fontes do DS com a E (1.5.0). Juntas, as cinco cobrem exatamente files[].
     const siteDir = join(WORK, "site-sem-spas");
     const spaDir = new RegExp(`[\\\\/]site[\\\\/](${SPA_SCREENS.map(arvoreDe).join("|")})([\\\\/]|$)`);
     cpSync(join(OUT, SITE_DIR), siteDir, { recursive: true, filter: (from) => !spaDir.test(from) });
+    // 1.5.0: A2 e E têm scripts com o mesmo nome em pastas próprias; o fechamento de cada uma é medido sem os
+    // arquivos de public/ da outra (a mesma separação do exportador).
+    const PROPRIOS: Record<string, readonly string[]> = { [SCREEN_A2]: SCREEN_A2_PUBLIC, [SCREEN_E]: SCREEN_E_PUBLIC };
+    const siteSem = (nome: string): string => {
+      const outros = Object.entries(PROPRIOS).filter(([n]) => n !== nome).flatMap(([, ps]) => ps);
+      if (!outros.length) return siteDir;
+      const d = join(WORK, `site-sem-spas-${nome}`);
+      const fora = new RegExp(`[\\\\/]site-sem-spas[\\\\/](${outros.map((p) => p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})([\\\\/]|$)`);
+      if (!existsSync(d)) cpSync(siteDir, d, { recursive: true, filter: (from) => !fora.test(from) });
+      return d;
+    };
     const doPacote = (nome: string): Set<string> => (SPA_SCREENS as readonly string[]).includes(nome)
       ? new Set(manifest.files.filter((f) => f.path.startsWith(`${arvoreDe(nome)}/`)).map((f) => f.path))
-      : new Set(assetClosure(siteDir, telaOf(nome).entry));
+      : new Set(assetClosure(siteSem(nome), telaOf(nome).entry));
     const porTela = new Map(SCREENS.map((nome) => [nome, doPacote(nome)]));
     const cobertos = new Set([...porTela.values()].flatMap((s) => [...s]));
-    assert.deepEqual([...cobertos].sort(), manifest.files.map((f) => f.path).sort(), "files[] ≠ união das quatro telas");
-    for (const f of porTela.get(SCREEN_A2)!) assert.ok(!/^pnip(-d)?\//.test(f) && !/solicitacao/.test(f), `A2 trouxe ${f}`);
-    for (const f of porTela.get(SCREEN_A)!) assert.ok(!/^pnip(-d)?\//.test(f) && !/acompanhamento|inicio\.html|meus-requerimentos/.test(f), `A trouxe ${f}`);
+    assert.deepEqual([...cobertos].sort(), manifest.files.map((f) => f.path).sort(), "files[] ≠ união das cinco telas");
+    const DA_E = /cadastro-pais|administracao\.html|minha-conta\.html|paises-importadores\.html|servicos-defesa\.html/;
+    for (const f of porTela.get(SCREEN_A2)!) assert.ok(!/^pnip(-d)?\//.test(f) && !/solicitacao/.test(f) && !DA_E.test(f), `A2 trouxe ${f}`);
+    for (const f of porTela.get(SCREEN_A)!) assert.ok(!/^pnip(-d)?\//.test(f) && !/acompanhamento|inicio\.html|meus-requerimentos/.test(f) && !DA_E.test(f), `A trouxe ${f}`);
+    for (const f of porTela.get(SCREEN_E)!) assert.ok(!/^pnip(-d)?\//.test(f) && !/solicitacao|acompanhamento|inicio\.html|meus-requerimentos/.test(f), `E trouxe ${f}`);
     console.log(`   por tela: ${SCREENS.map((n) => `${n} ${porTela.get(n)!.size}`).join(" · ")} (${cobertos.size} no total)`);
     for (const nome of SCREENS) {
       const tela = telaOf(nome);
@@ -552,6 +569,7 @@ async function main(): Promise<void> {
     assert.match(server.output(), /Solicitar serviço: http:\/\/127\.0\.0\.1:\d+\/solicitacao\.html/);
     assert.match(server.output(), /Acompanhar requerimento: http:\/\/127\.0\.0\.1:\d+\/acompanhamento\.html/);
     assert.match(server.output(), /Processos: http:\/\/127\.0\.0\.1:\d+\/pnip-d\/portal-mpa\/processos\?mock-perfil=mpa/);
+    assert.match(server.output(), /Cadastrar país importador: http:\/\/127\.0\.0\.1:\d+\/cadastro-pais\.html/);
     const { createHash } = await import("node:crypto");
     for (const f of manifest.files) {
       const res = await fetch(`${server.origin}/${f.path.split("/").map(encodeURIComponent).join("/")}`);
@@ -587,6 +605,7 @@ async function main(): Promise<void> {
       ["/index.html", [404]], ["/src/solicitacao.tsx", [404]], ["/@fs/etc/passwd", [404]], ["/solicitacao.html", [405], "POST"],
       ["/acompanhamento/", [404]], ["/acompanhamento", [404]], ["/acompanhamento/core.min.js.map", [404]], ["/src/acompanhamento/acompanhamento.css", [404]], ["/acompanhamento/../server.mjs", [400]],
       ["/controles/", [404]], ["/pnip-c/index.html", [404]], ["/acompanhamento.html", [405], "PUT"],
+      ["/cadastro-pais/", [404]], ["/cadastro-pais/core.min.js.map", [404]], ["/src/cadastro-pais/cadastro-pais.css", [404]], ["/cadastro-pais.html", [405], "POST"],
       ["/pnip-d/manifesto.json", [404]], ["/pnip-d/../server.mjs", [400]], ["/pnip-dx/portal-mpa/processos", [404]], ["/pnip-d", [404]],
     ];
     for (const [path, expected, method] of cases) {
