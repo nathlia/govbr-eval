@@ -1,0 +1,183 @@
+{
+  "contract": "campaign.v2",
+  "fixture": false,
+  "campaignId": "nat78-tela-e-01",
+  "kind": "formal",
+  "title": "Coleta medida da tela E (cadastro-pais, página construída), estudo complementar NAT-78 — 9 trios sem/ferramentas/com em quadrado latino, Opus 5.5 high, oráculo congelado 3.7.12, 30 min por execução",
+  "objective": "Responder à QP-E do protocolo NAT-78 (revisão 6, §2.1) na tela E selada (cadastro-pais, página construída pelo procedimento da A2, D-201; referência 1.0.0, sha256 661cc54b7b291bc6e455065ecb23c08e5279bf7a0e9c7d6494afd78ae112c528, CONG-16): com o mesmo modelo, tarefa, navegador, ferramentas de medição e limites, dar ao agente o pacote de conhecimento DS + e-MAG do oráculo (braço com, perfil evaluation) em vez das mesmas ferramentas sem esse pacote (braço ferramentas, perfil knowledge-free) muda o número de specs do DS semeadas confirmadas por trio? Secundárias QS1 (sem × com) e QS2 (sem × ferramentas), cada uma com o seu n. Instrumento congelado igual ao da D: validator 3.7.12 (816f4bae41f4486b7055f0ac265167e87ce0d5e5, tag congelado-3.7.12; dist cd1aaf354b9d…, data b4b2eceb…; D-195), skill avaliar-tela 8139bb0c (template), coletor collector-route-guard-1.0.2 com relogio-2, imagem do agente govbr-runner-agent:1.0.0-mcp0.0.70-cc2.1.288-c90c12ac81308, detector de vazamento 1.3.9, scorer flow-semantic-1.8.2, política do juiz 1.3.0 com a 1.1.0 ao lado, LEIAME-juiz nat78-primeira-passada-1.4.7. Próprio da E (RASCUNHO, ramo bancada-e; valores finais no congelamento): texto da tarefa da E a 30 min 344f2e70fbe4f9b65f0c335a1ffee3cfd7dc6b3504cf1d27ce6223d0181e263c, igual nos três braços; govbr-telas d8eb604ab8953c29c624c376407c2599fd850fa3 no ramo bancada-e (site 968abbd974d5, manifesto 204b68f2…; CONG-17, commit da main a fixar); inventário do DOM da E (scripts/vazamento/inventario-dom/cadastro-pais.json, sha256 e2ff5c63c7415f0e84ae652c01f09dc232326da4a7ba70942970d4302804c8e2; CONG-18); lock de imagens a refazer só na imagem screens. Coleta paga pela assinatura (conta = principal; decisão da autora de 13/11). A E vem depois da coleta da D e nunca tira janela dela (§3.8). O que os 9 trios estimam: o efeito do pacote DS + e-MAG sobre defeitos do DS postos por sorteio numa página construída, nesta configuração (§2.1); não é amostra de telas nem de aplicações reais. Durante a coleta só os sinais técnicos de cada trio são lidos (D-138).",
+  "hypotheses": [
+    "QP-E (coprimária, §2.1, §6.3): D_fc^E = specs do DS semeadas confirmadas por com − as confirmadas por ferramentas, por trio, nas 6 specs ds da referência congelada. H0: D_fc^E é simétrico em torno de 0 (rótulos ferramentas e com trocáveis dentro do trio). H1 (bicaudal): a média de D_fc^E é diferente de 0. Limiar: o que o Holm entre D e E der à E (0,025 ou 0,05).",
+    "QS1 e QS2 (secundárias, α = 0,05, sem correção de multiplicidade): D_sc^E = com − sem e D_sf^E = ferramentas − sem, por trio, no mesmo conjunto."
+  ],
+  "createdAt": "2026-11-16T00:00:00Z",
+  "frozenAt": "2026-11-16T00:00:00Z",
+  "design": {
+    "screens": [
+      {
+        "id": "cadastro-pais",
+        "label": "Cadastrar país importador",
+        "version": "govbr-telas-site-968abbd974d5"
+      }
+    ],
+    "arms": [
+      "sem",
+      "ferramentas",
+      "com"
+    ],
+    "models": [
+      {
+        "family": "Opus",
+        "requested": "claude-opus-5-5"
+      }
+    ],
+    "effort": "high",
+    "repetitions": 9,
+    "order": "quadrado-latino",
+    "seed": null,
+    "comparisons": [
+      {
+        "id": "ferramentas-x-com",
+        "arms": [
+          "ferramentas",
+          "com"
+        ],
+        "role": "primary",
+        "question": "QP-E (§2.1): o pacote de conhecimento DS + e-MAG servido e aplicado pelo oráculo 3.7.12 (com) muda o número de specs do DS semeadas confirmadas por trio em relação às mesmas ferramentas de medição sem esse pacote (ferramentas), nas 6 specs ds da tela E? D_fc^E = com − ferramentas; permutação exata bicaudal, limiar do Holm D × E (§6.3)."
+      },
+      {
+        "id": "sem-x-com",
+        "arms": [
+          "sem",
+          "com"
+        ],
+        "role": "secondary",
+        "question": "QS1 (§2.2): o oráculo congelado inteiro muda as specs do DS confirmadas por trio em relação ao navegador sozinho? D_sc^E = com − sem; α = 0,05, sem correção."
+      },
+      {
+        "id": "sem-x-ferramentas",
+        "arms": [
+          "sem",
+          "ferramentas"
+        ],
+        "role": "secondary",
+        "question": "QS2 (§2.2): as ferramentas de medição sozinhas acrescentam algo ao navegador? D_sf^E = ferramentas − sem; α = 0,05, sem correção."
+      }
+    ]
+  },
+  "fixed": {
+    "protocolSha256": "8139bb0cd71d273e1f63294b2523478fd54fc2e05033cfc58f58bda174d83e3c",
+    "client": {
+      "name": "claude-code",
+      "version": "2.1.288 (Claude Code)"
+    },
+    "provider": {
+      "name": "anthropic",
+      "authMethod": "oauth-subscription"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "147.0.7727.15"
+    },
+    "playwrightMcp": "@playwright/mcp@0.0.70",
+    "isolationPolicyVersion": "isolamento-runner-1.1.0",
+    "oracleProfiles": {
+      "com": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.12",
+        "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "evaluation",
+        "tools": [
+          "get_component_spec",
+          "get_design_tokens",
+          "get_ds_rules",
+          "get_emag_rules",
+          "get_finding_details",
+          "get_page_rules",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "04ae14378db09bd4cdef48841e3d1a9388b701e18279fe08a04267af3c74614c"
+      },
+      "ferramentas": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.12",
+        "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "knowledge-free",
+        "tools": [
+          "get_finding_details",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "5b9c59aaa490f5de2a4a497eda8a2e3dbedd25b2a8288fed8eb049f7233d40dc"
+      }
+    },
+    "scorerVersion": "flow-semantic-1.8.2"
+  },
+  "limits": {
+    "timeoutSeconds": 1800,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 31,
+    "retryOn": [
+      "rate-limited",
+      "model-unavailable",
+      "auth-failed",
+      "preflight-failed",
+      "vm-lost",
+      "harness-error",
+      "archive-unavailable",
+      "cancelled"
+    ],
+    "attemptSelection": "Protocolo NAT-78 §7.2 (iguais à T7, D-88): entra na análise a primeira tentativa elegível de cada slot, na ordem da agenda. Nova tentativa só por falha técnica, no máximo 2 tentativas por slot e 31 na campanha (27 planejadas + 4), prioridade pela ordem da agenda; teto esgotado = slot perdido, trio incompleto, nunca reposto nem N estendido. Tempo esgotado (1.800 s) é resultado do agente: inelegível, sem nova tentativa, nunca zero achados. Elegível = técnico e isolamento passed, relatório aceito, identidade igual à campanha congelada (inclusive toolsListSha256, trava = 0 e dicionário = 0), tentativa dentro da política; o estado de uso do oráculo (§4.5) não entra (used-with-errors não é perda de slot)."
+  },
+  "failurePolicy": "Protocolo NAT-78 §7.2 (as mesmas regras da D, campanha própria: teto 27 + 4 = 31) com a emenda (a) adotada em 13/11 (N11; docs/runner-isolado.md, 'Emenda (a) às regras de falha'): (1) a linha de base da campanha é medida e congelada uma vez, antes do primeiro trio, por um disparo so-linha-de-base, em campanhas/nat78-tela-e-01/linha-de-base.json, commitado antes do slot 1, e todo slot dispara com etapas = so-coleta e usa esse registro, conferido contra o manifesto de coleta do slot; (2) falha de job de infraestrutura fora do agente (linha de base, arquivamento, rede do runner) é reexecutada no mesmo disparo, sem rodar o agente de novo e sem contar como tentativa nem no teto de 31; (3) tentativa cuja coleta terminou e cujo pacote não chegou ao arquivamento conta como tentativa: fica no índice, nunca some nem é fabricada. Isolamento reprovado = slot perdido, sem exceção nem resgate (D-157; D-164 vale só para dev-*; emenda (b) não adotada). Nenhum commit no govbr-eval entre o primeiro e o último slot de um trio. Defeito técnico que exige commit no eval para a coleta (D-138); o trio afetado é refeito inteiro, dentro do teto de 31 (N6, padrão recomendado). Paradas (§6.4): falha técnica (nova tentativa), cota (trio adiado, sem mudar N nem ordem), teto estimado (a coleta para, o que rodou fica), administrativa; em nenhum caso N é estendido nem trios perdidos são repostos.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": []
+  },
+  "analysisPlan": {
+    "primaryOutcome": "D_fc^E por trio (com − ferramentas) nas 6 specs ds da referência cadastro-pais 1.0.0 (tela-e2/classes-d156-1.0.0.json, sha256 afd8e6e38897f00ebfbe09579f5df9be7a0810608614c675701898e293b7bfc9; D-102: spec confirmada = pelo menos uma unidade confirmada pela revisão fechada §8, em passada própria da E), sob a política do juiz 1.3.0, coluna detecção (D-157 item 4). Configuração pré-registrada da análise: campanhas/nat78-tela-e-01/analise-preregistrada.json, sha256 b55a6b28ccbfe8edfda1906b9f186992c9506b2c9ea861f3a098799945c30a0e. Teste: permutação exata por troca de sinais sobre a média de D_fc^E, bicaudal, limiar dado pelo Holm entre as telas D e E (§6.3; estatistica-pareada.ts › holmTelas).",
+    "secondaryOutcomes": [
+      "D_sc^E (com − sem) e D_sf^E (ferramentas − sem) por trio, mesmo conjunto e mesmo método, α = 0,05, sem correção de multiplicidade.",
+      "Detecção fundamentada ao lado, por braço e trio, com mediana (descritiva; N8); política 1.1.0 ao lado; 1.2.0 pura por reingestão (N7).",
+      "Sensibilidades: todas as 8 specs da E; por unidade; variante comU09 (9 specs, D-202 item 4); variante semIdsExpostos; S4'; por protocolo (§4.5, nunca o primário).",
+      "Leitura com δ = 2 specs por trio (A8; §6.1: na E, com 6 specs do DS, um efeito grande, declarado).",
+      "QS4: recall da classe geral (2 specs) ao lado, descritivo, sem teste.",
+      "QS3 e QS5 descritivas: matriz spec × abordagem (3 braços, axe, validator não guiado, Stylelint) e falso alarme nos 5 controles conformes da referência (_meta.conformes; seleção posterior à auditoria, DV-03); linhas de base sem teste inferencial (D-128).",
+      "Aderência ao oráculo por execução (§4.5), publicada; medidas de recurso só registradas."
+    ],
+    "uncertaintyMethod": "IC 95% da média de D por bootstrap percentil, 10.000 reamostragens de trios, mulberry32 com semente derivada de design.seed; Wilcoxon-Pratt e teste do sinal exatos como robustez; indisponível se n efetivo < 5 ou D todos iguais. Publicados sempre D por trio, média, mediana, DP, n planejado (9) e efetivo.",
+    "exclusionRules": "Fora da comparação: execução inelegível (§7.2: técnico, isolamento, submissão, identidade, tentativa) e trio sem os dois braços daquela comparação (trio incompleto entra só nas comparações que têm os dois braços); listados com motivo, perdas por braço e alerta de risco de seleção quando as perdas diferem entre braços. Sem olhada intermediária, parada antecipada nem trio acrescentado (§6.2). Texto da revisão nunca entra na referência: defeito novo é descoberta por braço, nunca unidade nova."
+  },
+  "budget": {
+    "approved": false,
+    "amount": null,
+    "currency": null,
+    "approvedBy": null,
+    "approvedAt": null
+  },
+  "pendingDecisions": [
+    {
+      "topic": "Congelamento da campanha da E: commit sozinho na main do eval depois do protocolo congelado (CONG-15) e da análise; design.seed declarada nesse commit; budget aprovado com amount 230 e currency USD (teto da coleta da E, N10, estimativa do cliente pela assinatura; o contrato só aceita amount com approved = true). Até lá o contrato recusa a campanha formal e o preflight não dispara nada.",
+      "issue": "NAT-78",
+      "owner": "assistente (por delegação da autora)"
+    },
+    {
+      "topic": "Valores da E presos ao ramo bancada-e (govbr-telas d8eb604, site 968abbd974d5) a reconferir depois do merge nas mains; lock refeito só na imagem screens, depois de a coleta da D estar presa no seu ramo/tag congelado; regra de desfecho da E no recalculo-campanha.ts.",
+      "issue": "NAT-78",
+      "owner": "assistente"
+    }
+  ]
+}
