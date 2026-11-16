@@ -34,7 +34,9 @@
  * (`solicitacao`, 2.0.0) por SPEC, primário = as specs sorteadas A-*, sensibilidade = as unidades A-* (por instância),
  * camada de página P-* à parte (nunca somada); tela E (`cadastro-pais`, 1.0.0; NAT-78 §5.1 coprimário) por SPEC, primário =
  * as specs do DS semeadas não expostas, sensibilidade = todas as specs, as unidades do primário e "com U-09" (a spec retirada
- * no denominador, crédito zero nos três braços). δ = 2 specs. Outra tela: recusa.
+ * no denominador, crédito zero nos três braços); e, só na coluna fundamentada (descritiva, sem teste), "sem ids expostos"
+ * (`fundamentadaDoTrio`: crédito fundamentado só por id exposto da spec sai, pela citação gravada no próprio achado; mesma
+ * passada, nenhum juiz de novo). δ = 2 specs. Outra tela: recusa.
  *
  * `--por-protocolo` (NAT-78 §4.5): sensibilidade por protocolo AO LADO do primário. O estado do oráculo de cada slot vem da
  * `summary.json` da análise (`mcpIsolamento.usoOraculo` = `run.status.oracleUsage`); o slot conta quando o estado é o que o
@@ -61,11 +63,12 @@ import {
 import { POLITICA_SENSIBILIDADE, TCC, jsonTexto, ordenar, posix, rotuloPolitica, sha, type VersaoPolitica } from "./comum";
 import type { OracleUsage } from "../../contracts";
 import { bracoDoRun, referenciasDoAchado } from "./e14-campanha";
-import type { Derivado, Resposta } from "./e14-comum";
+import { IDS_REFERENCIA, type Derivado, type Resposta } from "./e14-comum";
 import {
   AVISO_POR_PROTOCOLO, FORMATO_POR_PROTOCOLO, LEITURA_POR_PROTOCOLO, TIPO_POR_PROTOCOLO, classeDaSpec, definicaoPorProtocolo, estadosDoOraculo, exclusoesMd,
-  exclusoesPorBraco, situacaoPorProtocolo, type ExclusaoDoBraco, type ExecucaoDoResumo, type PorProtocolo, type SituacaoProtocolo,
+  exclusoesPorBraco, situacaoPorProtocolo, specFundamentada, type ExclusaoDoBraco, type ExecucaoDoResumo, type PorProtocolo, type SituacaoProtocolo,
 } from "./e14-deteccao";
+import { normalizarRegra } from "./politica";
 import { relacaoMedida, relacaoNoDominioMedido } from "./montar";
 import { aplicarOrigem, lerOrigem, type AplicacaoOrigem } from "./origem-campanha";
 import { gravarImutavel, lerArgs, lerPassada, pastaDaAnalise, type Passada } from "./revisao-campanha";
@@ -91,16 +94,72 @@ const r4 = (x: number | null) => (x === null ? null : Math.round(x * 10000) / 10
  * variante "com U-09"): specs que entram no denominador (`specs`) mas nunca são contadas como confirmadas, em braço nenhum.
  */
 export interface Conjunto { id: string; rotulo: string; specs: string[]; modo: "spec" | "unidade"; tipo: "primario" | "sensibilidade" | "a-parte"; semCredito?: string[] }
-export interface RegraDesfecho { tela: string; referencia: string; unidadeDelta: "specs"; conjuntos: Conjunto[] }
+/**
+ * Sensibilidade da coluna fundamentada (só a tela E, variante "sem ids expostos" da referência): `expostos` = por spec que
+ * muda, os ids que a variante retira de `rules` (forma canônica, `idCanonico`). Rederivada da MESMA passada: um cartão
+ * fundamentado (`specFundamentada`) cuja norma que deu a classe — a regra que o achado cita, ou a referência secundária
+ * do achado que deu a classe (`citacaoPor`) — é um id exposto da spec creditada sai da coluna fundamentada nesta
+ * variante ("fundamentada por norma exposta"); a detecção (e todo D das `tabelas`) não muda.
+ */
+export interface SensibilidadeFundamentada { id: string; rotulo: string; coluna: "fundamentada"; tipo: "sensibilidade"; expostos: Record<string, string[]> }
+export interface RegraDesfecho { tela: string; referencia: string; unidadeDelta: "specs"; conjuntos: Conjunto[]; fundamentada?: SensibilidadeFundamentada[] }
 export const conjuntoDe = (r: RegraDesfecho, id: string): Conjunto => { const c = r.conjuntos.find(x => x.id === id); if (!c) throw new Error(`conjunto ${id} fora da regra da tela ${r.tela}`); return c; };
 
 export interface Referencia {
   _meta: { version: string; suite?: string; exposto?: { specs: string[] };
     /** Tela E (cadastro-pais): estratos da página construída (semeadas por classe selada; expostas). */
     estratos?: { semeada?: { DS?: string[]; G?: string[] }; exposto?: { specs: string[] } };
-    /** Tela E: variantes de sensibilidade declaradas antes da coleta; a "com U-09" traz a spec retirada pelo desvio. */
-    sensibilidades?: { comU09?: { spec?: { id: string } } } };
-  violations: { id: string; expectedCount?: number; categories?: string[] }[];
+    /**
+     * Tela E: variantes de sensibilidade declaradas antes da coleta; a "com U-09" traz a spec retirada pelo desvio; a "sem
+     * ids expostos", o `rules` de cada spec que muda (os ids expostos retirados).
+     */
+    sensibilidades?: { comU09?: { spec?: { id: string } }; semIdsExpostos?: { rules?: Record<string, string[]> } };
+    /** Tela E: por spec, os ids de `rules` não expostos e os expostos (conferidos contra a variante "sem ids expostos"). */
+    fundamentacao?: { porSpec?: Record<string, { expostos?: { id: string }[] }> } };
+  violations: { id: string; expectedCount?: number; categories?: string[]; rules?: string[] }[];
+}
+
+/**
+ * Id de norma na forma canônica para comparar a citação do achado com os ids da referência: a mesma normalização que a
+ * passada cega aplica antes de resolver a norma (`normalizarRegra`, `emag-N.N` → `emag:N.N`, `ds:govbr-…` → `govbr-…`;
+ * e14-fila.ts › normasDaCampanha). Id de verificação (`ds:page-*`, alias de várias regras) fica como está: não é o id
+ * literal de nenhuma regra da referência; a passada o resolve pelo `checker-aliases.json` e pela base do validador da
+ * campanha, que o recálculo não lê (ver `ehIdDeVerificacao` e `porAlias`).
+ */
+export const idCanonico = (bruto: string): string => normalizarRegra(bruto).replace(/^emag-(\d+\.\d+)$/, "emag:$1").replace(/^ds:(?=govbr-)/, "");
+/**
+ * Id canônico que a passada resolve pelo caminho das verificações (`ds:<verificação>`, ex. `ds:page-footer`: um id que vale
+ * por várias regras; e14-fila.ts › normasDaCampanha, `checker-aliases.json` + base do validador). As regras que ele traz
+ * dependem dessas duas entradas, que não estão na análise nem na passada: o recálculo não as adivinha (nenhum segundo
+ * mapeamento) e lista o cartão em `porAlias`.
+ */
+export const ehIdDeVerificacao = (canon: string): boolean => /^ds:/.test(canon);
+
+/**
+ * [tela E] A variante "sem ids expostos" como sensibilidade da coluna fundamentada: por spec que ela muda, os ids retirados
+ * de `rules` (principal − variante). Para se a variante cita spec fora da referência, traz id que a principal não tem, não
+ * retira nada, ou se os retirados não são os expostos que `_meta.fundamentacao.porSpec` declara.
+ */
+export function sensibilidadeSemIdsExpostos(ref: Referencia): SensibilidadeFundamentada {
+  const v = ref._meta.sensibilidades?.semIdsExpostos?.rules;
+  if (!v || typeof v !== "object" || !Object.keys(v).length) throw new Error(`referência ${ref._meta.suite ?? "?"} ${ref._meta.version} sem _meta.sensibilidades.semIdsExpostos.rules`);
+  const expostos: Record<string, string[]> = {};
+  for (const s of Object.keys(v).sort()) {
+    const spec = ref.violations.find(x => x.id === s);
+    if (!spec) throw new Error(`variante sem ids expostos: spec ${s} fora da referência`);
+    const principal = spec.rules ?? [], variante = v[s];
+    const alheios = variante.filter(r => !principal.includes(r));
+    if (alheios.length) throw new Error(`variante sem ids expostos: ${s} traz ids que a principal não tem em rules (${alheios.length})`);
+    const ret = [...new Set(principal.filter(r => !variante.includes(r)).map(idCanonico))].sort();
+    if (!ret.length) throw new Error(`variante sem ids expostos: ${s} não retira id nenhum de rules`);
+    const decl = ref._meta.fundamentacao?.porSpec?.[s]?.expostos;
+    if (decl && JSON.stringify([...new Set(decl.map(e => idCanonico(e.id)))].sort()) !== JSON.stringify(ret))
+      throw new Error(`variante sem ids expostos: os ids retirados de ${s} não são os expostos de _meta.fundamentacao.porSpec.${s}`);
+    expostos[s] = ret;
+  }
+  const n = Object.keys(expostos).length;
+  return { id: "sem-ids-expostos", coluna: "fundamentada", tipo: "sensibilidade", expostos,
+    rotulo: `sem ids expostos (${n} spec(s) mudam; só a coluna fundamentada: crédito fundamentado só por id exposto da spec sai da coluna; a detecção não muda; sensibilidade)` };
 }
 
 /** Regra fixa do protocolo §5.1 para as duas telas da coleta; qualquer outra tela (ou versão de referência) é recusada. */
@@ -131,8 +190,8 @@ export function regraDaTela(tela: string, ref: Referencia): RegraDesfecho {
   // classes da E), conferida contra o estrato semeado DS que a própria referência declara: divergência recusa. Sensibilidades
   // (§5.1): todas as specs da E; a mesma comparação por unidade. Variante "com U-09" (§3.8, limitação 3; decisão do assistente
   // de 16/11): a spec retirada da principal entra no denominador com crédito zero nos três braços (`semCredito`), então o D é
-  // o de "todas" e só a proporção muda. A variante "sem ids expostos" não está aqui: o protocolo não diz como ela entra no
-  // recálculo (ela muda as normas dadas ao juiz, e14-campanha.ts), e fica como pergunta.
+  // o de "todas" e só a proporção muda. Variante "sem ids expostos" (pré-registrada: "só muda a coluna fundamentada"): em
+  // `fundamentada`, rederivada da mesma passada pela citação do próprio achado (sem segunda passada de juiz).
   if (tela === "cadastro-pais" && ref._meta.version === "1.0.0") {
     const est = ref._meta.estratos;
     const exp = est?.exposto?.specs, semeadasDs = est?.semeada?.DS;
@@ -148,11 +207,15 @@ export function regraDaTela(tela: string, ref: Referencia): RegraDesfecho {
     if (!u09) throw new Error("referência cadastro-pais 1.0.0 sem _meta.sensibilidades.comU09.spec.id");
     if (ids.includes(u09)) throw new Error(`cadastro-pais 1.0.0: a spec da variante com U-09 (${u09}) já está na referência principal`);
     const nu = prim.reduce((n, v) => n + (v.expectedCount ?? 1), 0);
+    // Variante "sem ids expostos" (§5.1, analise-preregistrada › sensibilidades): só a coluna fundamentada, rederivada da
+    // mesma passada pela citação do próprio achado (`fundamentadaDoTrio`); nenhum conjunto de detecção novo.
+    const semIds = sensibilidadeSemIdsExpostos(ref);
     return { tela, referencia: ref._meta.version, unidadeDelta: "specs", conjuntos: [
       { id: "primario", rotulo: `specs do DS semeadas, não expostas (${prim.length})`, specs: prim.map(v => v.id), modo: "spec", tipo: "primario" },
       { id: "todas", rotulo: `todas as specs da E (${ids.length}; sensibilidade)`, specs: ids, modo: "spec", tipo: "sensibilidade" },
       { id: "unidades", rotulo: `unidades das specs do primário (${nu}; por unidade, sensibilidade)`, specs: prim.map(v => v.id), modo: "unidade", tipo: "sensibilidade" },
-      { id: "com-u09", rotulo: `com a ${u09} (${ids.length + 1} specs; a ${u09} no denominador com crédito zero nos três braços; sensibilidade)`, specs: [...ids, u09], modo: "spec", tipo: "sensibilidade", semCredito: [u09] }] };
+      { id: "com-u09", rotulo: `com a ${u09} (${ids.length + 1} specs; a ${u09} no denominador com crédito zero nos três braços; sensibilidade)`, specs: [...ids, u09], modo: "spec", tipo: "sensibilidade", semCredito: [u09] }],
+      fundamentada: [semIds] };
   }
   throw new Error(`tela ${tela} (referência ${ref._meta.version}) sem regra de desfecho pré-registrada (só processos 1.0.0/1.1.0, solicitacao 2.0.0 e cadastro-pais 1.0.0)`);
 }
@@ -312,6 +375,103 @@ export function creditosDoTrio(pkg: SemanticPackage, julgados: CartaoJulgado[], 
       creditados };
   }
   return { porBraco, recusados };
+}
+
+// ───────────────────────────────────────────────────────────────── coluna fundamentada e a variante "sem ids expostos" (tela E)
+
+/**
+ * A norma que fundamentou o crédito, como o AGENTE a escreveu no achado (nada do juiz): a regra citada (`card.rule`) ou,
+ * quando a classe veio de uma referência secundária (`derivado.citacaoPor`, política 1.3.0), essa referência do achado
+ * (`referenciasDoAchado`, a mesma lista que a passada publicou como REF1/REF2). Cartão sem regra citada → null.
+ */
+export function normaDaFundamentacao(card: Card, d: Pick<Derivado, "citacaoPor">, id = card.id): string | null {
+  if (d.citacaoPor) {
+    const r = referenciasDoAchado(card)[IDS_REFERENCIA.indexOf(d.citacaoPor)];
+    if (!r) throw new Error(`${id}: citacaoPor ${d.citacaoPor} sem essa referência no achado`);
+    return r;
+  }
+  return card.rule ?? null;
+}
+
+export interface FundamentadaBraco {
+  /** Specs fundamentadas na leitura principal (`specFundamentada`, a mesma coluna de e14-deteccao.ts). */
+  principal: string[];
+  /** Por sensibilidade da coluna (`RegraDesfecho.fundamentada`): as specs que continuam fundamentadas. */
+  variantes: Record<string, string[]>;
+  /** Cartões fundamentados cuja norma é id exposto da spec creditada, por sensibilidade ("fundamentada por norma exposta"). */
+  porNormaExposta: Record<string, { id: string; spec: string; norma: string }[]>;
+  /**
+   * Cartões fundamentados, numa spec que a sensibilidade muda, cuja norma é id de verificação (`ehIdDeVerificacao`): a
+   * passada resolve esse id pelo `checker-aliases.json` + base do validador, entradas que o recálculo não lê. Ficam
+   * contados como na principal e listados aqui, por sensibilidade, para ninguém os perder de vista.
+   */
+  porAlias: Record<string, { id: string; spec: string; norma: string }[]>;
+}
+
+/**
+ * Coluna fundamentada de um trio por braço do desenho, na leitura principal e em cada sensibilidade da coluna. Mesma
+ * passada, mesmo derivado: na sensibilidade, o cartão fundamentado cuja norma (`normaDaFundamentacao`, forma canônica)
+ * é um id exposto da spec creditada deixa de fundamentar; os outros cartões contam como na principal (a spec fica
+ * fundamentada se outro cartão a fundamenta por norma não exposta). Cartão sem regra citada nunca é "por norma exposta".
+ * Cartão cuja norma é id de verificação (alias de várias regras) numa spec com ids expostos: contado como na principal e
+ * listado em `porAlias` (as regras do alias não se resolvem aqui sem as entradas do validador; nenhum segundo mapeamento).
+ */
+export function fundamentadaDoTrio(pkg: SemanticPackage, julgados: CartaoJulgado[], bracos: readonly string[], sens: readonly SensibilidadeFundamentada[]): Record<string, FundamentadaBraco> {
+  const cards = new Map(pkg.cards.map(c => [c.id, c]));
+  const out: Record<string, FundamentadaBraco> = {};
+  for (const run of pkg.runs) {
+    const b = bracoDoRun(run, bracos);
+    if (bracos.includes(b)) out[b] ??= { principal: [], variantes: Object.fromEntries(sens.map(s => [s.id, []])), porNormaExposta: Object.fromEntries(sens.map(s => [s.id, []])),
+      porAlias: Object.fromEntries(sens.map(s => [s.id, []])) };
+  }
+  for (const j of ordenar(julgados, x => x.id)) {
+    const x = out[j.braco];
+    if (!x) continue;
+    const f = specFundamentada({ id: j.id, resposta: j.resposta, derivado: j.derivado });
+    if (!f) continue;
+    const card = cards.get(j.cardId);
+    if (!card) throw new Error(`${j.id}: cartão ${j.cardId} fora do pacote`);
+    const norma = normaDaFundamentacao(card, j.derivado, j.id), canon = norma === null ? null : idCanonico(norma);
+    if (!x.principal.includes(f.spec)) x.principal.push(f.spec);
+    for (const s of sens) {
+      const exp = s.expostos[f.spec] ?? [];
+      if (canon !== null && exp.includes(canon)) { x.porNormaExposta[s.id].push({ id: j.id, spec: f.spec, norma: norma! }); continue; }
+      if (canon !== null && exp.length && ehIdDeVerificacao(canon)) x.porAlias[s.id].push({ id: j.id, spec: f.spec, norma: norma! });
+      if (!x.variantes[s.id].includes(f.spec)) x.variantes[s.id].push(f.spec);
+    }
+  }
+  for (const x of Object.values(out)) { x.principal.sort(); for (const k of Object.keys(x.variantes)) x.variantes[k].sort(); }
+  return out;
+}
+
+/** Specs de um conjunto (modo spec) que a coluna conta: as do conjunto menos as `semCredito`. */
+export function contarFundamentada(regra: RegraDesfecho, conjunto: string, specs: readonly string[]): number {
+  const c = conjuntoDe(regra, conjunto);
+  if (c.modo !== "spec") throw new Error(`coluna fundamentada: conjunto ${conjunto} não é por spec`);
+  return specs.filter(s => c.specs.includes(s) && !c.semCredito?.includes(s)).length;
+}
+
+export interface ColunaFundamentada {
+  coluna: "fundamentada"; tipo: string; regra: string; sensibilidades: SensibilidadeFundamentada[];
+  porTrio: { trio: string; porBraco: Record<string, FundamentadaBraco> }[];
+  /** Por conjunto (modo spec) × leitura (`principal` e cada sensibilidade) × braço: contagem por trio (null = braço ausente no trio). */
+  contagens: Record<string, Record<string, Record<string, (number | null)[]>>>;
+}
+
+/** A coluna fundamentada da campanha, descritiva (sem D nem teste: analise-preregistrada › colunas.testeNaFundamentada = false). */
+export function colunaFundamentada(regra: RegraDesfecho, bracos: readonly string[], porTrio: ColunaFundamentada["porTrio"]): ColunaFundamentada {
+  const sens = regra.fundamentada ?? [];
+  const leituras = ["principal", ...sens.map(s => s.id)];
+  const contagens: ColunaFundamentada["contagens"] = {};
+  for (const c of regra.conjuntos.filter(x => x.modo === "spec")) {
+    contagens[c.id] = Object.fromEntries(leituras.map(l => [l, Object.fromEntries(bracos.map(b => [b, porTrio.map(t => {
+      const x = t.porBraco[b];
+      return x ? contarFundamentada(regra, c.id, l === "principal" ? x.principal : x.variantes[l]) : null;
+    })]))]));
+  }
+  return { coluna: "fundamentada", tipo: "descritiva (sem teste; ao lado da detecção)",
+    regra: "fundamentada = specFundamentada (e14-deteccao.ts) sobre o derivado da passada (com a origem medida, se dada); sensibilidade \"sem ids expostos\": o cartão cuja norma que deu a classe (a regra do achado, ou a referência secundária do achado em citacaoPor), na forma canônica, é id exposto da spec creditada sai da coluna (\"fundamentada por norma exposta\"); o cartão cuja norma é id de verificação (ds:<verificação>, alias de várias regras) numa spec com ids expostos fica contado como na principal e listado em porAlias, porque a passada resolve esse id pelo checker-aliases.json e pela base do validador, que o recálculo não lê; a mesma passada, sem juiz novo; a detecção e as tabelas não mudam",
+    sensibilidades: [...sens], porTrio, contagens };
 }
 
 // ───────────────────────────────────────────────────────────────── D por comparação (parte pura)
@@ -724,11 +884,16 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
     residuoDeBraco: residuoInfo, recusasDoScorer: recusas, tabelas,
   };
   if (o.origens?.length) json.origem = resumoDaOrigem(passadas, origemInfo, derivadoNa);
+  // Coluna fundamentada com as suas sensibilidades, só quando a regra da tela as declara (tela E): mesma passada, mesmo
+  // derivado; sem a declaração (D, A), nada muda.
+  const fund = regra.fundamentada?.length ? colunaFundamentada(regra, bracos, ordenar(analises, x => x.coleta.trio).map(a =>
+    ({ trio: a.coleta.trio, porBraco: fundamentadaDoTrio(a.pkg, julgadosDoTrio(a, derivadoNa), bracos, regra.fundamentada!) }))) : null;
+  if (fund) json.fundamentada = fund;
   const pp = o.porProtocolo ? sensibilidadePorProtocolo(analises, trios, E, { regra, specDe, comps, nPlanejado, sementeBase, reamostragens: o.reamostragens }) : null;
   if (pp) json.sensibilidadePorProtocolo = pp;
   json.entradas = E.manifesto();
   E.conferir(json.entradas as Record<string, string>);
-  return { json, md: tabelaMd(json, tabelas, regra, comps, s4.disponivel) + (pp ? porProtocoloMd(pp, regra) : "") };
+  return { json, md: tabelaMd(json, tabelas, regra, comps, s4.disponivel) + (fund ? fundamentadaMd(fund, regra, bracos) : "") + (pp ? porProtocoloMd(pp, regra) : "") };
 }
 
 export interface SensibilidadePorProtocolo {
@@ -768,6 +933,24 @@ export function sensibilidadePorProtocolo(analises: AnaliseLida[], trios: TrioEn
   return { formato: FORMATO_POR_PROTOCOLO, leitura: LEITURA_POR_PROTOCOLO, tipo: TIPO_POR_PROTOCOLO, aviso: AVISO_POR_PROTOCOLO, definicao: definicaoPorProtocolo(), trioComSlotFora: TRIO_COM_SLOT_FORA,
     regra: `slot no conjunto quando o estado do oráculo (summary.json › mcpIsolamento.usoOraculo = run.status.oracleUsage) é o exigido pelo braço; trio com slot fora: ${TRIO_COM_SLOT_FORA === "trio-inteiro" ? "sai de todas as comparações por protocolo" : "sai só das comparações com o braço do slot"} e é listado; slot perdido segue a regra do trio incompleto (§6.3); used-with-errors fora, à parte com a contagem do slot`,
     exclusoesPorBraco: exclusoesPorBraco(estados.flatMap(e => e.slots), bracos), trios: estados, comErros: ordenar(comErros, x => `${x.trio}|${x.braco}`), tabelas };
+}
+
+/** Seção da coluna fundamentada (descritiva) e das suas sensibilidades no tabela.md. */
+export function fundamentadaMd(f: ColunaFundamentada, regra: RegraDesfecho, bracos: readonly string[]): string {
+  const L = ["", "## Coluna fundamentada (descritiva, sem teste) e a sensibilidade \"sem ids expostos\"", "",
+    `Regra: ${f.regra}.`, ""];
+  for (const s of f.sensibilidades) L.push(`- \`${s.id}\`: ${s.rotulo}.`);
+  L.push("");
+  for (const [conj, porLeitura] of Object.entries(f.contagens)) {
+    L.push(`### ${conjuntoDe(regra, conj).rotulo}`, "", `| leitura | ${bracos.map(b => `${b} (por trio)`).join(" | ")} |`, `|---|${bracos.map(() => "---").join("|")}|`);
+    for (const [l, porBraco] of Object.entries(porLeitura)) L.push(`| ${l} | ${bracos.map(b => porBraco[b].map(x => x ?? "—").join(", ")).join(" | ")} |`);
+    L.push("");
+  }
+  const expostos = f.porTrio.flatMap(t => Object.entries(t.porBraco).flatMap(([b, x]) => Object.entries(x.porNormaExposta).flatMap(([s, cs]) => cs.map(c => `${c.id} (${t.trio}, ${b}, ${c.spec}; ${s})`))));
+  const alias = f.porTrio.flatMap(t => Object.entries(t.porBraco).flatMap(([b, x]) => Object.entries(x.porAlias).flatMap(([s, cs]) => cs.map(c => `${c.id} (${t.trio}, ${b}, ${c.spec}, ${c.norma}; ${s})`))));
+  L.push(`Fundamentados só por norma exposta: ${expostos.length ? expostos.join("; ") : "nenhum"}.`, "",
+    `Por id de verificação (alias; contados como na principal, não resolvidos aqui): ${alias.length ? alias.join("; ") : "nenhum"}.`, "");
+  return L.join("\n");
 }
 
 function porProtocoloMd(pp: SensibilidadePorProtocolo, regra: RegraDesfecho): string {

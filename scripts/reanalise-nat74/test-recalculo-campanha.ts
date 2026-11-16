@@ -17,10 +17,12 @@ import { mapaRetrospectivo } from "./mapa";
 import { DEFINICAO_POR_PROTOCOLO, LEITURA_POR_PROTOCOLO, exclusoesPorBraco } from "./e14-deteccao";
 import { montarDecisoes } from "./montar";
 import type { AtomoClassificado } from "./politica";
+import { NAO_PERGUNTADO } from "./e14-comum";
 import {
-  Entradas, TRIO_COM_SLOT_FORA, chavePorProtocolo, chaveVariante, conjuntoDe, contar, executar, leituraComDelta, recalcular, regraDaTela, removidosS4, slotsPorProtocolo,
+  Entradas, TRIO_COM_SLOT_FORA, chavePorProtocolo, chaveVariante, colunaFundamentada, conjuntoDe, contar, contarFundamentada, ehIdDeVerificacao, executar, fundamentadaDoTrio, fundamentadaMd, idCanonico,
+  leituraComDelta, normaDaFundamentacao, recalcular, regraDaTela, removidosS4, sensibilidadeSemIdsExpostos, slotsPorProtocolo,
   tabelaDaComparacao, tabelaPorProtocolo, unidadesDaSpec, vereditoNaPolitica,
-  type Comparacao, type Contestado, type TabelaComparacao, type TrioEntrada,
+  type CartaoJulgado, type Comparacao, type Contestado, type TabelaComparacao, type TrioEntrada,
 } from "./recalculo-campanha";
 
 let n = 0, falhas = 0, pulados = 0;
@@ -76,14 +78,18 @@ try {
   // Tela E (cadastro-pais 1.0.0; NAT-78 §5.1 coprimário, §3.8 limitação 3): referência SINTÉTICA, só a forma dos campos que a
   // regra lê (ids, categories, contagem, estratos, variante com U-09); nenhuma spec, âncora ou descrição real.
   type RefE = Parameters<typeof regraDaTela>[1];
-  const refESint = (o: { exp?: string[]; dsSemeada?: string[]; u09?: string | null; version?: string } = {}): RefE => ({
+  // Variante "sem ids expostos" sintética: X-01 perde emag:1.4 e X-04 perde o id da base …04040404; fundamentacao declara os mesmos.
+  const SEM_IDS: Record<string, string[]> = { "X-01": ["govbr-3.7.0-component-button-010101010101"], "X-04": ["govbr-3.7.0-component-select-040404040400"] };
+  const refESint = (o: { exp?: string[]; dsSemeada?: string[]; u09?: string | null; version?: string; semIds?: Record<string, string[]> | null; expostosDecl?: Record<string, string[]> } = {}): RefE => ({
     _meta: { version: o.version ?? "1.0.0", suite: "cadastro-pais",
       estratos: { semeada: { DS: o.dsSemeada ?? ["X-01", "X-02", "X-03"], G: ["X-04", "X-05"] }, exposto: { specs: o.exp ?? [] } },
-      ...(o.u09 === null ? {} : { sensibilidades: { comU09: { spec: { id: o.u09 ?? "X-09" } } } }) },
+      sensibilidades: { ...(o.u09 === null ? {} : { comU09: { spec: { id: o.u09 ?? "X-09" } } }), ...(o.semIds === null ? {} : { semIdsExpostos: { rules: o.semIds ?? SEM_IDS } }) },
+      fundamentacao: { porSpec: Object.fromEntries(Object.entries(o.expostosDecl ?? { "X-01": ["emag:1.4"], "X-04": ["govbr-3.7.0-component-select-040404040404"] }).map(([s, ids]) => [s, { expostos: ids.map(id => ({ id })) }])) } },
     violations: [
-      { id: "X-01", expectedCount: 1, categories: ["estrutura"] }, { id: "X-02", expectedCount: 2, categories: ["token"] },
-      { id: "X-03", expectedCount: 1, categories: ["componente", "tipografia"] },
-      { id: "X-04", expectedCount: 1, categories: ["token", "acessibilidade"] }, { id: "X-05", expectedCount: 1, categories: ["comportamento", "acessibilidade"] }] });
+      { id: "X-01", expectedCount: 1, categories: ["estrutura"], rules: ["govbr-3.7.0-component-button-010101010101", "emag:1.4"] }, { id: "X-02", expectedCount: 2, categories: ["token"], rules: ["wcag:1.3.1"] },
+      { id: "X-03", expectedCount: 1, categories: ["componente", "tipografia"], rules: ["wcag:1.3.1"] },
+      { id: "X-04", expectedCount: 1, categories: ["token", "acessibilidade"], rules: ["govbr-3.7.0-component-select-040404040400", "govbr-3.7.0-component-select-040404040404"] },
+      { id: "X-05", expectedCount: 1, categories: ["comportamento", "acessibilidade"], rules: ["emag:2.1"] }] });
   t("[tela E] desfecho cadastro-pais 1.0.0 (sintético): primário = DS semeadas não expostas por spec; todas; unidades do primário; com U-09 no denominador sem crédito", () => {
     const e = regraDaTela("cadastro-pais", refESint());
     assert.equal(e.tela, "cadastro-pais"); assert.equal(e.referencia, "1.0.0"); assert.equal(e.unidadeDelta, "specs");
@@ -133,6 +139,87 @@ try {
     assert.equal(conjuntoDe(e, "com-u09").specs.length, conjuntoDe(e, "todas").specs.length + 1);
     assert.match(tab("com-u09").conjunto, /crédito zero nos três braços/);
   });
+
+  // ── [tela E] "sem ids expostos": só a coluna fundamentada, rederivada da mesma passada pela citação do próprio achado.
+  t("[tela E, sem ids expostos] regra: declarada ao lado das sensibilidades, só na coluna fundamentada; expostos = rules da principal − da variante, conferidos com _meta.fundamentacao; nenhum conjunto de detecção novo", () => {
+    const e = regraDaTela("cadastro-pais", refESint());
+    assert.deepEqual(e.fundamentada, [{ id: "sem-ids-expostos", coluna: "fundamentada", tipo: "sensibilidade", rotulo: e.fundamentada![0].rotulo,
+      expostos: { "X-01": ["emag:1.4"], "X-04": ["govbr-3.7.0-component-select-040404040404"] } }]);
+    assert.match(e.fundamentada![0].rotulo, /^sem ids expostos \(2 spec\(s\) mudam; só a coluna fundamentada/);
+    assert.deepEqual(e.conjuntos.map(c => c.id), ["primario", "todas", "unidades", "com-u09"], "a detecção não ganha conjunto");
+    assert.equal(regraDaTela("processos", refD).fundamentada, undefined, "tela D: nada (recalculo.json da D igual)");
+    assert.equal(regraDaTela("solicitacao", refA).fundamentada, undefined);
+  });
+  t("[tela E, sem ids expostos] recusas: variante ausente, spec fora da referência, id que a principal não tem, nada retirado, retirados ≠ expostos declarados", () => {
+    assert.throws(() => regraDaTela("cadastro-pais", refESint({ semIds: null })), /semIdsExpostos\.rules/);
+    assert.throws(() => sensibilidadeSemIdsExpostos(refESint({ semIds: { "X-99": [] } })), /X-99 fora da referência/);
+    assert.throws(() => sensibilidadeSemIdsExpostos(refESint({ semIds: { "X-01": ["emag:9.9"] } })), /ids que a principal não tem/);
+    assert.throws(() => sensibilidadeSemIdsExpostos(refESint({ semIds: { "X-02": ["wcag:1.3.1"] } })), /não retira id nenhum/);
+    assert.throws(() => sensibilidadeSemIdsExpostos(refESint({ expostosDecl: { "X-01": ["emag:6.3"] } })), /não são os expostos/);
+  });
+  t("id canônico: a mesma normalização da passada (emag-N.N → emag:N.N, ds:govbr- → govbr-, parênteses e espaços fora); id de verificação fica", () => {
+    assert.equal(idCanonico(" emag-1.4 "), "emag:1.4"); assert.equal(idCanonico("emag:1.4 (Recomendação 1.4)"), "emag:1.4");
+    assert.equal(idCanonico("ds:govbr-3.7.0-component-select-040404040404"), "govbr-3.7.0-component-select-040404040404");
+    assert.equal(idCanonico("ds-page-footer"), "ds:page-footer"); assert.equal(idCanonico("wcag:1.3.1"), "wcag:1.3.1");
+  });
+  {
+    // Trio sintético: pacote (só cartões e runs) + cartões julgados com resposta e derivado, como julgadosDoTrio os entrega.
+    const e = regraDaTela("cadastro-pais", refESint());
+    const cardE = (id: string, rule: string | null, refs: string[] = []) => ({ id, origin: "agente", rule, reportedEvidence: refs.length ? { finding: { references: refs } } : null }) as unknown as SemanticPackage["cards"][number];
+    const runE = (id: string, p: string, ids: string[]) => ({ id, kind: "agente", tool: null, config: { oracleProfile: p }, cardIds: ids });
+    const pkgE = { cards: [cardE("C-f1", "emag-1.4"), cardE("C-c1", "govbr-3.7.0-component-button-010101010101"), cardE("C-c2", "wcag:1.3.1", ["emag:1.4"]),
+      cardE("C-c3", "govbr-3.7.0-component-button-010101010101", ["emag:1.4"]), cardE("C-s1", null), cardE("C-s2", "emag:1.4"), cardE("C-g1", "ds:govbr-3.7.0-component-select-040404040404"),
+      cardE("C-a1", "ds-page-footer"), cardE("C-a2", "ds:token-cor")],
+      runs: [runE("r-sem", "none", ["C-s1", "C-s2"]), runE("r-fer", "knowledge-free", ["C-f1"]), runE("r-com", "evaluation", ["C-c1", "C-c2", "C-c3", "C-g1", "C-a1", "C-a2"])] } as unknown as SemanticPackage;
+    const norma = (violada = "sim") => ({ id: "citada", forca: "obrigatorio", aplicabilidade: "aplica", violada });
+    const jul = (id: string, cardId: string, braco: string, spec: string, o: { violada?: string; ref?: boolean; normaQ1?: boolean } = {}) => ({ id, cardId, braco, runId: `r-${braco.slice(0, 3)}`,
+      derivado: { classe: "violacao-pagina", regraDaPolitica: "R7", spec, qualidadeDaSugestao: null, pendencias: [], fundamentacao: "norma", ...(o.ref ? { citacaoPor: "REF1" } : {}), s5: { classe: "violacao-pagina", regraDaPolitica: "R7", spec } },
+      resposta: { id, verdadeFactual: "verdadeira", vinculo: { spec, relacao: "direta" }, sugestao: NAO_PERGUNTADO, forcaDoVeredito: "medido", evidencias: ["MEDIDA"], justificativa: "x",
+        norma: o.normaQ1 ? { id: "emag:1.4", forca: "obrigatorio", aplicabilidade: "aplica", violada: "sim" } : o.ref ? norma("nao") : norma(o.violada),
+        ...(o.ref ? { referencias: [{ id: "REF1", forca: "obrigatorio", aplicabilidade: "aplica", violada: "sim" }] } : {}) } }) as unknown as CartaoJulgado;
+    const julgadosE = [jul("T-f1", "C-f1", "ferramentas", "X-01"), jul("T-c1", "C-c1", "com", "X-01"), jul("T-c2", "C-c2", "com", "X-02", { ref: true }),
+      jul("T-c3", "C-c3", "com", "X-01", { ref: true }), jul("T-s1", "C-s1", "sem", "X-01", { normaQ1: true }), jul("T-s2", "C-s2", "sem", "X-03", { violada: "nao" }),
+      jul("T-g1", "C-g1", "com", "X-04"), jul("T-a1", "C-a1", "com", "X-01"), jul("T-a2", "C-a2", "com", "X-02")];
+    const BR = ["sem", "ferramentas", "com"];
+    const f = fundamentadaDoTrio(pkgE, julgadosE, BR, e.fundamentada!);
+    t("[tela E, sem ids expostos] por cartão: sai o crédito fundamentado SÓ por id exposto da spec (regra do achado, ou a REF que deu a classe); o resto como na principal", () => {
+      assert.deepEqual(f.ferramentas, { principal: ["X-01"], variantes: { "sem-ids-expostos": [] }, porNormaExposta: { "sem-ids-expostos": [{ id: "T-f1", spec: "X-01", norma: "emag-1.4" }] }, porAlias: { "sem-ids-expostos": [] } },
+        "emag-1.4 citado = emag:1.4 exposto da X-01");
+      assert.deepEqual(f.com.principal, ["X-01", "X-02", "X-04"]);
+      assert.deepEqual(f.com.variantes["sem-ids-expostos"], ["X-01", "X-02"], "X-01 fica (C-c1 a fundamenta por id não exposto); X-04 sai (ds:govbr-… exposto); X-02 não muda (sem exposto)");
+      assert.deepEqual(f.com.porNormaExposta["sem-ids-expostos"].map(x => [x.id, x.spec]), [["T-c3", "X-01"], ["T-g1", "X-04"]], "C-c3: a REF que deu a classe é a exposta");
+      assert.deepEqual(f.sem, { principal: ["X-01"], variantes: { "sem-ids-expostos": ["X-01"] }, porNormaExposta: { "sem-ids-expostos": [] }, porAlias: { "sem-ids-expostos": [] } },
+        "sem regra citada não é 'por norma exposta' (a norma é do juiz); detecção sem violada sim não é fundamentada");
+    });
+    t("[tela E, sem ids expostos] id de verificação (alias, ds:<verificação>): sem as entradas do validador não se resolve aqui; contado como na principal e listado em porAlias só na spec com ids expostos", () => {
+      assert.deepEqual(f.com.porAlias["sem-ids-expostos"], [{ id: "T-a1", spec: "X-01", norma: "ds-page-footer" }], "X-02 não tem id exposto: o alias dela não entra");
+      assert.ok(!f.com.porNormaExposta["sem-ids-expostos"].some(x => x.id === "T-a1" || x.id === "T-a2"));
+      assert.ok(f.com.variantes["sem-ids-expostos"].includes("X-01") && f.com.variantes["sem-ids-expostos"].includes("X-02"));
+      // sozinho na X-01, o alias segura a spec na variante (contado como na principal) e fica visível
+      const so = fundamentadaDoTrio(pkgE, julgadosE.filter(j => ["T-a1", "T-f1"].includes(j.id)), BR, e.fundamentada!);
+      assert.deepEqual(so.com.variantes["sem-ids-expostos"], ["X-01"]); assert.equal(so.com.porAlias["sem-ids-expostos"].length, 1);
+      assert.equal(ehIdDeVerificacao(idCanonico("ds-page-footer")), true); assert.equal(ehIdDeVerificacao(idCanonico("ds:govbr-3.7.0-component-select-040404040404")), false);
+      assert.equal(ehIdDeVerificacao("emag:1.4"), false);
+      const col = colunaFundamentada(e, BR, [{ trio: "p01", porBraco: f }]);
+      assert.match(col.regra, /porAlias/);
+      assert.match(fundamentadaMd(col, e, BR), /Por id de verificação \(alias; contados como na principal, não resolvidos aqui\): T-a1 \(p01, com, X-01, ds-page-footer; sem-ids-expostos\)\./);
+    });
+    t("[tela E, sem ids expostos] contagens por conjunto (só modo spec) × leitura × braço, por trio; braço ausente = null; a detecção não entra", () => {
+      const fSemCom = fundamentadaDoTrio({ ...pkgE, runs: pkgE.runs.filter(r => r.id !== "r-com") } as SemanticPackage, julgadosE.filter(j => j.braco !== "com"), BR, e.fundamentada!);
+      const col = colunaFundamentada(e, BR, [{ trio: "p01", porBraco: f }, { trio: "p02", porBraco: fSemCom }]);
+      assert.deepEqual(Object.keys(col.contagens), ["primario", "todas", "com-u09"], "unidades (modo unidade) fica fora");
+      assert.deepEqual(col.contagens.primario, { principal: { sem: [1, 1], ferramentas: [1, 1], com: [2, null] }, "sem-ids-expostos": { sem: [1, 1], ferramentas: [0, 0], com: [2, null] } });
+      assert.deepEqual(col.contagens.todas["sem-ids-expostos"].com, [2, null]); assert.deepEqual(col.contagens.todas.principal.com, [3, null]);
+      assert.equal(contarFundamentada(e, "com-u09", ["X-01", "X-09"]), 1, "a spec sem crédito nunca conta");
+      assert.throws(() => contarFundamentada(e, "unidades", []), /não é por spec/);
+      assert.match(fundamentadaMd(col, e, BR), /Fundamentados só por norma exposta: T-f1 \(p01, ferramentas, X-01; sem-ids-expostos\); T-c3 \(p01, com, X-01; sem-ids-expostos\); T-g1 \(p01, com, X-04; sem-ids-expostos\); T-f1 \(p02,/);
+    });
+    t("[tela E, sem ids expostos] citacaoPor sem a referência no achado: para (nunca adivinha a norma)", () => {
+      assert.throws(() => normaDaFundamentacao(cardE("C-x", "emag:1.4"), { citacaoPor: "REF1" }), /sem essa referência no achado/);
+      assert.equal(normaDaFundamentacao(cardE("C-x", "emag:1.4", ["wcag:1.3.1", "emag:2.1"]), { citacaoPor: "REF2" }), "emag:2.1");
+      assert.equal(normaDaFundamentacao(cardE("C-x", null), {}), null);
+    });
+  }
   {
     const refEAbs = join(EVAL, "ground-truth-cadastro-pais.json");
     if (!existsSync(refEAbs)) { pulados++; console.log("  PULADO referência da E ausente"); }
@@ -141,6 +228,8 @@ try {
       const e = regraDaTela("cadastro-pais", lerJson<RefE>(refEAbs));
       assert.deepEqual(e.conjuntos.map(c => [c.id, c.specs.length, c.semCredito?.length ?? 0]), [["primario", 6, 0], ["todas", 8, 0], ["unidades", 6, 0], ["com-u09", 9, 1]]);
       assert.match(conjuntoDe(e, "unidades").rotulo, /\(6;/);
+      // "sem ids expostos" (só contagens): 3 specs mudam, 5 ids expostos retirados, conferidos com _meta.fundamentacao.
+      assert.deepEqual(e.fundamentada!.map(s => [s.id, Object.keys(s.expostos).length, Object.values(s.expostos).flat().length]), [["sem-ids-expostos", 3, 5]]);
     });
   }
 
@@ -401,6 +490,9 @@ try {
       const rb = recalcular({ passadas: [ADJ], analises: [join(T, "analisar-20261019T1")], ...base });
       assert.equal(JSON.stringify(rb.json), JSON.stringify(ra.json));
       assert.equal(rb.md, ra.md);
+    });
+    t("tela sem sensibilidade da coluna fundamentada (ensaio, tela A): recalculo.json sem a chave `fundamentada`, tabela.md sem a seção", () => {
+      for (const r of [r4, ra]) { assert.ok(!("fundamentada" in r.json)); assert.ok(!r.md.includes("Coluna fundamentada")); assert.ok(!("fundamentada" in (r.json.regraDoDesfecho as object))); }
     });
     t("[§4.5] --por-protocolo no ensaio (3 slots aderentes pela summary.json): só ACRESCENTA a chave própria e a summary.json às entradas; mesmos D", () => {
       const rp = recalcular({ passadas: [ADJ], analises: [join(T, "analisar-20261019T1")], ...base, porProtocolo: true });

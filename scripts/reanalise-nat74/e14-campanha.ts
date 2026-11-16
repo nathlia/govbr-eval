@@ -41,7 +41,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import type { SemanticPackage } from "../semantic-flow";
 import { ID_DE_ACHADO, distingueComDeFerramentas, mascararNormaCega, mascararTextoCego } from "../painel/mascara";
-import { POLITICA_PRINCIPAL, TCC, bracoDoPerfil, gravar, jsonTexto, lerJson, ordenar, rotuloPolitica, sha, versaoDaPolitica, type VersaoPolitica } from "./comum";
+import { EVAL, POLITICA_PRINCIPAL, TCC, bracoDoPerfil, gravar, jsonTexto, lerJson, ordenar, rotuloPolitica, sha, versaoDaPolitica, type VersaoPolitica } from "./comum";
 import { CATEGORIAS_RESIDUO, residuoDeBraco, verificarCegueira, type Cegueira, type ResiduoDoCartao } from "./e14-cegueira";
 import {
   ESQUEMA_RESPOSTAS_CAMPANHA, ESQUEMA_RESPOSTAS_CAMPANHA_1_3_1, FORMATO_LOTE, FORMATO_MANIFESTO_CAMPANHA, FORMATO_MANIFESTO_CAMPANHA_1_3_1, FORMATO_RESPOSTAS,
@@ -115,10 +115,26 @@ import { leiameJuiz, tamanhosDosLotes } from "./e14-preparar";
  * (`arvorePapeis`, padrão `false` em `leiameCampanha13`: o texto da 1.4.6 byte a byte, e as passadas 1.4.6 arquivadas se
  * refazem iguais). Formatos do lote, do manifesto e das respostas iguais; esquema, ingestão e derivação iguais. A 1.2.0
  * não muda.
+ * 1.4.8 (tela E, NAT-78: três das specs são julgadas pela descrição; critérios fixados antes da coleta): a tela pode declarar
+ * em `telas.json` um arquivo de critérios de julgamento (`criteriosDeJulgamento: { arquivo, sha256 }`, caminho relativo à
+ * raiz do govbr-eval). Na 1.3.0, com a declaração: o sha256 do arquivo tem de ser o declarado e a referência que o arquivo
+ * cita tem de ser a da análise (senão para); o lote publica, para TODOS os defeitos da tela, o mesmo `criterio`
+ * (`observavel`, `estado`, `decisao`; `criteriosParaOJuiz`) e, na tela, `criteriosComuns`; nada do arquivo que diga como a
+ * spec é medida (predicado, fontes, classe, seções) vai ao juiz, nem o nome do arquivo. O LEIAME ganha LEIAME_CRITERIOS no
+ * fim da seção `vinculo` (versão LEIAME_VERSAO_CRITERIOS) e o manifesto grava `criterios` (arquivo, sha256, referência) e
+ * `leiame` (versão, sha256). A 1.2.0 com a declaração para. Sem a declaração (toda tela até a E, a D inclusive): lote,
+ * LEIAME, esquema e manifesto byte a byte os da 1.4.7.
  */
 export const E14_CAMPANHA_VERSAO = "nat78-primeira-passada-1.3.1";
 /** [D-156] Versão da passada preparada na política 1.3.0 (referências secundárias). A 1.2.0 continua 1.3.1. */
 export const E14_CAMPANHA_VERSAO_1_4 = "nat78-primeira-passada-1.4.7";
+/**
+ * [1.4.8] Versão da passada 1.3.0 em que alguma tela declara critérios de julgamento (`telas.json › <tela>.criteriosDeJulgamento`).
+ * Sem a declaração, a passada continua 1.4.7, byte a byte.
+ */
+export const E14_CAMPANHA_VERSAO_CRITERIOS = "nat78-primeira-passada-1.4.8";
+/** [1.4.8] Versão do LEIAME com a seção dos critérios de julgamento (LEIAME_CRITERIOS); vai ao manifesto com o sha256 do LEIAME. */
+export const LEIAME_VERSAO_CRITERIOS = "nat78-leiame-juiz-1.4.8-criterios";
 /** Política das campanhas novas (D-156). `--politica 1.2.0` reproduz o histórico. */
 export const POLITICA_CAMPANHA_PADRAO: VersaoPolitica = "1.3.0";
 
@@ -267,7 +283,117 @@ export function enderecoDaTela(meta: { url?: string }, urlDaCaptura: string): st
   return meta.url;
 }
 
-export function prepararCampanha(analises: string[], o: { validador?: string; checkerAliases?: string; politica?: VersaoPolitica; baseUrl?: string } = {}): PreparoCampanha {
+// ───────────────────────────────────────────────────────────────── [1.4.8] critérios de julgamento declarados pela tela
+
+/** [1.4.8] Declaração da tela em `telas.json`: o arquivo de critérios (relativo à raiz do govbr-eval) e o sha256 dele. */
+export interface DeclaracaoCriterios { arquivo: string; sha256: string }
+/** [1.4.8] O critério de um defeito como o lote o publica: a mesma forma para todo defeito da tela. */
+export interface CriterioDoDefeito { observavel: string; estado: string; decisao: string }
+export interface CriteriosParaOJuiz { comuns: { id: string; texto: string }[]; porDefeito: Record<string, CriterioDoDefeito> }
+/** [1.4.8] Telas do instrumento (padrão: `telas.json` deste repositório). */
+export const TELAS_PADRAO = join(EVAL, "telas.json");
+
+/**
+ * [1.4.8] `criteriosDeJulgamento` da tela em `telas.json`, ou `null` (tela sem a declaração, ou fora do arquivo: as telas
+ * sintéticas dos testes). Fora do formato `{ arquivo: texto, sha256: 64 hex }`, para.
+ */
+export function criteriosDeclarados(telaId: string, telasAbs: string = TELAS_PADRAO): DeclaracaoCriterios | null {
+  const tela = lerJson<Record<string, { criteriosDeJulgamento?: unknown } | undefined>>(telasAbs)[telaId];
+  const d = tela?.criteriosDeJulgamento;
+  if (d === undefined) return null;
+  const x = d as Partial<DeclaracaoCriterios> | null;
+  if (!x || typeof x !== "object" || Array.isArray(x) || typeof x.arquivo !== "string" || !x.arquivo.trim() || typeof x.sha256 !== "string" || !/^[0-9a-f]{64}$/.test(x.sha256)
+    || Object.keys(x).some(k => k !== "arquivo" && k !== "sha256"))
+    throw new Error(`telas.json › ${telaId}.criteriosDeJulgamento fora do formato { arquivo, sha256 }`);
+  return { arquivo: x.arquivo, sha256: x.sha256 };
+}
+
+type CampoCriterio = string | Record<string, unknown>;
+/** Texto de um campo do critério: o texto, ou os campos do registro estruturado na ordem dada (um registro não fixado para). */
+function textoDoCampo(v: CampoCriterio | undefined, onde: string, render: (r: Record<string, unknown>) => string): string {
+  if (typeof v === "string" && v.trim()) return v.trim();
+  if (v && typeof v === "object" && !Array.isArray(v)) {
+    if (v.situacao !== undefined && v.situacao !== "fixado") throw new Error(`critérios de julgamento: ${onde} não está fixado (situacao ${JSON.stringify(v.situacao)})`);
+    const t = render(v).trim();
+    if (t) return t;
+  }
+  throw new Error(`critérios de julgamento: ${onde} vazio ou fora do formato`);
+}
+const txt = (r: Record<string, unknown>, k: string): string => (typeof r[k] === "string" ? (r[k] as string).trim() : "");
+/**
+ * [1.4.8] Códigos de decisão da revisão (os de `decisao` do pacote) que os critérios citam viram as palavras que eles
+ * nomeiam: no lote, o código seria um rastro de decisão arquivada para a verificação de cegueira, e o LEIAME já diz
+ * como lê-los ("evidência insuficiente" → `indisponivel`/`indeterminado`). Só a grafia muda.
+ */
+const CODIGOS_DE_DECISAO: [RegExp, string][] = [[/`?evidencia-insuficiente`?/g, "evidência insuficiente"], [/`?defeito-novo-correto`?/g, "defeito novo correto"],
+  [/`?defeito-do-gabarito`?/g, "defeito do gabarito"]];
+const textoDoCriterio = (t: string): string => CODIGOS_DE_DECISAO.reduce((s, [de, para]) => s.replace(de, para), mascararNormaCega(t));
+const juntar = (...xs: string[]) => xs.filter(Boolean).join(" ");
+
+/**
+ * [1.4.8] O que o juiz recebe do arquivo de critérios: os critérios comuns (`_meta.criteriosComuns`, id + texto) e, para
+ * CADA defeito da referência, `{ observavel, estado, decisao }` em texto. Um item de critério é um objeto com `observavel`,
+ * `estado` e `criterio`, em qualquer seção do arquivo fora de `_meta` e `variantes` (variantes são outra referência); a
+ * seção, as fontes, a classe e qualquer outro campo do item NÃO vão ao juiz — só os três textos, na mesma forma para todo
+ * defeito. Campo em texto vai como está; registro estruturado (com `situacao: "fixado"`) vira texto pelos seus campos
+ * (observável: elemento, localizador, o que se olha; estado: declarado, como se alcança; critério: acerto e o que não
+ * conta). Defeito da referência sem critério, defeito com dois, item de defeito fora da referência ou registro não
+ * fixado: para.
+ */
+export function criteriosParaOJuiz(doc: unknown, idsDaReferencia: readonly string[]): CriteriosParaOJuiz {
+  const d = doc as { _meta?: { criteriosComuns?: { id?: unknown; texto?: unknown }[] } } & Record<string, unknown>;
+  const cc = d?._meta?.criteriosComuns;
+  if (!Array.isArray(cc) || !cc.length) throw new Error("critérios de julgamento: sem _meta.criteriosComuns");
+  const comuns = cc.map((c, k) => {
+    if (typeof c?.id !== "string" || typeof c?.texto !== "string" || !c.texto.trim()) throw new Error(`critérios de julgamento: critério comum ${k + 1} sem id ou texto`);
+    return { id: c.id, texto: textoDoCriterio(c.texto.trim()) };
+  });
+  const achados = new Map<string, { secao: string; item: Record<string, CampoCriterio> }>();
+  for (const [secao, v] of Object.entries(d)) {
+    if (secao === "_meta" || secao === "variantes" || !v || typeof v !== "object" || Array.isArray(v)) continue;
+    for (const [id, item] of Object.entries(v as Record<string, unknown>)) {
+      if (!item || typeof item !== "object" || Array.isArray(item)) continue;
+      const it = item as Record<string, CampoCriterio>;
+      if (!("observavel" in it && "estado" in it && "criterio" in it)) continue;
+      if (!idsDaReferencia.includes(id)) throw new Error(`critérios de julgamento: item ${id} (${secao}) não é defeito da referência`);
+      if (achados.has(id)) throw new Error(`critérios de julgamento: defeito ${id} com dois critérios (${achados.get(id)!.secao}, ${secao})`);
+      achados.set(id, { secao, item: it });
+    }
+  }
+  const porDefeito: Record<string, CriterioDoDefeito> = {};
+  for (const id of idsDaReferencia) {
+    const a = achados.get(id);
+    if (!a) throw new Error(`critérios de julgamento: defeito ${id} da referência sem critério`);
+    const it = a.item;
+    porDefeito[id] = {
+      observavel: textoDoCriterio(textoDoCampo(it.observavel, `${id}.observavel`, r => juntar(txt(r, "elemento") && `${txt(r, "elemento")}.`,
+        txt(r, "localizador") && `Localizador: ${txt(r, "localizador")}.`, txt(r, "oQueSeOlha") && `O que se olha: ${txt(r, "oQueSeOlha")}`))),
+      estado: textoDoCriterio(textoDoCampo(it.estado, `${id}.estado`, r => juntar(txt(r, "declarado") && `${txt(r, "declarado")}.`, txt(r, "comoSeAlcanca")))),
+      decisao: textoDoCriterio(textoDoCampo(it.criterio, `${id}.criterio`, r => {
+        const nc = Array.isArray(r.naoConta) ? (r.naoConta as unknown[]).filter((x): x is string => typeof x === "string" && !!x.trim()).map(x => x.trim()) : [];
+        return txt(r, "acerto") ? juntar(`Acerto = ${txt(r, "acerto")}`, nc.length ? `Não conta: ${nc.join(" ")}` : "") : "";
+      })),
+    };
+  }
+  return { comuns, porDefeito };
+}
+
+/**
+ * [1.4.8] Lê e confere o arquivo de critérios declarado: o sha256 tem de ser o declarado em `telas.json`, e a referência
+ * que o arquivo cita (`_meta.referencia.sha256`) a da análise. Qualquer diferença para (nunca julga com outro critério).
+ */
+export function carregarCriterios(telaId: string, decl: DeclaracaoCriterios, raiz: string, idsDaReferencia: readonly string[], referenciaSha256: string): CriteriosParaOJuiz {
+  const abs = resolve(raiz, decl.arquivo);
+  if (!existsSync(abs)) throw new Error(`critérios de julgamento da tela ${telaId}: ${decl.arquivo} não existe`);
+  const bytes = readFileSync(abs), s = sha(bytes);
+  if (s !== decl.sha256) throw new Error(`critérios de julgamento da tela ${telaId}: sha256 de ${decl.arquivo} (${s}) ≠ o declarado em telas.json (${decl.sha256})`);
+  const doc = JSON.parse(bytes.toString("utf8").replace(/^﻿/, "")) as { _meta?: { referencia?: { sha256?: unknown } } };
+  const r = doc._meta?.referencia?.sha256;
+  if (r !== referenciaSha256) throw new Error(`critérios de julgamento da tela ${telaId}: o arquivo é da referência ${String(r)}, a análise traz ${referenciaSha256}`);
+  return criteriosParaOJuiz(doc, idsDaReferencia);
+}
+
+export function prepararCampanha(analises: string[], o: { validador?: string; checkerAliases?: string; politica?: VersaoPolitica; baseUrl?: string; telas?: string } = {}): PreparoCampanha {
   const politica = o.politica ?? POLITICA_CAMPANHA_PADRAO, v13 = politica === "1.3.0";
   // [1.4.2] --base-url só na 1.3.0: a 1.2.0 refaz o histórico, com o endereço de sempre.
   if (o.baseUrl !== undefined && !v13) throw new Error("--base-url só na política 1.3.0 (a 1.2.0 refaz o histórico byte a byte)");
@@ -277,7 +403,10 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
   // [1.4.6] Só na 1.3.0: a norma `emag:N.N` com a força que a base declara para a recomendação.
   const nr = normasDaCampanha({ dataSha256: datas[0], validador: resolve(o.validador ?? VALIDADOR_PADRAO), checkerAliases: o.checkerAliases, ...(v13 ? { emagPelaBase: true } : {}) });
   const itens: { item: ItemChave; card: Card; cartao: CartaoCego }[] = [];
-  const telas: Record<string, { nome: string; versao: string; endereco: string; paradas?: Record<string, Parada>; defeitos: unknown[] }> = {};
+  const telas: Record<string, { nome: string; versao: string; endereco: string; paradas?: Record<string, Parada>; criteriosComuns?: CriteriosParaOJuiz["comuns"]; defeitos: unknown[] }> = {};
+  // [1.4.8] Critérios de julgamento declarados por tela (telas.json); sem declaração, nada muda.
+  const telasAbs = resolve(o.telas ?? TELAS_PADRAO);
+  const criteriosUsados = new Map<string, { declaracao: DeclaracaoCriterios; referenciaSha256: string; criterios: CriteriosParaOJuiz }>();
   const fontes: Record<string, string> = { ...nr.fontes };
   let desenho: { arms: string[]; comparisons: { id: string; arms: string[]; role?: string }[] } | null = null;
   let idsDeAchado = 0;
@@ -306,16 +435,29 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
       if (!(v.state in paradas)) throw new Error(`E14 campanha: defeito ${v.id} no estado ${v.state}, que _meta.states não declara`);
       return paradas[v.state].registro;
     };
+    const refAbs = join(dir, "entradas", "referencia.json");
+    // [1.4.8] Critérios de julgamento da tela, se ela os declara: conferidos pelo sha256 declarado e pela referência da análise.
+    const decl = criteriosDeclarados(telaId, telasAbs);
+    if (decl && !v13) throw new Error(`E14 campanha: a tela ${telaId} declara critérios de julgamento; só a política 1.3.0 os publica (a 1.2.0 refaz o histórico)`);
+    const refSha = sha(readFileSync(refAbs));
+    if (decl) {
+      const ja = criteriosUsados.get(telaId);
+      if (ja && ja.referenciaSha256 !== refSha) throw new Error(`E14 campanha: análises da tela ${telaId} com referências diferentes (${ja.referenciaSha256.slice(0, 12)} × ${refSha.slice(0, 12)})`);
+      if (!ja) {
+        criteriosUsados.set(telaId, { declaracao: decl, referenciaSha256: refSha, criterios: carregarCriterios(telaId, decl, dirname(telasAbs), ref.violations.map(v => v.id), refSha) });
+        fontes[`telas.json › ${telaId}.criteriosDeJulgamento: ${decl.arquivo}`] = decl.sha256;
+      }
+    }
+    const crit = criteriosUsados.get(telaId)?.criterios ?? null;
     const specs = ref.violations.map(v => {
       const unidades = v.expectedCount ?? 1, descricao = mascararNormaCega(v.description), normas = v.rules.map(nr.resolver).filter(Boolean);
       if (!v13) return { id: v.id, estado: v.state, unidades, descricao, normas };
       const dominio = dominioDoDefeito(v);
-      return { id: v.id, estado: v.state, registro: registroDe(v), unidades, descricao, normas, ...(dominio ? { dominio } : {}) };
+      return { id: v.id, estado: v.state, registro: registroDe(v), unidades, descricao, normas, ...(dominio ? { dominio } : {}), ...(crit ? { criterio: crit.porDefeito[v.id] } : {}) };
     });
     const endereco = enderecoDaTela(ref._meta, lerJson<{ url: string }>(join(dir, "revisao", "capture.json")).url);
-    const refAbs = join(dir, "entradas", "referencia.json");
-    fontes[`${rotuloDe(dir)}/entradas/referencia.json`] = sha(readFileSync(refAbs));
-    telas[telaId] ??= { nome, versao: ref._meta.version, endereco, ...(paradas ? { paradas } : {}), defeitos: specs };
+    fontes[`${rotuloDe(dir)}/entradas/referencia.json`] = refSha;
+    telas[telaId] ??= { nome, versao: ref._meta.version, endereco, ...(paradas ? { paradas } : {}), ...(crit ? { criteriosComuns: crit.comuns } : {}), defeitos: specs };
     const specDe = new Map(pkg.units.map(u => [u.id, u.specId]));
     const runDe = new Map(pkg.runs.flatMap(r => r.cardIds.map(id => [id, r] as const)));
     for (const card of pkg.cards) {
@@ -356,13 +498,15 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
   const forcas = nr.forcas ?? [];
   // [1.4.6] Na 1.3.0, a frase do e-MAG só quando a base dá força a alguma recomendação.
   // [1.4.7] Na 1.3.0, a fonte da árvore de papéis (LEIAME_ARVORE_PAPEIS) em toda passada nova.
-  const leiame = v13 ? leiameCampanha13(ord.length, lotes.length, nomes, baseUrl, forcas, (nr.emagComForca ?? 0) > 0, true)
+  // [1.4.8] Com critérios declarados por alguma tela da passada, LEIAME_CRITERIOS no fim da seção `vinculo`.
+  const comCriterios = criteriosUsados.size > 0;
+  const leiame = v13 ? leiameCampanha13(ord.length, lotes.length, nomes, baseUrl, forcas, (nr.emagComForca ?? 0) > 0, true, comCriterios)
     : leiameCampanha(ord.length, lotes.length, nomes, forcas);
   // [1.4.2] Na 1.3.0, `vinculo.spec` = os ids dos defeitos das telas da passada (os mesmos que os lotes publicam em
   // `referencias`); a 1.2.0 publica o esquema histórico, byte a byte.
   const esquema = jsonTexto(v13 ? esquemaDaPassada(ESQUEMA_RESPOSTAS_CAMPANHA_1_3_1, Object.values(telas).flatMap(t => (t.defeitos as { id: string }[]).map(d => d.id)))
     : ESQUEMA_RESPOSTAS_CAMPANHA);
-  const rotulo = v13 ? rotuloPolitica(politica) : POLITICA_PRINCIPAL, versao = v13 ? E14_CAMPANHA_VERSAO_1_4 : E14_CAMPANHA_VERSAO;
+  const rotulo = v13 ? rotuloPolitica(politica) : POLITICA_PRINCIPAL, versao = comCriterios ? E14_CAMPANHA_VERSAO_CRITERIOS : v13 ? E14_CAMPANHA_VERSAO_1_4 : E14_CAMPANHA_VERSAO;
   const juiz = new Map<string, string>([["lotes/LEIAME-juiz.md", leiame], ["lotes/esquema-respostas.schema.json", esquema]]);
   for (const l of lotes) {
     const cs = l.ids.map(id => ord.find(x => x.item.id === id)!.cartao);
@@ -393,7 +537,12 @@ export function prepararCampanha(analises: string[], o: { validador?: string; ch
       respostas: { pasta: "respostas/", formato: v13 ? FORMATO_RESPOSTAS_CAMPANHA_1_3_1 : FORMATO_RESPOSTAS_CAMPANHA, nota: "pasta da passada, ao lado de lotes/ (nunca lotes/respostas/)" },
       analises: analises.map(d => ({ dir: rotuloDe(d), packageSha256: sha(readFileSync(join(d, "revisao", "package.json"))) })),
       arquivos: Object.fromEntries([...juiz].map(([rel, t]) => [rel, sha(t)])),
-      lotes: lotes.map(l => ({ lote: l.lote, n: l.ids.length, sha256: sha(juiz.get(`lotes/${l.lote}.json`)!), ids: l.ids })), chaveSha256: sha(chaveTxt), residuoSha256: sha(residuoTxt), fontes })]]);
+      lotes: lotes.map(l => ({ lote: l.lote, n: l.ids.length, sha256: sha(juiz.get(`lotes/${l.lote}.json`)!), ids: l.ids })), chaveSha256: sha(chaveTxt), residuoSha256: sha(residuoTxt), fontes,
+      // [1.4.8] Só com critérios declarados: versão e sha256 do LEIAME e, por tela, o arquivo de critérios conferido.
+      ...(comCriterios ? { leiame: { versao: LEIAME_VERSAO_CRITERIOS, arquivo: "LEIAME-juiz.md", sha256: sha(leiame) },
+        criterios: [...criteriosUsados].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)).map(([tela, c]) => ({ tela, declaradoEm: `telas.json › ${tela}.criteriosDeJulgamento`,
+          arquivo: c.declaracao.arquivo, sha256: c.declaracao.sha256, referenciaSha256: c.referenciaSha256, defeitos: Object.keys(c.criterios.porDefeito).length,
+          criteriosComuns: c.criterios.comuns.length })) } : {}) })]]);
   return { arquivosDoJuiz: juiz, arquivosInternos: internos, cegueira, falhasTrio, fontes };
 }
 
@@ -485,7 +634,7 @@ export function leiameCampanha(total: number, nLotes: number, nomes: string, for
  * byte (as passadas 1.4.6 arquivadas se refazem iguais); a preparação de uma passada nova passa `true`.
  */
 export function leiameCampanha13(total: number, nLotes: number, nomes: string, baseUrl = BASE_URL_PADRAO, forcasDaBase: readonly string[] = [],
-  emagPelaBase = false, arvorePapeis = false): string {
+  emagPelaBase = false, arvorePapeis = false, criterios = false): string {
   const NL = "\n";
   let t = leiameCampanha(total, nLotes, nomes, forcasDaBase);
   // [1.4.2] Endereço da página congelada (--base-url); com o padrão, nada muda.
@@ -502,6 +651,8 @@ export function leiameCampanha13(total: number, nLotes: number, nomes: string, b
   t = trocar(t, "- Nunca pelo id da regra nem por semelhança de texto (R7): só pelo fato." + NL,
     "- Nunca pelo id da regra nem por semelhança de texto (R7): só pelo fato." + NL + LEIAME_IDENTIDADE_REGISTRO + NL + LEIAME_PARADAS + NL
     + LEIAME_MOTIVO_SEM_VINCULO + NL);
+  // [1.4.8] Critérios de julgamento declarados pela tela: no fim da seção `vinculo`, depois do motivo do "sem vínculo".
+  if (criterios) t = trocar(t, NL + LEIAME_MOTIVO_SEM_VINCULO + NL, NL + LEIAME_MOTIVO_SEM_VINCULO + NL + LEIAME_CRITERIOS + NL);
   t = t.split("política normativa 1.2.0").join("política normativa 1.3.0");
   t = t.split("política 1.2.0").join("política 1.3.0");
   t = trocar(t, `"formato": "${FORMATO_RESPOSTAS_CAMPANHA}"`, `"formato": "${FORMATO_RESPOSTAS_CAMPANHA_1_3_1}"`);
@@ -644,6 +795,26 @@ export const LEIAME_MOTIVO_SEM_VINCULO = [
   "  não tem; nunca com outro `vinculo`): o que separa o fato do defeito da lista mais próximo dele (em geral um dos",
   "  `candidatas`). Um valor; se mais de um vale, o primeiro desta ordem. Não muda a classe.",
   ...MOTIVO_SEM_VINCULO.map(k => `  - \`${k}\`: ${MOTIVOS_NO_LEIAME[k]}`),
+].join("\n");
+
+/**
+ * [1.4.8] Critérios de julgamento declarados pela tela, no fim da seção `vinculo` (depois de LEIAME_MOTIVO_SEM_VINCULO). Um
+ * texto só, igual para todo defeito: não diz como cada defeito é medido nem de onde veio o critério, e não fala de braço.
+ * Só procedimento: o conteúdo de cada critério vem do lote (`criteriosComuns`, `criterio` de cada defeito).
+ */
+export const LEIAME_CRITERIOS = [
+  "- **Critérios de julgamento dos defeitos.** Quando a tela traz, em `referencias`, `criteriosComuns` (ids `C-1`, `C-2`…),",
+  "  todo defeito dela traz `criterio`, na mesma forma: `observavel` (o que se olha e em que elemento), `estado` (em que",
+  "  estado se olha) e `decisao` (o que conta como acerto e o que não conta). Foram escritos antes de qualquer alegação e",
+  "  valem do mesmo modo para todos os defeitos da lista. Vincule o cartão a um defeito só quando o fato que você mediu é o",
+  "  `observavel` dele, no `estado` dele, e a alegação é um acerto pela `decisao` dele e pelos critérios comuns; o que a",
+  "  `decisao` ou um critério comum diz que não conta não vincula aquele defeito (`\"nenhum\"` com o `motivoSemVinculo` que",
+  "  couber, ou outro defeito que o fato satisfaça pelos mesmos critérios). Os critérios falam a língua da contagem: leia",
+  "  \"acerto\" como vínculo ao defeito; \"não conta\" e \"descoberta\" como sem vínculo a ele; \"evidência insuficiente\" como as",
+  "  respostas de sempre para a falta de evidência (`indisponivel`, `indeterminado`). O que eles dizem sobre crédito, contagem",
+  "  ou fundamentação não muda as outras perguntas: `verdadeFactual`, `norma` e `estadoAlcancado` se respondem como acima.",
+  "  O observável se confere na página congelada (`MEDIDA`), nunca pelo texto do cartão nem pelo do critério; o critério é",
+  "  o mesmo para todo cartão, qualquer que seja a origem do cartão.",
 ].join("\n");
 
 /** [1.4.2] Endereço da página congelada no LEIAME (`--base-url`); o padrão é o de sempre. */

@@ -232,7 +232,21 @@ cegos, que recebem só os arquivos indicados.
    unidade, scorer 1.8.2). D por comparação do `design.comparisons` (D = 2º braço − 1º: D_fc = com − ferramentas, D_sc =
    com − sem, D_sf = ferramentas − sem), sempre por spec no primário (D-102): na tela D (referência 1.0.0 ou 1.1.0, a
    mesma regra) sobre as 9 não expostas (13 como sensibilidade, e as 53 unidades das não expostas como sensibilidade por
-   unidade), na tela A sobre as 12 A-* (as 14 unidades A-* como sensibilidade por instância; P-* à parte); política 1.2.0 e, ao lado, 1.1.0 (sem R15 nem Q1 a); S4' sem os créditos de
+   unidade), na tela A sobre as 12 A-* (as 14 unidades A-* como sensibilidade por instância; P-* à parte), na tela E
+   (`cadastro-pais` 1.0.0) sobre as specs do DS semeadas não expostas (sensibilidades: todas as specs, as unidades do
+   primário e "com U-09", a spec retirada no denominador com crédito zero). **Tela E, "sem ids expostos"** (variante da
+   referência, pré-registrada como "só muda a coluna fundamentada"): `regraDoDesfecho.fundamentada` declara, por spec que
+   a variante muda, os ids que ela retira de `rules` (principal − variante, conferidos com `_meta.fundamentacao.porSpec`), e
+   `recalculo.json › fundamentada` traz a coluna fundamentada (`specFundamentada`, a mesma de `e14-deteccao.ts`) por trio e
+   braço, na leitura principal e na variante, com as contagens por conjunto (modo spec) — descritiva, sem D nem teste. É
+   rederivada da MESMA passada, sem segundo juiz: a norma que deu a classe é lida do próprio achado (a `rule`, ou a
+   referência secundária do achado em `citacaoPor`), na forma canônica da passada (`idCanonico`), e o cartão cuja norma é
+   id exposto da spec creditada sai da coluna na variante ("fundamentada por norma exposta", listado); cartão sem regra
+   citada nunca sai. Citação por id de verificação (`ds:<verificação>`, alias de várias regras): a passada a resolve pelo
+   `checker-aliases.json` e pela base do validador da campanha, entradas que o recálculo não lê (e não ganhou em
+   silêncio); por isso, numa spec com ids expostos, o cartão fica contado como na principal e vai listado em
+   `porAlias` (cartão, spec, id citado), para ser decidido à vista — nenhum segundo mapeamento. A detecção e as `tabelas` não mudam. Sem a declaração (telas D e A), `recalculo.json` e `tabela.md`
+   saem byte a byte os de antes (conferido no ensaio: T4 e adjudicada, contra `3431229`); política 1.2.0 e, ao lado, 1.1.0 (sem R15 nem Q1 a); S4' sem os créditos de
    cartões de `contestados.json` que a autora não ratificou (sem `--ratificacoes`, nenhum), nos dois braços; checagem S4
    por braço com o resíduo de braço (`residuo-de-braco.json` da passada ou de `--residuo-passada`, casado pelo cartão).
    Permutação, Wilcoxon-Pratt, sinal, IC bootstrap e a leitura com δ = 2 pela `estatistica-pareada.ts`. Toda entrada lida
@@ -304,6 +318,22 @@ cegos, que recebem só os arquivos indicados.
   ao da 1.2.0. `--politica 1.2.0` refaz a passada antiga byte a byte (referências ignoradas). A 1.4.1 tinha quebrado isso
   (a receita vazia entrou também no LEIAME 1.2.0); a 1.4.2 corrige, e as passadas 1.2.0 arquivadas desde o gerador 1.2.0
   voltam a sair iguais (conferido contra os 17 LEIAMEs arquivados; `--base-url` é recusado na 1.2.0).
+- **Critérios de julgamento declarados pela tela (passada 1.4.8, tela E).** Uma tela pode declarar em `telas.json`
+  `criteriosDeJulgamento: { arquivo, sha256 }` (caminho relativo à raiz do govbr-eval; hoje só `cadastro-pais`, com
+  `tela-e2/criterios-de-julgamento-sem-predicado.json`). Na 1.3.0, com a declaração, `e14-campanha.ts` para se o sha256 do
+  arquivo não for o declarado ou se a referência que o arquivo cita (`_meta.referencia.sha256`) não for a da análise; o
+  lote publica, em `referencias.<tela>`, `criteriosComuns` (id + texto) e, em **todo** defeito, `criterio` com as mesmas
+  três chaves (`observavel`, `estado`, `decisao`; `criteriosParaOJuiz`: um item de critério é um objeto com `observavel`,
+  `estado` e `criterio` em qualquer seção fora de `_meta` e `variantes`; defeito sem critério, com dois, item fora da
+  referência ou registro não `fixado` param). Nada do arquivo que diga como cada spec é medida vai ao juiz — seção,
+  fontes, classe, campos sobre o predicado, variantes — nem o nome do arquivo; códigos de decisão da revisão citados
+  nos critérios (`evidencia-insuficiente`…) viram as palavras que nomeiam. O LEIAME ganha, no fim da seção `vinculo`,
+  `LEIAME_CRITERIOS` (versão `nat78-leiame-juiz-1.4.8-criterios`): um texto só, igual para todo defeito, que diz como ler
+  "acerto"/"não conta"/"descoberta" no vocabulário do juiz e que os critérios não mudam fato, norma nem estado. O
+  manifesto grava `leiame` (versão + sha256) e `criterios` (tela, arquivo, sha256, referência, contagens), e `fontes`
+  ganha a declaração; a passada é `nat78-primeira-passada-1.4.8`. A 1.2.0 com a declaração para. Sem a declaração (a tela
+  D inclusive), lote, LEIAME, esquema, manifesto, chave, cegueira e resíduo saem byte a byte os da 1.4.7 (conferido numa
+  análise sintética da tela D com a referência da D, contra `3431229`). Testes: `npm run test:revisao-criterios`.
 - **Juiz.** A `norma` continua a julgar só a regra principal. Quando o fato é verdadeiro e a `norma` dá erro normativo (não
   se aplica, não violada, mais fraca sem vínculo, ou só permite), a resposta tem de trazer `referencias`: um
   `{id, forca, aplicabilidade, violada}` por referência (mesmo vocabulário de `norma`). Nos outros casos, `"nao-perguntado"`.

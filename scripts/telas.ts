@@ -88,6 +88,12 @@ export interface Tela {
   runs: { com: string; sem: string; smoke: string };
   /** Raiz dos pacotes de revisão desta tela. */
   review: string;
+  /**
+   * Critérios de julgamento fixados antes da coleta (arquivo relativo à raiz deste repo + sha256). Só a montagem da
+   * passada cega dos juízes os lê (`scripts/reanalise-nat74/e14-campanha.ts`, 1.4.8): confere o sha256 e publica o
+   * critério de cada defeito no lote. Sem o campo, a passada é a de sempre. A coleta não o lê.
+   */
+  criteriosDeJulgamento?: { arquivo: string; sha256: string };
   /** Observação declarada sobre a tela: o que ela é e o que ela ainda não tem. */
   nota?: string;
   isolamento: TelaIsolamento;

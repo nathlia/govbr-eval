@@ -137,6 +137,7 @@
     "sources": [],
     "runs": { "com": "results/runs-cadastro-pais", "sem": "results/runs-cadastro-pais-ablacao", "smoke": "results/runs-cadastro-pais-smoke" },
     "review": "results/semantic-review-cadastro-pais",
+    "criteriosDeJulgamento": { "arquivo": "tela-e2/criterios-de-julgamento-sem-predicado.json", "sha256": "ceb60518905b04366652f5680e90506f00fad25541f2de767a92c619a3deb992" },
     "nota": "Tela E (página construída pelo procedimento da A2, D-201), coprimária da pergunta do DS (protocolo NAT-78 §3.8). Referência ground-truth-cadastro-pais.json 1.0.0 congelada em 2026-11-16 (eval-e 4f200f2, sha256 661cc54b…c528); estados S0 → S1 → S2 no _meta.setup dela. Regra de reserva (protocolo §3.6/§3.8): nenhum detector rodou nesta tela antes do congelamento. Entrada Vite, mas HTML escrito à mão com scripts clássicos de public/cadastro-pais/ e quatro páginas de destino (o único arquivo que o Vite processa é a folha src/cadastro-pais/cadastro-pais.css): não há TSX para o ESLint ler (sources vazio). Página comum, não SPA: a superfície congela o fechamento de arquivos da entrada, sem site. Preparação em tela-e2/ (fora do checkout esparso da coleta). Para servir o dist/ a conferir:referencia: CORPUS_DIR=<checkout do corpus> node tela-e2/servir.mjs 3219.",
     "isolamento": {
       "texto": "Cadastrar País Importador",
