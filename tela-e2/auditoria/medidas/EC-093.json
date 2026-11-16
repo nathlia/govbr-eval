@@ -1,0 +1,44 @@
+{
+ "id": "EC-093",
+ "classe": "conforme",
+ "instancia": "brd-trilha",
+ "chave": "atual-nao-link-links-em-lista",
+ "porEstado": {
+  "S0": {
+   "valor": {
+    "atualTag": "span",
+    "atualTabindex": null,
+    "paradasNaTrilha": [
+     "Início",
+     "Administração",
+     "Países Importadores"
+    ]
+   },
+   "viola": false
+  },
+  "S1": {
+   "valor": {
+    "atualTag": "span",
+    "atualTabindex": null,
+    "paradasNaTrilha": [
+     "Início",
+     "Administração",
+     "Países Importadores"
+    ]
+   },
+   "viola": false
+  },
+  "S2": {
+   "valor": {
+    "atualTag": "span",
+    "atualTabindex": null,
+    "paradasNaTrilha": [
+     "Início",
+     "Administração",
+     "Países Importadores"
+    ]
+   },
+   "viola": false
+  }
+ }
+}

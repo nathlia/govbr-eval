@@ -1,0 +1,1312 @@
+[
+ {
+  "celula": "msg-orientacao::a2-db25bc1d1653",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-db25bc1d1653",
+  "arquivo": "componentes/message__acessibilidade.md",
+  "secao": "Acessibilidade no Message › Navegação e Comportamento",
+  "texto": "No momento da exibição da mensagem, o foco do navegador deve estar sobre o botão fechar, quando houver.",
+  "contexto": "No momento da exibição da mensagem, o foco do navegador deve estar sobre o botão fechar, quando houver. Isto permite que o usuário possa sair da mensagem e voltar ao fluxo de navegação original;",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "foco-fica-na-ajuda",
+    "descricao": "Fechada a msg-orientacao, acionar o btn-ajuda a mostra de novo, mas o foco fica no btn-ajuda em vez de ir para o Fechar.",
+    "clausula": "No momento da exibição da mensagem, o foco do navegador deve estar sobre o botão fechar, quando houver."
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-f8e02fcd7de2",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-f8e02fcd7de2",
+  "arquivo": "componentes/message__acessibilidade.md",
+  "secao": "Acessibilidade no Message › Navegação e Comportamento",
+  "texto": "Ao exibir uma mensagem de feedback em resposta à ação do usuário, permita que o leitor de tela leia imediatamente a mensagem;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "erro-sem-regiao-viva",
+    "descricao": "A msg-erro aparece em S1 sem role de alerta nem aria-live.",
+    "clausula": "permita que o leitor de tela leia imediatamente a mensagem"
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-a7417adc8e5b",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-a7417adc8e5b",
+  "arquivo": "componentes/message__desenvolvedor.md",
+  "secao": "Message (Mensagem) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-message · Container para Tipo Padrão",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "erro-sem-br-message",
+    "descricao": "A raiz de msg-erro usa classe própria com a aparência copiada à mão, sem br-message.",
+    "clausula": "class · string · br-message · Container para Tipo Padrão"
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-1adbb9c1a3ca",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-1adbb9c1a3ca",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Comportamentos › 4. Estados › Estado Erro",
+  "texto": "Deve ser usado quando o objetivo da mensagem for transmitir um alerta de erro por parte do sistema ou por parte do usuário.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "erro-com-tipo-info",
+    "descricao": "A msg-erro usa o tipo Informação (cor e ícone de informação), com o mesmo texto de erro.",
+    "clausula": "Deve ser usado quando o objetivo da mensagem for transmitir um alerta de erro"
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-50718f0da5ac",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-50718f0da5ac",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Comportamentos › 4. Estados › Estado Informativo",
+  "texto": "Deve ser usado quando o objetivo da mensagem for uma informação neutra.",
+  "contexto": "É o estado padrão de utilização do Message. Deve ser usado quando o objetivo da mensagem for uma informação neutra.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "orientacao-tipo-sucesso",
+    "descricao": "A msg-orientacao usa o tipo Sucesso (cor e ícone de sucesso), com o mesmo texto de orientação.",
+    "clausula": "Deve ser usado quando o objetivo da mensagem for uma informação neutra."
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-544adb3c8b26",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-544adb3c8b26",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Anatomia",
+  "texto": "1 · Superfície do Message · Fundamento Superfície · Obrigatório",
+  "contexto": null,
+  "antecedente": "O Message é composto pelos seguintes elementos:",
+  "colocacao": [
+   {
+    "variante": "sem-superficie",
+    "descricao": "A mensagem fica com fundo transparente (sem a superfície do tipo).",
+    "clausula": "1 · Superfície do Message · Fundamento Superfície · Obrigatório"
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-544adb3c8b26",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-544adb3c8b26",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Anatomia",
+  "texto": "1 · Superfície do Message · Fundamento Superfície · Obrigatório",
+  "contexto": null,
+  "antecedente": "O Message é composto pelos seguintes elementos:",
+  "colocacao": [
+   {
+    "variante": "sem-superficie",
+    "descricao": "A mensagem fica com fundo transparente (sem a superfície do tipo).",
+    "clausula": "1 · Superfície do Message · Fundamento Superfície · Obrigatório"
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-7ce46ea1d9b8",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-7ce46ea1d9b8",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Comportamentos › 3. Posicionamento › Mensagem para uso global",
+  "texto": "A informação deste tipo de notificação, deve, de forma geral, ser uma resposta à funcionalidade de toda a página ou sistema e deverá ser apresentado entre o cabeçalho e o componente breadcrumb, se estendendo até o limite da sua largura.",
+  "contexto": "A informação deste tipo de notificação, deve, de forma geral, ser uma resposta à funcionalidade de toda a página ou sistema e deverá ser apresentado entre o cabeçalho e o componente breadcrumb, se estendendo até o limite da sua largura. Neste tipo de posicionamento, a superfície do Message deverá se estender, sangrando a área da Grid, enquanto seu conteúdo interno deverá respeitar as margens da área útil. Como exemplificado abaixo:",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "orientacao-abaixo-do-titulo",
+    "descricao": "A msg-orientacao passa para depois do h1, logo acima do formulário (abaixo do breadcrumb).",
+    "clausula": "deverá ser apresentado entre o cabeçalho e o componente breadcrumb"
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-b141828d5580",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-b141828d5580",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Comportamentos › 3. Posicionamento › Mensagem para uso global",
+  "texto": "Neste tipo de posicionamento, a superfície do Message deverá se estender, sangrando a área da Grid, enquanto seu conteúdo interno deverá respeitar as margens da área útil.",
+  "contexto": "A informação deste tipo de notificação, deve, de forma geral, ser uma resposta à funcionalidade de toda a página ou sistema e deverá ser apresentado entre o cabeçalho e o componente breadcrumb, se estendendo até o limite da sua largura. Neste tipo de posicionamento, a superfície do Message deverá se estender, sangrando a área da Grid, enquanto seu conteúdo interno deverá respeitar as margens da área útil. Como exemplificado abaixo:",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "superficie-sem-sangria",
+    "descricao": "A superfície da msg-orientacao fica restrita à largura da coluna de conteúdo, sem sangrar a grid.",
+    "clausula": "a superfície do Message deverá se estender, sangrando a área da Grid"
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-db30195b0e66",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-db30195b0e66",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Anatomia › Detalhamento dos Itens › 4. Mensagem (Obrigatório) › Tom e Voz da Mensagem",
+  "texto": "Deve-se optar por um texto curto, claro e objetivo, compreendendo toda informação necessária ao usuário.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "mensagem-prolixa",
+    "descricao": "A mensagem ganha 90 palavras de explicação institucional antes de dizer o que importa.",
+    "clausula": "Deve-se optar por um texto curto, claro e objetivo, compreendendo toda informação necessária ao usuário."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-db30195b0e66",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-db30195b0e66",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Anatomia › Detalhamento dos Itens › 4. Mensagem (Obrigatório) › Tom e Voz da Mensagem",
+  "texto": "Deve-se optar por um texto curto, claro e objetivo, compreendendo toda informação necessária ao usuário.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "mensagem-prolixa",
+    "descricao": "A mensagem ganha 90 palavras de explicação institucional antes de dizer o que importa.",
+    "clausula": "Deve-se optar por um texto curto, claro e objetivo, compreendendo toda informação necessária ao usuário."
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-12d0d71f5dd2",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-12d0d71f5dd2",
+  "arquivo": "componentes/radio__acessibilidade.md",
+  "secao": "Acessibilidade no Radio › Recomendações para Código",
+  "texto": "Para radio buttons com opção de seleção obrigatória, utilize o atributo required.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "sem-required",
+    "descricao": "Os três input radio ficam sem o atributo required (o indicador visual e o erro de S1 continuam).",
+    "clausula": "Para radio buttons com opção de seleção obrigatória, utilize o atributo required."
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-186453b0926b",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-186453b0926b",
+  "arquivo": "componentes/radio__acessibilidade.md",
+  "secao": "Acessibilidade no Radio › Navegação e Comportamento",
+  "texto": "Radio buttons devem ser navegáveis pelo teclado por meio da tecla Tab e acionados com a tecla Space.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "radios-fora-do-tab",
+    "descricao": "Os três input radio recebem tabindex=-1.",
+    "clausula": "Radio buttons devem ser navegáveis pelo teclado por meio da tecla Tab"
+   },
+   {
+    "variante": "espaco-inerte",
+    "descricao": "Com foco numa opção, Espaço não a marca (keydown cancelado por script).",
+    "clausula": "acionados com a tecla Space"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-8a9292a9f7a6",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-8a9292a9f7a6",
+  "arquivo": "componentes/radio__desenvolvedor.md",
+  "secao": "Radio (Caixa de Opção) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-radio · Container do componente",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "opcao-sem-classe",
+    "descricao": "O contêiner da opção \"Suspenso\" usa classe própria com a aparência copiada à mão, sem br-radio.",
+    "clausula": "class · string · br-radio · Container do componente"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-03c25d3eccc0",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-03c25d3eccc0",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 1. Caixa de Opção (Obrigatório) › A. Container",
+  "texto": "O container do Radio parte de um círculo opaco que deverá conter o ícone de suporte interativo.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "caixa-quadrada",
+    "descricao": "A caixa de opção das três opções fica quadrada (border-radius 0).",
+    "clausula": "O container do Radio parte de um círculo opaco"
+   },
+   {
+    "variante": "caixa-transparente",
+    "descricao": "O fundo da caixa de opção fica transparente (sem cor própria), só a borda.",
+    "clausula": "O container do Radio parte de um círculo opaco"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-29c719d70e4c",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-29c719d70e4c",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 2. Item de opção (Obrigatório) › B. Texto descritivo",
+  "texto": "Deve-se manter uma coerência entre as larguras dos itens evitando um texto descritivo com mais de sete palavras.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "opcao-longa",
+    "descricao": "O texto da opção \"Em análise\" vira \"Em análise pela equipe técnica do serviço de defesa\" (9 palavras).",
+    "clausula": "evitando um texto descritivo com mais de sete palavras"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-35b101662a6e",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-35b101662a6e",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 5. Mensagens de feedback contextual (Opcional)",
+  "texto": "Deve se posicionar abaixo do último item da lista de opções, alinhado à esquerda e respeitando uma margem superior de acordo com suas diretrizes.",
+  "contexto": "O componente mensagem pode ser utilizado para enviar mensagens informativas, de alerta, de erro (A) ou validação (feedback contextual) devem ser o mais sucintas possível, de preferência não ultrapassando uma linha da mesma largura do campo de texto além de seguir suas diretrizes de componente. Deve se posicionar abaixo do último item da lista de opções, alinhado à esquerda e respeitando uma margem superior de acordo com suas diretrizes.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "mensagem-acima",
+    "descricao": "Em S1 a mensagem de erro do grupo aparece entre a legend e a primeira opção.",
+    "clausula": "Deve se posicionar abaixo do último item da lista de opções"
+   },
+   {
+    "variante": "mensagem-colada",
+    "descricao": "Em S1 a mensagem de erro encosta na última opção (margem superior 0).",
+    "clausula": "respeitando uma margem superior de acordo com suas diretrizes"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-41049ef58d60",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-41049ef58d60",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 3. Cabeçalho de opções (Opcional) › A. Rótulo",
+  "texto": "Quando o componente é apresentado em uma lista e opções devem ser precedidos de um rótulo que descreva a informação que o usuário deve selecionar.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "legenda-generica",
+    "descricao": "A legend passa de \"Situação do cadastro\" para \"Opções\".",
+    "clausula": "devem ser precedidos de um rótulo que descreva a informação que o usuário deve selecionar"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-6ee3ac4d9077",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-6ee3ac4d9077",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Mensagens de feedback contextual",
+  "texto": "Deverá haver apenas uma mensagem para todo o conjunto da lista de opções.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "mensagem-por-opcao",
+    "descricao": "Em S1 cada uma das três opções recebe sua própria mensagem de erro (três mensagens).",
+    "clausula": "Deverá haver apenas uma mensagem para todo o conjunto da lista de opções."
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-7d46c1c71043",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-7d46c1c71043",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 3. Cabeçalho de opções (Opcional) › A. Rótulo",
+  "texto": "Deverá ser escrito com sua primeira letra em maiúsculo e o restante em minúsculo.",
+  "contexto": "Deverá ser escrito com sua primeira letra em maiúsculo e o restante em minúsculo. Ex.: Selecione a opção 01.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "legenda-caixa-alta",
+    "descricao": "A legend vira \"SITUAÇÃO DO CADASTRO\" (escrito assim no HTML).",
+    "clausula": "Deverá ser escrito com sua primeira letra em maiúsculo e o restante em minúsculo."
+   },
+   {
+    "variante": "legenda-iniciais",
+    "descricao": "A legend vira \"Situação Do Cadastro\".",
+    "clausula": "Deverá ser escrito com sua primeira letra em maiúsculo e o restante em minúsculo."
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-916abe162da9",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-916abe162da9",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 3. Cabeçalho de opções (Opcional)",
+  "texto": "Deve ser o item mais ao topo da lista de opções.",
+  "contexto": "O cabeçalho de opções é composto pelo rótulo (A) e caso necessário, texto auxiliar (B). Deve ser o item mais ao topo da lista de opções. Não há restrição de largura ou altura para este item.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "legenda-embaixo",
+    "descricao": "A legend \"Situação do cadastro\" é exibida abaixo da última opção (posicionamento CSS).",
+    "clausula": "Deve ser o item mais ao topo da lista de opções."
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-c5683c991906",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-c5683c991906",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 1. Caixa de Opção (Obrigatório) › B. Ícone de suporte visual interativo",
+  "texto": "O Ícone de suporte visual é um elemento que ficará dentro da área do container e deve ser utilizado para identificar o estado do item radio como selecionado ou não selecionado a depender do seu estado.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "ponto-em-todas",
+    "descricao": "O ponto de seleção aparece também nas opções não marcadas (as três mostram o ponto já em S0).",
+    "clausula": "deve ser utilizado para identificar o estado do item radio como selecionado ou não selecionado"
+   },
+   {
+    "variante": "ponto-ausente",
+    "descricao": "Marcar uma opção não mostra o ponto de seleção (o ícone fica oculto em todos os estados).",
+    "clausula": "deve ser utilizado para identificar o estado do item radio como selecionado ou não selecionado"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-c59c42d24936",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-c59c42d24936",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Disposição vertical",
+  "texto": "Para itens de opção com larguras diferentes a lista de opções deve seguir as dimensões do maior item.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "lista-estreita",
+    "descricao": "O contêiner das opções fica com 70px e overflow oculto, cortando o texto \"Em análise\".",
+    "clausula": "a lista de opções deve seguir as dimensões do maior item"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-c882461d927f",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-c882461d927f",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Anatomia",
+  "texto": "1 · Caixa de opção · --- · Obrigatório",
+  "contexto": null,
+  "antecedente": "O Radio é constituído por:",
+  "colocacao": [
+   {
+    "variante": "sem-caixa",
+    "descricao": "O círculo da caixa de opção das três opções não é desenhado (borda e fundo transparentes); só o texto aparece.",
+    "clausula": "1 · Caixa de opção · --- · Obrigatório"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-ce7c7fd4908e",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-ce7c7fd4908e",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Cabeçalho de opções",
+  "texto": "O Rótulo e o texto auxiliar devem estar ao topo do agrupamento, devem se posicionar um logo abaixo do outro não havendo espaçamento além do já previsto em suas diretrizes e um espaçamento inferior a partir do último dos dois elementos (Rótulo ou texto auxiliar).",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "legenda-colada",
+    "descricao": "A primeira opção fica encostada na legend (espaço 0 abaixo dela).",
+    "clausula": "um espaçamento inferior a partir do último dos dois elementos (Rótulo ou texto auxiliar)"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-d7ea81c1cca6",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-d7ea81c1cca6",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 2. Item de opção (Obrigatório) › B. Texto descritivo",
+  "texto": "Para proporcionar um maior conforto visual ao usuário, o texto descritivo deve se posicionar sempre à direita do container respeitando o espaçamento lateral da caixa de opção.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "texto-a-esquerda",
+    "descricao": "Nas três opções o texto fica à esquerda e o círculo à direita dele.",
+    "clausula": "o texto descritivo deve se posicionar sempre à direita do container"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-ddbd0a530749",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-ddbd0a530749",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 1. Caixa de Opção (Obrigatório) › B. Ícone de suporte visual interativo",
+  "texto": "Deve estar dentro da área do container",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "ponto-fora",
+    "descricao": "Ao marcar uma opção, o ponto aparece deslocado 16px à direita, fora do círculo.",
+    "clausula": "Deve estar dentro da área do container"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-df9d11a960cf",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-df9d11a960cf",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 2. Item de opção (Obrigatório) › B. Texto descritivo",
+  "texto": "Os textos descritivos deverão ser escritos com sua primeira letra em maiúsculo e o restante em minúsculo.",
+  "contexto": "Os textos descritivos deverão ser escritos com sua primeira letra em maiúsculo e o restante em minúsculo. Ex.: Selecione a opção 01.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "opcao-caixa-alta",
+    "descricao": "O texto da opção \"Suspenso\" vira \"SUSPENSO\" (escrito assim no HTML).",
+    "clausula": "deverão ser escritos com sua primeira letra em maiúsculo e o restante em minúsculo"
+   },
+   {
+    "variante": "opcao-minuscula",
+    "descricao": "O texto da opção \"Habilitado\" vira \"habilitado\".",
+    "clausula": "deverão ser escritos com sua primeira letra em maiúsculo"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-e88148ca33a8",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-e88148ca33a8",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Caixa de opção",
+  "texto": "A caixa de opção do item do Radio deve manter uma distância superior e inferior (1) e um espaçamento lateral direito (2) de qualquer outro elemento.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "caixa-colada",
+    "descricao": "Nas três opções o texto começa encostado na borda direita do círculo (espaço 0).",
+    "clausula": "deve manter uma distância superior e inferior (1) e um espaçamento lateral direito (2) de qualquer outro elemento"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-f838b54da560",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-f838b54da560",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 3. Cabeçalho de opções (Opcional) › A. Rótulo",
+  "texto": "O rótulo deve se posicionar no topo do componente alinhado à esquerda.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "legenda-centralizada",
+    "descricao": "A legend fica centralizada sobre a largura do grupo (text-align center).",
+    "clausula": "O rótulo deve se posicionar no topo do componente alinhado à esquerda."
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-ffe76a1c4056",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-ffe76a1c4056",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Texto descritivo",
+  "texto": "Deve manter um espaçamento inferior dos elementos abaixo (3).",
+  "contexto": "O texto descritivo deve se posicionar sempre à direita a (2) da caixa de opção como indicado acima. Deve manter um espaçamento inferior dos elementos abaixo (3).",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "opcoes-coladas",
+    "descricao": "As três opções ficam empilhadas sem espaço vertical entre elas.",
+    "clausula": "Deve manter um espaçamento inferior dos elementos abaixo (3)."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-126c376799cd",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-126c376799cd",
+  "arquivo": "componentes/select__acessibilidade.md",
+  "secao": "Acessibilidade no Select › Navegação e Comportamento",
+  "texto": "Quando o foco estiver sobre o select, o mesmo deve ser acionado e exibir a lista de itens;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "foco-nao-abre",
+    "descricao": "Com foco no campo, Enter e seta para baixo não abrem a lista; só o clique no gatilho abre.",
+    "clausula": "Quando o foco estiver sobre o select, o mesmo deve ser acionado e exibir a lista de itens"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-41577e5f420c",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-41577e5f420c",
+  "arquivo": "componentes/select__acessibilidade.md",
+  "secao": "Acessibilidade no Select › Navegação e Comportamento",
+  "texto": "Após aberta a lista de itens, o usuário deve conseguir navegar através dela por meio das teclas de seta Up e Down;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "setas-inertes",
+    "descricao": "Com a lista aberta, as setas não movem entre os itens.",
+    "clausula": "o usuário deve conseguir navegar através dela por meio das teclas de seta Up e Down"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-654520f6ba0e",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-654520f6ba0e",
+  "arquivo": "componentes/select__acessibilidade.md",
+  "secao": "Acessibilidade no Select › Navegação e Comportamento",
+  "texto": "O select pode ser recolhido por meio da tecla Esc, sem selecionar qualquer item de opção.",
+  "contexto": "- O select pode ser recolhido por meio da tecla Esc, sem selecionar qualquer item de opção.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "esc-inerte",
+    "descricao": "Com a lista do select aberta, Esc não a fecha.",
+    "clausula": "O select pode ser recolhido por meio da tecla Esc, sem selecionar qualquer item de opção."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-7348bce34289",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-7348bce34289",
+  "arquivo": "componentes/select__acessibilidade.md",
+  "secao": "Acessibilidade no Select › Recomendações para Estilo e Design",
+  "texto": "Certifique-se de seguir as recomendações de cores e estados na diretriz do componente, garantindo a qualidade de contraste e legibilidade para usuários com baixa visão.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "opcoes-texto-claro",
+    "descricao": "O texto das opções da lista aberta fica #AAAAAA sobre fundo branco.",
+    "clausula": "garantindo a qualidade de contraste e legibilidade para usuários com baixa visão"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-d1039a4016fe",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-d1039a4016fe",
+  "arquivo": "componentes/select__acessibilidade.md",
+  "secao": "Acessibilidade no Select › Navegação e Comportamento",
+  "texto": "O componente select deve ser acessado via navegação por teclado por meio da tecla Tab;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "campo-fora-do-tab",
+    "descricao": "O campo do select recebe tabindex=-1 e sai da sequência de Tab.",
+    "clausula": "O componente select deve ser acessado via navegação por teclado por meio da tecla Tab"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-45a090bca496",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-45a090bca496",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "secao": "Select (Campo de Seleção) › Como usar › Propriedades obrigatórias",
+  "texto": "atributo · string · trigger · Configura o button como gatilho de abertura da lista de itens",
+  "contexto": null,
+  "antecedente": "class · string · small · Aplica a Densidade Alta",
+  "colocacao": [
+   {
+    "variante": "gatilho-sem-trigger",
+    "descricao": "O gatilho perde o atributo trigger; a abertura da lista é ligada por um script da página, e S2 continua alcançável pelo mesmo botão.",
+    "clausula": "atributo · string · trigger"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-4c2ef1bf747e",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-4c2ef1bf747e",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "secao": "Select (Campo de Seleção) › Como usar › Propriedades obrigatórias",
+  "texto": "atributo · string · name · Deve ser inseridos nos inputs radio e checkbox",
+  "contexto": null,
+  "antecedente": "atributo · string · all · Seta a opção Selecionar todos",
+  "colocacao": [
+   {
+    "variante": "radios-sem-name",
+    "descricao": "Os inputs radio das opções do select ficam sem o atributo name.",
+    "clausula": "name · Deve ser inseridos nos inputs radio e checkbox"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-6eb568d6dd94",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-6eb568d6dd94",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "secao": "Select (Campo de Seleção) › Como usar › Propriedades obrigatórias",
+  "texto": "atributo · string · value · Deve ser inseridos nos inputs radio e checkbox",
+  "contexto": null,
+  "antecedente": "atributo · string · name · Deve ser inseridos nos inputs radio e checkbox",
+  "colocacao": [
+   {
+    "variante": "radios-sem-value",
+    "descricao": "Os inputs radio das opções do select ficam sem o atributo value.",
+    "clausula": "value · Deve ser inseridos nos inputs radio e checkbox"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-1f3279c0e6a1",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-1f3279c0e6a1",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Detalhamento dos Itens › 3. Componente List (Obrigatório) › Sombra no componente list",
+  "texto": "O componente list será apresentado flutuando sobre a tela e uma sombra deve ser utilizada para proporcionar contraste entre o componente e o conteúdo de tela ao fundo.",
+  "contexto": "O componente list será apresentado flutuando sobre a tela e uma sombra deve ser utilizada para proporcionar contraste entre o componente e o conteúdo de tela ao fundo. Para maiores informações consultar o fundamento visual Elevação.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "lista-sem-sombra",
+    "descricao": "A lista aberta do select fica com box-shadow none.",
+    "clausula": "uma sombra deve ser utilizada"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-30278caa77da",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-30278caa77da",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Detalhamento dos Itens › 2. Componente Button (Obrigatório)",
+  "texto": "Este botão deve estar posicionado na extremidade direita ao componente input.",
+  "contexto": "É um botão terciário que tem a função de acionar a exibição ou ocultação da lista dropdown, apresentando um feedback visual através da alternância em seu ícone interno, através de um comportamento de toggle. Este botão deve estar posicionado na extremidade direita ao componente input. Para maiores informações consultar o documento Padrão Dropdown.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "gatilho-a-esquerda",
+    "descricao": "O botão gatilho do select fica à esquerda do campo.",
+    "clausula": "Este botão deve estar posicionado na extremidade direita ao componente input."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-482ab9c4a4b1",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-482ab9c4a4b1",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Anatomia",
+  "texto": "4 · Modos de seleção · Estados · Obrigatório",
+  "contexto": null,
+  "antecedente": "3 · Componente list · List · Obrigatório",
+  "colocacao": [
+   {
+    "variante": "escolhido-sem-estado",
+    "descricao": "Depois de escolher uma opção, o item escolhido não recebe o estado selecionado: sem destaque e com o radio desmarcado.",
+    "clausula": "4 · Modos de seleção · Estados · Obrigatório"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-adae4a234fdd",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-adae4a234fdd",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Detalhamento dos Itens › 3. Componente List (Obrigatório)",
+  "texto": "O componente list deve apresentar os itens a serem escolhidos pelo usuário.",
+  "contexto": "O componente list deve apresentar os itens a serem escolhidos pelo usuário. No tipo multiselect, o usuário poderá incluir ou remover mais de um item por meio do checkbox. Cada item selecionado assumirá o estado selecionado.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "opcao-nao-escolhivel",
+    "descricao": "O 3º item aparece na lista aberta, mas clicar nele (ou Enter) não o escolhe: o campo não muda.",
+    "clausula": "O componente list deve apresentar os itens a serem escolhidos pelo usuário."
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-33e661bc4435",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-33e661bc4435",
+  "arquivo": "componentes/switch__acessibilidade.md",
+  "secao": "Acessibilidade no Switch › Navegação e Comportamento",
+  "texto": "Para que usuários com deficiência visual possam entender completamente a opção selecionada, os leitores de tela devem anunciar o rótulo descritivo e o estado atual do switch.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "estado-nao-exposto",
+    "descricao": "O input do switch recebe role=\"button\" sem aria-pressed: o nome continua, o estado deixa de ser exposto.",
+    "clausula": "os leitores de tela devem anunciar o rótulo descritivo e o estado atual do switch"
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-f2a468af452d",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-f2a468af452d",
+  "arquivo": "componentes/switch__acessibilidade.md",
+  "secao": "Acessibilidade no Switch › Navegação e Comportamento",
+  "texto": "Os usuários devem poder acessar o switch por meio da tecla Tab e alternar seu estado (ligado/desligado) por meio das teclas Space ou Enter;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "switch-fora-do-tab",
+    "descricao": "O input do switch recebe tabindex=-1.",
+    "clausula": "Os usuários devem poder acessar o switch por meio da tecla Tab"
+   },
+   {
+    "variante": "espaco-inerte",
+    "descricao": "Com foco no switch, Espaço não alterna (keydown cancelado por script).",
+    "clausula": "alternar seu estado (ligado/desligado) por meio das teclas Space ou Enter"
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-159612f619b5",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-159612f619b5",
+  "arquivo": "componentes/switch__desenvolvedor.md",
+  "secao": "Switch (Controle Interruptor) › Informações adicionais › Switch com rótulos adicionais",
+  "texto": "data-disabled: é mostrado quando o componente está \"desligado\"",
+  "contexto": null,
+  "antecedente": "Para o rótulo adiciona use a classe switch-data. Os textos de ligado e desligado devem ficar em atributos data-\\:",
+  "colocacao": [
+   {
+    "variante": "desligado-mostra-ligado",
+    "descricao": "data-disabled recebe o mesmo texto de data-enabled: com o switch desligado, o texto ao lado da chave diz o de ligado.",
+    "clausula": "data-disabled: é mostrado quando o componente está \"desligado\""
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-33de62f95ce7",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-33de62f95ce7",
+  "arquivo": "componentes/switch__desenvolvedor.md",
+  "secao": "Switch (Controle Interruptor) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-switch · Container do componente",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "sem-classe-do-componente",
+    "descricao": "A raiz do switch usa classe própria com a aparência copiada à mão, sem br-switch.",
+    "clausula": "class · string · br-switch · Container do componente"
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-5b4b95d8e2e0",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-5b4b95d8e2e0",
+  "arquivo": "componentes/switch__desenvolvedor.md",
+  "secao": "Switch (Controle Interruptor) › Informações adicionais › Switch com rótulos adicionais",
+  "texto": "data-enabled: é mostrado quando o componente está \"ligado\"",
+  "contexto": null,
+  "antecedente": "Para o rótulo adiciona use a classe switch-data. Os textos de ligado e desligado devem ficar em atributos data-\\:",
+  "colocacao": [
+   {
+    "variante": "ligado-mostra-desligado",
+    "descricao": "data-enabled recebe o mesmo texto de data-disabled: com o switch ligado, o texto ao lado da chave diz o de desligado.",
+    "clausula": "data-enabled: é mostrado quando o componente está \"ligado\""
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-002bf9be74ec",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-002bf9be74ec",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "O Switch deve ser posicionado na interface de forma firme e consistente durante o movimento da chave de alternância ou alternância de labels e surgimento de bordas de foco, evitando mudar o posicionamento do seu container.",
+  "contexto": "O Switch deve ser posicionado na interface de forma firme e consistente durante o movimento da chave de alternância ou alternância de labels e surgimento de bordas de foco, evitando mudar o posicionamento do seu container. Caso contrário, poderá confundir ou atrapalhar o processo de interação do usuário com o componente.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "container-se-move",
+    "descricao": "Ao ligar, o contêiner do switch muda de largura e desloca a chave e o label.",
+    "clausula": "O Switch deve ser posicionado na interface de forma firme e consistente durante o movimento da chave de alternância"
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-402eef83153c",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-402eef83153c",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Anatomia",
+  "texto": "3 · Chave de alternância · --- · Obrigatório",
+  "contexto": null,
+  "antecedente": "2 · container · Superfície · Obrigatório",
+  "colocacao": [
+   {
+    "variante": "sem-chave",
+    "descricao": "A chave de alternância fica oculta; só o trilho aparece.",
+    "clausula": "3 · Chave de alternância · --- · Obrigatório"
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-41f0168a6cbb",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-41f0168a6cbb",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Anatomia",
+  "texto": "2 · container · Superfície · Obrigatório",
+  "contexto": null,
+  "antecedente": "1 · Label · Tipografia · Opcional",
+  "colocacao": [
+   {
+    "variante": "sem-trilho",
+    "descricao": "O trilho do switch fica transparente e sem borda; só a chave aparece.",
+    "clausula": "2 · container · Superfície · Obrigatório"
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-44a57ddcc53f",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-44a57ddcc53f",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Use rótulos sempre na mesma posição em relação ao switch.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "estado-troca-de-lado",
+    "descricao": "Com o switch ligado o texto de estado aparece à direita da chave; desligado, à esquerda (posicionado sem deslocar a chave nem o contêiner).",
+    "clausula": "Use rótulos sempre na mesma posição em relação ao switch."
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-771cb345f19e",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-771cb345f19e",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Detalhamento dos Itens › 4. Rótulo (Opcional)",
+  "texto": "Use rótulos curtos e concisos.",
+  "contexto": null,
+  "antecedente": "Rótulos favorecem a usabilidade, pois auxiliam no entendimento da posição em que a chave se encontra.",
+  "colocacao": [
+   {
+    "variante": "estado-prolixo",
+    "descricao": "O texto de estado do switch ligado vira uma frase de ~15 palavras ('A emissão automática de certificado sanitário está ativada para todos os países habilitados no cadastro').",
+    "clausula": "Use rótulos curtos e concisos."
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-8f7b9c91d55e",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-8f7b9c91d55e",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Switches devem ter efeito imediato e não devem exigir que o usuário clique em botões de \"Salvar\" ou \"Enviar\" para aplicar o novo estado.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "exige-salvar-configuracao",
+    "descricao": "Ao alternar, a chave muda mas a configuração fica pendente: surge ao lado um botão secundário 'Salvar configuração' e o aviso 'Clique em Salvar configuração para aplicar'; só esse clique aplica o novo estado.",
+    "clausula": "Switches devem ter efeito imediato e não devem exigir que o usuário clique em botões de \"Salvar\" ou \"Enviar\" para aplicar o novo estado."
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-c5776632fd52",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-c5776632fd52",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Os rótulos devem descrever o que o switch fará quando a chave estiver ligada ou desligada.",
+  "contexto": "Os rótulos devem descrever o que o switch fará quando a chave estiver ligada ou desligada. Eles não devem ser neutros ou ambíguos.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-neutro",
+    "descricao": "O label do switch passa de \"Emissão automática de certificado sanitário para países habilitados\" para \"Opção\".",
+    "clausula": "Os rótulos devem descrever o que o switch fará quando a chave estiver ligada ou desligada."
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-04a4c3ea1b70",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-04a4c3ea1b70",
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 2.6 – Não incluir situações com intermitência de tela",
+  "contexto": "*[Ver WCAG 2.0 Critério de Sucesso 2.3.1](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/seizure-does-not-violate.html)* Não devem ser utilizados efeitos visuais piscantes, intermitentes ou cintilantes. Em pessoas com epilepsia fotosensitiva, o cintilar ou piscar pode desencadear um ataque epilético. A exigência dessa diretriz aplica-se também para propaganda de terceiros inserida na página. Exemplo: A imagem abaixo representa um elemento piscante, onde as intermitências ocorrem a cada 0,2 segundos. ![Exemplo de intermitência de imagem](imagens/intermitencia.png) Exemplo de intermitência de imagem",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "icone-piscante",
+    "descricao": "O ícone da instância pisca 3 vezes por segundo (animação CSS infinita de opacidade 1→0).",
+    "clausula": "Não devem ser utilizados efeitos visuais piscantes, intermitentes ou cintilantes."
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-04a4c3ea1b70",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-04a4c3ea1b70",
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 2.6 – Não incluir situações com intermitência de tela",
+  "contexto": "*[Ver WCAG 2.0 Critério de Sucesso 2.3.1](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/seizure-does-not-violate.html)* Não devem ser utilizados efeitos visuais piscantes, intermitentes ou cintilantes. Em pessoas com epilepsia fotosensitiva, o cintilar ou piscar pode desencadear um ataque epilético. A exigência dessa diretriz aplica-se também para propaganda de terceiros inserida na página. Exemplo: A imagem abaixo representa um elemento piscante, onde as intermitências ocorrem a cada 0,2 segundos. ![Exemplo de intermitência de imagem](imagens/intermitencia.png) Exemplo de intermitência de imagem",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "icone-piscante",
+    "descricao": "O ícone da instância pisca 3 vezes por segundo (animação CSS infinita de opacidade 1→0).",
+    "clausula": "Não devem ser utilizados efeitos visuais piscantes, intermitentes ou cintilantes."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-04a4c3ea1b70",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-04a4c3ea1b70",
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 2.6 – Não incluir situações com intermitência de tela",
+  "contexto": "*[Ver WCAG 2.0 Critério de Sucesso 2.3.1](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/seizure-does-not-violate.html)* Não devem ser utilizados efeitos visuais piscantes, intermitentes ou cintilantes. Em pessoas com epilepsia fotosensitiva, o cintilar ou piscar pode desencadear um ataque epilético. A exigência dessa diretriz aplica-se também para propaganda de terceiros inserida na página. Exemplo: A imagem abaixo representa um elemento piscante, onde as intermitências ocorrem a cada 0,2 segundos. ![Exemplo de intermitência de imagem](imagens/intermitencia.png) Exemplo de intermitência de imagem",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "icone-piscante",
+    "descricao": "O ícone da instância pisca 3 vezes por segundo (animação CSS infinita de opacidade 1→0).",
+    "clausula": "Não devem ser utilizados efeitos visuais piscantes, intermitentes ou cintilantes."
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-0aafa5e96c13",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-0aafa5e96c13",
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 2.7 – Assegurar o controle do usuário sobre as alterações temporais do conteúdo",
+  "contexto": "*[Ver WCAG 2.0 Critério de Sucesso 2.2.2](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/time-limits-pause.html)* Conteúdos como *slideshows*, que “se movem”, rolagens, movimentações em geral ou animações não devem ser disparadas automaticamente sem o controle do usuário, mesmo em propagandas na página. Ao usuário deve ser repassado o controle sobre essas movimentações (quer seja por escolha de preferência de visualização da página, quer por outro método qualquer acessível a usuário com deficiência). Além disso, o usuário deve ser capaz de parar e reiniciar conteúdos que se movem, sem exceção. É desejável que o usuário tenha também o controle da velocidade desses conteúdos. ![Exemplo de slideshow, com mecanismos de parada e navegação entre os slides.](imagens/slideshow.jpg) Exemplo de slideshow, com mecanismos de parada e navegação entre os slides.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "icone-girando",
+    "descricao": "O ícone da instância gira sem parar desde a carga (rotação CSS infinita, 1 volta a cada 2 s, sem piscar), sem nenhum controle para parar.",
+    "clausula": "animações não devem ser disparadas automaticamente sem o controle do usuário"
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-0aafa5e96c13",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-0aafa5e96c13",
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 2.7 – Assegurar o controle do usuário sobre as alterações temporais do conteúdo",
+  "contexto": "*[Ver WCAG 2.0 Critério de Sucesso 2.2.2](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/time-limits-pause.html)* Conteúdos como *slideshows*, que “se movem”, rolagens, movimentações em geral ou animações não devem ser disparadas automaticamente sem o controle do usuário, mesmo em propagandas na página. Ao usuário deve ser repassado o controle sobre essas movimentações (quer seja por escolha de preferência de visualização da página, quer por outro método qualquer acessível a usuário com deficiência). Além disso, o usuário deve ser capaz de parar e reiniciar conteúdos que se movem, sem exceção. É desejável que o usuário tenha também o controle da velocidade desses conteúdos. ![Exemplo de slideshow, com mecanismos de parada e navegação entre os slides.](imagens/slideshow.jpg) Exemplo de slideshow, com mecanismos de parada e navegação entre os slides.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "icone-girando",
+    "descricao": "O ícone da instância gira sem parar desde a carga (rotação CSS infinita, 1 volta a cada 2 s, sem piscar), sem nenhum controle para parar.",
+    "clausula": "animações não devem ser disparadas automaticamente sem o controle do usuário"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-18acbf7b4c9c",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-18acbf7b4c9c",
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 3.12 – Disponibilizar uma explicação para siglas, abreviaturas e palavras incomuns",
+  "contexto": "*[Ver WCAG 2.0 Critérios de Sucesso 3.1.3](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/meaning-idioms.html) e [Ver WCAG 2.0 Critérios de Sucesso3.1.4](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/meaning-located.html)* Ao menos na primeira ocorrência de siglas, abreviaturas ou palavras incomuns (ambíguas, desconhecidas ou utilizadas de forma muito específica), deve ser disponibilizada sua explicação ou forma completa. Essa explicação pode estar expressa no próprio texto, pode estar presente em um glossário ou, então, através da utilização do elemento abbr, conforme exemplos a seguir. Exemplo 1 – Explicação no próprio texto <p>A ONU (Organização das Nações Unidas) é um órgão internacional criado em 1945.</p> Exemplo 2 – Utilização de glossário Um site sobre desenvolvimento Web fornece um link de menu para o Glossário, que contém explicações para termos como HTML, CSS, Tag, atributo, etc. Exemplo 3 – Utilização do elementos abbr <p>Bem-vindo à <abbr title=\"World Wide Web\" lang=\"en\">WWW</abbr>!</p>",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "sigla-no-apoio",
+    "descricao": "O texto de apoio vira 'Use o código de 3 letras do SISCOMEX', sem forma completa de SISCOMEX em lugar nenhum da página.",
+    "clausula": "Ao menos na primeira ocorrência de siglas, abreviaturas ou palavras incomuns (ambíguas, desconhecidas ou utilizadas de forma muito específica), deve ser disponibilizada sua explicação ou forma completa."
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-18acbf7b4c9c",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-18acbf7b4c9c",
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 3.12 – Disponibilizar uma explicação para siglas, abreviaturas e palavras incomuns",
+  "contexto": "*[Ver WCAG 2.0 Critérios de Sucesso 3.1.3](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/meaning-idioms.html) e [Ver WCAG 2.0 Critérios de Sucesso3.1.4](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/meaning-located.html)* Ao menos na primeira ocorrência de siglas, abreviaturas ou palavras incomuns (ambíguas, desconhecidas ou utilizadas de forma muito específica), deve ser disponibilizada sua explicação ou forma completa. Essa explicação pode estar expressa no próprio texto, pode estar presente em um glossário ou, então, através da utilização do elemento abbr, conforme exemplos a seguir. Exemplo 1 – Explicação no próprio texto <p>A ONU (Organização das Nações Unidas) é um órgão internacional criado em 1945.</p> Exemplo 2 – Utilização de glossário Um site sobre desenvolvimento Web fornece um link de menu para o Glossário, que contém explicações para termos como HTML, CSS, Tag, atributo, etc. Exemplo 3 – Utilização do elementos abbr <p>Bem-vindo à <abbr title=\"World Wide Web\" lang=\"en\">WWW</abbr>!</p>",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "sigla-sem-explicacao",
+    "descricao": "O rótulo do switch vira 'Emissão automática de CSI para países habilitados', sem forma completa de CSI em lugar nenhum da página.",
+    "clausula": "Ao menos na primeira ocorrência de siglas, abreviaturas ou palavras incomuns (ambíguas, desconhecidas ou utilizadas de forma muito específica), deve ser disponibilizada sua explicação ou forma completa."
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-2bc503ea01f1",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-2bc503ea01f1",
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 6.4 – Não provocar automaticamente alteração no contexto",
+  "contexto": "*[Ver WCAG 2.0 Critério de Sucesso 3.2.2](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/consistent-behavior-unpredictable-change.html)* Quando um elemento de formulário receber o foco, não deve ser iniciada uma mudança automática na página que confunda ou desoriente o usuário. Assim, as mudanças devem ocorrer através do acionamento de um botão. Exemplo correto <select id=\"cidade\" name=\"cidade\"> <option value=\"POA\">Porto Alegre</option> <option value=\"BH\">Belo Horizonte</option> <option value=\"RJ\">Rio de Janeiro</option> <option value=\"SP\">São Paulo</option> </select> <input type=\"submit\" id=\"submit\" value=\"Enviar\"> Exemplo incorreto <select name=\"cidade\" id=\"cidade\" onchange=\"location = this.options[this.selectedIndex].value;\"> <option value=\"POA.html\">Porto Alegre</option> <option value=\"BH.html\">Belo Horizonte</option> <option value=\"RJ.html\">Rio de Janeiro</option> <option value=\"SP.html\">São Paulo</option> </select> [Ir ao exemplo navegável Recomendação 6.4](recomendacao-041.php \"Ir ao exemplo navegável Recomendação 6.4\")",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "escolha-envia",
+    "descricao": "Escolher uma opção (continente na lista; situação no radio) envia o formulário sozinho, como se 'Salvar país' fosse acionado.",
+    "clausula": "Assim, as mudanças devem ocorrer através do acionamento de um botão."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-2bc503ea01f1",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-2bc503ea01f1",
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 6.4 – Não provocar automaticamente alteração no contexto",
+  "contexto": "*[Ver WCAG 2.0 Critério de Sucesso 3.2.2](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/consistent-behavior-unpredictable-change.html)* Quando um elemento de formulário receber o foco, não deve ser iniciada uma mudança automática na página que confunda ou desoriente o usuário. Assim, as mudanças devem ocorrer através do acionamento de um botão. Exemplo correto <select id=\"cidade\" name=\"cidade\"> <option value=\"POA\">Porto Alegre</option> <option value=\"BH\">Belo Horizonte</option> <option value=\"RJ\">Rio de Janeiro</option> <option value=\"SP\">São Paulo</option> </select> <input type=\"submit\" id=\"submit\" value=\"Enviar\"> Exemplo incorreto <select name=\"cidade\" id=\"cidade\" onchange=\"location = this.options[this.selectedIndex].value;\"> <option value=\"POA.html\">Porto Alegre</option> <option value=\"BH.html\">Belo Horizonte</option> <option value=\"RJ.html\">Rio de Janeiro</option> <option value=\"SP.html\">São Paulo</option> </select> [Ir ao exemplo navegável Recomendação 6.4](recomendacao-041.php \"Ir ao exemplo navegável Recomendação 6.4\")",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "escolha-envia",
+    "descricao": "Escolher uma opção (continente na lista; situação no radio) envia o formulário sozinho, como se 'Salvar país' fosse acionado.",
+    "clausula": "Assim, as mudanças devem ocorrer através do acionamento de um botão."
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-5432c282d0d7",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-5432c282d0d7",
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 4.3 – Permitir redimensionamento sem perda de funcionalidade",
+  "contexto": "*[Ver WCAG 2.0 Critério de Sucesso 1.4.4](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-scale.html)* A página deve continuar legível e funcional mesmo quando redimensionada para até 200%. Assim, é preciso garantir que, quando a página for redimensionada, não ocorram sobreposições nem o aparecimento de uma barra horizontal. Exemplo Exemplo de sítio no qual, à medida que ocorre o redimensionamento, o leiaute se ajusta para que não ocorram “quebras”. ![Exemplo de página em seu tamanho padrão](imagens/figura22.jpg) Exemplo de página em seu tamanho padrão ![Exemplo de página redimensionada em 200% sem perda de funcionalidade](imagens/figura23.jpg) Exemplo de página redimensionada em 200% sem perda de funcionalidade Além de permitir o redimensionamento sem perda de funcionalidade, o leiaute do sítio deve adequar-se à resolução de tela do dispositivo pelo qual está sendo acessado, já que, atualmente, não existe mais um padrão de resolução de tela para os computadores e há uma crescente utilização de dispositivos móveis. A melhor maneira de tratar as diferentes resoluções de tela é através do **design responsivo**, que trata especificamente da forma que o site será renderizado dependendo do tamanho em pixels da tela que o dispositivo possui e seu objetivo. O design responsivo trata a resolução de tela considerando faixas de resolução, através de diferentes folhas de estilo para tratamento das faixas de resolução de tela. Para tratar a folha de estilo, basta inserir no mesmo documento comandos de Media Queries contendo a resolução máxima de apresentação e as alterações desejadas logo depois. ![Exemplo de página em seu tamanho padrão](imagens/figura24.png) Exemplo de leiaute responsivo, que se adapta conforme a resolução da tela",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "altura-fixa-corta",
+    "descricao": "A instância (cada item da lista; a mensagem) ganha altura fixa em px e overflow hidden: com o texto a 200% parte do texto é cortada.",
+    "clausula": "A página deve continuar legível e funcional mesmo quando redimensionada para até 200%."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-5432c282d0d7",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-5432c282d0d7",
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 4.3 – Permitir redimensionamento sem perda de funcionalidade",
+  "contexto": "*[Ver WCAG 2.0 Critério de Sucesso 1.4.4](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-scale.html)* A página deve continuar legível e funcional mesmo quando redimensionada para até 200%. Assim, é preciso garantir que, quando a página for redimensionada, não ocorram sobreposições nem o aparecimento de uma barra horizontal. Exemplo Exemplo de sítio no qual, à medida que ocorre o redimensionamento, o leiaute se ajusta para que não ocorram “quebras”. ![Exemplo de página em seu tamanho padrão](imagens/figura22.jpg) Exemplo de página em seu tamanho padrão ![Exemplo de página redimensionada em 200% sem perda de funcionalidade](imagens/figura23.jpg) Exemplo de página redimensionada em 200% sem perda de funcionalidade Além de permitir o redimensionamento sem perda de funcionalidade, o leiaute do sítio deve adequar-se à resolução de tela do dispositivo pelo qual está sendo acessado, já que, atualmente, não existe mais um padrão de resolução de tela para os computadores e há uma crescente utilização de dispositivos móveis. A melhor maneira de tratar as diferentes resoluções de tela é através do **design responsivo**, que trata especificamente da forma que o site será renderizado dependendo do tamanho em pixels da tela que o dispositivo possui e seu objetivo. O design responsivo trata a resolução de tela considerando faixas de resolução, através de diferentes folhas de estilo para tratamento das faixas de resolução de tela. Para tratar a folha de estilo, basta inserir no mesmo documento comandos de Media Queries contendo a resolução máxima de apresentação e as alterações desejadas logo depois. ![Exemplo de página em seu tamanho padrão](imagens/figura24.png) Exemplo de leiaute responsivo, que se adapta conforme a resolução da tela",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "altura-fixa-corta",
+    "descricao": "A instância (cada item da lista; a mensagem) ganha altura fixa em px e overflow hidden: com o texto a 200% parte do texto é cortada.",
+    "clausula": "A página deve continuar legível e funcional mesmo quando redimensionada para até 200%."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-9bc102ab300b",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-9bc102ab300b",
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 1.6 – Não utilizar tabelas para diagramação",
+  "contexto": "*[Ver WCAG 2.0 Critério de Sucesso 1.3.1 (Técnica H51)](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/content-structure-separation-programmatic.html)* As tabelas devem ser utilizadas apenas para dados tabulares e não para efeitos de disposição dos elementos na página. Para este fim, utilize as folhas de estilo. Exemplo correto – Utilização de tableless para diagramação </head> <body> <div id=\"topo\" role=”banner”> <div> <!--barra de acessibilidade--> </div> <h1>Exemplo sem tabelas!</h1> </div> <div id=\"menu\" role=”navigation”> <ul> <li><a href=\"menu1.html\">Menu 1</a></li> <li><a href=\"menu2.html\">Menu 2</a></li> <li><a href=\"menu3.html\">Menu 3</a></li> <li><a href=\"menu4.html\">Menu 4</a></li> </ul> </div> <div id=\"conteudo\" role=\"main\"> <!--conteúdo principal da página--> <div id=\"lateral\"> <!--conteúdo da lateral da página--> </div> <div id=\"rodape\" role=\"contentinfo\"> <!--direitos autorais--> <address> <!--e-mail de contato--> </address> </div></div> </body> </html> Exemplo incorreto - Utilização de tabela para leiaute </head> <body> <table border=\"1\"> <tr id=\"topo\"> <td colspan=\"2\"> <!--barra de acessibilidade--> </td> <td colspan=\"3\"> <h1>Exemplo com tabela</h1> </td> </tr> <tr id=\"menu\"> <td><a href=\"menu1.html\">Menu 1</a></td> <td><a href=\"menu2.html\">Menu 2</a></td> <td><a href=\"menu3.html\">Menu 3</a></td> <td><a href=\"menu4.html\">Menu 4</a></td> </tr> <tr id=\"conteudo\"> <td colspan=\"4\" id=\"central\"> <!--conteúdo principal da página--> </td> <td id=\"lateral\"> <!--conteúdo da lateral da página--> </td> </tr> <tr id=\"rodape\"> <td colspan=\"2\"> <!--direitos autorais--> </td> <td colspan=\"3\"> <!--e-mail de contato--> </td> </tr> </table> </body>",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "tabela-de-diagramacao",
+    "descricao": "A instância passa a ser disposta com uma table de uma linha (msg-orientacao: ícone numa célula, texto em outra; rad-situacao: cada opção numa célula), sem cabeçalhos.",
+    "clausula": "As tabelas devem ser utilizadas apenas para dados tabulares e não para efeitos de disposição dos elementos na página."
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-9bc102ab300b",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-9bc102ab300b",
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 1.6 – Não utilizar tabelas para diagramação",
+  "contexto": "*[Ver WCAG 2.0 Critério de Sucesso 1.3.1 (Técnica H51)](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/content-structure-separation-programmatic.html)* As tabelas devem ser utilizadas apenas para dados tabulares e não para efeitos de disposição dos elementos na página. Para este fim, utilize as folhas de estilo. Exemplo correto – Utilização de tableless para diagramação </head> <body> <div id=\"topo\" role=”banner”> <div> <!--barra de acessibilidade--> </div> <h1>Exemplo sem tabelas!</h1> </div> <div id=\"menu\" role=”navigation”> <ul> <li><a href=\"menu1.html\">Menu 1</a></li> <li><a href=\"menu2.html\">Menu 2</a></li> <li><a href=\"menu3.html\">Menu 3</a></li> <li><a href=\"menu4.html\">Menu 4</a></li> </ul> </div> <div id=\"conteudo\" role=\"main\"> <!--conteúdo principal da página--> <div id=\"lateral\"> <!--conteúdo da lateral da página--> </div> <div id=\"rodape\" role=\"contentinfo\"> <!--direitos autorais--> <address> <!--e-mail de contato--> </address> </div></div> </body> </html> Exemplo incorreto - Utilização de tabela para leiaute </head> <body> <table border=\"1\"> <tr id=\"topo\"> <td colspan=\"2\"> <!--barra de acessibilidade--> </td> <td colspan=\"3\"> <h1>Exemplo com tabela</h1> </td> </tr> <tr id=\"menu\"> <td><a href=\"menu1.html\">Menu 1</a></td> <td><a href=\"menu2.html\">Menu 2</a></td> <td><a href=\"menu3.html\">Menu 3</a></td> <td><a href=\"menu4.html\">Menu 4</a></td> </tr> <tr id=\"conteudo\"> <td colspan=\"4\" id=\"central\"> <!--conteúdo principal da página--> </td> <td id=\"lateral\"> <!--conteúdo da lateral da página--> </td> </tr> <tr id=\"rodape\"> <td colspan=\"2\"> <!--direitos autorais--> </td> <td colspan=\"3\"> <!--e-mail de contato--> </td> </tr> </table> </body>",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "tabela-de-diagramacao",
+    "descricao": "A instância passa a ser disposta com uma table de uma linha (msg-orientacao: ícone numa célula, texto em outra; rad-situacao: cada opção numa célula), sem cabeçalhos.",
+    "clausula": "As tabelas devem ser utilizadas apenas para dados tabulares e não para efeitos de disposição dos elementos na página."
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-e5b4728ca51e",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-e5b4728ca51e",
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 4.2 – Não utilizar apenas cor ou outras características sensoriais para diferenciar elementos",
+  "contexto": "*[Ver WCAG 2.0 Critérios de Sucesso 1.3.3](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/content-structure-separation-understanding.html) e [Ver WCAG 2.0 Critérios de Sucesso1.4.1](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-without-color.html)* A cor ou outras características sensoriais, como forma, tamanho, localização visual, orientação ou som não devem ser utilizadas como o único meio para transmitir informações, indicar uma ação, pedir uma resposta ao usuário ou distinguir um elemento visual. ![A cor não deve ser o unico elemento de diferenciação. A esquerda sinais com a visão normal, à direita os mesmo sinais vistos por quem tem daltonismo. ](imagens/figura20.png) A cor não deve ser o unico elemento de diferenciação. A esquerda sinais com a visão normal, à direita os mesmo sinais vistos por quem tem daltonismo. HTML - Exemplo incorreto <p>Existem três procedimentos para executar a tarefa:</p> <ul> <li><a href=\"#\">Procedimento A</a></li> <li><a href=\"#\" class=\"recomendado\">Procedimento B</a></li> <li><a href=\"#\">Procedimento C</a></li> </ul> CSS a.recomendado { color: #FF0000; } HTML - Exemplo correto <p>Existem três procedimentos para executar a tarefa:</p> <ul> <li><a href=\"#\">Procedimento A</a></li> <li><a href=\"#\" class=\"recomendado\">Procedimento B (Recomendado)</a></li> <li><a href=\"#\">Procedimento C</a></li> </ul> CSS a.recomendado { color: #FF0000; } ![Exemplo correto de utilização de cores nos elementos](imagens/figura21.png) Exemplo correto de utilização de cores nos elementos",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "situacao-so-pela-cor",
+    "descricao": "Nos itens da lista, o texto da situação (Habilitado, Suspenso, Em análise) é trocado por um ponto colorido (verde, vermelho, amarelo), sem texto nem nome acessível.",
+    "clausula": "A cor ou outras características sensoriais, como forma, tamanho, localização visual, orientação ou som não devem ser utilizadas como o único meio para transmitir informações"
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-0383076211e0",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-0383076211e0",
+  "arquivo": "fundamentos-visuais/cores.md",
+  "secao": "Cores › Princípios › Acessibilidade",
+  "texto": "Para texto grande a taxa de contraste mínimo deve ser de pelo menos 3:1.",
+  "contexto": "O nível AA indica que é necessária uma taxa de contraste de pelo menos 4,5:1 para que o texto seja considerado normal e tenha boa legibilidade. Para texto grande a taxa de contraste mínimo deve ser de pelo menos 3:1.",
+  "antecedente": "O contraste varia entre 1 a 21 (geralmente descritos 1:1 a 21:1).",
+  "colocacao": [
+   {
+    "variante": "titulo-grande-baixo-contraste",
+    "descricao": "O título da lista (texto grande) fica #BDBDBD sobre branco (≈1,9:1), mantendo tamanho e peso.",
+    "clausula": "Para texto grande a taxa de contraste mínimo deve ser de pelo menos 3:1."
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-15a1e5d58ef7",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-15a1e5d58ef7",
+  "arquivo": "fundamentos-visuais/cores.md",
+  "secao": "Cores › Função das Cores › 3. Função Feedback (Estados) › Função Interação",
+  "texto": "É necessário que estas cores se destaquem sobre os outros elementos ou informações textuais na interface.",
+  "contexto": "São cores que servem para indicar ao usuário a possibilidade de interação sobre qualquer elemento que a utiliza. É necessário que estas cores se destaquem sobre os outros elementos ou informações textuais na interface.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "interativo-cor-de-texto",
+    "descricao": "O texto e a borda do 'Limpar campos' (ou o ícone do botão de ajuda) usam #333333, a mesma cor do texto corrido, sem a cor de interação.",
+    "clausula": "É necessário que estas cores se destaquem sobre os outros elementos ou informações textuais na interface."
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-15a1e5d58ef7",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-15a1e5d58ef7",
+  "arquivo": "fundamentos-visuais/cores.md",
+  "secao": "Cores › Função das Cores › 3. Função Feedback (Estados) › Função Interação",
+  "texto": "É necessário que estas cores se destaquem sobre os outros elementos ou informações textuais na interface.",
+  "contexto": "São cores que servem para indicar ao usuário a possibilidade de interação sobre qualquer elemento que a utiliza. É necessário que estas cores se destaquem sobre os outros elementos ou informações textuais na interface.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "interativo-cor-de-texto",
+    "descricao": "O texto e a borda do 'Limpar campos' (ou o ícone do botão de ajuda) usam #333333, a mesma cor do texto corrido, sem a cor de interação.",
+    "clausula": "É necessário que estas cores se destaquem sobre os outros elementos ou informações textuais na interface."
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-cc3d7bd5342f",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-cc3d7bd5342f",
+  "arquivo": "fundamentos-visuais/cores.md",
+  "secao": "Cores › Função das Cores › 1. Função Container (Superfícies)",
+  "texto": "Também devem proporcionar contraste com o texto e elementos interativos, assim como qualquer outro elemento de comunicação visual na interface, como imagens, ilustrações, ícones, etc.",
+  "contexto": "As cores de superfície são utilizadas como base cromática neutra para composição do tema e compõem harmonicamente com as demais cores. São usadas especificamente em planos de fundo nas telas da interface e superfícies de componentes. Também devem proporcionar contraste com o texto e elementos interativos, assim como qualquer outro elemento de comunicação visual na interface, como imagens, ilustrações, ícones, etc.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "superficie-sem-contraste",
+    "descricao": "A superfície da mensagem fica #155BCB (orientação) ou #E52207 (erro), mantendo texto e ícone escuros: contraste abaixo de 3:1.",
+    "clausula": "Também devem proporcionar contraste com o texto e elementos interativos, assim como qualquer outro elemento de comunicação visual na interface, como imagens, ilustrações, ícones, etc."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-cc3d7bd5342f",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-cc3d7bd5342f",
+  "arquivo": "fundamentos-visuais/cores.md",
+  "secao": "Cores › Função das Cores › 1. Função Container (Superfícies)",
+  "texto": "Também devem proporcionar contraste com o texto e elementos interativos, assim como qualquer outro elemento de comunicação visual na interface, como imagens, ilustrações, ícones, etc.",
+  "contexto": "As cores de superfície são utilizadas como base cromática neutra para composição do tema e compõem harmonicamente com as demais cores. São usadas especificamente em planos de fundo nas telas da interface e superfícies de componentes. Também devem proporcionar contraste com o texto e elementos interativos, assim como qualquer outro elemento de comunicação visual na interface, como imagens, ilustrações, ícones, etc.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "superficie-sem-contraste",
+    "descricao": "A superfície da mensagem fica #155BCB (orientação) ou #E52207 (erro), mantendo texto e ícone escuros: contraste abaixo de 3:1.",
+    "clausula": "Também devem proporcionar contraste com o texto e elementos interativos, assim como qualquer outro elemento de comunicação visual na interface, como imagens, ilustrações, ícones, etc."
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-033815886ead",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-033815886ead",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Hover › Especificação para Estado Hover",
+  "texto": "Além disso, nos elementos Interativos, o cursor do mouse deve ser alterado para a \"mão fechada com indicador esticado\".",
+  "contexto": "A cor do elemento Overlay será sempre a cor do Primeiro Plano do elemento hover. O valor da opacidade deve variar de acordo com Fundo (Claro ou Escuro) para gerar percepção (contraste) suficiente do Estado. Além disso, nos elementos Interativos, o cursor do mouse deve ser alterado para a \"mão fechada com indicador esticado\".",
+  "antecedente": "É importante a possibilidade de herança com outros estados mesmo com hover. Desta forma, o recurso de Overlay é utilizado como feedback.",
+  "colocacao": [
+   {
+    "variante": "cursor-padrao",
+    "descricao": "O elemento interativo (o botão; o gatilho do select) mostra o cursor padrão (seta).",
+    "clausula": "nos elementos Interativos, o cursor do mouse deve ser alterado para a \"mão fechada com indicador esticado\"."
+   }
+  ]
+ }
+]

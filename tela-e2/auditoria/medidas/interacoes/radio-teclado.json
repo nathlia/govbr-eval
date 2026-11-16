@@ -1,0 +1,46 @@
+{
+ "sonda": "radio-teclado",
+ "estado": "S0",
+ "paradasAte": 13,
+ "primeiroFoco": "input#situacao-habilitado",
+ "anelFoco": {
+  "outline": "none 3px rgb(51, 51, 51) 0px",
+  "boxShadow": "rgb(194, 133, 12) 0px 0px 0px 2px",
+  "borda": "solid 1px rgb(194, 133, 12)",
+  "w": "24px",
+  "h": "24px",
+  "fundo": "rgb(255, 255, 255)"
+ },
+ "difFocoLabel": {
+  "clip": {
+   "x": 52,
+   "y": 794.65625,
+   "width": 119.078125,
+   "height": 44
+  },
+  "iguais": false,
+  "bytesCom": 2026,
+  "bytesSem": 1405
+ },
+ "aposSpace": [
+  true,
+  false,
+  false
+ ],
+ "aposArrowDown": {
+  "marcados": [
+   false,
+   true,
+   false
+  ],
+  "foco": "input#situacao-suspenso"
+ },
+ "indicadorMarcado": {
+  "content": "\"\"",
+  "fundo": "rgb(38, 112, 232)",
+  "w": "16px",
+  "h": "16px",
+  "display": "block"
+ },
+ "errosPagina": []
+}

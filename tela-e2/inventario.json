@@ -1,0 +1,310 @@
+{
+  "_meta": {
+    "tela": "pais-importador-construida (tela E2, plano B da tela E)",
+    "titulo": "Cadastrar país importador",
+    "metodo": "tela-e2/metodo.md (commit 214ded2)",
+    "decisoes": [
+      "D-200"
+    ],
+    "fixadoEm": "2026-11-14",
+    "iteracao": 2,
+    "nota": "Fixado ANTES de abrir o texto de qualquer obrigação: só os tipos de componente da rota escolhida (tela-e/escolha-da-rota.json: button, input, item, list, message, radio, select, select-pnip → select, switch) e os nomes dos 36 componentes do @govbr-ds/core 3.7.0 (pastas componentes/<nome>__*.md do corpus literal). Página HTML pura com a marcação oficial do core 3.7.0 (scripts clássicos, CSS do DS), como a A2. Nenhum id/rótulo de instância descreve defeito (D-24).",
+    "regraAndaime": "Andaime = casco da rota real (header, footer, avatar, signin, breadcrumb, divider; viabilidade § 7.2, a mesma lista da tentativa real), skiplink e região principal (moldura de página, D-53/D-83), os botões que disparam os estados declarados (btn-salvar, e btn-cancelar ao lado dele na barra de ações) e o documento (pagina). Andaime é construído conforme e nunca hospeda defeito. Componente de tipo sorteável embutido em instância sorteável (embutidos) hospeda as unidades do seu componente só nessas instâncias.",
+    "pagina": "Página interna gov.br de um serviço do órgão de defesa agropecuária: título 'Cadastrar país importador', mensagem informativa no topo, formulário de cadastro (nome, código, continente, situação, emissão de certificado; ações Salvar/Limpar campos/Cancelar) e, abaixo, a lista dos países já cadastrados. Janela 1280×900, tema claro, densidade padrão.",
+    "iteracoes": [
+      {
+        "n": 1,
+        "commit": "b87c4c7",
+        "nota": "inventário inicial"
+      },
+      {
+        "n": 2,
+        "data": "2026-11-14",
+        "motivo": "correção de conformidade antes de qualquer contagem de elegíveis e de qualquer sorteio: no passo 2, um juiz apontou que um switch gravado só por Salvar contraria uma obrigação do próprio switch (efeito imediato); a página conforme não pode violar obrigação por desenho. Mesma instância, mesmo tipo, mesmo número de instâncias e hospedeiros; muda só o papel do switch.",
+        "mudancas": [
+          "swt-certificado sai do formulário: vira configuração do serviço com efeito imediato (emissão automática de certificado sanitário para países habilitados), numa seção própria entre o formulário e a lista, com texto de estado; não depende de Salvar",
+          "as unidades do switch e as unidades sem componente que tinham swt-certificado como hospedeiro são rejulgadas (lote 9)"
+        ]
+      }
+    ]
+  },
+  "estados": [
+    {
+      "id": "S0",
+      "descricao": "carga inicial: mensagem informativa, formulário vazio, lista de países cadastrados"
+    },
+    {
+      "id": "S1",
+      "descricao": "Salvar país com o formulário vazio: mensagem de erro do envio e campos obrigatórios em estado de erro",
+      "gatilho": "btn-salvar"
+    },
+    {
+      "id": "S2",
+      "descricao": "lista de opções do select de continente aberta (a partir da carga)",
+      "gatilho": "botão gatilho de sel-continente"
+    }
+  ],
+  "sorteaveis": [
+    {
+      "componente": "button",
+      "instancias": [
+        {
+          "id": "btn-limpar",
+          "rotulo": "Limpar campos (botão secundário na barra de ações do formulário)",
+          "estados": [
+            "S0",
+            "S1",
+            "S2"
+          ]
+        },
+        {
+          "id": "btn-ajuda",
+          "rotulo": "Ajuda sobre o cadastro (botão circular só com ícone, ao lado do título da página)",
+          "estados": [
+            "S0",
+            "S1",
+            "S2"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "input",
+      "instancias": [
+        {
+          "id": "inp-nome-pais",
+          "rotulo": "Nome do país (campo de texto obrigatório)",
+          "estados": [
+            "S0",
+            "S1",
+            "S2"
+          ]
+        },
+        {
+          "id": "inp-codigo",
+          "rotulo": "Código do país (campo de texto com texto de apoio sobre o formato)",
+          "estados": [
+            "S0",
+            "S1",
+            "S2"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "select",
+      "instancias": [
+        {
+          "id": "sel-continente",
+          "rotulo": "Continente (select simples, não múltiplo; input, botão gatilho, lista e itens internos)",
+          "estados": [
+            "S0",
+            "S1",
+            "S2"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "radio",
+      "instancias": [
+        {
+          "id": "rad-situacao",
+          "rotulo": "Situação do cadastro (grupo de 3 opções com legenda)",
+          "opcoes": 3,
+          "estados": [
+            "S0",
+            "S1",
+            "S2"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "switch",
+      "instancias": [
+        {
+          "id": "swt-certificado",
+          "rotulo": "Emissão automática de certificado sanitário para países habilitados (switch de efeito imediato, fora do formulário, numa seção de configuração do serviço, com rótulo e texto de estado)",
+          "estados": [
+            "S0",
+            "S1",
+            "S2"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "list",
+      "instancias": [
+        {
+          "id": "lst-paises",
+          "rotulo": "Países cadastrados (lista com título e 4 itens: nome do país e situação)",
+          "itens": 4,
+          "estados": [
+            "S0",
+            "S1",
+            "S2"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "message",
+      "instancias": [
+        {
+          "id": "msg-orientacao",
+          "rotulo": "Mensagem informativa sobre o cadastro (com botão Fechar)",
+          "estados": [
+            "S0",
+            "S1",
+            "S2"
+          ]
+        },
+        {
+          "id": "msg-erro",
+          "rotulo": "Retorno do envio sem os campos obrigatórios (mensagem de erro)",
+          "estados": [
+            "S1"
+          ]
+        }
+      ]
+    },
+    {
+      "componente": "item",
+      "instancias": [],
+      "nota": "Só embutido: os itens da lista de países e os itens da lista do select."
+    }
+  ],
+  "andaime": [
+    {
+      "componente": "header",
+      "instancias": [
+        {
+          "id": "hdr-govbr",
+          "rotulo": "Cabeçalho gov.br com usuária logada"
+        }
+      ]
+    },
+    {
+      "componente": "signin",
+      "instancias": [
+        {
+          "id": "sgn-usuaria",
+          "rotulo": "Botão da usuária logada no cabeçalho"
+        }
+      ]
+    },
+    {
+      "componente": "avatar",
+      "instancias": [
+        {
+          "id": "ava-usuaria",
+          "rotulo": "Avatar da usuária no botão do cabeçalho"
+        }
+      ]
+    },
+    {
+      "componente": "footer",
+      "instancias": [
+        {
+          "id": "ftr-govbr",
+          "rotulo": "Rodapé gov.br"
+        }
+      ]
+    },
+    {
+      "componente": "skiplink",
+      "instancias": [
+        {
+          "id": "skp-conteudo",
+          "rotulo": "Ir para o conteúdo"
+        }
+      ]
+    },
+    {
+      "componente": "breadcrumb",
+      "instancias": [
+        {
+          "id": "brd-trilha",
+          "rotulo": "Início › Administração › Países importadores › Cadastrar"
+        }
+      ]
+    },
+    {
+      "componente": "divider",
+      "instancias": [
+        {
+          "id": "div-secoes",
+          "rotulo": "Separador entre o formulário e a lista"
+        }
+      ]
+    },
+    {
+      "componente": "button",
+      "instancias": [
+        {
+          "id": "btn-salvar",
+          "rotulo": "Salvar país (primário; gatilho do estado S1)"
+        },
+        {
+          "id": "btn-cancelar",
+          "rotulo": "Cancelar (secundário, volta à lista de países)"
+        }
+      ]
+    },
+    {
+      "componente": "pagina",
+      "instancias": [
+        {
+          "id": "pagina",
+          "rotulo": "Documento (title, lang, títulos, regiões)"
+        }
+      ]
+    }
+  ],
+  "fora": {
+    "nota": "Os 36 componentes do pacote menos os acima. Regras deles saem com 'componente-fora-da-tela'.",
+    "componentes": [
+      "accordion",
+      "card",
+      "carousel",
+      "checkbox",
+      "cookiebar",
+      "datetimepicker",
+      "loading",
+      "magicbutton",
+      "menu",
+      "modal",
+      "notification",
+      "pagination",
+      "scrim",
+      "step",
+      "tab",
+      "table",
+      "tag",
+      "textarea",
+      "tooltip",
+      "upload",
+      "wizard"
+    ]
+  },
+  "embutidos": {
+    "_nota": "Componente de tipo sorteável dentro de outra instância sorteável: a unidade do componente pode ser hospedada também nestas instâncias (além das instâncias próprias do componente). Botões de andaime (btn-salvar, btn-cancelar) nunca hospedam.",
+    "button": [
+      "sel-continente",
+      "msg-orientacao"
+    ],
+    "input": [
+      "sel-continente"
+    ],
+    "list": [
+      "sel-continente"
+    ],
+    "item": [
+      "sel-continente",
+      "lst-paises"
+    ]
+  },
+  "aninhamento": {}
+}

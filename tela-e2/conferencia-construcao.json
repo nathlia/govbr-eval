@@ -1,0 +1,1986 @@
+{
+ "pagina": "cadastro-pais.html",
+ "corpus": "F:\\Dev Nath\\TCC\\.tmp-eval\\corpus-e",
+ "sha256": {
+  "cadastro-pais.html": "4eb1bea84d19556c71c85097284b3f3ee2087fd933d830f3077ea69c3ae0b369",
+  "assets/cadastro-pais-BwO4kZri.css": "d15a3d6261c8ec587fa405bf202b0ac76db4cc567c10e92318a1881187b8720e",
+  "cadastro-pais/comportamento.js": "853bf917aad2bde4db2fc356f7923d0d34ed091d574b0571b64c4bae17f9175c"
+ },
+ "sorteio": {
+  "semente": "f82c2f7c16baed0ce04fea9f27909c1a1fbe2fa8",
+  "selo": "c2de4360e1269535b3be20424833c874767195a6"
+ },
+ "variantes": {
+  "semeada": {
+   "obs": {
+    "btn-limpar::a2-2ac598dc24db": {
+     "violado": true,
+     "fato": {
+      "limparX": 525.1,
+      "salvarDireita": 509.1
+     },
+     "conformeSe": false
+    },
+    "msg-orientacao::a2-d6b3f0e36943": {
+     "violado": true,
+     "fato": {
+      "termosTecnicos": 7
+     },
+     "conformeSe": false
+    },
+    "btn-ajuda::a2-5b47246a41c1": {
+     "violado": true,
+     "fato": {
+      "iconesVisiveis": 0
+     },
+     "conformeSe": false
+    },
+    "rad-situacao::a2-f838b54da560": {
+     "violado": true,
+     "fato": {
+      "esquerdaTexto": 296.1,
+      "centroTexto": 380,
+      "centroGrupo": 380,
+      "esquerdaOpcao": 62
+     },
+     "conformeSe": false
+    },
+    "inp-codigo::a2-a39f3ad397d4": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "usadas": [
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ]
+      ],
+      "declaradas": [
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif"
+      ]
+     }
+    },
+    "inp-nome-pais::a2-328f62cfe4ce": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "focado": "nome-pais",
+      "valor": ""
+     }
+    },
+    "lst-paises::a2-5432c282d0d7": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cortados": 4,
+      "faltaPx": [
+       19,
+       19,
+       19,
+       19
+      ]
+     }
+    },
+    "msg-erro::a2-ef29db5bb4ac": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "fundo": "rgb(38, 112, 232)",
+      "marcas": 1
+     }
+    },
+    "sel-continente::a2-7348bce34289": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cores": [
+       "rgb(170, 170, 170)"
+      ],
+      "contrasteMin": 2.32
+     }
+    }
+   },
+   "estados": {
+    "S0": {
+     "alcancado": true,
+     "ms": 113,
+     "ok": true,
+     "erros": 0
+    },
+    "S1": {
+     "alcancado": true,
+     "ms": 77,
+     "ok": true,
+     "erros": 0
+    },
+    "S2": {
+     "alcancado": true,
+     "ms": 47,
+     "ok": true,
+     "erros": 0
+    }
+   }
+  },
+  "sem-semente": {
+   "obs": {
+    "btn-limpar::a2-2ac598dc24db": {
+     "violado": false,
+     "fato": {
+      "limparX": 376.2,
+      "salvarDireita": 700
+     },
+     "conformeSe": true
+    },
+    "msg-orientacao::a2-d6b3f0e36943": {
+     "violado": false,
+     "fato": {
+      "termosTecnicos": 0
+     },
+     "conformeSe": true
+    },
+    "btn-ajuda::a2-5b47246a41c1": {
+     "violado": false,
+     "fato": {
+      "iconesVisiveis": 1
+     },
+     "conformeSe": true
+    },
+    "rad-situacao::a2-f838b54da560": {
+     "violado": false,
+     "fato": {
+      "esquerdaTexto": 62,
+      "centroTexto": 145.9,
+      "centroGrupo": 380,
+      "esquerdaOpcao": 62
+     },
+     "conformeSe": true
+    },
+    "inp-codigo::a2-a39f3ad397d4": {
+     "violado": false,
+     "conformeSe": true,
+     "fato": {
+      "usadas": [
+       [
+        "Rawline SemiBold"
+       ],
+       [
+        "Rawline Medium"
+       ],
+       [
+        "Rawline"
+       ]
+      ],
+      "declaradas": [
+       "Rawline, Raleway, sans-serif",
+       "Rawline, Raleway, sans-serif",
+       "Rawline, Raleway, sans-serif"
+      ]
+     }
+    },
+    "inp-nome-pais::a2-328f62cfe4ce": {
+     "violado": false,
+     "conformeSe": true,
+     "fato": {
+      "focado": "nome-pais",
+      "valor": "Chile"
+     }
+    },
+    "lst-paises::a2-5432c282d0d7": {
+     "violado": false,
+     "conformeSe": true,
+     "fato": {
+      "cortados": 0,
+      "faltaPx": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    "msg-erro::a2-ef29db5bb4ac": {
+     "violado": false,
+     "conformeSe": true,
+     "fato": {
+      "fundo": "rgb(253, 224, 219)",
+      "marcas": 0
+     }
+    },
+    "sel-continente::a2-7348bce34289": {
+     "violado": false,
+     "conformeSe": true,
+     "fato": {
+      "cores": [
+       "rgb(51, 51, 51)"
+      ],
+      "contrasteMin": 12.63
+     }
+    }
+   },
+   "estados": {
+    "S0": {
+     "alcancado": true,
+     "ms": 107,
+     "ok": true,
+     "erros": 0
+    },
+    "S1": {
+     "alcancado": true,
+     "ms": 57,
+     "ok": true,
+     "erros": 0
+    },
+    "S2": {
+     "alcancado": true,
+     "ms": 69,
+     "ok": true,
+     "erros": 0
+    }
+   }
+  },
+  "sem-btn-limpar": {
+   "obs": {
+    "btn-limpar::a2-2ac598dc24db": {
+     "violado": false,
+     "fato": {
+      "limparX": 376.2,
+      "salvarDireita": 700
+     },
+     "conformeSe": true
+    },
+    "msg-orientacao::a2-d6b3f0e36943": {
+     "violado": true,
+     "fato": {
+      "termosTecnicos": 7
+     },
+     "conformeSe": false
+    },
+    "btn-ajuda::a2-5b47246a41c1": {
+     "violado": true,
+     "fato": {
+      "iconesVisiveis": 0
+     },
+     "conformeSe": false
+    },
+    "rad-situacao::a2-f838b54da560": {
+     "violado": true,
+     "fato": {
+      "esquerdaTexto": 296.1,
+      "centroTexto": 380,
+      "centroGrupo": 380,
+      "esquerdaOpcao": 62
+     },
+     "conformeSe": false
+    },
+    "inp-codigo::a2-a39f3ad397d4": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "usadas": [
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ]
+      ],
+      "declaradas": [
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif"
+      ]
+     }
+    },
+    "inp-nome-pais::a2-328f62cfe4ce": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "focado": "nome-pais",
+      "valor": ""
+     }
+    },
+    "lst-paises::a2-5432c282d0d7": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cortados": 4,
+      "faltaPx": [
+       19,
+       19,
+       19,
+       19
+      ]
+     }
+    },
+    "msg-erro::a2-ef29db5bb4ac": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "fundo": "rgb(38, 112, 232)",
+      "marcas": 1
+     }
+    },
+    "sel-continente::a2-7348bce34289": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cores": [
+       "rgb(170, 170, 170)"
+      ],
+      "contrasteMin": 2.32
+     }
+    }
+   },
+   "estados": {
+    "S0": {
+     "alcancado": true,
+     "ms": 102,
+     "ok": true,
+     "erros": 0
+    },
+    "S1": {
+     "alcancado": true,
+     "ms": 58,
+     "ok": true,
+     "erros": 0
+    },
+    "S2": {
+     "alcancado": true,
+     "ms": 66,
+     "ok": true,
+     "erros": 0
+    }
+   }
+  },
+  "sem-msg-orientacao": {
+   "obs": {
+    "btn-limpar::a2-2ac598dc24db": {
+     "violado": true,
+     "fato": {
+      "limparX": 525.1,
+      "salvarDireita": 509.1
+     },
+     "conformeSe": false
+    },
+    "msg-orientacao::a2-d6b3f0e36943": {
+     "violado": false,
+     "fato": {
+      "termosTecnicos": 0
+     },
+     "conformeSe": true
+    },
+    "btn-ajuda::a2-5b47246a41c1": {
+     "violado": true,
+     "fato": {
+      "iconesVisiveis": 0
+     },
+     "conformeSe": false
+    },
+    "rad-situacao::a2-f838b54da560": {
+     "violado": true,
+     "fato": {
+      "esquerdaTexto": 296.1,
+      "centroTexto": 380,
+      "centroGrupo": 380,
+      "esquerdaOpcao": 62
+     },
+     "conformeSe": false
+    },
+    "inp-codigo::a2-a39f3ad397d4": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "usadas": [
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ]
+      ],
+      "declaradas": [
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif"
+      ]
+     }
+    },
+    "inp-nome-pais::a2-328f62cfe4ce": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "focado": "nome-pais",
+      "valor": ""
+     }
+    },
+    "lst-paises::a2-5432c282d0d7": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cortados": 4,
+      "faltaPx": [
+       19,
+       19,
+       19,
+       19
+      ]
+     }
+    },
+    "msg-erro::a2-ef29db5bb4ac": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "fundo": "rgb(38, 112, 232)",
+      "marcas": 1
+     }
+    },
+    "sel-continente::a2-7348bce34289": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cores": [
+       "rgb(170, 170, 170)"
+      ],
+      "contrasteMin": 2.32
+     }
+    }
+   },
+   "estados": {
+    "S0": {
+     "alcancado": true,
+     "ms": 104,
+     "ok": true,
+     "erros": 0
+    },
+    "S1": {
+     "alcancado": true,
+     "ms": 57,
+     "ok": true,
+     "erros": 0
+    },
+    "S2": {
+     "alcancado": true,
+     "ms": 54,
+     "ok": true,
+     "erros": 0
+    }
+   }
+  },
+  "sem-btn-ajuda": {
+   "obs": {
+    "btn-limpar::a2-2ac598dc24db": {
+     "violado": true,
+     "fato": {
+      "limparX": 525.1,
+      "salvarDireita": 509.1
+     },
+     "conformeSe": false
+    },
+    "msg-orientacao::a2-d6b3f0e36943": {
+     "violado": true,
+     "fato": {
+      "termosTecnicos": 7
+     },
+     "conformeSe": false
+    },
+    "btn-ajuda::a2-5b47246a41c1": {
+     "violado": false,
+     "fato": {
+      "iconesVisiveis": 1
+     },
+     "conformeSe": true
+    },
+    "rad-situacao::a2-f838b54da560": {
+     "violado": true,
+     "fato": {
+      "esquerdaTexto": 296.1,
+      "centroTexto": 380,
+      "centroGrupo": 380,
+      "esquerdaOpcao": 62
+     },
+     "conformeSe": false
+    },
+    "inp-codigo::a2-a39f3ad397d4": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "usadas": [
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ]
+      ],
+      "declaradas": [
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif"
+      ]
+     }
+    },
+    "inp-nome-pais::a2-328f62cfe4ce": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "focado": "nome-pais",
+      "valor": ""
+     }
+    },
+    "lst-paises::a2-5432c282d0d7": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cortados": 4,
+      "faltaPx": [
+       19,
+       19,
+       19,
+       19
+      ]
+     }
+    },
+    "msg-erro::a2-ef29db5bb4ac": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "fundo": "rgb(38, 112, 232)",
+      "marcas": 1
+     }
+    },
+    "sel-continente::a2-7348bce34289": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cores": [
+       "rgb(170, 170, 170)"
+      ],
+      "contrasteMin": 2.32
+     }
+    }
+   },
+   "estados": {
+    "S0": {
+     "alcancado": true,
+     "ms": 100,
+     "ok": true,
+     "erros": 0
+    },
+    "S1": {
+     "alcancado": true,
+     "ms": 54,
+     "ok": true,
+     "erros": 0
+    },
+    "S2": {
+     "alcancado": true,
+     "ms": 53,
+     "ok": true,
+     "erros": 0
+    }
+   }
+  },
+  "sem-inp-codigo": {
+   "obs": {
+    "btn-limpar::a2-2ac598dc24db": {
+     "violado": true,
+     "fato": {
+      "limparX": 525.1,
+      "salvarDireita": 509.1
+     },
+     "conformeSe": false
+    },
+    "msg-orientacao::a2-d6b3f0e36943": {
+     "violado": true,
+     "fato": {
+      "termosTecnicos": 7
+     },
+     "conformeSe": false
+    },
+    "btn-ajuda::a2-5b47246a41c1": {
+     "violado": true,
+     "fato": {
+      "iconesVisiveis": 0
+     },
+     "conformeSe": false
+    },
+    "rad-situacao::a2-f838b54da560": {
+     "violado": true,
+     "fato": {
+      "esquerdaTexto": 296.1,
+      "centroTexto": 380,
+      "centroGrupo": 380,
+      "esquerdaOpcao": 62
+     },
+     "conformeSe": false
+    },
+    "inp-codigo::a2-a39f3ad397d4": {
+     "violado": false,
+     "conformeSe": true,
+     "fato": {
+      "usadas": [
+       [
+        "Rawline SemiBold"
+       ],
+       [
+        "Rawline Medium"
+       ],
+       [
+        "Rawline"
+       ]
+      ],
+      "declaradas": [
+       "Rawline, Raleway, sans-serif",
+       "Rawline, Raleway, sans-serif",
+       "Rawline, Raleway, sans-serif"
+      ]
+     }
+    },
+    "inp-nome-pais::a2-328f62cfe4ce": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "focado": "nome-pais",
+      "valor": ""
+     }
+    },
+    "lst-paises::a2-5432c282d0d7": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cortados": 4,
+      "faltaPx": [
+       19,
+       19,
+       19,
+       19
+      ]
+     }
+    },
+    "msg-erro::a2-ef29db5bb4ac": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "fundo": "rgb(38, 112, 232)",
+      "marcas": 1
+     }
+    },
+    "sel-continente::a2-7348bce34289": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cores": [
+       "rgb(170, 170, 170)"
+      ],
+      "contrasteMin": 2.32
+     }
+    }
+   },
+   "estados": {
+    "S0": {
+     "alcancado": true,
+     "ms": 105,
+     "ok": true,
+     "erros": 0
+    },
+    "S1": {
+     "alcancado": true,
+     "ms": 68,
+     "ok": true,
+     "erros": 0
+    },
+    "S2": {
+     "alcancado": true,
+     "ms": 52,
+     "ok": true,
+     "erros": 0
+    }
+   }
+  },
+  "sem-rad-situacao": {
+   "obs": {
+    "btn-limpar::a2-2ac598dc24db": {
+     "violado": true,
+     "fato": {
+      "limparX": 525.1,
+      "salvarDireita": 509.1
+     },
+     "conformeSe": false
+    },
+    "msg-orientacao::a2-d6b3f0e36943": {
+     "violado": true,
+     "fato": {
+      "termosTecnicos": 7
+     },
+     "conformeSe": false
+    },
+    "btn-ajuda::a2-5b47246a41c1": {
+     "violado": true,
+     "fato": {
+      "iconesVisiveis": 0
+     },
+     "conformeSe": false
+    },
+    "rad-situacao::a2-f838b54da560": {
+     "violado": false,
+     "fato": {
+      "esquerdaTexto": 62,
+      "centroTexto": 145.9,
+      "centroGrupo": 380,
+      "esquerdaOpcao": 62
+     },
+     "conformeSe": true
+    },
+    "inp-codigo::a2-a39f3ad397d4": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "usadas": [
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ]
+      ],
+      "declaradas": [
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif"
+      ]
+     }
+    },
+    "inp-nome-pais::a2-328f62cfe4ce": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "focado": "nome-pais",
+      "valor": ""
+     }
+    },
+    "lst-paises::a2-5432c282d0d7": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cortados": 4,
+      "faltaPx": [
+       19,
+       19,
+       19,
+       19
+      ]
+     }
+    },
+    "msg-erro::a2-ef29db5bb4ac": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "fundo": "rgb(38, 112, 232)",
+      "marcas": 1
+     }
+    },
+    "sel-continente::a2-7348bce34289": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cores": [
+       "rgb(170, 170, 170)"
+      ],
+      "contrasteMin": 2.32
+     }
+    }
+   },
+   "estados": {
+    "S0": {
+     "alcancado": true,
+     "ms": 112,
+     "ok": true,
+     "erros": 0
+    },
+    "S1": {
+     "alcancado": true,
+     "ms": 52,
+     "ok": true,
+     "erros": 0
+    },
+    "S2": {
+     "alcancado": true,
+     "ms": 57,
+     "ok": true,
+     "erros": 0
+    }
+   }
+  },
+  "sem-msg-erro": {
+   "obs": {
+    "btn-limpar::a2-2ac598dc24db": {
+     "violado": true,
+     "fato": {
+      "limparX": 525.1,
+      "salvarDireita": 509.1
+     },
+     "conformeSe": false
+    },
+    "msg-orientacao::a2-d6b3f0e36943": {
+     "violado": true,
+     "fato": {
+      "termosTecnicos": 7
+     },
+     "conformeSe": false
+    },
+    "btn-ajuda::a2-5b47246a41c1": {
+     "violado": true,
+     "fato": {
+      "iconesVisiveis": 0
+     },
+     "conformeSe": false
+    },
+    "rad-situacao::a2-f838b54da560": {
+     "violado": true,
+     "fato": {
+      "esquerdaTexto": 296.1,
+      "centroTexto": 380,
+      "centroGrupo": 380,
+      "esquerdaOpcao": 62
+     },
+     "conformeSe": false
+    },
+    "inp-codigo::a2-a39f3ad397d4": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "usadas": [
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ]
+      ],
+      "declaradas": [
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif"
+      ]
+     }
+    },
+    "inp-nome-pais::a2-328f62cfe4ce": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "focado": "nome-pais",
+      "valor": ""
+     }
+    },
+    "lst-paises::a2-5432c282d0d7": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cortados": 4,
+      "faltaPx": [
+       19,
+       19,
+       19,
+       19
+      ]
+     }
+    },
+    "msg-erro::a2-ef29db5bb4ac": {
+     "violado": false,
+     "conformeSe": true,
+     "fato": {
+      "fundo": "rgb(253, 224, 219)",
+      "marcas": 0
+     }
+    },
+    "sel-continente::a2-7348bce34289": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cores": [
+       "rgb(170, 170, 170)"
+      ],
+      "contrasteMin": 2.32
+     }
+    }
+   },
+   "estados": {
+    "S0": {
+     "alcancado": true,
+     "ms": 111,
+     "ok": true,
+     "erros": 0
+    },
+    "S1": {
+     "alcancado": true,
+     "ms": 58,
+     "ok": true,
+     "erros": 0
+    },
+    "S2": {
+     "alcancado": true,
+     "ms": 51,
+     "ok": true,
+     "erros": 0
+    }
+   }
+  },
+  "sem-sel-continente": {
+   "obs": {
+    "btn-limpar::a2-2ac598dc24db": {
+     "violado": true,
+     "fato": {
+      "limparX": 525.1,
+      "salvarDireita": 509.1
+     },
+     "conformeSe": false
+    },
+    "msg-orientacao::a2-d6b3f0e36943": {
+     "violado": true,
+     "fato": {
+      "termosTecnicos": 7
+     },
+     "conformeSe": false
+    },
+    "btn-ajuda::a2-5b47246a41c1": {
+     "violado": true,
+     "fato": {
+      "iconesVisiveis": 0
+     },
+     "conformeSe": false
+    },
+    "rad-situacao::a2-f838b54da560": {
+     "violado": true,
+     "fato": {
+      "esquerdaTexto": 296.1,
+      "centroTexto": 380,
+      "centroGrupo": 380,
+      "esquerdaOpcao": 62
+     },
+     "conformeSe": false
+    },
+    "inp-codigo::a2-a39f3ad397d4": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "usadas": [
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ]
+      ],
+      "declaradas": [
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif"
+      ]
+     }
+    },
+    "inp-nome-pais::a2-328f62cfe4ce": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "focado": "nome-pais",
+      "valor": ""
+     }
+    },
+    "lst-paises::a2-5432c282d0d7": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cortados": 4,
+      "faltaPx": [
+       19,
+       19,
+       19,
+       19
+      ]
+     }
+    },
+    "msg-erro::a2-ef29db5bb4ac": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "fundo": "rgb(38, 112, 232)",
+      "marcas": 1
+     }
+    },
+    "sel-continente::a2-7348bce34289": {
+     "violado": false,
+     "conformeSe": true,
+     "fato": {
+      "cores": [
+       "rgb(51, 51, 51)"
+      ],
+      "contrasteMin": 12.63
+     }
+    }
+   },
+   "estados": {
+    "S0": {
+     "alcancado": true,
+     "ms": 107,
+     "ok": true,
+     "erros": 0
+    },
+    "S1": {
+     "alcancado": true,
+     "ms": 68,
+     "ok": true,
+     "erros": 0
+    },
+    "S2": {
+     "alcancado": true,
+     "ms": 57,
+     "ok": true,
+     "erros": 0
+    }
+   }
+  },
+  "sem-inp-nome-pais": {
+   "obs": {
+    "btn-limpar::a2-2ac598dc24db": {
+     "violado": true,
+     "fato": {
+      "limparX": 525.1,
+      "salvarDireita": 509.1
+     },
+     "conformeSe": false
+    },
+    "msg-orientacao::a2-d6b3f0e36943": {
+     "violado": true,
+     "fato": {
+      "termosTecnicos": 7
+     },
+     "conformeSe": false
+    },
+    "btn-ajuda::a2-5b47246a41c1": {
+     "violado": true,
+     "fato": {
+      "iconesVisiveis": 0
+     },
+     "conformeSe": false
+    },
+    "rad-situacao::a2-f838b54da560": {
+     "violado": true,
+     "fato": {
+      "esquerdaTexto": 296.1,
+      "centroTexto": 380,
+      "centroGrupo": 380,
+      "esquerdaOpcao": 62
+     },
+     "conformeSe": false
+    },
+    "inp-codigo::a2-a39f3ad397d4": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "usadas": [
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ]
+      ],
+      "declaradas": [
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif"
+      ]
+     }
+    },
+    "inp-nome-pais::a2-328f62cfe4ce": {
+     "violado": false,
+     "conformeSe": true,
+     "fato": {
+      "focado": "nome-pais",
+      "valor": "Chile"
+     }
+    },
+    "lst-paises::a2-5432c282d0d7": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cortados": 4,
+      "faltaPx": [
+       19,
+       19,
+       19,
+       19
+      ]
+     }
+    },
+    "msg-erro::a2-ef29db5bb4ac": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "fundo": "rgb(38, 112, 232)",
+      "marcas": 1
+     }
+    },
+    "sel-continente::a2-7348bce34289": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cores": [
+       "rgb(170, 170, 170)"
+      ],
+      "contrasteMin": 2.32
+     }
+    }
+   },
+   "estados": {
+    "S0": {
+     "alcancado": true,
+     "ms": 114,
+     "ok": true,
+     "erros": 0
+    },
+    "S1": {
+     "alcancado": true,
+     "ms": 80,
+     "ok": true,
+     "erros": 0
+    },
+    "S2": {
+     "alcancado": true,
+     "ms": 49,
+     "ok": true,
+     "erros": 0
+    }
+   }
+  },
+  "sem-lst-paises": {
+   "obs": {
+    "btn-limpar::a2-2ac598dc24db": {
+     "violado": true,
+     "fato": {
+      "limparX": 525.1,
+      "salvarDireita": 509.1
+     },
+     "conformeSe": false
+    },
+    "msg-orientacao::a2-d6b3f0e36943": {
+     "violado": true,
+     "fato": {
+      "termosTecnicos": 7
+     },
+     "conformeSe": false
+    },
+    "btn-ajuda::a2-5b47246a41c1": {
+     "violado": true,
+     "fato": {
+      "iconesVisiveis": 0
+     },
+     "conformeSe": false
+    },
+    "rad-situacao::a2-f838b54da560": {
+     "violado": true,
+     "fato": {
+      "esquerdaTexto": 296.1,
+      "centroTexto": 380,
+      "centroGrupo": 380,
+      "esquerdaOpcao": 62
+     },
+     "conformeSe": false
+    },
+    "inp-codigo::a2-a39f3ad397d4": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "usadas": [
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ]
+      ],
+      "declaradas": [
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif"
+      ]
+     }
+    },
+    "inp-nome-pais::a2-328f62cfe4ce": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "focado": "nome-pais",
+      "valor": ""
+     }
+    },
+    "lst-paises::a2-5432c282d0d7": {
+     "violado": false,
+     "conformeSe": true,
+     "fato": {
+      "cortados": 0,
+      "faltaPx": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    "msg-erro::a2-ef29db5bb4ac": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "fundo": "rgb(38, 112, 232)",
+      "marcas": 1
+     }
+    },
+    "sel-continente::a2-7348bce34289": {
+     "violado": true,
+     "conformeSe": false,
+     "fato": {
+      "cores": [
+       "rgb(170, 170, 170)"
+      ],
+      "contrasteMin": 2.32
+     }
+    }
+   },
+   "estados": {
+    "S0": {
+     "alcancado": true,
+     "ms": 103,
+     "ok": true,
+     "erros": 0
+    },
+    "S1": {
+     "alcancado": true,
+     "ms": 71,
+     "ok": true,
+     "erros": 0
+    },
+    "S2": {
+     "alcancado": true,
+     "ms": 52,
+     "ok": true,
+     "erros": 0
+    }
+   }
+  }
+ },
+ "pontosConformes": {
+  "semeada": [
+   {
+    "nome": "página: sem bloco style nem script embutido no HTML servido",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: sem atributos style e on* no HTML servido",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: elementos vazios sem '/>' no HTML servido",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: script sem type/language",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: sem elementos font nem atributos align/color/bgcolor",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: sem table",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: DOCTYPE html, lang pt-BR, UTF-8, título descritivo",
+    "ok": true,
+    "fato": "{\"doctype\":true,\"lang\":\"pt-BR\",\"charset\":\"UTF-8\",\"titulo\":\"Cadastrar país importador — Defesa Agropecuária gov.br\"}"
+   },
+   {
+    "nome": "página: um único main",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: títulos h1 → h2 sem salto",
+    "ok": true,
+    "fato": "[\"H1\",\"H2\",\"H2\",\"H2\"]"
+   },
+   {
+    "nome": "andaime hdr-govbr: cabeçalho visível no topo, antes do main",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "andaime ftr-govbr: rodapé visível depois do main",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "andaime skp-conteudo: atalho é o 1º filho do body, destinos existem, sem papéis de menu",
+    "ok": true,
+    "fato": "{\"primeiro\":true,\"destinos\":true,\"papeis\":0}"
+   },
+   {
+    "nome": "andaime brd-trilha: item atual sem tabindex, rótulo em português, depois da mensagem de uso geral",
+    "ok": true,
+    "fato": "{\"atual\":{\"tag\":\"SPAN\",\"tabindex\":null},\"rotulo\":\"Trilha de navegação\",\"depoisDaMensagem\":true}"
+   },
+   {
+    "nome": "página: links para o mesmo destino com a mesma descrição",
+    "ok": true,
+    "fato": "[[\"#main-content\",[\"Ir para o conteúdo (1/2)\"]],[\"#rodape\",[\"Ir para o rodapé (2/2)\"]],[\"minha-conta.html\",[\"HConta de Helena\"]],[\"servicos-defesa.html\",[\"Início\"]],[\"administracao.html\",[\"Administração\"]],[\"paises-importadores.html\",[\"Países Importadores\"]]]"
+   },
+   {
+    "nome": "página: destinos dos links existem no dist",
+    "ok": true,
+    "fato": "[[\"minha-conta.html\",200],[\"servicos-defesa.html\",200],[\"administracao.html\",200],[\"paises-importadores.html\",200]]"
+   },
+   {
+    "nome": "msg-orientacao (a2-7ce46ea1d9b8): entre o cabeçalho e a trilha",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "msg-orientacao (a2-b141828d5580, a2-7cf0838736be): superfície na largura da janela; ícone e Fechar dentro da área útil da grid",
+    "ok": true,
+    "fato": "{\"caixa\":{\"x\":0,\"y\":115.1,\"w\":1280,\"h\":96.7,\"right\":1280,\"bottom\":211.8},\"util\":{\"x\":60,\"right\":1220},\"icone\":76,\"fechar\":1212}"
+   },
+   {
+    "nome": "msg-orientacao (a2-6c82acf760ae, a2-952e88a5af0d, a2-55dab9d0155c): tipo Informativo, superfície --blue-warm-vivid-10, ícone info-circle, tipo em texto oculto",
+    "ok": true,
+    "fato": "{\"fundo\":\"rgb(212, 229, 255)\",\"icone\":\"fas fa-info-circle fa-lg\"}"
+   },
+   {
+    "nome": "msg-orientacao (a2-5df30996e1c5): ícone à esquerda, Fechar no topo à direita",
+    "ok": true,
+    "fato": "{\"icone\":{\"x\":76,\"y\":162.9,\"w\":28,\"h\":1,\"right\":104,\"bottom\":163.9},\"fechar\":{\"x\":1180,\"y\":123.1,\"w\":32,\"h\":32,\"right\":1212,\"bottom\":155.1}}"
+   },
+   {
+    "nome": "msg-orientacao: contraste do texto ≥ 4,5",
+    "ok": true,
+    "fato": "9.9"
+   },
+   {
+    "nome": "Fechar de msg-orientacao (a2-507dbd6cdee4, a2-5b47246a41c1, a2-923a3ee74050, a2-5f85eeafe863): BUTTON br-button circle small 32×32, aria-label, ícone fa-times aria-hidden centrado",
+    "ok": true,
+    "fato": "{\"tag\":\"BUTTON\",\"classes\":\"br-button circle small fechar-mensagem\",\"rotulo\":\"Fechar\",\"w\":32,\"h\":32,\"icone\":\"fas fa-times\",\"oculto\":\"true\",\"desvio\":0}"
+   },
+   {
+    "nome": "gatilho do select (a2-5b47246a41c1, a2-30278caa77da, a2-5f85eeafe863): ícone angle-down aria-hidden centrado, aria-label, sem tabindex=-1, na extremidade direita do campo",
+    "ok": true,
+    "fato": "{\"icone\":\"fas fa-angle-down\",\"oculto\":\"true\",\"rotulo\":\"Exibir lista\",\"tabindex\":null,\"desvio\":0,\"direita\":456,\"campoDireita\":460}"
+   },
+   {
+    "nome": "btn-ajuda (a2-b0f874b8b2cf, a2-dc561d157556, a2-4f6b7bd068c4, a2-c23f336807f4): circular 40×40, terciário, aria-label, junto do h1 com espaço",
+    "ok": true,
+    "fato": "{\"w\":40,\"h\":40,\"classes\":\"br-button circle acao-ajuda\",\"rotulo\":\"Ajuda sobre o cadastro\",\"distH1\":16}"
+   },
+   {
+    "nome": "btn-ajuda (a2-35afb7e6ee7c): nome acessível 'Ajuda sobre o cadastro'",
+    "ok": true,
+    "fato": "{\"nome\":\"Ajuda sobre o cadastro\",\"papel\":\"button\",\"checked\":null,\"required\":null,\"readonly\":null,\"invalid\":\"false\"}"
+   },
+   {
+    "nome": "barra de ações (a2-b0f874b8b2cf, a2-59c1236e3ebd, a2-4f6b7bd068c4): Salvar primário, Limpar e Cancelar secundários, 40 px, rótulo em uma linha",
+    "ok": true,
+    "fato": "[{\"id\":\"btn-cancelar\",\"classes\":\"br-button secondary acao-cancelar\",\"h\":40,\"linhas\":1,\"texto\":\"Cancelar\",\"x\":239.2,\"right\":360.2},{\"id\":\"btn-limpar\",\"classes\":\"br-button secondary acao-limpar\",\"h\":40,\"linhas\":1,\"texto\":\"Limpar Campos\",\"x\":525.1,\"right\":700},{\"id\":\"btn-salvar\",\"classes\":\"br-button primary acao-salvar\",\"h\":40,\"linhas\":1,\"texto\":\"Salvar País\",\"x\":376.2,\"right\":509.1}]"
+   },
+   {
+    "nome": "barra de ações (a2-2ac598dc24db, controle): Cancelar (secundário) à esquerda de Salvar (primário)",
+    "ok": true,
+    "fato": "{\"cancelarDireita\":360.2,\"salvarX\":376.2}"
+   },
+   {
+    "nome": "barra de ações (a2-73e03945d5cc, a2-5a1fcf660ae1, a2-12afa1f3c1f0): rótulos com iniciais maiúsculas, sem artigo, com verbo",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "campos (a2-7c43824db106, a2-1f45d0dc0c3a, a2-b174afd9a294, a2-624afa51bbaf): rótulos associados, sem dois-pontos, opcional entre parênteses, obrigatórios sem marca",
+    "ok": true,
+    "fato": "[\"Nome do país\",\"Código do país (opcional)\",\"Continente\"]"
+   },
+   {
+    "nome": "inp-nome-pais (a2-11b459a3885c): required sem valor, type text",
+    "ok": true,
+    "fato": "{\"required\":\"\",\"tipo\":\"text\"}"
+   },
+   {
+    "nome": "inp-codigo (a2-59c41d3b1085, a2-56357b049872, a2-cd5cbf0f18dc, a2-18acbf7b4c9c): type text, apoio ligado por aria-describedby, sem valor inicial, sigla do exemplo por extenso",
+    "ok": true,
+    "fato": "{\"tipo\":\"text\",\"descritoPor\":\"codigo-pais-apoio\",\"apoio\":\"Três letras, como ARG para Argentina.\",\"valor\":\"\"}"
+   },
+   {
+    "nome": "sel-continente (a2-4c2ef1bf747e, a2-6eb568d6dd94, a2-3312a3e57512): opções com name e value; placeholder mais completo que o rótulo",
+    "ok": true,
+    "fato": "Selecione o continente do país"
+   },
+   {
+    "nome": "rad-situacao (a2-12d0d71f5dd2, a2-11b459a3885c): required sem valor nas 3 opções",
+    "ok": true,
+    "fato": "[\"\",\"\",\"\"]"
+   },
+   {
+    "nome": "rad-situacao (a2-b4f55de91129): na carga, borda das caixas na cor padrão (não a de erro)",
+    "ok": true,
+    "fato": "{\"bordas\":[\"rgb(204, 204, 204)\",\"rgb(204, 204, 204)\",\"rgb(204, 204, 204)\"],\"padrao\":\"rgb(204, 204, 204)\"}"
+   },
+   {
+    "nome": "rad-situacao (a2-8ec9171bd752, a2-02ccd4221688, a2-916abe162da9): caixas 24×24 redondas, fieldset sem borda, legenda acima das opções",
+    "ok": true,
+    "fato": "[[\"24px\",\"24px\",\"50%\"],[\"24px\",\"24px\",\"50%\"],[\"24px\",\"24px\",\"50%\"]]"
+   },
+   {
+    "nome": "rad-situacao (a2-29c719d70e4c, a2-df9d11a960cf, a2-6c531e6437e8): opções curtas, só a 1ª letra maiúscula, os mesmos termos da lista",
+    "ok": true,
+    "fato": "[\"Habilitado\",\"Suspenso\",\"Em análise\"]"
+   },
+   {
+    "nome": "swt-certificado (a2-dc662beb73b3, a2-52394d43a884, a2-159612f619b5, a2-c1af8ea16c40): role switch, aria-checked=false, texto de estado 'Desligada' vindo de data-disabled, par de textos",
+    "ok": true,
+    "fato": "{\"papel\":\"switch\",\"aria\":\"false\",\"estado\":\"\\\"Desligada\\\"\",\"dados\":[\"Ligada\",\"Desligada\"]}"
+   },
+   {
+    "nome": "lst-paises (a2-312e000d6784, a2-d45711a55b6c, a2-39c30a5ea7ee): 4 itens em role=list, divisor abaixo de cada item",
+    "ok": true,
+    "fato": "{\"papelLista\":true,\"itens\":4,\"divisores\":4,\"contrastes\":[12.63,12.63,12.63,12.63],\"situacoes\":[\"Habilitado\",\"Habilitado\",\"Suspenso\",\"Em análise\"],\"titulo\":\"Países Cadastrados\",\"dentroDaGrid\":true}"
+   },
+   {
+    "nome": "lst-paises (a2-66fbdcf13772, a2-9250e991e04f, a2-598ca56880b1, a2-6a99b79819ae): texto com contraste ≥ 4,5, situação em texto, título 'Países Cadastrados', texto dentro da área útil",
+    "ok": true,
+    "fato": "[12.63,12.63,12.63,12.63]"
+   },
+   {
+    "nome": "andaime div-secoes: divisor entre o formulário e a lista, fora do foco",
+    "ok": true,
+    "fato": "{\"classe\":true,\"entre\":true,\"focavel\":false}"
+   },
+   {
+    "nome": "lst-paises (a2-a14d31901423): a 1280×900 nenhum item cortado",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "a2-a39f3ad397d4 (controle): Rawline é a fonte usada no h1, no rótulo do nome, na mensagem, na lista, na legenda e no switch",
+    "ok": true,
+    "fato": "{\"h1\":[\"Rawline Light\"],\"rótulo do nome\":[\"Rawline SemiBold\"],\"mensagem\":[\"Rawline\"],\"lista\":[\"Rawline\"],\"legenda\":[\"Rawline SemiBold\"],\"switch\":[\"Rawline SemiBold\"]}"
+   },
+   {
+    "nome": "andaime skp-conteudo: o 1º Tab cai no atalho para #main-content",
+    "ok": true,
+    "fato": "{\"dentro\":true,\"href\":\"#main-content\"}"
+   },
+   {
+    "nome": "formulário: ordem de Tab segue o código (nome, código, continente, gatilho, situação, Cancelar, Limpar, Salvar)",
+    "ok": true,
+    "fato": "[\"nome-pais\",\"codigo-pais\",\"continente\",\"Exibir lista\",\"situacao-habilitado\",\"btn-cancelar\",\"btn-limpar\",\"btn-salvar\"]"
+   },
+   {
+    "nome": "inp-codigo (a2-328f62cfe4ce, controle): com foco por Tab, o texto entra no campo",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "rad-situacao (a2-186453b0926b): Espaço marca, seta move a escolha",
+    "ok": true,
+    "fato": "{\"foco\":\"situacao-suspenso\",\"marcado\":\"situacao-suspenso\"}"
+   },
+   {
+    "nome": "swt-certificado (a2-14fa162258a8, a2-8f7b9c91d55e, a2-e9ded28efe9c, a2-5b4b95d8e2e0, a2-33e661bc4435, a2-002bf9be74ec): clicar o rótulo liga na hora, aria-checked=true, texto 'Ligada', árvore AX marcada, contêiner parado",
+    "ok": true,
+    "fato": "{\"caixa\":{\"x\":60,\"y\":620.7,\"w\":517,\"h\":30,\"right\":577,\"bottom\":650.7},\"checked\":true,\"aria\":\"true\",\"estado\":\"\\\"Ligada\\\"\",\"aviso\":\"Emissão automática ligada.\",\"ax\":{\"nome\":\"Emitir certificado sanitário automaticamente para países habilitados\",\"papel\":\"switch\",\"checked\":\"true\",\"required\":null,\"readonly\":null,\"invalid\":\"false\"}}"
+   },
+   {
+    "nome": "swt-certificado (a2-f2a468af452d): Espaço alterna de volta",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "msg-orientacao (a2-8536d91ce5b9, a2-14f2e6c3226f, a2-c7d20a2735ef, a2-db25bc1d1653): Fechar remove e o foco vai ao h1; a ajuda reexibe no mesmo lugar com foco no Fechar; ao fechar, o foco volta à ajuda",
+    "ok": true,
+    "fato": "{\"fechada\":{\"existe\":false,\"foco\":\"H1\"},\"reaberta\":{\"existe\":true,\"antesDaTrilha\":true,\"foco\":true},\"voltou\":{\"existe\":false,\"foco\":\"btn-ajuda\"}}"
+   },
+   {
+    "nome": "estado S0: msg-erro oculta na carga",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "estado S0 (pontos conformes): medido em até 120 s, sem recarga",
+    "ok": true,
+    "fato": "321 ms"
+   },
+   {
+    "nome": "sel-continente (a2-1f3279c0e6a1, a2-daf3655caedf, a2-83611c221e13, a2-386b2c116eb3): lista aberta com sombra, ícone alterna, 6 opções sem rolagem, junto do campo",
+    "ok": true,
+    "fato": "{\"fechadoIcone\":\"fas fa-angle-down\",\"sombra\":true,\"icone\":\"fas fa-angle-up\",\"rolagem\":1,\"perto\":2}"
+   },
+   {
+    "nome": "sel-continente (a2-654520f6ba0e): Esc recolhe sem escolher",
+    "ok": true,
+    "fato": "{\"aberta\":false,\"valor\":\"\"}"
+   },
+   {
+    "nome": "sel-continente (a2-e85eefb9d6f2, a2-adae4a234fdd, a2-482ab9c4a4b1): escolher a opção a leva ao campo e marca o item como selecionado",
+    "ok": true,
+    "fato": "{\"valor\":\"Ásia\",\"selecionado\":true}"
+   },
+   {
+    "nome": "S1 msg-erro (a2-1adbb9c1a3ca, a2-f8e02fcd7de2, a2-952e88a5af0d, a2-55dab9d0155c, a2-e175765df557): tipo Erro, região viva, ícone times-circle, tipo em texto oculto, sem Fechar, até a borda direita do formulário",
+    "ok": true,
+    "fato": "{\"classes\":\"br-message danger retorno-envio\",\"papel\":\"alert\",\"icone\":\"fas fa-times-circle fa-lg\",\"tipo\":\"Erro\",\"texto\":\"Não foi possível salvar o país. Faltam informações obrigatórias. Preencha o nome do país, o continente e a situação do cadastro e salve novamente.\",\"fechar\":0,\"largura\":[700,700],\"nome\":{\"desc\":[\"Informe o nome do país.\"],\"invalido\":\"true\",\"borda\":\"rgb(229, 34, 7)\"},\"continente\":{\"desc\":[\"Selecione o continente.\"],\"invalido\":\"true\"},\"situacao\":{\"desc\":[\"Selecione a situação do cadastro.\"],\"mensagens\":1,\"abaixo\":true,\"invalidas\":3},\"perigo\":\"rgb(229, 34, 7)\",\"iconesCampos\":[[\"fas fa-times-circle\",\"true\"],[\"fas fa-times-circle\",\"true\"],[\"fas fa-times-circle\",\"true\"]]}"
+   },
+   {
+    "nome": "S1 msg-erro (a2-61f7e680f11b, a2-0ea33ff35779, a2-d6b3f0e36943 controle): diz que houve erro, por quê e o que fazer, sem termos técnicos",
+    "ok": true,
+    "fato": "Não foi possível salvar o país. Faltam informações obrigatórias. Preencha o nome do país, o continente e a situação do cadastro e salve novamente."
+   },
+   {
+    "nome": "S1 campos (a2-d720ea8520cb, a2-56357b049872, a2-7bdc66f1d99d): nome e continente com texto de erro ligado por aria-describedby, aria-invalid e borda de erro",
+    "ok": true,
+    "fato": "{\"nome\":{\"desc\":[\"Informe o nome do país.\"],\"invalido\":\"true\",\"borda\":\"rgb(229, 34, 7)\"},\"continente\":{\"desc\":[\"Selecione o continente.\"],\"invalido\":\"true\"}}"
+   },
+   {
+    "nome": "S1 situação (a2-6ee3ac4d9077, a2-35b101662a6e): uma mensagem para o grupo, abaixo da última opção, alinhada à esquerda; caixas com a classe invalid do DS",
+    "ok": true,
+    "fato": "{\"desc\":[\"Selecione a situação do cadastro.\"],\"mensagens\":1,\"abaixo\":true,\"invalidas\":3}"
+   },
+   {
+    "nome": "S1 (a2-1d6a18d52408, a2-fe133882c34a): ícones das mensagens dos campos times-circle com aria-hidden",
+    "ok": true,
+    "fato": "[[\"fas fa-times-circle\",\"true\"],[\"fas fa-times-circle\",\"true\"],[\"fas fa-times-circle\",\"true\"]]"
+   },
+   {
+    "nome": "S1 inp-nome-pais: árvore AX com nome, obrigatório e inválido",
+    "ok": true,
+    "fato": "{\"nome\":\"Nome do país\",\"papel\":\"textbox\",\"checked\":null,\"required\":true,\"readonly\":true,\"invalid\":\"true\"}"
+   },
+   {
+    "nome": "S1 (a2-46523775b9da): erro continua depois de interagir sem corrigir",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "estado S1 (pontos conformes): medido em até 120 s, sem recarga",
+    "ok": true,
+    "fato": "104 ms"
+   },
+   {
+    "nome": "página (e-MAG 4.3, a2-5432c282d0d7 controle em msg-orientacao): a 640×450 sem rolagem horizontal, nada além da janela, mensagem sem corte",
+    "ok": true,
+    "fato": "{\"sw\":640,\"cw\":640,\"alem\":[],\"msgCorte\":0}"
+   },
+   {
+    "nome": "página: sem erros de console a 640×450",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: core.min.js servido é o do pacote @govbr-ds/core 3.7.0, byte a byte",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: pacote do DS é o 3.7.0",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: nenhum pedido fora da origem servida",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: sem erros de console/página nem respostas 4xx/5xx em S0",
+    "ok": true,
+    "fato": ""
+   }
+  ],
+  "sem-semente": [
+   {
+    "nome": "página: sem bloco style nem script embutido no HTML servido",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: sem atributos style e on* no HTML servido",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: elementos vazios sem '/>' no HTML servido",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: script sem type/language",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: sem elementos font nem atributos align/color/bgcolor",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: sem table",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: DOCTYPE html, lang pt-BR, UTF-8, título descritivo",
+    "ok": true,
+    "fato": "{\"doctype\":true,\"lang\":\"pt-BR\",\"charset\":\"UTF-8\",\"titulo\":\"Cadastrar país importador — Defesa Agropecuária gov.br\"}"
+   },
+   {
+    "nome": "página: um único main",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: títulos h1 → h2 sem salto",
+    "ok": true,
+    "fato": "[\"H1\",\"H2\",\"H2\",\"H2\"]"
+   },
+   {
+    "nome": "andaime hdr-govbr: cabeçalho visível no topo, antes do main",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "andaime ftr-govbr: rodapé visível depois do main",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "andaime skp-conteudo: atalho é o 1º filho do body, destinos existem, sem papéis de menu",
+    "ok": true,
+    "fato": "{\"primeiro\":true,\"destinos\":true,\"papeis\":0}"
+   },
+   {
+    "nome": "andaime brd-trilha: item atual sem tabindex, rótulo em português, depois da mensagem de uso geral",
+    "ok": true,
+    "fato": "{\"atual\":{\"tag\":\"SPAN\",\"tabindex\":null},\"rotulo\":\"Trilha de navegação\",\"depoisDaMensagem\":true}"
+   },
+   {
+    "nome": "página: links para o mesmo destino com a mesma descrição",
+    "ok": true,
+    "fato": "[[\"#main-content\",[\"Ir para o conteúdo (1/2)\"]],[\"#rodape\",[\"Ir para o rodapé (2/2)\"]],[\"minha-conta.html\",[\"HConta de Helena\"]],[\"servicos-defesa.html\",[\"Início\"]],[\"administracao.html\",[\"Administração\"]],[\"paises-importadores.html\",[\"Países Importadores\"]]]"
+   },
+   {
+    "nome": "página: destinos dos links existem no dist",
+    "ok": true,
+    "fato": "[[\"minha-conta.html\",200],[\"servicos-defesa.html\",200],[\"administracao.html\",200],[\"paises-importadores.html\",200]]"
+   },
+   {
+    "nome": "msg-orientacao (a2-7ce46ea1d9b8): entre o cabeçalho e a trilha",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "msg-orientacao (a2-b141828d5580, a2-7cf0838736be): superfície na largura da janela; ícone e Fechar dentro da área útil da grid",
+    "ok": true,
+    "fato": "{\"caixa\":{\"x\":0,\"y\":115.1,\"w\":1280,\"h\":96.7,\"right\":1280,\"bottom\":211.8},\"util\":{\"x\":60,\"right\":1220},\"icone\":76,\"fechar\":1212}"
+   },
+   {
+    "nome": "msg-orientacao (a2-6c82acf760ae, a2-952e88a5af0d, a2-55dab9d0155c): tipo Informativo, superfície --blue-warm-vivid-10, ícone info-circle, tipo em texto oculto",
+    "ok": true,
+    "fato": "{\"fundo\":\"rgb(212, 229, 255)\",\"icone\":\"fas fa-info-circle fa-lg\"}"
+   },
+   {
+    "nome": "msg-orientacao (a2-5df30996e1c5): ícone à esquerda, Fechar no topo à direita",
+    "ok": true,
+    "fato": "{\"icone\":{\"x\":76,\"y\":162.9,\"w\":28,\"h\":1,\"right\":104,\"bottom\":163.9},\"fechar\":{\"x\":1180,\"y\":123.1,\"w\":32,\"h\":32,\"right\":1212,\"bottom\":155.1}}"
+   },
+   {
+    "nome": "msg-orientacao: contraste do texto ≥ 4,5",
+    "ok": true,
+    "fato": "9.9"
+   },
+   {
+    "nome": "Fechar de msg-orientacao (a2-507dbd6cdee4, a2-5b47246a41c1, a2-923a3ee74050, a2-5f85eeafe863): BUTTON br-button circle small 32×32, aria-label, ícone fa-times aria-hidden centrado",
+    "ok": true,
+    "fato": "{\"tag\":\"BUTTON\",\"classes\":\"br-button circle small fechar-mensagem\",\"rotulo\":\"Fechar\",\"w\":32,\"h\":32,\"icone\":\"fas fa-times\",\"oculto\":\"true\",\"desvio\":0}"
+   },
+   {
+    "nome": "gatilho do select (a2-5b47246a41c1, a2-30278caa77da, a2-5f85eeafe863): ícone angle-down aria-hidden centrado, aria-label, sem tabindex=-1, na extremidade direita do campo",
+    "ok": true,
+    "fato": "{\"icone\":\"fas fa-angle-down\",\"oculto\":\"true\",\"rotulo\":\"Exibir lista\",\"tabindex\":null,\"desvio\":0,\"direita\":456,\"campoDireita\":460}"
+   },
+   {
+    "nome": "btn-ajuda (a2-b0f874b8b2cf, a2-dc561d157556, a2-4f6b7bd068c4, a2-c23f336807f4): circular 40×40, terciário, aria-label, junto do h1 com espaço",
+    "ok": true,
+    "fato": "{\"w\":40,\"h\":40,\"classes\":\"br-button circle acao-ajuda\",\"rotulo\":\"Ajuda sobre o cadastro\",\"distH1\":16}"
+   },
+   {
+    "nome": "btn-ajuda (a2-35afb7e6ee7c): nome acessível 'Ajuda sobre o cadastro'",
+    "ok": true,
+    "fato": "{\"nome\":\"Ajuda sobre o cadastro\",\"papel\":\"button\",\"checked\":null,\"required\":null,\"readonly\":null,\"invalid\":\"false\"}"
+   },
+   {
+    "nome": "barra de ações (a2-b0f874b8b2cf, a2-59c1236e3ebd, a2-4f6b7bd068c4): Salvar primário, Limpar e Cancelar secundários, 40 px, rótulo em uma linha",
+    "ok": true,
+    "fato": "[{\"id\":\"btn-cancelar\",\"classes\":\"br-button secondary acao-cancelar\",\"h\":40,\"linhas\":1,\"texto\":\"Cancelar\",\"x\":239.2,\"right\":360.2},{\"id\":\"btn-limpar\",\"classes\":\"br-button secondary acao-limpar\",\"h\":40,\"linhas\":1,\"texto\":\"Limpar Campos\",\"x\":376.2,\"right\":551.1},{\"id\":\"btn-salvar\",\"classes\":\"br-button primary acao-salvar\",\"h\":40,\"linhas\":1,\"texto\":\"Salvar País\",\"x\":567.1,\"right\":700}]"
+   },
+   {
+    "nome": "barra de ações (a2-2ac598dc24db, controle): Cancelar (secundário) à esquerda de Salvar (primário)",
+    "ok": true,
+    "fato": "{\"cancelarDireita\":360.2,\"salvarX\":567.1}"
+   },
+   {
+    "nome": "barra de ações (a2-73e03945d5cc, a2-5a1fcf660ae1, a2-12afa1f3c1f0): rótulos com iniciais maiúsculas, sem artigo, com verbo",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "campos (a2-7c43824db106, a2-1f45d0dc0c3a, a2-b174afd9a294, a2-624afa51bbaf): rótulos associados, sem dois-pontos, opcional entre parênteses, obrigatórios sem marca",
+    "ok": true,
+    "fato": "[\"Nome do país\",\"Código do país (opcional)\",\"Continente\"]"
+   },
+   {
+    "nome": "inp-nome-pais (a2-11b459a3885c): required sem valor, type text",
+    "ok": true,
+    "fato": "{\"required\":\"\",\"tipo\":\"text\"}"
+   },
+   {
+    "nome": "inp-codigo (a2-59c41d3b1085, a2-56357b049872, a2-cd5cbf0f18dc, a2-18acbf7b4c9c): type text, apoio ligado por aria-describedby, sem valor inicial, sigla do exemplo por extenso",
+    "ok": true,
+    "fato": "{\"tipo\":\"text\",\"descritoPor\":\"codigo-pais-apoio\",\"apoio\":\"Três letras, como ARG para Argentina.\",\"valor\":\"\"}"
+   },
+   {
+    "nome": "sel-continente (a2-4c2ef1bf747e, a2-6eb568d6dd94, a2-3312a3e57512): opções com name e value; placeholder mais completo que o rótulo",
+    "ok": true,
+    "fato": "Selecione o continente do país"
+   },
+   {
+    "nome": "rad-situacao (a2-12d0d71f5dd2, a2-11b459a3885c): required sem valor nas 3 opções",
+    "ok": true,
+    "fato": "[\"\",\"\",\"\"]"
+   },
+   {
+    "nome": "rad-situacao (a2-b4f55de91129): na carga, borda das caixas na cor padrão (não a de erro)",
+    "ok": true,
+    "fato": "{\"bordas\":[\"rgb(204, 204, 204)\",\"rgb(204, 204, 204)\",\"rgb(204, 204, 204)\"],\"padrao\":\"rgb(204, 204, 204)\"}"
+   },
+   {
+    "nome": "rad-situacao (a2-8ec9171bd752, a2-02ccd4221688, a2-916abe162da9): caixas 24×24 redondas, fieldset sem borda, legenda acima das opções",
+    "ok": true,
+    "fato": "[[\"24px\",\"24px\",\"50%\"],[\"24px\",\"24px\",\"50%\"],[\"24px\",\"24px\",\"50%\"]]"
+   },
+   {
+    "nome": "rad-situacao (a2-29c719d70e4c, a2-df9d11a960cf, a2-6c531e6437e8): opções curtas, só a 1ª letra maiúscula, os mesmos termos da lista",
+    "ok": true,
+    "fato": "[\"Habilitado\",\"Suspenso\",\"Em análise\"]"
+   },
+   {
+    "nome": "swt-certificado (a2-dc662beb73b3, a2-52394d43a884, a2-159612f619b5, a2-c1af8ea16c40): role switch, aria-checked=false, texto de estado 'Desligada' vindo de data-disabled, par de textos",
+    "ok": true,
+    "fato": "{\"papel\":\"switch\",\"aria\":\"false\",\"estado\":\"\\\"Desligada\\\"\",\"dados\":[\"Ligada\",\"Desligada\"]}"
+   },
+   {
+    "nome": "lst-paises (a2-312e000d6784, a2-d45711a55b6c, a2-39c30a5ea7ee): 4 itens em role=list, divisor abaixo de cada item",
+    "ok": true,
+    "fato": "{\"papelLista\":true,\"itens\":4,\"divisores\":4,\"contrastes\":[12.63,12.63,12.63,12.63],\"situacoes\":[\"Habilitado\",\"Habilitado\",\"Suspenso\",\"Em análise\"],\"titulo\":\"Países Cadastrados\",\"dentroDaGrid\":true}"
+   },
+   {
+    "nome": "lst-paises (a2-66fbdcf13772, a2-9250e991e04f, a2-598ca56880b1, a2-6a99b79819ae): texto com contraste ≥ 4,5, situação em texto, título 'Países Cadastrados', texto dentro da área útil",
+    "ok": true,
+    "fato": "[12.63,12.63,12.63,12.63]"
+   },
+   {
+    "nome": "andaime div-secoes: divisor entre o formulário e a lista, fora do foco",
+    "ok": true,
+    "fato": "{\"classe\":true,\"entre\":true,\"focavel\":false}"
+   },
+   {
+    "nome": "lst-paises (a2-a14d31901423): a 1280×900 nenhum item cortado",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "a2-a39f3ad397d4 (controle): Rawline é a fonte usada no h1, no rótulo do nome, na mensagem, na lista, na legenda e no switch",
+    "ok": true,
+    "fato": "{\"h1\":[\"Rawline Light\"],\"rótulo do nome\":[\"Rawline SemiBold\"],\"mensagem\":[\"Rawline\"],\"lista\":[\"Rawline\"],\"legenda\":[\"Rawline SemiBold\"],\"switch\":[\"Rawline SemiBold\"]}"
+   },
+   {
+    "nome": "andaime skp-conteudo: o 1º Tab cai no atalho para #main-content",
+    "ok": true,
+    "fato": "{\"dentro\":true,\"href\":\"#main-content\"}"
+   },
+   {
+    "nome": "formulário: ordem de Tab segue o código (nome, código, continente, gatilho, situação, Cancelar, Limpar, Salvar)",
+    "ok": true,
+    "fato": "[\"nome-pais\",\"codigo-pais\",\"continente\",\"Exibir lista\",\"situacao-habilitado\",\"btn-cancelar\",\"btn-limpar\",\"btn-salvar\"]"
+   },
+   {
+    "nome": "inp-codigo (a2-328f62cfe4ce, controle): com foco por Tab, o texto entra no campo",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "rad-situacao (a2-186453b0926b): Espaço marca, seta move a escolha",
+    "ok": true,
+    "fato": "{\"foco\":\"situacao-suspenso\",\"marcado\":\"situacao-suspenso\"}"
+   },
+   {
+    "nome": "swt-certificado (a2-14fa162258a8, a2-8f7b9c91d55e, a2-e9ded28efe9c, a2-5b4b95d8e2e0, a2-33e661bc4435, a2-002bf9be74ec): clicar o rótulo liga na hora, aria-checked=true, texto 'Ligada', árvore AX marcada, contêiner parado",
+    "ok": true,
+    "fato": "{\"caixa\":{\"x\":60,\"y\":620.7,\"w\":517,\"h\":30,\"right\":577,\"bottom\":650.7},\"checked\":true,\"aria\":\"true\",\"estado\":\"\\\"Ligada\\\"\",\"aviso\":\"Emissão automática ligada.\",\"ax\":{\"nome\":\"Emitir certificado sanitário automaticamente para países habilitados\",\"papel\":\"switch\",\"checked\":\"true\",\"required\":null,\"readonly\":null,\"invalid\":\"false\"}}"
+   },
+   {
+    "nome": "swt-certificado (a2-f2a468af452d): Espaço alterna de volta",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "msg-orientacao (a2-8536d91ce5b9, a2-14f2e6c3226f, a2-c7d20a2735ef, a2-db25bc1d1653): Fechar remove e o foco vai ao h1; a ajuda reexibe no mesmo lugar com foco no Fechar; ao fechar, o foco volta à ajuda",
+    "ok": true,
+    "fato": "{\"fechada\":{\"existe\":false,\"foco\":\"H1\"},\"reaberta\":{\"existe\":true,\"antesDaTrilha\":true,\"foco\":true},\"voltou\":{\"existe\":false,\"foco\":\"btn-ajuda\"}}"
+   },
+   {
+    "nome": "estado S0: msg-erro oculta na carga",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "estado S0 (pontos conformes): medido em até 120 s, sem recarga",
+    "ok": true,
+    "fato": "302 ms"
+   },
+   {
+    "nome": "sel-continente (a2-1f3279c0e6a1, a2-daf3655caedf, a2-83611c221e13, a2-386b2c116eb3): lista aberta com sombra, ícone alterna, 6 opções sem rolagem, junto do campo",
+    "ok": true,
+    "fato": "{\"fechadoIcone\":\"fas fa-angle-down\",\"sombra\":true,\"icone\":\"fas fa-angle-up\",\"rolagem\":1,\"perto\":2}"
+   },
+   {
+    "nome": "sel-continente (a2-654520f6ba0e): Esc recolhe sem escolher",
+    "ok": true,
+    "fato": "{\"aberta\":false,\"valor\":\"\"}"
+   },
+   {
+    "nome": "sel-continente (a2-e85eefb9d6f2, a2-adae4a234fdd, a2-482ab9c4a4b1): escolher a opção a leva ao campo e marca o item como selecionado",
+    "ok": true,
+    "fato": "{\"valor\":\"Ásia\",\"selecionado\":true}"
+   },
+   {
+    "nome": "S1 msg-erro (a2-1adbb9c1a3ca, a2-f8e02fcd7de2, a2-952e88a5af0d, a2-55dab9d0155c, a2-e175765df557): tipo Erro, região viva, ícone times-circle, tipo em texto oculto, sem Fechar, até a borda direita do formulário",
+    "ok": true,
+    "fato": "{\"classes\":\"br-message danger retorno-envio\",\"papel\":\"alert\",\"icone\":\"fas fa-times-circle fa-lg\",\"tipo\":\"Erro\",\"texto\":\"Não foi possível salvar o país. Faltam informações obrigatórias. Preencha o nome do país, o continente e a situação do cadastro e salve novamente.\",\"fechar\":0,\"largura\":[700,700],\"nome\":{\"desc\":[\"Informe o nome do país.\"],\"invalido\":\"true\",\"borda\":\"rgb(229, 34, 7)\"},\"continente\":{\"desc\":[\"Selecione o continente.\"],\"invalido\":\"true\"},\"situacao\":{\"desc\":[\"Selecione a situação do cadastro.\"],\"mensagens\":1,\"abaixo\":true,\"invalidas\":3},\"perigo\":\"rgb(229, 34, 7)\",\"iconesCampos\":[[\"fas fa-times-circle\",\"true\"],[\"fas fa-times-circle\",\"true\"],[\"fas fa-times-circle\",\"true\"]]}"
+   },
+   {
+    "nome": "S1 msg-erro (a2-61f7e680f11b, a2-0ea33ff35779, a2-d6b3f0e36943 controle): diz que houve erro, por quê e o que fazer, sem termos técnicos",
+    "ok": true,
+    "fato": "Não foi possível salvar o país. Faltam informações obrigatórias. Preencha o nome do país, o continente e a situação do cadastro e salve novamente."
+   },
+   {
+    "nome": "S1 campos (a2-d720ea8520cb, a2-56357b049872, a2-7bdc66f1d99d): nome e continente com texto de erro ligado por aria-describedby, aria-invalid e borda de erro",
+    "ok": true,
+    "fato": "{\"nome\":{\"desc\":[\"Informe o nome do país.\"],\"invalido\":\"true\",\"borda\":\"rgb(229, 34, 7)\"},\"continente\":{\"desc\":[\"Selecione o continente.\"],\"invalido\":\"true\"}}"
+   },
+   {
+    "nome": "S1 situação (a2-6ee3ac4d9077, a2-35b101662a6e): uma mensagem para o grupo, abaixo da última opção, alinhada à esquerda; caixas com a classe invalid do DS",
+    "ok": true,
+    "fato": "{\"desc\":[\"Selecione a situação do cadastro.\"],\"mensagens\":1,\"abaixo\":true,\"invalidas\":3}"
+   },
+   {
+    "nome": "S1 (a2-1d6a18d52408, a2-fe133882c34a): ícones das mensagens dos campos times-circle com aria-hidden",
+    "ok": true,
+    "fato": "[[\"fas fa-times-circle\",\"true\"],[\"fas fa-times-circle\",\"true\"],[\"fas fa-times-circle\",\"true\"]]"
+   },
+   {
+    "nome": "S1 inp-nome-pais: árvore AX com nome, obrigatório e inválido",
+    "ok": true,
+    "fato": "{\"nome\":\"Nome do país\",\"papel\":\"textbox\",\"checked\":null,\"required\":true,\"readonly\":false,\"invalid\":\"true\"}"
+   },
+   {
+    "nome": "S1 (a2-46523775b9da): erro continua depois de interagir sem corrigir",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "estado S1 (pontos conformes): medido em até 120 s, sem recarga",
+    "ok": true,
+    "fato": "116 ms"
+   },
+   {
+    "nome": "página (e-MAG 4.3, a2-5432c282d0d7 controle em msg-orientacao): a 640×450 sem rolagem horizontal, nada além da janela, mensagem sem corte",
+    "ok": true,
+    "fato": "{\"sw\":640,\"cw\":640,\"alem\":[],\"msgCorte\":0}"
+   },
+   {
+    "nome": "página: sem erros de console a 640×450",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: core.min.js servido é o do pacote @govbr-ds/core 3.7.0, byte a byte",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: pacote do DS é o 3.7.0",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: nenhum pedido fora da origem servida",
+    "ok": true,
+    "fato": ""
+   },
+   {
+    "nome": "página: sem erros de console/página nem respostas 4xx/5xx em S0",
+    "ok": true,
+    "fato": ""
+   }
+  ]
+ },
+ "resumo": {
+  "observaveisVioladosNaSemeada": "9/9",
+  "observaveisConformesSemSemente": "9/9",
+  "celulasIsoladasSemInterferencia": "9/9",
+  "interferencias": 0,
+  "estadosAlcancados": "33/33",
+  "pontosConformes": "134/134"
+ }
+}

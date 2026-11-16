@@ -1,0 +1,3346 @@
+[
+ {
+  "id": "a2-21ca39426148",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Anatomia",
+  "texto": "3 · Superfície · Fundamento Superfície · Obrigatório",
+  "contexto": null,
+  "antecedente": "2 · Rótulo · Fundamento Tipografia · Obrigatório",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "duplicada:a2-099a2401f473",
+   "justificativa": "Superfície do botão: nos botões embutidos só o de escolher arquivo tem superfície visível em repouso, e ela é a área de transferência do upload já aceita em a2-099a2401f473 (mesmo observável).",
+   "origem": "lote-E.json"
+  },
+  "porque": "duplicada-alvo-fora"
+ },
+ {
+  "id": "a2-5b47246a41c1",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Anatomia › Detalhamento dos Itens › 1. Ícone (Opcional)",
+  "texto": "Nos botões do tipo circular a utilização é obrigatória, visto que a mensagem da ação é transmitida apenas pelo ícone.",
+  "contexto": null,
+  "antecedente": "Uso do ícone no botão padrão",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Botão circular (só ícone) tem ícone obrigatório: Fechar das mensagens, gatilho dos tooltips, gatilho do select. Medida: elemento de ícone visível dentro do botão.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno",
+    "tip-prazo",
+    "tip-protocolo",
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "fechar-sem-icone",
+     "descricao": "O botão Fechar da mensagem fica vazio, sem o ícone de fechar (aria-label mantido).",
+     "instancias": [
+      "msg-pendencia",
+      "msg-retorno"
+     ],
+     "clausula": "Nos botões do tipo circular a utilização é obrigatória"
+    },
+    {
+     "id": "gatilho-sem-icone",
+     "descricao": "O botão gatilho fica sem o ícone (círculo vazio), com o nome acessível mantido.",
+     "instancias": [
+      "tip-prazo",
+      "tip-protocolo",
+      "sel-tipo-documento"
+     ],
+     "clausula": "Nos botões do tipo circular a utilização é obrigatória"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-d495bfd02867",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Anatomia › Detalhamento dos Itens › 2. Rótulo (Obrigatório)",
+  "texto": "O rótulo é um elemento obrigatório.",
+  "contexto": "O rótulo é um elemento obrigatório. A exceção ocorre na versão tipo circular uma vez que não existe rótulo.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Rótulo obrigatório no botão que não é circular; na tela, o botão de escolher arquivo do upload. Medida: texto visível dentro do botão.",
+   "instancias": [
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "escolher-arquivo-so-icone",
+     "descricao": "O botão de escolher arquivo mostra só o ícone, sem texto visível (o nome acessível fica num aria-label).",
+     "clausula": "O rótulo é um elemento obrigatório."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-59c1236e3ebd",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Anatomia › Detalhamento dos Itens › Tamanho dos Rótulos",
+  "texto": "Nunca utilize quebra de linhas no rótulodo botão.",
+  "contexto": "Naturalmente as palavras usadas nos rótulos variam bastante de tamanho. O ideal é que seja utilizado apenas uma ou duas palavras no máximo. Deve-se evitar usar três ou mais palavras no rótulo. Nunca utilize quebra de linhas no rótulodo botão.",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Proíbe quebra de linha no rótulo do botão; na tela, o botão de escolher arquivo. Medida: número de linhas do rótulo (altura do texto / line-height ou getClientRects).",
+   "instancias": [
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-em-duas-linhas",
+     "descricao": "O rótulo do botão de escolher arquivo quebra em duas linhas (largura do botão limitada).",
+     "clausula": "Nunca utilize quebra de linhas no rótulodo botão."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-6d5f38f9bab8",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Anatomia › Detalhamento dos Itens › Tamanho dos Rótulos",
+  "texto": "Importante: o crescimento do botão deve acompanhar o tamanho do rótulo, porém as margens internas devem ser respeitadas.",
+  "contexto": null,
+  "antecedente": "Boas práticas no uso de rótulos",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "O botão cresce com o rótulo respeitando as margens internas. Medida: padding computado do botão de escolher arquivo e se o texto cabe sem corte.",
+   "instancias": [
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "escolher-arquivo-sem-margem",
+     "descricao": "O botão de escolher arquivo fica com padding horizontal 0, texto encostado na borda.",
+     "clausula": "porém as margens internas devem ser respeitadas"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-a9890f9d0039",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Anatomia › Detalhamento dos Itens › Tamanho dos Rótulos › Tom e Voz nos Rótulos",
+  "texto": "Deve estar alinhado com o tom de voz da sua marca, além de orientar de forma clara qual ação esperada.",
+  "contexto": "O tom e voz utilizado no rótulo é, essencialmente, como ele vai comunicar a sua ação. Deve estar alinhado com o tom de voz da sua marca, além de orientar de forma clara qual ação esperada.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b): o rótulo deve orientar claramente qual ação se espera; caso flagrante oposto é um rótulo genérico. Medida: texto do botão de escolher arquivo.",
+   "instancias": [
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-generico",
+     "descricao": "O botão de escolher arquivo tem o rótulo \"OK\".",
+     "clausula": "orientar de forma clara qual ação esperada"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-7d805a2b0e75",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Anatomia › Detalhamento dos Itens › 3. Superfície (Obrigatório)",
+  "texto": "A Superfície é um elemento obrigatório e tem aparência distinta dependendo do tipo utilizado.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "duplicada:a2-099a2401f473",
+   "justificativa": "Mesmo predicado de a2-21ca39426148 (superfície obrigatória); observável igual ao de a2-099a2401f473.",
+   "origem": "lote-E.json"
+  },
+  "porque": "duplicada-alvo-fora"
+ },
+ {
+  "id": "a2-4f6b7bd068c4",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Ênfases › 1. Ênfase Primária",
+  "texto": "Utilizados com maior frequência, devem ser aplicados em ações cruciais da tela, informando ao usuário sua importância.",
+  "contexto": "É utilizada em botões que possuem maior importância ou prioridade. Utilizados com maior frequência, devem ser aplicados em ações cruciais da tela, informando ao usuário sua importância.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ênfase primária só em ação crucial da tela; Fechar a mensagem e abrir ajuda não são. Medida: classe/fundo de ênfase primária no botão embutido.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno",
+    "tip-prazo",
+    "tip-protocolo"
+   ],
+   "variantes": [
+    {
+     "id": "fechar-primario",
+     "descricao": "O botão Fechar da mensagem recebe ênfase primária (fundo azul sólido).",
+     "instancias": [
+      "msg-pendencia",
+      "msg-retorno"
+     ],
+     "clausula": "devem ser aplicados em ações cruciais da tela"
+    },
+    {
+     "id": "gatilho-ajuda-primario",
+     "descricao": "O gatilho do tooltip no card recebe ênfase primária.",
+     "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+     ],
+     "clausula": "devem ser aplicados em ações cruciais da tela"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-5f85eeafe863",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 2. Densidade",
+  "texto": "Importante: é importante observar que o rótulo do botão e o ícone permanecem sempre centralizados tanto na largura quanto na altura, e seus tamanhos inalterados.",
+  "contexto": "Importante: é importante observar que o rótulo do botão e o ícone permanecem sempre centralizados tanto na largura quanto na altura, e seus tamanhos inalterados. Também permanece inalterado o espaçamento entre o rótulo e o ícone.",
+  "antecedente": "Exemplo de densidades aplicada ao botão",
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Rótulo e ícone sempre centralizados na largura e na altura do botão. Medida: centro do ícone/rótulo contra o centro do botão (getBoundingClientRect).",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno",
+    "tip-prazo",
+    "tip-protocolo",
+    "sel-tipo-documento",
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "icone-descentralizado",
+     "descricao": "O ícone dentro do botão fica alinhado ao canto superior esquerdo, fora do centro.",
+     "instancias": [
+      "msg-pendencia",
+      "msg-retorno",
+      "tip-prazo",
+      "tip-protocolo",
+      "sel-tipo-documento"
+     ],
+     "clausula": "o rótulo do botão e o ícone permanecem sempre centralizados tanto na largura quanto na altura"
+    },
+    {
+     "id": "rotulo-alinhado-a-esquerda",
+     "descricao": "Ícone e rótulo do botão de escolher arquivo ficam alinhados à esquerda do botão.",
+     "instancias": [
+      "upl-documento"
+     ],
+     "clausula": "permanecem sempre centralizados tanto na largura quanto na altura"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-df449a7d5cd8",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 3. Posicionamento",
+  "texto": "Tendo em vista a utilização das diferentes ênfases nos botões com o intuito de manter uma hierarquia visual na interface, é necessário posicioná-los de forma coerente em relação ao grau de importância de cada um dessas ênfases.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "necessario",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "Posicionar botões por ênfase só se manifesta num grupo de botões; o único grupo é btn-enviar/btn-voltar (moldura).",
+   "origem": "lote-E.json"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-66f05213a674",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 3. Posicionamento",
+  "texto": "Deve-se seguir o seguinte princípio: a ênfase de maior relevância deverá vir sempre à direita.",
+  "contexto": null,
+  "antecedente": "Tendo em vista a utilização das diferentes ênfases nos botões com o intuito de manter uma hierarquia visual na interface, é necessário posicioná-los de forma coerente em relação ao grau de importância de cada um dessas ênfases.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "\"Maior relevância à direita\" exige grupo de botões de ênfases diferentes; só btn-enviar/btn-voltar (moldura).",
+   "origem": "lote-E.json"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-c23f336807f4",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 6. Área de Proteção",
+  "texto": "Quando o botão estiver próximo a algum outro componente, mantenha um espaçamento mínimo para que a o botão seja notado na tela e que sua área de interação não se confunda com as de outros componentes.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Botão próximo de outro componente mantém espaçamento mínimo para não confundir áreas de interação; o gatilho do tooltip fica no card, junto do texto. Medida: distância entre o gatilho e o elemento vizinho (getBoundingClientRect).",
+   "instancias": [
+    "tip-prazo",
+    "tip-protocolo"
+   ],
+   "variantes": [
+    {
+     "id": "gatilho-colado-ao-texto",
+     "descricao": "O gatilho do tooltip fica encostado (0 px) ao valor do card, com sobreposição das caixas.",
+     "clausula": "mantenha um espaçamento mínimo"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-3241a9611f30",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 6. Área de Proteção",
+  "texto": "Utilize algum espaçamento da escala de layout, listado no Fundamento Espaçamento, de forma consistente ao longo de sua interface.",
+  "contexto": null,
+  "antecedente": "Exemplos área de proteção no botão",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "O espaçamento de proteção do botão vem da escala de layout do Fundamento Espaçamento. Medida: margem computada do gatilho contra os valores da escala.",
+   "instancias": [
+    "tip-prazo",
+    "tip-protocolo"
+   ],
+   "variantes": [
+    {
+     "id": "protecao-fora-da-escala",
+     "descricao": "A margem entre o gatilho do tooltip e o texto vizinho é 5 px, valor fora da escala.",
+     "clausula": "Utilize algum espaçamento da escala de layout"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-72ddeddc1ac8",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Especificações › Iconografia",
+  "texto": "Tabela de especificação — Button (Botão) › Especificações › Iconografia",
+  "contexto": "Name · Size || Ícone (Padrão) · --icon-size-base || Ícone (Circular) · --icon-size-base",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ícone de botão circular no tamanho --icon-size-base. Medida: font-size/largura computada do ícone dentro dos botões circulares (gatilhos dos tooltips, gatilho do select, Fechar das mensagens).",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno",
+    "tip-prazo",
+    "tip-protocolo",
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "icone-do-gatilho-maior",
+     "descricao": "O ícone do botão-gatilho fica com --icon-size-lg (maior que o base); o botão circular continua do mesmo tamanho.",
+     "instancias": [
+      "tip-prazo",
+      "tip-protocolo",
+      "sel-tipo-documento"
+     ],
+     "clausula": "Ícone (Circular) · --icon-size-base"
+    },
+    {
+     "id": "icone-fechar-maior",
+     "descricao": "O ícone do botão Fechar da mensagem fica com --icon-size-lg.",
+     "instancias": [
+      "msg-pendencia",
+      "msg-retorno"
+     ],
+     "clausula": "Ícone (Circular) · --icon-size-base"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-9fc840ceb22d",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Especificações › Cor",
+  "texto": "Tabela de especificação — Button (Botão) › Especificações › Cor",
+  "contexto": "Name · Property · Color Token · Opacidade || Ícone, Rótulo (Primária) · text color · --pure-0 · - || Ícone, Rótulo (Primária - Fundo Escuro) · text color · --blue-warm-vivid-90 · - || Ícone, Rótulo (Secundária) · text color · --blue-warm-vivid-70 · - || Ícone, Rótulo (Secundária - Fundo Escuro) · text color · --blue-warm-vivid-20 · - || Ícone, Rótulo (Terciária) · text color · --blue-warm-vivid-70 · - || Ícone, Rótulo (Terciária - Fundo Escuro) · text color · --blue-warm-vivid-20 · - || Superfície (Primária) · background color · --blue-warm-vivid-70 · - || Superfície (Primária - Fundo Escuro) · background color · --blue-warm-vivid-20 · - || Superfície (Secundária) · background color · --pure-0 · - || Superfície (Secundária - Fundo Escuro) · background color · --blue-warm-vivid-90 · - || Superfície (Terciária) · - · - · 0% || Superfície (Secundária) · border color · --blue-warm-vivid-70 · - || Superfície (Secundária- Fundo Escuro) · border color · --blue-warm-vivid-20 · -",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Botão terciário (circular) em fundo claro: ícone --blue-warm-vivid-70 e superfície transparente (opacidade 0%). Vale para os gatilhos dos tooltips e do select; o Fechar das mensagens segue a cor própria do Message. Medida: color e background-color computados do botão.",
+   "instancias": [
+    "tip-prazo",
+    "tip-protocolo",
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "gatilho-icone-cinza",
+     "descricao": "O ícone do botão-gatilho fica em --gray-80 em vez do azul terciário.",
+     "clausula": "Ícone, Rótulo (Terciária) · text color · --blue-warm-vivid-70"
+    },
+    {
+     "id": "gatilho-com-fundo",
+     "descricao": "A superfície do botão-gatilho ganha fundo --gray-5 em repouso (deixa de ser transparente).",
+     "clausula": "Superfície (Terciária) · - · - · 0%"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-b0f874b8b2cf",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Especificações › Dimensões",
+  "texto": "Tabela de especificação — Button (Botão) › Especificações › Dimensões",
+  "contexto": "Name · Height · Width || Superfície (Padrão - Densidade Baixa) · 48px · variável || Superfície (Padrão - Densidade Padrão) · 40px · variável || Superfície (Padrão - Densidade Alta) · 32px · variável || Superfície (Circular - Densidade Baixa) · 48px · 48px || Superfície (Circular - Densidade Padrão) · 40px · 40px || Superfície (Circular - Densidade Alta) · 32px · 32px",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Botão circular é quadrado no tamanho da densidade: 40×40 (padrão) ou 32×32 (alta: gatilho do select e Fechar das mensagens). Medida: width/height computados do botão.",
+   "instancias": [
+    "tip-prazo",
+    "tip-protocolo",
+    "sel-tipo-documento",
+    "msg-pendencia",
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "gatilho-tooltip-36",
+     "descricao": "O botão-gatilho do tooltip fica com 36×36 px (fora das três densidades).",
+     "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+     ],
+     "clausula": "Superfície (Circular - Densidade Padrão) · 40px · 40px"
+    },
+    {
+     "id": "botao-alta-oval",
+     "descricao": "O botão circular de densidade alta fica com 32 px de altura e 44 px de largura.",
+     "instancias": [
+      "sel-tipo-documento",
+      "msg-pendencia",
+      "msg-retorno"
+     ],
+     "clausula": "Superfície (Circular - Densidade Alta) · 32px · 32px"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-40e233d8affd",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Especificações › Arredondamento",
+  "texto": "Tabela de especificação — Button (Botão) › Especificações › Arredondamento",
+  "contexto": "Name · Property · Value || Superfície (Padrão) · border-radius · --surface-rounder-pill",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "Única linha é do botão Padrão (com rótulo, formato pílula): os embutidos são circulares e a área de escolha do upload é superfície do Upload; botões Padrão br-button só em btn-enviar/btn-voltar (moldura).",
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-c7ac4e76783e",
+  "componente": "button",
+  "arquivo": "componentes/button__desenvolvedor.md",
+  "secao": "Button (Botão) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-button · Container do componente.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "titulo-obrigatorio",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Container do botão com a classe br-button (Fechar das mensagens e gatilhos dos tooltips; o do select já está em a2-879621000aa6). Medida: classe do botão.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno",
+    "tip-prazo",
+    "tip-protocolo"
+   ],
+   "variantes": [
+    {
+     "id": "botao-sem-br-button",
+     "descricao": "O botão embutido usa classe própria (aparência copiada à mão), sem br-button.",
+     "clausula": "class · string · br-button"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-923a3ee74050",
+  "componente": "button",
+  "arquivo": "componentes/button__desenvolvedor.md",
+  "secao": "Button (Botão) › Informações adicionais › Acessibilidade",
+  "texto": "Ícones decorativos precisam ter o atributo aria-hidden=\"true\"",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "precisa",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ícone decorativo do botão com aria-hidden=\"true\". Medida: atributo aria-hidden no elemento do ícone.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno",
+    "tip-prazo",
+    "tip-protocolo",
+    "sel-tipo-documento",
+    "upl-documento",
+    "acc-duvidas"
+   ],
+   "variantes": [
+    {
+     "id": "icone-sem-aria-hidden",
+     "descricao": "O ícone dentro do botão fica sem aria-hidden=\"true\".",
+     "clausula": "Ícones decorativos precisam ter o atributo aria-hidden=\"true\""
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-dc561d157556",
+  "componente": "button",
+  "arquivo": "componentes/button__desenvolvedor.md",
+  "secao": "Button (Botão) › Informações adicionais › Acessibilidade",
+  "texto": "Inclua o atributo aria-label no componente",
+  "contexto": "O Tipo Circular precisa de texto alternativo para o ícone decorativo. Inclua o atributo aria-label no componente",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Botão circular com o nome no atributo aria-label (mais que nome acessível: o atributo). Medida: aria-label presente e não vazio no botão.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno",
+    "tip-prazo",
+    "tip-protocolo",
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "nome-so-em-title",
+     "descricao": "O botão só com ícone perde o atributo aria-label; o mesmo nome fica no atributo title e no texto oculto (span sr-only), de modo que o nome acessível não muda (medido: 'Fechar', tela-a2/construtibilidade/resultado.json).",
+     "clausula": "Inclua o atributo aria-label no componente"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-2"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-be0b9ab18685",
+  "componente": "button",
+  "arquivo": "componentes/button__acessibilidade.md",
+  "secao": "Acessibilidade no Button › Recomendações para Estilo e Design",
+  "texto": "Quando utilizar botões com apenas ícones, certifique-se de exibir a informação do rótulo através do tooltip ao passar o mouse ou focar no botão;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "assegure",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Botão só com ícone mostra o rótulo em tooltip no hover e no foco. Medida: passar o mouse e focar o botão e ver se aparece balão com o rótulo.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno",
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "icone-sem-tooltip",
+     "descricao": "O botão só com ícone não exibe tooltip com o rótulo no hover nem no foco.",
+     "clausula": "certifique-se de exibir a informação do rótulo através do tooltip ao passar o mouse ou focar no botão"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-ff6a961f006f",
+  "componente": "button",
+  "arquivo": "componentes/button__acessibilidade.md",
+  "secao": "Acessibilidade no Button › Recomendações para Código",
+  "texto": "Caso seja utilizado um ícone decorativo, aquele que é usado como apoio ao lado do rótulo do botão, utilize aria-hidden=true e não utilize atributo title, evitando que os leitores de tela leiam duas vezes a mesma informação;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ícone decorativo ao lado do rótulo sem atributo title (além de aria-hidden). Medida: ausência de title no ícone do botão com rótulo.",
+   "instancias": [
+    "upl-documento",
+    "acc-duvidas"
+   ],
+   "variantes": [
+    {
+     "id": "icone-com-title",
+     "descricao": "O ícone ao lado do rótulo recebe um atributo title repetindo o rótulo.",
+     "clausula": "não utilize atributo title"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-fee39db9eda4",
+  "componente": "button",
+  "arquivo": "componentes/button__acessibilidade.md",
+  "secao": "Acessibilidade no Button › Recomendações para Código",
+  "texto": "Ao utilizar botões com apenas ícones, certifique-se de usar os atributos title ou aria-label;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "assegure",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Revisão 2: restaurada como predicado DS próprio. 'title ou aria-label' no botão só com ícone exige um dos dois ATRIBUTOS, além de o botão ter nome. Não multiplica observável: a2-35afb7e6ee7c é o botão sem nome algum; a2-dc561d157556 é o botão sem aria-label mas com title; aqui o botão fica sem os dois atributos e com nome só pelo texto oculto. Medida: atributos title e aria-label ausentes no botão; nome acessível continua não vazio.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno",
+    "tip-prazo",
+    "tip-protocolo",
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "nome-so-no-texto-oculto",
+     "descricao": "O botão só com ícone fica sem title e sem aria-label; o nome acessível continua vindo do texto oculto (span sr-only) dentro do botão (nos gatilhos dos tooltips, também do aria-labelledby).",
+     "clausula": "Ao utilizar botões com apenas ícones, certifique-se de usar os atributos title ou aria-label;"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-2"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-2bef68e79f2d",
+  "componente": "button",
+  "arquivo": "componentes/button__acessibilidade.md",
+  "secao": "Acessibilidade no Button › Recomendações para Código",
+  "texto": "Para botões com ações de alternância, utilize aria-pressed alternando seu valor entre true e false ou alternância de rótulo com texto que seja significativo para o entendimento do usuário (por exemplo: Expandir / Retrair).",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Nenhum botão embutido é de alternância (pressionado/não pressionado); o cabeçalho do accordion é de expansão e segue aria-expanded do próprio accordion.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-49acced70a42",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Anatomia",
+  "texto": "2 · Campo de Entrada de Texto · --- · Obrigatório",
+  "contexto": null,
+  "antecedente": "1 · Rótulo/Label · Tipografia · Opcional",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Tirar o campo de entrada desfaz o select inteiro (segunda violação na anatomia do select).",
+   "origem": "lote-E.json"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-3452a785e45d",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Detalhamento dos itens › 1. Rótulo/Label (Opcional)",
+  "texto": "O texto do Rótulo deve ser curto e objetivo possível.",
+  "contexto": "Auxilia o usuário, indicando o tipo de informação que deve ser digitado no Campo de Texto. O texto do Rótulo deve ser curto e objetivo possível.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b): rótulo curto e objetivo; caso flagrante oposto é rótulo longo. Medida: nº de palavras do rótulo do select.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-longo",
+     "descricao": "O rótulo do select vira uma frase de mais de 20 palavras explicando para que serve o tipo de documento.",
+     "clausula": "O texto do Rótulo deve ser curto e objetivo possível."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-d817fab151df",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Detalhamento dos itens › 2. Campo de entrada de texto (Obrigatório)",
+  "texto": "Este é o elemento essencial e obrigatório do componente.",
+  "contexto": "Este é o elemento essencial e obrigatório do componente. Por meio dele o usuário deve inserir a informação que foi requerida pelo sistema.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Campo de entrada obrigatório: tirá-lo desfaz o select (mesmo caso de a2-49acced70a42).",
+   "origem": "lote-E.json"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-438a309adabe",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Detalhamento dos itens › 3. Ícone Ilustrativo (Opcional)",
+  "texto": "Quando utilizado, deve estar posicionado à esquerda dentro do campo de input, antes do placeholder ou do texto digitado pelo usuário.",
+  "contexto": "O componente input também prevê o uso de ícone, de forma opcional, como maneira de reforçar a comunicação semântica a respeito do dado de entrada solicitado. Este ícone é apenas representativo e não possui qualquer tipo de interação. Quando utilizado, deve estar posicionado à esquerda dentro do campo de input, antes do placeholder ou do texto digitado pelo usuário. Observe os exemplos abaixo:",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "O campo do select não tem ícone ilustrativo.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-54dca6a2c217",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Detalhamento dos itens › 4. Ação interna (Opcional)",
+  "texto": "Por padrão é utilizado um Button de enfase terciária do tipo circular sempre com densidade alta, e o ícone deve representar a ação a ser realizada na interação.",
+  "contexto": "Este elemento é opcional e visa auxiliar o usuário sobre ações referentes ao campo de entrada de texto. Por padrão é utilizado um Button de enfase terciária do tipo circular sempre com densidade alta, e o ícone deve representar a ação a ser realizada na interação.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ação interna do campo (o gatilho do select) com ícone que representa a ação de abrir a lista. Medida: classe do ícone do gatilho.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "gatilho-icone-errado",
+     "descricao": "O gatilho do select mostra uma lupa em vez da seta para baixo.",
+     "clausula": "o ícone deve representar a ação a ser realizada na interação"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-6b41cb544272",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Detalhamento dos itens › 4. Ação interna (Opcional)",
+  "texto": "Esse uso é indicado em casos excepcionais, e deve-se utilizar apenas recursos textuais.",
+  "contexto": "Caso seja identificado que o usuário não esteja entendendo a ação interna, é possível alterar o tipo do button. Esse uso é indicado em casos excepcionais, e deve-se utilizar apenas recursos textuais.",
+  "antecedente": "Caso o ícone não seja suficiente para o entendimento da ação, pode-se utilizar o Button tipo Padrão, mas neste caso, recomendamos somente o uso do elemento textual (evitando o auxílio de ícones).",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há ação interna em botão textual (caso excepcional) na tela.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-3312a3e57512",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Detalhamento dos itens › 5. Placeholder (Opcional)",
+  "texto": "Deve trazer informações mais completas que a contida no Rótulo/Label, e desaparece quando o usuário iniciar o preenchimento do campo.",
+  "contexto": "Deve trazer informações mais completas que a contida no Rótulo/Label, e desaparece quando o usuário iniciar o preenchimento do campo. No caso de exclusão da do texto digitado, o placeholder deve reaparecer.",
+  "antecedente": "O placeholder tem a função de auxiliar o usuário a preencher os dados solicitados.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b): o placeholder traz informação mais completa que o rótulo; caso flagrante oposto é repetir o rótulo. Medida: placeholder do campo contra o texto do rótulo.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "placeholder-igual-rotulo",
+     "descricao": "O placeholder do campo do select repete exatamente o texto do rótulo.",
+     "clausula": "Deve trazer informações mais completas que a contida no Rótulo/Label"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-76f24d309b17",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Detalhamento dos itens › 5. Placeholder (Opcional)",
+  "texto": "No caso de exclusão da do texto digitado, o placeholder deve reaparecer.",
+  "contexto": "Deve trazer informações mais completas que a contida no Rótulo/Label, e desaparece quando o usuário iniciar o preenchimento do campo. No caso de exclusão da do texto digitado, o placeholder deve reaparecer.",
+  "antecedente": "O placeholder tem a função de auxiliar o usuário a preencher os dados solicitados.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Apagado o texto digitado (filtro do select), o placeholder volta. Medida: digitar e apagar no campo e ler o placeholder exibido.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "placeholder-nao-volta",
+     "descricao": "Depois que o usuário digita no campo do select, o script zera o placeholder e ele não reaparece ao apagar o texto.",
+     "clausula": "No caso de exclusão da do texto digitado, o placeholder deve reaparecer."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-aed330b42967",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Comportamentos › 3. Estados › Estado aviso - Informativo",
+  "texto": "Porém, se houver a necessidade de mais ênfase ou destaque na informação, deve-se optar pela mensagem informativa.",
+  "contexto": "Esse estado ocorre quando há a necessidade de passar informação neutra ao usuário. Nessa situação, pode-se utilizar tanto o texto auxiliar como a mensagem informativa. Porém, se houver a necessidade de mais ênfase ou destaque na informação, deve-se optar pela mensagem informativa. Observe abaixo:",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "O select não exibe estado informativo na tela.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-eec6bc910f55",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Comportamentos › 3. Estados › Estado desabilitado",
+  "texto": "Caso tenha necessidade de passar alguma informação sobre o campo para o usuário, utilize a mensagem do tipo alerta.",
+  "contexto": "Estado desabilitado em fundo claro e escuro. Caso tenha necessidade de passar alguma informação sobre o campo para o usuário, utilize a mensagem do tipo alerta.",
+  "antecedente": "Ocorre quando o input está desabilitado temporariamente para o preenchimento. Nesse caso, é apresentado com opacidade reduzida, o cursor do mouse muda de forma e não há ação sobre o campo.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "O select não fica desabilitado em nenhum estado.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-db9f9aa4a02e",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Comportamentos › 3. Estados › Estado Hover",
+  "texto": "O cursor deve mudar para o formato Text.",
+  "contexto": "Este estado ocorre quando o usuário posiciona o mouse sobre o campo de texto. O cursor deve mudar para o formato Text.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "No hover sobre o campo o cursor vira o de texto. Medida: cursor computado do campo do select com hover.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "cursor-padrao-no-campo",
+     "descricao": "O campo do select mostra o cursor padrão (seta) no hover.",
+     "clausula": "O cursor deve mudar para o formato Text."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "medicao",
+    "interacao"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-05e0365f1c3c",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Comportamentos › 3. Estados › Estado foco",
+  "texto": "Além disso, quando está \"focado\", o estado hover não precisa ser aplicado na superfície do componente, porém, o cursor do mouse ainda deve sofrer as alterações referentes.",
+  "contexto": "Umas das interações para receber foco é por meio de clique/toque. Por tanto, o estado \"pressionado padrão\" não existe neste componente. Além disso, quando está \"focado\", o estado hover não precisa ser aplicado na superfície do componente, porém, o cursor do mouse ainda deve sofrer as alterações referentes.",
+  "antecedente": "Estado foco em fundo claro e escuro.",
+  "forca": "proibida",
+  "marcador": "nao-modal",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Com o campo focado, o cursor continua mudando no hover (condição diferente de a2-db9f9aa4a02e). Medida: cursor computado do campo focado com hover.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "cursor-some-no-foco",
+     "descricao": "Quando o campo do select está focado, o cursor volta à seta no hover.",
+     "clausula": "o cursor do mouse ainda deve sofrer as alterações referentes"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-06f818bc75a5",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Melhores práticas › Uso de máscaras",
+  "texto": "Não divida o input em campos separados sem necessidade.",
+  "contexto": null,
+  "antecedente": "Evite dividir o input em campos separados sem necessidade, isso aumenta o custo de interação do usuário, além de causar problemas para usuários internacionais, visto que utilizam padrões diferenciados. Por exemplo, o formato do telefone nos EUA é bem diferente do brasileiro: +1 (xxx) xxx-xx-xx.",
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "O tipo de documento não é dado segmentado (telefone, CPF); não há campo a dividir.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-eca300840220",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Melhores práticas › Uso de máscaras",
+  "texto": "A máscara deve oferecer espaçamentos e separadores específicos para cada trecho do número, código ou protocolo digitado.",
+  "contexto": "A máscara deve oferecer espaçamentos e separadores específicos para cada trecho do número, código ou protocolo digitado. Esta prática oferece ao usuário uma melhor visualização do texto, além de prevenir possíveis erros de digitação.",
+  "antecedente": "Não divida o input em campos separados sem necessidade.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "O campo do select não usa máscara.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-fc1517207533",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Melhores práticas › Uso de máscaras",
+  "texto": "Ofereça espaçamentos e separadores entre trechos do texto",
+  "contexto": null,
+  "antecedente": "A máscara deve oferecer espaçamentos e separadores específicos para cada trecho do número, código ou protocolo digitado. Esta prática oferece ao usuário uma melhor visualização do texto, além de prevenir possíveis erros de digitação.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "O campo do select não usa máscara.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-8424f75a80a8",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Especificações › Cores",
+  "texto": "Tabela de especificação — Input (Campo de Entrada de Texto) › Especificações › Cores",
+  "contexto": "Name · Property · Token/Value || Rótulo/Label · color · --gray-80 || Rótulo/Label fundo escuro · color · --pure-0 || Placeholder · color · --gray-80 || Texto auxiliar · color · --gray-80 || Texto auxiliar fundo escuro · color · --pure-0 || Campo de texto · background · --pure-0 || Campo de texto - Input Destaque · background · --gray-2 || Borda campo de texto · background · --gray-40 || Ícone Ilustrativo · color · --gray-40",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Cores do campo do select em fundo claro: rótulo, placeholder e texto auxiliar --gray-80, campo --pure-0, borda --gray-40. Medida: cores computadas do input de sel-tipo-documento.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "borda-campo-clara",
+     "descricao": "A borda do campo do select fica --gray-20.",
+     "clausula": "Borda campo de texto · background · --gray-40"
+    },
+    {
+     "id": "placeholder-claro",
+     "descricao": "O placeholder do select fica --gray-40.",
+     "clausula": "Placeholder · color · --gray-80"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra",
+    "axe"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-bc172ac96406",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Especificações › Tipografia",
+  "texto": "Tabela de especificação — Input (Campo de Entrada de Texto) › Especificações › Tipografia",
+  "contexto": "Name · Token Size · Token Weight · Tabela de Estilo || Rótulo/Label · - · - · Label || Placeholder · - · - · Placeholder || Campo de texto · - · - · Input || Texto auxiliar · --font-size-scale-base · --font-weight-regular · -",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Rótulo do campo no estilo Label e placeholder/valor nos estilos da tabela de tipografia. Medida: font-size/font-weight computados do label \"Tipo de documento\" contra o estilo Label.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-peso-regular",
+     "descricao": "O rótulo \"Tipo de documento\" fica em peso regular (fora do estilo Label).",
+     "clausula": "Rótulo/Label · - · - · Label"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-3169f339a8e1",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Especificações › Dimensões",
+  "texto": "Tabela de especificação — Input (Campo de Entrada de Texto) › Especificações › Dimensões",
+  "contexto": "Name · Property · Token/Value || Campo de texto - Input Destaque · height · --spacing-scale-7x || Campo de texto - Densidade Baixa · height · --spacing-scale-6x || Campo de texto - Densidade Média · height · --spacing-scale-5x || Campo de texto - Densidade Alta · height · --spacing-scale-4x || Campo de texto · border-radius · --surface-rounder-sm || Campo de texto - Input Destaque · border-radius · --surface-rounder-md || Ação interna · densidade · alta || Ação interna - Input Destaque · densidade · normal",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Campo de densidade média com altura --spacing-scale-5x, raio --surface-rounder-sm, ação interna em densidade alta. Medida: height e border-radius computados do input do select.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "campo-sem-raio",
+     "descricao": "O campo do select fica com border-radius 0.",
+     "clausula": "Campo de texto · border-radius · --surface-rounder-sm"
+    },
+    {
+     "id": "campo-alto",
+     "descricao": "O campo do select fica com 52px de altura.",
+     "clausula": "Campo de texto - Densidade Média · height · --spacing-scale-5x"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-8fcc793aaed1",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Especificações › Espaçamentos",
+  "texto": "Tabela de especificação — Input (Campo de Entrada de Texto) › Especificações › Espaçamentos",
+  "contexto": "Name · Property · Token/Value || Rótulo/Label topo · margin-bottom · --spacing-scale-half || Rótulo/Label lateral · margin-right · --spacing-scale-base || Placeholder · margin-left · --spacing-scale-2x || Placeholder · margin-top/bottom · --spacing-vertical-center || Placeholder (ícone) · margin-left · --spacing-scale-base || Texto auxiliar · margin-top · --spacing-scale-base || Ação interna · margin-top/bottom · --spacing-vertical-center || Ação interna · margin-right · --spacing-scale-half || Campo de entrada de texto · margin-top · --spacing-scale-half || Campo de entrada de texto · margin-bottom · --spacing-scale-base || Campo de entrada de texto · padding-top/padding-bottom · --spacing-vertical-center || Campo de entrada de texto · padding-left · --spacing-scale-2x || Campo de entrada de texto · padding-right · --spacing-scale-half || Campo de entrada de texto - Input Destaque · padding-top/padding-bottom · --spacing-vertical-center || Campo de entrada de texto - Input Destaque · padding-left · --spacing-scale-3x || Campo de entrada de texto - Input Destaque · padding-right · --spacing-scale-2x || Ícone ilustrativo · margin-left · --spacing-scale-2x || Ícone ilustrativo · margin-right · --spacing-scale-base",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Espaçamentos do campo: rótulo topo margin-bottom half, padding-left 2x, padding-right half etc. Medida: padding/margens computados do input e do label do select.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "texto-colado-borda",
+     "descricao": "O campo do select fica com padding-left 0 (texto encostado na borda).",
+     "clausula": "Campo de entrada de texto · padding-left · --spacing-scale-2x"
+    },
+    {
+     "id": "rotulo-afastado",
+     "descricao": "O rótulo fica com margin-bottom de 24px acima do campo.",
+     "clausula": "Rótulo/Label topo · margin-bottom · --spacing-scale-half"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-5ef3ffb3d9b1",
+  "componente": "input",
+  "arquivo": "componentes/input__desenvolvedor.md",
+  "secao": "Input (Campo de Entrada de Texto) › Instanciação do Componente › HTML",
+  "texto": "Incluir o arquivo core.min.js no html.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Tirar o core.min.js quebra todos os componentes da página, inclusive a moldura.",
+   "origem": "lote-E.json"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-614b66b81ee0",
+  "componente": "input",
+  "arquivo": "componentes/input__desenvolvedor.md",
+  "secao": "Input (Campo de Entrada de Texto) › Instanciação do Componente › JavaScript",
+  "texto": "Usar o seguinte código JavaScript para instanciar a classe BRInput, passando os seguintes parâmetros:",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "O campo embutido é instanciado pelo script do select, não por BRInput avulso.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-5574128c6a03",
+  "componente": "input",
+  "arquivo": "componentes/input__desenvolvedor.md",
+  "secao": "Input (Campo de Entrada de Texto) › Instanciação do Componente › JavaScript",
+  "texto": "Nome da classe (br-input)",
+  "contexto": null,
+  "antecedente": "Usar o seguinte código JavaScript para instanciar a classe BRInput, passando os seguintes parâmetros:",
+  "forca": "a-julgar",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Parâmetro da instanciação avulsa de BRInput; o campo do select não é instanciado assim.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-501efb342336",
+  "componente": "input",
+  "arquivo": "componentes/input__desenvolvedor.md",
+  "secao": "Input (Campo de Entrada de Texto) › Instanciação do Componente › JavaScript",
+  "texto": "Objeto referenciando a raiz do componente DOM",
+  "contexto": null,
+  "antecedente": "Usar o seguinte código JavaScript para instanciar a classe BRInput, passando os seguintes parâmetros:",
+  "forca": "a-julgar",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Parâmetro da instanciação avulsa de BRInput; o campo do select não é instanciado assim.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-4aeca513aeeb",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Navegação e Comportamento",
+  "texto": "Os inputs ou input Text devem ser acessíveis por meio de navegação via teclado, por meio da tecla Tab, onde cada input deve ser um ponto de foco na ordem da tabulação;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "O campo é ponto de foco alcançado pela tecla Tab (tecla específica). Medida: sequência de Tab para no campo do select.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "campo-fora-do-tab",
+     "descricao": "O campo do select recebe tabindex=\"-1\" e o Tab passa direto por ele.",
+     "clausula": "por meio da tecla Tab, onde cada input deve ser um ponto de foco na ordem da tabulação"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "axe"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-e1a8fbf8ec5c",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Navegação e Comportamento",
+  "texto": "Utilize a marcação correta para o estado de foco, previsto na diretriz de estados, quando o foco estiver ativo no input;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "O campo focado usa a marcação de foco da diretriz de Estados do DS (não basta qualquer foco visível). Medida: outline computado do campo focado contra o estilo de foco do DS.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "foco-fora-do-padrao",
+     "descricao": "O campo do select focado mostra contorno sólido vermelho de 1 px no lugar do foco do DS.",
+     "clausula": "Utilize a marcação correta para o estado de foco, previsto na diretriz de estados"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-328f62cfe4ce",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Navegação e Comportamento",
+  "texto": "Após o input receber o foco, permita que o usuário possa digitar o texto na sequência, sem necessidade de qualquer outro passo anterior;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Com o foco no campo, o usuário digita sem passo anterior. Medida: focar por Tab e digitar; o texto entra no campo.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "campo-readonly-ate-clique",
+     "descricao": "O campo do select fica readonly até o usuário clicar no gatilho; com foco por Tab não aceita digitação.",
+     "clausula": "permita que o usuário possa digitar o texto na sequência, sem necessidade de qualquer outro passo anterior"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-81fd932c0990",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Navegação e Comportamento",
+  "texto": "Permita que os controles internos ao input também possam ser acessados por teclado, via tecla Tab e acionados via tecla Space.",
+  "contexto": "Permita que os controles internos ao input também possam ser acessados por teclado, via tecla Tab e acionados via tecla Space. Por exemplo: botões de busca, botões para visualização de senha, etc;",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Controle interno do campo (gatilho do select) alcançável por Tab e acionado por Space. Medida: Tab até o gatilho e Space abre a lista.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "gatilho-fora-do-tab",
+     "descricao": "O gatilho do select recebe tabindex=\"-1\" e não é alcançado pelo Tab.",
+     "clausula": "acessados por teclado, via tecla Tab"
+    },
+    {
+     "id": "gatilho-ignora-space",
+     "descricao": "O gatilho do select abre a lista só com clique; Space não faz nada.",
+     "clausula": "acionados via tecla Space"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-13c4de8de18e",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Navegação e Comportamento",
+  "texto": "Siga uma ordem lógica para tabulação, focando primeiramente o rótulo associado ao input.",
+  "contexto": "Siga uma ordem lógica para tabulação, focando primeiramente o rótulo associado ao input. Depois, ícones/botões de informação associados ao rótulo. Por fim, input e seus controles internos;",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ordem de tabulação: campo antes dos controles internos (diz mais que e-MAG 6.3: a ordem dentro do componente). Medida: ordem de Tab entre o campo e o gatilho do select.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "gatilho-antes-do-campo",
+     "descricao": "O gatilho do select vem antes do campo na sequência de Tab (tabindex positivo no gatilho).",
+     "clausula": "Por fim, input e seus controles internos"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-ec99c6922afa",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Navegação e Comportamento",
+  "texto": "Por padrão, o usuário deve conseguir navegar entre as palavras do texto digitado, com o uso das teclas Ctrl + left/right no Windows ou Option + left/right no Mac.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "No campo, Ctrl+seta navega por palavras. Medida: digitar duas palavras, Ctrl+seta esquerda e ler a posição do cursor (selectionStart).",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "ctrl-seta-bloqueado",
+     "descricao": "Um script do campo do select cancela Ctrl+setas (preventDefault) e o cursor não pula palavras.",
+     "clausula": "navegar entre as palavras do texto digitado, com o uso das teclas Ctrl + left/right"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-020f0b4f0964",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Recomendações para Estilo e Design",
+  "texto": "Utilize rótulos (labels) claros e descritivos para que o usuário compreenda o propósito do campo de texto;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b): rótulo claro e descritivo do propósito do campo; caso flagrante oposto é rótulo genérico. Medida: texto do rótulo do select.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-generico",
+     "descricao": "O rótulo do select é \"Campo 1\".",
+     "clausula": "Utilize rótulos (labels) claros e descritivos"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-7bdc66f1d99d",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Recomendações para Estilo e Design",
+  "texto": "Marque o input com a cor correspondente ao estado de sucesso, se o usuário preencher corretamente, ou cor correspondente ao estado de erro, se houver algum problema no preenchimento do campo.",
+  "contexto": "Para validação em campos de texto, é importante fornecer feedback visual imediato quando o usuário preencher o input. Marque o input com a cor correspondente ao estado de sucesso, se o usuário preencher corretamente, ou cor correspondente ao estado de erro, se houver algum problema no preenchimento do campo.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Campo com problema marcado com a cor do estado de erro. Medida: em S2 (envio sem escolher tipo), border-color computado do campo do select contra a cor de erro do DS.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "erro-sem-cor",
+     "descricao": "Em S2 o campo do select mostra o texto de erro mas a borda continua na cor neutra.",
+     "clausula": "cor correspondente ao estado de erro, se houver algum problema no preenchimento do campo"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-59c41d3b1085",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Recomendações para Código",
+  "texto": "Utilize a marcação semântica correta no código HTML, com a tag <input> e o valor do atributo type correspondente a sua função.",
+  "contexto": "Utilize a marcação semântica correta no código HTML, com a tag <input> e o valor do atributo type correspondente a sua função. Por exemplo: type = \"text\", type = \"date\", type = \"email\", type = \"password\", etc; Veja mais detalhes em MDN Web Docs - Input Element;",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — type-errado → a2-684e49bfcc90 (A variante muda o atributo type; o filtro por digitação de letras quebrar é outro comportamento.); a2-328f62cfe4ce (Além do type, o texto digitado (letras) deixa de entrar no campo, outro comportamento.) | campo-em-div → a2-7c43824db106 (Além da tag do campo, o rótulo deixa de estar associado por for/id, outro nó e outra propriedade.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Campo em <input> com type correspondente à função (texto/filtro). Medida: tagName e type do campo.)",
+   "origem": "revisao-2"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-7c43824db106",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Recomendações para Código",
+  "texto": "Associe o input ao rótulo usando o atributo for na tag <label> e um id com mesmo valor na tag <input>;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Associação rótulo–campo pelo par for/id (diz mais que e-MAG 6.2: o mecanismo). Medida: label[for] igual ao id do input.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-por-labelledby",
+     "descricao": "O rótulo do select é ligado ao campo só por aria-labelledby, sem for/id.",
+     "clausula": "usando o atributo for na tag <label> e um id com mesmo valor na tag <input>"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-56357b049872",
+  "componente": "input",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Recomendações para Código",
+  "texto": "Caso seja necessário, use o atributo aria-describedby para vincular a um elemento de ajuda ou instrução e fornecer informações adicionais aos usuários que podem precisar de mais contexto.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Texto de ajuda/erro do campo vinculado por aria-describedby. Medida: em S2, aria-describedby do campo aponta para o texto de erro.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "erro-sem-describedby",
+     "descricao": "Em S2 o texto de erro do select aparece, mas o campo não tem aria-describedby apontando para ele.",
+     "clausula": "use o atributo aria-describedby para vincular a um elemento de ajuda ou instrução"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-544adb3c8b26",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Anatomia",
+  "texto": "1 · Superfície do Message · Fundamento Superfície · Obrigatório",
+  "contexto": null,
+  "antecedente": "O Message é composto pelos seguintes elementos:",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Superfície do message obrigatória. Medida: background-color computado da raiz da mensagem.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "sem-superficie",
+     "descricao": "A mensagem fica com fundo transparente (sem a superfície do tipo)."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-50affb0576ef",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Anatomia",
+  "texto": "4 · Mensagem · Fundamento Tipografia · Obrigatório",
+  "contexto": null,
+  "antecedente": "3 · Título do Message · Fundamento Tipografia · Opcional",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Tirar o texto da mensagem apaga também a informação que ela transmite; não há mudança local isolada.",
+   "origem": "rodada-0"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-5df30996e1c5",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Anatomia › Detalhamento dos Itens › 2. Ícones (Opcional) › Posição dos Ícones",
+  "texto": "Os ícones de função semântica devem ser posicionados à esquerda na Superfície do Message, enquanto o Botão Fechar, deve ser posicionado no topo e à direita.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ícone semântico à esquerda; Fechar no topo à direita. Medida: posição (getBoundingClientRect) do ícone e do botão Fechar na mensagem.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "fechar-a-esquerda",
+     "descricao": "O botão Fechar troca de lado com o ícone: Fechar à esquerda, ícone à direita."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-db30195b0e66",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Anatomia › Detalhamento dos Itens › 4. Mensagem (Obrigatório) › Tom e Voz da Mensagem",
+  "texto": "Deve-se optar por um texto curto, claro e objetivo, compreendendo toda informação necessária ao usuário.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b). Texto da mensagem curto, claro e objetivo. Medida: número de palavras e presença da informação necessária.",
+   "instancias": [
+    "msg-pendencia"
+   ],
+   "variantes": [
+    {
+     "id": "mensagem-prolixa",
+     "descricao": "A mensagem de pendência ganha 90 palavras de explicação institucional antes de dizer qual documento falta.",
+     "clausula": "Deve-se optar por um texto curto, claro e objetivo, compreendendo toda informação necessária ao usuário."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-1efbf2a4b525",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Anatomia › Detalhamento dos Itens › 5. Botão Fechar (Opcional)",
+  "texto": "No tipo Mensagem Contextual, não existe a opção de utilização do Botão Fechar.",
+  "contexto": "No tipo Mensagem Contextual, não existe a opção de utilização do Botão Fechar. Utilize o Botão Fechar apenas no Tipo de Message Padrão.",
+  "antecedente": "Botão Fechar",
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "A mensagem contextual (texto de erro do campo, .feedback, em S2) não tem Botão Fechar. Medida: ausência de botão dentro do feedback do campo.",
+   "instancias": [
+    "sel-tipo-documento",
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "feedback-com-fechar",
+     "descricao": "O texto de erro do campo em S2 ganha um botão Fechar ao lado da mensagem.",
+     "clausula": "No tipo Mensagem Contextual, não existe a opção de utilização do Botão Fechar."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-F.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-7ce46ea1d9b8",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Comportamentos › 3. Posicionamento › Mensagem para uso global",
+  "texto": "A informação deste tipo de notificação, deve, de forma geral, ser uma resposta à funcionalidade de toda a página ou sistema e deverá ser apresentado entre o cabeçalho e o componente breadcrumb, se estendendo até o limite da sua largura.",
+  "contexto": "A informação deste tipo de notificação, deve, de forma geral, ser uma resposta à funcionalidade de toda a página ou sistema e deverá ser apresentado entre o cabeçalho e o componente breadcrumb, se estendendo até o limite da sua largura. Neste tipo de posicionamento, a superfície do Message deverá se estender, sangrando a área da Grid, enquanto seu conteúdo interno deverá respeitar as margens da área útil. Como exemplificado abaixo:",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Notificação geral do sistema; as mensagens da tela são de uso direcionado ao requerimento.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b141828d5580",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Comportamentos › 3. Posicionamento › Mensagem para uso global",
+  "texto": "Neste tipo de posicionamento, a superfície do Message deverá se estender, sangrando a área da Grid, enquanto seu conteúdo interno deverá respeitar as margens da área útil.",
+  "contexto": "A informação deste tipo de notificação, deve, de forma geral, ser uma resposta à funcionalidade de toda a página ou sistema e deverá ser apresentado entre o cabeçalho e o componente breadcrumb, se estendendo até o limite da sua largura. Neste tipo de posicionamento, a superfície do Message deverá se estender, sangrando a área da Grid, enquanto seu conteúdo interno deverá respeitar as margens da área útil. Como exemplificado abaixo:",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Mensagem de uso global; as mensagens da tela são de uso direcionado.",
+   "origem": "lote-F.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-50718f0da5ac",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Comportamentos › 4. Estados › Estado Informativo",
+  "texto": "Deve ser usado quando o objetivo da mensagem for uma informação neutra.",
+  "contexto": "É o estado padrão de utilização do Message. Deve ser usado quando o objetivo da mensagem for uma informação neutra.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Tipo Informação; a tela não tem mensagem de informação neutra.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-fe00b737d272",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Comportamentos › 4. Estados › Estado Sucesso",
+  "texto": "Deve ser usado quando o objetivo da mensagem for transmitir uma ideia de finalização de tarefa/passo ou conclusão bem sucedida.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Tipo Sucesso; a tela não tem mensagem de conclusão.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-77f3dd74508b",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Comportamentos › 4. Estados › Estado Alerta",
+  "texto": "Deve ser usado quando o objetivo da mensagem for transmitir uma ideia de advertência ao usuário.",
+  "contexto": "Deve ser usado quando o objetivo da mensagem for transmitir uma ideia de advertência ao usuário. Geralmente, uma mensagem que alerte o usuário a evitar erros.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Advertência usa o tipo Alerta. Medida: classe/tipo da mensagem de pendência contra o conteúdo de advertência.",
+   "instancias": [
+    "msg-pendencia"
+   ],
+   "variantes": [
+    {
+     "id": "aviso-com-tipo-sucesso",
+     "descricao": "A mensagem de pendência usa o tipo Sucesso (cor e ícone de sucesso), com o mesmo texto de advertência."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-1adbb9c1a3ca",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Comportamentos › 4. Estados › Estado Erro",
+  "texto": "Deve ser usado quando o objetivo da mensagem for transmitir um alerta de erro por parte do sistema ou por parte do usuário.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Erro usa o tipo Erro. Medida: classe/tipo da mensagem de retorno contra o conteúdo de erro.",
+   "instancias": [
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "erro-com-tipo-info",
+     "descricao": "A mensagem de retorno do envio usa o tipo Informação (cor e ícone de informação), com o mesmo texto de erro."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-ada49eff27b5",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Melhores Práticas",
+  "texto": "Quando houver a necessidade de apresentar informações adicionais relacionadas a mensagem de erro do sistema, a descrição principal deverá ser apresentada por um estilo tipográfico (padrão) enquanto as informações complementares deverão ser apresentados em uma formatação diferente.",
+  "contexto": null,
+  "antecedente": "À direita exemplo do uso recomendável com as mensagens contextuais e à esquerda o exemplo do uso não recomendável com múltiplas mensagens",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "A mensagem de erro da tela não tem informação complementar.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-6c82acf760ae",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Especificações › Cores › Cores do Estado Informativo",
+  "texto": "Tabela de especificação — Message (Mensagem) › Especificações › Cores › Cores do Estado Informativo",
+  "contexto": "Name · Property · Color Token || Superfície do Message · background · --blue-warm-vivid-10 || Superfície do Message Tipo Context · background · --blue-warm-vivid-60 || Ícone · color · --blue-warm-vivid-60 || Título do Message · color · --gray-80 || Mensagem Tipo Context · color · --pure-0 || Botão Fechar · color · --blue-warm-vivid-60",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Cores do estado Informativo; as mensagens da tela são Alerta (msg-pendencia) e Erro (msg-retorno).",
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-fd04ea926801",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Especificações › Cores › Cores do Estado Sucesso",
+  "texto": "Tabela de especificação — Message (Mensagem) › Especificações › Cores › Cores do Estado Sucesso",
+  "contexto": "Name · Property · Color Token || Superfície do Message · background · --green-cool-vivid-5 || Superfície do Message Tipo Context · background · --green-cool-vivid-50 || Ícone · color · --green-cool-vivid-50 || Título do Message · color · --gray-80 || Mensagem Tipo Context · color · --pure-0 || Mensagem · color · --gray-80 || Botão Fechar · color · --green-cool-vivid-50",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Cores do estado Sucesso; as mensagens da tela são Alerta e Erro.",
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-5606a51d1ba1",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Especificações › Cores › Cores do Estado Alerta",
+  "texto": "Tabela de especificação — Message (Mensagem) › Especificações › Cores › Cores do Estado Alerta",
+  "contexto": "Name · Property · Color Token || Superfície do Message · background · --yellow-vivid-5 || Superfície do Message Tipo Context · background · --yellow-vivid-20 || Título do Message · color · --gray-80 || Mensagem · color · --gray-80 || Mensagem Tipo Context · color · --gray-80 || Botão Fechar · color · --gray-80",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Mensagem de Alerta (tipo padrão): superfície --yellow-vivid-5, título, texto e botão Fechar --gray-80. Medida: cores computadas de msg-pendencia.",
+   "instancias": [
+    "msg-pendencia"
+   ],
+   "variantes": [
+    {
+     "id": "alerta-fundo-forte",
+     "descricao": "A superfície de msg-pendencia fica --yellow-vivid-20 (cor do tipo contextual).",
+     "clausula": "Superfície do Message · background · --yellow-vivid-5"
+    },
+    {
+     "id": "alerta-fechar-azul",
+     "descricao": "O botão Fechar de msg-pendencia fica --blue-warm-vivid-70.",
+     "clausula": "Botão Fechar · color · --gray-80"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-90ea0bde7e04",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Especificações › Cores › Cores do Estado Erro",
+  "texto": "Tabela de especificação — Message (Mensagem) › Especificações › Cores › Cores do Estado Erro",
+  "contexto": "Name · Property · Color Token || Superfície do Message · background · --red-vivid-10 || Superfície do Message Tipo Context · background · --red-vivid-50 || Ícone · color · --red-vivid-50 || Título do Message · color · --gray-80 || Mensagem · color · --gray-80 || Mensagem Tipo Context · color · --pure-0 || Botão Fechar · color · --red-vivid-50",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Mensagem de Erro (tipo padrão): superfície --red-vivid-10, ícone e Fechar --red-vivid-50, texto --gray-80. Medida: cores computadas de msg-retorno.",
+   "instancias": [
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "erro-icone-cinza",
+     "descricao": "O ícone de msg-retorno fica --gray-80.",
+     "clausula": "Ícone · color · --red-vivid-50"
+    },
+    {
+     "id": "erro-fundo-branco",
+     "descricao": "A superfície de msg-retorno fica --pure-0.",
+     "clausula": "Superfície do Message · background · --red-vivid-10"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-fb8e73f4ce50",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Especificações › Tipografia",
+  "texto": "Tabela de especificação — Message (Mensagem) › Especificações › Tipografia",
+  "contexto": "Name · Size · Weight || Título do Message · --font-size-scale-up-01 · --font-weight-semi-bold || Mensagem · --font-size-scale-up-01 · --font-weight-regular || Mensagem Tipo Context · --font-size-scale-base · --font-weight-medium",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Texto da mensagem padrão em --font-size-scale-up-01 regular (título semi-bold). Medida: font-size/font-weight computados do texto das mensagens.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "mensagem-pequena",
+     "descricao": "O texto da mensagem fica em --font-size-scale-base.",
+     "clausula": "Mensagem · --font-size-scale-up-01 · --font-weight-regular"
+    },
+    {
+     "id": "mensagem-negrito",
+     "descricao": "O texto da mensagem fica em --font-weight-bold.",
+     "clausula": "Mensagem · --font-size-scale-up-01 · --font-weight-regular"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-b13bd6797498",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Especificações › Iconografia",
+  "texto": "Tabela de especificação — Message (Mensagem) › Especificações › Iconografia",
+  "contexto": "Name · Ícone · Token Size · Class (Font Awesome) || Ícone Botão Fechar · <i class=\"times\"></i> · --icon-size-base · times || Ícone Informativo - Tipo Padrão · <i class=\"info-circle\"></i> · --icon-size-lg · info-circle || Ícone Informativo - Tipo Context · <i class=\"info-circle\"></i> · --icon-size-base · info-circle || Ícone Sucesso - Tipo Padrão · <i class=\"check-circle\"></i> · --icon-size-lg · check-circle || Ícone Sucesso - Tipo Context · <i class=\"check-circle\"></i> · --icon-size-base · check-circle || Ícone Alerta - Tipo Padrão · <i class=\"exclamation-triangle\"></i> · --icon-size-lg · exclamation-triangle || Ícone Alerta - Tipo Context · <i class=\"exclamation-triangle\"></i> · --icon-size-base · exclamation-triangle || Ícone Erro - Tipo Padrão · <i class=\"times-circle\"></i> · --icon-size-lg · times-circle || Ícone Erro - Tipo Context · <i class=\"times-circle\"></i> · --icon-size-base · times-circle",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ícones do Message: Alerta padrão exclamation-triangle e Erro padrão times-circle em --icon-size-lg; Fechar times em --icon-size-base. Medida: glifo/classe e tamanho do ícone de cada mensagem.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "alerta-icone-info",
+     "descricao": "msg-pendencia usa o ícone info-circle em vez de exclamation-triangle.",
+     "instancias": [
+      "msg-pendencia"
+     ],
+     "clausula": "Ícone Alerta - Tipo Padrão · <i class=\"exclamation-triangle\"></i> · --icon-size-lg · exclamation-triangle"
+    },
+    {
+     "id": "erro-icone-pequeno",
+     "descricao": "O ícone times-circle de msg-retorno fica em --icon-size-base.",
+     "instancias": [
+      "msg-retorno"
+     ],
+     "clausula": "Ícone Erro - Tipo Padrão · <i class=\"times-circle\"></i> · --icon-size-lg · times-circle"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-4124b4181a77",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Especificações › Espaçamentos",
+  "texto": "Tabela de especificação — Message (Mensagem) › Especificações › Espaçamentos",
+  "contexto": "Name · Property · Value || Superfície do Message Tipo Padrão · padding-top · --spacing-scale-3x || Superfície do Message Tipo Padrão · padding-bottom · --spacing-scale-3x || Superfície do Message Tipo Padrão · padding-left · --spacing-scale-2x || Superfície do Message Tipo Padrão · padding-right · --spacing-scale-base || Botão Fechar · margin-top · --spacing-scale-base || Botão Fechar · margin-right · --spacing-scale-base || Ícone Tipo Padrão · margin-left · --spacing-scale-2x || Ícone Tipo Padrão · margin-right · --spacing-scale-2x || Ícone Tipo Padrão · margin-top · --spacing-vertical-center || Ícone Tipo Padrão · margin-bottom · --spacing-vertical-center || Ícone Tipo Context · margin-top · --spacing-vertical-center || Ícone Tipo Context · margin-bottom · --spacing-vertical-center || Ícone Tipo Context · margin-left · --spacing-scale-half || Ícone Tipo Context · margin-right · --spacing-scale-half || Título e Message Tipo Padrão · margin-top · --spacing-scale-3x || Título e Message Tipo Padrão · margin-bottom · --spacing-scale-3x || Título e Message Tipo Padrão · margin-left · --spacing-scale-2x || Título e Message Tipo Padrão · margin-right · --spacing-scale-2x || Message Tipo Context · margin-top · --spacing-scale-half || Message Tipo Context · margin-bottom · --spacing-scale-half || Message Tipo Context · margin-left · --spacing-scale-half || Message Tipo Context · margin-right · --spacing-scale-half",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Espaçamentos do Message tipo padrão (padding da superfície, margens do ícone, do título/texto e do Fechar). Medida: padding/margens computados das mensagens.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "mensagem-sem-padding-vertical",
+     "descricao": "A superfície da mensagem fica com padding-top e padding-bottom 0.",
+     "clausula": "Superfície do Message Tipo Padrão · padding-top · --spacing-scale-3x"
+    },
+    {
+     "id": "icone-colado-texto",
+     "descricao": "O ícone semântico fica sem margin-right (encostado no texto).",
+     "clausula": "Ícone Tipo Padrão · margin-right · --spacing-scale-2x"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-a7417adc8e5b",
+  "componente": "message",
+  "arquivo": "componentes/message__desenvolvedor.md",
+  "secao": "Message (Mensagem) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-message · Container para Tipo Padrão",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "titulo-obrigatorio",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — sem-br-message → a2-8536d91ce5b9 (A variante muda a classe da raiz; o Fechar parar de remover a mensagem é outro comportamento.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Container br-message. Medida: classe da raiz da mensagem.)",
+   "origem": "revisao-2"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-b069c3031aa0",
+  "componente": "message",
+  "arquivo": "componentes/message__desenvolvedor.md",
+  "secao": "Message (Mensagem) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · feedback · Container para Tipo Contextual",
+  "contexto": null,
+  "antecedente": "class · string · br-message · Container para Tipo Padrão",
+  "forca": "obrigatoria",
+  "marcador": "titulo-obrigatorio",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Mensagem contextual em .feedback (texto de erro do campo no estado inválido). Medida: classe do texto de erro do campo em S2.",
+   "instancias": [
+    "sel-tipo-documento",
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "feedback-sem-classe",
+     "descricao": "O texto de erro do campo em S2 é um span com cor vermelha, sem .feedback."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-333cfef507cf",
+  "componente": "message",
+  "arquivo": "componentes/message__desenvolvedor.md",
+  "secao": "Message (Mensagem) › Instanciação do Componente › HTML",
+  "texto": "Incluir o arquivo core.min.js no html.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "duplicada:a2-c5c20128d015",
+   "justificativa": "Mesmo predicado e observável (core.min.js incluído no HTML) da unidade do accordion.",
+   "origem": "lote-F.json"
+  },
+  "porque": "duplicada-alvo-fora"
+ },
+ {
+  "id": "a2-8536d91ce5b9",
+  "componente": "message",
+  "arquivo": "componentes/message__desenvolvedor.md",
+  "secao": "Message (Mensagem) › JavaScript",
+  "texto": "Usar o seguinte código JavaScript para instanciar a classe BRMessage, passando os seguintes parâmetros:",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "A mensagem é instanciada por BRMessage, que dá função ao Fechar. Medida: clicar em Fechar remove/oculta a mensagem.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "mensagem-nao-instanciada",
+     "descricao": "A mensagem fica fora da instanciação do script: clicar em Fechar não a remove.",
+     "clausula": "Usar o seguinte código JavaScript para instanciar a classe BRMessage"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-F.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-f8e02fcd7de2",
+  "componente": "message",
+  "arquivo": "componentes/message__acessibilidade.md",
+  "secao": "Acessibilidade no Message › Navegação e Comportamento",
+  "texto": "Ao exibir uma mensagem de feedback em resposta à ação do usuário, permita que o leitor de tela leia imediatamente a mensagem;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "A mensagem de retorno do envio (S2) é anunciada de imediato ao leitor de tela. Medida: região viva (role=alert ou aria-live) na mensagem quando ela aparece.",
+   "instancias": [
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "retorno-sem-regiao-viva",
+     "descricao": "A mensagem de retorno aparece em S2 sem role de alerta nem aria-live: o leitor de tela não a lê ao surgir.",
+     "clausula": "permita que o leitor de tela leia imediatamente a mensagem"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-F.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-db25bc1d1653",
+  "componente": "message",
+  "arquivo": "componentes/message__acessibilidade.md",
+  "secao": "Acessibilidade no Message › Navegação e Comportamento",
+  "texto": "No momento da exibição da mensagem, o foco do navegador deve estar sobre o botão fechar, quando houver.",
+  "contexto": "No momento da exibição da mensagem, o foco do navegador deve estar sobre o botão fechar, quando houver. Isto permite que o usuário possa sair da mensagem e voltar ao fluxo de navegação original;",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ao exibir a mensagem, o foco vai para o Fechar. Medida: document.activeElement logo depois do envio vazio.",
+   "instancias": [
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "foco-fica-no-enviar",
+     "descricao": "Depois do envio vazio, o foco continua no botão Enviar."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-14f2e6c3226f",
+  "componente": "message",
+  "arquivo": "componentes/message__acessibilidade.md",
+  "secao": "Acessibilidade no Message › Navegação e Comportamento",
+  "texto": "É importante que após o fechamento da mensagem, o foco do navegador volte ao local original no fluxo de navegação.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ao fechar a mensagem, o foco volta ao ponto do fluxo de onde veio. Medida: document.activeElement depois de acionar Fechar pelo teclado.",
+   "instancias": [
+    "msg-retorno",
+    "msg-pendencia"
+   ],
+   "variantes": [
+    {
+     "id": "foco-perdido-ao-fechar",
+     "descricao": "Depois de fechar a mensagem pelo teclado, o foco cai no body (início do documento).",
+     "clausula": "após o fechamento da mensagem, o foco do navegador volte ao local original no fluxo de navegação"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-F.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-55dab9d0155c",
+  "componente": "message",
+  "arquivo": "componentes/message__acessibilidade.md",
+  "secao": "Acessibilidade no Message › Recomendações para Estilo e Design",
+  "texto": "Lembre-se que o uso de cores semânticas não atende a todos os públicos, sempre forneça uma alternativa para usuários de leitores de tela;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Alternativa às cores semânticas para usuários de leitor de tela (o e-MAG 4.2 trata da percepção visual; esta exige o leitor de tela). Medida: nome acessível do ícone ou texto que diga o tipo.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "tipo-mudo-no-leitor",
+     "descricao": "O ícone da mensagem fica aria-hidden e nenhum texto (visível ou não) diz o tipo: o leitor de tela não sabe se é alerta ou erro.",
+     "clausula": "Lembre-se que o uso de cores semânticas não atende a todos os públicos, sempre forneça uma alternativa para usuários de leitores de tela;"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-507dbd6cdee4",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Anatomia › Detalhamento dos Itens › 5. Botão Fechar (Opcional)",
+  "texto": "Este elemento é o Componente Botão - Ênfase Terciária de Alta Densidade.",
+  "contexto": "Este elemento é o Componente Botão - Ênfase Terciária de Alta Densidade. É um elemento opcional e tem a função de ocultar o Componente Message da tela. É um recurso útil por oferecer ao usuário a opção de liberar mais espaço em tela após ler a mensagem.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "O Fechar da mensagem é um botão de ênfase terciária e densidade alta. Medida: classes de ênfase/densidade e altura computada do botão Fechar.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "fechar-densidade-padrao",
+     "descricao": "O botão Fechar da mensagem fica na densidade padrão (40 px) em vez da alta.",
+     "clausula": "Este elemento é o Componente Botão - Ênfase Terciária de Alta Densidade."
+    },
+    {
+     "id": "fechar-secundario",
+     "descricao": "O botão Fechar recebe ênfase secundária (contorno azul).",
+     "clausula": "Este elemento é o Componente Botão - Ênfase Terciária de Alta Densidade."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-e175765df557",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Comportamentos › 1. Responsividade",
+  "texto": "A Superfície do Message se estenderá até o limite à direita da tela, oferecendo espaço ao texto da mensagem.",
+  "contexto": "A Superfície do Message se estenderá até o limite à direita da tela, oferecendo espaço ao texto da mensagem. Quando o espaço da tela for menor que a largura do texto da mensagem, a Superfície do Message também se estenderá até o limite, porém sua altura também será aumentada, acompanhando a quebra de linha do texto da mensagem. Observe abaixo.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "A superfície da mensagem padrão se estende até o limite direito do contêiner. Medida: largura/right da mensagem contra o right do contêiner de conteúdo.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "mensagem-encolhida",
+     "descricao": "A mensagem fica com largura do texto (fit-content), terminando bem antes do limite direito do conteúdo.",
+     "clausula": "A Superfície do Message se estenderá até o limite à direita da tela"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-9e3f0f34fd0a",
+  "componente": "message",
+  "arquivo": "componentes/message__designer.md",
+  "secao": "Message (Mensagem) › Comportamentos › 2. Superfície do Message x Quebra de Linha",
+  "texto": "porém a Superfície do Message tem seu limite relacionado à largura do Componente ao qual se refere",
+  "contexto": "Na Mensagem Contextual a Superfície do Message acompanha sempre o conteúdo interno em sua largura e altura, porém a Superfície do Message tem seu limite relacionado à largura do Componente ao qual se refere. Observe a imagem acima.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "A mensagem contextual (texto de erro do campo em S2) não passa da largura do componente a que se refere. Medida: largura do feedback contra a do campo.",
+   "instancias": [
+    "sel-tipo-documento",
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "feedback-mais-largo",
+     "descricao": "O texto de erro do campo em S2 fica com largura maior que a do próprio campo, ultrapassando sua borda direita.",
+     "clausula": "a Superfície do Message tem seu limite relacionado à largura do Componente ao qual se refere"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-eb940c804923",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 2. Densidade",
+  "texto": "Também permanece inalterado o espaçamento entre o rótulo e o ícone.",
+  "contexto": "Importante: é importante observar que o rótulo do botão e o ícone permanecem sempre centralizados tanto na largura quanto na altura, e seus tamanhos inalterados. Também permanece inalterado o espaçamento entre o rótulo e o ícone.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Constância do espaçamento ao mudar a densidade; nenhum botão embutido alterna densidade.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b60eebdd6306",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 3. Posicionamento",
+  "texto": "o botão com ênfase primária será posicionado à direita e em sequência o de ênfase secundária e terciária",
+  "contexto": "Por exemplo, quando três botões com ênfases diferentes forem utilizados juntos, o botão com ênfase primária será posicionado à direita e em sequência o de ênfase secundária e terciária",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "Posicionamento por ênfase num grupo de botões; o único grupo é btn-enviar/btn-voltar (como a2-df449a7d5cd8).",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-99da0d5abad3",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 3. Posicionamento",
+  "texto": "O mesmo ocorre quando houver apenas o botão de ênfase primária e o de ênfase secundária juntos",
+  "contexto": "O mesmo ocorre quando houver apenas o botão de ênfase primária e o de ênfase secundária juntos",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "Posicionamento primário/secundário juntos; só ocorre em btn-enviar/btn-voltar.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-0bbeccc63fca",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 3. Posicionamento",
+  "texto": "Quando estiverem juntos apenas o botão de ênfase secundária e o de ênfase terciária, o de ênfase secundária será posicionado à direita",
+  "contexto": "Quando estiverem juntos apenas o botão de ênfase secundária e o de ênfase terciária, o de ênfase secundária será posicionado à direita",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Secundário e terciário juntos; não há esse par.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-75f137ee2a1d",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 3. Posicionamento",
+  "texto": "Com os botões de ênfase primária e terciária segue-se o mesmo princípio",
+  "contexto": "Com os botões de ênfase primária e terciária segue-se o mesmo princípio",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Primário e terciário juntos; não há esse par.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-35c752299c82",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 3. Posicionamento",
+  "texto": "Quando a disposição da tela permitir que os botões apareçam posicionados verticalmente, o botão mais relevante virá posicionado mais abaixo.",
+  "contexto": "Quando a disposição da tela permitir que os botões apareçam posicionados verticalmente, o botão mais relevante virá posicionado mais abaixo.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "Botões empilhados verticalmente; só o grupo da moldura poderia.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-0010742096a9",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 5. Loading",
+  "texto": "O componente loading aparece apenas quando o botão se encontra no estado progress.",
+  "contexto": "É um comportamento opcional. O componente loading aparece apenas quando o botão se encontra no estado progress. Esta situação ocorre quando existe a necessidade de mostrar ao usuário o progresso da requisição dentro do próprio botão após a interação.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Estado progress com loading; nenhum botão embutido tem.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-dc18106452ce",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 5. Loading",
+  "texto": "Neste estado todo o conteúdo do botão é substituído pelo componente loading",
+  "contexto": "Neste estado todo o conteúdo do botão é substituído pelo componente loading",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Estado progress com loading; não há.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-c595957b223a",
+  "componente": "button",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 7. Estados › Ativado",
+  "texto": "Este estado ocorre quando um botão, de um conjunto de opções, é ativado. Assim, o botão se mantém \"marcado\"",
+  "contexto": "Este estado ocorre quando um botão, de um conjunto de opções, é ativado. Assim, o botão se mantém \"marcado\"",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Botão ativado num conjunto de opções; não há.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-728a2fafbf41",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Detalhamento dos itens › 3. Ícone Ilustrativo (Opcional)",
+  "texto": "Este ícone é apenas representativo e não possui qualquer tipo de interação.",
+  "contexto": "O componente input também prevê o uso de ícone, de forma opcional, como maneira de reforçar a comunicação semântica a respeito do dado de entrada solicitado. Este ícone é apenas representativo e não possui qualquer tipo de interação. Quando utilizado, deve estar posicionado à esquerda dentro do campo de input, antes do placeholder ou do texto digitado pelo usuário. Observe os exemplos abaixo:",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone ilustrativo do input; o campo do select não tem (como a2-438a309adabe).",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-8f7ac4185fde",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Comportamentos › 3. Estados › Estado desabilitado",
+  "texto": "Nesse caso, é apresentado com opacidade reduzida, o cursor do mouse muda de forma e não há ação sobre o campo.",
+  "contexto": "Ocorre quando o input está desabilitado temporariamente para o preenchimento. Nesse caso, é apresentado com opacidade reduzida, o cursor do mouse muda de forma e não há ação sobre o campo.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Input desabilitado; o campo do select está habilitado.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-8da85415cc63",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Comportamentos › 3. Estados › Estado foco",
+  "texto": "Por tanto, o estado \"pressionado padrão\" não existe neste componente.",
+  "contexto": "Umas das interações para receber foco é por meio de clique/toque. Por tanto, o estado \"pressionado padrão\" não existe neste componente. Além disso, quando está \"focado\", o estado hover não precisa ser aplicado na superfície do componente, porém, o cursor do mouse ainda deve sofrer as alterações referentes.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "O campo não tem estado pressionado. Medida: estilo computado do campo do select durante mousedown (:active) igual ao de foco.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "campo-com-pressionado",
+     "descricao": "Pressionar o mouse sobre o campo do select escurece o fundo dele (estado pressionado).",
+     "clausula": "Por tanto, o estado \"pressionado padrão\" não existe neste componente."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-b36164f696c2",
+  "componente": "input",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Melhores práticas › Autocomplete",
+  "texto": "Por padrão, as sugestões são carregadas dinamicamente em uma lista dropdown no momento da digitação.",
+  "contexto": "Por padrão, as sugestões são carregadas dinamicamente em uma lista dropdown no momento da digitação.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Input com autocomplete; o select usa lista própria, não sugestões de input.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b85ef2761050",
+  "componente": "input",
+  "arquivo": "componentes/input__desenvolvedor.md",
+  "secao": "Input (Campo de Entrada de Texto) › Estados",
+  "texto": "Tabela normativa — Input (Campo de Entrada de Texto) › Estados (a partir da linha 34)",
+  "contexto": "l.40: Desativado | disabled | Desativa o componente (usar no input interno)",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Trata do input desativado; o campo do select nunca fica desativado na tela.",
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "nao-se-aplica"
+ }
+]

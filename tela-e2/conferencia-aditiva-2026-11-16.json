@@ -1,0 +1,186 @@
+{
+ "_meta": {
+  "data": "2026-11-16",
+  "base": "http://127.0.0.1:3219",
+  "caminho": "S0 → clicar #btn-salvar, esperar #msg-erro visível (S1) → clicar o gatilho do select, esperar a lista aberta (S2), sem recarga"
+ },
+ "resumo": "26/26",
+ "falhas": [],
+ "ok": {
+  "S0 instrução visível antes do 1º campo": true,
+  "S0 U-01 secundário à direita do primário": true,
+  "S0 U-02 ≥ 3 termos técnicos": true,
+  "S0 U-03 0 ícone": true,
+  "S0 U-04 sem Rawline": true,
+  "S0 U-05 texto > 20 px à direita da 1ª opção": true,
+  "S0 U-08 readonly": true,
+  "S1 instrução visível antes do 1º campo": true,
+  "S1 U-01 secundário à direita do primário": true,
+  "S1 U-02 ≥ 3 termos técnicos": true,
+  "S1 U-03 0 ícone": true,
+  "S1 U-04 sem Rawline": true,
+  "S1 U-05 texto > 20 px à direita da 1ª opção": true,
+  "S1 U-08 readonly": true,
+  "S2 instrução visível antes do 1º campo": true,
+  "S2 U-01 secundário à direita do primário": true,
+  "S2 U-02 ≥ 3 termos técnicos": true,
+  "S2 U-03 0 ícone": true,
+  "S2 U-04 sem Rawline": true,
+  "S2 U-05 texto > 20 px à direita da 1ª opção": true,
+  "S2 U-08 readonly": true,
+  "S1 U-06 fundo #2670e8 e fa-check visível": true,
+  "S2 U-06 fundo #2670e8 e fa-check visível": true,
+  "S2 U-07 6 opções em #aaa": true,
+  "S2 a 640×450 U-09 altura fixa com overflow hidden nos 4 itens": true,
+  "sem erro de página": true
+ },
+ "estados": {
+  "S0": {
+   "instrucao": {
+    "texto": "Todos os campos são obrigatórios, exceto os marcados como opcionais.",
+    "visivel": true,
+    "antesDoPrimeiroCampo": true
+   },
+   "U-01": {
+    "limparX": 525.125,
+    "salvarDireita": 509.125
+   },
+   "U-02": {
+    "termosTecnicos": 7
+   },
+   "U-03": {
+    "iconesFilhos": 0
+   },
+   "U-04": {
+    "fontes": [
+     "Arial, Helvetica, sans-serif",
+     "Arial, Helvetica, sans-serif",
+     "Arial, Helvetica, sans-serif"
+    ]
+   },
+   "U-05": {
+    "esquerdaTexto": 296.09375,
+    "esquerdaOpcao": 62
+   },
+   "U-06": {
+    "visivel": false,
+    "fundo": "rgb(38, 112, 232)",
+    "faCheckVisivel": false
+   },
+   "U-07": {
+    "cores": []
+   },
+   "U-08": {
+    "readonly": true
+   }
+  },
+  "S1": {
+   "instrucao": {
+    "texto": "Todos os campos são obrigatórios, exceto os marcados como opcionais.",
+    "visivel": true,
+    "antesDoPrimeiroCampo": true
+   },
+   "U-01": {
+    "limparX": 525.125,
+    "salvarDireita": 509.125
+   },
+   "U-02": {
+    "termosTecnicos": 7
+   },
+   "U-03": {
+    "iconesFilhos": 0
+   },
+   "U-04": {
+    "fontes": [
+     "Arial, Helvetica, sans-serif",
+     "Arial, Helvetica, sans-serif",
+     "Arial, Helvetica, sans-serif"
+    ]
+   },
+   "U-05": {
+    "esquerdaTexto": 296.09375,
+    "esquerdaOpcao": 62
+   },
+   "U-06": {
+    "visivel": true,
+    "fundo": "rgb(38, 112, 232)",
+    "faCheckVisivel": true
+   },
+   "U-07": {
+    "cores": []
+   },
+   "U-08": {
+    "readonly": true
+   }
+  },
+  "S2": {
+   "instrucao": {
+    "texto": "Todos os campos são obrigatórios, exceto os marcados como opcionais.",
+    "visivel": true,
+    "antesDoPrimeiroCampo": true
+   },
+   "U-01": {
+    "limparX": 525.125,
+    "salvarDireita": 509.125
+   },
+   "U-02": {
+    "termosTecnicos": 7
+   },
+   "U-03": {
+    "iconesFilhos": 0
+   },
+   "U-04": {
+    "fontes": [
+     "Arial, Helvetica, sans-serif",
+     "Arial, Helvetica, sans-serif",
+     "Arial, Helvetica, sans-serif"
+    ]
+   },
+   "U-05": {
+    "esquerdaTexto": 296.09375,
+    "esquerdaOpcao": 62
+   },
+   "U-06": {
+    "visivel": true,
+    "fundo": "rgb(38, 112, 232)",
+    "faCheckVisivel": true
+   },
+   "U-07": {
+    "cores": [
+     "rgb(170, 170, 170)",
+     "rgb(170, 170, 170)",
+     "rgb(170, 170, 170)",
+     "rgb(170, 170, 170)",
+     "rgb(170, 170, 170)",
+     "rgb(170, 170, 170)"
+    ]
+   },
+   "U-08": {
+    "readonly": true
+   }
+  }
+ },
+ "u09_640x450": [
+  {
+   "scrollH": 93,
+   "clientH": 74,
+   "overflowY": "hidden"
+  },
+  {
+   "scrollH": 93,
+   "clientH": 74,
+   "overflowY": "hidden"
+  },
+  {
+   "scrollH": 93,
+   "clientH": 74,
+   "overflowY": "hidden"
+  },
+  {
+   "scrollH": 93,
+   "clientH": 74,
+   "overflowY": "hidden"
+  }
+ ],
+ "erros": []
+}

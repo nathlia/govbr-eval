@@ -1,0 +1,53 @@
+{
+ "id": "EA-02",
+ "classe": "achado",
+ "instancia": "btn-limpar",
+ "chave": "ordem-tab-igual-ordem-visual",
+ "porEstado": {
+  "S0": {
+   "valor": {
+    "sequenciaTab": [
+     "Cancelar",
+     "Limpar Campos",
+     "Salvar País"
+    ],
+    "ordemVisual": [
+     "Cancelar",
+     "Salvar País",
+     "Limpar Campos"
+    ]
+   },
+   "viola": true
+  },
+  "S1": {
+   "valor": {
+    "sequenciaTab": [
+     "Cancelar",
+     "Limpar Campos",
+     "Salvar País"
+    ],
+    "ordemVisual": [
+     "Cancelar",
+     "Salvar País",
+     "Limpar Campos"
+    ]
+   },
+   "viola": true
+  },
+  "S2": {
+   "valor": {
+    "sequenciaTab": [
+     "Cancelar",
+     "Limpar Campos",
+     "Salvar País"
+    ],
+    "ordemVisual": [
+     "Cancelar",
+     "Salvar País",
+     "Limpar Campos"
+    ]
+   },
+   "viola": true
+  }
+ }
+}

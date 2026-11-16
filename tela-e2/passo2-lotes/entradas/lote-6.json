@@ -1,0 +1,2816 @@
+[
+ {
+  "id": "a2-8cbdac8cd6c3",
+  "componente": null,
+  "arquivo": "guias/acessibilidade-html.md",
+  "secao": "Boas Práticas de Construção do HTML seguindo o eMAG › Informar mudança de idioma no conteúdo",
+  "texto": "Se algum elemento de uma página possuir conteúdo em um idioma diferente do principal, este deverá estar identificado pelo atributo lang.",
+  "contexto": "Se algum elemento de uma página possuir conteúdo em um idioma diferente do principal, este deverá estar identificado pelo atributo lang. Essa recomendação não se aplica para nomes próprios ou termos técnicos que sejam compreendidos no contexto.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há trecho em outro idioma na tela (como em e-MAG 3.2).",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-affdd8fad576",
+  "componente": null,
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "secao": "Padrão de Codificação HTML › Documento HTML",
+  "texto": "Definir a codificação de caracteres para UTF-8",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Codificação de caracteres declarada UTF-8. Medida: document.characterSet / meta charset.",
+   "instancias": [
+    "pagina"
+   ],
+   "variantes": [
+    {
+     "id": "codificacao-latin",
+     "descricao": "O documento é gravado e declarado em windows-1252 (meta charset), com o texto aparecendo normal.",
+     "clausula": "Definir a codificação de caracteres para UTF-8"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-94e76e38c85b",
+  "componente": null,
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "secao": "Padrão de Codificação HTML › Documento HTML",
+  "texto": "Incluir modo de compatibilidade para o Internet Explorer.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Meta de compatibilidade X-UA-Compatible (IE=edge) presente. Medida: querySelector('meta[http-equiv=X-UA-Compatible]').",
+   "instancias": [
+    "pagina"
+   ],
+   "variantes": [
+    {
+     "id": "sem-modo-compatibilidade",
+     "descricao": "O head fica sem a meta X-UA-Compatible.",
+     "clausula": "Incluir modo de compatibilidade para o Internet Explorer."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-11b459a3885c",
+  "componente": null,
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "secao": "Padrão de Codificação HTML › Formatação",
+  "texto": "NÃO incluir valor nos atributos boleanos",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Atributo booleano sem valor. Medida: getAttribute(attr) === '' nos atributos booleanos (single do accordion, disabled das etapas desabilitadas).",
+   "instancias": [
+    "acc-duvidas",
+    "stp-andamento"
+   ],
+   "variantes": [
+    {
+     "id": "single-com-valor",
+     "descricao": "O atributo single do accordion passa a ser single=\"true\".",
+     "instancias": [
+      "acc-duvidas"
+     ],
+     "clausula": "NÃO incluir valor nos atributos boleanos"
+    },
+    {
+     "id": "disabled-com-valor",
+     "descricao": "As etapas 3 e 4 desabilitadas passam a ter disabled=\"disabled\".",
+     "instancias": [
+      "stp-andamento"
+     ],
+     "clausula": "NÃO incluir valor nos atributos boleanos"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-d7e91aa996b7",
+  "componente": null,
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "secao": "Padrão de Codificação HTML › Documento HTML",
+  "texto": "Especificar o DOCTYPE para a linguagem HTML5",
+  "contexto": "1. Especificar o DOCTYPE para a linguagem HTML5",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "A página declara o DOCTYPE do HTML5 (<!DOCTYPE html>). O nó DocumentType fica no DOM. Medida: document.doctype.name === 'html', com publicId e systemId vazios.",
+   "instancias": [
+    "pagina"
+   ],
+   "variantes": [
+    {
+     "id": "doctype-html4-strict",
+     "descricao": "O documento passa a começar com o DOCTYPE do HTML 4.01 Strict (com identificador público e de sistema), que mantém o modo padrão de renderização, sem mudar a aparência.",
+     "clausula": "Especificar o DOCTYPE para a linguagem HTML5"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-a3ed861cbd65",
+  "componente": null,
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "secao": "Padrão de Codificação HTML › Formatação",
+  "texto": "Omitir atributos de tipo e linguagem nas tags script",
+  "contexto": "1. Omitir atributos de tipo e linguagem nas tags script",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "As tags script não levam atributo type nem language. Atributos ficam no DOM. Medida: document.querySelectorAll('script[type], script[language]') vazio.",
+   "instancias": [
+    "pagina"
+   ],
+   "variantes": [
+    {
+     "id": "script-com-type",
+     "descricao": "A tag script que carrega o JavaScript do DS ganha type=\"text/javascript\" (o comportamento não muda).",
+     "clausula": "Omitir atributos de tipo e linguagem nas tags script"
+    },
+    {
+     "id": "script-com-language",
+     "descricao": "A tag script que carrega o JavaScript do DS ganha language=\"javascript\".",
+     "clausula": "Omitir atributos de tipo e linguagem nas tags script"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-c63c63e831f9",
+  "componente": null,
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "secao": "Padrão de Codificação HTML › Formatação",
+  "texto": "Omitir atributos de tipo na tag link",
+  "contexto": "1. Omitir atributos de tipo na tag link",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "As tags link não levam atributo type. Medida: document.querySelectorAll('link[type]') vazio.",
+   "instancias": [
+    "pagina"
+   ],
+   "variantes": [
+    {
+     "id": "link-com-type",
+     "descricao": "A tag link da folha de estilo do DS ganha type=\"text/css\" (a aparência não muda).",
+     "clausula": "Omitir atributos de tipo na tag link"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-6afb3201269f",
+  "componente": null,
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "secao": "Padrão de Codificação HTML › Formatação",
+  "texto": "Escrever estilos e scripts em seus próprios arquivos",
+  "contexto": "1. Escrever estilos e scripts em seus próprios arquivos",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Estilos e scripts da página ficam em arquivos próprios (link/script src), sem bloco style ou script embutido no HTML. Medida: no HTML servido, querySelectorAll('style, script:not([src])') vazio.",
+   "instancias": [
+    "pagina"
+   ],
+   "variantes": [
+    {
+     "id": "estilo-embutido",
+     "descricao": "Uma regra de CSS da página (por exemplo, o espaçamento entre seções do conteúdo) sai do arquivo .css e passa para um bloco style no head, com o mesmo valor.",
+     "clausula": "Escrever estilos e scripts em seus próprios arquivos"
+    },
+    {
+     "id": "script-embutido",
+     "descricao": "O código que inicializa os componentes da página sai do arquivo .js próprio e passa para um bloco script no fim do body, com o mesmo conteúdo.",
+     "clausula": "Escrever estilos e scripts em seus próprios arquivos"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-971db6a57c75",
+  "componente": null,
+  "arquivo": "guias/wai-aria.md",
+  "secao": "Como usar o WAI-ARIA",
+  "texto": "Os autores precisam associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos, a menos que os elementos já tenham a semântica WAI-ARIA implícita apropriada para os states e properties.",
+  "contexto": null,
+  "antecedente": "O WAI-ARIA divide a semântica entre roles (o tipo que define o elemento da interface de usuário) e states e properties relacionado aos roles.",
+  "forca": "obrigatoria",
+  "marcador": "precisa",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Role e states/properties ARIA mantidos durante o ciclo de vida do elemento. Medida: após interagir, o estado ARIA reflete o estado visual (aria-selected da aba, aria-expanded do item).",
+   "instancias": [
+    "tab-requerimento",
+    "acc-duvidas"
+   ],
+   "variantes": [
+    {
+     "id": "aba-estado-desatualizado",
+     "descricao": "Ao selecionar a aba Documentos, aria-selected continua true em Andamento e false em Documentos.",
+     "instancias": [
+      "tab-requerimento"
+     ],
+     "clausula": "associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos"
+    },
+    {
+     "id": "item-expandido-sem-estado",
+     "descricao": "Ao abrir um item do accordion, o cabeçalho continua com aria-expanded=false.",
+     "instancias": [
+      "acc-duvidas"
+     ],
+     "clausula": "associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-bf7e49442c10",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Adote as boas práticas para criar formulários",
+  "texto": "Ordene os botões de ação",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "Ordem dos botões de ação do formulário; os botões são btn-enviar/btn-voltar (moldura protegida).",
+   "origem": "lote-A.json"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-a39f3ad397d4",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Tipografia",
+  "texto": "Utilize a família tipográfica Rawline com suas variações de peso e estilo.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Família tipográfica Rawline. Medida: font-family computado do texto da instância.",
+   "instancias": [
+    "crd-resumo",
+    "tbl-movimentacoes",
+    "acc-duvidas",
+    "msg-pendencia"
+   ],
+   "variantes": [
+    {
+     "id": "fonte-do-sistema",
+     "descricao": "O texto da instância passa a usar a fonte Arial (pilha sans-serif do sistema) em vez de Rawline.",
+     "clausula": "Utilize a família tipográfica Rawline com suas variações de peso e estilo."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-A.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-40a6f248b2f4",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplicativos",
+  "texto": "Barra Padrão para Aplicativos",
+  "contexto": "Barra Padrão para Aplicativos",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Barra padrão para aplicativos; a tela é página web, não aplicativo.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-fbf563b6c0cb",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Web Responsivo",
+  "texto": "Cabeçalho",
+  "contexto": "1. Cabeçalho",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "Cabeçalho gov.br é moldura protegida.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-021bc9b80ecf",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Web Responsivo",
+  "texto": "Logo Gov.br",
+  "contexto": "2. Logo Gov.br",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "O logo gov.br fica no cabeçalho (moldura protegida).",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-6fdad59940e1",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Web Responsivo",
+  "texto": "Rodapé",
+  "contexto": "3. Rodapé",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "Rodapé gov.br é moldura protegida.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-bc741b4ba1ac",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Web Responsivo",
+  "texto": "Botões",
+  "contexto": "6. Botões",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "'Botões' como item de aderência mínima = usar o componente Button do DS; violar exige trocar o componente inteiro, o que quebra junto as cláusulas de anatomia do Button.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-041825a2e1fb",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Iconografia",
+  "texto": "Bloquear: cadeado",
+  "contexto": "- Bloquear: cadeado",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone da ação 'bloquear'; nenhuma instância sorteável tem essa ação.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-3201afddaa7d",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Iconografia",
+  "texto": "Editar: lápis sobre documento",
+  "contexto": "- Editar: lápis sobre documento",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone da ação 'editar'; nenhuma instância sorteável tem essa ação.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-0c1808260f4e",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Iconografia",
+  "texto": "Cortar: tesoura",
+  "contexto": "- Cortar: tesoura",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone da ação 'cortar'; nenhuma instância sorteável tem essa ação.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-70cb445f08e9",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Iconografia",
+  "texto": "Pesquisar: lupa",
+  "contexto": "- Pesquisar: lupa",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone da ação 'pesquisar'; nenhuma instância sorteável tem essa ação.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-ac0ec572ac7f",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Iconografia",
+  "texto": "Excluir: lixeira",
+  "contexto": "- Excluir: lixeira",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone da ação 'excluir'; nenhuma instância sorteável tem essa ação.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-232ab7dd18c9",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Iconografia",
+  "texto": "Limpar: borracha",
+  "contexto": "- Limpar: borracha",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone da ação 'limpar'; nenhuma instância sorteável tem essa ação.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-2f51f3df505e",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Iconografia",
+  "texto": "Imprimir: impressora",
+  "contexto": "- Imprimir: impressora",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone da ação 'imprimir'; nenhuma instância sorteável tem essa ação.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-e587c7e9238f",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Iconografia",
+  "texto": "Atualizar: setas em sentido horário",
+  "contexto": "- Atualizar: setas em sentido horário",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone da ação 'atualizar'; nenhuma instância sorteável tem essa ação.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-65366b4baf7f",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Iconografia",
+  "texto": "Visualizar: olho",
+  "contexto": "- Visualizar: olho",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone da ação 'visualizar'; nenhuma instância sorteável tem essa ação.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-ba60a399cfc7",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Iconografia",
+  "texto": "Ir para tela inicial: casa",
+  "contexto": "- Ir para tela inicial: casa",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone da ação 'ir para a tela inicial'; nenhuma instância sorteável tem essa ação.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-2df7bf5e2fa2",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Iconografia",
+  "texto": "Para facilitar a padronização, utilize os componentes já disponíveis no Design System",
+  "contexto": "## Para facilitar a padronização, utilize os componentes já disponíveis no Design System",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Usar os componentes do DS: violar exige substituir um componente inteiro por marcação própria, o que viola junto todas as cláusulas de estrutura dele.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-c3f88a06ca93",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação",
+  "texto": "Sempre utilize o recurso de ajuda.",
+  "contexto": "Sempre utilize o recurso de ajuda. Além de ser uma heurística fundamental a ser seguida no quesito de usabilidade, nunca se sabe quando o usuário precisará dela;",
+  "antecedente": "Quando usar ajuda e comunicação para o usuário:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Tirar o recurso de ajuda é tirar instâncias da tela (accordion, tooltips).",
+   "origem": "rodada-0"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-460f5696acde",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Iconografia em Ajuda",
+  "texto": "É importante seguir esta referência dentro do contexto do Design System, desta forma pode-se deixar bem claro aos usuários o acesso à ajuda apenas com o uso de ícone, sem necessidade de textos explicativos adicionais.",
+  "contexto": "Dentro do imaginário coletivo dos usuários de sistemas, aplicativos, e sítios web, já existe uma forte referência iconográfica que representa um contexto de ajuda, a representação iconográfica do símbolo de interrogação, por exemplo: question ou question-circle. É importante seguir esta referência dentro do contexto do Design System, desta forma pode-se deixar bem claro aos usuários o acesso à ajuda apenas com o uso de ícone, sem necessidade de textos explicativos adicionais. Evite utilizar outras simbologias que trazem dúvidas ao usuário com relação a informação semântica.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Acesso à ajuda só com ícone segue a referência do símbolo de interrogação (question/question-circle; info/info-circle admitido em ajuda contextual). Medida: classe do ícone do gatilho de ajuda.",
+   "instancias": [
+    "tip-prazo",
+    "tip-protocolo"
+   ],
+   "variantes": [
+    {
+     "id": "ajuda-com-icone-estranho",
+     "descricao": "O gatilho de ajuda (botão só com ícone no card) usa o ícone de lâmpada (lightbulb) em vez de interrogação ou informação.",
+     "clausula": "É importante seguir esta referência dentro do contexto do Design System, desta forma pode-se deixar bem claro aos usuários o acesso à ajuda apenas com o uso de ícone"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-A.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-828be0a7c0d6",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Tipos de Ajuda › 1. Global",
+  "texto": "Tem o objetivo de auxiliar o usuário em todos os aspectos e deve oferecer desde instruções básicas até as mais avançadas, abordando todas as questões de uso do produto.",
+  "contexto": "Ajuda global compreende todo conteúdo de ajuda disponível para o usuário em um sistema. Em suma, é o manual de instruções de uso de seu produto. Tem o objetivo de auxiliar o usuário em todos os aspectos e deve oferecer desde instruções básicas até as mais avançadas, abordando todas as questões de uso do produto. Abaixo seguem algumas formas de como estruturar este conteúdo:",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ajuda global do produto, presente em todas as telas; a tela é uma só.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-639a3b7c05e7",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Tipos de Ajuda › 1. Global",
+  "texto": "Disponibilize uma seção de ajuda: O conteúdo deve ser estruturado em uma tela ou seção do sistema.",
+  "contexto": "Disponibilize uma seção de ajuda: O conteúdo deve ser estruturado em uma tela ou seção do sistema. Deve ficar claro para o usuário onde encontrar o conteúdo de ajuda. Certifique-se de que o acesso ao conteúdo de ajuda esteja presente em todas as telas de forma visível e fácil de achar;",
+  "antecedente": "Ajuda global compreende todo conteúdo de ajuda disponível para o usuário em um sistema. Em suma, é o manual de instruções de uso de seu produto. Tem o objetivo de auxiliar o usuário em todos os aspectos e deve oferecer desde instruções básicas até as mais avançadas, abordando todas as questões de uso do produto. Abaixo seguem algumas formas de como estruturar este conteúdo:",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ajuda global do produto, presente em todas as telas; a tela é uma só.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-bb101b7d3462",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Tipos de Ajuda › 1. Global",
+  "texto": "Certifique-se de que o acesso ao conteúdo de ajuda esteja presente em todas as telas de forma visível e fácil de achar;",
+  "contexto": "Disponibilize uma seção de ajuda: O conteúdo deve ser estruturado em uma tela ou seção do sistema. Deve ficar claro para o usuário onde encontrar o conteúdo de ajuda. Certifique-se de que o acesso ao conteúdo de ajuda esteja presente em todas as telas de forma visível e fácil de achar;",
+  "antecedente": "Ajuda global compreende todo conteúdo de ajuda disponível para o usuário em um sistema. Em suma, é o manual de instruções de uso de seu produto. Tem o objetivo de auxiliar o usuário em todos os aspectos e deve oferecer desde instruções básicas até as mais avançadas, abordando todas as questões de uso do produto. Abaixo seguem algumas formas de como estruturar este conteúdo:",
+  "forca": "obrigatoria",
+  "marcador": "assegure",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ajuda global do produto, presente em todas as telas; a tela é uma só.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-abc74cc8564c",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Tipos de Ajuda › 1. Global",
+  "texto": "Organize o conteúdo: Organize o conteúdo de ajuda em tópicos, categorias e assuntos recorrentes.",
+  "contexto": "Organize o conteúdo: Organize o conteúdo de ajuda em tópicos, categorias e assuntos recorrentes. Se possível, utilize um menu próprio para o conteúdo de ajuda ou uma busca com autocomplete nesta seção;",
+  "antecedente": "Ajuda global compreende todo conteúdo de ajuda disponível para o usuário em um sistema. Em suma, é o manual de instruções de uso de seu produto. Tem o objetivo de auxiliar o usuário em todos os aspectos e deve oferecer desde instruções básicas até as mais avançadas, abordando todas as questões de uso do produto. Abaixo seguem algumas formas de como estruturar este conteúdo:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ajuda global do produto (seção/tela de ajuda); a tela só tem ajuda contextual (tooltips, accordion).",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-9bfe3d3183d3",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Tipos de Ajuda › 1. Global",
+  "texto": "Apresente informações relevantes: Exiba apenas informações que sejam realmente importantes dentro do contexto tratado no tópico de ajuda.",
+  "contexto": "Apresente informações relevantes: Exiba apenas informações que sejam realmente importantes dentro do contexto tratado no tópico de ajuda. Evite dar detalhes que fogem ao assunto;",
+  "antecedente": "Ajuda global compreende todo conteúdo de ajuda disponível para o usuário em um sistema. Em suma, é o manual de instruções de uso de seu produto. Tem o objetivo de auxiliar o usuário em todos os aspectos e deve oferecer desde instruções básicas até as mais avançadas, abordando todas as questões de uso do produto. Abaixo seguem algumas formas de como estruturar este conteúdo:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ajuda global do produto (seção/tela de ajuda); a tela só tem ajuda contextual (tooltips, accordion).",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-3a7eecd79db0",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Tipos de Ajuda › 1. Global",
+  "texto": "Evite dar detalhes que fogem ao assunto;",
+  "contexto": "Apresente informações relevantes: Exiba apenas informações que sejam realmente importantes dentro do contexto tratado no tópico de ajuda. Evite dar detalhes que fogem ao assunto;",
+  "antecedente": "Ajuda global compreende todo conteúdo de ajuda disponível para o usuário em um sistema. Em suma, é o manual de instruções de uso de seu produto. Tem o objetivo de auxiliar o usuário em todos os aspectos e deve oferecer desde instruções básicas até as mais avançadas, abordando todas as questões de uso do produto. Abaixo seguem algumas formas de como estruturar este conteúdo:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ajuda global do produto (seção/tela de ajuda); a tela só tem ajuda contextual (tooltips, accordion).",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-f332ca030a08",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Tipos de Ajuda › 1. Global",
+  "texto": "Simplifique a leitura: Utilize uma linguagem simples e objetiva, evitando o uso de termos técnicos e mantendo a explicação mais curta possível;",
+  "contexto": null,
+  "antecedente": "Ajuda global compreende todo conteúdo de ajuda disponível para o usuário em um sistema. Em suma, é o manual de instruções de uso de seu produto. Tem o objetivo de auxiliar o usuário em todos os aspectos e deve oferecer desde instruções básicas até as mais avançadas, abordando todas as questões de uso do produto. Abaixo seguem algumas formas de como estruturar este conteúdo:",
+  "forca": "obrigatoria",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ajuda global do produto (seção/tela de ajuda); a tela só tem ajuda contextual (tooltips, accordion).",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-01e2766ec4e8",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Tipos de Ajuda › 1. Global",
+  "texto": "Utilize imagens: O uso de imagens facilita a compreensão do usuário durante a leitura;",
+  "contexto": null,
+  "antecedente": "Ajuda global compreende todo conteúdo de ajuda disponível para o usuário em um sistema. Em suma, é o manual de instruções de uso de seu produto. Tem o objetivo de auxiliar o usuário em todos os aspectos e deve oferecer desde instruções básicas até as mais avançadas, abordando todas as questões de uso do produto. Abaixo seguem algumas formas de como estruturar este conteúdo:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ajuda global do produto (seção/tela de ajuda); a tela só tem ajuda contextual (tooltips, accordion).",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-ff3400e55e02",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Tipos de Ajuda › 1. Global",
+  "texto": "Utilize Audiovisual: O conteúdo pode ser oferecido de forma textual ou audiovisual.",
+  "contexto": "Utilize Audiovisual: O conteúdo pode ser oferecido de forma textual ou audiovisual. O objetivo principal é tornar o entendimento mais didático e de fácil compreensão pelo usuário;",
+  "antecedente": "Ajuda global compreende todo conteúdo de ajuda disponível para o usuário em um sistema. Em suma, é o manual de instruções de uso de seu produto. Tem o objetivo de auxiliar o usuário em todos os aspectos e deve oferecer desde instruções básicas até as mais avançadas, abordando todas as questões de uso do produto. Abaixo seguem algumas formas de como estruturar este conteúdo:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ajuda global do produto (seção/tela de ajuda); a tela só tem ajuda contextual (tooltips, accordion).",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-bd36a3a634a3",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Tipos de Ajuda › 2. Contextual › Dropdown com Modais",
+  "texto": "Quando a necessidade exigir um conteúdo de ajuda contextual mais elaborado, contendo texto com formatação, imagens, vídeos etc, faz-se necessário usar o componente Modal, pois este permite maior espaço, além de oferecer rolagem interna.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "necessario",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ajuda contextual elaborada (formatação, imagens, vídeo) pede modal; as ajudas da tela são textos curtos em tooltip.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-3efa429eb319",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Tipos de Ajuda › 2. Contextual › Acessando mais detalhes",
+  "texto": "Este deve estar localizado dentro do Tooltip ou Modal ao final do conteúdo de ajuda contextual.",
+  "contexto": "Caso seja necessário fazer uma referência à algum conteúdo relacionado ou um detalhamento maior da ajuda, pode-se usar um hiperlink de acesso ao conteúdo de ajuda global. Este deve estar localizado dentro do Tooltip ou Modal ao final do conteúdo de ajuda contextual.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Link para ajuda global ao final da ajuda contextual; os tooltips da tela não remetem à ajuda global.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-2158a52abf3b",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Comunicação › Iconografia em Comunicação",
+  "texto": "Porém, evite o uso do balão duplo, como comments-alt ou comments, pois rementem a uma ideia de bate-papo, que não é caso aqui.",
+  "contexto": "Com relação à semântica do ícone de envio de feedback, pode-se usar a representação de um balão de comentário como padrão, como comment ou comment-alt, fazendo referência ao ato de se comunicar unilateralmente. Porém, evite o uso do balão duplo, como comments-alt ou comments, pois rementem a uma ideia de bate-papo, que não é caso aqui.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone de envio de feedback; a tela não tem recurso de feedback.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-64df1c8263b8",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Comunicação › Iconografia em Comunicação",
+  "texto": "Utilize comment ou comment-alt como iconografia padrão para Envio de Feedback",
+  "contexto": null,
+  "antecedente": "Com relação à semântica do ícone de envio de feedback, pode-se usar a representação de um balão de comentário como padrão, como comment ou comment-alt, fazendo referência ao ato de se comunicar unilateralmente. Porém, evite o uso do balão duplo, como comments-alt ou comments, pois rementem a uma ideia de bate-papo, que não é caso aqui.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone de envio de feedback; a tela não tem recurso de feedback.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-85ece80676b3",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Comunicação › Como Coletar Feedback do Usuário › Formulários › Abertos",
+  "texto": "Neste formato é importante que seja oferecido ao usuário um combo de seleção onde ele possa definir o motivo de seu contato.",
+  "contexto": "Neste formato é importante que seja oferecido ao usuário um combo de seleção onde ele possa definir o motivo de seu contato. Também é interessante solicitar, de forma opcional, o email deste usuário caso seja possível um contato mais personalizado.",
+  "antecedente": "Talvez seja a forma mais tradicional de coleta de dados. Consiste em oferecer ao usuário uma caixa de texto onde ele possa preencher e enviar suas dúvidas, sugestões ou críticas. Esta forma de coleta de dados pode ser exibida em uma tela específica, em uma janela ou painel flutuante.",
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Formulário aberto de feedback; não há.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-0ddef069d601",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Melhores Práticas › Localização",
+  "texto": "O acesso ao conteúdo de ajuda deve estar localizado em uma região de fácil visualização na interface e que seja acessível a partir de qualquer tela de sua aplicação.",
+  "contexto": "O acesso ao conteúdo de ajuda deve estar localizado em uma região de fácil visualização na interface e que seja acessível a partir de qualquer tela de sua aplicação. Geralmente os locais mais apropriados para o acesso a este tipo de conteúdo são Cabeçalhos, Rodapés ou Menus de navegação.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ajuda global do produto, presente em todas as telas; a tela é uma só.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-c7d20a2735ef",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Melhores Práticas › Acesso Imediato",
+  "texto": "Após acionar o botão de ajuda, é importante que o usuário seja conduzido imediatamente ao conteúdo de ajuda.",
+  "contexto": "Após acionar o botão de ajuda, é importante que o usuário seja conduzido imediatamente ao conteúdo de ajuda. Evite exibir um conteúdo intermediário, como menus de opções que trazem tópicos não relacionados à ajuda.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Botão de ajuda que conduz ao conteúdo de ajuda global; a tela não tem botão de ajuda global.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-2646cf178994",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Melhores Práticas › Acesso Imediato",
+  "texto": "Evite exibir um conteúdo intermediário, como menus de opções que trazem tópicos não relacionados à ajuda.",
+  "contexto": "Após acionar o botão de ajuda, é importante que o usuário seja conduzido imediatamente ao conteúdo de ajuda. Evite exibir um conteúdo intermediário, como menus de opções que trazem tópicos não relacionados à ajuda.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Conteúdo intermediário após o botão de ajuda global; não há.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-66cc8c46f14a",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Tipos de Ajuda › 2. Contextual › Como Usar",
+  "texto": "Posicione o ícone padrão de ajuda próximo ao elemento referência da ajuda.",
+  "contexto": "- 2. Posicionamento: Posicione o ícone padrão de ajuda próximo ao elemento referência da ajuda.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "O ícone de ajuda contextual fica junto do elemento a que a ajuda se refere. Na tela: os gatilhos das tooltips de prazo e protocolo, ao lado do dado que explicam no card. R-ED (b): caso flagrante e oposto, o ícone longe do seu dado e junto de outro. Medida: getBoundingClientRect do gatilho contra o do dado referido (mesma linha, poucos px de distância).",
+   "instancias": [
+    "tip-prazo",
+    "tip-protocolo"
+   ],
+   "variantes": [
+    {
+     "id": "ajuda-longe-do-dado",
+     "descricao": "O ícone de ajuda do prazo sai do lado do valor do prazo e vai para o canto superior direito do card, ao lado do número do requerimento.",
+     "instancias": [
+      "tip-prazo"
+     ],
+     "clausula": "Posicione o ícone padrão de ajuda próximo ao elemento referência da ajuda."
+    },
+    {
+     "id": "ajuda-protocolo-deslocada",
+     "descricao": "O ícone de ajuda do protocolo sai do lado do número do protocolo e vai para o pé do card, abaixo do prazo.",
+     "instancias": [
+      "tip-protocolo"
+     ],
+     "clausula": "Posicione o ícone padrão de ajuda próximo ao elemento referência da ajuda."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-05db50db6619",
+  "componente": null,
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Tipos de Ajuda › 2. Contextual › Como Usar",
+  "texto": "Apresente um texto curto, direto e contextual a respeito da ajuda solicitada;",
+  "contexto": "- 3. Escrita: Apresente um texto curto, direto e contextual a respeito da ajuda solicitada;",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "duplicada:a2-09eb42d69b01",
+   "justificativa": "Texto de ajuda contextual curto e direto = texto da tooltip curto e conciso (a2-09eb42d69b01, aceita).",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "duplicada-alvo-fora"
+ },
+ {
+  "id": "a2-49fc7885c5cd",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Anatomia",
+  "texto": "2 · Título · Fundamento Tipografia · Obrigatório",
+  "contexto": null,
+  "antecedente": "1 · Imagem · --- · Opcional",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-371057c7a941",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Anatomia",
+  "texto": "3 · Corpo da Mensagem · Fundamento Tipografia · Obrigatório",
+  "contexto": null,
+  "antecedente": "2 · Título · Fundamento Tipografia · Obrigatório",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-17ade3eba24a",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Detalhamento dos Itens › 2. Título (Obrigatório)",
+  "texto": "É importante utilizá-lo sempre de forma positiva.",
+  "contexto": "É uma declaração curta e objetiva usada para resumir a mensagem. É importante utilizá-lo sempre de forma positiva. Por exemplo, em vez de \"Você não tem dados ativos\", pode-se usar \"Insira ativos de dados para visualizar\".",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-899b236d311b",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Detalhamento dos Itens › 3. Corpo da Mensagem (Obrigatório)",
+  "texto": "Deve ser descrito de forma clara e direta, sugerindo ao usuário qual ação deve ser tomada para contornar a situação.",
+  "contexto": "É uma breve explanação sobre o contexto. Deve ser descrito de forma clara e direta, sugerindo ao usuário qual ação deve ser tomada para contornar a situação.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-a5cd7064a3cf",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Detalhamento dos Itens › 4. Elementos Interativos (Opcional)",
+  "texto": "Estes devem ser usados quando houver a possibilidade de uma tomada de ação imediata pelo usuário.",
+  "contexto": "Nesta área utiliza-se elementos interativos, como Buttons ou Hiperlinks. Estes devem ser usados quando houver a possibilidade de uma tomada de ação imediata pelo usuário. Caso haja a necessidade de mais de uma tomada de ação, utilize o Button (Ênfase Secundária) para ação principal e, para uma ação menos prioritária, utilize um hiperlink, por exemplo, para visualizar um detalhamento ou consultar alguma documentação. Posicione estes elementos logo abaixo do Corpo da Mensagem.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-cd58107212c1",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Detalhamento dos Itens › 4. Elementos Interativos (Opcional)",
+  "texto": "Caso haja a necessidade de mais de uma tomada de ação, utilize o Button (Ênfase Secundária) para ação principal e, para uma ação menos prioritária, utilize um hiperlink, por exemplo, para visualizar um detalhamento ou consultar alguma documentação.",
+  "contexto": "Nesta área utiliza-se elementos interativos, como Buttons ou Hiperlinks. Estes devem ser usados quando houver a possibilidade de uma tomada de ação imediata pelo usuário. Caso haja a necessidade de mais de uma tomada de ação, utilize o Button (Ênfase Secundária) para ação principal e, para uma ação menos prioritária, utilize um hiperlink, por exemplo, para visualizar um detalhamento ou consultar alguma documentação. Posicione estes elementos logo abaixo do Corpo da Mensagem.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-51aa3a22aab2",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Detalhamento dos Itens › 4. Elementos Interativos (Opcional)",
+  "texto": "Posicione estes elementos logo abaixo do Corpo da Mensagem.",
+  "contexto": "Nesta área utiliza-se elementos interativos, como Buttons ou Hiperlinks. Estes devem ser usados quando houver a possibilidade de uma tomada de ação imediata pelo usuário. Caso haja a necessidade de mais de uma tomada de ação, utilize o Button (Ênfase Secundária) para ação principal e, para uma ação menos prioritária, utilize um hiperlink, por exemplo, para visualizar um detalhamento ou consultar alguma documentação. Posicione estes elementos logo abaixo do Corpo da Mensagem.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-d82eed6caf27",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Tipos Comuns de Empty States e como Usá-los",
+  "texto": "Empty States ocorrem por diversos motivos diferenciados e devem ser tratados de forma específica em cada uma destas situações.",
+  "contexto": "Empty States ocorrem por diversos motivos diferenciados e devem ser tratados de forma específica em cada uma destas situações. A seguir pode-se observar alguns tipos de abordagens para Empty States e como elas podem atender às necessidades dos usuários em cada situação.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-d8a11140e3d6",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Tipos Comuns de Empty States e como Usá-los › 1. Ausência de Dados",
+  "texto": "Deve informa ao usuário que tipo de dado estará disponível na tela ou elemento quando os dados forem inseridos.",
+  "contexto": "É o tipo mais básico e comum de Empty State. Deve informa ao usuário que tipo de dado estará disponível na tela ou elemento quando os dados forem inseridos. Também deve orientar o usuário a respeito do próximo passo caso o usuário queira preencher o espaço vazio.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-78e2e79d04eb",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Tipos Comuns de Empty States e como Usá-los › 1. Ausência de Dados",
+  "texto": "Também deve orientar o usuário a respeito do próximo passo caso o usuário queira preencher o espaço vazio.",
+  "contexto": "É o tipo mais básico e comum de Empty State. Deve informa ao usuário que tipo de dado estará disponível na tela ou elemento quando os dados forem inseridos. Também deve orientar o usuário a respeito do próximo passo caso o usuário queira preencher o espaço vazio.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-1112d02f7556",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Tipos Comuns de Empty States e como Usá-los › 1. Ausência de Dados",
+  "texto": "Durante a primeira utilização do sistema pelo usuário, quando ainda não existem dados a serem exibidos. · O usuário deve entender que os dados estarão disponíveis na tela quando forem inseridos por ele ou outrem. A mensagem deve orientar o usuário quanto a inserção dos dados. · Em situações mais simples ou com prioridade secundária onde são requeridos poucos dados.",
+  "contexto": null,
+  "antecedente": "Exemplo de Ausência de Dados em Galeria de Imagens",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-67e05d415795",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Tipos Comuns de Empty States e como Usá-los › 2. Ausência de Dados por Ação do Usuário",
+  "texto": "Ofereça uma informação clara sobre o ocorrido e oriente a respeito das seguintes etapas, como configuração de parâmetros ou filtros de pesquisa para realização de uma nova busca.",
+  "contexto": "Este tipo é exibido em decorrência de uma interação do usuário no sistema, como uma mensagem informando que não há dados de pesquisa. Ofereça uma informação clara sobre o ocorrido e oriente a respeito das seguintes etapas, como configuração de parâmetros ou filtros de pesquisa para realização de uma nova busca. Opções para \"Limpar Filtros\" ou \"Consultar Documentação\" podem ser oferecidas ao usuário.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-6a225a082b74",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Tipos Comuns de Empty States e como Usá-los › 2. Ausência de Dados por Ação do Usuário",
+  "texto": "Durante um feedback do sistema com base em alguma ação do usuário. Como um resultado de pesquisa vazio ou confirmação na conclusão de algum processo. · O usuário deve entender que poderá configurar os parâmetros ou filtros de pesquisa para visualizar a informação desejada. Ou deve entender que concluiu com sucesso algum processo. · Quando houver a necessidade de fornecer feedback ao usuário com base em sua interação.",
+  "contexto": null,
+  "antecedente": "Ausência de Dados por Ação do Usuário em Próximas Etapas",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-4abd5f3b6947",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Tipos Comuns de Empty States e como Usá-los › 3. Gerenciamento de Erros em Empty States",
+  "texto": "Este tipo de Empty State requer uma comunicação com maior especificidade e detalhamento do problema para que o usuário seja capaz de resolvê-lo.",
+  "contexto": "Nesta situação os dados não são exibidos por causa da inexistência deles, mas por algum impedimento específico. Este tipo de Empty State requer uma comunicação com maior especificidade e detalhamento do problema para que o usuário seja capaz de resolvê-lo.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "precisa",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b372f797b737",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Tipos Comuns de Empty States e como Usá-los › 3. Gerenciamento de Erros em Empty States",
+  "texto": "Em casos de ausência de configuração necessária, erros no sistema ou problemas relacionados a permissão do usuário. · O usuário deve entender qual tipo de problema ocorreu e caso haja necessidade de tomada de ação corretiva, o usuário deve ser orientado sobre como agir. · Quando algo deu errado durante o fluxo de jornada do usuário ou quando algum tipo de intervenção deve ser tomada.",
+  "contexto": null,
+  "antecedente": "Gerenciamento de Erros em Empty States - O usuário tenta realizar upload de um arquivo não compatível. A mensagem de Empty State ocorre no local onde deveria aparecer o dado do arquivo enviado.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-f7eb62bb41b0",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Tipos Comuns de Empty States e como Usá-los › 3. Gerenciamento de Erros em Empty States › Empty States x Templates de Erro",
+  "texto": "Para este tipo de erro deve-se seguir os padrões especificados na documentação Template de Erro.",
+  "contexto": "É importante salientar que existem tipos de erros que possuem uma origem além da aplicação, como por exemplo, erros provenientes do protocolo HTTP (404, 403, 408, 500 ... entre outros). Para este tipo de erro deve-se seguir os padrões especificados na documentação Template de Erro.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-c76ac23b4fe4",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States",
+  "texto": "Para garantir a coerência e boa usabilidade, os Empty States devem ser exibidos na mesma localidade onde deveriam ser apresentados os dados contextuais ausentes.",
+  "contexto": "Para garantir a coerência e boa usabilidade, os Empty States devem ser exibidos na mesma localidade onde deveriam ser apresentados os dados contextuais ausentes. Isto pode ocorrer em qualquer espaço de sua interface gráfica, desde uma página inteira, painéis laterais, tabela de dados, cards ou painéis.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-7094f78370aa",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States",
+  "texto": "Deve-se estar atento para usar a melhor abordagem de layout em cada uma dessas situações.",
+  "contexto": "Deve-se estar atento para usar a melhor abordagem de layout em cada uma dessas situações. Sendo assim, observe algumas orientações e boas práticas de utilização em espaços amplos ou pequenos.",
+  "antecedente": "Para garantir a coerência e boa usabilidade, os Empty States devem ser exibidos na mesma localidade onde deveriam ser apresentados os dados contextuais ausentes. Isto pode ocorrer em qualquer espaço de sua interface gráfica, desde uma página inteira, painéis laterais, tabela de dados, cards ou painéis.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-7ed98d2b86ac",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 1. Utilizando Empty States em Espaços Pequenos › Alinhamento em Espaços Pequenos",
+  "texto": "Por padrão todos os elementos do Empty State devem ser alinhados à esquerda dentro do espaço onde são exibidos.",
+  "contexto": "Por padrão todos os elementos do Empty State devem ser alinhados à esquerda dentro do espaço onde são exibidos. Caso o espaço seja bastante pequeno, utilize apenas a ilustração centralizada, enquanto que o conteúdo textual permanece à esquerda. Desta forma, a imagem centralizada chama a atenção do usuário, evitando confundir a ideia de Empty State com o conteúdo real. Observe os exemplos abaixo.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-d7e903707a61",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 1. Utilizando Empty States em Espaços Pequenos › Alinhamento em Espaços Pequenos",
+  "texto": "Caso o espaço seja bastante pequeno, utilize apenas a ilustração centralizada, enquanto que o conteúdo textual permanece à esquerda.",
+  "contexto": "Por padrão todos os elementos do Empty State devem ser alinhados à esquerda dentro do espaço onde são exibidos. Caso o espaço seja bastante pequeno, utilize apenas a ilustração centralizada, enquanto que o conteúdo textual permanece à esquerda. Desta forma, a imagem centralizada chama a atenção do usuário, evitando confundir a ideia de Empty State com o conteúdo real. Observe os exemplos abaixo.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b95871b10e87",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 1. Utilizando Empty States em Espaços Pequenos › Uso da Ilustração em Espaços Pequenos › Tamanho e Proporção",
+  "texto": "Fique atento à utilização do tamanho de sua imagem.",
+  "contexto": "Fique atento à utilização do tamanho de sua imagem. Esta deverá seguir um tamanho proporcional adequado dentro do espaço de exibição do Empty State. Porém, não exagere com dimensões muito grandes, a imagem deve ser proporcional tanto ao espaço quanto ao conteúdo textual exibido.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-bce5db3220c2",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 1. Utilizando Empty States em Espaços Pequenos › Uso da Ilustração em Espaços Pequenos › Tamanho e Proporção",
+  "texto": "Esta deverá seguir um tamanho proporcional adequado dentro do espaço de exibição do Empty State.",
+  "contexto": "Fique atento à utilização do tamanho de sua imagem. Esta deverá seguir um tamanho proporcional adequado dentro do espaço de exibição do Empty State. Porém, não exagere com dimensões muito grandes, a imagem deve ser proporcional tanto ao espaço quanto ao conteúdo textual exibido.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-21c802d46304",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 1. Utilizando Empty States em Espaços Pequenos › Uso da Ilustração em Espaços Pequenos › Tamanho e Proporção",
+  "texto": "Porém, não exagere com dimensões muito grandes, a imagem deve ser proporcional tanto ao espaço quanto ao conteúdo textual exibido.",
+  "contexto": "Fique atento à utilização do tamanho de sua imagem. Esta deverá seguir um tamanho proporcional adequado dentro do espaço de exibição do Empty State. Porém, não exagere com dimensões muito grandes, a imagem deve ser proporcional tanto ao espaço quanto ao conteúdo textual exibido.",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-60760408646e",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 1. Utilizando Empty States em Espaços Pequenos › Uso da Ilustração em Espaços Pequenos › Apenas Texto",
+  "texto": "Se o espaço de exibição do Empty State for bastante reduzido, utilize apenas a informação textual.",
+  "contexto": "Se o espaço de exibição do Empty State for bastante reduzido, utilize apenas a informação textual. Desta forma evita-se problemas relacionados à legibilidade ou responsividade.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-ff07373fd56d",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 1. Utilizando Empty States em Espaços Pequenos › Uso da Ilustração em Espaços Pequenos › Semântica",
+  "texto": "Também é importante observar a semântica utilizada na imagem.",
+  "contexto": "Também é importante observar a semântica utilizada na imagem. Relacione uma imagem coerente que esteja fortemente relacionada com a mensagem textual.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-76f5017fd998",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 1. Utilizando Empty States em Espaços Pequenos › Uso da Ilustração em Espaços Pequenos › Semântica",
+  "texto": "Relacione uma imagem coerente que esteja fortemente relacionada com a mensagem textual.",
+  "contexto": "Também é importante observar a semântica utilizada na imagem. Relacione uma imagem coerente que esteja fortemente relacionada com a mensagem textual.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-73aa92798fa2",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 1. Utilizando Empty States em Espaços Pequenos › Usando Vários Empty States",
+  "texto": "Em vez disso, use imagens sóbrias com tons discretos ou utilize apenas textos.",
+  "contexto": "Em algumas situações pode haver a necessidade de se utilizar vários Empty States na mesma tela. Geralmente isto ocorre em telas de Dashboard ou com bastantes painéis de informação. Quando isto acontecer evite poluir a tela com diversas ilustrações muito coloridas ou excesso de botões de ação primária ou secundária. Em vez disso, use imagens sóbrias com tons discretos ou utilize apenas textos. Também pode-se utilizar botões de ação terciária ou links.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-ea09c6c4030f",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 2. Utilizando Empty States em Espaços Amplos › Alinhamento em Espaços Amplos",
+  "texto": "Com espaço de exibição maior, a informação de Empty State deve chamar a atenção do usuário na tela.",
+  "contexto": "Com espaço de exibição maior, a informação de Empty State deve chamar a atenção do usuário na tela. Para isto, utilize uma margem lateral maior ou bloco centralizado na horizontal, assim como alinhamento vertical na tela.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-4d6eb48adb71",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 2. Utilizando Empty States em Espaços Amplos › Alinhamento em Espaços Amplos",
+  "texto": "Para isto, utilize uma margem lateral maior ou bloco centralizado na horizontal, assim como alinhamento vertical na tela.",
+  "contexto": "Com espaço de exibição maior, a informação de Empty State deve chamar a atenção do usuário na tela. Para isto, utilize uma margem lateral maior ou bloco centralizado na horizontal, assim como alinhamento vertical na tela.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-76de24f63529",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 2. Utilizando Empty States em Espaços Amplos › Alinhamento em Espaços Amplos › Posicionamento e Conteúdo",
+  "texto": "Use Empty States substituindo os elementos que deveriam aparecer.",
+  "contexto": "Use Empty States substituindo os elementos que deveriam aparecer. Por exemplo, Empty States de uma tabela deve substituir toda sua estrutura, Cabeçalho, Rodapé, Linhas e Colunas. Desta forma evita-se que o usuário perca tempo lendo alguma informação irrelevante.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-852353d1a725",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 2. Utilizando Empty States em Espaços Amplos › Alinhamento em Espaços Amplos › Posicionamento e Conteúdo",
+  "texto": "Por exemplo, Empty States de uma tabela deve substituir toda sua estrutura, Cabeçalho, Rodapé, Linhas e Colunas.",
+  "contexto": "Use Empty States substituindo os elementos que deveriam aparecer. Por exemplo, Empty States de uma tabela deve substituir toda sua estrutura, Cabeçalho, Rodapé, Linhas e Colunas. Desta forma evita-se que o usuário perca tempo lendo alguma informação irrelevante.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b373e3f0636d",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 2. Utilizando Empty States em Espaços Amplos › Uso da Ilustração em Espaços Amplos",
+  "texto": "Utilize imagens relacionadas ao conteúdo;",
+  "contexto": null,
+  "antecedente": "Aqui segue-se as mesmas regras e orientações descritas em espaços menores:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-5b7020e0895b",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 2. Utilizando Empty States em Espaços Amplos › Uso da Ilustração em Espaços Amplos",
+  "texto": "Mantenha a proporção entre ilustração, espaço e conteúdo;",
+  "contexto": null,
+  "antecedente": "Aqui segue-se as mesmas regras e orientações descritas em espaços menores:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-4ec033fe8c66",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 2. Utilizando Empty States em Espaços Amplos › Uso da Ilustração em Espaços Amplos › Arranjos Diferenciados",
+  "texto": "Utilize arranjos diferenciados entre imagem e texto da seguinte forma:",
+  "contexto": "Com espaços mais amplos, existe maior flexibilidade para composição de um layout em Empty States. Utilize arranjos diferenciados entre imagem e texto da seguinte forma:",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-43591d0f5351",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 2. Utilizando Empty States em Espaços Amplos › Uso da Ilustração em Espaços Amplos › Arranjos Diferenciados",
+  "texto": "Para imagens horizontais ou amplas, posicione-as acima do texto;",
+  "contexto": null,
+  "antecedente": "Com espaços mais amplos, existe maior flexibilidade para composição de um layout em Empty States. Utilize arranjos diferenciados entre imagem e texto da seguinte forma:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b154db43ffab",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 2. Utilizando Empty States em Espaços Amplos › Uso da Ilustração em Espaços Amplos › Acessibilidade nas Ilustrações",
+  "texto": "As ilustrações utilizadas em Empty States devem possuir o objetivo meramente decorativo, tendo em vista que podem ser despercebidas por indivíduos com necessidades especiais ou programas leitores de tela.",
+  "contexto": "As ilustrações utilizadas em Empty States devem possuir o objetivo meramente decorativo, tendo em vista que podem ser despercebidas por indivíduos com necessidades especiais ou programas leitores de tela. Portanto evite incluir conteúdo visual informativo neste tipo de ilustração. Toda informação importante para o usuário deve estar contida no Título e Corpo da Mensagem.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-e01185840d9e",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 2. Utilizando Empty States em Espaços Amplos › Uso da Ilustração em Espaços Amplos › Acessibilidade nas Ilustrações",
+  "texto": "Toda informação importante para o usuário deve estar contida no Título e Corpo da Mensagem.",
+  "contexto": "As ilustrações utilizadas em Empty States devem possuir o objetivo meramente decorativo, tendo em vista que podem ser despercebidas por indivíduos com necessidades especiais ou programas leitores de tela. Portanto evite incluir conteúdo visual informativo neste tipo de ilustração. Toda informação importante para o usuário deve estar contida no Título e Corpo da Mensagem.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-fa952130cddb",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 2. Utilizando Empty States em Espaços Amplos › Uso da Ilustração em Espaços Amplos › Acessibilidade nas Ilustrações",
+  "texto": "Utilize a tag alt=\"\" (vazia) em imagens decorativas;",
+  "contexto": null,
+  "antecedente": "A WCAG orienta:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Imagens decorativas (ilustração de empty state); a tela não tem imagem fora da moldura.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-ac0e8466e299",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Onde Usar Empty States › 2. Utilizando Empty States em Espaços Amplos › Uso da Ilustração em Espaços Amplos › Acessibilidade nas Ilustrações",
+  "texto": "Evite utilizar a tag role=\"presentation\" para imagens decorativas, pois ainda é um atributo pouco reconhecido pelos principais navegadores do mercado;",
+  "contexto": null,
+  "antecedente": "A WCAG orienta:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "role=presentation em imagens decorativas; a tela não tem imagem fora da moldura.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ }
+]

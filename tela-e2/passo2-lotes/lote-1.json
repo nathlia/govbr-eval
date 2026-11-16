@@ -1,0 +1,1743 @@
+{
+ "a2-8955e16f95dc": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "Seção Uso: orienta para que serve o componente (escolha de componente), não impõe observável à instância."
+ },
+ "a2-51718b330849": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "Orientação de uso (qual componente escolher para seleção única); violar seria trocar o componente."
+ },
+ "a2-8394c222d97c": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "\"Deve ser avaliada a possibilidade\": orientação de uso; além disso o grupo tem só 3 opções."
+ },
+ "a2-6245275610d1": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Condição é o radio sem texto descritivo (ex.: em tabela); as 3 opções da tela têm texto."
+ },
+ "a2-9b19d0220971": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "Orientação de escolha de componente (sim/não; switch como alternativa); o grupo da tela tem 3 opções."
+ },
+ "a2-02953f75840e": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "Continua a frase introduzida por \"Recomenda-se\" sobre o texto do rótulo; herda a força de recomendação."
+ },
+ "a2-9ed07f2ea14d": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Segue o caso de várias colunas (\"Nesse caso\"); o grupo da tela é uma lista vertical de uma coluna."
+ },
+ "a2-c882461d927f": {
+  "aceita": true,
+  "justificativa": "Caixa de opção (círculo) é parte obrigatória de cada item. Medida: borda e fundo computados do círculo de cada opção.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "sem-caixa",
+    "descricao": "O círculo da caixa de opção das três opções não é desenhado (borda e fundo transparentes); só o texto aparece.",
+    "clausula": "1 · Caixa de opção · --- · Obrigatório",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS do pseudo-elemento que desenha o círculo nos labels"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-f7da7f9a25d7": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Tirar o item de opção é tirar a opção do grupo; tirar todos remove o componente inteiro (segunda violação)."
+ },
+ "a2-47c343cd8272": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Sem a lista de opções não há radio: violar exige remover o componente inteiro."
+ },
+ "a2-03c25d3eccc0": {
+  "aceita": true,
+  "justificativa": "Container da caixa é um círculo opaco. Medida: border-radius e alfa do background computados da caixa.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "caixa-quadrada",
+    "descricao": "A caixa de opção das três opções fica quadrada (border-radius 0).",
+    "clausula": "O container do Radio parte de um círculo opaco",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS do pseudo-elemento do círculo"
+    }
+   },
+   {
+    "id": "caixa-transparente",
+    "descricao": "O fundo da caixa de opção fica transparente (sem cor própria), só a borda.",
+    "clausula": "O container do Radio parte de um círculo opaco",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS do pseudo-elemento do círculo"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-c5683c991906": {
+  "aceita": true,
+  "justificativa": "O ícone interno indica selecionado/não selecionado. Medida: ponto visível só na opção marcada.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "ponto-em-todas",
+    "descricao": "O ponto de seleção aparece também nas opções não marcadas (as três mostram o ponto já em S0).",
+    "clausula": "deve ser utilizado para identificar o estado do item radio como selecionado ou não selecionado",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS do pseudo-elemento do ponto sem depender de :checked"
+    }
+   },
+   {
+    "id": "ponto-ausente",
+    "descricao": "Marcar uma opção não mostra o ponto de seleção (o ícone fica oculto em todos os estados).",
+    "clausula": "deve ser utilizado para identificar o estado do item radio como selecionado ou não selecionado",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS do pseudo-elemento do ponto oculto"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "interacao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: indicação visual do estado, o estado acessível (checked) não muda",
+  "equivalenteEmag": null
+ },
+ "a2-ddbd0a530749": {
+  "aceita": true,
+  "justificativa": "O ponto de seleção fica dentro do círculo. Medida: retângulo do ponto contido no da caixa depois de marcar uma opção.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "ponto-fora",
+    "descricao": "Ao marcar uma opção, o ponto aparece deslocado 16px à direita, fora do círculo.",
+    "clausula": "Deve estar dentro da área do container",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de posição do pseudo-elemento do ponto"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "interacao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-0a3eb585d193": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Remete a largura mínima e máxima a tokens sem valor nem limite nesta unidade; não há caso inequívoco."
+ },
+ "a2-d7ea81c1cca6": {
+  "aceita": true,
+  "justificativa": "Texto descritivo sempre à direita da caixa, com espaçamento lateral. Medida: x do texto maior que a borda direita do círculo.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "texto-a-esquerda",
+    "descricao": "Nas três opções o texto fica à esquerda e o círculo à direita dele.",
+    "clausula": "o texto descritivo deve se posicionar sempre à direita do container",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS inverte a ordem visual círculo/texto"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-29c719d70e4c": {
+  "aceita": true,
+  "justificativa": "R-ED (a): texto descritivo de até sete palavras. Medida: contagem de palavras do texto de cada opção.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "opcao-longa",
+    "descricao": "O texto da opção \"Em análise\" vira \"Em análise pela equipe técnica do serviço de defesa\" (9 palavras).",
+    "clausula": "evitando um texto descritivo com mais de sete palavras",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto de um label de opção"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "o observável é o conteúdo do rótulo da opção (campo de formulário)",
+  "equivalenteEmag": null
+ },
+ "a2-df9d11a960cf": {
+  "aceita": true,
+  "justificativa": "R-ED (a): texto descritivo com só a primeira letra maiúscula. Medida: caixa das letras do texto de cada opção.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "opcao-caixa-alta",
+    "descricao": "O texto da opção \"Suspenso\" vira \"SUSPENSO\" (escrito assim no HTML).",
+    "clausula": "deverão ser escritos com sua primeira letra em maiúsculo e o restante em minúsculo",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto de um label de opção"
+    }
+   },
+   {
+    "id": "opcao-minuscula",
+    "descricao": "O texto da opção \"Habilitado\" vira \"habilitado\".",
+    "clausula": "deverão ser escritos com sua primeira letra em maiúsculo",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto de um label de opção"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "o observável é o conteúdo do rótulo da opção (campo de formulário)",
+  "equivalenteEmag": null
+ },
+ "a2-f660416c3ccb": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "\"Evitar\": recomendação de redação."
+ },
+ "a2-916abe162da9": {
+  "aceita": true,
+  "justificativa": "O cabeçalho (legend) é o item mais ao topo do grupo. Medida: y da legend menor que o da primeira opção.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "legenda-embaixo",
+    "descricao": "A legend \"Situação do cadastro\" é exibida abaixo da última opção (posicionamento CSS).",
+    "clausula": "Deve ser o item mais ao topo da lista de opções.",
+    "efeitos": {
+     "toca": [
+      "$:legenda",
+      "$:grupo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de posição da legend dentro do fieldset"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-c3e876f18939": {
+  "aceita": false,
+  "motivo": "nao-normativa",
+  "justificativa": "Declara ausência de restrição; não impõe nada."
+ },
+ "a2-41049ef58d60": {
+  "aceita": true,
+  "justificativa": "R-ED (b): o grupo é precedido de rótulo que descreve o que selecionar. Medida: texto da legend.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "legenda-generica",
+    "descricao": "A legend passa de \"Situação do cadastro\" para \"Opções\".",
+    "clausula": "devem ser precedidos de um rótulo que descreva a informação que o usuário deve selecionar",
+    "efeitos": {
+     "toca": [
+      "$:legenda"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto da legend"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "o observável é o conteúdo do rótulo do grupo (campo de formulário)",
+  "equivalenteEmag": null
+ },
+ "a2-f838b54da560": {
+  "aceita": true,
+  "justificativa": "Rótulo no topo, alinhado à esquerda. Medida: x da legend igual ao x da primeira opção.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "legenda-centralizada",
+    "descricao": "A legend fica centralizada sobre a largura do grupo (text-align center).",
+    "clausula": "O rótulo deve se posicionar no topo do componente alinhado à esquerda.",
+    "efeitos": {
+     "toca": [
+      "$:legenda"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de alinhamento da legend"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-7d46c1c71043": {
+  "aceita": true,
+  "justificativa": "R-ED (a): rótulo com só a primeira letra maiúscula. Medida: caixa das letras da legend.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "legenda-caixa-alta",
+    "descricao": "A legend vira \"SITUAÇÃO DO CADASTRO\" (escrito assim no HTML).",
+    "clausula": "Deverá ser escrito com sua primeira letra em maiúsculo e o restante em minúsculo.",
+    "efeitos": {
+     "toca": [
+      "$:legenda"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto da legend"
+    }
+   },
+   {
+    "id": "legenda-iniciais",
+    "descricao": "A legend vira \"Situação Do Cadastro\".",
+    "clausula": "Deverá ser escrito com sua primeira letra em maiúsculo e o restante em minúsculo.",
+    "efeitos": {
+     "toca": [
+      "$:legenda"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto da legend"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "o observável é o conteúdo do rótulo do grupo (campo de formulário)",
+  "equivalenteEmag": null
+ },
+ "a2-4c27198ec8a8": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "\"Evitar\": recomendação de redação."
+ },
+ "a2-c5602f38e470": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Posição do texto auxiliar do cabeçalho; o grupo da tela só tem a legend, sem texto auxiliar."
+ },
+ "a2-4ae57a0400eb": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Caixa do texto de informações adicionais; o grupo da tela não tem texto auxiliar."
+ },
+ "a2-03b70f8dd05a": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "\"Evitar\": recomendação de redação (e não há texto auxiliar)."
+ },
+ "a2-303880341523": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "\"O mais sucintas possível, de preferência\": orientação, sem critério imposto."
+ },
+ "a2-35b101662a6e": {
+  "aceita": true,
+  "justificativa": "Em S1, a mensagem de erro do grupo fica abaixo da última opção, alinhada à esquerda, com margem superior. Medida: y e x da mensagem e distância à última opção.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-acima",
+    "descricao": "Em S1 a mensagem de erro do grupo aparece entre a legend e a primeira opção.",
+    "clausula": "Deve se posicionar abaixo do último item da lista de opções",
+    "efeitos": {
+     "toca": [
+      "$:mensagem",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "posição da mensagem de erro inserida em S1"
+    }
+   },
+   {
+    "id": "mensagem-colada",
+    "descricao": "Em S1 a mensagem de erro encosta na última opção (margem superior 0).",
+    "clausula": "respeitando uma margem superior de acordo com suas diretrizes",
+    "efeitos": {
+     "toca": [
+      "$:mensagem"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de margem da mensagem do grupo"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-08cbe0d08f62": {
+  "aceita": false,
+  "motivo": "nao-normativa",
+  "justificativa": "\"Pode ser aplicado\": permissão de uso do estado inválido."
+ },
+ "a2-e88148ca33a8": {
+  "aceita": true,
+  "justificativa": "A caixa mantém distância do texto à direita e dos elementos acima/abaixo. Medida: espaço entre a borda direita do círculo e o texto.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "caixa-colada",
+    "descricao": "Nas três opções o texto começa encostado na borda direita do círculo (espaço 0).",
+    "clausula": "deve manter uma distância superior e inferior (1) e um espaçamento lateral direito (2) de qualquer outro elemento",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de padding do label"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-524d44bd9696": {
+  "aceita": false,
+  "motivo": "duplicada:a2-d7ea81c1cca6",
+  "justificativa": "Mesmo predicado (texto à direita da caixa) da unidade do Detalhamento."
+ },
+ "a2-ffe76a1c4056": {
+  "aceita": true,
+  "justificativa": "Espaçamento inferior entre uma opção e a seguinte. Medida: distância vertical entre opções consecutivas.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "opcoes-coladas",
+    "descricao": "As três opções ficam empilhadas sem espaço vertical entre elas.",
+    "clausula": "Deve manter um espaçamento inferior dos elementos abaixo (3).",
+    "efeitos": {
+     "toca": [
+      "$:rotulos",
+      "$:grupo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de margem/padding dos itens"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-e8b91f7b5bcc": {
+  "aceita": false,
+  "motivo": "duplicada:a2-ffe76a1c4056",
+  "justificativa": "Na lista vertical, o observável é o mesmo espaço entre opções consecutivas."
+ },
+ "a2-ce7c7fd4908e": {
+  "aceita": true,
+  "justificativa": "Cabeçalho ao topo com espaçamento inferior antes das opções. Medida: distância entre a legend e a primeira opção.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "legenda-colada",
+    "descricao": "A primeira opção fica encostada na legend (espaço 0 abaixo dela).",
+    "clausula": "um espaçamento inferior a partir do último dos dois elementos (Rótulo ou texto auxiliar)",
+    "efeitos": {
+     "toca": [
+      "$:legenda"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de margem/padding da legend"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-7e49635c71a6": {
+  "aceita": false,
+  "motivo": "duplicada:a2-35b101662a6e",
+  "justificativa": "Mesmo predicado: mensagem abaixo da última opção."
+ },
+ "a2-f140247db8d0": {
+  "aceita": false,
+  "motivo": "duplicada:a2-35b101662a6e",
+  "justificativa": "Mesmo predicado: margem superior da mensagem em relação à última opção."
+ },
+ "a2-6ee3ac4d9077": {
+  "aceita": true,
+  "justificativa": "R-ED (a): uma só mensagem para o grupo. Medida: número de mensagens de erro do grupo em S1.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-por-opcao",
+    "descricao": "Em S1 cada uma das três opções recebe sua própria mensagem de erro (três mensagens).",
+    "clausula": "Deverá haver apenas uma mensagem para todo o conjunto da lista de opções.",
+    "efeitos": {
+     "toca": [
+      "$:mensagem",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "script de S1 insere uma mensagem por opção"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "o observável é a mensagem de erro do campo",
+  "equivalenteEmag": null
+ },
+ "a2-315db2f8f614": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Condição de textos de alturas diferentes ou de várias linhas; as opções da tela têm uma linha."
+ },
+ "a2-9d120d481470": {
+  "aceita": false,
+  "motivo": "nao-normativa",
+  "justificativa": "Declara ausência de limite; não impõe nada."
+ },
+ "a2-c59c42d24936": {
+  "aceita": true,
+  "justificativa": "R-ED (b): a lista acompanha o maior item. Medida: largura do contêiner das opções contra a do item mais largo.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "lista-estreita",
+    "descricao": "O contêiner das opções fica com 70px e overflow oculto, cortando o texto \"Em análise\".",
+    "clausula": "a lista de opções deve seguir as dimensões do maior item",
+    "efeitos": {
+     "toca": [
+      "$:grupo",
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de largura do contêiner das opções"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-caf4d12df099": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Listas horizontais; o grupo da tela é vertical."
+ },
+ "a2-8f4bf46382c5": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Listas horizontais; o grupo da tela é vertical."
+ },
+ "a2-d88dfbb1dca5": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Listas horizontais com item além do limite de largura; o grupo da tela é vertical."
+ },
+ "a2-cb9bfff64f8f": {
+  "aceita": false,
+  "motivo": "nao-normativa",
+  "justificativa": "Declara ausência de limite; não impõe nada."
+ },
+ "a2-4d33f36acba1": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Lista horizontal com alturas diferentes; o grupo da tela é vertical, de uma linha."
+ },
+ "a2-8ec9171bd752": {
+  "aceita": true,
+  "justificativa": "Caixa 24×24px, border-radius 12px, borda 1px. Medida: dimensões e borda computadas do círculo.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "caixa-20px",
+    "descricao": "A caixa de opção fica com 20×20px.",
+    "clausula": "Caixa de opção · width · 24px",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS do pseudo-elemento do círculo"
+    }
+   },
+   {
+    "id": "borda-2px",
+    "descricao": "A borda da caixa de opção fica com 2px.",
+    "clausula": "Caixa de opção · border-width · 1px",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS do pseudo-elemento do círculo"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-12f325dc3426": {
+  "aceita": true,
+  "justificativa": "Espaçamentos do radio por token. Medida: padding do texto descritivo e da legend.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "texto-sem-recuo",
+    "descricao": "O texto descritivo das opções fica com padding-left 0 em vez de --spacing-scale-default.",
+    "clausula": "Texto descritivo · padding-left · --spacing-scale-default",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de padding do label"
+    }
+   },
+   {
+    "id": "cabecalho-sem-recuo-inferior",
+    "descricao": "A legend fica com padding-bottom 0 em vez de --spacing-scale-2x.",
+    "clausula": "Cabeçalho de opções · padding-bottom · --spacing-scale-2x",
+    "efeitos": {
+     "toca": [
+      "$:legenda"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de padding da legend"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-1f5a6fa02843": {
+  "aceita": true,
+  "justificativa": "Tipografia do radio: rótulo semi-bold, texto descritivo base medium. Medida: font-weight e font-size computados.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "legenda-regular",
+    "descricao": "A legend fica em --font-weight-regular.",
+    "clausula": "Rótulo · –-font-family-base · --font-size-scale-base · --font-weight-semi-bold",
+    "efeitos": {
+     "toca": [
+      "$:legenda"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de peso da legend"
+    }
+   },
+   {
+    "id": "opcoes-menores",
+    "descricao": "O texto das opções fica em --font-size-scale-down-01.",
+    "clausula": "Texto descritivo · -–font-family-base · --font-size-scale-base · --font-weight-medium",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de tamanho do texto dos labels"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "visual-token cujo observável é peso/tamanho de texto",
+  "equivalenteEmag": null
+ },
+ "a2-b4f55de91129": {
+  "aceita": true,
+  "justificativa": "Cores do radio por token. Medida: cor computada da borda da caixa e do texto descritivo.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "borda-azul",
+    "descricao": "A borda da caixa de opção fica --blue-warm-vivid-50 em vez de --gray-20.",
+    "clausula": "Caixa de opção · border · --gray-20",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de cor da borda do círculo"
+    }
+   },
+   {
+    "id": "texto-azul",
+    "descricao": "O texto das opções fica --blue-warm-vivid-70 em vez de --gray-80.",
+    "clausula": "Texto descritivo · color · --gray-80",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de cor do texto dos labels"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-fc79ce778b75": {
+  "aceita": true,
+  "justificativa": "Ícone interativo é um círculo (fa-circle, tamanho sm). Medida: forma do ponto depois de marcar uma opção.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "ponto-quadrado",
+    "descricao": "Ao marcar uma opção, o ponto de seleção aparece quadrado (border-radius 0).",
+    "clausula": "Ícone interativo · -- · <i class=\"fas fa-circle\"></i> · .icon.size--sm · .fa-circle",
+    "efeitos": {
+     "toca": [
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS do pseudo-elemento do ponto"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "interacao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-8a9292a9f7a6": {
+  "aceita": true,
+  "justificativa": "Cada opção tem o contêiner br-radio. Medida: classe do contêiner de cada opção.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "opcao-sem-classe",
+    "descricao": "O contêiner da opção \"Suspenso\" usa classe própria com a aparência copiada à mão, sem br-radio.",
+    "clausula": "class · string · br-radio · Container do componente",
+    "efeitos": {
+     "toca": [
+      "$:inputs",
+      "$:rotulos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "classe do contêiner de uma opção e CSS copiado"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "estrutura-classe: classe do contêiner, sem propriedade acessível",
+  "equivalenteEmag": null
+ },
+ "a2-a84a041f3704": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Instrução para a listagem horizontal; o grupo da tela é vertical."
+ },
+ "a2-312f909631b7": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Radio desativado; nenhuma opção da tela é desativada."
+ },
+ "a2-186453b0926b": {
+  "aceita": true,
+  "justificativa": "Radios alcançáveis por Tab e selecionados por Espaço. Medida: Tab para no grupo; Espaço marca a opção focada.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "radios-fora-do-tab",
+    "descricao": "Os três input radio recebem tabindex=-1.",
+    "clausula": "Radio buttons devem ser navegáveis pelo teclado por meio da tecla Tab",
+    "efeitos": {
+     "toca": [
+      "$:inputs"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "atributo tabindex nos inputs"
+    }
+   },
+   {
+    "id": "espaco-inerte",
+    "descricao": "Com foco numa opção, Espaço não a marca (keydown cancelado por script).",
+    "clausula": "acionados com a tecla Space",
+    "efeitos": {
+     "toca": [
+      "$:inputs",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "listener de teclado que cancela Espaço"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "operação por teclado é propriedade de acessibilidade",
+  "equivalenteEmag": null
+ },
+ "a2-12e21a9b29f9": {
+  "aceita": false,
+  "motivo": "duplicada:a2-f4237d13520b",
+  "justificativa": "Diz o mesmo que a recomendação do e-MAG sobre associar rótulos aos campos.",
+  "equivalenteEmag": "6.2"
+ },
+ "a2-18daf2bc26d3": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Feedback audível da mudança de estado vem da semântica nativa do radio; tirá-lo exige trocar o elemento, perdendo também rótulo associado e teclado."
+ },
+ "a2-c4599b261a28": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Condição é opção marcada por padrão; o grupo começa sem seleção (obrigatório, em erro em S1)."
+ },
+ "a2-12d0d71f5dd2": {
+  "aceita": true,
+  "justificativa": "Grupo obrigatório usa o atributo required. Medida: required nos inputs do grupo e estado required na árvore de acessibilidade.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "sem-required",
+    "descricao": "Os três input radio ficam sem o atributo required (o indicador visual e o erro de S1 continuam).",
+    "clausula": "Para radio buttons com opção de seleção obrigatória, utilize o atributo required.",
+    "efeitos": {
+     "toca": [
+      "$:inputs"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "atributo required removido; S1 continua pelo script da página"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "axe",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "obrigatoriedade de campo exposta como estado acessível",
+  "equivalenteEmag": null
+ },
+ "a2-41f0168a6cbb": {
+  "aceita": true,
+  "justificativa": "Container (trilho) obrigatório. Medida: fundo e borda computados do trilho.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "sem-trilho",
+    "descricao": "O trilho do switch fica transparente e sem borda; só a chave aparece.",
+    "clausula": "2 · container · Superfície · Obrigatório",
+    "efeitos": {
+     "toca": [
+      "$:chave",
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS do pseudo-elemento do trilho (no label)"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-402eef83153c": {
+  "aceita": true,
+  "justificativa": "Chave de alternância obrigatória. Medida: tamanho e cor visíveis da chave.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "sem-chave",
+    "descricao": "A chave de alternância fica oculta; só o trilho aparece.",
+    "clausula": "3 · Chave de alternância · --- · Obrigatório",
+    "efeitos": {
+     "toca": [
+      "$:chave",
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS do pseudo-elemento da chave (no label)"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-ae1397ab72d5": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Consistência entre switches do produto; a tela tem um único switch, nada a comparar."
+ },
+ "a2-771cb345f19e": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Rótulos de ligado/desligado (item 4 da anatomia); o switch da tela não os usa."
+ },
+ "a2-6990d98db92a": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Label distante do container; na tela o label fica ao lado do switch."
+ },
+ "a2-3c18fb6c1dbc": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Switches agrupados com checkbox principal; a tela tem um só switch e nenhum checkbox."
+ },
+ "a2-8f7b9c91d55e": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "O switch da tela é campo de um formulário de cadastro novo, gravado só por Salvar país (andaime); não há preferência a aplicar de imediato."
+ },
+ "a2-89d5e6e47d30": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Rótulos de ligado/desligado; o switch da tela não os usa."
+ },
+ "a2-002bf9be74ec": {
+  "aceita": true,
+  "justificativa": "Posição firme durante a alternância. Medida: getBoundingClientRect do contêiner antes e depois de alternar.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "container-se-move",
+    "descricao": "Ao ligar, o contêiner do switch muda de largura e desloca a chave e o label.",
+    "clausula": "O Switch deve ser posicionado na interface de forma firme e consistente durante o movimento da chave de alternância",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:chave"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS em :checked altera a largura do contêiner"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-c5776632fd52": {
+  "aceita": true,
+  "justificativa": "R-ED (b): o rótulo diz o que o switch faz. Medida: texto do label nomeia a ação.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-neutro",
+    "descricao": "O label do switch passa de \"Emitir certificado sanitário para este país\" para \"Opção\".",
+    "clausula": "Os rótulos devem descrever o que o switch fará quando a chave estiver ligada ou desligada.",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto do label"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "o observável é o conteúdo do rótulo do campo",
+  "equivalenteEmag": null
+ },
+ "a2-44a57ddcc53f": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Posição dos rótulos de ligado/desligado; o switch da tela não os usa."
+ },
+ "a2-b20a134b4c05": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Rótulos de ligado/desligado; o switch da tela não os usa."
+ },
+ "a2-c0e948f338ec": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Posição dos rótulos de ligado/desligado; não há."
+ },
+ "a2-c1af8ea16c40": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Rótulos de ligado/desligado em pares; não há."
+ },
+ "a2-1854c7b2badd": {
+  "aceita": true,
+  "justificativa": "Label centrado na vertical em relação à chave. Medida: centro vertical do texto contra o da chave.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "label-no-topo",
+    "descricao": "O texto do switch fica alinhado ao topo da chave, fora do centro vertical.",
+    "clausula": "Label · --spacing-vertical-center",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de alinhamento vertical do texto"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-2a5f1cb5a078": {
+  "aceita": true,
+  "justificativa": "Espaçamentos do switch: label a --spacing-scale-2x da chave; chave à direita quando ligado. Medida: distância label–trilho e posição da chave.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "label-colado",
+    "descricao": "O label fica encostado no trilho (margem 0).",
+    "clausula": "Label (depende da posição) · margin-right/margin-left/margin-botton · --spacing-scale-2x",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de margem do texto"
+    }
+   },
+   {
+    "id": "chave-ligada-a-esquerda",
+    "descricao": "Ao ligar, a chave permanece à esquerda (só a cor muda).",
+    "clausula": "Chave (ligado) · horizontal align · right",
+    "efeitos": {
+     "toca": [
+      "$:chave"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS em :checked não desloca a chave"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "interacao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-89b4537e8260": {
+  "aceita": true,
+  "justificativa": "Switch de densidade média: container 52×30px, chave 22×22px. Medida: dimensões computadas do trilho e da chave.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "chave-pequena",
+    "descricao": "A chave fica com 14×14px dentro do container 52×30.",
+    "clausula": "Chave de alternância (média) · width · 22px",
+    "efeitos": {
+     "toca": [
+      "$:chave"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS do pseudo-elemento da chave"
+    }
+   },
+   {
+    "id": "trilho-largo",
+    "descricao": "O container fica com 64×30px.",
+    "clausula": "container (média) · width · 52px",
+    "efeitos": {
+     "toca": [
+      "$:chave",
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS do pseudo-elemento do trilho"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-86176aff4a89": {
+  "aceita": true,
+  "justificativa": "Cores do switch por token. Medida: cor da chave desligada e ligada, cor do label.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "desligado-escuro",
+    "descricao": "O switch desligado fica com a cor de alternância --gray-80.",
+    "clausula": "chave de alternância - off · icon · --gray-20",
+    "efeitos": {
+     "toca": [
+      "$:chave"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de cor no estado desligado"
+    }
+   },
+   {
+    "id": "ligado-verde",
+    "descricao": "O switch ligado fica com a cor --green-cool-vivid-50.",
+    "clausula": "chave de alternância - on · icon · --blue-warm-vivid-40",
+    "efeitos": {
+     "toca": [
+      "$:chave"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de cor no estado ligado"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "interacao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-463dea60790d": {
+  "aceita": true,
+  "justificativa": "Label do switch em --font-size-scale-base semi-bold. Medida: font-weight/font-size computados do label.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "label-regular",
+    "descricao": "O label do switch fica em --font-weight-regular.",
+    "clausula": "Label · font-weight · --font-weight-semi-bold",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de peso do label"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "visual-token cujo observável é peso de texto",
+  "equivalenteEmag": null
+ },
+ "a2-33de62f95ce7": {
+  "aceita": true,
+  "justificativa": "Contêiner br-switch. Medida: classe da raiz.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "sem-classe-do-componente",
+    "descricao": "A raiz do switch usa classe própria com a aparência copiada à mão, sem br-switch.",
+    "clausula": "class · string · br-switch · Container do componente",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "classe da raiz e CSS copiado"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "estrutura-classe: classe do contêiner, sem propriedade acessível",
+  "equivalenteEmag": null
+ },
+ "a2-52394d43a884": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Switch com rótulos adicionais de ligado/desligado; o da tela não os usa."
+ },
+ "a2-5b4b95d8e2e0": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Switch com rótulos adicionais de ligado/desligado; o da tela não os usa."
+ },
+ "a2-159612f619b5": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Switch com rótulos adicionais de ligado/desligado; o da tela não os usa."
+ },
+ "a2-f2a468af452d": {
+  "aceita": true,
+  "justificativa": "Switch alcançável por Tab e alternado por Espaço ou Enter. Medida: Tab para no switch; a tecla alterna.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "switch-fora-do-tab",
+    "descricao": "O input do switch recebe tabindex=-1.",
+    "clausula": "Os usuários devem poder acessar o switch por meio da tecla Tab",
+    "efeitos": {
+     "toca": [
+      "$:input"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "atributo tabindex no input"
+    }
+   },
+   {
+    "id": "espaco-inerte",
+    "descricao": "Com foco no switch, Espaço não alterna (keydown cancelado por script).",
+    "clausula": "alternar seu estado (ligado/desligado) por meio das teclas Space ou Enter",
+    "efeitos": {
+     "toca": [
+      "$:input",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "listener de teclado que cancela Espaço"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "operação por teclado é propriedade de acessibilidade",
+  "equivalenteEmag": null
+ },
+ "a2-33e661bc4435": {
+  "aceita": true,
+  "justificativa": "Leitor de tela anuncia o rótulo e o estado atual. Medida: na árvore de acessibilidade o switch tem nome e estado ligado/desligado igual ao visual.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "estado-nao-exposto",
+    "descricao": "O input do switch recebe role=\"button\" sem aria-pressed: o nome continua, o estado deixa de ser exposto.",
+    "clausula": "os leitores de tela devem anunciar o rótulo descritivo e o estado atual do switch",
+    "efeitos": {
+     "toca": [
+      "$:input"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "atributo role no input"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "axe",
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "estado acessível do controle",
+  "equivalenteEmag": null
+ },
+ "a2-4a2e16cecb19": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "\"Visual e/ou auditivo\": violar exige tirar ao mesmo tempo a indicação visual da chave e o estado exposto."
+ },
+ "a2-e9ded28efe9c": {
+  "aceita": true,
+  "justificativa": "aria-checked acompanha o estado. Medida: aria-checked em S0 (desligado) e depois de ligar.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "aria-checked-fixo",
+    "descricao": "aria-checked fica 'true' com o switch desligado e não muda ao alternar.",
+    "clausula": "quando desativado, o atributo aria-checked definido como false",
+    "efeitos": {
+     "toca": [
+      "$:input",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "valor fixo de aria-checked"
+    }
+   },
+   {
+    "id": "sem-aria-checked",
+    "descricao": "O elemento do switch fica sem o atributo aria-checked.",
+    "clausula": "o elemento switch deve ter o atributo aria-checked definido como true e quando desativado, o atributo aria-checked definido como false",
+    "efeitos": {
+     "toca": [
+      "$:input",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "atributo aria-checked removido"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "axe",
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "estado acessível do controle",
+  "equivalenteEmag": null
+ },
+ "a2-14fa162258a8": {
+  "aceita": true,
+  "justificativa": "A área interativa inclui o container e o label. Medida: clicar no texto do label alterna o switch.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "texto-fora-do-label",
+    "descricao": "O texto do switch sai do <label> para um span ao lado (nome mantido por aria-labelledby); clicar no texto não alterna.",
+    "clausula": "A interatividade do componente switch ocorre tanto na área compreendida pelo container como pelo label correspondente.",
+    "efeitos": {
+     "toca": [
+      "$:rotulo",
+      "$:input"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto movido para fora do label; aria-labelledby no input"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "comportamento do DS (área clicável), nome acessível preservado",
+  "equivalenteEmag": null
+ },
+ "a2-dc662beb73b3": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Rótulos adicionais de ligado/desligado; o switch da tela não os usa."
+ }
+}

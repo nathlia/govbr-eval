@@ -1,0 +1,59 @@
+{
+ "id": "EI-16",
+ "classe": "incerto",
+ "instancia": "pagina",
+ "chave": "ancoras-name-id",
+ "porEstado": {
+  "S0": {
+   "valor": [
+    {
+     "id": "main-content",
+     "existe": true,
+     "tag": "MAIN",
+     "name": null
+    },
+    {
+     "id": "rodape",
+     "existe": true,
+     "tag": "FOOTER",
+     "name": null
+    }
+   ],
+   "viola": null
+  },
+  "S1": {
+   "valor": [
+    {
+     "id": "main-content",
+     "existe": true,
+     "tag": "MAIN",
+     "name": null
+    },
+    {
+     "id": "rodape",
+     "existe": true,
+     "tag": "FOOTER",
+     "name": null
+    }
+   ],
+   "viola": null
+  },
+  "S2": {
+   "valor": [
+    {
+     "id": "main-content",
+     "existe": true,
+     "tag": "MAIN",
+     "name": null
+    },
+    {
+     "id": "rodape",
+     "existe": true,
+     "tag": "FOOTER",
+     "name": null
+    }
+   ],
+   "viola": null
+  }
+ }
+}

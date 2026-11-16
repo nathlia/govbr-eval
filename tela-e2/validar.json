@@ -1,0 +1,106 @@
+{
+  "aviso": "--validar NÃO sorteia; só contagens (sem conteúdo de célula, regra ou sítio)",
+  "status": "RASCUNHO",
+  "idsNaoResolvidosNaExposicao": 0,
+  "porEtapa": [
+    {
+      "etapa": "elegiveis-passo2",
+      "DS": 284,
+      "G": 201,
+      "hospedeirosDS": 10,
+      "regrasDS": 175,
+      "hospedeirosG": 10,
+      "regrasG": 93
+    },
+    {
+      "etapa": "depois-de-sem-clausula-na-base",
+      "DS": 181,
+      "G": 178,
+      "hospedeirosDS": 10,
+      "regrasDS": 111,
+      "hospedeirosG": 10,
+      "regrasG": 86
+    },
+    {
+      "etapa": "depois-de-exposta",
+      "DS": 167,
+      "G": 137,
+      "hospedeirosDS": 10,
+      "regrasDS": 104,
+      "hospedeirosG": 10,
+      "regrasG": 70
+    },
+    {
+      "etapa": "depois-de-tentativa-e",
+      "DS": 162,
+      "G": 135,
+      "hospedeirosDS": 10,
+      "regrasDS": 101,
+      "hospedeirosG": 10,
+      "regrasG": 69
+    },
+    {
+      "etapa": "depois-de-classe-em-desacordo",
+      "DS": 151,
+      "G": 101,
+      "hospedeirosDS": 10,
+      "regrasDS": 95,
+      "hospedeirosG": 10,
+      "regrasG": 53
+    }
+  ],
+  "excluidasPorMotivo": {
+    "sem-clausula-na-base": 126,
+    "exposta": 55,
+    "tentativa-e": 7,
+    "classe-em-desacordo": 45
+  },
+  "elegiveisFinais": {
+    "DS": {
+      "celulas": 151,
+      "hospedeiros": 10,
+      "regras": 95
+    },
+    "G": {
+      "celulas": 101,
+      "hospedeiros": 10,
+      "regras": 53
+    }
+  },
+  "colocacoes": 261,
+  "paresDeHospedeirosDiferentes": 30122,
+  "paresIncompativeis": 431,
+  "cotas": {
+    "DS": 6,
+    "G": 3
+  },
+  "cotasEfetivas": {
+    "DS": 6,
+    "G": 3
+  },
+  "deficit": {
+    "DS": 0,
+    "G": 0
+  },
+  "portaoDSAlcancavel": true,
+  "reposicaoDS": 145,
+  "reposicaoDSSuficiente": true,
+  "metaFolga": {
+    "alvo": {
+      "celulasDS": 12,
+      "hospedeirosDS": 8
+    },
+    "celulasDS": 151,
+    "hospedeirosDS": 10,
+    "atingida": true
+  },
+  "solucaoOrdemNeutra": {
+    "sementes": 9,
+    "nos": 225,
+    "problemas": 0
+  },
+  "decisao": {
+    "regra": "DS efetiva ≥ 5 E reposição DS ≥ 2",
+    "sortear": true
+  }
+}

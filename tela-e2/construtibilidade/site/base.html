@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cadastrar país importador</title>
+<link rel="stylesheet" href="/rawline/css/rawline.css">
+<link rel="stylesheet" href="/fa/css/all.min.css">
+<link rel="stylesheet" href="/core/core.min.css">
+</head>
+<body>
+<main id="main-content" class="container-lg my-3">
+<div class="d-flex align-items-center" id="cabecalho-pagina">
+  <h1>Cadastrar País Importador</h1>
+  <button class="br-button circle" type="button" id="btn-ajuda" aria-label="Ajuda sobre o cadastro"><i class="fas fa-question" aria-hidden="true"></i></button>
+</div>
+
+<div class="br-message info" id="msg-orientacao" role="status">
+  <div class="icon"><i class="fas fa-info-circle fa-lg" aria-hidden="true"></i></div>
+  <div class="content"><span class="message-title">Informação.</span><span class="message-body"> Os países cadastrados aparecem na lista abaixo do formulário.</span></div>
+  <div class="close"><button class="br-button circle small" type="button" id="msg-orientacao-fechar" aria-label="Fechar"><i class="fas fa-times" aria-hidden="true"></i></button></div>
+</div>
+
+<form id="form-pais" novalidate>
+  <h2>Dados do País</h2>
+  <div class="br-message danger" id="msg-erro" role="alert" hidden>
+    <div class="icon"><i class="fas fa-times-circle fa-lg" aria-hidden="true"></i></div>
+    <div class="content"><span class="message-title">Erro.</span><span class="message-body"> Preencha os campos obrigatórios e tente novamente.</span></div>
+  </div>
+  <div class="br-input" id="inp-nome-pais">
+    <label for="nome-pais">Nome do país</label>
+    <input id="nome-pais" type="text" required aria-required="true" aria-describedby="nome-pais-msg"/>
+    <span class="feedback danger" role="alert" id="nome-pais-msg" hidden><i class="fas fa-times-circle" aria-hidden="true"></i>Informe o nome do país.</span>
+  </div>
+  <div class="br-input" id="inp-codigo">
+    <label for="codigo">Código do país</label>
+    <input id="codigo" type="text" aria-describedby="codigo-apoio"/>
+    <p class="text-base mt-1" id="codigo-apoio">Use 3 letras, por exemplo: ARG.</p>
+  </div>
+  <div class="br-select" id="sel-continente">
+    <div class="br-input">
+      <label for="continente">Continente</label>
+      <input id="continente" type="text" placeholder="Selecione o continente" required aria-required="true"/>
+      <button class="br-button" type="button" aria-label="Exibir lista" data-trigger="data-trigger" id="sel-gatilho"><i class="fas fa-angle-down" aria-hidden="true"></i></button>
+    </div>
+    <div class="br-list" tabindex="0">
+      <div class="br-item" tabindex="-1"><div class="br-radio"><input id="ct0" type="radio" name="continente" value="af"/><label for="ct0">África</label></div></div>
+      <div class="br-item" tabindex="-1"><div class="br-radio"><input id="ct1" type="radio" name="continente" value="am"/><label for="ct1">América</label></div></div>
+      <div class="br-item" tabindex="-1"><div class="br-radio"><input id="ct2" type="radio" name="continente" value="as"/><label for="ct2">Ásia</label></div></div>
+      <div class="br-item" tabindex="-1"><div class="br-radio"><input id="ct3" type="radio" name="continente" value="eu"/><label for="ct3">Europa</label></div></div>
+      <div class="br-item" tabindex="-1"><div class="br-radio"><input id="ct4" type="radio" name="continente" value="oc"/><label for="ct4">Oceania</label></div></div>
+      <div class="br-item" tabindex="-1"><div class="br-radio"><input id="ct5" type="radio" name="continente" value="an"/><label for="ct5">Antártida</label></div></div>
+    </div>
+    <span class="feedback danger" role="alert" id="continente-msg" hidden><i class="fas fa-times-circle" aria-hidden="true"></i>Selecione o continente.</span>
+  </div>
+  <fieldset id="rad-situacao">
+    <legend>Situação do cadastro</legend>
+    <div class="br-radio"><input id="sit0" type="radio" name="situacao" value="habilitado"/><label for="sit0">Habilitado</label></div>
+    <div class="br-radio"><input id="sit1" type="radio" name="situacao" value="suspenso"/><label for="sit1">Suspenso</label></div>
+    <div class="br-radio"><input id="sit2" type="radio" name="situacao" value="analise"/><label for="sit2">Em análise</label></div>
+    <span class="feedback danger" role="alert" id="situacao-msg" hidden><i class="fas fa-times-circle" aria-hidden="true"></i>Escolha a situação.</span>
+  </fieldset>
+  <div class="d-flex justify-content-end" id="acoes">
+    <button class="br-button secondary mr-2" type="button" id="btn-cancelar">Cancelar</button>
+    <button class="br-button secondary mr-2" type="reset" id="btn-limpar">Limpar Campos</button>
+    <button class="br-button primary" type="submit" id="btn-salvar">Salvar País</button>
+  </div>
+</form>
+
+<section id="secao-config">
+  <h2>Configuração do Serviço</h2>
+  <div class="br-switch" role="presentation" id="swt-certificado"><input id="swt-cert" type="checkbox" role="switch"/><label for="swt-cert">Emissão automática de certificado sanitário para países habilitados</label><div class="switch-data" data-enabled="Ligada" data-disabled="Desligada"></div></div>
+</section>
+
+<span class="br-divider my-3"></span>
+<section id="secao-lista">
+  <h2>Países Cadastrados</h2>
+  <div class="br-list" id="lst-paises" role="list">
+    <div class="br-item" role="listitem">Argentina — Habilitado</div>
+    <span class="br-divider"></span>
+    <div class="br-item" role="listitem">Chile — Habilitado</div>
+    <span class="br-divider"></span>
+    <div class="br-item" role="listitem">Japão — Suspenso</div>
+    <span class="br-divider"></span>
+    <div class="br-item" role="listitem">Egito — Em análise</div>
+  </div>
+</section>
+</main>
+<script src="/core/core.min.js"></script>
+<script src="init.js"></script>
+</body>
+</html>

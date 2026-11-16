@@ -1,0 +1,237 @@
+{
+ "_meta": {
+  "tela": "E2 — cadastro-pais.html",
+  "data": "2026-11-14",
+  "regra": "seletor = id de instância do inventário (D-24: lugar, nunca defeito) ou descendente estrutural dele; texto = papel + rótulo visível; nenhuma âncora nomeia o defeito. Contagem = elementos visíveis.",
+  "pagina": "http://127.0.0.1:3219/cadastro-pais.html",
+  "viewport": "1280×900",
+  "problemas": []
+ },
+ "waitFor": "#main-content",
+ "setup": [
+  {
+   "action": "click",
+   "selector": "#btn-salvar"
+  },
+  {
+   "action": "wait",
+   "selector": "#msg-erro:not([hidden])"
+  },
+  {
+   "action": "click",
+   "selector": "#sel-continente [data-trigger]"
+  },
+  {
+   "action": "wait",
+   "selector": "#sel-continente .br-list[expanded]"
+  }
+ ],
+ "states": [
+  {
+   "id": "S0",
+   "afterStep": 0,
+   "path": "/cadastro-pais.html",
+   "note": "carga inicial"
+  },
+  {
+   "id": "S1",
+   "afterStep": 2,
+   "path": "/cadastro-pais.html",
+   "note": "Salvar País acionado com o formulário vazio"
+  },
+  {
+   "id": "S2",
+   "afterStep": 4,
+   "path": "/cadastro-pais.html",
+   "note": "gatilho do select Continente acionado (lista aberta), depois de S1"
+  }
+ ],
+ "specs": [
+  {
+   "celula": "btn-limpar::a2-2ac598dc24db",
+   "anchor": "#btn-limpar",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "sempre",
+   "texto": "botão 'Limpar Campos' da barra de ações do formulário",
+   "medido": {
+    "S0": 1,
+    "S1": 1,
+    "S2": 1
+   }
+  },
+  {
+   "celula": "msg-orientacao::a2-d6b3f0e36943",
+   "anchor": "#msg-orientacao .message-body",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "sempre",
+   "texto": "corpo da mensagem informativa 'Como cadastrar.'",
+   "medido": {
+    "S0": 1,
+    "S1": 1,
+    "S2": 1
+   }
+  },
+  {
+   "celula": "btn-ajuda::a2-5b47246a41c1",
+   "anchor": "#btn-ajuda",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "sempre",
+   "texto": "botão circular 'Ajuda sobre o cadastro' ao lado do título",
+   "medido": {
+    "S0": 1,
+    "S1": 1,
+    "S2": 1
+   }
+  },
+  {
+   "celula": "inp-codigo::a2-a39f3ad397d4",
+   "anchor": "#inp-codigo",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "sempre",
+   "texto": "campo 'Código do país (opcional)' (rótulo, campo e texto de apoio)",
+   "medido": {
+    "S0": 1,
+    "S1": 1,
+    "S2": 1
+   }
+  },
+  {
+   "celula": "rad-situacao::a2-f838b54da560",
+   "anchor": "#rad-situacao legend",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "sempre",
+   "texto": "legenda do grupo 'Situação do cadastro'",
+   "medido": {
+    "S0": 1,
+    "S1": 1,
+    "S2": 1
+   }
+  },
+  {
+   "celula": "msg-erro::a2-ef29db5bb4ac",
+   "anchor": "#msg-erro",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "S1",
+   "texto": "mensagem 'Não foi possível salvar o país.'",
+   "medido": {
+    "S0": 0,
+    "S1": 1,
+    "S2": 1
+   }
+  },
+  {
+   "celula": "sel-continente::a2-7348bce34289",
+   "anchor": "#sel-continente .br-list .br-item label",
+   "scope": "composicao",
+   "expectedCount": 1,
+   "participantCount": 6,
+   "state": "S2",
+   "texto": "rótulos das 6 opções da lista do select 'Continente'",
+   "medido": {
+    "S0": 0,
+    "S1": 0,
+    "S2": 6
+   }
+  },
+  {
+   "celula": "inp-nome-pais::a2-328f62cfe4ce",
+   "anchor": "#nome-pais",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "sempre",
+   "texto": "campo 'Nome do país'",
+   "medido": {
+    "S0": 1,
+    "S1": 1,
+    "S2": 1
+   }
+  },
+  {
+   "celula": "lst-paises::a2-5432c282d0d7",
+   "anchor": "#lst-paises .item-pais",
+   "scope": "composicao",
+   "expectedCount": 1,
+   "participantCount": 4,
+   "state": "sempre",
+   "texto": "os 4 itens da lista 'Países Cadastrados'",
+   "medido": {
+    "S0": 4,
+    "S1": 4,
+    "S2": 4
+   }
+  }
+ ],
+ "controles": [
+  {
+   "id": "K-01",
+   "instancia": "hdr-govbr",
+   "selector": "#cabecalho",
+   "count": 1,
+   "state": "S0",
+   "texto": "cabeçalho gov.br",
+   "medido": {
+    "S0": 1,
+    "S1": 1,
+    "S2": 1
+   }
+  },
+  {
+   "id": "K-02",
+   "instancia": "ftr-govbr",
+   "selector": "#rodape",
+   "count": 1,
+   "state": "S0",
+   "texto": "rodapé gov.br",
+   "medido": {
+    "S0": 1,
+    "S1": 1,
+    "S2": 1
+   }
+  },
+  {
+   "id": "K-03",
+   "instancia": "div-secoes",
+   "selector": "#div-secoes",
+   "count": 1,
+   "state": "S0",
+   "texto": "divisor entre a configuração e a lista",
+   "medido": {
+    "S0": 1,
+    "S1": 1,
+    "S2": 1
+   }
+  },
+  {
+   "id": "K-04",
+   "instancia": "swt-certificado",
+   "selector": "#swt-certificado",
+   "count": 1,
+   "state": "S0",
+   "texto": "switch 'Emitir certificado sanitário automaticamente…'",
+   "medido": {
+    "S0": 1,
+    "S1": 1,
+    "S2": 1
+   }
+  },
+  {
+   "id": "K-05",
+   "instancia": "btn-cancelar",
+   "selector": "#btn-cancelar",
+   "count": 1,
+   "state": "S0",
+   "texto": "botão 'Cancelar' da barra de ações",
+   "medido": {
+    "S0": 1,
+    "S1": 1,
+    "S2": 1
+   }
+  }
+ ]
+}

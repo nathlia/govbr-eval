@@ -1,0 +1,1807 @@
+[
+ {
+  "id": "a2-8955e16f95dc",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Uso",
+  "texto": "O componente Radio deve ser utilizado para permitir que o usuário selecione uma ou mais opções em uma lista de opções.",
+  "contexto": null,
+  "antecedente": "Componente Radio",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-51718b330849",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Uso",
+  "texto": "Quando a lista de opções exigir a seleção de apenas um item deve-se utilizar o componente radiobutton.",
+  "contexto": null,
+  "antecedente": "O componente Radio deve ser utilizado para permitir que o usuário selecione uma ou mais opções em uma lista de opções.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-8394c222d97c",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Uso",
+  "texto": "Quando a lista de opções for muito extensa, deve ser avaliada a possibilidade de uso do componente select.",
+  "contexto": null,
+  "antecedente": "Quando a lista de opções exigir a seleção de apenas um item deve-se utilizar o componente radiobutton.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-6245275610d1",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Uso",
+  "texto": "O componente pode ser utilizado sem o texto descritivo, como em uma tabela, por exemplo; e deverá continuar mantendo suas diretrizes de alinhamento e espaçamento.",
+  "contexto": null,
+  "antecedente": "Cada opção pode ser acompanhada de um texto que a descreva.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-9b19d0220971",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Tom e voz",
+  "texto": "Deve-se utilizar o componente para opções em que a resposta seja sim ou não (Ex.: Lembrar senha?), quando a resposta for ligado ou desligado (Ex.: Componente habilitado.) pode-se utilizar o componente switch como alternativa.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-02953f75840e",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Tom e voz",
+  "texto": "Utilizar os verbos sempre na terceira pessoa do imperativo afirmativo.",
+  "contexto": "Recomenda-se, que o texto do rótulo e o texto descritivo sejam breves, claros e diretos. Utilizar os verbos sempre na terceira pessoa do imperativo afirmativo. Ex.: Selecione os estados contidos no projeto.",
+  "antecedente": "Deve-se utilizar o componente para opções em que a resposta seja sim ou não (Ex.: Lembrar senha?), quando a resposta for ligado ou desligado (Ex.: Componente habilitado.) pode-se utilizar o componente switch como alternativa.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-9ed07f2ea14d",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Tom e voz",
+  "texto": "Deve-se manter uma coerência entre as larguras dos itens evitando uma largura de linha com mais de 10 palavras ou 56 caracteres em média.",
+  "contexto": null,
+  "antecedente": "Dar preferência ao uso do componente em uma coluna, porém pode-se dispor de mais de uma coluna se houver extrema necessidade. Nesse caso, é recomendado manter a mesma largura em todos os itens da mesma coluna e a mesma altura dos itens da mesma linha da lista.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-c882461d927f",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Anatomia",
+  "texto": "1 · Caixa de opção · --- · Obrigatório",
+  "contexto": null,
+  "antecedente": "O Radio é constituído por:",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-f7da7f9a25d7",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Anatomia",
+  "texto": "2 · Item de opção · Item · Obrigatório",
+  "contexto": null,
+  "antecedente": "1 · Caixa de opção · --- · Obrigatório",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-47c343cd8272",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Anatomia",
+  "texto": "4 · Lista de opções · List · Obrigatório",
+  "contexto": null,
+  "antecedente": "3 · Cabeçalho de opções · Tipografia · Opcional",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-03c25d3eccc0",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 1. Caixa de Opção (Obrigatório) › A. Container",
+  "texto": "O container do Radio parte de um círculo opaco que deverá conter o ícone de suporte interativo.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-c5683c991906",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 1. Caixa de Opção (Obrigatório) › B. Ícone de suporte visual interativo",
+  "texto": "O Ícone de suporte visual é um elemento que ficará dentro da área do container e deve ser utilizado para identificar o estado do item radio como selecionado ou não selecionado a depender do seu estado.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-ddbd0a530749",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 1. Caixa de Opção (Obrigatório) › B. Ícone de suporte visual interativo",
+  "texto": "Deve estar dentro da área do container",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-0a3eb585d193",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 2. Item de opção (Obrigatório)",
+  "texto": "Este item deve ter uma largura mínima e máxima (ver design tokens).",
+  "contexto": "É composto pela caixa de opção (A) à esquerda e o texto descritivo (B) sempre à sua direita. Este item deve ter uma largura mínima e máxima (ver design tokens).",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-d7ea81c1cca6",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 2. Item de opção (Obrigatório) › B. Texto descritivo",
+  "texto": "Para proporcionar um maior conforto visual ao usuário, o texto descritivo deve se posicionar sempre à direita do container respeitando o espaçamento lateral da caixa de opção.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-29c719d70e4c",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 2. Item de opção (Obrigatório) › B. Texto descritivo",
+  "texto": "Deve-se manter uma coerência entre as larguras dos itens evitando um texto descritivo com mais de sete palavras.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-df9d11a960cf",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 2. Item de opção (Obrigatório) › B. Texto descritivo",
+  "texto": "Os textos descritivos deverão ser escritos com sua primeira letra em maiúsculo e o restante em minúsculo.",
+  "contexto": "Os textos descritivos deverão ser escritos com sua primeira letra em maiúsculo e o restante em minúsculo. Ex.: Selecione a opção 01.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-f660416c3ccb",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 2. Item de opção (Obrigatório) › B. Texto descritivo",
+  "texto": "Evitar escrever com todas as letras em maiúsculo (ALL CAPS) ou com todas as primeiras letras das palavras em maiúsculo (Camel Case).",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-916abe162da9",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 3. Cabeçalho de opções (Opcional)",
+  "texto": "Deve ser o item mais ao topo da lista de opções.",
+  "contexto": "O cabeçalho de opções é composto pelo rótulo (A) e caso necessário, texto auxiliar (B). Deve ser o item mais ao topo da lista de opções. Não há restrição de largura ou altura para este item.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-c3e876f18939",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 3. Cabeçalho de opções (Opcional)",
+  "texto": "Não há restrição de largura ou altura para este item.",
+  "contexto": "O cabeçalho de opções é composto pelo rótulo (A) e caso necessário, texto auxiliar (B). Deve ser o item mais ao topo da lista de opções. Não há restrição de largura ou altura para este item.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "restritivo",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-41049ef58d60",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 3. Cabeçalho de opções (Opcional) › A. Rótulo",
+  "texto": "Quando o componente é apresentado em uma lista e opções devem ser precedidos de um rótulo que descreva a informação que o usuário deve selecionar.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-f838b54da560",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 3. Cabeçalho de opções (Opcional) › A. Rótulo",
+  "texto": "O rótulo deve se posicionar no topo do componente alinhado à esquerda.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-7d46c1c71043",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 3. Cabeçalho de opções (Opcional) › A. Rótulo",
+  "texto": "Deverá ser escrito com sua primeira letra em maiúsculo e o restante em minúsculo.",
+  "contexto": "Deverá ser escrito com sua primeira letra em maiúsculo e o restante em minúsculo. Ex.: Selecione a opção 01.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-4c27198ec8a8",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 3. Cabeçalho de opções (Opcional) › A. Rótulo",
+  "texto": "Evitar escrever com todas as letras em maiúsculo (ALL CAPS) ou com todas as primeiras letras das palavras em maiúsculo (Camel Case).",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-c5602f38e470",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 3. Cabeçalho de opções (Opcional) › B. Informações Adicionais",
+  "texto": "Este texto deve se posicionar logo abaixo do componente rótulo, sem espaçamentos e alinhado à esquerda.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-4ae57a0400eb",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 3. Cabeçalho de opções (Opcional) › B. Informações Adicionais",
+  "texto": "Deverá ser escrito com sua primeira letra em maiúsculo e o restante em minúsculo.",
+  "contexto": "Deverá ser escrito com sua primeira letra em maiúsculo e o restante em minúsculo. Ex.: Selecione a opção 01.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-03b70f8dd05a",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 3. Cabeçalho de opções (Opcional) › B. Informações Adicionais",
+  "texto": "Evitar escrever com todas as letras em maiúsculo (ALL CAPS) ou com todas as primeiras letras das palavras em maiúsculo (Camel Case).",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-303880341523",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 5. Mensagens de feedback contextual (Opcional)",
+  "texto": "O componente mensagem pode ser utilizado para enviar mensagens informativas, de alerta, de erro (A) ou validação (feedback contextual) devem ser o mais sucintas possível, de preferência não ultrapassando uma linha da mesma largura do campo de texto além de seguir suas diretrizes de componente.",
+  "contexto": "O componente mensagem pode ser utilizado para enviar mensagens informativas, de alerta, de erro (A) ou validação (feedback contextual) devem ser o mais sucintas possível, de preferência não ultrapassando uma linha da mesma largura do campo de texto além de seguir suas diretrizes de componente. Deve se posicionar abaixo do último item da lista de opções, alinhado à esquerda e respeitando uma margem superior de acordo com suas diretrizes.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-35b101662a6e",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Detalhamento dos Itens › 5. Mensagens de feedback contextual (Opcional)",
+  "texto": "Deve se posicionar abaixo do último item da lista de opções, alinhado à esquerda e respeitando uma margem superior de acordo com suas diretrizes.",
+  "contexto": "O componente mensagem pode ser utilizado para enviar mensagens informativas, de alerta, de erro (A) ou validação (feedback contextual) devem ser o mais sucintas possível, de preferência não ultrapassando uma linha da mesma largura do campo de texto além de seguir suas diretrizes de componente. Deve se posicionar abaixo do último item da lista de opções, alinhado à esquerda e respeitando uma margem superior de acordo com suas diretrizes.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-08cbe0d08f62",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 1. Estados › Invalid",
+  "texto": "Pode ser aplicado quando a opção selecionada em um questionário está incorreta, ou o preenchimento de ao menos uma opção é obrigatório.",
+  "contexto": "Estado indicativo de que a opção não é válida. Pode ser aplicado quando a opção selecionada em um questionário está incorreta, ou o preenchimento de ao menos uma opção é obrigatório.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-e88148ca33a8",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Caixa de opção",
+  "texto": "A caixa de opção do item do Radio deve manter uma distância superior e inferior (1) e um espaçamento lateral direito (2) de qualquer outro elemento.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-524d44bd9696",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Texto descritivo",
+  "texto": "O texto descritivo deve se posicionar sempre à direita a (2) da caixa de opção como indicado acima.",
+  "contexto": "O texto descritivo deve se posicionar sempre à direita a (2) da caixa de opção como indicado acima. Deve manter um espaçamento inferior dos elementos abaixo (3).",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-ffe76a1c4056",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Texto descritivo",
+  "texto": "Deve manter um espaçamento inferior dos elementos abaixo (3).",
+  "contexto": "O texto descritivo deve se posicionar sempre à direita a (2) da caixa de opção como indicado acima. Deve manter um espaçamento inferior dos elementos abaixo (3).",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-e8b91f7b5bcc",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Item de opção",
+  "texto": "Cada item do Radio, composto pela caixa de opção à esquerda e seu texto descritivo à direita, deve manter uma distância à direita (4), abaixo (3) e acima (1) entre este e o próximo componente.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-ce7c7fd4908e",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Cabeçalho de opções",
+  "texto": "O Rótulo e o texto auxiliar devem estar ao topo do agrupamento, devem se posicionar um logo abaixo do outro não havendo espaçamento além do já previsto em suas diretrizes e um espaçamento inferior a partir do último dos dois elementos (Rótulo ou texto auxiliar).",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-7e49635c71a6",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Mensagens de feedback contextual",
+  "texto": "Deve ser o elemento mais abaixo na lista de opções do componente.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-f140247db8d0",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Mensagens de feedback contextual",
+  "texto": "Deve manter o espaçamento superior do último item da lista de opções (2).",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-6ee3ac4d9077",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Mensagens de feedback contextual",
+  "texto": "Deverá haver apenas uma mensagem para todo o conjunto da lista de opções.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-315db2f8f614",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Disposição vertical",
+  "texto": "No caso de listas verticais com textos descritivos de alturas diferentes ou que ultrapassem um linha de conteúdo deve-se manter o espaçamento inferior (3) para garantir a distinção dos itens pelo usuário.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-9d120d481470",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Disposição vertical",
+  "texto": "Não há limite de altura ou linhas de texto para os itens de opção.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "restritivo",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-c59c42d24936",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Disposição vertical",
+  "texto": "Para itens de opção com larguras diferentes a lista de opções deve seguir as dimensões do maior item.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-caf4d12df099",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Disposição horizontal",
+  "texto": "Para listas horizontais com mais de um item, deve-se manter a largura máxima (1) e mínima (2) (ver design tokens).",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-8f4bf46382c5",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Disposição horizontal",
+  "texto": "No caso de listas horizontais com itens de opção com larguras diferentes, deve-se manter o espaçamento lateral direito de segurança entre os itens (2).",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-d88dfbb1dca5",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Disposição horizontal",
+  "texto": "No caso de o item de opção ultrapassar o limite de largura (1), o texto descritivo deverá continuar em uma outra linha mantendo o alinhamento ao texto.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-cb9bfff64f8f",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Disposição horizontal",
+  "texto": "Não há limite de linhas de texto ou altura de linha para os itens do componente.",
+  "contexto": null,
+  "antecedente": "Espaçamento dos itens em lista horizontal",
+  "forca": "a-julgar",
+  "marcador": "restritivo",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-4d33f36acba1",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Comportamentos › 2. Espaçamento e Alinhamento › Disposição horizontal",
+  "texto": "Para itens de opção com alturas diferentes a lista de opções deve seguir as dimensões do maior item.",
+  "contexto": null,
+  "antecedente": "Espaçamento dos itens em lista horizontal",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-8ec9171bd752",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Especificações › Dimensões",
+  "texto": "Tabela de especificação — Radio (Caixa de Opção) › Especificações › Dimensões",
+  "contexto": "Nome · Property · Value || Caixa de opção · width · 24px || Caixa de opção · height · 24px || Caixa de opção · border-radius · 12px || Caixa de opção · border-width · 1px",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-12f325dc3426",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Especificações › Espaçamento",
+  "texto": "Tabela de especificação — Radio (Caixa de Opção) › Especificações › Espaçamento",
+  "contexto": "Name · Property · Value || Caixa de opção · padding-right · --spacing-scale-base || Caixa de opção · padding-left · --spacing-scale-default || Caixa de opção · padding-top · --spacing-scale-half || Caixa de opção · padding-bottom · --spacing-scale-half || Texto descritivo · padding-right · --spacing-scale-4x || Texto descritivo · padding-left · --spacing-scale-default || Texto descritivo · padding-bottom · --spacing-scale-2x || Texto descritivo · padding-top · --spacing-scale-half || Rótulo · padding · --spacing-scale-default || Texto auxiliar · padding · --spacing-scale-default || Cabeçalho de opções · padding · --spacing-scale-default || Cabeçalho de opções · padding-bottom · --spacing-scale-2x || Lista de opções · padding-top · --spacing-scale-default || Lista de opções · margin-bottom · --spacing-scale-2x || Lista de opções · padding-left · --spacing-scale-default || Lista de opções · padding-right · --spacing-scale-5x",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-1f5a6fa02843",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Especificações › Tipografia",
+  "texto": "Tabela de especificação — Radio (Caixa de Opção) › Especificações › Tipografia",
+  "contexto": "Name · family-type · font-size · font-weight || Rótulo · –-font-family-base · --font-size-scale-base · --font-weight-semi-bold || Texto auxiliar · -–font-family-base · --font-size-scale-down-01 · --font-weight-medium || Texto descritivo · -–font-family-base · --font-size-scale-base · --font-weight-medium",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-b4f55de91129",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Especificações › Cores",
+  "texto": "Tabela de especificação — Radio (Caixa de Opção) › Especificações › Cores",
+  "contexto": "Name · Property · Color Token || Caixa de opção · background · --pure-0 || Caixa de opção · border · --gray-20 || Ícone de suporte visual interativo · background · --blue-warm-vivid-50 || Texto descritivo · color · --gray-80 || Rótulo · color · --gray-80 || Informações adicionais · color · --gray-80",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-fc79ce778b75",
+  "componente": "radio",
+  "arquivo": "componentes/radio__designer.md",
+  "secao": "Radio (Caixa de Opção) › Especificações › Iconografia",
+  "texto": "Tabela de especificação — Radio (Caixa de Opção) › Especificações › Iconografia",
+  "contexto": "Name · Estado · Ícone · Size · Class (Font Awesome) || Ícone interativo · -- · <i class=\"fas fa-circle\"></i> · .icon.size--sm · .fa-circle",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-8a9292a9f7a6",
+  "componente": "radio",
+  "arquivo": "componentes/radio__desenvolvedor.md",
+  "secao": "Radio (Caixa de Opção) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-radio · Container do componente",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "titulo-obrigatorio",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-a84a041f3704",
+  "componente": "radio",
+  "arquivo": "componentes/radio__desenvolvedor.md",
+  "secao": "Radio (Caixa de Opção) › Informações adicionais › Listagem horizontal",
+  "texto": "Usar Utilitários CSS Display e Espaçamento para modificar o componente.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-312f909631b7",
+  "componente": "radio",
+  "arquivo": "componentes/radio__desenvolvedor.md",
+  "secao": "Radio (Caixa de Opção) › Informações adicionais › Radio desativado",
+  "texto": "Além de adicionar a classe \"disabled\" ao componente, adicione também o atributo \"disabled\" na tag html <input>.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-186453b0926b",
+  "componente": "radio",
+  "arquivo": "componentes/radio__acessibilidade.md",
+  "secao": "Acessibilidade no Radio › Navegação e Comportamento",
+  "texto": "Radio buttons devem ser navegáveis pelo teclado por meio da tecla Tab e acionados com a tecla Space.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-12e21a9b29f9",
+  "componente": "radio",
+  "arquivo": "componentes/radio__acessibilidade.md",
+  "secao": "Acessibilidade no Radio › Recomendações para Estilo e Design",
+  "texto": "Radio button devem ter rótulos associados que expliquem seu objetivo e esteja claramente vinculado a eles;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-18daf2bc26d3",
+  "componente": "radio",
+  "arquivo": "componentes/radio__acessibilidade.md",
+  "secao": "Acessibilidade no Radio › Recomendações para Estilo e Design",
+  "texto": "Quando houver mudança de estado, ofereça sempre feedback de status claro e audível para o usuário;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-c4599b261a28",
+  "componente": "radio",
+  "arquivo": "componentes/radio__acessibilidade.md",
+  "secao": "Acessibilidade no Radio › Recomendações para Código",
+  "texto": "Em caso de radio button selecionado por padrão, utilize o atributo checked;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-12d0d71f5dd2",
+  "componente": "radio",
+  "arquivo": "componentes/radio__acessibilidade.md",
+  "secao": "Acessibilidade no Radio › Recomendações para Código",
+  "texto": "Para radio buttons com opção de seleção obrigatória, utilize o atributo required.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "rad-situacao"
+  ],
+  "a2": null,
+  "porque": "sem-julgamento-a2"
+ },
+ {
+  "id": "a2-41f0168a6cbb",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Anatomia",
+  "texto": "2 · container · Superfície · Obrigatório",
+  "contexto": null,
+  "antecedente": "1 · Label · Tipografia · Opcional",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Container (superfície/trilho) obrigatório. Medida: fundo e borda computados do trilho.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "sem-trilho",
+     "descricao": "O trilho do switch fica transparente e sem borda; só a chave aparece."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-402eef83153c",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Anatomia",
+  "texto": "3 · Chave de alternância · --- · Obrigatório",
+  "contexto": null,
+  "antecedente": "2 · container · Superfície · Obrigatório",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Chave de alternância obrigatória. Medida: a chave (pseudo-elemento) tem tamanho e cor visíveis.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "sem-chave",
+     "descricao": "A chave de alternância fica oculta; só o trilho aparece."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-ae1397ab72d5",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Detalhamento dos Itens › 1. Label (Opcional)",
+  "texto": "Uma vez definido como serão aplicados os labels em seu produto, mantenha sempre a consistência.",
+  "contexto": "O label pode estar localizado à esquerda, à direita ou acima do switch e a distância entre o label e o switch pode ser determinado pelo layout da tela. Uma vez definido como serão aplicados os labels em seu produto, mantenha sempre a consistência.",
+  "antecedente": "Labels são itens opcionais. Muitas vezes switches podem funcionar adequadamente sem labels, porém, se houver necessidade de deixar o entendimento mais claro, não hesite em utilizar labels que devem descrever concisamente o que o componente faz quando a alternância estiver ativada.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Consistência na aplicação dos rótulos. Medida: posição do rótulo de cada switch em relação à chave.",
+   "instancias": [
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-do-outro-lado",
+     "descricao": "O rótulo do switch de SMS fica à esquerda da chave; o de e-mail, à direita."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-771cb345f19e",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Detalhamento dos Itens › 4. Rótulo (Opcional)",
+  "texto": "Use rótulos curtos e concisos.",
+  "contexto": null,
+  "antecedente": "Rótulos favorecem a usabilidade, pois auxiliam no entendimento da posição em que a chave se encontra.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos de ligado/desligado (item 4 da anatomia); os switches da tela não os usam.",
+   "origem": "lote-D.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-6990d98db92a",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Comportamentos › 2. Área interativa",
+  "texto": "Atenção: nos casos em que o label e o container não estejam próximos apenas o container deverá ser interativo.",
+  "contexto": null,
+  "antecedente": "A interatividade do componente switch ocorre tanto na área compreendida pelo container como pelo label correspondente.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Label distante do container; nos switches da tela o label fica ao lado.",
+   "origem": "lote-D.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-3c18fb6c1dbc",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Comportamentos › 4. Agrupamento",
+  "texto": "No entanto, quando utilizados de forma agrupada, deverão vir associados a um componente checkbox principal, permitindo ao usuário selecionar e desselecionar todas, além de ter o feedback relacionado ao estado intermediário.",
+  "contexto": "O componente switch, funciona basicamente como um interruptor de alternância, permitindo aos usuários ligar ou desligar as opções apresentadas. No entanto, quando utilizados de forma agrupada, deverão vir associados a um componente checkbox principal, permitindo ao usuário selecionar e desselecionar todas, além de ter o feedback relacionado ao estado intermediário. Para maiores informações consultar \"Estado Intermediário\" na documentação do componente checkbox. Exemplo de switches agrupados em uma lista associado a um checkbox principal.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Switches agrupados vêm com checkbox principal que seleciona/desseleciona todos e mostra o estado intermediário (inventário emendado). Medida: com só um switch ligado, o checkbox principal fica intermediário; marcar/desmarcar o principal liga/desliga os dois.",
+   "instancias": [
+    "chk-avisos-todos"
+   ],
+   "variantes": [
+    {
+     "id": "principal-sem-intermediario",
+     "descricao": "Com só um switch ligado, o checkbox principal aparece desmarcado (sem o estado intermediário).",
+     "clausula": "No entanto, quando utilizados de forma agrupada, deverão vir associados a um componente checkbox principal, permitindo ao usuário selecionar e desselecionar todas, além de ter o feedback relacionado ao estado intermediário."
+    },
+    {
+     "id": "principal-inerte",
+     "descricao": "Marcar o checkbox principal não liga os switches.",
+     "clausula": "No entanto, quando utilizados de forma agrupada, deverão vir associados a um componente checkbox principal, permitindo ao usuário selecionar e desselecionar todas"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-8f7b9c91d55e",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Switches devem ter efeito imediato e não devem exigir que o usuário clique em botões de \"Salvar\" ou \"Enviar\" para aplicar o novo estado.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-modal",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Efeito imediato, sem exigir Salvar/Enviar. Medida: depois de alternar, o estado é aplicado (aviso de preferência salva) sem outro clique.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "so-com-enviar",
+     "descricao": "Alternar não aplica nada; o texto de apoio diz que a preferência será salva ao clicar em Enviar documento."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-89d5e6e47d30",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Mantenha os rótulos dos switches curtos e diretos.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos de ligado/desligado; os switches da tela não os usam.",
+   "origem": "lote-D.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-002bf9be74ec",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "O Switch deve ser posicionado na interface de forma firme e consistente durante o movimento da chave de alternância ou alternância de labels e surgimento de bordas de foco, evitando mudar o posicionamento do seu container.",
+  "contexto": "O Switch deve ser posicionado na interface de forma firme e consistente durante o movimento da chave de alternância ou alternância de labels e surgimento de bordas de foco, evitando mudar o posicionamento do seu container. Caso contrário, poderá confundir ou atrapalhar o processo de interação do usuário com o componente.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Posição firme durante a alternância. Medida: getBoundingClientRect do contêiner antes e depois de alternar.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "container-se-move",
+     "descricao": "Alternar muda a largura do contêiner e desloca o switch."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-c5776632fd52",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Os rótulos devem descrever o que o switch fará quando a chave estiver ligada ou desligada.",
+  "contexto": "Os rótulos devem descrever o que o switch fará quando a chave estiver ligada ou desligada. Eles não devem ser neutros ou ambíguos.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b). Rótulo do switch diz o que ele faz ligado/desligado. Medida: o texto do rótulo nomeia a ação.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-neutro",
+     "descricao": "O rótulo do switch fica 'Opção'.",
+     "clausula": "Os rótulos devem descrever o que o switch fará quando a chave estiver ligada ou desligada."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-44a57ddcc53f",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Use rótulos sempre na mesma posição em relação ao switch.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Posição dos rótulos de ligado/desligado; os switches da tela não os usam.",
+   "origem": "lote-D.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b20a134b4c05",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Use rótulos curtos e concisos.",
+  "contexto": null,
+  "antecedente": "Evite utilizar rótulo apenas para um estado possível.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos de ligado/desligado; os switches da tela não os usam.",
+   "origem": "lote-D.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-c0e948f338ec",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Não alterne a posição dos rótulos.",
+  "contexto": null,
+  "antecedente": "Use rótulos curtos e concisos.",
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Posição dos rótulos de ligado/desligado; não há.",
+   "origem": "lote-D.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-c1af8ea16c40",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Use os rótulos sempre em pares.",
+  "contexto": null,
+  "antecedente": "Não alterne a posição dos rótulos.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos de ligado/desligado em pares; não há.",
+   "origem": "lote-D.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-1854c7b2badd",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Especificações › Alinhamento",
+  "texto": "Tabela de especificação — Switch (Controle Interruptor) › Especificações › Alinhamento",
+  "contexto": "Name · Spacing Token || Label · --spacing-vertical-center || Label · --spacing-horizontal-left",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Label do switch centrado na vertical em relação à chave e alinhado à esquerda. Medida: posição vertical do texto em relação ao centro da chave.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "label-no-topo",
+     "descricao": "O texto do switch fica alinhado ao topo da chave, deslocado do centro vertical.",
+     "clausula": "Label · --spacing-vertical-center"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-2a5f1cb5a078",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Especificações › Espaçamento",
+  "texto": "Tabela de especificação — Switch (Controle Interruptor) › Especificações › Espaçamento",
+  "contexto": "Name · Property · Token/Value || Label (depende da posição) · margin-right/margin-left/margin-botton · --spacing-scale-2x || Rótulo (depende da posição) · margin-right/margin-left · --spacing-scale-base || container (alta) · padding-all · --spacing-scale-half || container (média) · padding-all · --spacing-scale-half || container (baixa) · padding-left, padding-right · --spacing-scale-half || container (baixa) · padding-top, padding-botton · --spacing-scale-half || container · margin-bottom · --spacing-scale-base || Chave (ligado) · horizontal align · right || Chave (desligado) · horizontal align · left",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Espaçamentos do switch: label afastado da chave por --spacing-scale-2x, container com margin-bottom base, chave à direita quando ligado e à esquerda quando desligado. Medida: distância label–chave e posição da chave.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "label-colado",
+     "descricao": "O label fica encostado na chave (margem 0).",
+     "clausula": "Label (depende da posição) · margin-right/margin-left/margin-botton · --spacing-scale-2x"
+    },
+    {
+     "id": "chave-ligada-a-esquerda",
+     "descricao": "Ao ligar, a chave de alternância permanece à esquerda (só a cor muda).",
+     "clausula": "Chave (ligado) · horizontal align · right"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-89b4537e8260",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Especificações › Dimensão",
+  "texto": "Tabela de especificação — Switch (Controle Interruptor) › Especificações › Dimensão",
+  "contexto": "Name · Property · Token/Value || container (alta) · width · 40px || container (alta) · height · 24px || Chave de alternância (alta) · width · 16px || Chave de alternância (alta) · height · 16px || container (média) · width · 52px || container (média) · height · 30px || Chave de alternância (média) · width · 22px || Chave de alternância (média) · height · 22px || container (baixa) · width · 64px || container (baixa) · height · 36px || Chave de alternância (baixa) · width · 28px || Chave de alternância (baixa) · height · 28px",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Switch de densidade média: container 52×30px, chave 22×22px. Medida: dimensões computadas do trilho e da chave.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "chave-pequena",
+     "descricao": "A chave de alternância fica com 14×14px dentro do container 52×30.",
+     "clausula": "Chave de alternância (média) · width · 22px"
+    },
+    {
+     "id": "trilho-largo",
+     "descricao": "O container fica com 64×30px.",
+     "clausula": "container (média) · width · 52px"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-86176aff4a89",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Especificações › Cor",
+  "texto": "Tabela de especificação — Switch (Controle Interruptor) › Especificações › Cor",
+  "contexto": "Name · Property · Color Token || Superfície · background · --pure-0 || Label · text · --gray-80 || Rótulo · text · --gray-80 || chave de alternância - on · icon · --blue-warm-vivid-40 || chave de alternância - off · icon · --gray-20 || Ícones · icon · --pure-0",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Cores do switch: superfície --pure-0, label --gray-80, chave ligada --blue-warm-vivid-40, desligada --gray-20. Medida: cores computadas no estado desligado e ligado.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "desligado-escuro",
+     "descricao": "O switch desligado fica com a cor de alternância --gray-80.",
+     "clausula": "chave de alternância - off · icon · --gray-20"
+    },
+    {
+     "id": "ligado-verde",
+     "descricao": "O switch ligado fica com a cor --green-cool-vivid-50.",
+     "clausula": "chave de alternância - on · icon · --blue-warm-vivid-40"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-463dea60790d",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Especificações › Tipografia",
+  "texto": "Tabela de especificação — Switch (Controle Interruptor) › Especificações › Tipografia",
+  "contexto": "Name · Property · Token/Value || Label · size · --font-size-scale-base || Label · font-weight · --font-weight-semi-bold || Rótulo · size · --font-size-scale-base || Rótulo · font-weight · --font-weight-regular",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Label do switch em --font-size-scale-base semi-bold. Medida: font-size/font-weight computados do label.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "label-regular",
+     "descricao": "O label do switch fica em --font-weight-regular.",
+     "clausula": "Label · font-weight · --font-weight-semi-bold"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-33de62f95ce7",
+  "componente": "switch",
+  "arquivo": "componentes/switch__desenvolvedor.md",
+  "secao": "Switch (Controle Interruptor) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-switch · Container do componente",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "titulo-obrigatorio",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Container br-switch. Medida: classe da raiz.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "sem-br-switch",
+     "descricao": "A raiz do switch usa classe própria (aparência copiada à mão), sem br-switch."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-52394d43a884",
+  "componente": "switch",
+  "arquivo": "componentes/switch__desenvolvedor.md",
+  "secao": "Switch (Controle Interruptor) › Informações adicionais › Switch com rótulos adicionais",
+  "texto": "Os textos de ligado e desligado devem ficar em atributos data-\\:",
+  "contexto": "Para o rótulo adiciona use a classe switch-data. Os textos de ligado e desligado devem ficar em atributos data-\\:",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Switch com rótulos adicionais de ligado/desligado; os switches da tela não os usam.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-5b4b95d8e2e0",
+  "componente": "switch",
+  "arquivo": "componentes/switch__desenvolvedor.md",
+  "secao": "Switch (Controle Interruptor) › Informações adicionais › Switch com rótulos adicionais",
+  "texto": "data-enabled: é mostrado quando o componente está \"ligado\"",
+  "contexto": null,
+  "antecedente": "Para o rótulo adiciona use a classe switch-data. Os textos de ligado e desligado devem ficar em atributos data-\\:",
+  "forca": "obrigatoria",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Switch com rótulos adicionais de ligado/desligado; os switches da tela não os usam.",
+   "origem": "lote-D.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-159612f619b5",
+  "componente": "switch",
+  "arquivo": "componentes/switch__desenvolvedor.md",
+  "secao": "Switch (Controle Interruptor) › Informações adicionais › Switch com rótulos adicionais",
+  "texto": "data-disabled: é mostrado quando o componente está \"desligado\"",
+  "contexto": null,
+  "antecedente": "Para o rótulo adiciona use a classe switch-data. Os textos de ligado e desligado devem ficar em atributos data-\\:",
+  "forca": "obrigatoria",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Switch com rótulos adicionais de ligado/desligado; os switches da tela não os usam.",
+   "origem": "lote-D.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-f2a468af452d",
+  "componente": "switch",
+  "arquivo": "componentes/switch__acessibilidade.md",
+  "secao": "Acessibilidade no Switch › Navegação e Comportamento",
+  "texto": "Os usuários devem poder acessar o switch por meio da tecla Tab e alternar seu estado (ligado/desligado) por meio das teclas Space ou Enter;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Switch por Tab e alternado por Espaço ou Enter (teclas prescritas). Medida: Tab para no switch; Espaço e Enter alternam.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "switch-fora-do-tab",
+     "descricao": "O input do switch recebe tabindex=-1.",
+     "clausula": "Os usuários devem poder acessar o switch por meio da tecla Tab e alternar seu estado (ligado/desligado) por meio das teclas Space ou Enter;"
+    },
+    {
+     "id": "enter-inerte",
+     "descricao": "Com foco no switch, Enter não alterna (só Espaço).",
+     "clausula": "Os usuários devem poder acessar o switch por meio da tecla Tab e alternar seu estado (ligado/desligado) por meio das teclas Space ou Enter;"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-33e661bc4435",
+  "componente": "switch",
+  "arquivo": "componentes/switch__acessibilidade.md",
+  "secao": "Acessibilidade no Switch › Navegação e Comportamento",
+  "texto": "Para que usuários com deficiência visual possam entender completamente a opção selecionada, os leitores de tela devem anunciar o rótulo descritivo e o estado atual do switch.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — estado-nao-exposto → a2-3c18fb6c1dbc (O checkbox principal, outro nó, deixa de ir ao intermediário porque o div não tem estado checked.); a2-f4237d13520b (A associação label[for]/id, outra propriedade, se perde porque um div não é rotulável por for.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Leitor de tela anuncia rótulo E estado atual; a parte residual, que o e-MAG 6.2 não cobre, é o estado. Medida: estado (checked/aria-checked) exposto na árvore de acessibilidade igual ao visual.)",
+   "origem": "revisao-2"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-4a2e16cecb19",
+  "componente": "switch",
+  "arquivo": "componentes/switch__acessibilidade.md",
+  "secao": "Acessibilidade no Switch › Recomendações para Estilo e Design",
+  "texto": "Forneça feedback visual e/ou auditivo indicando qual é o estado atual da opção selecionada.",
+  "contexto": "Forneça feedback visual e/ou auditivo indicando qual é o estado atual da opção selecionada. Observe as indicações de cores de estado na diretriz do componente;",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "\"Visual e/ou auditivo\": violar exige tirar ao mesmo tempo a indicação visual (chave/cor) e o estado exposto (aria-checked), já julgados em outras unidades.",
+   "origem": "lote-D.json"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-e9ded28efe9c",
+  "componente": "switch",
+  "arquivo": "componentes/switch__acessibilidade.md",
+  "secao": "Acessibilidade no Switch › Recomendações para Código",
+  "texto": "Quando ativado, o elemento switch deve ter o atributo aria-checked definido como true e quando desativado, o atributo aria-checked definido como false;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "aria-checked acompanha o estado. Medida: aria-checked depois de ligar e de desligar.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "aria-checked-fixo",
+     "descricao": "aria-checked fica 'false' mesmo com o switch ligado."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "axe",
+    "interacao"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-14fa162258a8",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Comportamentos › 2. Área interativa",
+  "texto": "A interatividade do componente switch ocorre tanto na área compreendida pelo container como pelo label correspondente.",
+  "contexto": "A interatividade do componente switch ocorre tanto na área compreendida pelo container como pelo label correspondente.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "A área interativa do switch inclui o container e o label. Medida: clicar no texto do rótulo alterna o switch.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-nao-clicavel",
+     "descricao": "Clicar no texto do rótulo do switch não o alterna (o rótulo ignora o ponteiro), só a chave.",
+     "clausula": "A interatividade do componente switch ocorre tanto na área compreendida pelo container como pelo label correspondente."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-dc662beb73b3",
+  "componente": "switch",
+  "arquivo": "componentes/switch__desenvolvedor.md",
+  "secao": "Switch (Controle Interruptor) › Informações adicionais › Switch com rótulos adicionais",
+  "texto": "Para o rótulo adiciona use a classe switch-data.",
+  "contexto": "Para o rótulo adiciona use a classe switch-data. Os textos de ligado e desligado devem ficar em atributos data-\\:",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos adicionais de ligado/desligado; os switches não os usam.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ }
+]

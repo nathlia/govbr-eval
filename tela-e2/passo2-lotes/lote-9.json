@@ -1,0 +1,2005 @@
+{
+ "a2-41f0168a6cbb": {
+  "aceita": true,
+  "justificativa": "Container (trilho) obrigatório. Medida: fundo e borda computados do trilho.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "sem-trilho",
+    "descricao": "O trilho do switch fica transparente e sem borda; só a chave aparece.",
+    "clausula": "2 · container · Superfície · Obrigatório",
+    "efeitos": {
+     "toca": [
+      "$:chave",
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS do pseudo-elemento do trilho (no label)"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-402eef83153c": {
+  "aceita": true,
+  "justificativa": "Chave de alternância obrigatória. Medida: tamanho e cor visíveis da chave.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "sem-chave",
+    "descricao": "A chave de alternância fica oculta; só o trilho aparece.",
+    "clausula": "3 · Chave de alternância · --- · Obrigatório",
+    "efeitos": {
+     "toca": [
+      "$:chave",
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS do pseudo-elemento da chave (no label)"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-ae1397ab72d5": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Consistência entre switches do produto; a tela tem um único switch, nada a comparar."
+ },
+ "a2-771cb345f19e": {
+  "aceita": true,
+  "justificativa": "Item 4 da anatomia: o rótulo de estado (texto de ligado/desligado ao lado da chave) deve ser curto e conciso. R-ED (b): uma frase longa no lugar do texto de estado é flagrante e oposta. Medida: número de palavras do texto de estado em cada posição da chave.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "estado-prolixo",
+    "descricao": "O texto de estado do switch ligado vira uma frase de ~15 palavras ('A emissão automática de certificado sanitário está ativada para todos os países habilitados no cadastro').",
+    "clausula": "Use rótulos curtos e concisos.",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:texto-estado"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto do estado ligado (atributo data-* na raiz) alongado"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "redação do rótulo de estado do componente; não é rótulo de campo de formulário nem propriedade acessível",
+  "equivalenteEmag": null
+ },
+ "a2-6990d98db92a": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Label distante do container; na tela o label fica ao lado do switch."
+ },
+ "a2-3c18fb6c1dbc": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Switches agrupados com checkbox principal; a tela tem um só switch e nenhum checkbox."
+ },
+ "a2-8f7b9c91d55e": {
+  "aceita": true,
+  "justificativa": "O switch da página é configuração de efeito imediato: alternar aplica o novo estado sem exigir clique em Salvar/Enviar. Medida: depois de alternar, sem outro clique, não há aplicação pendente nem botão de salvar a configuração a acionar.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "exige-salvar-configuracao",
+    "descricao": "Ao alternar, a chave muda mas a configuração fica pendente: surge ao lado um botão secundário 'Salvar configuração' e o aviso 'Clique em Salvar configuração para aplicar'; só esse clique aplica o novo estado.",
+    "clausula": "Switches devem ter efeito imediato e não devem exigir que o usuário clique em botões de \"Salvar\" ou \"Enviar\" para aplicar o novo estado.",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "pagina:secao-config",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "botão e aviso novos na seção de configuração; script adia a aplicação até o clique"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "comportamento do DS (momento em que o estado é aplicado), sem propriedade acessível",
+  "equivalenteEmag": null
+ },
+ "a2-89d5e6e47d30": {
+  "aceita": false,
+  "motivo": "duplicada:a2-771cb345f19e",
+  "justificativa": "Mesmo predicado (rótulo de estado curto) e mesmo observável de a2-771cb345f19e, que vem antes no texto."
+ },
+ "a2-002bf9be74ec": {
+  "aceita": true,
+  "justificativa": "Posição firme durante a alternância. Medida: getBoundingClientRect do contêiner antes e depois de alternar.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "container-se-move",
+    "descricao": "Ao ligar, o contêiner do switch muda de largura e desloca a chave e o label.",
+    "clausula": "O Switch deve ser posicionado na interface de forma firme e consistente durante o movimento da chave de alternância",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:chave"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS em :checked altera a largura do contêiner"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-c5776632fd52": {
+  "aceita": true,
+  "justificativa": "R-ED (b): o rótulo diz o que o switch faz. Medida: texto do label nomeia a ação.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-neutro",
+    "descricao": "O label do switch passa de \"Emissão automática de certificado sanitário para países habilitados\" para \"Opção\".",
+    "clausula": "Os rótulos devem descrever o que o switch fará quando a chave estiver ligada ou desligada.",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto do label"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "redação do label do componente; o switch é configuração fora do formulário, não campo",
+  "equivalenteEmag": null
+ },
+ "a2-44a57ddcc53f": {
+  "aceita": true,
+  "justificativa": "O rótulo de estado fica sempre na mesma posição em relação ao switch. Medida: posição (lado) do texto de estado em relação à chave, ligado e desligado.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "estado-troca-de-lado",
+    "descricao": "Com o switch ligado o texto de estado aparece à direita da chave; desligado, à esquerda (posicionado sem deslocar a chave nem o contêiner).",
+    "clausula": "Use rótulos sempre na mesma posição em relação ao switch.",
+    "efeitos": {
+     "toca": [
+      "$:texto-estado"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de posição do texto de estado depende do estado"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico (posição), sem propriedade acessível",
+  "equivalenteEmag": null
+ },
+ "a2-b20a134b4c05": {
+  "aceita": false,
+  "motivo": "duplicada:a2-771cb345f19e",
+  "justificativa": "Mesma frase ('Use rótulos curtos e concisos.') e mesmo observável de a2-771cb345f19e, que vem antes no texto."
+ },
+ "a2-c0e948f338ec": {
+  "aceita": false,
+  "motivo": "duplicada:a2-44a57ddcc53f",
+  "justificativa": "Com um único switch, não alternar a posição do rótulo é o mesmo predicado e observável de a2-44a57ddcc53f (mesma posição em relação ao switch), que vem antes no texto."
+ },
+ "a2-c1af8ea16c40": {
+  "aceita": true,
+  "justificativa": "Rótulos de estado em par: há texto para ligado e para desligado. Medida: texto de estado presente nas duas posições da chave.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "estado-so-ligado",
+    "descricao": "O texto de desligado é retirado (sem data-disabled): com o switch desligado nada aparece ao lado da chave; ligado, o texto continua.",
+    "clausula": "Use os rótulos sempre em pares.",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:texto-estado"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "atributo do texto de desligado removido da raiz"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "interacao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "presença do rótulo de estado do componente; sem propriedade acessível",
+  "equivalenteEmag": null
+ },
+ "a2-1854c7b2badd": {
+  "aceita": true,
+  "justificativa": "Label centrado na vertical em relação à chave. Medida: centro vertical do texto contra o da chave.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "label-no-topo",
+    "descricao": "O texto do switch fica alinhado ao topo da chave, fora do centro vertical.",
+    "clausula": "Label · --spacing-vertical-center",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de alinhamento vertical do texto"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-2a5f1cb5a078": {
+  "aceita": true,
+  "justificativa": "Espaçamentos do switch: label a --spacing-scale-2x da chave; chave à direita quando ligado. Medida: distância label–trilho e posição da chave.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "label-colado",
+    "descricao": "O label fica encostado no trilho (margem 0).",
+    "clausula": "Label (depende da posição) · margin-right/margin-left/margin-botton · --spacing-scale-2x",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de margem do texto"
+    }
+   },
+   {
+    "id": "chave-ligada-a-esquerda",
+    "descricao": "Ao ligar, a chave permanece à esquerda (só a cor muda).",
+    "clausula": "Chave (ligado) · horizontal align · right",
+    "efeitos": {
+     "toca": [
+      "$:chave"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS em :checked não desloca a chave"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "interacao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-89b4537e8260": {
+  "aceita": true,
+  "justificativa": "Switch de densidade média: container 52×30px, chave 22×22px. Medida: dimensões computadas do trilho e da chave.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "chave-pequena",
+    "descricao": "A chave fica com 14×14px dentro do container 52×30.",
+    "clausula": "Chave de alternância (média) · width · 22px",
+    "efeitos": {
+     "toca": [
+      "$:chave"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS do pseudo-elemento da chave"
+    }
+   },
+   {
+    "id": "trilho-largo",
+    "descricao": "O container fica com 64×30px.",
+    "clausula": "container (média) · width · 52px",
+    "efeitos": {
+     "toca": [
+      "$:chave",
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS do pseudo-elemento do trilho"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-86176aff4a89": {
+  "aceita": true,
+  "justificativa": "Cores do switch por token. Medida: cor da chave desligada e ligada, cor do label.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "desligado-escuro",
+    "descricao": "O switch desligado fica com a cor de alternância --gray-80.",
+    "clausula": "chave de alternância - off · icon · --gray-20",
+    "efeitos": {
+     "toca": [
+      "$:chave"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de cor no estado desligado"
+    }
+   },
+   {
+    "id": "ligado-verde",
+    "descricao": "O switch ligado fica com a cor --green-cool-vivid-50.",
+    "clausula": "chave de alternância - on · icon · --blue-warm-vivid-40",
+    "efeitos": {
+     "toca": [
+      "$:chave"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de cor no estado ligado"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "interacao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+  "equivalenteEmag": null
+ },
+ "a2-463dea60790d": {
+  "aceita": true,
+  "justificativa": "Label do switch em --font-size-scale-base semi-bold. Medida: font-weight/font-size computados do label.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "label-regular",
+    "descricao": "O label do switch fica em --font-weight-regular.",
+    "clausula": "Label · font-weight · --font-weight-semi-bold",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "CSS de peso do label"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "visual-token cujo observável é peso de texto",
+  "equivalenteEmag": null
+ },
+ "a2-33de62f95ce7": {
+  "aceita": true,
+  "justificativa": "Contêiner br-switch. Medida: classe da raiz.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "sem-classe-do-componente",
+    "descricao": "A raiz do switch usa classe própria com a aparência copiada à mão, sem br-switch.",
+    "clausula": "class · string · br-switch · Container do componente",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "classe da raiz e CSS copiado"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "estrutura-classe: classe do contêiner, sem propriedade acessível",
+  "equivalenteEmag": null
+ },
+ "a2-52394d43a884": {
+  "aceita": true,
+  "justificativa": "Os textos de ligado e desligado ficam nos atributos data-enabled/data-disabled. Medida: atributos data-* da raiz e origem do texto exibido.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "textos-em-spans",
+    "descricao": "Os atributos data-enabled/data-disabled são retirados; os dois textos ficam escritos em spans dentro do switch, um escondido por CSS conforme o estado (aparência igual).",
+    "clausula": "Os textos de ligado e desligado devem ficar em atributos data-\\:",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:texto-estado"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "textos movidos de atributos para spans"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "marcação do rótulo de estado, parte da anatomia do componente",
+  "equivalenteEmag": null
+ },
+ "a2-5b4b95d8e2e0": {
+  "aceita": true,
+  "justificativa": "O texto de data-enabled é o mostrado com o switch ligado. Medida: ao ligar, o texto de estado exibido é o de ligado.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "ligado-mostra-desligado",
+    "descricao": "data-enabled recebe o mesmo texto de data-disabled: com o switch ligado, o texto ao lado da chave diz o de desligado.",
+    "clausula": "data-enabled: é mostrado quando o componente está \"ligado\"",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:texto-estado"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "valor do atributo de ligado trocado"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "texto exibido por estado do componente; sem propriedade acessível",
+  "equivalenteEmag": null
+ },
+ "a2-159612f619b5": {
+  "aceita": true,
+  "justificativa": "O texto de data-disabled é o mostrado com o switch desligado. Medida: em S0 (desligado), o texto de estado exibido é o de desligado.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "desligado-mostra-ligado",
+    "descricao": "data-disabled recebe o mesmo texto de data-enabled: com o switch desligado, o texto ao lado da chave diz o de ligado.",
+    "clausula": "data-disabled: é mostrado quando o componente está \"desligado\"",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:texto-estado"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "valor do atributo de desligado trocado"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "texto exibido por estado do componente; sem propriedade acessível",
+  "equivalenteEmag": null
+ },
+ "a2-f2a468af452d": {
+  "aceita": true,
+  "justificativa": "Switch alcançável por Tab e alternado por Espaço ou Enter. Medida: Tab para no switch; a tecla alterna.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "switch-fora-do-tab",
+    "descricao": "O input do switch recebe tabindex=-1.",
+    "clausula": "Os usuários devem poder acessar o switch por meio da tecla Tab",
+    "efeitos": {
+     "toca": [
+      "$:input"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "atributo tabindex no input"
+    }
+   },
+   {
+    "id": "espaco-inerte",
+    "descricao": "Com foco no switch, Espaço não alterna (keydown cancelado por script).",
+    "clausula": "alternar seu estado (ligado/desligado) por meio das teclas Space ou Enter",
+    "efeitos": {
+     "toca": [
+      "$:input",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "listener de teclado que cancela Espaço"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "operação por teclado é propriedade de acessibilidade",
+  "equivalenteEmag": null
+ },
+ "a2-33e661bc4435": {
+  "aceita": true,
+  "justificativa": "Leitor de tela anuncia o rótulo e o estado atual. Medida: na árvore de acessibilidade o switch tem nome e estado ligado/desligado igual ao visual.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "estado-nao-exposto",
+    "descricao": "O input do switch recebe role=\"button\" sem aria-pressed: o nome continua, o estado deixa de ser exposto.",
+    "clausula": "os leitores de tela devem anunciar o rótulo descritivo e o estado atual do switch",
+    "efeitos": {
+     "toca": [
+      "$:input"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "atributo role no input"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "axe",
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "estado acessível do controle",
+  "equivalenteEmag": null
+ },
+ "a2-4a2e16cecb19": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "\"Visual e/ou auditivo\": violar exige tirar ao mesmo tempo a indicação visual da chave e o estado exposto."
+ },
+ "a2-e9ded28efe9c": {
+  "aceita": true,
+  "justificativa": "aria-checked acompanha o estado. Medida: aria-checked em S0 (desligado) e depois de ligar.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "aria-checked-fixo",
+    "descricao": "aria-checked fica 'true' com o switch desligado e não muda ao alternar.",
+    "clausula": "quando desativado, o atributo aria-checked definido como false",
+    "efeitos": {
+     "toca": [
+      "$:input",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "valor fixo de aria-checked"
+    }
+   },
+   {
+    "id": "sem-aria-checked",
+    "descricao": "O elemento do switch fica sem o atributo aria-checked.",
+    "clausula": "o elemento switch deve ter o atributo aria-checked definido como true e quando desativado, o atributo aria-checked definido como false",
+    "efeitos": {
+     "toca": [
+      "$:input",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "atributo aria-checked removido"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "axe",
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "estado acessível do controle",
+  "equivalenteEmag": null
+ },
+ "a2-cdd2382da97b": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Hover herda os outros estados (overlay, não substituição). Medida: com o estado aplicado (foco por Tab; switch ligado), passar o ponteiro e ver se o estado continua visível.",
+  "instancias": [
+   "btn-limpar",
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "hover-apaga-foco",
+    "instancias": [
+     "btn-limpar"
+    ],
+    "descricao": "Com o 'Limpar campos' focado por Tab, o hover substitui o estilo: o contorno de foco some enquanto o ponteiro está sobre ele.",
+    "clausula": "É importante a possibilidade de herança com outros estados mesmo com hover.",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "hover anula o estilo de foco"
+    }
+   },
+   {
+    "id": "hover-apaga-ligado",
+    "instancias": [
+     "swt-certificado"
+    ],
+    "descricao": "Com o switch ligado, o hover mostra o visual de desligado enquanto o ponteiro está sobre ele.",
+    "clausula": "É importante a possibilidade de herança com outros estados mesmo com hover.",
+    "efeitos": {
+     "toca": [
+      "$:chave"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "hover anula o visual de ligado"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Comportamento de estado; uma variante apaga o foco visível."
+ },
+ "a2-78f11cbcb280": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Pressionado herda os outros estados. Medida: com o controle ligado/marcado, pressionar e ver se o estado continua visível.",
+  "instancias": [
+   "swt-certificado",
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "pressionado-apaga-estado",
+    "descricao": "Durante o pressionar, o estilo de pressionado substitui o do estado: o switch ligado (ou o radio marcado) aparece desligado/desmarcado.",
+    "clausula": "É importante manter heranças de outros Estados mesmo com Pressionado.",
+    "efeitos": {
+     "porHospedeiro": {
+      "swt-certificado": {
+       "toca": [
+        "$:chave"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "pressionado anula o visual de ligado"
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:inputs"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "pressionado anula a marca de selecionado"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Comportamento de estado."
+ },
+ "a2-0cb58cc75f6f": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Borda de foco em volta do elemento com espaçamento de segurança. Medida: outline-offset/padding do indicador em :focus-visible.",
+  "instancias": [
+   "btn-limpar",
+   "inp-codigo",
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "foco-colado",
+    "descricao": "O indicador de foco fica colado ao elemento (outline-offset 0, sem espaçamento).",
+    "clausula": "Essa borda deve ser criada em volta do elemento e deve ter um espaçamento de segurança",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "foco sem espaçamento"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "foco sem espaçamento"
+      },
+      "swt-certificado": {
+       "toca": [
+        "$:input",
+        "$:chave"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "foco sem espaçamento"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "token",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Token de espaçamento do foco; observável é o foco visível."
+ },
+ "a2-2b5c2bc4358b": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Borda de foco em fundo claro na cor --gold-vivid-40. Medida: outline-color em :focus-visible.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-codigo",
+   "sel-continente",
+   "swt-certificado",
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "foco-cor-fora",
+    "descricao": "O contorno de foco do controle fica #1351B4 (azul de interação) em vez de --gold-vivid-40; continua visível e tracejado.",
+    "clausula": "border (Sobre um fundo Claro) · color · --gold-vivid-40",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do contorno de foco"
+      },
+      "btn-ajuda": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do contorno de foco"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do contorno de foco"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do contorno de foco"
+      },
+      "swt-certificado": {
+       "toca": [
+        "$:input",
+        "$:chave"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do contorno de foco"
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:inputs"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do contorno de foco"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "token",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Token de cor do foco; observável é o foco visível."
+ },
+ "a2-235056fad007": {
+  "aceita": true,
+  "justificativa": "Tabela Ligado/Desligado: ligado = --blue-warm-vivid-40. Na página: o switch de certificado ligado. Medida: cor computada da chave com o switch ligado. A linha Desligado (--gray-40) diverge da especificação do próprio Switch; fica sem variante.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "ligado-cor-fora",
+    "descricao": "Com o switch ligado, a chave fica #1351B4 (--blue-warm-vivid-70) em vez de --blue-warm-vivid-40.",
+    "clausula": "background/foreground (Ligado) · color · --blue-warm-vivid-40",
+    "efeitos": {
+     "toca": [
+      "$:chave",
+      "pagina:estilos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Regra de estilo da cor da chave no estado ligado."
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Observável é cor (token).",
+  "equivalenteEmag": null
+ },
+ "a2-3d935c4b833a": {
+  "aceita": true,
+  "justificativa": "O título do formulário tem de ter o maior tamanho de texto entre os elementos do formulário. Medida: font-size computado do título do formulário contra rótulos dos campos e texto do botão Limpar. O switch saiu do formulário (seção própria de configuração do serviço) e não é hospedeiro desta cláusula.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "texto-maior-que-titulo-form",
+    "descricao": "O rótulo do campo (no botão, o texto 'Limpar campos') recebe font-size de 40px, maior que o do título do formulário.",
+    "clausula": "devem ter o maior tamanho de texto entre todos os elementos do formulário",
+    "efeitos": {
+     "porHospedeiro": {
+      "inp-nome-pais": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-size do rótulo acima do título do formulário"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-size do rótulo acima do título do formulário"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-size do rótulo acima do título do formulário"
+      },
+      "btn-limpar": {
+       "toca": [
+        "$:texto"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-size do texto do botão acima do título do formulário"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "tipografia",
+   "formulario"
+  ],
+  "razaoCategorias": "Observável é tamanho de fonte (tipografia) de rótulo de campo (formulario).",
+  "equivalenteEmag": null
+ },
+ "a2-3778203c3941": {
+  "aceita": true,
+  "justificativa": "Rótulos concisos. R-ED (b): rótulo-parágrafo é flagrante e oposto a 'concisos'. Medida: número de palavras do rótulo/legend. O switch saiu do formulário (seção própria de configuração do serviço) e não é hospedeiro desta cláusula.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-prolixo",
+    "descricao": "O rótulo do campo (a legend, no grupo de radios) vira uma frase de ~25 palavras explicando por extenso o que se pede e por quê.",
+    "clausula": "Utilize rótulos concisos",
+    "efeitos": {
+     "porHospedeiro": {
+      "inp-nome-pais": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "texto do rótulo alongado"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "texto do rótulo alongado"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "texto do rótulo alongado"
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:legenda"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "texto da legend alongado"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "Texto do rótulo de campo (formulario), cláusula de redação sobre a estrutura do formulário.",
+  "equivalenteEmag": null
+ },
+ "a2-31c6d22fa5eb": {
+  "aceita": true,
+  "justificativa": "Uso consistente de ':' no fim dos rótulos. R-ED (a): presença do caractere é contável. Medida: último caractere de cada rótulo do formulário. O switch saiu do formulário (seção própria de configuração do serviço) e não é hospedeiro desta cláusula.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "dois-pontos-em-um-so",
+    "descricao": "Só o rótulo deste campo termina com ':'; os demais rótulos do formulário ficam sem.",
+    "clausula": "se optar pelos dois pontos \":\" no final do rótulo mantenha esse padrão",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "um ':' acrescentado ao texto do rótulo"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "Texto do rótulo de campo (formulario).",
+  "equivalenteEmag": null
+ },
+ "a2-0cb2e580195d": {
+  "aceita": true,
+  "justificativa": "Espaçamentos constantes para a mesma função na tela. Medida: distância rótulo–campo e distância entre campos consecutivos, comparadas entre os campos do formulário. O switch saiu do formulário (seção própria de configuração do serviço) e não é hospedeiro desta cláusula.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-campo-colado",
+    "instancias": [
+     "inp-nome-pais",
+     "inp-codigo",
+     "sel-continente"
+    ],
+    "descricao": "A distância entre o rótulo e o campo deste campo fica 2px, diferente dos demais campos.",
+    "clausula": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "margem do label reduzida a 2px"
+    }
+   },
+   {
+    "id": "espaco-entre-campos-desigual",
+    "descricao": "A margem abaixo deste campo fica 64px, enquanto entre os demais campos segue o espaçamento padrão.",
+    "clausula": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "margem inferior do campo de 64px"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Espaçamento: token.",
+  "equivalenteEmag": null
+ },
+ "a2-015f84774222": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (a). Rótulo de elemento de entrada de dados não fica todo em caixa alta (contável). Medida: texto renderizado do rótulo/legenda não é todo maiúsculo.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-campo-caixa-alta",
+    "descricao": "O rótulo do campo (a legenda, no grupo de radios) é escrito inteiro em maiúsculas (ex.: 'NOME DO PAÍS', 'SITUAÇÃO DO CADASTRO').",
+    "clausula": "Não deixe o texto todo em caixa alta.",
+    "efeitos": {
+     "porHospedeiro": {
+      "inp-nome-pais": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto do rótulo/legenda muda"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto do rótulo/legenda muda"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto do rótulo/legenda muda"
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:legenda"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto do rótulo/legenda muda"
+      },
+      "swt-certificado": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto do rótulo/legenda muda"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "redação do rótulo de campo"
+ },
+ "a2-1f45d0dc0c3a": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (a). Uso de ':' no fim do rótulo consistente em todo o formulário (contável). Medida: os rótulos e a legenda terminam todos com ':' ou nenhum termina. O switch saiu do formulário (seção própria de configuração do serviço) e não é hospedeiro desta cláusula.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "dois-pontos-em-um-rotulo",
+    "descricao": "Só o rótulo deste campo (ou a legenda, no grupo de radios) passa a terminar com ':'; os demais ficam sem.",
+    "clausula": "se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário",
+    "efeitos": {
+     "porHospedeiro": {
+      "inp-nome-pais": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto de um rótulo ganha ':'"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto de um rótulo ganha ':'"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto de um rótulo ganha ':'"
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:legenda"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto de um rótulo ganha ':'"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "redação do rótulo de campo"
+ },
+ "a2-7278a9812cac": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (b). Rótulos positivos, breves, claros e diretos; caso flagrante o do próprio texto: rótulo em forma negativa. Medida: o rótulo é afirmativo.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-negativo",
+    "descricao": "O rótulo passa a forma negativa (ex.: switch 'Não suspender a emissão automática de certificado sanitário'; select 'Não deixe de informar o continente').",
+    "clausula": "Os textos dos rótulos devem ser positivos, breves, claros e diretos.",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o texto do rótulo muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "redação do rótulo de campo"
+ },
+ "a2-971db6a57c75": {
+  "aceita": true,
+  "justificativa": "Role e states/properties ARIA acompanham o elemento durante o ciclo de vida, salvo quando a semântica implícita já basta. Na página: o estado de expansão do select ao abrir a lista (S2) e o estado ligado/desligado do switch. Medida: após a interação, o estado na árvore de acessibilidade (expanded, checked) reflete o estado visual.",
+  "instancias": [
+   "sel-continente",
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "expansao-desatualizada",
+    "descricao": "Ao abrir a lista de continentes (S2), o atributo aria-expanded do select continua false; a lista abre normalmente.",
+    "instancias": [
+     "sel-continente"
+    ],
+    "clausula": "associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos",
+    "efeitos": {
+     "toca": [
+      "$:campo",
+      "$:gatilho",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Só o estado acessível de expansão deixa de ser atualizado; S2 continua alcançável."
+    }
+   },
+   {
+    "id": "chave-com-estado-fixo",
+    "descricao": "O input do switch ganha aria-checked=\"false\" fixo, que não muda quando a chave é ligada; visualmente a chave liga normalmente.",
+    "instancias": [
+     "swt-certificado"
+    ],
+    "clausula": "associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos",
+    "efeitos": {
+     "toca": [
+      "$:input"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Estado acessível congelado em desligado; aparência e efeito da configuração iguais."
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Guia geral de WAI-ARIA (exige acessibilidade); o observável é o estado acessível após a interação.",
+  "equivalenteEmag": null
+ },
+ "a2-a39f3ad397d4": {
+  "aceita": true,
+  "justificativa": "O texto usa a família Rawline. Medida: font-family computado do texto de cada instância com texto visível (btn-ajuda só tem ícone e fica de fora).",
+  "instancias": [
+   "btn-limpar",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "fonte-do-sistema",
+    "descricao": "O texto da instância passa a usar Arial (pilha sans-serif do sistema) em vez de Rawline, declarado no elemento raiz da instância.",
+    "clausula": "Utilize a família tipográfica Rawline com suas variações de peso e estilo.",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      },
+      "inp-nome-pais": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      },
+      "sel-continente": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:grupo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      },
+      "swt-certificado": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      },
+      "lst-paises": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      },
+      "msg-erro": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "Unidade do DS cujo observável é a família da fonte do texto.",
+  "equivalenteEmag": null
+ },
+ "a2-18acbf7b4c9c": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 3.12: sigla com explicação ou forma completa ao menos na primeira ocorrência (R-ED b: sigla sem expansão em lugar nenhum). Medida: texto visível e abbr/title da página.",
+  "instancias": [
+   "inp-codigo",
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "sigla-sem-explicacao",
+    "instancias": [
+     "swt-certificado"
+    ],
+    "descricao": "O rótulo do switch vira 'Emissão automática de CSI para países habilitados', sem forma completa de CSI em lugar nenhum da página.",
+    "clausula": "Ao menos na primeira ocorrência de siglas, abreviaturas ou palavras incomuns (ambíguas, desconhecidas ou utilizadas de forma muito específica), deve ser disponibilizada sua explicação ou forma completa.",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "rótulo troca a expressão por sigla não explicada"
+    }
+   },
+   {
+    "id": "sigla-no-apoio",
+    "instancias": [
+     "inp-codigo"
+    ],
+    "descricao": "O texto de apoio vira 'Use o código de 3 letras do SISCOMEX', sem forma completa de SISCOMEX em lugar nenhum da página.",
+    "clausula": "Ao menos na primeira ocorrência de siglas, abreviaturas ou palavras incomuns (ambíguas, desconhecidas ou utilizadas de forma muito específica), deve ser disponibilizada sua explicação ou forma completa.",
+    "efeitos": {
+     "toca": [
+      "$:apoio"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto de apoio cita sigla não explicada"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "formulario"
+  ],
+  "razaoCategorias": "e-MAG; o observável é rótulo/instrução de campo com sigla."
+ },
+ "a2-a6e2601837a7": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 4.4: a área com foco de teclado claramente marcada; a borda pode mudar, não ser removida. Medida: estilo em :focus-visible ao chegar por Tab.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "foco-invisivel",
+    "descricao": "O indicador de foco do controle é suprimido (outline none, sem box-shadow nem borda de foco).",
+    "clausula": "Essa borda pode ser modificada via CSS para melhorar o destaque, mas não deverá ser removida.",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "indicador de foco removido"
+      },
+      "btn-ajuda": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "indicador de foco removido"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "indicador de foco removido"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "indicador de foco removido"
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:inputs"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "indicador de foco removido"
+      },
+      "swt-certificado": {
+       "toca": [
+        "$:input",
+        "$:chave"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "indicador de foco removido"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "indicador de foco removido"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "acessibilidade"
+  ],
+  "razaoCategorias": "e-MAG; o observável é foco visível."
+ },
+ "a2-f4237d13520b": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 6.2: label associado ao campo por for/id. Medida: for do label = id do campo; nome acessível do campo.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-desassociado",
+    "descricao": "O rótulo visível continua lá, mas sem for/id (nem aria-labelledby): não está associado ao campo (no radio, os rótulos das 3 opções).",
+    "clausula": "As etiquetas de texto (elemento LABEL) devem estar associadas aos seus campos (elementos INPUT, SELECT e TEXTAREA, à exceção do elemento BUTTON) correspondentes no formulário",
+    "efeitos": {
+     "porHospedeiro": {
+      "inp-nome-pais": {
+       "toca": [
+        "$:rotulo",
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "label sem for"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:rotulo",
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "label sem for"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:rotulo",
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "label sem for"
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:rotulos",
+        "$:inputs"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "labels das opções sem for"
+      },
+      "swt-certificado": {
+       "toca": [
+        "$:rotulo",
+        "$:input"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "label sem for"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "axe",
+   "medicao"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "formulario"
+  ],
+  "razaoCategorias": "e-MAG; o observável é rótulo de campo."
+ },
+ "a2-0f20577609d3": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 6.3: ordem do código do formulário = ordem lógica de navegação; tabindex só com real necessidade. Medida: ordem de Tab no formulário. O switch saiu do formulário (seção própria de configuração do serviço) e não é hospedeiro desta cláusula.",
+  "instancias": [
+   "inp-codigo",
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "ordem-codigo-trocada",
+    "instancias": [
+     "inp-codigo"
+    ],
+    "descricao": "O campo 'Código do país' vem antes de 'Nome do país' no código e é reposto depois por CSS (order): o Tab passa pelo código primeiro.",
+    "clausula": "os formulários devem primeiro ser codificados considerando a ordem lógica de navegação para depois serem organizados visualmente via CSS.",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "pagina:formulario"
+     ],
+     "remove": [],
+     "cascata": [
+      "inp-nome-pais"
+     ],
+     "estado": null,
+     "nota": "ordem no DOM trocada, visual reposto por CSS"
+    }
+   },
+   {
+    "id": "tabindex-no-formulario",
+    "instancias": [
+     "rad-situacao"
+    ],
+    "descricao": "O controle recebe tabindex=1 e sai da ordem do formulário (é a primeira parada de Tab).",
+    "clausula": "Os elementos do formulário devem ser distribuídos corretamente através do código HTML, criando, assim, uma sequência lógica de navegação.",
+    "efeitos": {
+     "porHospedeiro": {
+      "rad-situacao": {
+       "toca": [
+        "$:inputs"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "tabindex positivo nos radios"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "navegacao",
+   "formulario"
+  ],
+  "razaoCategorias": "e-MAG; o observável é a ordem de navegação do formulário."
+ },
+ "a2-14fa162258a8": {
+  "aceita": true,
+  "justificativa": "A área interativa inclui o container e o label. Medida: clicar no texto do label alterna o switch.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "texto-fora-do-label",
+    "descricao": "O texto do switch sai do <label> para um span ao lado (nome mantido por aria-labelledby); clicar no texto não alterna.",
+    "clausula": "A interatividade do componente switch ocorre tanto na área compreendida pelo container como pelo label correspondente.",
+    "efeitos": {
+     "toca": [
+      "$:rotulo",
+      "$:input"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto movido para fora do label; aria-labelledby no input"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "comportamento do DS (área clicável), nome acessível preservado",
+  "equivalenteEmag": null
+ },
+ "a2-dc662beb73b3": {
+  "aceita": true,
+  "justificativa": "A página tem rótulo de estado (texto de ligado/desligado) com a marcação oficial: classe switch-data na raiz. Medida: classe da raiz do switch.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "estado-sem-classe-propria",
+    "descricao": "A raiz perde a classe switch-data; uma regra CSS da página reproduz o texto de estado a partir dos mesmos atributos data-* (aparência igual).",
+    "clausula": "Para o rótulo adiciona use a classe switch-data.",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:texto-estado"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "classe retirada da raiz; CSS próprio desenha o texto"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "classe que monta o rótulo de estado, parte da anatomia do componente",
+  "equivalenteEmag": null
+ }
+}

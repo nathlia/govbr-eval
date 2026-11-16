@@ -1,0 +1,254 @@
+{
+ "_meta": {
+  "regra": "protocolo NAT-78 REVISÃO 2026-11-12 § 3.7 (≥ 5 specs do DS semeadas que pegaram; cada uma 1. confirmada por medição por auditor cego só com a documentação do DS, 2. num estado alcançável pelas paradas declaradas, 3. violando cláusula que existe na base literal); metodo.md § 6 (E-02: sorteada medida fica na referência, mas para o portão só conta se o auditor cego a confirmar)",
+  "regraDaRemedida": "fixada pelo coordenador antes da medida: confirmada às cegas = 1ª auditoria achou com a cláusula sorteada (mesma-clausula: principal, tambem ou duplicata selada) OU o 2º auditor cego, perguntado de forma neutra entre 10 iscas, decidiu 'viola' no observável sorteado. 'Achada com outra cláusula' sozinha não conta.",
+  "data": "2026-11-14",
+  "paginaMedida": "corpus 386a8d8 (depois da F-01), nas duas medidas que contam aqui (re-medida da 1ª e 2º auditor)",
+  "remedida": "tela-e2/remedida/ (cópia sem edição) · remedida-mapa.json (semente, mapa) · remedida-juncao.json",
+  "iscas": {
+   "satisfaz": 10,
+   "total": 10,
+   "viola": []
+  }
+ },
+ "limiar": 5,
+ "specsDSemVigor": 6,
+ "n_soPrimeiraAuditoria": 4,
+ "passaSoPrimeiraAuditoria": false,
+ "n_estrito": 6,
+ "passaEstrito": true,
+ "folga": 1,
+ "n_estritoSeItens2e3ForemB": 4,
+ "passaSeItens2e3ForemB": false,
+ "n_pelaLetraAnterior": 5,
+ "porSpec": [
+  {
+   "celula": "btn-limpar::a2-2ac598dc24db",
+   "classe": "DS",
+   "pegouNaConstrucao": true,
+   "primeiraAuditoria": {
+    "resultado": "mesma-clausula",
+    "via": "principal",
+    "achado": "EA-01",
+    "conformeContrario": null
+   },
+   "remedida": null,
+   "confirmadaPelaPrimeira": true,
+   "confirmadaPelaRemedida": false,
+   "confirmacaoCega": true,
+   "ambosAuditoresJulgaramConforme": false,
+   "c2_estadoAlcancavel": true,
+   "c3_clausulaNaBase": true,
+   "idsBase": [
+    "govbr-3.7.0-pattern-global-a0e5ee1b1a71"
+   ],
+   "contaEstrito": true,
+   "contaSoPrimeira": true,
+   "dependeDoItem": null
+  },
+  {
+   "celula": "msg-orientacao::a2-d6b3f0e36943",
+   "classe": "DS",
+   "pegouNaConstrucao": true,
+   "primeiraAuditoria": {
+    "resultado": "mesma-clausula",
+    "via": "tambem",
+    "achado": "EA-10",
+    "conformeContrario": null
+   },
+   "remedida": null,
+   "confirmadaPelaPrimeira": true,
+   "confirmadaPelaRemedida": false,
+   "confirmacaoCega": true,
+   "ambosAuditoresJulgaramConforme": false,
+   "c2_estadoAlcancavel": true,
+   "c3_clausulaNaBase": true,
+   "idsBase": [
+    "govbr-3.7.0-pattern-global-5dfbb109d8d4"
+   ],
+   "contaEstrito": true,
+   "contaSoPrimeira": true,
+   "dependeDoItem": 3
+  },
+  {
+   "celula": "btn-ajuda::a2-5b47246a41c1",
+   "classe": "DS",
+   "pegouNaConstrucao": true,
+   "primeiraAuditoria": {
+    "resultado": "mesma-clausula",
+    "via": "principal",
+    "achado": "EA-03",
+    "conformeContrario": null
+   },
+   "remedida": null,
+   "confirmadaPelaPrimeira": true,
+   "confirmadaPelaRemedida": false,
+   "confirmacaoCega": true,
+   "ambosAuditoresJulgaramConforme": false,
+   "c2_estadoAlcancavel": true,
+   "c3_clausulaNaBase": true,
+   "idsBase": [
+    "govbr-3.7.0-component-button-627dd3089562"
+   ],
+   "contaEstrito": true,
+   "contaSoPrimeira": true,
+   "dependeDoItem": null
+  },
+  {
+   "celula": "inp-codigo::a2-a39f3ad397d4",
+   "classe": "DS",
+   "pegouNaConstrucao": true,
+   "primeiraAuditoria": {
+    "resultado": "mesma-clausula",
+    "via": "duplicata-selada",
+    "achado": "EA-06",
+    "conformeContrario": null
+   },
+   "remedida": null,
+   "confirmadaPelaPrimeira": true,
+   "confirmadaPelaRemedida": false,
+   "confirmacaoCega": true,
+   "ambosAuditoresJulgaramConforme": false,
+   "c2_estadoAlcancavel": true,
+   "c3_clausulaNaBase": true,
+   "idsBase": [
+    "govbr-3.7.0-page-global-881fe9380b81"
+   ],
+   "contaEstrito": true,
+   "contaSoPrimeira": true,
+   "dependeDoItem": 2
+  },
+  {
+   "celula": "rad-situacao::a2-f838b54da560",
+   "classe": "DS",
+   "pegouNaConstrucao": true,
+   "primeiraAuditoria": {
+    "resultado": "nao-achada",
+    "via": null,
+    "achado": null,
+    "conformeContrario": "EC-062"
+   },
+   "remedida": {
+    "item": "R-05",
+    "decisao": "viola"
+   },
+   "confirmadaPelaPrimeira": false,
+   "confirmadaPelaRemedida": true,
+   "confirmacaoCega": true,
+   "ambosAuditoresJulgaramConforme": false,
+   "c2_estadoAlcancavel": true,
+   "c3_clausulaNaBase": true,
+   "idsBase": [
+    "govbr-3.7.0-component-radio-331797975ce6"
+   ],
+   "contaEstrito": true,
+   "contaSoPrimeira": false,
+   "dependeDoItem": null
+  },
+  {
+   "celula": "msg-erro::a2-ef29db5bb4ac",
+   "classe": "DS",
+   "pegouNaConstrucao": true,
+   "primeiraAuditoria": {
+    "resultado": "outra-clausula",
+    "via": null,
+    "achado": "EA-12",
+    "conformeContrario": null
+   },
+   "remedida": {
+    "item": "R-11",
+    "decisao": "viola"
+   },
+   "confirmadaPelaPrimeira": false,
+   "confirmadaPelaRemedida": true,
+   "confirmacaoCega": true,
+   "ambosAuditoresJulgaramConforme": false,
+   "c2_estadoAlcancavel": true,
+   "c3_clausulaNaBase": true,
+   "idsBase": [
+    "govbr-3.7.0-foundation-global-ced823e7339b"
+   ],
+   "contaEstrito": true,
+   "contaSoPrimeira": false,
+   "dependeDoItem": null
+  },
+  {
+   "celula": "sel-continente::a2-7348bce34289",
+   "classe": "G",
+   "pegouNaConstrucao": true,
+   "primeiraAuditoria": {
+    "resultado": "outra-clausula",
+    "via": null,
+    "achado": "EA-08",
+    "conformeContrario": null
+   },
+   "remedida": {
+    "item": "R-03",
+    "decisao": "viola"
+   },
+   "confirmadaPelaPrimeira": false,
+   "confirmadaPelaRemedida": true,
+   "confirmacaoCega": true,
+   "ambosAuditoresJulgaramConforme": false,
+   "c2_estadoAlcancavel": true,
+   "c3_clausulaNaBase": true,
+   "idsBase": [
+    "govbr-3.7.0-accessibility-select-fc1a1281fbbc"
+   ],
+   "contaEstrito": false,
+   "contaSoPrimeira": false,
+   "dependeDoItem": null
+  },
+  {
+   "celula": "inp-nome-pais::a2-328f62cfe4ce",
+   "classe": "G",
+   "pegouNaConstrucao": true,
+   "primeiraAuditoria": {
+    "resultado": "mesma-clausula",
+    "via": "principal",
+    "achado": "EA-04",
+    "conformeContrario": null
+   },
+   "remedida": null,
+   "confirmadaPelaPrimeira": true,
+   "confirmadaPelaRemedida": false,
+   "confirmacaoCega": true,
+   "ambosAuditoresJulgaramConforme": false,
+   "c2_estadoAlcancavel": true,
+   "c3_clausulaNaBase": true,
+   "idsBase": [
+    "govbr-3.7.0-accessibility-input-cacdb7dbe765"
+   ],
+   "contaEstrito": false,
+   "contaSoPrimeira": false,
+   "dependeDoItem": null
+  },
+  {
+   "celula": "lst-paises::a2-5432c282d0d7",
+   "classe": "G",
+   "pegouNaConstrucao": true,
+   "primeiraAuditoria": {
+    "resultado": "nao-achada",
+    "via": null,
+    "achado": null,
+    "conformeContrario": "EC-111"
+   },
+   "remedida": {
+    "item": "R-14",
+    "decisao": "satisfaz"
+   },
+   "confirmadaPelaPrimeira": false,
+   "confirmadaPelaRemedida": false,
+   "confirmacaoCega": false,
+   "ambosAuditoresJulgaramConforme": true,
+   "c2_estadoAlcancavel": true,
+   "c3_clausulaNaBase": true,
+   "idsBase": [
+    "emag:4.3"
+   ],
+   "contaEstrito": false,
+   "contaSoPrimeira": false,
+   "dependeDoItem": null
+  }
+ ]
+}

@@ -1,0 +1,77 @@
+{
+ "id": "EA-03",
+ "classe": "achado",
+ "instancia": "btn-ajuda",
+ "chave": "circular-icone-obrigatorio",
+ "porEstado": {
+  "S0": {
+   "valor": {
+    "classes": [
+     "br-button",
+     "circle",
+     "acao-ajuda"
+    ],
+    "filhos": [
+     "span.sr-only"
+    ],
+    "antes": "none",
+    "depois": "none",
+    "pixelsNaoBrancosEmRepouso": 0,
+    "referenciaBotaoFecharDaMensagem": 1024,
+    "fundo": {
+     "bg": "rgba(0, 0, 0, 0)",
+     "bgImg": "none",
+     "borda": "0px",
+     "mask": "none"
+    }
+   },
+   "viola": true
+  },
+  "S1": {
+   "valor": {
+    "classes": [
+     "br-button",
+     "circle",
+     "acao-ajuda"
+    ],
+    "filhos": [
+     "span.sr-only"
+    ],
+    "antes": "none",
+    "depois": "none",
+    "pixelsNaoBrancosEmRepouso": 0,
+    "referenciaBotaoFecharDaMensagem": 1024,
+    "fundo": {
+     "bg": "rgba(0, 0, 0, 0)",
+     "bgImg": "none",
+     "borda": "0px",
+     "mask": "none"
+    }
+   },
+   "viola": true
+  },
+  "S2": {
+   "valor": {
+    "classes": [
+     "br-button",
+     "circle",
+     "acao-ajuda"
+    ],
+    "filhos": [
+     "span.sr-only"
+    ],
+    "antes": "none",
+    "depois": "none",
+    "pixelsNaoBrancosEmRepouso": 0,
+    "referenciaBotaoFecharDaMensagem": 1024,
+    "fundo": {
+     "bg": "rgba(0, 0, 0, 0)",
+     "bgImg": "none",
+     "borda": "0px",
+     "mask": "none"
+    }
+   },
+   "viola": true
+  }
+ }
+}

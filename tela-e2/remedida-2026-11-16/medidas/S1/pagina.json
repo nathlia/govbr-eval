@@ -1,0 +1,239 @@
+{
+ "url": "http://127.0.0.1:3219/cadastro-pais.html",
+ "titulo": "Cadastrar país importador — Defesa Agropecuária gov.br",
+ "lang": "pt-BR",
+ "headings": [
+  {
+   "tag": "H1",
+   "texto": "Cadastrar País Importador",
+   "visivel": true,
+   "estilo": {
+    "fontSize": "41.804px",
+    "fontWeight": "300",
+    "color": "rgb(51, 51, 51)",
+    "lineHeight": "48.0746px",
+    "marginTop": "0px",
+    "marginBottom": "32px"
+   },
+   "caixa": {
+    "x": 60,
+    "y": 283.8,
+    "w": 494,
+    "h": 48.1
+   },
+   "tabindex": "-1"
+  },
+  {
+   "tag": "H2",
+   "texto": "Dados do País",
+   "visivel": true,
+   "estilo": {
+    "fontSize": "34.832px",
+    "fontWeight": "400",
+    "color": "rgb(51, 51, 51)",
+    "lineHeight": "40.0568px",
+    "marginTop": "16px",
+    "marginBottom": "20px"
+   },
+   "caixa": {
+    "x": 60,
+    "y": 379.8,
+    "w": 640,
+    "h": 60
+   },
+   "tabindex": null
+  },
+  {
+   "tag": "H2",
+   "texto": "Configuração do Serviço",
+   "visivel": true,
+   "estilo": {
+    "fontSize": "34.832px",
+    "fontWeight": "400",
+    "color": "rgb(51, 51, 51)",
+    "lineHeight": "40.0568px",
+    "marginTop": "16px",
+    "marginBottom": "20px"
+   },
+   "caixa": {
+    "x": 60,
+    "y": 1318.9,
+    "w": 1160,
+    "h": 60
+   },
+   "tabindex": null
+  },
+  {
+   "tag": "H2",
+   "texto": "Países Cadastrados",
+   "visivel": true,
+   "estilo": {
+    "fontSize": "34.832px",
+    "fontWeight": "400",
+    "color": "rgb(51, 51, 51)",
+    "lineHeight": "40.0568px",
+    "marginTop": "28px",
+    "marginBottom": "20px"
+   },
+   "caixa": {
+    "x": 76,
+    "y": 1546,
+    "w": 313.3,
+    "h": 60
+   },
+   "tabindex": null
+  }
+ ],
+ "regioes": {
+  "header": 1,
+  "main": 1,
+  "footer": 1,
+  "nav": [
+   {
+    "classe": "br-skiplink atalhos-pagina",
+    "ariaLabel": null
+   },
+   {
+    "classe": "br-breadcrumb trilha-servico",
+    "ariaLabel": "Trilha de navegação"
+   }
+  ],
+  "section": [
+   {
+    "labelledby": "titulo-configuracao"
+   },
+   {
+    "labelledby": "titulo-lista"
+   }
+  ]
+ },
+ "noscript": [
+  "<p>Esta página precisa de JavaScript para exibir a lista de continentes, a configuração do serviço e o retorno do cadastro.</p>"
+ ],
+ "metaRefresh": null,
+ "targetBlank": 0,
+ "accesskeys": [
+  "1",
+  "2"
+ ],
+ "tabindexPositivo": [],
+ "tabindexTodos": [
+  [
+   "h1.titulo-pagina",
+   "-1"
+  ],
+  [
+   "div#list-6274.br-list",
+   "-1"
+  ],
+  [
+   "div.br-item",
+   "-1"
+  ],
+  [
+   "div.br-item",
+   "-1"
+  ],
+  [
+   "div.br-item",
+   "-1"
+  ],
+  [
+   "div.br-item",
+   "-1"
+  ],
+  [
+   "div.br-item",
+   "-1"
+  ],
+  [
+   "div.br-item",
+   "-1"
+  ]
+ ],
+ "imagens": [
+  {
+   "src": "/cadastro-pais/marca-govbr.svg",
+   "alt": "gov.br"
+  },
+  {
+   "src": "/cadastro-pais/marca-govbr-negativa.svg",
+   "alt": "gov.br"
+  }
+ ],
+ "primeiroLink": {
+  "texto": "Ir para o conteúdo (1/2)",
+  "href": "#main-content"
+ },
+ "links": [
+  {
+   "texto": "Ir para o conteúdo (1/2)",
+   "href": "#main-content",
+   "title": null
+  },
+  {
+   "texto": "Ir para o rodapé (2/2)",
+   "href": "#rodape",
+   "title": null
+  },
+  {
+   "texto": "HConta de Helena",
+   "href": "minha-conta.html",
+   "title": null
+  },
+  {
+   "texto": "Início",
+   "href": "servicos-defesa.html",
+   "title": null
+  },
+  {
+   "texto": "Administração",
+   "href": "administracao.html",
+   "title": null
+  },
+  {
+   "texto": "Países Importadores",
+   "href": "paises-importadores.html",
+   "title": null
+  }
+ ],
+ "ancoras": [
+  {
+   "id": "main-content",
+   "existe": true,
+   "tag": "MAIN",
+   "name": null
+  },
+  {
+   "id": "rodape",
+   "existe": true,
+   "tag": "FOOTER",
+   "name": null
+  }
+ ],
+ "titleAttrs": [],
+ "outrosLang": [],
+ "forms": [
+  {
+   "id": "form-pais",
+   "novalidate": true
+  }
+ ],
+ "fieldsets": [
+  {
+   "id": "rad-situacao",
+   "legend": "Situação do cadastro"
+  }
+ ],
+ "tabelas": 0,
+ "bodyPrimeiroFilho": "nav.br-skiplink.atalhos-pagina",
+ "larguraDoc": [
+  1280,
+  1280
+ ],
+ "focoChegada": "button#btn-salvar.br-button.primary.acao-salvar",
+ "erros": [],
+ "console": [],
+ "pedidosExternos": [],
+ "metodosNaoGet": []
+}

@@ -1,0 +1,5035 @@
+{
+ "_meta": {
+  "regra": "tela-e2/metodo.md § 4.4",
+  "origem": "tela-a2/elegibilidade-passo2.json",
+  "pool": 1431,
+  "herdadas": {
+   "forca": 176,
+   "sem-medicao": 116,
+   "duplicada": 198,
+   "nao-normativa": 168,
+   "conflito": 4,
+   "escopo": 47
+  },
+  "aJulgar": {
+   "duplicada-alvo-fora": 5,
+   "aceita": 272,
+   "so-andaime": 22,
+   "nao-se-aplica": 341,
+   "acoplada": 23,
+   "sem-julgamento-a2": 59
+  }
+ },
+ "regras": {
+  "a2-9088f7e86716": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Utilize botões quando for necessário…\" é orientação de quando usar o componente.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-ff2696feca97": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Herda \"Utilize botões quando…\": orientação de uso, não exigência.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-82d96f91ebdc": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Herda \"Utilize botões quando…\": orientação de uso, não exigência.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-c0b6946dae13": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Herda \"Utilize botões quando…\": orientação de uso, não exigência.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-b1f0ccda7cf2": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Herda \"Utilize botões quando…\": orientação de uso, não exigência.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-246d862f42fb": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Herda \"Utilize botões quando…\": orientação de uso, não exigência.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-2392b30732bb": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Herda \"Utilize botões quando…\": orientação de uso, não exigência.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-65fac7fa5182": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Usar botões \"conforme a necessidade de interação\" é critério de projeto; não há medida na página.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-52db9995fef0": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "\"Ao se projetar… planejar o posicionamento\" é processo de design, não observável.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-68415d749b11": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "\"Definir o grau de importância e hierarquia das ações\" é decisão de projeto; o observável de ênfase está nas unidades de Ênfases.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-d648407ac6bb": {
+   "aceita": false,
+   "motivo": "duplicada:a2-d495bfd02867",
+   "justificativa": "Mesmo predicado (rótulo obrigatório) e mesmo observável que a2-d495bfd02867.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-1d8a2ddab3ea": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Ícone no botão padrão é opcional; a condição \"necessidade de enfatizar\" é juízo de projeto.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-1a95eeb43d22": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Deve-se evitar\" três ou mais palavras, com \"o ideal é\" no mesmo bloco: recomendação.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-9c7a5411e171": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Explica a finalidade das ênfases; não impõe nada.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-27b5f22e0f91": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Exemplo (salvar × cancelar) que ilustra a regra de ênfase primária.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-e60399fb0115": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Utilize de forma limitada\" é orientação de uso.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-2eb232425452": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Completa \"Utilize de forma limitada\" (orientação); o observável impositivo está em a2-4f6b7bd068c4.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-a9e5968c6c71": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Utilize para ações que não sejam…\" é orientação de uso da ênfase secundária.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-f7ca1b786909": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Utilize para ações de múltipla escolha…\" é orientação de uso da ênfase terciária.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-72439446cf32": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "\"Atenção:\" só introduz itens que descrevem/permitem o comportamento bloco.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-7c15fd8222c5": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve quais tipos de botão possuem o comportamento bloco.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-6b2d74ccb7b9": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Permissão (\"pode ser utilizado\").",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-564f707547af": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Permissão (\"pode ser utilizado\").",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-53e24245542b": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Permissão (\"pode existir\").",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-71cb115d4c16": {
+   "aceita": false,
+   "motivo": "conflito",
+   "justificativa": "Linha Rótulo (Padrão) vale para botão com rótulo; nos embutidos só o botão de escolha do upl-documento tem texto, e a tabela Tipografia do Upload fixa para ele outro estilo (Placeholder: --font-size-scale-base, regular, uppercase, itálico) contra up-01/semi-bold/none do Button; a página conforme segue a do Upload (componente mais específico). Os demais embutidos são circulares só com ícone e os botões br-button com rótulo são btn-enviar/btn-voltar (moldura).",
+   "origem": "lote-r2-G1.json",
+   "heranca": "a2"
+  },
+  "a2-5920d766fc49": {
+   "aceita": false,
+   "motivo": "conflito",
+   "justificativa": "Linhas (margem do ícone ao rótulo, padding lateral 3x) são de botão com rótulo; nos embutidos só o botão de escolha do upl-documento tem rótulo, e a tabela Espaçamento do Upload fixa para essa superfície padding lateral --spacing-scale-2x e margem do ícone 2x; a página conforme segue a do Upload. Os circulares não têm padding de rótulo; btn-enviar/btn-voltar são moldura.",
+   "origem": "lote-r2-G1.json",
+   "heranca": "a2"
+  },
+  "a2-1faa8ef238c0": {
+   "aceita": false,
+   "motivo": "duplicada:a2-35afb7e6ee7c",
+   "justificativa": "Revisão 2: 'O Tipo Circular precisa de texto alternativo para o ícone' tem o mesmo predicado (botão só com ícone tem alternativa em texto), a mesma condição (ícone carrega o sentido do botão) e o mesmo observável (nome acessível vazio) de a2-35afb7e6ee7c, que já é aceita com os mesmos hospedeiros (Fechar das mensagens, gatilhos dos tooltips e do select). A equivalência antiga com e-MAG 3.6 caiu: 3.6 trata de alt de imagem.",
+   "origem": "revisao-2",
+   "heranca": "a2"
+  },
+  "a2-d4c134db1d65": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Área de toque em dispositivos mobile; o contrato é 1280×900 sem toque.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-8d0a43ba3116": {
+   "aceita": false,
+   "motivo": "duplicada:a2-a6e2601837a7",
+   "justificativa": "Manter o foco visível = e-MAG 4.4, mesmo predicado e observável (indicador de foco).",
+   "equivalenteEmag": "4.4",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-e06e33122030": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Utilize o componente input quando:\" é orientação de uso.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-73066df76b6c": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Herda \"Utilize o componente input quando:\" (orientação de uso).",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-e25387e89a38": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Herda \"Utilize o componente input quando:\" (orientação de uso).",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-d004617ab085": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Herda \"Utilize o componente input quando:\" (orientação de uso).",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-2e625701f224": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve a função do rótulo.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-ae8db33b4503": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve uma função do rótulo e remete ao Padrão de Formulário, onde está a regra de marcação de obrigatórios.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-309fd2a0777a": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Remissão a outro documento.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-121e2f176704": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve para que serve o campo.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-55c2c29974e2": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Use o placeholder quando…\" é orientação de uso.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-ea84b8ce983e": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "A condição (\"quando label e placeholder não foram suficientes\") é juízo de projeto.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-27ced4974856": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Grid de 4 colunas (telas pequenas) e área de toque; contrato 1280×900.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-ff5e306ed5d2": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Evite dividir o input\" é recomendação.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-9a95fc4f7003": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de \"boas práticas\" de autocomplete: recomendação.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-a64db0c373c8": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de \"boas práticas\" de autocomplete: recomendação.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-6bdd82e245d3": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de \"boas práticas\" de autocomplete: recomendação.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-703143614a12": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de \"boas práticas\" de autocomplete: recomendação.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-5b0b407b140e": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de \"boas práticas\" de autocomplete: recomendação.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-93c8e2f7bb50": {
+   "aceita": false,
+   "motivo": "duplicada:a2-bd84ff2497d5",
+   "justificativa": "Classe br-input no campo do select já aceita em a2-bd84ff2497d5 (mesmo observável; único hospedeiro do input).",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-01e8f41e5ef6": {
+   "aceita": false,
+   "motivo": "duplicada:a2-cd5cbf0f18dc",
+   "justificativa": "Ajuda contextual / instruções de preenchimento = e-MAG 6.5, mesmo predicado e observável (texto de instrução junto ao campo).",
+   "equivalenteEmag": "6.5",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-5b4660cb8794": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"É importante fornecer feedback imediato\" em seção de recomendações: ênfase/recomendação; o observável impositivo (cor do estado) está em a2-7bdc66f1d99d.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-463fd1d8185a": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Devem ser utilizados quando se pretende…\" é orientação de quando usar o item.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-b090304b9dd6": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "A superfície do item não tem aparência própria em repouso nos hospedeiros (herda a da lista/barra); nada a medir.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-bf22d6ac05ac": {
+   "aceita": false,
+   "motivo": "duplicada:a2-b4c1596eb8e2",
+   "justificativa": "Área de conteúdo obrigatória: mesmo predicado e observável de a2-b4c1596eb8e2.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-db12ed1239a7": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "\"Levar em conta as características de cada componente\" é critério de diagramação, não medível.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-e4ef78351d8e": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Só nomeia a parte (Superfície).",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-412284c6dcc9": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Use este recurso com cautela\" é recomendação.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-0f969abfa232": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Informa que as larguras são flexíveis.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-bb61fc345436": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Evite…\" é recomendação; a proibição medível está em a2-7339465391f7.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-ece46f7d3792": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Legenda de imagem de exemplos.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-f9a04eef042d": {
+   "aceita": false,
+   "motivo": "duplicada:a2-e06d4991a48e",
+   "justificativa": "\"Só mídias podem sangrar\" = o mesmo padding obrigatório para o resto (mesmo observável).",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-872ebc14bda0": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Remissão a outro documento.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-e3c22c4d911a": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Declara que os comportamentos são opcionais.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-f528988199db": {
+   "aceita": false,
+   "motivo": "duplicada:a2-419c091564b6",
+   "justificativa": "br-item nas opções do select já aceito em a2-419c091564b6 (as abas usam tab-item, não br-item).",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-f307529302ba": {
+   "aceita": false,
+   "motivo": "duplicada:a2-acc4801af71c",
+   "justificativa": "\"Navegação clara entre itens para quem tem deficiência física\" = e-MAG 2.1 (todas as funções via teclado), mesmo observável; as teclas específicas estão em unidades próprias.",
+   "equivalenteEmag": "2.1",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-2c63891a8aa6": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Área de toque em dispositivos mobile; contrato 1280×900 sem toque.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-f2ebf922f989": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "\"Deixe claro\" quais elementos são interativos não tem caso inequívoco além dos estados, cobertos por a2-2f900cc3509d.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-95767259dad6": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Utilize lists quando…\" é orientação de uso.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-871ffc90f87b": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Tenha cuidado…\" é recomendação.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-22df7e6c59e8": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Use … com cautela\" é recomendação.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-9184c2c1959b": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Introduzido por \"é recomendado utilizar as sugestões abaixo\".",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-c6b6850137f2": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Permissão (\"é permitida a criação…\").",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-a6b6ebbef5fb": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "\"Reflita sempre\" é processo de design.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-e07139c5eb2c": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Decisão \"com equilíbrio e bom senso\"; nenhum caso inequívoco.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-e1ab80e8601d": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Tenha sempre bom senso\" é orientação.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-7453f15aa4b0": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Use … com moderação e bom senso\" é orientação.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-f2e0d479ac82": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Resoluções abaixo de 4 colunas; contrato 1280×900.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-273db6cae8f4": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Permissão de combinar exemplos.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-f59f88352907": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Evite criar lists com mais de um sub-nível\" é recomendação.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-86ae257e7085": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Utilize lists quando…\" é orientação de uso.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-000fbf226374": {
+   "aceita": false,
+   "motivo": "duplicada:a2-0a6b97c41045",
+   "justificativa": "br-list na lista do select já aceito em a2-0a6b97c41045.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-f843837bec78": {
+   "aceita": false,
+   "motivo": "duplicada:a2-419c091564b6",
+   "justificativa": "br-item nas opções do select já aceito em a2-419c091564b6.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-56623ea03d68": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Utilitários opcionais de densidade.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-5daa95adef73": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Utilize lists quando…\" é orientação de uso.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-869f294f6e29": {
+   "aceita": false,
+   "motivo": "duplicada:a2-41577e5f420c",
+   "justificativa": "Navegar pela lista com setas Up/Down = unidade do select já aceita (mesmas teclas, mesmo observável).",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-09acac0aa16a": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "\"Sentido lógico\" da ordem das opções não tem caso inequívoco para uma lista de tipos de documento.",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-a720326087f7": {
+   "aceita": false,
+   "motivo": "duplicada:a2-66fbdcf13772",
+   "justificativa": "Legibilidade para baixa visão com cores recomendadas = e-MAG 4.1 (contraste mínimo), mesmo observável.",
+   "equivalenteEmag": "4.1",
+   "origem": "lote-E.json",
+   "heranca": "a2"
+  },
+  "a2-1826eeeb0e6c": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Utilize o Message quando…': orientação de uso.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-b37cd347eb8e": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve que a superfície pode variar de tamanho.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-92f3d5de1e4b": {
+   "aceita": false,
+   "motivo": "duplicada:a2-50affb0576ef",
+   "justificativa": "Mesmo elemento (a mensagem obrigatória).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-e2f346a96f1d": {
+   "aceita": false,
+   "motivo": "duplicada:a2-1efbf2a4b525",
+   "justificativa": "Mesmo predicado (Fechar só no tipo padrão, nunca no contextual) e mesmo observável.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-885d22427fd3": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "A própria frase diz que 'não é uma ação obrigatória' (recomendação).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-d227c295ae61": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Comportamento de responsividade (Grid de 4 colunas) quando a superfície cresce em altura; fora da janela 1280×900.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-65a05505f2bf": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "'De acordo com a necessidade de uso' não impõe nada observável.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-85dfe0051271": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Saber se a resposta é 'relacionada a uma funcionalidade específica' é julgamento de propósito.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-ba453bfa2ddb": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'É importante evitar' textos longos, seguido de 'O ideal é…': recomendação.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-c859afd9b54e": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "'Deve-se evitar' remete a uma imagem de exemplo; recomendação sem objeto observável.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-8a2919fdad4a": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "'Deve-se evitar' (recomendação).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-9fa10bfbf963": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Quando for necessário dar ênfase…, utilize': orientação de uso.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-364ba8bf174e": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Todas as linhas dizem 'variável' (largura e altura); não fixa valor.",
+   "origem": "lote-r2-G1.json",
+   "heranca": "a2"
+  },
+  "a2-1e85b4bb57f1": {
+   "aceita": false,
+   "motivo": "duplicada:a2-8536d91ce5b9",
+   "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-af81bfeb88e3": {
+   "aceita": false,
+   "motivo": "duplicada:a2-8536d91ce5b9",
+   "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-c6d37b34ba6b": {
+   "aceita": false,
+   "motivo": "duplicada:a2-db30195b0e66",
+   "justificativa": "Mesmo predicado (texto da mensagem claro) da unidade de design já julgada; ver nota sobre R-ED no relatório.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-e194d3fe5a26": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Evite jargões': recomendação.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-765215cf4d56": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Evite projetar mensagens que desapareçam': recomendação de projeto.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-58de311dc67a": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Utilize o select quando…': orientação de uso.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-6c797958acd3": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "'Forma lógica' admite várias ordens (alfabética, cronológica, frequência); nenhuma troca de ordem é inequivocamente ilógica pelo texto.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-d37c02a7ed04": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Diz que o ícone não é obrigatório.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-dfa0fb9f5edd": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Os valores de largura mínima e máxima não estão no texto nem na imagem oficial que o acompanha, recuperada do commit de diretrizes 107c64a4 (tela-a2/fontes/select-behavior-size.png, sha256 8dadbd7e…): ela só mostra 'Largura ajustável ao conteúdo'. Sem limiar na fonte oficial, não há violação verificável.",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-d7e15c02cebe": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "'Sempre que possível, deve-se evitar' (recomendação).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-6802b0c228a8": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Diz que não há obrigação de largura máxima.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-604a71cdb04c": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "'Deve-se prezar' (recomendação).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-a7bf43e3e4d8": {
+   "aceita": false,
+   "motivo": "duplicada:a2-8ed2a1b99cae",
+   "justificativa": "Única linha aplicável (List regular) é o mesmo peso do texto principal da lista do select, aceito na tabela de tipografia da List; 'Selecionar Todos' é de multiselect.",
+   "origem": "lote-r2-G1.json",
+   "heranca": "a2"
+  },
+  "a2-799f9755bfb7": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve uma classe opcional.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-0780d5c4571c": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve uma classe opcional.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-6b81534ea677": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve uma classe opcional (densidade).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-a54a3257f7cb": {
+   "aceita": false,
+   "motivo": "duplicada:a2-a3eb3793d8de",
+   "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-26de6e75e4bc": {
+   "aceita": false,
+   "motivo": "duplicada:a2-a3eb3793d8de",
+   "justificativa": "Parâmetro do construtor: parte da mesma instrução de instanciação, sem observável próprio.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-366426ce7c1e": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Parâmetro opcional do construtor.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-1ea0fb02f0f7": {
+   "aceita": false,
+   "motivo": "duplicada:a2-020f0b4f0964",
+   "justificativa": "Reconciliação entre lotes: mesmo predicado e observável no select (rótulo claro que diz o propósito) que a2-020f0b4f0964, de id menor.",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-9dac2e9de844": {
+   "aceita": false,
+   "motivo": "duplicada:a2-f4237d13520b",
+   "justificativa": "Associar o campo a <label> = recomendação 6.2 do e-MAG (associar etiquetas aos campos).",
+   "equivalenteEmag": "6.2",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-76403803f08d": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "'Pode ser marcado' (permissão).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-b3c32fcb1b12": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "'Caso seja necessário': uso opcional de aria-describedby; o select não tem texto de ajuda.",
+   "origem": "lote-F.json",
+   "heranca": "a2"
+  },
+  "a2-9fdd7d02bd08": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Orientação de uso (quando usar switches).",
+   "origem": "lote-D.json",
+   "heranca": "a2"
+  },
+  "a2-c5034cfd30b1": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Diz que o rótulo é opcional.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-f9e352b8a63d": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Remete ao documento de estados.",
+   "origem": "lote-D.json",
+   "heranca": "a2"
+  },
+  "a2-05d00b006222": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Diz que não há comportamento especial em resoluções menores.",
+   "origem": "lote-D.json",
+   "heranca": "a2"
+  },
+  "a2-bd01686c9a9b": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Atenção à área de interação em resoluções menores e toque; fora de 1280×900.",
+   "origem": "lote-D.json",
+   "heranca": "a2"
+  },
+  "a2-d6f890f4ffd1": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Evite\" (orientação).",
+   "origem": "lote-D.json",
+   "heranca": "a2"
+  },
+  "a2-959a8fd276d9": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Justificativa da frase anterior.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-cd45634bb932": {
+   "aceita": false,
+   "motivo": "duplicada:a2-ae1397ab72d5",
+   "justificativa": "Mesmo observável (consistência entre os switches).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-f6f3ae20e10e": {
+   "aceita": false,
+   "motivo": "duplicada:a2-c5776632fd52",
+   "justificativa": "Mesmo observável (rótulo do switch não neutro).",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-a383b23c7f75": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Evite\" (orientação); trata dos rótulos de ligado/desligado.",
+   "origem": "lote-D.json",
+   "heranca": "a2"
+  },
+  "a2-b94c40fd64db": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Evite\" (orientação).",
+   "origem": "lote-D.json",
+   "heranca": "a2"
+  },
+  "a2-b867020c9bb6": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Prefira\" (orientação), sobre rótulos de ligado/desligado.",
+   "origem": "lote-D.json",
+   "heranca": "a2"
+  },
+  "a2-d74dace9d0de": {
+   "aceita": false,
+   "motivo": "duplicada:a2-89b4537e8260",
+   "justificativa": "Linha aplicável (chave de alternância média) mede o mesmo tamanho da chave já coberto pela tabela Dimensão; ícones on/off são do switch com ícones, não usado.",
+   "origem": "lote-r2-G1.json",
+   "heranca": "a2"
+  },
+  "a2-3403920b2fa1": {
+   "aceita": false,
+   "motivo": "duplicada:a2-c5776632fd52",
+   "justificativa": "Mesmo observável (rótulo do switch claro).",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-56e837134425": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "\"Ampla o suficiente\" sem limiar; o label associado já estende a área clicável, e nenhuma mudança local dá caso inequívoco.",
+   "origem": "lote-D.json",
+   "heranca": "a2"
+  },
+  "a2-3a0cb4fc6e72": {
+   "aceita": false,
+   "motivo": "duplicada:a2-f4237d13520b",
+   "justificativa": "Repete, para estas instâncias, a recomendação 6.2 do e-MAG (switches já hospedeiros); hospedeiros e variante ficam nela.",
+   "equivalenteEmag": "6.2",
+   "origem": "lote-D.json",
+   "heranca": "a2"
+  },
+  "a2-eadc35148ab4": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Frase de apresentação.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-ab853deb1d9c": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-60d60030b848": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Utilize os estados para comunicar visualmente\" é orientação de uso (finalidade dos estados), não exigência observável.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-2abefc95e5ea": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Herda a introdução \"Utilize os estados para comunicar visualmente:\", orientação sobre a finalidade dos estados, sem exigência própria.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-13b04d7df8b1": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Herda a introdução \"Utilize os estados para comunicar visualmente:\", orientação sobre a finalidade dos estados, sem exigência própria.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-62d7b744fc0a": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Herda a introdução \"Utilize os estados para comunicar visualmente:\", orientação sobre a finalidade dos estados, sem exigência própria.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-f9954c36bc51": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-2a2750e3a763": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Orientação de processo (\"faça ajustes utilizando como base outros fundamentos\") quando os estilos não bastam; não impõe resultado.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-ad12f8f65287": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão').",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-bbdc203ce15b": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-095a8a52fa90": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-f3855fcfd881": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Advertência (\"podem tornar a interface desagradável\"), equivalente a \"evite transições elaboradas\"; não fixa limite.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-aba0b9110366": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-c264f53dd99d": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-ca107a813788": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Remete aos princípios do fundamento Cores; as cláusulas concretas de cores.md estão no universo e são julgadas lá (a rodada 0 a tratava como duplicada do e-MAG 4.1, o que não é o mesmo predicado).",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-0eee9b543c7b": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Orientação de processo: consultar o Fundamento Cores como guia se o contraste não for satisfatório.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-c77a6ae72bde": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Tome cuidado para não sobrepor\", com aumento de 4/8px dado como exemplo (\"pode ser suficiente\"): cautela de projeto, não exigência.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-3d66c8b0d555": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Ao projetar um componente, considere...\" é recomendação de processo de projeto.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-d80f13760f47": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item herdado de \"Ao projetar um componente, considere o uso de diferentes dispositivos de entrada\" — recomendação de processo de projeto.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-9c4760a2090e": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item herdado de \"Ao projetar um componente, considere o uso de diferentes dispositivos de entrada\" — recomendação de processo de projeto.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-9eaf3e323710": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item herdado de \"Ao projetar um componente, considere o uso de diferentes dispositivos de entrada\" — recomendação de processo de projeto. (acesso por teclado em si é coberto por outras unidades).",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-afbd495b5158": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item herdado de \"Ao projetar um componente, considere o uso de diferentes dispositivos de entrada\" — recomendação de processo de projeto.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-17b36cb4e103": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item herdado de \"Ao projetar um componente, considere o uso de diferentes dispositivos de entrada\" — recomendação de processo de projeto.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-21add26e5e9c": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item herdado de \"Ao projetar um componente, considere o uso de diferentes dispositivos de entrada\" — recomendação de processo de projeto.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-89c2d896bfc3": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão').",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-75629bbcfb59": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Exige entendimento dos fundamentos por quem projeta; é processo/conhecimento, não propriedade da página.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-78c8e4c4bf99": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve que alguns estados \"precisam de cuidado\" conforme o fundo; não fixa valor nem condição verificável (os limiares de contraste estão em outras unidades).",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-882b645e558a": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão').",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-1a1ea8b0b8e2": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão').",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-07be83498c76": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Explica por que o \"Estado Padrão\" não tem detalhamento; não impõe nada.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-0795b6ad88f8": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-9622a7d023bc": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Evite ... prefira\" é recomendação (e não há links no conteúdo sorteável).",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-1444de6d3180": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Tenha em mente se vale a pena\" é orientação de projeto.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-4445b3ce5ed8": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Tenha cuidado ... visite o Fundamento Cores\" é orientação de processo; os limiares de contraste estão em outras unidades.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-8f145ae1a71f": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Evite o uso [de sublinhado]\" é recomendação.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-d2bb5c9cd92a": {
+   "aceita": false,
+   "motivo": "duplicada:a2-1c18ad657e0d",
+   "justificativa": "Mesmo observável (desabilitado sem elevação/sombra).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-6fff690036a6": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Herda \"é preferível não exibi-los [desabilitados]\": preferência, não proibição.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-4c5c68ae0cbb": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Herda \"é preferível não exibi-los\": preferência (e não há modal na tela).",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-7d304653e215": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Herda \"é preferível não exibi-los [desabilitados]\": preferência, não proibição.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-7f5ce46f762f": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Herda \"é preferível não exibi-los\": preferência (e não há Magic Button na tela).",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-72b58f169d36": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "A frase não fixa o valor da opacidade.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-c380edac525f": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "A frase não fixa o valor da opacidade.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-65ab1a90c410": {
+   "aceita": false,
+   "motivo": "duplicada:a2-033815886ead",
+   "justificativa": "Mesmo observável (cursor 'mão' no interativo).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-e80f58b4b913": {
+   "aceita": false,
+   "motivo": "duplicada:a2-a6e2601837a7",
+   "justificativa": "Foco com alta ênfase = foco visualmente evidente (4.4).",
+   "equivalenteEmag": "4.4",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-027fd69c08bd": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão').",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-760f23547fab": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Como regra geral, utilize este estilo [foco tênue]\" é orientação; a própria seção diz que o foco tênue só se usa quando a diretriz do componente especificar.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-3e52dee10a13": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item herdado de \"Como regra geral, utilize este estilo sempre que:\" — orientação sobre quando usar foco tênue.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-f9401b054bb6": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item herdado de \"Como regra geral, utilize...\"; além disso \"ênfase muito maior do que deveria\" é juízo de projeto.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-8970233d9e42": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão').",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-370b35b87f02": {
+   "aceita": false,
+   "motivo": "duplicada:a2-a6e2601837a7",
+   "justificativa": "Foco por teclado existe = 4.4.",
+   "equivalenteEmag": "4.4",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-bd8d06482110": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-1bbbbbe820d0": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão').",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-6476cc96292c": {
+   "aceita": false,
+   "motivo": "duplicada:a2-bfc5ebd36c20",
+   "justificativa": "Mesmo texto (\"Apenas um item pode ser ativado por vez\"), repetido na seção Selecionado; mesmo predicado e observável.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-bd6e34bcfb23": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Lista onde o estado Selecionado não se aplica (navegação, tooltip, message...); não impõe nada às instâncias que o usam.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-57f8e54ad9e5": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "O visual de Selecionado é fundo --blue-warm-vivid-50 + ícone de check; num divider (linha) só caberia a cor, que não se distingue de um divider colorido — nenhum caso inequívoco.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-9b2fcaa1dcf6": {
+   "aceita": false,
+   "motivo": "duplicada:a2-482ab9c4a4b1",
+   "justificativa": "Mesmo observável (item escolhido com estado selecionado).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-b5d2c3743371": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Prefira o posicionamento do ícone\" é preferência (e não há elemento arrastável).",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-ca77bfacf3f4": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Justifica a escolha do feedback (só borda) para o dropzone; o observável (borda) está na especificação, e não há outro estado simultâneo do upload a preservar durante o arrasto.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-b7db2cc52887": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Permissão (\"poderá ser ampliada\"), não exigência.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-d77655ca94e7": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-4b8242eb41a2": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Não impõe nada observável ('conforme a necessidade', 'sempre que possível', 'não precisa', 'por padrão').",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-4893be9b5861": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-0f569d8fa30a": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Utilize o estado com cuidado\" é cautela, sem critério observável.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-9a2a3f4abc1d": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Sem links no conteúdo sorteável; o visual de Visitado (texto --blue-warm-vivid-80) aplicado a não-link é igual ao de outros estados (ativo/texto), logo nenhum caso inequívoco.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-96a8e6331b1b": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Sem limiar ou observável fixado na frase (consistência, clareza, herança, contraste entre estados sem valor, cursor de arrasto controlado pelo sistema).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-339335f6ecf5": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Permissões (\"Pode persistir\", \"pode ser dispensado\"); não impõe nada.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-8f506c2c04a6": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Permissões (\"Pode persistir\", \"pode ser dispensado\"); não impõe nada.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-0e36d85d2a99": {
+   "aceita": false,
+   "motivo": "duplicada:a2-f0e069600ad6",
+   "justificativa": "Na tela, a única superfície informativa é o balão da tooltip (fundo --blue-warm-vivid-60, sem ícone); a linha aplicável é a mesma cor da tabela Feedback Informação.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-a9190c0fe6be": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Conteúdo do subtítulo é julgamento.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-2cf05f66f1df": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3d935c4b833a",
+   "justificativa": "Ênfase do título contra os demais textos do formulário; o caso inequívoco (mesmo tamanho/peso dos rótulos) é o mesmo observável do título com maior tamanho do formulário.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-e911e5c8d86f": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Considere apenas a letra inicial maiúscula' — 'considere' é recomendação pelo critério comum a todos os lotes (o lote B tratou assim os verbos brandos); a maiúscula do rótulo de ação segue coberta por a2-c678d7f46286.",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-bd25d0e98b52": {
+   "aceita": false,
+   "motivo": "duplicada:a2-f4237d13520b",
+   "justificativa": "Campo de entrada com rótulo = recomendação 6.2 (etiqueta associada ao campo).",
+   "equivalenteEmag": "6.2",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-f9bd4feb338d": {
+   "aceita": false,
+   "motivo": "duplicada:a2-f4237d13520b",
+   "justificativa": "Placeholder no lugar do rótulo = falta de etiqueta associada da recomendação 6.2 (mesma decisão da unidade irmã a2-20a2754d88ff).",
+   "equivalenteEmag": "6.2",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-84b4e3a0e70a": {
+   "aceita": false,
+   "motivo": "duplicada:a2-f2afb51765c7",
+   "justificativa": "Mesmo predicado (rótulo perto do campo), dito na negativa.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-6854a35b9351": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "'Prefira' (recomendação).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-c9e06229aebc": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Complementa a recomendação \"Prefira criar formulários cujos campos sejam obrigatórios\"; orientação de escolha de projeto.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-172c2de5b954": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "'Pode ser necessário' (permissão).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-708c80c9546a": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Instrução condicional a uma escolha de projeto.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-72c04236c683": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Legenda de imagem.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-f6a51dd122cf": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "'Evite' (recomendação).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-a221b6eb52ce": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "'Considere' (recomendação).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-7cf9313c9fcc": {
+   "aceita": false,
+   "motivo": "conflito",
+   "justificativa": "Conflito normativo explícito, decidido antes da semente. Texto: 'O primeiro campo de entrada obrigatório do formulário deve receber o estado de foco.' (padroes/design/formulario.md, sob 'Siga as recomendações:'); o texto não diz o evento. Leitura adotada: ao exibir o formulário. Na A2 o formulário aparece quando a aba Documentos é ativada; mover o foco para o select nessa hora contraria 'Ao acessar o componente tabs, o foco inicial deve cair sobre a primeira aba interativa' e a navegação por setas entre abas (a2-557812293319, a2-f19f80da5bea), que pressupõe o foco na lista de abas. Decisão: vale a regra do componente (específica) sobre a do padrão (geral); a página conforme não move o foco ao ativar a aba. Não é impossibilidade demonstrada: é escolha registrada (plano § 7).",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-292b8ad131d6": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Quando pertinente, utilize\" autocomplete: recomendação.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-bda6c486a54a": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Considere técnicas de truncamento\": recomendação.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-3c41add42ce4": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve uma situação.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-a621c42d0a5d": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Insira elementos auxiliares que facilitem\" com lista de exemplos: orientação de uso; o observável exigível (instruções de formato) é a 6.5.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-8f8416e523d9": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de exemplo herdado de \"Insira elementos auxiliares... como:\" (orientação).",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-9a763769cf35": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de exemplo herdado de \"Insira elementos auxiliares... como:\" (orientação).",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-e6ca59724f7b": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de exemplo herdado de \"Insira elementos auxiliares... como:\" (orientação).",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-4461158b58b1": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de exemplo herdado de \"Insira elementos auxiliares... como:\" (orientação).",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-1b06382cc43a": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de exemplo herdado de \"Insira elementos auxiliares... como:\" (orientação).",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-aa787d1e87f2": {
+   "aceita": false,
+   "motivo": "duplicada:a2-cd5cbf0f18dc",
+   "justificativa": "Explicar requisitos de entrada/formatação = instruções de entrada de dados da recomendação 6.5 (texto de apoio com formatos do upload).",
+   "equivalenteEmag": "6.5",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-2c7b11fee957": {
+   "aceita": false,
+   "motivo": "duplicada:a2-cd5cbf0f18dc",
+   "justificativa": "Instruções exatas quando o campo exige formato = recomendação 6.5 (formatos aceitos no upload).",
+   "equivalenteEmag": "6.5",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-8e09cdf9bbc6": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Prefira\" exemplos genéricos como placeholder: recomendação.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-173a35c3ca83": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Considere utilizar placeholders quando...\": recomendação.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-751ad24830dc": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Introdução de dicas (\"Fique atento para as seguintes dicas\").",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-667b6f91a423": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Utilize texto auxiliar com a finalidade de...\": orientação de uso (finalidade); a presença do texto de apoio é a 6.5.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-56efb314c6c4": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Necessidade de ajuda é julgamento.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-c5037a4ba6b7": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Utilize mensagens contextuais para...\": orientação de uso do recurso.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-e43e2837418a": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "'Preferencialmente' (recomendação); além disso, os botões são andaime.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-272419619deb": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Evite botões do tipo Redefinir e Limpar Formulário\": recomendação.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-24c7e415c6af": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Ao se projetar um formulário, considere a ordem lógica\": orientação de projeto (a ordem observável é a 6.3).",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-80f07dc2682d": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Considere ainda priorizar...\": recomendação.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-03670465d44e": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve que há várias formas de agrupar; não impõe nada.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-fb49f773f79e": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Prefira diagramar em uma única coluna\": recomendação.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-a4a64ba63d57": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve casos complexos que exigem campos lado a lado.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-9232156884a2": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Alterações por resolução/orientação de dispositivo; o contrato é 1280×900.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-6f543db37b45": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Explica o fieldset.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-85f29ecf4300": {
+   "aceita": false,
+   "motivo": "duplicada:a2-18bccce4132a",
+   "justificativa": "Usar legend no grupo é a recomendação 6.7.",
+   "equivalenteEmag": "6.7",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-9fcb867acf78": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Tenha cautela\": recomendação.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-2f30ee20c630": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Agrupamento por espaçamento é uma das formas opcionais (\"podem ser agrupados por aproximação\").",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-11a3cde92bae": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Detalha a forma opcional de agrupamento por espaçamento.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-9395dbb2f3d3": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Agrupamento por cor é forma opcional (\"Outra possibilidade\").",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-5bd2bcbb0bfe": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Considere sempre questões de legibilidade\": recomendação.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-620b3aa24042": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "\"Pode funcionar também\": possibilidade.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-95a942e8505d": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Mínimo de informações necessárias é decisão de produto (finalidade do dado).",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-dd98125c97c9": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Finalidade do dado é decisão de produto.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-065449110d9a": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Finalidade do dado é decisão de produto.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-8bdd4d2b9a33": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Organização \"de acordo com o perfil do usuário\" é julgamento de projeto.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-96dcf8098a6b": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Remete à WCAG inteira; sem observável único.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-bb1797b5899d": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Resoluções de tela menores; o contrato é 1280×900.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-c93fa23b79d3": {
+   "aceita": false,
+   "motivo": "duplicada:a2-acc4801af71c",
+   "justificativa": "Repete a recomendação 2.1 para os campos.",
+   "equivalenteEmag": "2.1",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-f9bc87c84bdf": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Procure elaborar formulários curtos\": recomendação.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-4c1a643288db": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Necessidade de cada campo é decisão de produto.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-765073c3d610": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Recorte prévio de escopo (plano § 4): o contrato de observação é a janela 1280×900; a A2 não conclui nada sobre outros tamanhos, dispositivos móveis ou toque. Texto/página a 200% na mesma janela (e-MAG 4.3) continua aplicável.",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-a6ff9bd3dde7": {
+   "aceita": false,
+   "motivo": "duplicada:a2-acc4801af71c",
+   "justificativa": "Navegar entre campos por teclado ou mouse = recomendação 2.1 (todas as funções via teclado).",
+   "equivalenteEmag": "2.1",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-7893da21d37a": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Orientação/recomendação no contexto (verbo brando: evite/prefira/opte/considere/lembre-se), não impõe.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-5de60e4b35d8": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Opte por' = preferência (rótulos de tags de interação); não impõe.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-923f656fca07": {
+   "aceita": false,
+   "motivo": "duplicada:a2-59c1236e3ebd",
+   "justificativa": "Reconciliação entre lotes: mesmo predicado e observável no botão de escolher arquivo (rótulo de ação em uma linha só) que a2-59c1236e3ebd, de id menor.",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-d49d815f9832": {
+   "aceita": false,
+   "motivo": "duplicada:a2-274ebf4959e8",
+   "justificativa": "Mesmo predicado (brevidade do rótulo de ação), mesma condição e mesmo observável (nº de palavras) que 'Escreva rótulos curtos'.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-74e8b61606cc": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Evite' = recomendação; e não há diálogo Sim/Não na tela.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-8a61ee14d227": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "É o exemplo 'Não recomendável' (Não / Sim), não uma cláusula.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-f4e45dd0a793": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Se for necessário, utilize tooltip' = opcional/orientação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-d22e5132f27b": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Opte por' = preferência (rótulos de tags); não impõe.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-dcf92371f256": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Evite' = recomendação (e não há links no conteúdo sorteável).",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-38b868958848": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Opte por' = preferência (links, ausentes no conteúdo sorteável).",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-fd4a1b0c688e": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Considere' = recomendação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-90f940e4e457": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-1f4674970cfc": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Remete à 'recomendação' de concisão e sugere dividir em blocos ('você pode'); não impõe.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-9a7855a8147e": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Evite' = recomendação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-8f3255e3da17": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-ff4774df0f23": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Evite' = recomendação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-1acad722c4ce": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-bd3e30f68ef0": {
+   "aceita": false,
+   "motivo": "duplicada:a2-372068e40fd2",
+   "justificativa": "Hierarquia de títulos/subtítulos = e-MAG 1.3 (mesmo predicado e observável: sequência h1–h6).",
+   "equivalenteEmag": "1.3",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-766414fd4ce4": {
+   "aceita": false,
+   "motivo": "duplicada:a2-372068e40fd2",
+   "justificativa": "H1 para o título da página = e-MAG 1.3 ('H1 deverá corresponder ao conteúdo principal da página').",
+   "equivalenteEmag": "1.3",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-4e5a457e6d01": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-79929d75e9fd": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Evite' = recomendação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-a3591a629688": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Lembre-se' = orientação; tom e voz do produto sem caso inequívoco.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-36e7ede3f63d": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Evite' = recomendação (o predicado observável fica na unidade 'Não culpe o usuário').",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-7196ad4a3f2d": {
+   "aceita": false,
+   "motivo": "duplicada:a2-46c418f28680",
+   "justificativa": "Mesmo observável (texto do componente de navegação sucinto).",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-9e8282563327": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-4d2faf4cd9ac": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Prefira' = preferência (contexto de navegação: menu/links, fora do sorteável).",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-950f82952462": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de 'algumas maneiras simples' de SEO = dica; herda a força da introdução.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-0407f25dc463": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de 'algumas maneiras simples' de SEO = dica; herda a força da introdução.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-94dbb4f6f47d": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de 'algumas maneiras simples' de SEO = dica; herda a força da introdução.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-f0a60a161e60": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de 'algumas maneiras simples' de SEO = dica (e não há imagem de conteúdo).",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-96632c4fef99": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Justificativa da heurística; não impõe nada.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-6b0c03c14c12": {
+   "aceita": false,
+   "motivo": "duplicada:a2-460f5696acde",
+   "justificativa": "Mesmo predicado (ícone de ajuda = interrogação), dito na negativa.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-ebf08d06a482": {
+   "aceita": false,
+   "motivo": "duplicada:a2-460f5696acde",
+   "justificativa": "Mesmo predicado e observável (question/question-circle como ícone de ajuda).",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-39cf6f42fa5c": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "\"Pode-se usar\" info/info-circle: permissão.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-6df766fca75b": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Alternativa permitida (info/info-circle) à regra do ícone de ajuda.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-7c5c88e6762b": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Clareza é julgamento.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-75fd4aa6d6fe": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Utilize Modais quando houver necessidade\": orientação de uso.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-2e686dd0a3f0": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Contexto \"é recomendado o uso de Tooltips. Neste caso, evite...\": recomendação.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-520bb2e1d048": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Dê preferência\": recomendação.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-164afb980ecc": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Quando necessário, utilize Hiperlink\": orientação de uso.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-6b8328b0e0a8": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve o custo do questionário.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-ee51fdee5bf2": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Utilize Empty States para:\": orientação de uso do padrão.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-6470b2747410": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item herdado de \"Utilize Empty States para:\".",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-bbdbe9c24041": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item herdado de \"Utilize Empty States para:\".",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-52593d3ba114": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item herdado de \"Utilize Empty States para:\".",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-6fb62c1596bb": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Observação de que há erros de origem HTTP; não impõe nada.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-a33ab64c0b03": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Introdução.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-5703b2530594": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo de projeto da navegação (inventário de usuários, prioridades, caminhos); não é observável na página.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-a6bf05b911d3": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo de projeto da navegação (inventário de usuários, prioridades, caminhos); não é observável na página.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-61172f9a397b": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo de projeto da navegação (inventário de usuários, prioridades, caminhos); não é observável na página.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-9693d257b76a": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Quais elementos têm \"alta prioridade\" é julgamento de produto; sem caso inequívoco.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-74d3cd9eca47": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo de projeto da navegação (inventário de usuários, prioridades, caminhos); não é observável na página.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-37c9efc4db11": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo de projeto da navegação (inventário de usuários, prioridades, caminhos); não é observável na página.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-eb470d67f120": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Destinos frequentes e tarefas relacionadas dependem de dados de uso; não observável na página.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-78afd5401869": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo de projeto da navegação (inventário de usuários, prioridades, caminhos); não é observável na página.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-c234a9e74e11": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Decomposição de fluxos é processo de projeto.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-5afc7bb34da5": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Facilidade é julgamento.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-756e337ffe70": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Aprendizagem é julgamento.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-6973b50d3af6": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "\"Dê destaque ao mais importante\": prioridade é julgamento.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-edd74e6f5945": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Evite\" menus/tabs com muitos itens: recomendação.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-7c1b79e2bcc2": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Genérico.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-7116f1e98539": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Genérico (\"utilizar os padrões mais adequados\").",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-f3b4abf09055": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Recorte prévio de escopo (plano § 4): o contrato de observação é a janela 1280×900; a A2 não conclui nada sobre outros tamanhos, dispositivos móveis ou toque. Texto/página a 200% na mesma janela (e-MAG 4.3) continua aplicável.",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-b735a9108aaf": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Genérico.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-3ab15b98e299": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-1fa2afdfe5d8": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Fala do processo de escrita (bom senso, diálogo com áreas técnicas), não da página.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-e68613d7ba36": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve o objetivo da Linguagem Simples; não impõe nada.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-680fc6ae64f1": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Item da lista de objetivos do writing; declara meta, não cláusula.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-bc60da954336": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-8bac830a994e": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo (usar guia de estilo e método), não observável na página.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-1b64f4d40425": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Qualidade de redação (clareza, concisão, tom); sem medida pequena.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-563801a32ce1": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "'Escreva como um humano' não tem critério contável nem caso inequívoco.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-e8ef9a9bc498": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-ef45780b673c": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'procure explicar' = orientação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-92fa8a2632b2": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "'Pense que a escrita precisa ser sucinta' é orientação de atitude ao redator; as cláusulas concretas de concisão estão aceitas nas instâncias.",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-d051f4509212": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Utilidade da informação é julgamento editorial sem caso inequívoco.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-0cd8e830165f": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "'O mais acessível possível' sem critério contável nem caso inequívoco.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-902a234f887c": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Justificativa ('lembre-se que...'), não impõe nada.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-ed8369e6a78d": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Considere' = recomendação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-71b482fd4521": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Considere' = recomendação (e é processo de pesquisa com usuários).",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-9c703de75f43": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Justificativa ('tenha em mente'), não impõe nada.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-b43f1860fd24": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo (testar e validar com usuários), não observável na página.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-4caed2640752": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'considere uma voz neutra' = recomendação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-3804d73aa63e": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "No contexto 'como forma geral, considere...' a frase é orientação de tom (inclusiva, sem gírias/jargões).",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-f27a38284ac7": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'considere ajustar' = recomendação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-7d657a9927c8": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-68af96222c81": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Fala de experiência e estudo de quem escreve (processo).",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-e9fcf16e650f": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'lembre-se de ser conciso' = orientação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-94305d160902": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Opte por' = preferência.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-729f9df0c7cc": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve que casos diferentes pedem alinhamentos diferentes; não impõe nada.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-5e8c5bf4deea": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Lembre-se de padronizar' = orientação, e entre telas.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-9932f3f90548": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de 'algumas maneiras de conseguir isso' (dicas de escaneabilidade); herda a força da introdução.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-275ae798acea": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Quando possível' + item de dicas; não impõe.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-0d5ae15892d3": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de dicas; destaque opcional.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-c541d58cf8c7": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Item de 'algumas maneiras de conseguir isso' (dicas); herda a força da introdução apesar do limite de 4 linhas.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-cb82f71ab9ba": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Evite' = recomendação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-ea7e91ba8435": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Prefira' = preferência.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-e59a980bb5ae": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Evite' = recomendação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-29bea9107a3f": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Dê preferência' = preferência.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-b35d4da9598b": {
+   "aceita": false,
+   "motivo": "duplicada:a2-46c418f28680",
+   "justificativa": "Mesmo observável (rótulo de elemento interativo objetivo).",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-ad0e7d66765f": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Evite' = recomendação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-d5d3fc49b7e0": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Constatação ('sempre há chance...'), não impõe.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-5d37562b139e": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Prefira' = preferência.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-5992cfd640ea": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-d5774660fa43": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-13bd50085c2a": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Evite' = recomendação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-fc89dea7b07b": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-2e03bbdb01b8": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'procure explicar' = orientação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-42757e3c479f": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve o esforço de quem escreve; não impõe nada.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-8f8c5722c5ea": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-630e2c67260d": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Lembrete descritivo sobre humor; não impõe nada.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-b68fae76422d": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Considere' = recomendação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-e8839e2beb48": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Evite, quando possível' = recomendação (e não há links no sorteável).",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-e3c4f490e133": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Frase de transição ('Isso é importante porque:').",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-4c406056e235": {
+   "aceita": false,
+   "motivo": "duplicada:a2-e5b4728ca51e",
+   "justificativa": "Cor como único meio = 4.2.",
+   "equivalenteEmag": "4.2",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-5b623d8a8789": {
+   "aceita": false,
+   "motivo": "duplicada:a2-679351f2635c",
+   "justificativa": "Descrição para imagens = e-MAG 3.6 (vídeo/áudio não existem na tela).",
+   "equivalenteEmag": "3.6",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-95da9984f12d": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-5c314e764482": {
+   "aceita": false,
+   "motivo": "duplicada:a2-679351f2635c",
+   "justificativa": "Texto alternativo para imagens = e-MAG 3.6.",
+   "equivalenteEmag": "3.6",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-f19303eaf259": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Tenha cautela' = orientação (e não há imagem de conteúdo/legenda).",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-e4fa85fba453": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Explica a diferença entre texto alternativo e legenda.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-9e6505e797b4": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Remete genericamente aos 'conceitos de microcopy'; sem predicado próprio nem caso inequívoco.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-7bf68b8112fc": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Define linguagem inclusiva (citação).",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-8571bc44c93e": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-eb2482445be4": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Recomendação, exemplo ou definição; não impõe nada observável.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-852f95055a63": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Evite' = recomendação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-a63b3379e9c8": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Evite' = recomendação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-ec0d1bb4ad23": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Evite' = recomendação.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-820965e0b219": {
+   "aceita": false,
+   "motivo": "duplicada:a2-7e05c5c8e09c",
+   "justificativa": "Mesmo observável (vocabulário de grupo restrito no texto).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-0b6ac0a6bc42": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Função da cor sem observável único.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-9decdf14dc87": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Guarda-chuva de acessibilidade.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-2f6900335a84": {
+   "aceita": false,
+   "motivo": "duplicada:a2-66fbdcf13772",
+   "justificativa": "Contraste mínimo 4,5:1 para texto normal: mesmo predicado, condição e observável da Recomendação 4.1 do e-MAG.",
+   "equivalenteEmag": "4.1",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-7c18d8a16446": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve o nível AAA da WCAG; o DS declara trabalhar com conformidade mínima AA, então 7:1 não é exigido.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-28de8942dba9": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo de teste e aprovação de nova cor pela equipe do DS; não é propriedade da página.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-57498ef83425": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "\"Determine o uso [da cor] em diferentes luminâncias\" é decisão de projeto (e a tela só tem fundo claro).",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-e64c41be5867": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Procure as documentações relacionadas\" é orientação de consulta.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-b4139f08e1c7": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Define o que são as cores de leitura.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-8d96c3f347df": {
+   "aceita": false,
+   "motivo": "duplicada:a2-36dcfef2c39b",
+   "justificativa": "Cor de interação em fundo claro #1351B4 (--blue-warm-vivid-70): mesma linha e mesmo observável da tabela do estado Interativo.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-94d2f57b9801": {
+   "aceita": false,
+   "motivo": "duplicada:a2-622c6c318ee6",
+   "justificativa": "Feedback sucesso: a única linha aplicável (#168821, marcador de concluído do step) é a mesma da tabela do estado Sucesso; a alternativa clara não é usada na tela.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-cc823e1ff75c": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Utilize a grid para auxiliar\" é orientação de uso.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-3bffb19b8840": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Recorte prévio de escopo (plano § 4): o contrato de observação é a janela 1280×900; a A2 não conclui nada sobre outros tamanhos, dispositivos móveis ou toque. Texto/página a 200% na mesma janela (e-MAG 4.3) continua aplicável.",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-04ecf8748d69": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo de teste e aprovação de adaptações da grid pela equipe do DS.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-e9b7ed194374": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Recorte prévio de escopo (plano § 4): o contrato de observação é a janela 1280×900; a A2 não conclui nada sobre outros tamanhos, dispositivos móveis ou toque. Texto/página a 200% na mesma janela (e-MAG 4.3) continua aplicável.",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-141237683128": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Recorte prévio de escopo (plano § 4): o contrato de observação é a janela 1280×900; a A2 não conclui nada sobre outros tamanhos, dispositivos móveis ou toque. Texto/página a 200% na mesma janela (e-MAG 4.3) continua aplicável.",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-b26e9e7b1843": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Grid de 4 colunas (telas pequenas); a observação é em 1280.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-6684dddde24f": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Grid de 8 colunas (smartphone landscape/tablet); a observação é em 1280.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-3366d227b4d0": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Grid fluida é recomendada para...\" é recomendação.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-5130bd400133": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "'Recomenda-se'.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-4d9580371227": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Grid para TV; a observação é em 1280.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-2f00ff64db29": {
+   "aceita": false,
+   "motivo": "duplicada:a2-6a99b79819ae",
+   "justificativa": "Mesmo observável (conteúdo dentro das margens da grid).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-ba3439c9ddd0": {
+   "aceita": false,
+   "motivo": "duplicada:a2-6a99b79819ae",
+   "justificativa": "Mesmo observável (elementos dentro das margens).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-9b1f86870c73": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Recorte prévio de escopo (plano § 4): o contrato de observação é a janela 1280×900; a A2 não conclui nada sobre outros tamanhos, dispositivos móveis ou toque. Texto/página a 200% na mesma janela (e-MAG 4.3) continua aplicável.",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-590ef96dad73": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Recorte prévio de escopo (plano § 4): o contrato de observação é a janela 1280×900; a A2 não conclui nada sobre outros tamanhos, dispositivos móveis ou toque. Texto/página a 200% na mesma janela (e-MAG 4.3) continua aplicável.",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-7b181cada204": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Trata de baixas resoluções; a observação é em 1280.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-5e2a4c157a82": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Recorte prévio de escopo (plano § 4): o contrato de observação é a janela 1280×900; a A2 não conclui nada sobre outros tamanhos, dispositivos móveis ou toque. Texto/página a 200% na mesma janela (e-MAG 4.3) continua aplicável.",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-7b84d24b83fe": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Adaptação do layout a diferentes grids/toque; a observação é 1280 sem toque.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-4f989970ac49": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Gestos para interfaces voltadas ao toque; fora do contrato 1280 sem toque.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-522cccf12a0c": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Equilíbrio entre toque e clique ao adaptar resoluções; fora do contrato 1280 sem toque.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-0d24ad84e358": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Decisão de projeto (definir grid fixa ou fluida); não há valor verificável na página.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-1eb2be826730": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve o comportamento da grid fixa nos exemplos (que estão em imagem).",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-126a6960d260": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Recorte prévio de escopo (plano § 4): o contrato de observação é a janela 1280×900; a A2 não conclui nada sobre outros tamanhos, dispositivos móveis ou toque. Texto/página a 200% na mesma janela (e-MAG 4.3) continua aplicável.",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-0b6ed5d60169": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Entender dimensões \"para repassar ao desenvolvedor\" é processo de projeto.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-529eb650f033": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Tenha em mente\" é orientação; não impõe nada.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-d34f9ca2adfb": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve que flutuantes não interagem com a grid.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-4016c10a64ae": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "\"Para cada tipo de grid ... rever\" trata da apresentação em outras grids/tamanhos de janela.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-f5a61bdcd7ad": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Papel do ícone é julgamento.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-5cc83e401387": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Motivação (\"é importante que alcancem a maior quantidade de pessoas\") que introduz a classificação decorativo/semântico.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-bd456a928d4d": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Explica webfonts.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-214a81874142": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Introdução da lista; o que se exige está nos itens (aria-hidden, alternativa em texto, CSS de ocultação, title), julgados à parte.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-e84d0fcb6582": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "No mesmo bloco, para elementos interativos focalizáveis (os únicos ícones semânticos da tela: botões só com ícone) o texto troca o title por recomendação: \"recomendamos usar o atributo title ou uma solução de tooltip personalizado\".",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-6e082644d710": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Justifica o Font Awesome.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-664354a0229a": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo de inclusão de novos ícones (consultar a tabela, validar com a equipe).",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-1bd9d5f8574b": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Permissão (\"Pode ser utilizado\").",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-618764be1999": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Orientação de processo para quando não houver ícone adequado.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-969e3300f6dd": {
+   "aceita": false,
+   "motivo": "duplicada:a2-5542b7528b3d",
+   "justificativa": "Mesmo observável (área mínima do ícone interativo).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-f0e1d7f16f8b": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Recorte prévio de escopo (plano § 4): o contrato de observação é a janela 1280×900; a A2 não conclui nada sobre outros tamanhos, dispositivos móveis ou toque. Texto/página a 200% na mesma janela (e-MAG 4.3) continua aplicável.",
+   "origem": "revisao-1",
+   "heranca": "a2"
+  },
+  "a2-08acc761e53d": {
+   "aceita": false,
+   "motivo": "duplicada:a2-2f4eadc23b2c",
+   "justificativa": "Mesmo observável (escala tipográfica).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-b29e725262d0": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Guarda-chuva.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-84e597ff795b": {
+   "aceita": false,
+   "motivo": "duplicada:a2-d45711a55b6c",
+   "justificativa": "Marcação semântica do texto = 1.2.",
+   "equivalenteEmag": "1.2",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-05763ed77f2d": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "'Sempre que possível' (recomendação).",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-d94c8ac3d26f": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo de validação de nova família tipográfica pela equipe do DS.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-0da3fdc4c825": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo de comunicação com desenvolvedores.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-d32be051c797": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Explica a vantagem de definir uma fonte base; não impõe nada.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-5eba8d01b99d": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Explica por que a escala é importante.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-1adc675c5c64": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Dica: utilize alguma calculadora\" é sugestão de processo.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-e87dc5f5957d": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Cuidado: ... pode atrapalhar\" é cautela; trocar a fonte base \"somente em casos que justifique\" depende de justificativa de projeto.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-a1b8b3c6fe93": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "\"Fique atento às questões de legibilidade\" é cautela sem critério.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-e5a3efb8028d": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "\"Por padrão, utilize\" é valor padrão (precedente do passo 2: \"por padrão\" não impõe); as entrelinhas exigidas por elemento estão nas Tabelas de Estilos (a2-329f74d7646c).",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-512484b770f6": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Esclarece a base de cálculo da entrelinha; não impõe nada além da tabela.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-c68271bde5ca": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Explica como ler as tabelas de 4 colunas (que, além disso, são de outro tamanho de janela).",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-b955ffe42e59": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Define para que serve a lista não ordenada.",
+   "origem": "lote-C.json",
+   "heranca": "a2"
+  },
+  "a2-deed2926e716": {
+   "aceita": false,
+   "motivo": "duplicada:a2-671056d628cb",
+   "justificativa": "Passo 'Seguir os padrões Web' = e-MAG 1.1.",
+   "equivalenteEmag": "1.1",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-41296b869801": {
+   "aceita": false,
+   "motivo": "duplicada:a2-671056d628cb",
+   "justificativa": "Código dentro dos padrões Web do W3C = e-MAG 1.1.",
+   "equivalenteEmag": "1.1",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-ed21800a3c0b": {
+   "aceita": false,
+   "motivo": "duplicada:a2-671056d628cb",
+   "justificativa": "Repete a recomendação 1.1 do e-MAG.",
+   "equivalenteEmag": "1.1",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-eecfb4af1d1e": {
+   "aceita": false,
+   "motivo": "duplicada:a2-d45711a55b6c",
+   "justificativa": "Repete a recomendação 1.2.",
+   "equivalenteEmag": "1.2",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-9aa02d7df964": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo de avaliação (validação automática), não propriedade da página.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-5085c6c4f5fc": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Constatação sobre validadores automáticos.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-40396165af3b": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo de avaliação (validação manual), não propriedade da página.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-c4695ea47e7a": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Justificativa da validação manual.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-aa877d73b001": {
+   "aceita": false,
+   "motivo": "duplicada:a2-d45711a55b6c",
+   "justificativa": "Usar elemento HTML pelo significado = e-MAG 1.2 ('cada elemento deve ser utilizado para o fim que foi criado').",
+   "equivalenteEmag": "1.2",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-efaa1a56290c": {
+   "aceita": false,
+   "motivo": "duplicada:a2-d45711a55b6c",
+   "justificativa": "Repete a recomendação 1.2.",
+   "equivalenteEmag": "1.2",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-bff5d6df8622": {
+   "aceita": false,
+   "motivo": "duplicada:a2-372068e40fd2",
+   "justificativa": "Cabeçalhos conforme hierarquia = e-MAG 1.3.",
+   "equivalenteEmag": "1.3",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-47b777d7f803": {
+   "aceita": false,
+   "motivo": "duplicada:a2-372068e40fd2",
+   "justificativa": "Repete a recomendação 1.3.",
+   "equivalenteEmag": "1.3",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-e0b41499dd79": {
+   "aceita": false,
+   "motivo": "duplicada:a2-372068e40fd2",
+   "justificativa": "Texto idêntico ao de e-MAG 1.3 (H1 = conteúdo principal; recomendável um só H1).",
+   "equivalenteEmag": "1.3",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-23e41146ee6c": {
+   "aceita": false,
+   "motivo": "duplicada:a2-d45711a55b6c",
+   "justificativa": "Listas conforme a finalidade = marcação semântica de listas de e-MAG 1.2.",
+   "equivalenteEmag": "1.2",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-71f5bfe76574": {
+   "aceita": false,
+   "motivo": "duplicada:a2-9bc102ab300b",
+   "justificativa": "Repete a recomendação 1.6.",
+   "equivalenteEmag": "1.6",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-8a54ef111343": {
+   "aceita": false,
+   "motivo": "duplicada:a2-9bc102ab300b",
+   "justificativa": "Diagramação por CSS e não por tabela = e-MAG 1.6.",
+   "equivalenteEmag": "1.6",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-54110c0cf291": {
+   "aceita": false,
+   "motivo": "duplicada:a2-1ea2f43d76db",
+   "justificativa": "Repete a recomendação 3.1.",
+   "equivalenteEmag": "3.1",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-c64a6b1b489d": {
+   "aceita": false,
+   "motivo": "duplicada:a2-1ea2f43d76db",
+   "justificativa": "Repete a recomendação 3.1.",
+   "equivalenteEmag": "3.1",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-6dc87e28972f": {
+   "aceita": false,
+   "motivo": "duplicada:a2-679351f2635c",
+   "justificativa": "Repete a recomendação 3.6.",
+   "equivalenteEmag": "3.6",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-127f92e2ad55": {
+   "aceita": false,
+   "motivo": "duplicada:a2-f4237d13520b",
+   "justificativa": "Repete a recomendação 6.2.",
+   "equivalenteEmag": "6.2",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-687664a3051c": {
+   "aceita": false,
+   "motivo": "duplicada:a2-1ea2f43d76db",
+   "justificativa": "lang no elemento html = e-MAG 3.1.",
+   "equivalenteEmag": "3.1",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-336e6c67b3b1": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "O parser sempre cria head e body no DOM; a ausência das tags só existe no código-fonte.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-33232bc1d4f9": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Meta viewport (largura do dispositivo, escala 1:1) só tem efeito em telas móveis; o contrato é 1280×900 em desktop.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-d65063427355": {
+   "aceita": false,
+   "motivo": "duplicada:a2-855a016067f1",
+   "justificativa": "Presença de title está contida em e-MAG 3.3 (title descritivo); não diz nada além.",
+   "equivalenteEmag": "3.3",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-a0cefe07ca15": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Indentação do código-fonte não aparece no DOM construído.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-de88a511d760": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Barra de fechamento de elemento vazio ('<br/>') é descartada pelo parser; só existe no código-fonte.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-0efa500e071e": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Princípio guarda-chuva (perceptível/operável/compreensível/robusto); sem observável único — as obrigações concretas são as recomendações do e-MAG.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-0e14b7416c83": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve a base legal (Estatuto, Art. 63); sem predicado observável próprio.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-6eb94a328835": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve a base legal (Lei 14.129) para dispositivos móveis.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-219fad7a1579": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Define cegueira.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-07b1edc24273": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve configuração de tecnologia assistiva do usuário.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-938e8e5cf6c8": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve o alcance das diretrizes WCAG.",
+   "origem": "lote-B.json",
+   "heranca": "a2"
+  },
+  "a2-f454513b3b84": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve a WCAG, a avaliação ou o próprio DS; não impõe nada à página.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-7fe441d7e201": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Princípio guarda-chuva (perceptível/operável/compreensível/robusto); sem observável único — as obrigações concretas são as recomendações do e-MAG.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-7e48dae780c6": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Princípio guarda-chuva (perceptível/operável/compreensível/robusto); sem observável único — as obrigações concretas são as recomendações do e-MAG.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-a2872503ab86": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Princípio guarda-chuva (perceptível/operável/compreensível/robusto); sem observável único — as obrigações concretas são as recomendações do e-MAG.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-3938fd575fac": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Princípio guarda-chuva (perceptível/operável/compreensível/robusto); sem observável único — as obrigações concretas são as recomendações do e-MAG.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-1550c237c5ed": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve a WCAG, a avaliação ou o próprio DS; não impõe nada à página.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-fe970e7d07cb": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve a WCAG, a avaliação ou o próprio DS; não impõe nada à página.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-a967925813b1": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve a WCAG, a avaliação ou o próprio DS; não impõe nada à página.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-8dc9577fd386": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve a WCAG, a avaliação ou o próprio DS; não impõe nada à página.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-3f6b7b055edf": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Princípio guarda-chuva (perceptível/operável/compreensível/robusto); sem observável único — as obrigações concretas são as recomendações do e-MAG.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-fe17653002d8": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve a WCAG, a avaliação ou o próprio DS; não impõe nada à página.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-0a9a8742f95f": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Chamada de seção que remete ao padrão Formulário; sem predicado próprio.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-d42b11b3d7ab": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Chamada de seção que remete ao padrão Formulário; sem predicado próprio.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-e085b5d271c8": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Guarda-chuva que remete ao fundamento Cores; sem função de cor ou valor fixado na frase.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-7346c6b4e21f": {
+   "aceita": false,
+   "motivo": "duplicada:a2-b889b938c32d",
+   "justificativa": "Seguir as orientações de uso de ícones = seguir a tabela de uso de ícones do fundamento Iconografia.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-2781578517b1": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Chamada para cadastrar o serviço; não é sobre a página.",
+   "origem": "lote-A.json",
+   "heranca": "a2"
+  },
+  "a2-a06dc9ebbfe4": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Compreensão do texto é julgamento de redação.",
+   "origem": "rodada-0",
+   "heranca": "a2"
+  },
+  "a2-1f54e64301d8": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'É utilizada quando há necessidade de feedback global': orientação de uso do tipo padrão.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-2b328e5fbcef": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'É utilizada quando o feedback está relacionado a um elemento': orientação de uso do tipo contextual.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-d18fcbe1e7fa": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Posição do Fechar e do ícone quando a superfície cresce por quebra de linha em telas estreitas, como a2-d227c295ae61.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-85507a862fda": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Deve-se evitar' (critério de força: evite → força); remete à imagem do exemplo F.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-deede0ef5e68": {
+   "aceita": false,
+   "motivo": "duplicada:a2-e85eefb9d6f2",
+   "justificativa": "Item escolhido visível no campo de entrada: mesmo observável.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-fae64a06e367": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Os limites que invoca são recomendação ('recomendamos' mínimo de 64px; sem máximo obrigatório).",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-0465c30b3825": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Grid de 4 colunas.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-4b4c1d7466fb": {
+   "aceita": false,
+   "motivo": "duplicada:a2-2f900cc3509d",
+   "justificativa": "Hover no item da lista do select: mesmo observável (variante item-sem-hover).",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-0d8141710aae": {
+   "aceita": false,
+   "motivo": "duplicada:a2-482ab9c4a4b1",
+   "justificativa": "Item escolhido no estado selecionado: mesmo observável.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-e4ed78938b04": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Abre a lista de alturas máximas; o valor do select está no item a2-83611c221e13.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-95f9a6eaa8ba": {
+   "aceita": false,
+   "motivo": "duplicada:a2-684e49bfcc90",
+   "justificativa": "Função de filtro do select ao digitar no campo: mesmo observável.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-8523bfe1280c": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve que os radios seguem o padrão W3C; os atributos exigidos estão em a2-4c2ef1bf747e e a2-6eb568d6dd94.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-d3145b4aebbf": {
+   "aceita": false,
+   "motivo": "duplicada:a2-684e49bfcc90",
+   "justificativa": "Filtrar digitando = filtro já aceito; a navegação por setas é a2-41577e5f420c.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-054e7ec8405d": {
+   "aceita": false,
+   "motivo": "duplicada:a2-9ca0ad49a63a",
+   "justificativa": "Space/Enter escolhe o item na lista do select: mesmo observável.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-b9f704f44a24": {
+   "aceita": false,
+   "motivo": "duplicada:a2-8f7b9c91d55e",
+   "justificativa": "Ação binária com efeito imediato: mesmo observável da unidade aceita.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-fd97029026d4": {
+   "aceita": false,
+   "motivo": "duplicada:a2-8f7b9c91d55e",
+   "justificativa": "Mesmo texto (ação binária imediata) na página de desenvolvedor.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-69e3d9cf4cb3": {
+   "aceita": false,
+   "motivo": "duplicada:a2-8f7b9c91d55e",
+   "justificativa": "Mesmo texto (ação binária imediata) na página de acessibilidade.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-f97779e73308": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'O ideal é' uma ou duas palavras: orientação.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-4095c6865789": {
+   "aceita": false,
+   "motivo": "duplicada:a2-a9890f9d0039",
+   "justificativa": "Rótulo informa a ação: mesmo predicado (R-ED b) e observável.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-1b733fd9b08b": {
+   "aceita": false,
+   "motivo": "duplicada:a2-4f6b7bd068c4",
+   "justificativa": "Ênfase primária para maior importância: mesmo predicado e observável.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-9da54b795b13": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'É utilizada nos botões com importância intermediária': orientação de uso da ênfase.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-1cd392c81428": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'É usada em botões de baixa importância': orientação de uso da ênfase.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-a7a47709434b": {
+   "aceita": false,
+   "motivo": "duplicada:a2-8e13c46672f5",
+   "justificativa": "Toggle do gatilho do select (ícone alterna): mesmo observável; no accordion, a2-d159e0f4acdf.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-6b4d3668a1be": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Dispositivos mobile.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-4827707a66a7": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Posição padrão do rótulo com permissão de outra ('pode ser utilizado à esquerda').",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-c1a7be65a847": {
+   "aceita": false,
+   "motivo": "duplicada:a2-e1a8fbf8ec5c",
+   "justificativa": "Marcação do estado de foco do campo segundo a diretriz: mesmo observável (estilo de foco computado).",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-c8e883f814e3": {
+   "aceita": false,
+   "motivo": "duplicada:a2-13c4de8de18e",
+   "justificativa": "Ordem de tabulação até o input e seus controles internos: mesmo texto e observável.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-623bbce449cc": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Redimensionamento da tela.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-f6dce058d729": {
+   "aceita": false,
+   "motivo": "duplicada:a2-482ab9c4a4b1",
+   "justificativa": "Item selecionável assume o estado selecionado: mesmo observável (no item da aba, a2-fc8612404c77).",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-7ab26b54d2ad": {
+   "aceita": false,
+   "motivo": "duplicada:a2-9ca0ad49a63a",
+   "justificativa": "Itens acionados por Space/Enter no select: mesmo observável; na aba, a2-2e96af5b4635.",
+   "origem": "lote-r2-G2.json",
+   "heranca": "a2"
+  },
+  "a2-777552081394": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes. (Alternativa textual: e-MAG 3.6/6.1 e texto alternativo de ícones já tratados.)",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-aaea18cff3ad": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-c01c7931f337": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes. (Contraste: e-MAG 4.1 e fundamento Cores.)",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-f30373c01719": {
+   "aceita": false,
+   "motivo": "duplicada:a2-acc4801af71c",
+   "justificativa": "Toda funcionalidade disponível por teclado = e-MAG 2.1 (mesmo predicado e observável).",
+   "equivalenteEmag": "2.1",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-f0f936d2b593": {
+   "aceita": false,
+   "motivo": "duplicada:a2-04a4c3ea1b70",
+   "justificativa": "Não criar conteúdo que cause convulsões = e-MAG 2.6 (sem intermitência de tela).",
+   "equivalenteEmag": "2.6",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-5d71dd301de6": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-d0f999e273f9": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-3c60c31e040b": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-02d46e798e66": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-ef5b541133c7": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-6423b7b57f6f": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Diretriz WCAG resumida, guarda-chuva com vários critérios de sucesso; sem observável único — as obrigações concretas são as recomendações do e-MAG e as cláusulas dos componentes. A frase só descreve o objetivo da diretriz (várias modalidades de entrada além do teclado).",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-66933615dfa1": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Mesmo parágrafo de a2-3f6b7b055edf: princípio guarda-chuva (perceber, entender, navegar, interagir); sem observável único.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-70e6c9cf922d": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Passo de processo (realizar avaliação de acessibilidade), não propriedade da página.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-93e48ebe4229": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Fala da necessidade de avaliar (processo), não de uma propriedade da página.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-c187d7b0ee2e": {
+   "aceita": false,
+   "motivo": "duplicada:a2-671056d628cb",
+   "justificativa": "HTML válido conforme as normas do W3C = e-MAG 1.1 (como a2-ed21800a3c0b).",
+   "equivalenteEmag": "1.1",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-13dc5e3d1e5b": {
+   "aceita": false,
+   "motivo": "duplicada:a2-372068e40fd2",
+   "justificativa": "H2–H6 obedecendo hierarquia = e-MAG 1.3 (como a2-e0b41499dd79).",
+   "equivalenteEmag": "1.3",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-561af3bd0c85": {
+   "aceita": false,
+   "motivo": "duplicada:a2-1ea2f43d76db",
+   "justificativa": "Idioma identificado pelo atributo lang = e-MAG 3.1.",
+   "equivalenteEmag": "3.1",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-0a51ebc0d2bb": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Formatação de comentário (mesma linha, espaços) só existe no código-fonte; o DOM construído não guarda a formatação do código como foi escrita.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-f9f868246d37": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Formatação de comentário de várias linhas (linhas próprias, sem indentação) só existe no código-fonte; o DOM construído não guarda a disposição das linhas do código.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-1cfa902fa7ad": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Indentação só existe no código-fonte; o DOM construído não guarda a indentação. (Como a2-a0cefe07ca15.)",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-926f35d015e8": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "O parser HTML põe nomes de tags e atributos em minúsculas; a caixa original só existe no código-fonte; o DOM construído não guarda a caixa original.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-2b1bf1171853": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "O parser fecha elementos implicitamente; tag de fechamento omitida só existe no código-fonte; o DOM construído não guarda se a tag foi escrita. (Como a2-de88a511d760.)",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-cd5616b3811f": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Aspas dos valores de atributo: só existe no código-fonte; o DOM construído não guarda o tipo de aspas usado.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-dbcc920d85cb": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Frase de introdução da página do padrão mínimo; não impõe nada.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-048df7876e49": {
+   "aceita": false,
+   "motivo": "duplicada:a2-a39f3ad397d4",
+   "justificativa": "Tipografia Rawline = a2-a39f3ad397d4 (aceita; mesmo observável: font-family).",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-2a26ec4b2ebe": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Paleta de cores do DS = usar sempre as cores pré-definidas (a2-3fb37eb25f3c, aceita).",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-47e95d69211b": {
+   "aceita": false,
+   "motivo": "duplicada:a2-db50df136f86",
+   "justificativa": "Fechar = 'x' é o mesmo observável de a2-db50df136f86 (aceita; ícone do botão Fechar = fa-times).",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-2c791b329734": {
+   "aceita": false,
+   "motivo": "duplicada:a2-2df7bf5e2fa2",
+   "justificativa": "Continuação da mesma frase-título (usar os componentes essenciais do DS).",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-9b4cbe463375": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'É mais adequado' = recomendação (e trata de ilustração de empty state, que não existe na tela).",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-054cfaa23352": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3452a785e45d",
+   "justificativa": "Rótulo sucinto = rótulo curto e objetivo (a2-3452a785e45d, aceita; mesmo observável: nº de palavras do rótulo).",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-b407feef8940": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "'Podem exigir' descreve possibilidade; não impõe nada.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-4079d192930e": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Testar em todas as resoluções e orientações de dispositivo; o contrato é 1280×900.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-0d33581a3847": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Continua 'Procure elaborar formulários curtos…' e é condicional ('se preciso'): recomendação (como a2-f9bc87c84bdf).",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-c1b1de4018c6": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Atribuir prioridades às atividades depende de dados de uso (processo de projeto), como a2-eb470d67f120.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-20e8cc07fdd7": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Oferecer opções relacionadas é decisão de arquitetura de navegação; nenhum caso inequívoco na página.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-ed5bb72705c2": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Em dispositivos móveis; o contrato é 1280×900.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-ee9dba1fc6c0": {
+   "aceita": false,
+   "motivo": "duplicada:a2-274ebf4959e8",
+   "justificativa": "Máximo de duas palavras (três se inevitável) já é a medida de a2-274ebf4959e8 (aceita), da mesma frase.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-55e29f8a3043": {
+   "aceita": false,
+   "motivo": "conflito",
+   "justificativa": "Exige rótulo de ação começando por verbo no infinitivo. O botão de escolher arquivo do upload é 'Selecione o arquivo' (imperativo), fixado no inventário pela regra do upload de arquivo único (a2-6e7c9e436ad4), e os rótulos das abas são substantivos (Andamento, Documentos). A página conforme segue o componente e o inventário, e por isso violaria esta cláusula. Para aceitar, o rótulo do botão do upload teria de ser trocado (ex.: 'Selecionar arquivo').",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-fde9c0cced53": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Constatação (mensagem longa é menos lida); o predicado normativo é a frase vizinha.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-fc99c0db73c4": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Item da lista de objetivos do writing; declara meta, não cláusula (como a2-680fc6ae64f1).",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-87a6ef93eb2f": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Item da lista de objetivos do writing; declara meta, não cláusula (como a2-680fc6ae64f1).",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-ffac7751c5b1": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Item da lista de objetivos do writing; declara meta, não cláusula (como a2-680fc6ae64f1).",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-747515b43724": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Item da lista de objetivos do writing; declara meta, não cláusula (como a2-680fc6ae64f1).",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-caeaef36e509": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Define o que é um texto acessível.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-2e47fd643127": {
+   "aceita": false,
+   "motivo": "duplicada:a2-6c531e6437e8",
+   "justificativa": "Reutilizar as mesmas palavras em contextos semelhantes = terminologia consistente (a2-6c531e6437e8, aceita; mesmo observável: o mesmo dado com dois nomes).",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-799800fab95b": {
+   "aceita": false,
+   "motivo": "duplicada:a2-6c531e6437e8",
+   "justificativa": "Consistência entre as palavras ('Agendar' x 'Programar') = terminologia consistente (a2-6c531e6437e8, aceita).",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-73a6b6a52a5c": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Esclarece o sentido de 'conciso'; o predicado está na frase seguinte (a2-5610d5df55f0, aceita).",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-cc437f217b56": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve a vantagem do alinhamento à esquerda; não impõe nada (como a2-729f9df0c7cc).",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-9e1a835fa52a": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Introdução guarda-chuva das dicas de escaneabilidade ('estrutura clara'); sem observável único, e as dicas saíram como recomendação.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-8d1b666574b5": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Uma das 'maneiras de conseguir' escaneabilidade (dica); como a2-275ae798acea ('quando possível, apresente em listas').",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-55d85630aecf": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo (testar com usuários e revisar), como a2-b43f1860fd24.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-40e63c381eab": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Intenção geral ('ir além' dos requisitos legais); sem observável.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-4690f51372ed": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Título-guarda-chuva da linguagem inclusiva; as formas concretas vêm como 'possibilidades' sugeridas e o caso flagrante (zombar do usuário) já está em a2-909e5f61d661.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-5cdbe8c0d277": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Introduzida por 'indicamos algumas possibilidades de contornar': sugestão.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-63d4dc64b9e6": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "'Sempre que possível' + 'possibilidades' sugeridas: recomendação.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-eddc41c7dae7": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Introduzida por 'indicamos algumas possibilidades de contornar': sugestão.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-6177a4b74498": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Alinhamento da paleta aos princípios e sua aplicação na biblioteca de componentes é propriedade do DS, não da página; o uso de cores pré-definidas na página já é a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-5c0958e895c9": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Define texto grande (18pt/24px ou 14pt negrito); não impõe nada.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-48f21d412344": {
+   "aceita": false,
+   "motivo": "duplicada:a2-66fbdcf13772",
+   "justificativa": "Conformidade mínima AA (4,5:1) para texto: mesmo predicado, condição e observável da Recomendação 4.1 do e-MAG (como a2-2f6900335a84).",
+   "equivalenteEmag": "4.1",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-42f5fd524676": {
+   "aceita": false,
+   "motivo": "duplicada:a2-66fbdcf13772",
+   "justificativa": "Cores de 3:1 só para gráficos/texto grande: usá-las em texto normal é ficar abaixo de 4,5:1, o mesmo observável da Recomendação 4.1 do e-MAG.",
+   "equivalenteEmag": "4.1",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-3dd5d6fc4964": {
+   "aceita": false,
+   "motivo": "duplicada:a2-36dcfef2c39b",
+   "justificativa": "Famílias Blue Warm/Blue Warm Vivid para interação: o observável (cor de interação dos elementos interativos) é o da tabela do estado Interativo, que fixa o token.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-c4e5ddfcd9e8": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Red' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-de0dda08d77c": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Red Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-42ecf7c97137": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Red Cool' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-c5869066593c": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Red Cool Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-574f91c49083": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Red Warm' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-f29743ca30f0": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Red Warm Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-372debe4d431": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Orange' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-c3b2b94bf96a": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Orange Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-d091cb898d5a": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Orange Warm' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-4472c628f36d": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Orange Warm Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-2b37533092c8": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Gold' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-6363727ad1e1": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Gold Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-bd8b74dacc0a": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Yellow' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-c7d539b43837": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Yellow Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-da10fc920879": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Green' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-d170bcd25d39": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Green Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-a03d41f1674c": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Green Cool' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-0c2c03c29fd1": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Green Cool Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-8a57657707e5": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Green Warm' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-102ab68858c1": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Green Warm Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-3004e1a5a1a1": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Mint' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-4cb90c862726": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Mint Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-c5ae5070f6ba": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Mint Cool' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-d52285d4837a": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Mint Cool Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-3c9038617f1b": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Cyan' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-10a8deacdfc8": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Cyan Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-39362dfabbbe": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Blue' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-0506e736be5e": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Blue Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-35558ab2945b": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Blue Cool' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-9be28aa3d6c4": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Blue Cool Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-a2552432319e": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Blue Warm' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-2fcf4094dfd1": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Blue Warm Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-ec8f274e7e80": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Indigo' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-8dd010510dfa": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Indigo Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-dc2b2106af65": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Indigo Cool' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-a99b5256c9ba": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Indigo Cool Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-9c3b3db5be94": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Indigo Warm' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-c8ea655ae1d4": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Indigo Warm Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-a5a34cf1176b": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Violet' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-72fcfcc224a7": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Violet Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-9012a71f7186": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Violet Warm' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-8c0a91587869": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Violet Warm Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-7a0e75d247cf": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Magenta' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-b2d1aa05b6c1": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Magenta Vivid' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-778cb1886b46": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Gray' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-b71d02fea165": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Gray Cool' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-41c5484495af": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Gray Warm' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-a0286a3afda3": {
+   "aceita": false,
+   "motivo": "duplicada:a2-3fb37eb25f3c",
+   "justificativa": "Cabeçalho da família 'Pure' da paleta (tabela de tokens); o observável (cor computada pertence à paleta) é o de a2-3fb37eb25f3c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-87ac57121515": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Processo de proposta e aprovação de novo estado pela equipe do DS.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-7f289efc5ca0": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Prioridade entre estilos em conflito sem observável fixado; mesmo critério de a2-c264f53dd99d.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-986bce8e5866": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Caracteriza os estados de aviso (cor + ícone); os valores exigíveis estão nas tabelas de cada estado.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-96c4f55cc965": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "'Esteja claro o estado Interativo' sem limiar ou observável fixado (como a2-0795b6ad88f8).",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-6a71be40aa41": {
+   "aceita": false,
+   "motivo": "duplicada:a2-15a1e5d58ef7",
+   "justificativa": "Cor como principal característica do estado de interação: mesmo observável (elemento interativo com a cor de interação, distinta do texto).",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-ab5eec9678ac": {
+   "aceita": false,
+   "motivo": "duplicada:a2-d0179dc6bd81",
+   "justificativa": "Desabilitado sem herança de outros estados: na tela já aceito estado a estado nas etapas desabilitadas (hover a2-d0179dc6bd81, pressionado a2-dd1a39bcd50b, ativo a2-3e410f36c0cd, foco a2-25ddbebf4f1a).",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-1fefd66159a3": {
+   "aceita": false,
+   "motivo": "duplicada:a2-cdd2382da97b",
+   "justificativa": "Hover por overlay: mesmo observável de a2-cdd2382da97b.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-322a4802c571": {
+   "aceita": false,
+   "motivo": "duplicada:a2-dea6a58c22c4",
+   "justificativa": "Cor do overlay de hover = cor do primeiro plano: é a linha 'background · color · Primeiro Plano' da tabela do Hover.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-6468b76706d2": {
+   "aceita": false,
+   "motivo": "duplicada:a2-13efc60bb6b6",
+   "justificativa": "Cor do overlay de pressionado = cor do primeiro plano: é a linha 'background · color · Primeiro Plano' da tabela do Pressionado.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-920faf6b0136": {
+   "aceita": false,
+   "motivo": "duplicada:a2-63e7d8f1a47d",
+   "justificativa": "Sem foco tênue onde a diretriz não o especifica = o foco tem o estilo padrão (dashed, --surface-width-lg); mesmo observável da tabela do Estado Foco.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-edce1bd60be3": {
+   "aceita": false,
+   "motivo": "duplicada:a2-1754a39d9a39",
+   "justificativa": "Foco por clique só quando a diretriz especifica: mesmo observável de 'clicar não gera foco visual'.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-a5bf94392cd3": {
+   "aceita": false,
+   "motivo": "duplicada:a2-0cb58cc75f6f",
+   "justificativa": "Foco indicado por borda/contorno em volta do elemento: mesmo bloco e mesmo observável de a2-0cb58cc75f6f.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-90b9383fc954": {
+   "aceita": false,
+   "motivo": "duplicada:a2-bfc5ebd36c20",
+   "justificativa": "Um só Ativo por conjunto: mesmo predicado e observável.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-ab469c2727b7": {
+   "aceita": false,
+   "motivo": "duplicada:a2-7ecb601ffa09",
+   "justificativa": "Cor como principal característica do Ativo: o observável (cor do item ativo) é o da tabela do estado Ativo.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-bdda40c02e17": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Justifica o feedback do dropzone (borda basta); os valores estão na tabela do Dropzone.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-ccc6d902a4a5": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Explica que o cursor é a referência da sobreposição; não impõe nada.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-fb9e539d4528": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve que o overlay é o feedback do dropzone ativo; os valores estão na tabela.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-6afafbfc7a78": {
+   "aceita": false,
+   "motivo": "duplicada:a2-33f8d78aa04b",
+   "justificativa": "Overlay na cor do Interativo com opacidade fixa: mesmas linhas e observável da tabela do Dropzone ativo.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-6b42100a4bd2": {
+   "aceita": false,
+   "motivo": "duplicada:a2-235056fad007",
+   "justificativa": "Cor como característica de Ligado/Desligado: o observável é o da tabela Ligado e Desligado.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-9a0c3d0bb27c": {
+   "aceita": false,
+   "motivo": "duplicada:a2-fe133882c34a",
+   "justificativa": "Vermelho e ícone de X no Erro: mesmas linhas da tabela do estado Erro.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-bb2310e5cf41": {
+   "aceita": false,
+   "motivo": "duplicada:a2-a8421dd4efff",
+   "justificativa": "Amarelo e ícone de exclamação no Alerta: mesmas linhas da tabela do estado Alerta.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-47f249dd7284": {
+   "aceita": false,
+   "motivo": "duplicada:a2-622c6c318ee6",
+   "justificativa": "Verde e ícone de check no Sucesso: mesmas linhas da tabela do estado Sucesso.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-386b071ca598": {
+   "aceita": false,
+   "motivo": "duplicada:a2-f0e069600ad6",
+   "justificativa": "Azul e 'i' no Informativo: na tela só o balão da tooltip usa a cor de informação (sem ícone); mesmo observável da tabela Feedback Informação.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-6ca1b6381610": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Grid de 8 colunas (tablet/smartphone); a observação é em 1280.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-2f3047dbb164": {
+   "aceita": false,
+   "motivo": "duplicada:a2-fe5b8665db99",
+   "justificativa": "Espaçamento da grid de 12 colunas dependente do breakpoint: em 1280 é a linha da tabela Desktop.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-637f07df4a80": {
+   "aceita": false,
+   "motivo": "duplicada:a2-6a99b79819ae",
+   "justificativa": "Margem externa mínima de 40px: mesmo observável de 'conteúdo dentro das margens da grid'.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-f334843373f2": {
+   "aceita": false,
+   "motivo": "duplicada:a2-fe5b8665db99",
+   "justificativa": "Gutter de 24px do Desktop: é a linha da tabela Desktop.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-1378827bf80f": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Grid de TV (a partir de 1520px); a observação é em 1280.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-81a676aa9d0e": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Validar a cada breakpoint; o contrato de observação é 1280×900.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-341e32a322b9": {
+   "aceita": false,
+   "motivo": "duplicada:a2-312798bd96aa",
+   "justificativa": "Coleção Font Awesome: mesmo observável (classe/família do ícone) de a2-312798bd96aa.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-7a8444ab3c10": {
+   "aceita": false,
+   "motivo": "duplicada:a2-312798bd96aa",
+   "justificativa": "Estilos solid/brand: mesmo observável (família do ícone) de a2-312798bd96aa.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-928d495eb792": {
+   "aceita": false,
+   "motivo": "sem-medicao",
+   "justificativa": "Alinhamento ao contexto cultural e à experiência do usuário é julgamento de projeto.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-ec69df55e8bf": {
+   "aceita": false,
+   "motivo": "duplicada:a2-312798bd96aa",
+   "justificativa": "Estilos Solid e Brand: mesmo observável de a2-312798bd96aa.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-2f6b87d1c5b7": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve o estilo Brand.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-9b98387660c2": {
+   "aceita": false,
+   "motivo": "duplicada:a2-c72a64d5d504",
+   "justificativa": "Tamanho base de 16px e escala de tokens: é a tabela de tamanhos padrão.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-fad6997ed468": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Explica que a área mínima conta no espaçamento e anuncia os dois tipos; o valor de clique já está em a2-5542b7528b3d.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-293aacd7f161": {
+   "aceita": false,
+   "motivo": "duplicada:a2-b889b938c32d",
+   "justificativa": "Usar os ícones da tabela com a ação atribuída: mesmo predicado e observável de a2-b889b938c32d.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-f82d600db413": {
+   "aceita": false,
+   "motivo": "duplicada:a2-a39f3ad397d4",
+   "justificativa": "Família única Rawline: mesmo observável (font-family) de a2-a39f3ad397d4.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-a8114c14df41": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Justifica o uso de uma só família.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-271305d931f3": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Relata a escolha da fonte base de 14px e diz que 'essa escolha não é definitiva'; os tamanhos exigíveis estão na escala (a2-2f4eadc23b2c).",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-9bb580f3f5cb": {
+   "aceita": false,
+   "motivo": "duplicada:a2-2f4eadc23b2c",
+   "justificativa": "Escala Minor Third: mesmo observável (font-size contra a escala).",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-606272902695": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Define o ponto 1em da escala (14px, peso 400); os valores exigíveis estão na escala (a2-2f4eadc23b2c) e nas tabelas de estilo.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-b0a08f1cb960": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Descreve que os estilos são de elementos nativos do HTML.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-4bf1b50d3636": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Define para que serve a lista ordenada (como a2-b955ffe42e59).",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-4b41793df6b8": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Define para que serve a lista de definições (como a2-b955ffe42e59).",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-641c4d20ab8f": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "Tabela 'Componente | Utilize para': orientação de uso dos componentes de navegação lateral.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-d443707a1edf": {
+   "aceita": false,
+   "motivo": "duplicada:a2-8f86684de1e2",
+   "justificativa": "A linha aplicável (Texto à esquerda) é o mesmo observável de a2-8f86684de1e2 (aceita, mesma tabela); as linhas de dado monetário e ícone não têm coluna na tabela da tela.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-1f343a3e7bf2": {
+   "aceita": false,
+   "motivo": "nao-normativa",
+   "justificativa": "Tabela descritiva ('alguns termos que você pode encontrar'); além disso nenhuma ação sorteável usa esses verbos.",
+   "origem": "lote-r2-G4.json",
+   "heranca": "a2"
+  },
+  "a2-fc881a57891b": {
+   "aceita": false,
+   "motivo": "forca",
+   "justificativa": "A tabela classifica combinações (AAA/AA/x); a consequência normativa é 'x: ... Não é recomendado' (recomendação); o mínimo exigível de 4,5:1 está na Recomendação 4.1 do e-MAG (a2-66fbdcf13772).",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-9a7a924f8063": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Tabela de breakpoints (classes de dispositivo); só faz sentido entre tamanhos de janela.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-d2d7a7aa6ba8": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Grid de 4 colunas (até 559px); a observação é em 1280.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-eceb2ec18ff9": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Grid de 8 colunas (496–1199px); a observação é em 1280.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-fe5b8665db99": {
+   "aceita": false,
+   "motivo": "duplicada:a2-6a99b79819ae",
+   "justificativa": "Em 1280 vale a tabela Desktop; a linha observável sobre as instâncias é a margem de 40px, já aceita como 'conteúdo dentro das margens da grid'; o gutter de 24px exige colunas lado a lado que o inventário não fixa.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-bb8ab1145b98": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Grid de TV (a partir de 1520px); a observação é em 1280.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-f1efa8124874": {
+   "aceita": false,
+   "motivo": "duplicada:a2-c72a64d5d504",
+   "justificativa": "Mapeia as classes fa-* para os mesmos tokens de tamanho; mesmo observável da tabela de tamanhos.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-7ae4ad55ed25": {
+   "aceita": false,
+   "motivo": "duplicada:a2-b889b938c32d",
+   "justificativa": "Tabela de orientações de uso dos ícones: mesmo predicado e observável de a2-b889b938c32d (detalhada em a2-952e88a5af0d).",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-d5695a0a50f2": {
+   "aceita": false,
+   "motivo": "duplicada:a2-a39f3ad397d4",
+   "justificativa": "Token --font-family-base (Rawline): mesmo observável de a2-a39f3ad397d4.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-6d96474b0f3b": {
+   "aceita": false,
+   "motivo": "duplicada:a2-bc2dd4c6ab14",
+   "justificativa": "Tabela de pesos: mesmo predicado e observável de a2-bc2dd4c6ab14.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-6a762aac9cba": {
+   "aceita": false,
+   "motivo": "duplicada:a2-2f4eadc23b2c",
+   "justificativa": "Tabela da escala tipográfica: mesmo observável (font-size contra a escala) de a2-2f4eadc23b2c.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-2eb539f0767d": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "H1 para grid de 4 colunas (telas pequenas); a observação é em 1280.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-fc6334fab65a": {
+   "aceita": false,
+   "motivo": "duplicada:a2-329f74d7646c",
+   "justificativa": "Estilo H2: a2-329f74d7646c já mede o h2 da página contra estes valores (scale-up-05, regular, line-height low).",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-68cdebd764de": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "H2 para grid de 4 colunas; a observação é em 1280.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-5279fd95844d": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "H3 para grid de 4 colunas; a observação é em 1280.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-6d56ad3499ab": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "H4 para grid de 4 colunas; a observação é em 1280.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-b099a48a064b": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "H5 para grid de 4 colunas; a observação é em 1280.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-351910d59f9b": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "H6 para grid de 4 colunas; a observação é em 1280.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-a3e433fe2666": {
+   "aceita": false,
+   "motivo": "escopo",
+   "justificativa": "Parágrafo para grid de 4 colunas; a observação é em 1280.",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  },
+  "a2-3b4e8e23351d": {
+   "aceita": false,
+   "motivo": "duplicada:a2-329f74d7646c",
+   "justificativa": "Estilo Label: a2-329f74d7646c já mede os rótulos do select e do upload contra estes valores (scale-base, semi-bold).",
+   "origem": "lote-r2-G3.json",
+   "heranca": "a2"
+  }
+ }
+}

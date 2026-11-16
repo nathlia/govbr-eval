@@ -1,0 +1,223 @@
+{
+ "rotuloOpcao": {
+  "--text-color": [
+   {
+    "nivelAncestral": 2,
+    "seletor": ".br-select .br-item",
+    "valor": "var(--color-light)"
+   },
+   {
+    "nivelAncestral": 2,
+    "seletor": ".br-select .br-item",
+    "valor": "var(--color-light)"
+   },
+   {
+    "nivelAncestral": 2,
+    "seletor": ".campo-continente .br-item",
+    "valor": "#aaa"
+   },
+   {
+    "nivelAncestral": 2,
+    "seletor": ".campo-continente .br-item",
+    "valor": "#aaa"
+   },
+   {
+    "nivelAncestral": 9,
+    "seletor": "body",
+    "valor": "var(--color)"
+   },
+   {
+    "nivelAncestral": 9,
+    "seletor": "body",
+    "valor": "var(--color)"
+   }
+  ],
+  "--color": [
+   {
+    "nivelAncestral": 2,
+    "seletor": ".br-select .br-item",
+    "valor": "var(--color-light)"
+   },
+   {
+    "nivelAncestral": 2,
+    "seletor": ".br-select .br-item",
+    "valor": "var(--color-light)"
+   },
+   {
+    "nivelAncestral": 10,
+    "seletor": ":root",
+    "valor": "var(--color-light)"
+   },
+   {
+    "nivelAncestral": 10,
+    "seletor": ":root",
+    "valor": "var(--color-light)"
+   }
+  ]
+ },
+ "msgErro": {
+  "--message-background": [
+   {
+    "nivelAncestral": 1,
+    "seletor": ".br-message",
+    "valor": "var(--background)"
+   },
+   {
+    "nivelAncestral": 1,
+    "seletor": ".br-message",
+    "valor": "var(--background)"
+   },
+   {
+    "nivelAncestral": 1,
+    "seletor": ".br-message.danger, .br-message.is-danger, .br-message[danger]",
+    "valor": "var(--danger-alternative)"
+   },
+   {
+    "nivelAncestral": 1,
+    "seletor": ".br-message.danger, .br-message.is-danger, .br-message[danger]",
+    "valor": "var(--danger-alternative)"
+   },
+   {
+    "nivelAncestral": 1,
+    "seletor": ".formulario-pais .retorno-envio",
+    "valor": "var(--blue-warm-vivid-50)"
+   },
+   {
+    "nivelAncestral": 1,
+    "seletor": ".formulario-pais .retorno-envio",
+    "valor": "var(--blue-warm-vivid-50)"
+   }
+  ],
+  "--message-text": [
+   {
+    "nivelAncestral": 1,
+    "seletor": ".br-message",
+    "valor": "var(--color)"
+   },
+   {
+    "nivelAncestral": 1,
+    "seletor": ".br-message",
+    "valor": "var(--color)"
+   },
+   {
+    "nivelAncestral": 1,
+    "seletor": ".formulario-pais .retorno-envio",
+    "valor": "var(--pure-0)"
+   },
+   {
+    "nivelAncestral": 1,
+    "seletor": ".formulario-pais .retorno-envio",
+    "valor": "var(--pure-0)"
+   }
+  ],
+  "--background": [
+   {
+    "nivelAncestral": 6,
+    "seletor": ":root",
+    "valor": "var(--background-light)"
+   },
+   {
+    "nivelAncestral": 6,
+    "seletor": ":root",
+    "valor": "var(--background-light)"
+   }
+  ],
+  "--color": [
+   {
+    "nivelAncestral": 6,
+    "seletor": ":root",
+    "valor": "var(--color-light)"
+   },
+   {
+    "nivelAncestral": 6,
+    "seletor": ":root",
+    "valor": "var(--color-light)"
+   }
+  ]
+ },
+ "msgErroRaiz": {
+  "--message-background": [
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message",
+    "valor": "var(--background)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message",
+    "valor": "var(--background)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message.danger, .br-message.is-danger, .br-message[danger]",
+    "valor": "var(--danger-alternative)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message.danger, .br-message.is-danger, .br-message[danger]",
+    "valor": "var(--danger-alternative)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".formulario-pais .retorno-envio",
+    "valor": "var(--blue-warm-vivid-50)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".formulario-pais .retorno-envio",
+    "valor": "var(--blue-warm-vivid-50)"
+   }
+  ],
+  "--message-text": [
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message",
+    "valor": "var(--color)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message",
+    "valor": "var(--color)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".formulario-pais .retorno-envio",
+    "valor": "var(--pure-0)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".formulario-pais .retorno-envio",
+    "valor": "var(--pure-0)"
+   }
+  ],
+  "--feedback-background": [
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message",
+    "valor": "var(--background)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message",
+    "valor": "var(--background)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message.danger, .br-message.is-danger, .br-message[danger]",
+    "valor": "var(--danger)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message.danger, .br-message.is-danger, .br-message[danger]",
+    "valor": "var(--danger)"
+   }
+  ]
+ },
+ "valores": {
+  "textColorRotulo": "#aaa",
+  "msgBg": "#2670e8",
+  "msgOrientBg": "#d4e5ff",
+  "danger": "#e52207",
+  "dangerAlt": "#fde0db"
+ }
+}

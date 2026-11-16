@@ -1,0 +1,77 @@
+{
+ "id": "EC-092",
+ "classe": "conforme",
+ "instancia": "skp-conteudo",
+ "chave": "accesskey-unico-destinos",
+ "porEstado": {
+  "S0": {
+   "valor": {
+    "accesskeys": [
+     "1",
+     "2"
+    ],
+    "ancoras": [
+     {
+      "id": "main-content",
+      "existe": true,
+      "tag": "MAIN",
+      "name": null
+     },
+     {
+      "id": "rodape",
+      "existe": true,
+      "tag": "FOOTER",
+      "name": null
+     }
+    ]
+   },
+   "viola": false
+  },
+  "S1": {
+   "valor": {
+    "accesskeys": [
+     "1",
+     "2"
+    ],
+    "ancoras": [
+     {
+      "id": "main-content",
+      "existe": true,
+      "tag": "MAIN",
+      "name": null
+     },
+     {
+      "id": "rodape",
+      "existe": true,
+      "tag": "FOOTER",
+      "name": null
+     }
+    ]
+   },
+   "viola": false
+  },
+  "S2": {
+   "valor": {
+    "accesskeys": [
+     "1",
+     "2"
+    ],
+    "ancoras": [
+     {
+      "id": "main-content",
+      "existe": true,
+      "tag": "MAIN",
+      "name": null
+     },
+     {
+      "id": "rodape",
+      "existe": true,
+      "tag": "FOOTER",
+      "name": null
+     }
+    ]
+   },
+   "viola": false
+  }
+ }
+}

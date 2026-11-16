@@ -1,0 +1,42 @@
+{
+ "id": "EC-091",
+ "classe": "conforme",
+ "instancia": "skp-conteudo",
+ "chave": "mesma-posicao-e-oculta-ao-sair",
+ "porEstado": {
+  "S0": {
+   "valor": [
+    {
+     "tecla": "Tab 1",
+     "foco": "a.br-item",
+     "item1": {
+      "x": 16,
+      "y": 0,
+      "w": 300,
+      "h": 36.296875
+     },
+     "item1Visivel": true
+    },
+    {
+     "tecla": "Tab 2",
+     "foco": "a.br-item",
+     "item2": {
+      "x": 16,
+      "y": 0,
+      "w": 300,
+      "h": 36.296875
+     },
+     "item2Visivel": true,
+     "item1Visivel": false
+    },
+    {
+     "tecla": "Tab 3",
+     "foco": "a#sgn-usuaria.br-sign-in.conta-usuaria",
+     "item1Visivel": false,
+     "item2Visivel": false
+    }
+   ],
+   "viola": false
+  }
+ }
+}

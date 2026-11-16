@@ -1,0 +1,74 @@
+{
+ "_meta": {
+  "data": "2026-11-16",
+  "referencia": "ground-truth-cadastro-pais.json",
+  "limiar": 5
+ },
+ "specsDS": 6,
+ "n": 6,
+ "passa": true,
+ "folga": 1,
+ "n_soPrimeiraAuditoria": 4,
+ "linhas": [
+  {
+   "spec": "U-01",
+   "estado": "sempre",
+   "c1_confirmadaAsCegas": true,
+   "via": "1a-auditoria",
+   "c2_estadoAlcancavel": true,
+   "medidasAditivas": 3,
+   "c3_clausulaNaBaseServida": true,
+   "conta": true
+  },
+  {
+   "spec": "U-02",
+   "estado": "sempre",
+   "c1_confirmadaAsCegas": true,
+   "via": "1a-auditoria",
+   "c2_estadoAlcancavel": true,
+   "medidasAditivas": 3,
+   "c3_clausulaNaBaseServida": true,
+   "conta": true
+  },
+  {
+   "spec": "U-03",
+   "estado": "sempre",
+   "c1_confirmadaAsCegas": true,
+   "via": "1a-auditoria",
+   "c2_estadoAlcancavel": true,
+   "medidasAditivas": 3,
+   "c3_clausulaNaBaseServida": true,
+   "conta": true
+  },
+  {
+   "spec": "U-04",
+   "estado": "sempre",
+   "c1_confirmadaAsCegas": true,
+   "via": "1a-auditoria",
+   "c2_estadoAlcancavel": true,
+   "medidasAditivas": 3,
+   "c3_clausulaNaBaseServida": true,
+   "conta": true
+  },
+  {
+   "spec": "U-05",
+   "estado": "sempre",
+   "c1_confirmadaAsCegas": true,
+   "via": "remedida",
+   "c2_estadoAlcancavel": true,
+   "medidasAditivas": 3,
+   "c3_clausulaNaBaseServida": true,
+   "conta": true
+  },
+  {
+   "spec": "U-06",
+   "estado": "S1",
+   "c1_confirmadaAsCegas": true,
+   "via": "remedida",
+   "c2_estadoAlcancavel": true,
+   "medidasAditivas": 1,
+   "c3_clausulaNaBaseServida": true,
+   "conta": true
+  }
+ ]
+}

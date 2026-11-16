@@ -1,0 +1,1591 @@
+{
+ "a2-3e410f36c0cd": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum elemento sorteável fica desabilitado nem tem estado Ativo (não há abas, etapas, menu ou navegação ativa na página)."
+ },
+ "a2-fc8874ac7e03": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há componente com vários itens ativos nem listagem com expansão; a lista de países não expande nem seleciona."
+ },
+ "a2-bfc5ebd36c20": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há conjunto de itens com estado Ativo (ação imediata) na página; radio e select são escolha (Selecionado), não Ativo."
+ },
+ "a2-76dbeded6662": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum elemento sorteável tem estado Ativo para ser enfatizado no seu conjunto."
+ },
+ "a2-7ecb601ffa09": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Tabela do estado Ativo; nenhum elemento sorteável exibe o estado Ativo na página."
+ },
+ "a2-99d29fc4b1bf": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há menu, abas ou outro componente de navegação entre os sorteáveis (a trilha é andaime)."
+ },
+ "a2-b9005476f6a4": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há modal na página."
+ },
+ "a2-a02a690a8d63": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há tooltip na página."
+ },
+ "a2-04639abccf53": {
+  "aceita": true,
+  "justificativa": "O estado Selecionado (fundo --blue-warm-vivid-50 + ícone fa-check) não pode aparecer em botões. Medida: background-color computado e presença de ícone fa-check nos botões sorteáveis.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda"
+  ],
+  "variantes": [
+   {
+    "id": "botao-com-visual-selecionado",
+    "descricao": "O botão passa a exibir fundo --blue-warm-vivid-50 e um ícone fa-check (visual do estado Selecionado): em btn-limpar o check entra antes do texto; em btn-ajuda o check se soma ao ícone de ajuda.",
+    "clausula": "Button",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Estilo de fundo e ícone extra no próprio botão."
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Observável é cor de fundo e ícone de estado (visual-token).",
+  "equivalenteEmag": null
+ },
+ "a2-ef29db5bb4ac": {
+  "aceita": true,
+  "justificativa": "O estado Selecionado não pode ser aplicado a Message. Medida: a mensagem sem fundo --blue-warm-vivid-50 e sem ícone fa-check de seleção.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-com-visual-selecionado",
+    "descricao": "A mensagem recebe fundo --blue-warm-vivid-50 e um ícone fa-check de seleção antes do texto, além do ícone do seu tipo.",
+    "clausula": "Message",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Fundo e ícone extra na própria mensagem."
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Observável é cor de fundo e ícone de estado (visual-token).",
+  "equivalenteEmag": null
+ },
+ "a2-9bcf4f01a6bb": {
+  "aceita": true,
+  "justificativa": "O item escolhido na lista do select mostra o estado Selecionado com cor de fundo e elemento gráfico (o radio do item). Medida: escolher um continente, reabrir a lista e verificar fundo e marca gráfica do item escolhido.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "escolhido-so-fundo",
+    "descricao": "O círculo de radio dos itens da lista de continentes fica oculto por CSS; o item escolhido mostra só a cor de fundo.",
+    "clausula": "Cor de fundo e um elemento gráfico devem ser utilizados para representar o estado.",
+    "efeitos": {
+     "toca": [
+      "$:itens",
+      "pagina:estilos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Regra de estilo que oculta a marca gráfica dos itens da lista."
+    }
+   },
+   {
+    "id": "escolhido-so-marca",
+    "descricao": "O item escolhido na lista de continentes fica com fundo transparente, só com o radio marcado.",
+    "clausula": "Cor de fundo e um elemento gráfico devem ser utilizados para representar o estado.",
+    "efeitos": {
+     "toca": [
+      "$:itens",
+      "pagina:estilos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Regra de estilo que retira o fundo do item escolhido."
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Observável é cor de fundo e marca gráfica do estado (visual-token).",
+  "equivalenteEmag": null
+ },
+ "a2-0895138d72a0": {
+  "aceita": true,
+  "justificativa": "Tabela do estado Selecionado: fundo --blue-warm-vivid-50. Na página: o item escolhido na lista do select de continente. Medida: background-color computado do item escolhido.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "escolhido-fundo-claro",
+    "descricao": "O item escolhido na lista de continentes fica com fundo #D4E5FF (--blue-warm-vivid-10) em vez de --blue-warm-vivid-50, mantendo a marca gráfica.",
+    "clausula": "background/foreground · color · --blue-warm-vivid-50",
+    "efeitos": {
+     "toca": [
+      "$:itens",
+      "pagina:estilos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Regra de estilo do fundo do item escolhido."
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Observável é cor de fundo (token).",
+  "equivalenteEmag": null
+ },
+ "a2-c401529da18a": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-0bc9d331721d": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-7a4cc459f05c": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-94c20d374840": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-8e637084832f": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-a2cda6883389": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-280e09b93085": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-1716781bd268": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-6bbf1a76d8a1": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-532e06e9b442": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-0ac55a690dad": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-158f519cdfea": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-6ba31c373664": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-065bc0d01f43": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-6b21a16d1975": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-a08500e3b759": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-98243a6d8f3a": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há elemento arrastável na página (estados Arrastar/Arrastando não ocorrem)."
+ },
+ "a2-253f67dc1b85": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há área de soltura (dropzone) na página: não há upload nem elemento que receba arraste."
+ },
+ "a2-b1de44d95577": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há área de soltura (dropzone) na página: não há upload nem elemento que receba arraste."
+ },
+ "a2-57fb3e795aae": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há área de soltura (dropzone) na página: não há upload nem elemento que receba arraste."
+ },
+ "a2-9b8acd4a8f59": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há área de soltura (dropzone) na página: não há upload nem elemento que receba arraste."
+ },
+ "a2-5612fb499d07": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há área de soltura (dropzone) na página: não há upload nem elemento que receba arraste."
+ },
+ "a2-33f8d78aa04b": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há área de soltura (dropzone) na página: não há upload nem elemento que receba arraste."
+ },
+ "a2-590d318946bc": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há área de soltura (dropzone) na página: não há upload nem elemento que receba arraste."
+ },
+ "a2-497723f9f278": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Cor de visitado é de hiperlinks; não há links no conteúdo sorteável."
+ },
+ "a2-4de381049bd4": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Fundo escuro e links; a página só tem tema claro e não há links no conteúdo sorteável."
+ },
+ "a2-479f5042a47c": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Estado Visitado é de hiperlinks; não há links no conteúdo sorteável."
+ },
+ "a2-143bf14a2ef8": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Sublinhado de hiperlinks; não há links no conteúdo sorteável."
+ },
+ "a2-235056fad007": {
+  "aceita": true,
+  "justificativa": "Tabela Ligado/Desligado: ligado = --blue-warm-vivid-40. Na página: o switch de certificado ligado. Medida: cor computada da chave com o switch ligado. A linha Desligado (--gray-40) diverge da especificação do próprio Switch; fica sem variante.",
+  "instancias": [
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "ligado-cor-fora",
+    "descricao": "Com o switch ligado, a chave fica #1351B4 (--blue-warm-vivid-70) em vez de --blue-warm-vivid-40.",
+    "clausula": "background/foreground (Ligado) · color · --blue-warm-vivid-40",
+    "efeitos": {
+     "toca": [
+      "$:chave",
+      "pagina:estilos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Regra de estilo da cor da chave no estado ligado."
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Observável é cor (token).",
+  "equivalenteEmag": null
+ },
+ "a2-fe133882c34a": {
+  "aceita": true,
+  "justificativa": "Tabela do estado Erro: cor --red-vivid-50 e ícone times-circle. Na página (S1): a mensagem de erro do envio e as mensagens de erro dos campos obrigatórios. Medida: color computado do ícone e classe do ícone.",
+  "instancias": [
+   "msg-erro",
+   "inp-nome-pais",
+   "sel-continente",
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "erro-icone-cor-fora",
+    "descricao": "Em S1, o ícone da mensagem de erro do envio fica #B50909 (--red-vivid-60) em vez de --red-vivid-50.",
+    "instancias": [
+     "msg-erro"
+    ],
+    "clausula": "background/foreground · color · --red-vivid-50",
+    "efeitos": {
+     "toca": [
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Cor do ícone da mensagem de erro."
+    }
+   },
+   {
+    "id": "erro-campo-icone-trocado",
+    "descricao": "Em S1, a mensagem de erro do campo usa o ícone exclamation-triangle em vez de times-circle.",
+    "instancias": [
+     "inp-nome-pais",
+     "sel-continente",
+     "rad-situacao"
+    ],
+    "clausula": "icon · class · times-circle",
+    "efeitos": {
+     "toca": [
+      "$:mensagem"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Classe do ícone na mensagem de erro do campo."
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token",
+   "formulario"
+  ],
+  "razaoCategorias": "Cor e ícone de estado (token); uma variante muda a mensagem de erro de campo (formulario).",
+  "equivalenteEmag": null
+ },
+ "a2-a8421dd4efff": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum elemento em estado Alerta na página (as mensagens são informativa e de erro)."
+ },
+ "a2-622c6c318ee6": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum elemento em estado Sucesso nos estados declarados S0–S2."
+ },
+ "a2-27cf363853e4": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Condição (tokens do estado insuficientes para contraste) não ocorre: tema claro com os tokens de estado sobre fundo claro."
+ },
+ "a2-46523775b9da": {
+  "aceita": true,
+  "justificativa": "O estado de erro persiste até o erro ser resolvido. Na página (S1): mensagem de erro do envio e erro dos campos obrigatórios. Medida: interagir sem corrigir (focar, sair do campo, abrir e fechar a lista) e verificar que o erro continua exibido.",
+  "instancias": [
+   "msg-erro",
+   "inp-nome-pais",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "erro-envio-some-ao-focar",
+    "descricao": "Em S1, a mensagem de erro do envio é removida quando qualquer campo do formulário recebe foco, ainda sem nenhum valor preenchido.",
+    "instancias": [
+     "msg-erro"
+    ],
+    "clausula": "Importante que o estado persista até até que seja resolvido o erro.",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "pagina:scripts"
+     ],
+     "remove": [
+      "$:raiz"
+     ],
+     "cascata": [],
+     "estado": null,
+     "nota": "Script remove a mensagem no foco de um campo."
+    }
+   },
+   {
+    "id": "erro-campo-some-ao-sair",
+    "descricao": "Em S1, ao sair do campo Nome do país ainda vazio (blur), o estado de erro e a mensagem do campo são retirados.",
+    "instancias": [
+     "inp-nome-pais"
+    ],
+    "clausula": "Importante que o estado persista até até que seja resolvido o erro.",
+    "efeitos": {
+     "toca": [
+      "$:campo",
+      "$:mensagem",
+      "pagina:scripts"
+     ],
+     "remove": [
+      "$:mensagem"
+     ],
+     "cascata": [],
+     "estado": null,
+     "nota": "Script limpa o erro do campo no blur."
+    }
+   },
+   {
+    "id": "erro-select-some-ao-abrir",
+    "descricao": "Em S1, abrir e fechar a lista de continentes sem escolher nada retira o estado de erro e a mensagem do select.",
+    "instancias": [
+     "sel-continente"
+    ],
+    "clausula": "Importante que o estado persista até até que seja resolvido o erro.",
+    "efeitos": {
+     "toca": [
+      "$:campo",
+      "$:mensagem",
+      "pagina:scripts"
+     ],
+     "remove": [
+      "$:mensagem"
+     ],
+     "cascata": [],
+     "estado": null,
+     "nota": "Script limpa o erro do select ao abrir a lista."
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "formulario"
+  ],
+  "razaoCategorias": "Persistência do estado (comportamento) de mensagens de erro de formulário.",
+  "equivalenteEmag": null
+ },
+ "a2-e7608cf1c46d": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Condicionada a sangria; nenhum elemento sorteável usa sangria na página."
+ },
+ "a2-7cf0838736be": {
+  "aceita": true,
+  "justificativa": "Só elementos de função visual podem usar a sangria; mensagem é conteúdo informativo. Medida: getBoundingClientRect da caixa e do texto da mensagem contra as margens da grid em 1280.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-em-sangria",
+    "descricao": "A mensagem recebe margens laterais negativas e passa a ocupar a margem da grid até as bordas da janela, com o texto começando dentro da margem.",
+    "clausula": "somente elementos com funções visuais podem utilizar a sangria",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:texto"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Margens negativas na caixa da mensagem."
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Posição em relação às margens da grid (layout, visual-token).",
+  "equivalenteEmag": null
+ },
+ "a2-6a99b79819ae": {
+  "aceita": true,
+  "justificativa": "O conteúdo informativo fica dentro das margens da grid. Medida: getBoundingClientRect do texto dos itens da lista contra a margem do contêiner da grid.",
+  "instancias": [
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "itens-fora-da-margem",
+    "descricao": "O texto dos itens da lista de países é deslocado 48px para a esquerda (margem negativa), começando dentro da margem da grid.",
+    "clausula": "Os conteúdos informativos devem respeitar as margens da grid.",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Margem negativa no conteúdo dos itens."
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Posição em relação às margens da grid (layout, visual-token).",
+  "equivalenteEmag": null
+ },
+ "a2-386b2c116eb3": {
+  "aceita": true,
+  "justificativa": "Objeto temporário fica junto à área de conteúdo. Na página: a lista de opções do select aberta (S2). Medida: getBoundingClientRect da lista aberta dentro da área de conteúdo e junto ao campo (R-ED b).",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "lista-longe-do-conteudo",
+    "descricao": "A lista de continentes, ao abrir, fica em posição fixa colada à borda direita da janela, fora da área de conteúdo e longe do campo.",
+    "clausula": "é importante que o elemento temporário esteja localizado próxima da área de conteúdo (Max-width)",
+    "efeitos": {
+     "toca": [
+      "$:lista"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Posição fixa da lista aberta."
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Posição do objeto na grid (layout, visual-token).",
+  "equivalenteEmag": null
+ },
+ "a2-8dbdbd523f41": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Construção de ícones novos; a página não tem ícone novo."
+ },
+ "a2-952e88a5af0d": {
+  "aceita": true,
+  "justificativa": "Ícones com o significado da Tabela de Orientações de Uso: Mensagem Informativa = fa-info-circle, Mensagem Erro = fa-times-circle, Ajuda = fa-question. Medida: classe do ícone em cada instância.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro",
+   "btn-ajuda"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-icone-de-outro-tipo",
+    "descricao": "A mensagem usa ícone de outro significado: a informativa com fa-exclamation-triangle (Alerta) e a de erro com fa-info-circle.",
+    "instancias": [
+     "msg-orientacao",
+     "msg-erro"
+    ],
+    "clausula": "priorizem a utilização dos ícones, como demonstrado na Tabela de Orientações de Uso",
+    "efeitos": {
+     "toca": [
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Classe do ícone da mensagem."
+    }
+   },
+   {
+    "id": "ajuda-icone-trocado",
+    "descricao": "O botão de ajuda usa o ícone fa-cog no lugar do ícone de Ajuda.",
+    "instancias": [
+     "btn-ajuda"
+    ],
+    "clausula": "priorizem a utilização dos ícones, como demonstrado na Tabela de Orientações de Uso",
+    "efeitos": {
+     "toca": [
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Classe do ícone do botão."
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Classe do ícone, parte da anatomia do componente.",
+  "equivalenteEmag": null
+ },
+ "a2-db50df136f86": {
+  "aceita": true,
+  "justificativa": "Ícone de elemento de ação representa a ação executada (R-ED b: caso flagrante e oposto). Medida: classe do ícone do botão contra a ação (ajuda, fechar, abrir lista).",
+  "instancias": [
+   "btn-ajuda",
+   "msg-orientacao",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "icone-de-acao-oposta",
+    "descricao": "O ícone do botão indica ação oposta ou alheia: btn-ajuda com fa-trash, Fechar da mensagem com fa-plus, gatilho do select com fa-times.",
+    "clausula": "é importante que o ícone represente a ação a ser executada",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-ajuda": {
+       "toca": [
+        "$:icone"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Classe do ícone do botão de ajuda."
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Classe do ícone do botão Fechar."
+      },
+      "sel-continente": {
+       "toca": [
+        "$:gatilho"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Classe do ícone do gatilho."
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Classe do ícone, parte da anatomia do componente.",
+  "equivalenteEmag": null
+ },
+ "a2-1d6a18d52408": {
+  "aceita": true,
+  "justificativa": "Ícone decorativo (ao lado de texto que já diz o mesmo) recebe aria-hidden. Na página (S1): ícone da mensagem de erro de cada campo obrigatório. Medida: atributo aria-hidden no <i> da mensagem do campo.",
+  "instancias": [
+   "inp-nome-pais",
+   "sel-continente",
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "icone-erro-campo-exposto",
+    "descricao": "Em S1, o ícone da mensagem de erro do campo perde o aria-hidden.",
+    "clausula": "é necessário adicionar manualmente um atributo aria-hidden a cada um deles",
+    "efeitos": {
+     "toca": [
+      "$:mensagem"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Atributo aria-hidden retirado do ícone."
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura",
+   "acessibilidade",
+   "formulario"
+  ],
+  "razaoCategorias": "Atributo de acessibilidade do ícone na mensagem de erro de campo.",
+  "equivalenteEmag": null
+ },
+ "a2-76c8506bbc99": {
+  "aceita": true,
+  "justificativa": "Ícone semântico (botão só com ícone) leva aria-hidden no próprio ícone; o nome vem da alternativa em texto. Medida: aria-hidden=\"true\" no <i> dos botões só com ícone.",
+  "instancias": [
+   "btn-ajuda",
+   "msg-orientacao",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "icone-semantico-exposto",
+    "descricao": "O <i> do botão só com ícone (ajuda, Fechar da mensagem, gatilho do select) perde o aria-hidden.",
+    "clausula": "Atributo aria-hidden.",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-ajuda": {
+       "toca": [
+        "$:icone"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "aria-hidden retirado do ícone do botão de ajuda."
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "aria-hidden retirado do ícone do Fechar."
+      },
+      "sel-continente": {
+       "toca": [
+        "$:gatilho"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "aria-hidden retirado do ícone do gatilho."
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Atributo de acessibilidade do ícone.",
+  "equivalenteEmag": null
+ },
+ "a2-35afb7e6ee7c": {
+  "aceita": true,
+  "justificativa": "Ícone semântico sem texto ao lado precisa de alternativa em texto. Medida: nome acessível não vazio dos botões só com ícone.",
+  "instancias": [
+   "btn-ajuda",
+   "msg-orientacao",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "botao-icone-sem-alternativa",
+    "descricao": "O botão só com ícone (ajuda, Fechar da mensagem, gatilho do select) perde a alternativa em texto (sem aria-label e sem span), ficando sem nome acessível.",
+    "clausula": "Forneça uma alternativa de texto dentro de um elemento <span> (ou similar).",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-ajuda": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Alternativa em texto retirada do botão de ajuda."
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Alternativa em texto retirada do Fechar."
+      },
+      "sel-continente": {
+       "toca": [
+        "$:gatilho"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Alternativa em texto retirada do gatilho."
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "axe",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Nome acessível (alternativa textual) do botão.",
+  "equivalenteEmag": null
+ },
+ "a2-e99c92f13ac0": {
+  "aceita": true,
+  "justificativa": "Alternativa em texto do ícone semântico, quando em span, é oculta visualmente e segue acessível. Medida: visibilidade (recorte/posição) do texto alternativo dos botões só com ícone.",
+  "instancias": [
+   "btn-ajuda",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "alternativa-visivel",
+    "descricao": "A alternativa em texto do botão só com ícone vira um span sem CSS de ocultação: 'Ajuda sobre o cadastro' (btn-ajuda) e 'Fechar' (mensagem) aparecem e transbordam o botão circular.",
+    "clausula": "Inclua também o CSS apropriado para ocultar visualmente o elemento",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-ajuda": {
+       "toca": [
+        "$:raiz",
+        "$:texto"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Span de texto visível dentro do botão de ajuda."
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Span de texto visível dentro do Fechar."
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Tratamento da alternativa textual do ícone.",
+  "equivalenteEmag": null
+ },
+ "a2-6a6c6a49ec0b": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Vale para ícones em SVG com JavaScript; a página usa os ícones <i class=\"fas\"> por fonte do DS."
+ },
+ "a2-8b6f099effdd": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Desenho de ícone novo; a página não tem."
+ },
+ "a2-b889b938c32d": {
+  "aceita": false,
+  "motivo": "duplicada:a2-952e88a5af0d",
+  "justificativa": "Mesmo predicado (seguir a tabela de orientações de uso dos ícones) e mesmo observável (classe do ícone) da unidade anterior."
+ },
+ "a2-312798bd96aa": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Condição é a criação de ícone personalizado (layering ou do zero); a página só usa ícones da família."
+ },
+ "a2-dd7a65ef1946": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Grid de construção de ícones novos; a página não tem ícone novo."
+ },
+ "a2-5542b7528b3d": {
+  "aceita": true,
+  "justificativa": "Área de clique mínima de 24×24px em elementos de ícone interativos (mouse). Medida: getBoundingClientRect dos botões só com ícone.",
+  "instancias": [
+   "btn-ajuda",
+   "msg-orientacao",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "alvo-icone-20px",
+    "descricao": "O botão só com ícone (ajuda, Fechar da mensagem, gatilho do select) fica com 20×20px.",
+    "clausula": "Essa área, deve ser de no mínimo 24x24px.",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-ajuda": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Largura e altura do botão de ajuda."
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Largura e altura do Fechar."
+      },
+      "sel-continente": {
+       "toca": [
+        "$:gatilho"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Largura e altura do gatilho."
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Dimensão mínima (visual-token).",
+  "equivalenteEmag": null
+ },
+ "a2-d4db34492294": {
+  "aceita": false,
+  "motivo": "duplicada:a2-db50df136f86",
+  "justificativa": "Mesmo predicado (ícone de ação corresponde à ação executada), condição e observável da unidade anterior."
+ },
+ "a2-629a5a1701cc": {
+  "aceita": false,
+  "motivo": "nao-normativa",
+  "justificativa": "Descreve a grid de construção dos ícones da família; não impõe nada à página."
+ },
+ "a2-c72a64d5d504": {
+  "aceita": true,
+  "justificativa": "Tamanhos de ícone só na escala da tabela (16px/1em, .5em, .75em, 1.25em, 2em…10em). Medida: valor declarado de font-size dos ícones (CSSOM) pertence à tabela.",
+  "instancias": [
+   "btn-ajuda",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "icone-22px",
+    "descricao": "O ícone do botão (ajuda; gatilho do select) declara font-size: 22px, fora da tabela.",
+    "clausula": "16px (1em) || .5em (8px) || .75em (12px) || 1.25em (20px) || 2em (32px)",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-ajuda": {
+       "toca": [
+        "$:icone"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Tamanho do ícone do botão de ajuda."
+      },
+      "sel-continente": {
+       "toca": [
+        "$:gatilho"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Tamanho do ícone do gatilho."
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Tamanho de ícone (token), não texto.",
+  "equivalenteEmag": null
+ },
+ "a2-2f4eadc23b2c": {
+  "aceita": true,
+  "justificativa": "Nenhuma fonte fora da escala Minor Third (base 14px, razão 1,2). Medida: font-size computado dos textos contra os valores da escala.",
+  "instancias": [
+   "lst-paises",
+   "inp-codigo",
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "itens-15px",
+    "descricao": "O texto dos itens da lista de países fica com font-size 15px.",
+    "instancias": [
+     "lst-paises"
+    ],
+    "clausula": "nenhuma fonte deve estar fora da escala definida no DS: Minor Third",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Tamanho do texto dos itens."
+    }
+   },
+   {
+    "id": "apoio-13px",
+    "descricao": "O texto de apoio do campo Código do país fica com font-size 13px.",
+    "instancias": [
+     "inp-codigo"
+    ],
+    "clausula": "nenhuma fonte deve estar fora da escala definida no DS: Minor Third",
+    "efeitos": {
+     "toca": [
+      "$:apoio"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Tamanho do texto de apoio."
+    }
+   },
+   {
+    "id": "botao-texto-18px",
+    "descricao": "O texto do botão Limpar campos fica com font-size 18px.",
+    "instancias": [
+     "btn-limpar"
+    ],
+    "clausula": "nenhuma fonte deve estar fora da escala definida no DS: Minor Third",
+    "efeitos": {
+     "toca": [
+      "$:texto"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Tamanho do texto do botão."
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "Observável é tamanho de texto.",
+  "equivalenteEmag": null
+ },
+ "a2-0e0c2cbf4714": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Condicionada à alteração de algum valor da tabela padrão; a página usa a escala padrão."
+ },
+ "a2-bc2dd4c6ab14": {
+  "aceita": true,
+  "justificativa": "Pesos de fonte só entre os valores da tabela (100 a 900, de 100 em 100). Medida: font-weight computado dos textos.",
+  "instancias": [
+   "lst-paises",
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "itens-peso-550",
+    "descricao": "O nome do país nos itens da lista fica com font-weight 550.",
+    "instancias": [
+     "lst-paises"
+    ],
+    "clausula": "Utilize os valores abaixo para representar os diferentes estilos da fonte Rawline",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Peso do texto dos itens."
+    }
+   },
+   {
+    "id": "botao-peso-650",
+    "descricao": "O texto do botão Limpar campos fica com font-weight 650.",
+    "instancias": [
+     "btn-limpar"
+    ],
+    "clausula": "Utilize os valores abaixo para representar os diferentes estilos da fonte Rawline",
+    "efeitos": {
+     "toca": [
+      "$:texto"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Peso do texto do botão."
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "Observável é peso de texto.",
+  "equivalenteEmag": null
+ },
+ "a2-05a3253b3a06": {
+  "aceita": true,
+  "justificativa": "Tamanhos da escala, exceto a base, em unidade em. Medida: valor declarado de font-size (CSSOM) dos textos da instância.",
+  "instancias": [
+   "lst-paises",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "tamanho-em-px",
+    "descricao": "Uma regra própria declara font-size: 16.8px (px fixo) para o texto dos itens da lista ou para o título da mensagem.",
+    "clausula": "Com exceção da fonte base, utilize a unidade em para todos os outros valores da escala.",
+    "efeitos": {
+     "porHospedeiro": {
+      "lst-paises": {
+       "toca": [
+        "$:itens",
+        "pagina:estilos"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Regra com font-size em px nos itens."
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:titulo",
+        "pagina:estilos"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Regra com font-size em px no título da mensagem."
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "Observável é unidade do tamanho de texto.",
+  "equivalenteEmag": null
+ },
+ "a2-dadcee8e1cc6": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Condicionada a trocar a fonte base; a página usa a base padrão."
+ },
+ "a2-b66ac3a5b212": {
+  "aceita": true,
+  "justificativa": "Entrelinha em valor relativo (sem unidade, %, em ou rem), nunca px. Medida: valor declarado de line-height (CSSOM) dos textos.",
+  "instancias": [
+   "lst-paises",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "entrelinha-em-px",
+    "descricao": "Uma regra própria declara line-height: 22px para o texto dos itens da lista ou para o texto da mensagem.",
+    "clausula": "é preciso trabalhar com valores em porcentagem ou relativos (como rem ou em)",
+    "efeitos": {
+     "porHospedeiro": {
+      "lst-paises": {
+       "toca": [
+        "$:itens",
+        "pagina:estilos"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Regra com line-height em px nos itens."
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:texto",
+        "pagina:estilos"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Regra com line-height em px no texto da mensagem."
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "Observável é altura de linha.",
+  "equivalenteEmag": null
+ },
+ "a2-329f74d7646c": {
+  "aceita": true,
+  "justificativa": "Elementos nativos seguem a Tabela de Estilos; na página: os rótulos (label) dos campos, semi-bold na escala base. Medida: font-weight/font-size computados dos rótulos.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-peso-regular",
+    "descricao": "O rótulo do campo fica com font-weight 400 (regular) em vez de semi-bold.",
+    "clausula": "Utilize a tabela de estilo para determinar o visual de cada estilo de tipografia utilizada.",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Peso do texto do rótulo."
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "Observável é peso de texto do rótulo.",
+  "equivalenteEmag": null
+ },
+ "a2-a60989edf1af": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ampliação da escala além da tabela ('caso haja necessidade'); a página não usa valores fora da tabela."
+ },
+ "a2-03216e12bb96": {
+  "aceita": true,
+  "justificativa": "Entrelinha só nos tokens da tabela: 1,15 (low), 1,45 (medium), 1,85 (high). Medida: line-height computado / font-size dos textos.",
+  "instancias": [
+   "lst-paises",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "entrelinha-1-6",
+    "descricao": "O texto dos itens da lista (ou o texto da mensagem) fica com line-height 1.6.",
+    "clausula": "--font-lineheight-low || --font-lineheight-medium || --font-lineheight-high",
+    "efeitos": {
+     "porHospedeiro": {
+      "lst-paises": {
+       "toca": [
+        "$:itens"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Altura de linha dos itens."
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:texto"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Altura de linha do texto da mensagem."
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "Observável é altura de linha.",
+  "equivalenteEmag": null
+ },
+ "a2-0d50ac5f7083": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "Estilo do H1; o único h1 é o título do documento, que é andaime."
+ },
+ "a2-d05e499acddf": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Estilo H3; não há h3 nos hospedeiros sorteáveis."
+ },
+ "a2-7a9d5e4b3c79": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Estilo H4; não há h4 na página."
+ },
+ "a2-c593f7ae4ec2": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Estilo H5; não há h5 na página."
+ },
+ "a2-94332bb586eb": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Estilo H6; não há h6 na página."
+ },
+ "a2-f50e5a28b0c9": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Estilo do parágrafo nativo; os textos dos hospedeiros (corpo da mensagem, apoio do campo, itens) são partes dos componentes, sem parágrafo de texto corrido."
+ },
+ "a2-6f122899cebf": {
+  "aceita": true,
+  "justificativa": "Estilo Input: --font-size-scale-up-01, peso medium, line-height low, cor --gray-80. Medida: font-size/font-weight computados do elemento input.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "campo-peso-regular",
+    "descricao": "O texto do campo fica com font-weight 400 (regular) em vez de medium.",
+    "clausula": "--font-weight-medium",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Peso do texto do campo."
+    }
+   },
+   {
+    "id": "campo-tamanho-base",
+    "descricao": "O texto do campo fica com font-size 14px (scale-base) em vez de --font-size-scale-up-01.",
+    "instancias": [
+     "inp-nome-pais",
+     "inp-codigo"
+    ],
+    "clausula": "--font-size-scale-up-01",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Tamanho do texto do campo."
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "Observável é tamanho e peso do texto do campo.",
+  "equivalenteEmag": null
+ },
+ "a2-2db211927f15": {
+  "aceita": true,
+  "justificativa": "Estilo Placeholder: scale-base, peso regular, itálico. Na página: o placeholder do campo do select. Medida: estilos computados de ::placeholder do input do select.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "placeholder-sem-italico",
+    "descricao": "O placeholder do campo do select fica com font-style normal e font-weight 600.",
+    "clausula": "italic",
+    "efeitos": {
+     "toca": [
+      "$:campo",
+      "pagina:estilos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Regra de estilo do ::placeholder."
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "Observável é estilo e peso de texto.",
+  "equivalenteEmag": null
+ },
+ "a2-0b634b5de510": {
+  "aceita": true,
+  "justificativa": "Estilo Legend: --font-size-scale-up-01, semi-bold, line-height low, cor --gray-80. Na página: a legend 'Situação do cadastro'. Medida: estilos computados da legend.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "legenda-peso-regular",
+    "descricao": "A legend do grupo fica com font-weight 400 em vez de semi-bold.",
+    "clausula": "--font-weight-semi-bold",
+    "efeitos": {
+     "toca": [
+      "$:legenda"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Peso do texto da legend."
+    }
+   },
+   {
+    "id": "legenda-tamanho-base",
+    "descricao": "A legend do grupo fica com font-size 14px em vez de --font-size-scale-up-01.",
+    "clausula": "--font-size-scale-up-01",
+    "efeitos": {
+     "toca": [
+      "$:legenda"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Tamanho do texto da legend."
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "Observável é tamanho e peso de texto.",
+  "equivalenteEmag": null
+ },
+ "a2-612c013e50d2": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Marcação de texto (mark); não há mark na página."
+ },
+ "a2-fdf859cf9f4b": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Bloco de código; não há code na página."
+ },
+ "a2-1f3a53abca0d": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Listas de texto UL/OL/DL; a lista de países e a do select são o componente List, sem lista de texto nativa."
+ }
+}

@@ -1,0 +1,851 @@
+{
+ "a2-8cbdac8cd6c3": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há conteúdo em outro idioma nas instâncias sorteáveis; os nomes de países da lista são nomes próprios, que a própria cláusula exclui."
+ },
+ "a2-affdd8fad576": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "Codificação de caracteres é declarada no head do documento; nenhuma instância sorteável a contém."
+ },
+ "a2-94e76e38c85b": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "Meta de compatibilidade fica no head do documento; nenhuma instância sorteável a contém."
+ },
+ "a2-11b459a3885c": {
+  "aceita": true,
+  "justificativa": "Atributos booleanos escritos sem valor. Na página: o required dos campos obrigatórios (input do nome do país, inputs do grupo de situação). Medida: getAttribute('required') === '' nesses elementos (ou leitura do HTML servido).",
+  "instancias": [
+   "inp-nome-pais",
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "required-com-valor-campo",
+    "descricao": "O atributo booleano required do input 'Nome do país' passa a ser escrito required=\"required\" (a obrigatoriedade não muda).",
+    "instancias": [
+     "inp-nome-pais"
+    ],
+    "clausula": "NÃO incluir valor nos atributos boleanos",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Só a serialização do atributo no input; comportamento e erro em S1 iguais."
+    }
+   },
+   {
+    "id": "required-com-valor-opcoes",
+    "descricao": "Os inputs do grupo 'Situação do cadastro' passam a ter o atributo booleano required escrito required=\"true\" (a obrigatoriedade não muda).",
+    "instancias": [
+     "rad-situacao"
+    ],
+    "clausula": "NÃO incluir valor nos atributos boleanos",
+    "efeitos": {
+     "toca": [
+      "$:inputs"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Só a serialização do atributo nos 3 radios; erro em S1 igual."
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "Guia de HTML do DS; o observável é a sintaxe do atributo, não o estado de obrigatoriedade, que não muda.",
+  "equivalenteEmag": null
+ },
+ "a2-d7e91aa996b7": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "O DOCTYPE é do documento (andaime); nenhuma instância sorteável o contém."
+ },
+ "a2-a3ed861cbd65": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "As tags script são do documento; nenhuma instância sorteável contém script, e a unidade só se manifestaria nelas."
+ },
+ "a2-c63c63e831f9": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "As tags link são do head do documento; nenhuma instância sorteável contém link de folha de estilo."
+ },
+ "a2-6afb3201269f": {
+  "aceita": true,
+  "justificativa": "Estilos e scripts ficam em arquivos próprios, não escritos no HTML. Na página isso alcança as instâncias por atributo de evento ou de estilo escrito no próprio elemento. Medida: no HTML servido, atributos on* e style nas instâncias (e blocos style/script sem src) ausentes.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda",
+   "lst-paises",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "clique-escrito-no-botao",
+    "descricao": "O código que trata o clique do botão sai do arquivo .js da página e passa para um atributo onclick escrito no próprio botão, com o mesmo efeito.",
+    "instancias": [
+     "btn-limpar",
+     "btn-ajuda"
+    ],
+    "clausula": "Escrever estilos e scripts em seus próprios arquivos",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Handler sai do arquivo e vai para o atributo do botão; comportamento igual."
+    }
+   },
+   {
+    "id": "estilo-escrito-no-elemento",
+    "descricao": "Uma regra de CSS da página aplicada à instância (por exemplo, a margem superior) sai do arquivo .css e passa para um atributo style no elemento raiz da instância, com o mesmo valor.",
+    "instancias": [
+     "lst-paises",
+     "msg-orientacao"
+    ],
+    "clausula": "Escrever estilos e scripts em seus próprios arquivos",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "pagina:estilos"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Mesmo valor de estilo, agora no atributo style; aparência igual."
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "Guia de HTML do DS; o observável é onde o estilo ou o script está escrito, sem efeito de acessibilidade, formulário ou navegação.",
+  "equivalenteEmag": null
+ },
+ "a2-971db6a57c75": {
+  "aceita": true,
+  "justificativa": "Role e states/properties ARIA acompanham o elemento durante o ciclo de vida, salvo quando a semântica implícita já basta. Na página: o estado de expansão do select ao abrir a lista (S2) e o estado ligado/desligado do switch. Medida: após a interação, o estado na árvore de acessibilidade (expanded, checked) reflete o estado visual.",
+  "instancias": [
+   "sel-continente",
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "expansao-desatualizada",
+    "descricao": "Ao abrir a lista de continentes (S2), o atributo aria-expanded do select continua false; a lista abre normalmente.",
+    "instancias": [
+     "sel-continente"
+    ],
+    "clausula": "associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos",
+    "efeitos": {
+     "toca": [
+      "$:campo",
+      "$:gatilho",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Só o estado acessível de expansão deixa de ser atualizado; S2 continua alcançável."
+    }
+   },
+   {
+    "id": "chave-com-estado-fixo",
+    "descricao": "O input do switch ganha aria-checked=\"false\" fixo, que não muda quando a chave é ligada; visualmente a chave liga normalmente.",
+    "instancias": [
+     "swt-certificado"
+    ],
+    "clausula": "associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos",
+    "efeitos": {
+     "toca": [
+      "$:input"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Estado acessível congelado em desligado; aparência e envio iguais."
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Guia geral de WAI-ARIA (exige acessibilidade); o observável é o estado acessível após a interação.",
+  "equivalenteEmag": null
+ },
+ "a2-bf7e49442c10": {
+  "aceita": false,
+  "motivo": "duplicada:a2-2ac598dc24db",
+  "justificativa": "Item de lista sem ordem própria; a ordem dos botões de ação que ele manda seguir é a do padrão de formulário (primário à direita dos secundários), mesmo predicado e observável."
+ },
+ "a2-a39f3ad397d4": {
+  "aceita": true,
+  "justificativa": "O texto usa a família Rawline. Medida: font-family computado do texto de cada instância com texto visível (btn-ajuda só tem ícone e fica de fora).",
+  "instancias": [
+   "btn-limpar",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "fonte-do-sistema",
+    "descricao": "O texto da instância passa a usar Arial (pilha sans-serif do sistema) em vez de Rawline, declarado no elemento raiz da instância.",
+    "clausula": "Utilize a família tipográfica Rawline com suas variações de peso e estilo.",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      },
+      "inp-nome-pais": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      },
+      "sel-continente": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:grupo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      },
+      "swt-certificado": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      },
+      "lst-paises": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      },
+      "msg-erro": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "Unidade do DS cujo observável é a família da fonte do texto.",
+  "equivalenteEmag": null
+ },
+ "a2-40a6f248b2f4": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Barra padrão para aplicativos; a página é web, não aplicativo."
+ },
+ "a2-fbf563b6c0cb": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "O cabeçalho gov.br é andaime."
+ },
+ "a2-021bc9b80ecf": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "O logo gov.br fica no cabeçalho, que é andaime."
+ },
+ "a2-6fdad59940e1": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "O rodapé gov.br é andaime."
+ },
+ "a2-bc741b4ba1ac": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "'Botões' como item de aderência mínima é usar o componente Button do DS; violar exige trocar o componente inteiro, o que viola junto as cláusulas de anatomia do Button."
+ },
+ "a2-041825a2e1fb": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'bloquear'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-3201afddaa7d": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'editar'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-0c1808260f4e": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'cortar'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-70cb445f08e9": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'pesquisar'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-ac0ec572ac7f": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'excluir'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-232ab7dd18c9": {
+  "aceita": true,
+  "justificativa": "A ação Limpar, quando representada por ícone, usa a borracha. Na página a ação Limpar é btn-limpar ('Limpar campos'). Medida: classe do ícone dentro do botão. R-ED (a): mapeamento fechado ação→ícone da lista.",
+  "instancias": [
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "limpar-com-lixeira",
+    "descricao": "O botão 'Limpar campos' exibe, junto do texto, o ícone de lixeira (trash) como ícone da ação Limpar, no lugar da borracha (ou acrescentado, se o botão não tiver ícone).",
+    "clausula": "Limpar: borracha",
+    "efeitos": {
+     "toca": [
+      "$:icone",
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Só o ícone do botão; texto e comportamento iguais."
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Unidade do DS; o observável é o ícone, parte da anatomia do button.",
+  "equivalenteEmag": null
+ },
+ "a2-2f51f3df505e": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'imprimir'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-e587c7e9238f": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'atualizar'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-65366b4baf7f": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'visualizar'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-ba60a399cfc7": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone da ação 'ir para a tela inicial'; nenhuma instância sorteável tem essa ação."
+ },
+ "a2-2df7bf5e2fa2": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Usar os componentes do DS: violar exige substituir um componente inteiro por marcação própria, o que viola junto todas as cláusulas de estrutura dele."
+ },
+ "a2-c3f88a06ca93": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "O recurso de ajuda da página é btn-ajuda com a mensagem de orientação; violar é tirá-los, o que remove instâncias inteiras."
+ },
+ "a2-460f5696acde": {
+  "aceita": true,
+  "justificativa": "Acesso à ajuda só com ícone segue a referência do símbolo de interrogação (question/question-circle). Na página: btn-ajuda, botão circular só com ícone. Medida: classe do ícone do botão.",
+  "instancias": [
+   "btn-ajuda"
+  ],
+  "variantes": [
+   {
+    "id": "ajuda-com-icone-estranho",
+    "descricao": "O botão de ajuda ao lado do título usa o ícone de lâmpada (lightbulb) em vez de interrogação; o nome acessível continua 'Ajuda sobre o cadastro'.",
+    "clausula": "É importante seguir esta referência dentro do contexto do Design System, desta forma pode-se deixar bem claro aos usuários o acesso à ajuda apenas com o uso de ícone",
+    "efeitos": {
+     "toca": [
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Só a classe do ícone; nome acessível e comportamento iguais."
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Unidade do DS; o observável é o ícone, parte da anatomia do button; nome acessível não muda.",
+  "equivalenteEmag": null
+ },
+ "a2-828be0a7c0d6": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Trata da ajuda global do produto (seção ou tela de ajuda); a página só tem a ajuda da própria tela (btn-ajuda reexibe a mensagem de orientação), sem conteúdo de ajuda global."
+ },
+ "a2-639a3b7c05e7": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Trata da ajuda global do produto (seção ou tela de ajuda); a página só tem a ajuda da própria tela (btn-ajuda reexibe a mensagem de orientação), sem conteúdo de ajuda global."
+ },
+ "a2-bb101b7d3462": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Trata da ajuda global do produto (seção ou tela de ajuda); a página só tem a ajuda da própria tela (btn-ajuda reexibe a mensagem de orientação), sem conteúdo de ajuda global."
+ },
+ "a2-abc74cc8564c": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Trata da ajuda global do produto (seção ou tela de ajuda); a página só tem a ajuda da própria tela (btn-ajuda reexibe a mensagem de orientação), sem conteúdo de ajuda global."
+ },
+ "a2-9bfe3d3183d3": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Trata da ajuda global do produto (seção ou tela de ajuda); a página só tem a ajuda da própria tela (btn-ajuda reexibe a mensagem de orientação), sem conteúdo de ajuda global."
+ },
+ "a2-3a7eecd79db0": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "\"Evite dar detalhes…\" é orientação, não exigência."
+ },
+ "a2-f332ca030a08": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Trata da ajuda global do produto (seção ou tela de ajuda); a página só tem a ajuda da própria tela (btn-ajuda reexibe a mensagem de orientação), sem conteúdo de ajuda global."
+ },
+ "a2-01e2766ec4e8": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Trata da ajuda global do produto (seção ou tela de ajuda); a página só tem a ajuda da própria tela (btn-ajuda reexibe a mensagem de orientação), sem conteúdo de ajuda global."
+ },
+ "a2-ff3400e55e02": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Trata da ajuda global do produto (seção ou tela de ajuda); a página só tem a ajuda da própria tela (btn-ajuda reexibe a mensagem de orientação), sem conteúdo de ajuda global."
+ },
+ "a2-bd36a3a634a3": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ajuda contextual elaborada (formatação, imagens, vídeo) pede modal; a ajuda da página é um texto curto em mensagem, e não há modal."
+ },
+ "a2-3efa429eb319": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Link para a ajuda global dentro de tooltip ou modal; a página não tem tooltip, modal nem link para ajuda global."
+ },
+ "a2-2158a52abf3b": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "\"Evite o uso do balão duplo\" é orientação, e não há recurso de feedback na página."
+ },
+ "a2-64df1c8263b8": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícone de envio de feedback; a página não tem recurso de feedback."
+ },
+ "a2-85ece80676b3": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Formulário aberto de coleta de feedback; não há na página (o formulário é de cadastro)."
+ },
+ "a2-0ddef069d601": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Localização do acesso à ajuda global, acessível de qualquer tela (cabeçalho, rodapé ou menu); a página não tem ajuda global, só a ajuda da própria tela."
+ },
+ "a2-c7d20a2735ef": {
+  "aceita": true,
+  "justificativa": "Acionar o botão de ajuda leva de imediato ao conteúdo de ajuda. Na página: btn-ajuda reexibe a mensagem de orientação fechada. R-ED (b): caso flagrante e oposto, o conteúdo só aparece segundos depois. Medida: fechar a mensagem, acionar btn-ajuda e medir o tempo até a mensagem estar visível.",
+  "instancias": [
+   "btn-ajuda"
+  ],
+  "variantes": [
+   {
+    "id": "ajuda-com-atraso",
+    "descricao": "Ao acionar o botão de ajuda, a mensagem de orientação só reaparece 4 segundos depois, sem nenhum retorno nesse intervalo.",
+    "clausula": "Após acionar o botão de ajuda, é importante que o usuário seja conduzido imediatamente ao conteúdo de ajuda.",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "pagina:scripts",
+      "msg-orientacao:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Só o tempo até reexibir a mensagem; S0, S1 e S2 não dependem disso."
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Unidade do DS; o observável é o comportamento do botão de ajuda, sem propriedade acessível, de formulário ou de navegação.",
+  "equivalenteEmag": null
+ },
+ "a2-2646cf178994": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "\"Evite exibir um conteúdo intermediário…\" é orientação, não exigência."
+ },
+ "a2-66cc8c46f14a": {
+  "aceita": true,
+  "justificativa": "O ícone de ajuda fica junto do elemento a que a ajuda se refere. Na página: btn-ajuda, ao lado do título do cadastro. R-ED (b): caso flagrante e oposto, o ícone longe do título e junto de outra seção. Medida: getBoundingClientRect do botão contra o do h1 (mesma faixa, poucos px).",
+  "instancias": [
+   "btn-ajuda"
+  ],
+  "variantes": [
+   {
+    "id": "ajuda-longe-da-referencia",
+    "descricao": "O botão de ajuda sai da faixa do título e passa para o fim da seção da lista de países, abaixo da lista, longe do título do cadastro.",
+    "clausula": "Posicione o ícone padrão de ajuda próximo ao elemento referência da ajuda.",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "pagina:cabecalho-pagina",
+      "pagina:secao-lista"
+     ],
+     "remove": [],
+     "cascata": [
+      "lst-paises"
+     ],
+     "estado": null,
+     "nota": "Botão muda de lugar; título e lista não mudam de conteúdo."
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "Unidade do DS; o observável é a posição do botão em relação ao título, sem mudar nome, papel ou estado.",
+  "equivalenteEmag": null
+ },
+ "a2-05db50db6619": {
+  "aceita": true,
+  "justificativa": "O texto de ajuda é curto, direto e do contexto da ajuda pedida. Na página: o texto da mensagem de orientação, que é o conteúdo que btn-ajuda reexibe. R-ED (b): caso flagrante e oposto, texto sobre outro assunto. Medida: leitura do texto da mensagem contra o título e o formulário da página.",
+  "instancias": [
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "ajuda-fora-do-contexto",
+    "descricao": "O texto da mensagem de orientação passa a tratar de outro serviço (como emitir a segunda via de um boleto de taxa), sem falar do cadastro de país importador.",
+    "clausula": "Apresente um texto curto, direto e contextual a respeito da ajuda solicitada;",
+    "efeitos": {
+     "toca": [
+      "$:texto"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "Só o texto da mensagem; tipo, ícone e Fechar iguais."
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "Unidade do DS; o observável é o conteúdo do texto de ajuda, sem propriedade acessível, de campo ou de navegação.",
+  "equivalenteEmag": null
+ },
+ "a2-49fc7885c5cd": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-371057c7a941": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-17ade3eba24a": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-899b236d311b": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-a5cd7064a3cf": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-cd58107212c1": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-51aa3a22aab2": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-d82eed6caf27": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-d8a11140e3d6": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-78e2e79d04eb": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-1112d02f7556": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-67e05d415795": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-6a225a082b74": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-4abd5f3b6947": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-b372f797b737": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-f7eb62bb41b0": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-c76ac23b4fe4": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-7094f78370aa": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-7ed98d2b86ac": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-d7e903707a61": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-b95871b10e87": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-bce5db3220c2": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-21c802d46304": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-60760408646e": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-ff07373fd56d": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-76f5017fd998": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-73aa92798fa2": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "Herda \"evite poluir a tela…\": a alternativa proposta é orientação, não exigência."
+ },
+ "a2-ea09c6c4030f": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-4d6eb48adb71": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-76de24f63529": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-852353d1a725": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-b373e3f0636d": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-5b7020e0895b": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-4ec033fe8c66": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-43591d0f5351": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-b154db43ffab": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ilustração de empty state; a página não tem empty state nem imagem de conteúdo."
+ },
+ "a2-e01185840d9e": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem empty state: a lista de países sempre traz 4 itens e nenhum estado (S0, S1, S2) mostra área sem dados."
+ },
+ "a2-fa952130cddb": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Imagens decorativas; a página não tem imagem fora do andaime."
+ },
+ "a2-ac0e8466e299": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "\"Evite utilizar role=presentation…\" é orientação, não exigência."
+ }
+}

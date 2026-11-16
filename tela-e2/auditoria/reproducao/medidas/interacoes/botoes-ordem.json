@@ -1,0 +1,53 @@
+{
+ "sonda": "botoes-ordem",
+ "estado": "S0",
+ "container": {
+  "display": "flex",
+  "flexDirection": "row",
+  "justifyContent": "flex-end",
+  "gap": "16px",
+  "columnGap": "16px"
+ },
+ "botoes": [
+  {
+   "domIndice": 0,
+   "id": "btn-cancelar",
+   "texto": "Cancelar",
+   "classes": "br-button secondary acao-cancelar",
+   "order": "0",
+   "x": 239.15625,
+   "direita": 360.203125,
+   "y": 940.65625,
+   "marginLeft": "0px",
+   "marginRight": "0px",
+   "linhasRotulo": 2
+  },
+  {
+   "domIndice": 1,
+   "id": "btn-limpar",
+   "texto": "Limpar Campos",
+   "classes": "br-button secondary acao-limpar",
+   "order": "1",
+   "x": 525.125,
+   "direita": 700,
+   "y": 940.65625,
+   "marginLeft": "0px",
+   "marginRight": "0px",
+   "linhasRotulo": 2
+  },
+  {
+   "domIndice": 2,
+   "id": "btn-salvar",
+   "texto": "Salvar País",
+   "classes": "br-button primary acao-salvar",
+   "order": "0",
+   "x": 376.203125,
+   "direita": 509.125,
+   "y": 940.65625,
+   "marginLeft": "0px",
+   "marginRight": "0px",
+   "linhasRotulo": 2
+  }
+ ],
+ "errosPagina": []
+}

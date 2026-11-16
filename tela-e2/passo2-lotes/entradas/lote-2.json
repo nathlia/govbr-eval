@@ -1,0 +1,2818 @@
+[
+ {
+  "id": "a2-b4c1596eb8e2",
+  "componente": "item",
+  "arquivo": "componentes/item__designer.md",
+  "secao": "Item › Anatomia",
+  "texto": "Para construir um item é necessário uma superfície, uma área com no mínimo um conteúdo contido e opcionalmente um separador na extremidade inferior da superfície.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "necessario",
+  "hospedeirosPossiveis": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Item com área de conteúdo com no mínimo um conteúdo. Medida: cada item da lista do select tem conteúdo (texto) não vazio.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "item-vazio",
+     "descricao": "A lista do select tem um item sem nenhum conteúdo (linha vazia).",
+     "clausula": "uma área com no mínimo um conteúdo contido"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-40fe6a293a12",
+  "componente": "item",
+  "arquivo": "componentes/item__designer.md",
+  "secao": "Item › Anatomia › Detalhamento dos Itens › 1. Superfície (Obrigatório)",
+  "texto": "Área de conteúdo: qualquer componente é aceitável, exceto botões primários e componentes relacionados à navegação, como: carrossel, pagination, tab, menu, etc.",
+  "contexto": null,
+  "antecedente": "A superfície de um item é a área onde são colocados os componentes. A diagramação dos componentes dentro dessa área é livre porém deve-se levar em conta as características de cada componente.",
+  "forca": "obrigatoria",
+  "marcador": "herdado-titulo",
+  "hospedeirosPossiveis": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Proíbe botão primário e componentes de navegação dentro do item. Medida: presença de botão primário/navegação dentro de um item.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "primario-no-item",
+     "descricao": "Um item da lista do select ganha um botão primário \"Ver modelo\".",
+     "instancias": [
+      "sel-tipo-documento"
+     ],
+     "clausula": "exceto botões primários"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "variantesAcopladas": [
+    {
+     "id": "primario-na-aba",
+     "hospedeiros": [
+      "tab-requerimento"
+     ],
+     "viola": [
+      "a2-861377d8583b"
+     ],
+     "porque": "a2-861377d8583b (Além da presença do botão, a largura do item deixa de acompanhar o rótulo, outra propriedade.)"
+    }
+   ],
+   "origem": "revisao-2"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-e06d4991a48e",
+  "componente": "item",
+  "arquivo": "componentes/item__designer.md",
+  "secao": "Item › Regras para criação de itens › 3. Margens Internas",
+  "texto": "Os componentes dentro dos itens devem respeitar as margens internas (padding) entre cada um dos lados da superfície, conforme definido no documento de Fundamentos.",
+  "contexto": "Os componentes dentro dos itens devem respeitar as margens internas (padding) entre cada um dos lados da superfície, conforme definido no documento de Fundamentos. Somente elementos de mídias (como fotos e ilustrações) podem quando necessário \"sangrar\".",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Conteúdo do item respeita o padding interno da superfície. Medida: padding computado do item.",
+   "instancias": [
+    "sel-tipo-documento",
+    "tab-requerimento"
+   ],
+   "variantes": [
+    {
+     "id": "item-sem-padding",
+     "descricao": "Os itens da lista do select ficam com padding 0 e o texto encosta na borda.",
+     "instancias": [
+      "sel-tipo-documento"
+     ],
+     "clausula": "devem respeitar as margens internas (padding)"
+    },
+    {
+     "id": "aba-sem-padding",
+     "descricao": "O item da aba Andamento fica com padding horizontal 0.",
+     "instancias": [
+      "tab-requerimento"
+     ],
+     "clausula": "devem respeitar as margens internas (padding)"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-648f8c6d407b",
+  "componente": "item",
+  "arquivo": "componentes/item__designer.md",
+  "secao": "Item › Especificações › Cor",
+  "texto": "Tabela de especificação — Item › Especificações › Cor",
+  "contexto": "Name · Property · Color Token || Superfície · color · --pure-0",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Superfície do item em --pure-0. Medida: background-color computado dos itens da lista do select (aberta) e das abas em repouso.",
+   "instancias": [
+    "sel-tipo-documento",
+    "tab-requerimento"
+   ],
+   "variantes": [
+    {
+     "id": "item-lista-cinza",
+     "descricao": "Os itens da lista do select ficam com fundo --gray-5 em repouso.",
+     "instancias": [
+      "sel-tipo-documento"
+     ],
+     "clausula": "Superfície · color · --pure-0"
+    },
+    {
+     "id": "aba-inativa-cinza",
+     "descricao": "A aba inativa fica com fundo --gray-5.",
+     "instancias": [
+      "tab-requerimento"
+     ],
+     "clausula": "Superfície · color · --pure-0"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra",
+    "interacao"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-26d3db62e2ab",
+  "componente": "item",
+  "arquivo": "componentes/item__desenvolvedor.md",
+  "secao": "Item › Instanciação do Componente › HTML",
+  "texto": "Incluir o arquivo core.min.js no html.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Tirar o core.min.js quebra todos os componentes da página, inclusive a moldura.",
+   "origem": "lote-E.json"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-9655683035eb",
+  "componente": "item",
+  "arquivo": "componentes/item__desenvolvedor.md",
+  "secao": "Item › Instanciação do Componente › JavaScript",
+  "texto": "Usar o seguinte código JavaScript para instanciar a classe BRItem, passando os seguintes parâmetros:",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Os itens embutidos são geridos pelo script do select/tab, não por BRItem avulso.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-15cd0b55e268",
+  "componente": "item",
+  "arquivo": "componentes/item__desenvolvedor.md",
+  "secao": "Item › Instanciação do Componente › JavaScript",
+  "texto": "Nome da classe (br-item)",
+  "contexto": null,
+  "antecedente": "Usar o seguinte código JavaScript para instanciar a classe BRItem, passando os seguintes parâmetros:",
+  "forca": "a-julgar",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Parâmetro da instanciação avulsa de BRItem; não usada nos hospedeiros.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-126e73d998e3",
+  "componente": "item",
+  "arquivo": "componentes/item__desenvolvedor.md",
+  "secao": "Item › Instanciação do Componente › JavaScript",
+  "texto": "Objeto referenciando a raiz do componente DOM",
+  "contexto": null,
+  "antecedente": "Usar o seguinte código JavaScript para instanciar a classe BRItem, passando os seguintes parâmetros:",
+  "forca": "a-julgar",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Parâmetro da instanciação avulsa de BRItem; não usada nos hospedeiros.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-2f900cc3509d",
+  "componente": "item",
+  "arquivo": "componentes/item__acessibilidade.md",
+  "secao": "Acessibilidade no Item › Recomendações para Estilo e Design",
+  "texto": "Aplique os estados corretamente para fornecer feedback.",
+  "contexto": "Deixe claro para o usuário quais são os elementos interativos que o item contém ou se o próprio item é interativo. Aplique os estados corretamente para fornecer feedback.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Itens interativos aplicam os estados (hover, foco, selecionado) para dar feedback. Medida: estilo computado do item com e sem hover.",
+   "instancias": [
+    "sel-tipo-documento",
+    "tab-requerimento"
+   ],
+   "variantes": [
+    {
+     "id": "item-sem-hover",
+     "descricao": "Os itens da lista do select não mudam de aparência no hover.",
+     "instancias": [
+      "sel-tipo-documento"
+     ],
+     "clausula": "Aplique os estados corretamente para fornecer feedback."
+    },
+    {
+     "id": "aba-sem-hover",
+     "descricao": "A aba não ativa não muda de aparência no hover.",
+     "instancias": [
+      "tab-requerimento"
+     ],
+     "clausula": "Aplique os estados corretamente para fornecer feedback."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-312e000d6784",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Anatomia",
+  "texto": "2 · Item · Componente Item · Obrigatório",
+  "contexto": null,
+  "antecedente": "1 · Header · --- · Opcional",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Tirar os itens da lista desfaz o select (sem opções).",
+   "origem": "lote-E.json"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-aa386be53f7e",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Anatomia",
+  "texto": "5 · Superfície · Fundamento Superfície · Obrigatório",
+  "contexto": null,
+  "antecedente": "4 · Divider · Componente Divider · Opcional",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Lista com superfície própria. Medida: background computado da lista aberta do select (não transparente).",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "lista-sem-superficie",
+     "descricao": "A lista aberta do select fica com fundo transparente, deixando o conteúdo da página aparecer por baixo.",
+     "clausula": "5 · Superfície · Fundamento Superfície · Obrigatório"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-a14d31901423",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 2. Item (Obrigatório)",
+  "texto": "Atenção: os itens de uma list podem apresentar a quantidade de conteúdo que for necessária e consequentemente a altura deve variar de acordo com o conteúdo.",
+  "contexto": "Atenção: os itens de uma list podem apresentar a quantidade de conteúdo que for necessária e consequentemente a altura deve variar de acordo com o conteúdo. Tenha cuidado ao utilizar alturas flexíveis de itens em uma mesma list.",
+  "antecedente": "Exemplos de variação das alturas dos itens de uma list",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "A altura do item varia com o conteúdo. Medida: scrollHeight contra clientHeight dos itens (sem corte).",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "item-altura-fixa-cortando",
+     "descricao": "Os itens da lista do select têm altura fixa menor que o texto, com overflow escondido cortando a opção mais longa.",
+     "clausula": "a altura deve variar de acordo com o conteúdo"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-e258b3754ba3",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 2. Item (Obrigatório) › Área Principal",
+  "texto": "Deve ser usado somente quando há necessidade de ter um conteúdo com ênfase maior que o texto principal.",
+  "contexto": "Subtítulo: texto opcional que possui a maior ênfase entre os textos. Deve ser usado somente quando há necessidade de ter um conteúdo com ênfase maior que o texto principal. É sugerido o uso de letras maiúsculas;",
+  "antecedente": "A área principal suporta o conteúdo principal da list que geralmente é representado por textos. Podemos organizar o texto pensando na hierarquia da informação e para isso é recomendado utilizar as sugestões abaixo:",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Os itens da lista do select não têm subtítulo.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-56e1c02fed30",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 2. Item (Obrigatório) › Área Principal",
+  "texto": "Texto Principal: texto obrigatório, onde o conteúdo principal da list será exibido;",
+  "contexto": null,
+  "antecedente": "A área principal suporta o conteúdo principal da list que geralmente é representado por textos. Podemos organizar o texto pensando na hierarquia da informação e para isso é recomendado utilizar as sugestões abaixo:",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Texto principal obrigatório no item da list. Medida: cada item da lista do select tem texto visível.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "item-sem-texto",
+     "descricao": "Um item da lista do select mostra só o controle de seleção, sem texto principal.",
+     "clausula": "Texto Principal: texto obrigatório"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-bebc6bb692e0",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 2. Item (Obrigatório) › Recurso Visual ou Complementar",
+  "texto": "Atenção: mantenha a consistência de uma lista em relação ao posicionamento e tipos de recursos visuais/interativos utilizados.",
+  "contexto": null,
+  "antecedente": "Exemplos de possibilidades de uso dos recursos visuais/interativos em uma list representados em azul",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Posição e tipo dos recursos dos itens consistentes na lista. Medida: posição do controle de seleção em cada item.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "controle-fora-de-posicao",
+     "descricao": "Num dos itens da lista do select o controle de seleção fica à direita do texto; nos demais, à esquerda.",
+     "clausula": "mantenha a consistência de uma lista em relação ao posicionamento e tipos de recursos visuais/interativos utilizados"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-76fb32bbeb56",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 2. Item (Obrigatório) › Recurso Visual ou Complementar › Recursos Visuais",
+  "texto": "Quando existirem, devem estar localizados na área de suporte visual.",
+  "contexto": null,
+  "antecedente": "Os recursos visuais são definidos por quaisquer elementos que dão apoio visual ao conteúdo. Podem ser ícones, avatares e mídias em geral.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Os itens da lista do select não têm recursos visuais (ícones, avatares, mídia).",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-73892b5d0b84",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 2. Item (Obrigatório) › Recurso Visual ou Complementar › Recursos Complementares",
+  "texto": "Quando aparecerem, devem estar localizados na área de suporte complementar do item.",
+  "contexto": "Recursos complementares são quaisquer componentes interativos, metadados ou informações adicionais que podem ser utilizados em conjunto com lists. Quando aparecerem, devem estar localizados na área de suporte complementar do item.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Os itens da lista do select não têm recursos complementares (metadados, ações extras).",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-39c30a5ea7ee",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 4. Dividers e Espaçamento (Opcional)",
+  "texto": "Quando presentes, devem, estar localizados sempre abaixo da borda inferior de cada item, quando se tratar de uma list vertical ou após a borda direita, no caso de lists horizontais.",
+  "contexto": "Dividers são recursos opcionais que auxiliam visualmente a percepção do final do item de uma list favorecendo a distinção dos seus itens. Quando presentes, devem, estar localizados sempre abaixo da borda inferior de cada item, quando se tratar de uma list vertical ou após a borda direita, no caso de lists horizontais. Dividers podem ser utilizados também como agrupadores.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "A lista do select não usa dividers entre os itens.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b145544e8477",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 4. Dividers e Espaçamento (Opcional)",
+  "texto": "Atenção: os espaçamentos devem seguir as orientações especificadas no documento de Fundamentos/Espaçamentos.",
+  "contexto": null,
+  "antecedente": "Exemplo de list horizontal com dividers verticais",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Espaçamento entre itens da lista segue a escala de Fundamentos/Espaçamento. Medida: distância entre itens consecutivos contra os valores da escala.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "espaco-fora-da-escala",
+     "descricao": "Todos os itens da lista do select ficam separados por 3 px, valor fora da escala.",
+     "clausula": "os espaçamentos devem seguir as orientações especificadas no documento de Fundamentos/Espaçamentos"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-7339465391f7",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 4. Dividers e Espaçamento (Opcional) › Boas práticas no uso do dividers",
+  "texto": "Não é permitido variar o espaçamento dos itens dentro de uma mesma list.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "proibido",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Proíbe variar o espaçamento entre itens de uma mesma list. Medida: distâncias entre itens consecutivos da lista do select iguais.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "espaco-irregular",
+     "descricao": "O 3º item da lista do select fica com margem superior maior que os outros.",
+     "clausula": "Não é permitido variar o espaçamento dos itens dentro de uma mesma list."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-ce9cc95278b0",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Comportamentos › 2. Agrupamento",
+  "texto": "Por isso devem utilizar a mesma regra de densidade explicada acima.",
+  "contexto": "Os rótulos nada mais são que itens utilizados como títulos de agrupamentos. Por isso devem utilizar a mesma regra de densidade explicada acima.",
+  "antecedente": "Atenção: os exemplos acima podem ser combinados entre si para dar mais ênfase aos agrupamentos.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "A lista do select não tem rótulos de agrupamento.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-356e144e4de8",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Comportamentos › 4. Expansão",
+  "texto": "Atenção: Quando necessário, utilize dividers ou elementos visuais (como sombra) para destacar os rótulos ou itens expansíveis.",
+  "contexto": "Atenção: Quando necessário, utilize dividers ou elementos visuais (como sombra) para destacar os rótulos ou itens expansíveis. A superfície do conteúdo expandido pode opcionalmente assumir uma cor distinta para diferenciar da list principal, mas tenha atenção de não utilizar uma cor já definida para os estados, pois isso pode gerar confusão semântica. Respeite a usabilidade garantindo a taxa mínima de contraste entre a cor do texto e a cor do fundo.",
+  "antecedente": "Exemplo de expansão em uma list horizontal",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "A lista do select não tem itens expansíveis.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-0fefcdc8528d",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Comportamentos › 4. Expansão",
+  "texto": "Respeite a usabilidade garantindo a taxa mínima de contraste entre a cor do texto e a cor do fundo.",
+  "contexto": "Atenção: Quando necessário, utilize dividers ou elementos visuais (como sombra) para destacar os rótulos ou itens expansíveis. A superfície do conteúdo expandido pode opcionalmente assumir uma cor distinta para diferenciar da list principal, mas tenha atenção de não utilizar uma cor já definida para os estados, pois isso pode gerar confusão semântica. Respeite a usabilidade garantindo a taxa mínima de contraste entre a cor do texto e a cor do fundo.",
+  "antecedente": "Exemplo de expansão em uma list horizontal",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Refere-se à superfície do conteúdo expandido; a lista do select não tem expansão.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-347d2e241fb3",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Comportamentos › 5. Ordenação",
+  "texto": "Quando este recurso estiver ativado deve-se utilizar as definições do estado arrastado (ver documento de Fundamentos/Estados).",
+  "contexto": "Lists podem oferecer recursos de reordenação pelo usuário, ou até deslocamentos de itens de lists diferentes. Quando este recurso estiver ativado deve-se utilizar as definições do estado arrastado (ver documento de Fundamentos/Estados).",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "A lista do select não oferece reordenação.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-2d40da60ce61",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Especificações › Espaçamento › Alinhamento",
+  "texto": "Tabela de especificação — List (Lista) › Especificações › Espaçamento › Alinhamento",
+  "contexto": "Name · Spacing Token || Textos · --spacing-vertical-center || Textos · --spacing-horizontal-left",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Textos da lista centrados na vertical e alinhados à esquerda. Medida: text-align/align-items computados dos itens da lista do select.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "itens-centralizados",
+     "descricao": "Os textos dos itens da lista do select ficam centralizados horizontalmente.",
+     "clausula": "Textos · --spacing-horizontal-left"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-b30ded4687e3",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Especificações › Espaçamento › Spacing",
+  "texto": "Tabela de especificação — List (Lista) › Especificações › Espaçamento › Spacing",
+  "contexto": "Name · Token || Item - densidade alta · --spacing-scale-base || Item - densidade média · --spacing-scale-2x || Item - densidade baixa · --spacing-scale-3x",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Espaço do item conforme a densidade (média: --spacing-scale-2x). Medida: padding computado dos itens da lista do select.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "item-espaco-fora-da-escala",
+     "descricao": "Os itens da lista ficam com padding vertical de 2px (nenhuma densidade).",
+     "clausula": "Item - densidade média · --spacing-scale-2x"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-1f12ca328b9e",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Especificações › Cor",
+  "texto": "Tabela de especificação — List (Lista) › Especificações › Cor",
+  "contexto": "Name · Property · Color Token || Superfície · background · --pure-0 || Textos · text · --pure-100 || Texto secundário · text · --gray-70 || Rótulo · text · --pure-100",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Superfície da lista em --pure-0. Medida: background-color computado da lista aberta do select.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "lista-fundo-cinza",
+     "descricao": "A lista aberta do select fica com fundo --gray-10.",
+     "clausula": "Superfície · background · --pure-0"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-8ed2a1b99cae",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Especificações › Tipografia",
+  "texto": "Tabela de especificação — List (Lista) › Especificações › Tipografia",
+  "contexto": "Name · Property · Token/Value || Título · size · --font-size-scale-base || Item · size · --font-size-scale-down-01 || Texto principal · size · --font-size-scale-base || Texto secundário · size · --font-size-scale-down-01 || Rótulo · size · --font-size-scale-down-01 || Título · font-weight · --font-weight-bold || Item · font-weight · --font-weight-semi-bold || Texto principal · font-weight · --font-weight-regular || Texto secundário · font-weight · --font-weight-regular || Rótulo · font-weight · --font-weight-semi-bold",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Tipografia da lista: texto principal --font-size-scale-base regular. Medida: font-size/font-weight computados do texto dos itens da lista do select.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "itens-negrito",
+     "descricao": "O texto principal dos itens da lista fica em --font-weight-bold.",
+     "clausula": "Texto principal · font-weight · --font-weight-regular"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-d522f1f6d5a1",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Especificações › Iconografia",
+  "texto": "Tabela de especificação — List (Lista) › Especificações › Iconografia",
+  "contexto": "Name · Estado · Ícone · Size · Class (Font Awesome) || Ícone Expandir · -- · <i class=\"fas fa-chevron-down\"></i> · --icon-size-base · .fa-chevron-down || Ícone Retrair · -- · <i class=\"fas fa-chevron-up\"></i> · --icon-size-base · .fa-chevron-up",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícones de expandir/retrair são de list expansível; a lista do select não tem itens expansíveis.",
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-e186e4296fe6",
+  "componente": "list",
+  "arquivo": "componentes/list__desenvolvedor.md",
+  "secao": "List (Lista) › Como usar › Lista horizontal com expansão",
+  "texto": "Na versão horizontal o agrupador e a lista de sub-itens devem ficar dentro do br-item.",
+  "contexto": "Na versão horizontal o agrupador e a lista de sub-itens devem ficar dentro do br-item. Usar br-item-body para formatar corretamente o agrupador.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Lista horizontal com expansão não existe na tela.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-689fa6cd30b0",
+  "componente": "list",
+  "arquivo": "componentes/list__desenvolvedor.md",
+  "secao": "List (Lista) › Como usar › Lista horizontal com expansão",
+  "texto": "Usar br-item-body para formatar corretamente o agrupador.",
+  "contexto": "Na versão horizontal o agrupador e a lista de sub-itens devem ficar dentro do br-item. Usar br-item-body para formatar corretamente o agrupador.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Lista horizontal com expansão não existe na tela.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-ff2e6a346b2c",
+  "componente": "list",
+  "arquivo": "componentes/list__desenvolvedor.md",
+  "secao": "List (Lista) › Como usar › Configurações obrigatórias",
+  "texto": "group · classe · Container para a lista horizontal com expansão",
+  "contexto": null,
+  "antecedente": "br-item · classe · Container do componente Item",
+  "forca": "obrigatoria",
+  "marcador": "titulo-obrigatorio",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Classe group é da lista horizontal com expansão, ausente na tela.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b9e8622b3002",
+  "componente": "list",
+  "arquivo": "componentes/list__desenvolvedor.md",
+  "secao": "List (Lista) › Instanciação do Componente › HTML",
+  "texto": "Incluir o arquivo core.min.js no html.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Tirar o core.min.js quebra todos os componentes da página, inclusive a moldura.",
+   "origem": "lote-E.json"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-299fe3989b35",
+  "componente": "list",
+  "arquivo": "componentes/list__desenvolvedor.md",
+  "secao": "List (Lista) › JavaScript",
+  "texto": "Usar o seguinte código JavaScript para instanciar a classe BRList, passando os seguintes parâmetros:",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "A lista embutida é gerida pelo script do select, não por BRList avulso.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-a3b624b67bf7",
+  "componente": "list",
+  "arquivo": "componentes/list__desenvolvedor.md",
+  "secao": "List (Lista) › JavaScript",
+  "texto": "Nome da classe (br-list)",
+  "contexto": null,
+  "antecedente": "Usar o seguinte código JavaScript para instanciar a classe BRList, passando os seguintes parâmetros:",
+  "forca": "a-julgar",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Parâmetro da instanciação avulsa de BRList; não usada.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b0829f23c5f0",
+  "componente": "list",
+  "arquivo": "componentes/list__desenvolvedor.md",
+  "secao": "List (Lista) › JavaScript",
+  "texto": "Objeto referenciando a raiz do componente DOM",
+  "contexto": null,
+  "antecedente": "Usar o seguinte código JavaScript para instanciar a classe BRList, passando os seguintes parâmetros:",
+  "forca": "a-julgar",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Parâmetro da instanciação avulsa de BRList; não usada.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-9ca0ad49a63a",
+  "componente": "list",
+  "arquivo": "componentes/list__acessibilidade.md",
+  "secao": "Acessibilidade no List › Navegação e Comportamento",
+  "texto": "Certifique-se de que os elementos interativos dentro do list sejam acessíveis por teclado, com o uso das teclas Space ou Enter.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "assegure",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Itens interativos da lista acionáveis por Space ou Enter (teclas específicas). Medida: com destaque num item da lista aberta, Enter/Space escolhe o item.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "item-nao-aciona-por-tecla",
+     "descricao": "Na lista aberta do select, Enter e Space não escolhem o item destacado; só o clique escolhe.",
+     "clausula": "acessíveis por teclado, com o uso das teclas Space ou Enter"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-2ee1137ba80b",
+  "componente": "list",
+  "arquivo": "componentes/list__acessibilidade.md",
+  "secao": "Acessibilidade no List › Recomendações para Estilo e Design",
+  "texto": "Forneça informações claras e concisas que sejam de fácil entendimento para os usuários;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b): informação clara e concisa nos itens; caso flagrante oposto é opção muito longa. Medida: nº de palavras do texto de cada opção.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "opcao-prolixa",
+     "descricao": "Uma opção da lista do select tem uma frase de mais de 30 palavras em vez do nome do tipo de documento.",
+     "clausula": "Forneça informações claras e concisas"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "lote-E.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-f5698f1068ce",
+  "componente": "list",
+  "arquivo": "componentes/list__acessibilidade.md",
+  "secao": "Acessibilidade no List › Recomendações para Código",
+  "texto": "Se houver imagens no list, ofereça textos descritivos para elas com o atributo alt;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "A lista do select não tem imagens.",
+   "origem": "lote-E.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-bbe7f780dcd7",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Anatomia",
+  "texto": "1 · Componente input · Input · Obrigatório",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Sem o campo não há select (a remoção apaga o controle).",
+   "origem": "rodada-0"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-5d641612382a",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Anatomia",
+  "texto": "2 · Componente button · Button · Obrigatório",
+  "contexto": null,
+  "antecedente": "1 · Componente input · Input · Obrigatório",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Botão (gatilho) obrigatório. Medida: botão dentro do select.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "sem-gatilho",
+     "descricao": "O botão de abrir a lista é removido; a lista abre ao clicar no campo."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-b3562ce3e89b",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Anatomia",
+  "texto": "3 · Componente list · List · Obrigatório",
+  "contexto": null,
+  "antecedente": "2 · Componente button · Button · Obrigatório",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Sem a lista não há opções (a remoção apaga a função).",
+   "origem": "rodada-0"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-482ab9c4a4b1",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Anatomia",
+  "texto": "4 · Modos de seleção · Estados · Obrigatório",
+  "contexto": null,
+  "antecedente": "3 · Componente list · List · Obrigatório",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Modos de seleção (estados) obrigatórios. Medida: depois de escolher, o item escolhido tem o estado selecionado (classe/aria-selected/checked).",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "escolhido-sem-estado",
+     "descricao": "O item escolhido não recebe o estado selecionado na lista."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-30278caa77da",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Detalhamento dos Itens › 2. Componente Button (Obrigatório)",
+  "texto": "Este botão deve estar posicionado na extremidade direita ao componente input.",
+  "contexto": "É um botão terciário que tem a função de acionar a exibição ou ocultação da lista dropdown, apresentando um feedback visual através da alternância em seu ícone interno, através de um comportamento de toggle. Este botão deve estar posicionado na extremidade direita ao componente input. Para maiores informações consultar o documento Padrão Dropdown.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Botão na extremidade direita do campo. Medida: posição do botão contra a do campo.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "gatilho-a-esquerda",
+     "descricao": "O botão de abrir a lista fica à esquerda do campo."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-adae4a234fdd",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Detalhamento dos Itens › 3. Componente List (Obrigatório)",
+  "texto": "O componente list deve apresentar os itens a serem escolhidos pelo usuário.",
+  "contexto": "O componente list deve apresentar os itens a serem escolhidos pelo usuário. No tipo multiselect, o usuário poderá incluir ou remover mais de um item por meio do checkbox. Cada item selecionado assumirá o estado selecionado.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "A lista do select apresenta os itens a serem escolhidos (requisito, não descrição). Medida: cada opção exibida na lista aberta pode ser escolhida e passa ao campo.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "opcao-nao-escolhivel",
+     "descricao": "O 3º item aparece na lista aberta, mas clicar nele (ou Enter) não o escolhe: o campo não muda.",
+     "clausula": "O componente list deve apresentar os itens a serem escolhidos pelo usuário."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-1f3279c0e6a1",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Detalhamento dos Itens › 3. Componente List (Obrigatório) › Sombra no componente list",
+  "texto": "O componente list será apresentado flutuando sobre a tela e uma sombra deve ser utilizada para proporcionar contraste entre o componente e o conteúdo de tela ao fundo.",
+  "contexto": "O componente list será apresentado flutuando sobre a tela e uma sombra deve ser utilizada para proporcionar contraste entre o componente e o conteúdo de tela ao fundo. Para maiores informações consultar o fundamento visual Elevação.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Lista flutuante com sombra. Medida: box-shadow computado da lista aberta.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "lista-sem-sombra",
+     "descricao": "A lista aberta fica com box-shadow none."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-038abdaed903",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Tipos › 2. Tipo multiselect",
+  "texto": "Caso seja necessário oferecer múltiplas seleções, deve-se utilizar o tipo multiselect.",
+  "contexto": "Caso seja necessário oferecer múltiplas seleções, deve-se utilizar o tipo multiselect. As opções selecionadas serão apresentadas no \"Campo de Entrada de Texto\", seguindo as diretrizes de exibição do componente input.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Seleção múltipla; o select da tela é simples.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-bc65f270eab7",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 1. Seleção dos itens › Seleção de itens no multiselect",
+  "texto": "Importante: observe que no passo 3 e 4 o campo de entrada só exibe quantos itens couberem dentro do campo input e o restante será acrescentado em forma de quantidade ao final do texto.",
+  "contexto": null,
+  "antecedente": "Exemplo do comportamento de seleção de vários itens do multiselect.",
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Multiselect; o select da tela é simples.",
+   "origem": "lote-F.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-8e00d1afbe65",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 2. Abertura do select e multiselect",
+  "texto": "Importante: Não havendo espaço disponível para visualizar a abertura devido aos limites da tela, os itens do \"Componente list\" deverão ser reposicionado em uma outra direção, garantindo uma melhor adequação ao layout apresentado.",
+  "contexto": "Importante: Não havendo espaço disponível para visualizar a abertura devido aos limites da tela, os itens do \"Componente list\" deverão ser reposicionado em uma outra direção, garantindo uma melhor adequação ao layout apresentado. Para maiores informações consultar o tópico \"Posicionamento\" no documento Padrão Dropdown.",
+  "antecedente": "Exemplo do comportamento de abertura dos itens do multiselect nos estados interativo à esquerda, estado hover no centro e estado pressionado à direita.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Falta de espaço junto ao limite da tela; a lista abre com espaço na janela 1280×900.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-55ce9b3b3b6b",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 5. Dimensões mínimas e máximas › Largura Mínima",
+  "texto": "OBS: Em situações onde os textos do input ou dos itens do select forem muito extensos, estes deverão ser diagramados como informado no tópico \"Comportamento\", seção \"Ajustes textuais no select\".",
+  "contexto": null,
+  "antecedente": "Exemplos de larguras mínimas recomendáveis à esquerda, onde os textos estão bem ajustados e à direita exemplos selects com parte dos seus textos ocultados.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Textos extensos; os itens do select são curtos.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-c0c09380b881",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 5. Dimensões mínimas e máximas › Altura Máxima",
+  "texto": "Quando a quantidade de itens for superior, deverá ser utilizada uma barra de rolagem para visualização dos demais itens.",
+  "contexto": "Quando a quantidade de itens for superior, deverá ser utilizada uma barra de rolagem para visualização dos demais itens. Por exemplo, se o select possuir cem itens, ficarão visíveis apenas dez, e o restante será visível apenas por meio de rolagem.",
+  "antecedente": "Multiselect: nove itens.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rolagem quando a lista excede a altura máxima; a lista de tipos de documento é curta.",
+   "origem": "lote-F.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-dc529c1da67b",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 6. Ajustes textuais no select › Ajustes textuais na área do input",
+  "texto": "Sempre que a largura da área do campo de entrada for menor que o texto principal do item selecionado, deve-se seguir as seguintes recomendações:",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Campo mais estreito que o texto; não ocorre.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-59eeebe5c40d",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 6. Ajustes textuais no select › Ajustes textuais na área do input",
+  "texto": "Quando o item selecionado tiver um texto extenso e maior que a largura da área do campo de entrada do input, as últimas letras ou palavras poderão ser ocultadas, exibindo no final do campo o símbolo de \"reticências\" (...), indicando que existe mais palavras excedentes. OBS: O texto completo poderá ser exibido através do uso de tooltip. Exemplos de ajustes textuais no campo de entrada do input.",
+  "contexto": null,
+  "antecedente": "Sempre que a largura da área do campo de entrada for menor que o texto principal do item selecionado, deve-se seguir as seguintes recomendações:",
+  "forca": "obrigatoria",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Texto do item maior que o campo; os itens do select são curtos (como a2-dc529c1da67b).",
+   "origem": "lote-F.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-4f00f43853c9",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 6. Ajustes textuais no select › Ajustes textuais na área do input",
+  "texto": "Quando houver mais de um item selecionado, as informações apresentadas no campo de entrada deverá conter o texto do primeiro item selecionado, o sinal de \"mais\" (+) acrescido do \"somatório dos itens restantes entre parênteses ( )\".",
+  "contexto": "Quando houver mais de um item selecionado, as informações apresentadas no campo de entrada deverá conter o texto do primeiro item selecionado, o sinal de \"mais\" (+) acrescido do \"somatório dos itens restantes entre parênteses ( )\". Ex.: texto do primeiro item + (nº de itens restantes). Exemplos de ajustes textuais no campo de entrada do input.",
+  "antecedente": "Sempre que a largura da área do campo de entrada for menor que o texto principal do item selecionado, deve-se seguir as seguintes recomendações:",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Mais de um item selecionado; select simples.",
+   "origem": "lote-F.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-575b7d3ea8f9",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 6. Ajustes textuais no select › Ajustes textuais na área do input",
+  "texto": "Em situações em que, além da extensão dos textos, houver mais de um item selecionado, as informações exibidas na área do campo do input agrupará as boas práticas descritas no tópico 1 e 2. Ver exemplo abaixo: Exemplos de ajustes textuais no campo de entrada do input.",
+  "contexto": null,
+  "antecedente": "Sempre que a largura da área do campo de entrada for menor que o texto principal do item selecionado, deve-se seguir as seguintes recomendações:",
+  "forca": "obrigatoria",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Texto extenso com vários itens selecionados; select simples.",
+   "origem": "lote-F.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-7b690709168e",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 7. Feedback após pesquisa",
+  "texto": "Quando o usuário optar por utilizar a função de pesquisa e não for localizado o item procurado, o componente input deverá exibir, logo abaixo, uma mensagem de feedback do tipo \"Empty State\", onde será apresentada uma sugestão ou resposta visual para a informação pesquisada.",
+  "contexto": "Quando o usuário optar por utilizar a função de pesquisa e não for localizado o item procurado, o componente input deverá exibir, logo abaixo, uma mensagem de feedback do tipo \"Empty State\", onde será apresentada uma sugestão ou resposta visual para a informação pesquisada. Exemplo de mensagem de feedback do tipo empty state.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Pesquisa sem resultado (empty state); nenhum estado filtra o select.",
+   "origem": "lote-F.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-daf3655caedf",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Especificações › Iconografia",
+  "texto": "Tabela de especificação — Select (Campo de Seleção) › Especificações › Iconografia",
+  "contexto": "Name · Estado · Ícone · Class (Font Awesome) || Ícone - componente button · Fechado · <i class=\"fas fa-caret-down\"></i> · fa-caret-down || Ícone - componente button · Aberto · <i class=\"fas fa-caret-up\"></i> · fa-caret-up || Ícone - Search · - · <i class=\"fas fa-search\"></i> · fa-search",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ícone do gatilho aponta para baixo com a lista fechada e para cima com a lista aberta. Medida: ícone do gatilho antes e depois de abrir a lista.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "icone-nao-vira",
+     "descricao": "Com a lista aberta, o ícone do gatilho continua apontando para baixo.",
+     "clausula": "Ícone - componente button · Aberto · <i class=\"fas fa-caret-up\"></i> · fa-caret-up"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-41f27d1b3d7d",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Especificações › Opacidade",
+  "texto": "Tabela de especificação — Select (Campo de Seleção) › Especificações › Opacidade",
+  "contexto": "Name · Cor · Opacity Value || Selecionar Todos · --red-warm-vivid-50 · --surface-opacity-xs",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Única linha é do 'Selecionar Todos' do multiselect; o select da tela é simples.",
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-5250515a0c00",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Especificações › Espaçamento",
+  "texto": "Tabela de especificação — Select (Campo de Seleção) › Especificações › Espaçamento",
+  "contexto": "Name · Property · Token || Componente Input · margin-bottom · --spacing-scale-base || Selecionar Todos · margin-top · --spacing-scale-base || Componente List · margin-top · --spacing-scale-default",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Espaçamentos do select: input margin-bottom base, lista com margin-top default em relação ao input. Medida: distância computada entre o input e a lista aberta.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "lista-sobre-o-campo",
+     "descricao": "A lista aberta fica sobreposta ao campo (margin-top negativo, cobrindo a borda inferior do input).",
+     "clausula": "Componente List · margin-top · --spacing-scale-default"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-0d25882c88ba",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Especificações › Dimensões",
+  "texto": "Tabela de especificação — Select (Campo de Seleção) › Especificações › Dimensões",
+  "contexto": "Name · Width · Max-Width · Min-Width · Height || Componente Input - Select · variável · 400px · 100px · 40px || Componente Input - Multiselect · variável · 400px · 200px · 40px || Item List - Select · variável · 400px · 100px · 56px || Item List - Multiselect · variável · 400px · 200px · 56px",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Select simples: input entre 100 e 400px de largura, 40px de altura; itens da lista com 56px. Medida: width/height computados do input e dos itens.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "select-largura-total",
+     "descricao": "O campo do select ocupa a largura do conteúdo (bem acima de 400px a 1280).",
+     "clausula": "Componente Input - Select · variável · 400px · 100px · 40px"
+    },
+    {
+     "id": "itens-baixos",
+     "descricao": "Os itens da lista aberta ficam com 36px de altura.",
+     "clausula": "Item List - Select · variável · 400px · 100px · 56px"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra",
+    "interacao"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-8c3b5176e2a3",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Especificações › Sombra",
+  "texto": "Tabela de especificação — Select (Campo de Seleção) › Especificações › Sombra",
+  "contexto": "Name · Shadow || Superfície · --surface-shadow-md",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Lista flutuante com sombra --surface-shadow-md (o token, além da presença de sombra já aceita em a2-1f3279c0e6a1). Medida: box-shadow computado da lista aberta contra o token.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "lista-sombra-forte",
+     "descricao": "A lista aberta fica com sombra de nível xl em vez de md.",
+     "clausula": "Superfície · --surface-shadow-md"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-12888369bd0f",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "secao": "Select (Campo de Seleção) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-select · Container do componente Select",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "titulo-obrigatorio",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — sem-br-select → a2-4d99afd1c618 (A variante muda a classe da raiz; a lista que não abre ao clicar no campo é outro comportamento, perdido porque o BRSelect não é instanciado.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Container br-select. Medida: classe da raiz.)",
+   "origem": "revisao-2"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-bd84ff2497d5",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "secao": "Select (Campo de Seleção) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-input · Container do componente Input",
+  "contexto": null,
+  "antecedente": "class · string · br-select · Container do componente Select",
+  "forca": "obrigatoria",
+  "marcador": "titulo-obrigatorio",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — campo-sem-br-input → a2-3169f339a8e1 (Além da classe, altura e raio computados do campo mudam: outra propriedade.); a2-8fcc793aaed1 (Além da classe, paddings e margens do campo e do rótulo mudam: outras propriedades.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Campo interno em br-input. Medida: classe do contêiner do campo.)",
+   "origem": "revisao-2"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-879621000aa6",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "secao": "Select (Campo de Seleção) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-button · Container do componente Button",
+  "contexto": null,
+  "antecedente": "class · string · br-input · Container do componente Input",
+  "forca": "obrigatoria",
+  "marcador": "titulo-obrigatorio",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — gatilho-sem-br-button → a2-9fc840ceb22d (Além da classe, o fundo e a cor do ícone computados do botão mudam: outra propriedade.); a2-b0f874b8b2cf (Além da classe, as dimensões computadas do botão saem do 32×32: outra propriedade.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Gatilho em br-button. Medida: classe do botão.)",
+   "origem": "revisao-2"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-0a6b97c41045",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "secao": "Select (Campo de Seleção) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-list · Container do componente List",
+  "contexto": null,
+  "antecedente": "class · string · br-button · Container do componente Button",
+  "forca": "obrigatoria",
+  "marcador": "titulo-obrigatorio",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — lista-sem-br-list → a2-adae4a234fdd (Além da classe, a lista deixar de abrir e de entregar a escolha é outro comportamento, se o BRSelect localiza a lista por .br-list.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Lista em br-list. Medida: classe do contêiner da lista.)",
+   "origem": "revisao-2"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-419c091564b6",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "secao": "Select (Campo de Seleção) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-item · Container do componente Item",
+  "contexto": null,
+  "antecedente": "class · string · br-list · Container do componente List",
+  "forca": "obrigatoria",
+  "marcador": "titulo-obrigatorio",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — opcao-sem-br-item → a2-2f900cc3509d (Além da classe, o item perde o realce de hover/foco/selecionado, que é outro observável.); a2-b30ded4687e3 (Além da classe, o padding computado do item sai do token, que é outra propriedade.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Opções em br-item. Medida: classe de cada opção.)",
+   "origem": "revisao-2"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-ee58999db029",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "secao": "Select (Campo de Seleção) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-checkbox · Container do componente br-checkbox (apenas no Select Múltiplo)",
+  "contexto": null,
+  "antecedente": "class · string · br-item · Container do componente Item",
+  "forca": "obrigatoria",
+  "marcador": "titulo-obrigatorio",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Select múltiplo; não usado.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-45a090bca496",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "secao": "Select (Campo de Seleção) › Como usar › Propriedades obrigatórias",
+  "texto": "atributo · string · trigger · Configura o button como gatilho de abertura da lista de itens",
+  "contexto": null,
+  "antecedente": "class · string · small · Aplica a Densidade Alta",
+  "forca": "obrigatoria",
+  "marcador": "titulo-obrigatorio",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Atributo obrigatório 'trigger' no botão. Medida: atributo data-trigger no botão do select.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "gatilho-sem-atributo",
+     "descricao": "O botão não tem o atributo trigger; a abertura é ligada à mão."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-0e5d4429c4ef",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "secao": "Select (Campo de Seleção) › Como usar › Propriedades obrigatórias",
+  "texto": "atributo · string · all · Seta a opção Selecionar todos",
+  "contexto": null,
+  "antecedente": "atributo · string · trigger · Configura o button como gatilho de abertura da lista de itens",
+  "forca": "obrigatoria",
+  "marcador": "titulo-obrigatorio",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "'Selecionar todos' só existe no múltiplo.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-4c2ef1bf747e",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "secao": "Select (Campo de Seleção) › Como usar › Propriedades obrigatórias",
+  "texto": "atributo · string · name · Deve ser inseridos nos inputs radio e checkbox",
+  "contexto": null,
+  "antecedente": "atributo · string · all · Seta a opção Selecionar todos",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "name nos inputs das opções. Medida: atributo name dos inputs radio das opções.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "opcao-sem-name",
+     "descricao": "Os inputs radio das opções ficam sem name."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-6eb568d6dd94",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "secao": "Select (Campo de Seleção) › Como usar › Propriedades obrigatórias",
+  "texto": "atributo · string · value · Deve ser inseridos nos inputs radio e checkbox",
+  "contexto": null,
+  "antecedente": "atributo · string · name · Deve ser inseridos nos inputs radio e checkbox",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "value nos inputs das opções. Medida: atributo value dos inputs radio das opções.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "opcao-sem-value",
+     "descricao": "Os inputs radio das opções ficam sem value."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-2fbc06691f92",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "secao": "Select (Campo de Seleção) › Instanciação do Componente › HTML",
+  "texto": "Incluir o arquivo core.min.js no html.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "duplicada:a2-c5c20128d015",
+   "justificativa": "Mesmo predicado e observável (core.min.js incluído no HTML) da unidade do accordion.",
+   "origem": "lote-F.json"
+  },
+  "porque": "duplicada-alvo-fora"
+ },
+ {
+  "id": "a2-a3eb3793d8de",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "secao": "Select (Campo de Seleção) › JavaScript",
+  "texto": "Usar o seguinte código JavaScript para instanciar a classe BRSelect, passando os seguintes parâmetros:",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Sem instanciar BRSelect a lista não abre: viola também a2-41577e5f420c (setas na lista aberta) e a abertura pelo teclado.",
+   "origem": "lote-F.json"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-edfe49f231f8",
+  "componente": "select",
+  "arquivo": "componentes/select__desenvolvedor.md",
+  "secao": "Select (Campo de Seleção) › JavaScript",
+  "texto": "A tag wrapper do \"elemento not-found\" precisa conter as classe br-item e not-found",
+  "contexto": "> Importante! A tag wrapper do \"elemento not-found\" precisa conter as classe br-item e not-found",
+  "antecedente": "(Opcional) String contendo código HTML para dar o feedback de busca não encontrada. Caso não seja passada, será usado um código padrão.",
+  "forca": "obrigatoria",
+  "marcador": "precisa",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Item 'não encontrado' só aparece com filtro; nenhum estado o mostra.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-d1039a4016fe",
+  "componente": "select",
+  "arquivo": "componentes/select__acessibilidade.md",
+  "secao": "Acessibilidade no Select › Navegação e Comportamento",
+  "texto": "O componente select deve ser acessado via navegação por teclado por meio da tecla Tab;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Select alcançado pela tecla Tab (tecla prescrita). Medida: sequência de Tab para no campo do select.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "select-fora-do-tab",
+     "descricao": "O campo do select recebe tabindex=-1.",
+     "clausula": "O componente select deve ser acessado via navegação por teclado por meio da tecla Tab;"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-126c376799cd",
+  "componente": "select",
+  "arquivo": "componentes/select__acessibilidade.md",
+  "secao": "Acessibilidade no Select › Navegação e Comportamento",
+  "texto": "Quando o foco estiver sobre o select, o mesmo deve ser acionado e exibir a lista de itens;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Com foco no select, ele é acionado e exibe a lista (comportamento próprio do DS). Medida: com foco no campo, Enter/seta para baixo abre a lista.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "teclado-nao-abre",
+     "descricao": "A lista só abre com clique; com foco no campo, Enter e seta para baixo não fazem nada.",
+     "clausula": "Quando o foco estiver sobre o select, o mesmo deve ser acionado e exibir a lista de itens;"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-41577e5f420c",
+  "componente": "select",
+  "arquivo": "componentes/select__acessibilidade.md",
+  "secao": "Acessibilidade no Select › Navegação e Comportamento",
+  "texto": "Após aberta a lista de itens, o usuário deve conseguir navegar através dela por meio das teclas de seta Up e Down;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Na lista aberta, setas para cima/baixo navegam. Medida: seta para baixo move o foco/destaque para o próximo item.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "setas-inertes",
+     "descricao": "Com a lista aberta, as setas não movem entre os itens."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-7348bce34289",
+  "componente": "select",
+  "arquivo": "componentes/select__acessibilidade.md",
+  "secao": "Acessibilidade no Select › Recomendações para Estilo e Design",
+  "texto": "Certifique-se de seguir as recomendações de cores e estados na diretriz do componente, garantindo a qualidade de contraste e legibilidade para usuários com baixa visão.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "assegure",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Seguir cores e estados da diretriz do select. Medida: cor do texto do campo contra a da diretriz e contraste.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "texto-baixo-contraste",
+     "descricao": "O texto do campo fica #AAAAAA sobre branco.",
+     "clausula": "Certifique-se de seguir as recomendações de cores e estados na diretriz do componente, garantindo a qualidade de contraste e legibilidade para usuários com baixa visão."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-73b63c7b9f87",
+  "componente": "select",
+  "arquivo": "componentes/select__acessibilidade.md",
+  "secao": "Acessibilidade no Select › Recomendações para Código",
+  "texto": "Caso não haja um rótulo visual associado ao select, use o atributo aria-label para fornecer um nome descritivo com a explicação do propósito;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Condição 'sem rótulo visual' falsa: o select tem rótulo visível.",
+   "origem": "lote-F.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-684e49bfcc90",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Detalhamento dos Itens › 1. Componente Input (Obrigatório)",
+  "texto": "Ao clicar no componente input, este assumirá seu estado foco e o cursor ficará ativo em seu interior habilitando a funcionalidade de filtro de pesquisa por autocomplete.",
+  "contexto": "É o campo de entrada de texto onde o usuário poderá digitar o texto do item escolhido ou selecionar através do mouse. Ao clicar no componente input, este assumirá seu estado foco e o cursor ficará ativo em seu interior habilitando a funcionalidade de filtro de pesquisa por autocomplete.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ao clicar no campo do select ele assume o foco e a digitação filtra a lista (autocomplete). Medida: clicar no campo, digitar o início de uma opção e conferir a lista filtrada.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "sem-filtro",
+     "descricao": "Digitar no campo do select não filtra a lista; todas as opções continuam visíveis.",
+     "clausula": "habilitando a funcionalidade de filtro de pesquisa por autocomplete"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-8e13c46672f5",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Detalhamento dos Itens › 2. Componente Button (Obrigatório)",
+  "texto": "É um botão terciário que tem a função de acionar a exibição ou ocultação da lista dropdown, apresentando um feedback visual através da alternância em seu ícone interno",
+  "contexto": "É um botão terciário que tem a função de acionar a exibição ou ocultação da lista dropdown, apresentando um feedback visual através da alternância em seu ícone interno, através de um comportamento de toggle. Este botão deve estar posicionado na extremidade direita ao componente input. Para maiores informações consultar o documento Padrão Dropdown.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "O gatilho do select é botão terciário que abre/fecha a lista e alterna o ícone (toggle). Medida: ícone do gatilho com a lista fechada e aberta; ênfase do botão.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "icone-nao-alterna",
+     "descricao": "Com a lista aberta, o ícone do gatilho continua o de abrir (seta para baixo).",
+     "clausula": "apresentando um feedback visual através da alternância em seu ícone interno"
+    },
+    {
+     "id": "gatilho-secundario",
+     "descricao": "O gatilho do select recebe ênfase secundária (contorno).",
+     "clausula": "É um botão terciário"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-a0788e298517",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Detalhamento dos Itens › 3. Componente List (Obrigatório)",
+  "texto": "No tipo multiselect, o usuário poderá incluir ou remover mais de um item por meio do checkbox. Cada item selecionado assumirá o estado selecionado.",
+  "contexto": "O componente list deve apresentar os itens a serem escolhidos pelo usuário. No tipo multiselect, o usuário poderá incluir ou remover mais de um item por meio do checkbox. Cada item selecionado assumirá o estado selecionado.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Multiselect; o select é simples.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-d7daf3fab1df",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Detalhamento dos Itens › 4. Modos de Seleção (Obrigatório) › Seleção intermediária",
+  "texto": "Funciona como um feedback visual, sendo exibido quando existir, tanto item(ns) selecionado(s), quanto não selecionados.",
+  "contexto": "Funciona como um feedback visual, sendo exibido quando existir, tanto item(ns) selecionado(s), quanto não selecionados.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Seleção intermediária do multiselect; o select é simples.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-e85eefb9d6f2",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Tipos › 1. Tipo select",
+  "texto": "O tipo select é utilizado para as opções de seleção única. O item selecionado será apresentado no \"Campo de Entrada de Texto\" seguindo as diretrizes do componente input.",
+  "contexto": "O tipo select é utilizado para as opções de seleção única. O item selecionado será apresentado no \"Campo de Entrada de Texto\" seguindo as diretrizes do componente input.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "No select simples, o item escolhido aparece no campo de entrada. Medida: valor do campo depois de escolher uma opção.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "campo-nao-mostra-escolha",
+     "descricao": "Depois de escolher uma opção, a lista fecha e o campo continua vazio.",
+     "clausula": "O item selecionado será apresentado no \"Campo de Entrada de Texto\""
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-cf20e5b86798",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Tipos › 2. Tipo multiselect",
+  "texto": "As opções selecionadas serão apresentadas no \"Campo de Entrada de Texto\", seguindo as diretrizes de exibição do componente input.",
+  "contexto": "Caso seja necessário oferecer múltiplas seleções, deve-se utilizar o tipo multiselect. As opções selecionadas serão apresentadas no \"Campo de Entrada de Texto\", seguindo as diretrizes de exibição do componente input.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Multiselect; o select é simples.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-d310c5939aa9",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 1. Seleção dos itens › Seleção de itens no multiselect",
+  "texto": "3. O campo de entrada exibe as opções selecionadas em tempo real;",
+  "contexto": "3. O campo de entrada exibe as opções selecionadas em tempo real;",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Multiselect; o select é simples.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-e36f62b6cec2",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 1. Seleção dos itens › Seleção de todos os itens no multiselect",
+  "texto": "Esta opção é disponível no primeiro item da lista de forma destacada.",
+  "contexto": "O usuário poderá selecionar ou desselecionar todos os itens da lista ao mesmo tempo. Esta opção é disponível no primeiro item da lista de forma destacada.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Selecionar todos do multiselect; não há.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-a4f030053769",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 1. Seleção dos itens › Seleção de todos os itens no multiselect",
+  "texto": "Ao clicar no checkbox deste primeiro item, todos os itens da lista serão selecionados. Caso o usuário desmarque o checkbox do primeiro item, todos os itens da lista serão desselecionados.",
+  "contexto": "Ao clicar no checkbox deste primeiro item, todos os itens da lista serão selecionados. Caso o usuário desmarque o checkbox do primeiro item, todos os itens da lista serão desselecionados.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Selecionar todos do multiselect; não há.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-bf93d0b0e6f9",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 1. Seleção dos itens › Seleção de todos os itens no multiselect",
+  "texto": "O rótulo deste item alternará entre \"Selecionar Todos\" e \"Desselecionar Todos\" conforme o usuário marque ou desmarque o primeiro item da lista.",
+  "contexto": "O rótulo deste item alternará entre \"Selecionar Todos\" e \"Desselecionar Todos\" conforme o usuário marque ou desmarque o primeiro item da lista. Observe o exemplo abaixo:",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulo Selecionar/Desselecionar Todos do multiselect; não há.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-4d99afd1c618",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 2. Abertura do select e multiselect",
+  "texto": "Para abrir o componente select ou multiselect o usuário poderá clicar em toda a extensão no campo input.",
+  "contexto": "Para abrir o componente select ou multiselect o usuário poderá clicar em toda a extensão no campo input. Observe abaixo:",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Clicar em qualquer ponto da extensão do campo abre o select. Medida: clicar no meio do campo e conferir a lista aberta.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "so-gatilho-abre",
+     "descricao": "Clicar no campo do select não abre a lista; só o botão gatilho abre.",
+     "clausula": "o usuário poderá clicar em toda a extensão no campo input"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-a451e00d7b63",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 4. Estados › Estado Foco",
+  "texto": "O estado foco ocorre sobre o campo input quando o usuário clicar sobre ele ou sobre o botão terciário.",
+  "contexto": "O estado foco ocorre sobre o campo input quando o usuário clicar sobre ele ou sobre o botão terciário.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "O campo do select assume o estado de foco ao clicar nele ou no botão gatilho. Medida: estilo de foco do campo depois de clicar no gatilho.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "gatilho-nao-foca-campo",
+     "descricao": "Clicar no gatilho abre a lista, mas o campo não mostra o estado de foco.",
+     "clausula": "O estado foco ocorre sobre o campo input quando o usuário clicar sobre ele ou sobre o botão terciário."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao"
+   ],
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-83611c221e13",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 5. Dimensões mínimas e máximas › Altura Máxima",
+  "texto": "Select: dez itens;",
+  "contexto": "- Select: dez itens;",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Altura máxima da lista do select = dez itens; com menos itens, todos aparecem sem rolagem. Medida: altura máxima computada da lista contra a altura de 10 itens.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "lista-curta-com-rolagem",
+     "descricao": "A lista aberta do select fica limitada à altura de 2 itens, com barra de rolagem para os demais.",
+     "clausula": "Select: dez itens;"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "interacao"
+   ],
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-3f42b6af5f6c",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 5. Dimensões mínimas e máximas › Altura Máxima",
+  "texto": "Multiselect: nove itens.",
+  "contexto": "- Multiselect: nove itens.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Altura máxima do multiselect; o select é simples.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-c02b566bacc1",
+  "componente": "select",
+  "arquivo": "componentes/select__designer.md",
+  "secao": "Select (Campo de Seleção) › Comportamentos › 6. Ajustes textuais no select › Ajustes nos itens do select",
+  "texto": "Quando for de extrema necessidade, utiliza-se a quebra de linha dentro o item.",
+  "contexto": "Atenção: de modo geral, deve-se prezar pelo uso de textos curtos e objetivos no select e no multiselect. Quando for de extrema necessidade, utiliza-se a quebra de linha dentro o item.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Quebra de linha em item extenso; os itens do select são curtos (como a2-55ce9b3b3b6b).",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-654520f6ba0e",
+  "componente": "select",
+  "arquivo": "componentes/select__acessibilidade.md",
+  "secao": "Acessibilidade no Select › Navegação e Comportamento",
+  "texto": "O select pode ser recolhido por meio da tecla Esc, sem selecionar qualquer item de opção.",
+  "contexto": "- O select pode ser recolhido por meio da tecla Esc, sem selecionar qualquer item de opção.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Esc recolhe o select sem escolher item (tecla específica). Medida: abrir a lista, pressionar Esc, conferir lista fechada e valor inalterado.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "esc-nao-fecha-lista",
+     "descricao": "Com a lista do select aberta, Esc não a fecha.",
+     "clausula": "O select pode ser recolhido por meio da tecla Esc, sem selecionar qualquer item de opção."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-66f76b92ffb0",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 2. Item (Obrigatório)",
+  "texto": "No entanto, esteja atento em manter a formatação e consistência dentro de uma mesma list.",
+  "contexto": "Pode-se utilizar as três áreas sugeridas em conjunto ou isoladamente. É permitida ainda a criação de novas áreas ou utilizar qualquer uma delas isoladamente. No entanto, esteja atento em manter a formatação e consistência dentro de uma mesma list.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Formatação consistente entre os itens da mesma lista. Medida: font-size/peso/cor computados do texto de cada item da lista do select.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "item-formatado-diferente",
+     "descricao": "Um item da lista do select aparece em negrito e fonte maior que os demais.",
+     "clausula": "esteja atento em manter a formatação e consistência dentro de uma mesma list."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-a854cc8d302c",
+  "componente": "list",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Comportamentos › 4. Expansão",
+  "texto": "mas tenha atenção de não utilizar uma cor já definida para os estados, pois isso pode gerar confusão semântica",
+  "contexto": "Atenção: Quando necessário, utilize dividers ou elementos visuais (como sombra) para destacar os rótulos ou itens expansíveis. A superfície do conteúdo expandido pode opcionalmente assumir uma cor distinta para diferenciar da list principal, mas tenha atenção de não utilizar uma cor já definida para os estados, pois isso pode gerar confusão semântica. Respeite a usabilidade garantindo a taxa mínima de contraste entre a cor do texto e a cor do fundo.",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Superfície de conteúdo expandido da lista; não há lista expansível.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-e5c486e19a78",
+  "componente": "list",
+  "arquivo": "componentes/list__desenvolvedor.md",
+  "secao": "List (Lista) › Como usar › Lista vertical com expansão",
+  "texto": "Na versão vertical a lista de sub-itens fica logo após o br-item.",
+  "contexto": "Na versão vertical a lista de sub-itens fica logo após o br-item.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Lista vertical com sub-itens; não há (como a2-e186e4296fe6).",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-145591b8b938",
+  "componente": "item",
+  "arquivo": "componentes/item__designer.md",
+  "secao": "Item › Comportamentos › 1. Hover",
+  "texto": "Um item pode ser interativo. Neste caso, toda a superfície do item é interativa e assume o estado hover.",
+  "contexto": "Um item pode ser interativo. Neste caso, toda a superfície do item é interativa e assume o estado hover.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Item interativo: toda a superfície é clicável e recebe hover. Medida: clicar na parte vazia do item (à direita do texto) e conferir a ação.",
+   "instancias": [
+    "sel-tipo-documento",
+    "tab-requerimento"
+   ],
+   "variantes": [
+    {
+     "id": "so-texto-do-item-clicavel",
+     "descricao": "Na lista do select, clicar na parte vazia à direita do texto de um item não o escolhe; só o texto.",
+     "instancias": [
+      "sel-tipo-documento"
+     ],
+     "clausula": "toda a superfície do item é interativa"
+    },
+    {
+     "id": "so-texto-da-aba-clicavel",
+     "descricao": "Na aba Documentos, clicar no espaçamento interno fora do texto não ativa a aba; só o texto.",
+     "instancias": [
+      "tab-requerimento"
+     ],
+     "clausula": "toda a superfície do item é interativa"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-6700707b8210",
+  "componente": "item",
+  "arquivo": "componentes/item__designer.md",
+  "secao": "Item › Comportamentos › 2. Elemento Interativo",
+  "texto": "Neste caso, apenas estes elementos possuem ação e estado hover.",
+  "contexto": "Um item pode pode conter elementos interativos. Neste caso, apenas estes elementos possuem ação e estado hover.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Item com elementos interativos internos separados; os itens da lista do select e da aba são interativos por inteiro.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-8be415ce0e60",
+  "componente": "item",
+  "arquivo": "componentes/item__designer.md",
+  "secao": "Item › Comportamentos › 4. Expansão",
+  "texto": "Quando o usuário clicar no botão de expansão outros elementos serão apresentados. A qualquer momento o usuário poderá fechar a expansão.",
+  "contexto": "Um item pode ser expansível. Quando o usuário clicar no botão de expansão outros elementos serão apresentados. A qualquer momento o usuário poderá fechar a expansão.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Item expansível; não há.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "nao-se-aplica"
+ }
+]

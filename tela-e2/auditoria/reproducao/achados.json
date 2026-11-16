@@ -1,0 +1,866 @@
+{
+ "_meta": {
+  "tela": "cadastro-pais.html (E2)",
+  "auditoria": "cega, por medição (Playwright + CDP; sem oráculo, sem axe)",
+  "corpus": "F:/Dev Nath/TCC/ds-rules/govbr-ds-3.7.0-corpus",
+  "geradoPor": "avaliar.mjs",
+  "geradoEm": "2026-11-15T01:36:49.644Z",
+  "contagens": {
+   "verificacoes": 145,
+   "achados": 13,
+   "achadosDS": 9,
+   "achadosGeral": 4,
+   "conformes": 113,
+   "incertos": 19
+  }
+ },
+ "achados": [
+  {
+   "id": "EA-01",
+   "instancia": "btn-limpar",
+   "chave": "posicao-enfase-primaria-a-direita",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "Deve-se seguir o seguinte princípio: a **ênfase de maior relevância** deverá vir sempre à **direita**."
+    },
+    {
+     "arquivo": "padroes/design/formulario.md",
+     "citacao": "Quando utilizar mais de um botão, o elemento com ênfase primária deve estar necessariamente posicionado à direita dos botões de ênfase secundária"
+    }
+   ],
+   "tambem": [],
+   "esperado": "Salvar País (primário) à direita de Cancelar e Limpar Campos (secundários)",
+   "ancora": {
+    "texto": "botão 'Limpar Campos'",
+    "seletor": "#btn-limpar"
+   },
+   "medida": {
+    "S0": {
+     "ordemVisualEsqDir": [
+      "Cancelar(secundário, order 0)",
+      "Salvar País(primário, order 0)",
+      "Limpar Campos(secundário, order 1)"
+     ],
+     "ordemDOM": [
+      "Cancelar",
+      "Limpar Campos",
+      "Salvar País"
+     ],
+     "seletorOrder": {
+      "seletor": ".acoes-formulario .acao-limpar",
+      "valor": "1",
+      "imp": false
+     }
+    },
+    "S1": {
+     "ordemVisualEsqDir": [
+      "Cancelar(secundário, order 0)",
+      "Salvar País(primário, order 0)",
+      "Limpar Campos(secundário, order 1)"
+     ],
+     "ordemDOM": [
+      "Cancelar",
+      "Limpar Campos",
+      "Salvar País"
+     ],
+     "seletorOrder": {
+      "seletor": ".acoes-formulario .acao-limpar",
+      "valor": "1",
+      "imp": false
+     }
+    },
+    "S2": {
+     "ordemVisualEsqDir": [
+      "Cancelar(secundário, order 0)",
+      "Salvar País(primário, order 0)",
+      "Limpar Campos(secundário, order 1)"
+     ],
+     "ordemDOM": [
+      "Cancelar",
+      "Limpar Campos",
+      "Salvar País"
+     ],
+     "seletorOrder": {
+      "seletor": ".acoes-formulario .acao-limpar",
+      "valor": "1",
+      "imp": false
+     }
+    }
+   },
+   "origem": "CSS: `.acoes-formulario .acao-limpar { order: 1 }` (seletor da página, proveniencia via CDP)",
+   "medidaArquivo": "medidas/EA-01.json"
+  },
+  {
+   "id": "EA-02",
+   "instancia": "btn-limpar",
+   "chave": "ordem-tab-igual-ordem-visual",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Assim, os formulários devem primeiro ser codificados considerando a ordem lógica de navegação para depois serem organizados visualmente via CSS."
+    },
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Deve-se criar o código HTML com uma sequência lógica de leitura para percorrer links, controles de formulários e objetos."
+    }
+   ],
+   "tambem": [],
+   "esperado": "sequência de Tab na barra de ações igual à ordem visual (esquerda → direita)",
+   "ancora": {
+    "texto": "botão 'Limpar Campos'",
+    "seletor": "#btn-limpar"
+   },
+   "medida": {
+    "S0": {
+     "sequenciaTab": [
+      "Cancelar",
+      "Limpar Campos",
+      "Salvar País"
+     ],
+     "ordemVisual": [
+      "Cancelar",
+      "Salvar País",
+      "Limpar Campos"
+     ]
+    },
+    "S1": {
+     "sequenciaTab": [
+      "Cancelar",
+      "Limpar Campos",
+      "Salvar País"
+     ],
+     "ordemVisual": [
+      "Cancelar",
+      "Salvar País",
+      "Limpar Campos"
+     ]
+    },
+    "S2": {
+     "sequenciaTab": [
+      "Cancelar",
+      "Limpar Campos",
+      "Salvar País"
+     ],
+     "ordemVisual": [
+      "Cancelar",
+      "Salvar País",
+      "Limpar Campos"
+     ]
+    }
+   },
+   "origem": "CSS `order: 1` em `.acoes-formulario .acao-limpar` (página)",
+   "medidaArquivo": "medidas/EA-02.json"
+  },
+  {
+   "id": "EA-03",
+   "instancia": "btn-ajuda",
+   "chave": "circular-icone-obrigatorio",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "Nos botões do tipo circular a utilização é obrigatória, visto que a mensagem da ação é transmitida apenas pelo ícone."
+    },
+    {
+     "arquivo": "padroes/design/formulario.md",
+     "citacao": "Para acionar esse componente deve ser utilizado um botão de ênfase terciária com um ícone ou texto indicando sua finalidade"
+    }
+   ],
+   "tambem": [
+    {
+     "arquivo": "acessibilidade.md",
+     "citacao": "As informações e os componentes da interface do usuário devem ser apresentados em formas que possam ser percebidas pelo usuário."
+    }
+   ],
+   "esperado": "ícone visível dentro do botão circular (ex.: fa-question, 'Ajuda' na tabela de iconografia)",
+   "ancora": {
+    "texto": "botão circular de nome 'Ajuda sobre o cadastro' ao lado do h1",
+    "seletor": "#btn-ajuda"
+   },
+   "medida": {
+    "S0": {
+     "classes": [
+      "br-button",
+      "circle",
+      "acao-ajuda"
+     ],
+     "filhos": [
+      "span.sr-only"
+     ],
+     "antes": "none",
+     "depois": "none",
+     "pixelsNaoBrancosEmRepouso": 0,
+     "referenciaBotaoFecharDaMensagem": 1024,
+     "fundo": {
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgImg": "none",
+      "borda": "0px",
+      "mask": "none"
+     }
+    },
+    "S1": {
+     "classes": [
+      "br-button",
+      "circle",
+      "acao-ajuda"
+     ],
+     "filhos": [
+      "span.sr-only"
+     ],
+     "antes": "none",
+     "depois": "none",
+     "pixelsNaoBrancosEmRepouso": 0,
+     "referenciaBotaoFecharDaMensagem": 1024,
+     "fundo": {
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgImg": "none",
+      "borda": "0px",
+      "mask": "none"
+     }
+    },
+    "S2": {
+     "classes": [
+      "br-button",
+      "circle",
+      "acao-ajuda"
+     ],
+     "filhos": [
+      "span.sr-only"
+     ],
+     "antes": "none",
+     "depois": "none",
+     "pixelsNaoBrancosEmRepouso": 0,
+     "referenciaBotaoFecharDaMensagem": 1024,
+     "fundo": {
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgImg": "none",
+      "borda": "0px",
+      "mask": "none"
+     }
+    }
+   },
+   "origem": "marcação servida: `<button class=\"br-button circle acao-ajuda\">` contém só `<span class=\"sr-only\">`",
+   "medidaArquivo": "medidas/EA-03.json"
+  },
+  {
+   "id": "EA-04",
+   "instancia": "inp-nome-pais",
+   "chave": "usuario-insere-informacao-teclado",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/input__designer.md",
+     "citacao": "Este é o elemento essencial e obrigatório do componente. Por meio dele o usuário deve inserir a informação que foi requerida pelo sistema."
+    },
+    {
+     "arquivo": "componentes/input__acessibilidade.md",
+     "citacao": "Após o *input* receber o foco, permita que o usuário possa digitar o texto na sequência, sem necessidade de qualquer outro passo anterior;"
+    }
+   ],
+   "tambem": [
+    {
+     "arquivo": "acessibilidade.md",
+     "citacao": "Dito isso, uma interface com usuário acessível não pode impor barreiras para interação e para o acesso à informação, nem no hardware e nem no software do sistema interativo."
+    }
+   ],
+   "esperado": "campo obrigatório editável ao receber foco por Tab (texto digitado aparece no valor)",
+   "ancora": {
+    "texto": "campo de rótulo 'Nome do país'",
+    "seletor": "#inp-nome-pais"
+   },
+   "medida": {
+    "S0": {
+     "readonlyNoEstado": true,
+     "axReadonly": true,
+     "required": true,
+     "aposFocoPorTab": {
+      "readonly": true,
+      "valorDigitado": "\"\""
+     },
+     "aposCliqueDePonteiro": {
+      "readonly": false,
+      "valorDigitado": "Brasil"
+     }
+    },
+    "S1": {
+     "readonlyNoEstado": true,
+     "axReadonly": true,
+     "required": true,
+     "aposFocoPorTab": {
+      "readonly": true,
+      "valorDigitado": "\"\""
+     },
+     "aposCliqueDePonteiro": {
+      "readonly": false,
+      "valorDigitado": "Brasil"
+     }
+    },
+    "S2": {
+     "readonlyNoEstado": true,
+     "axReadonly": true,
+     "required": true,
+     "aposFocoPorTab": {
+      "readonly": true,
+      "valorDigitado": "\"\""
+     },
+     "aposCliqueDePonteiro": {
+      "readonly": false,
+      "valorDigitado": "Brasil"
+     }
+    }
+   },
+   "origem": "atributo `readonly` na marcação servida; script da página o remove só no clique de ponteiro",
+   "medidaArquivo": "medidas/EA-04.json"
+  },
+  {
+   "id": "EA-05",
+   "instancia": "inp-nome-pais",
+   "chave": "funcao-script-por-teclado",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Todas as funções da página desenvolvidas utilizando-se linguagens de script (javascript) devem ser programadas, primeiramente, para o uso com teclado."
+    }
+   ],
+   "tambem": [],
+   "esperado": "a liberação do campo (remoção de readonly) também por teclado",
+   "ancora": {
+    "texto": "campo de rótulo 'Nome do país'",
+    "seletor": "#inp-nome-pais"
+   },
+   "medida": {
+    "S0": {
+     "readonlyNoEstado": true,
+     "liberadoPorCliqueDePonteiro": true,
+     "liberadoPorTab": false,
+     "digitadoAposTab": ""
+    },
+    "S1": {
+     "readonlyNoEstado": true,
+     "liberadoPorCliqueDePonteiro": true,
+     "liberadoPorTab": false,
+     "digitadoAposTab": ""
+    },
+    "S2": {
+     "readonlyNoEstado": true,
+     "liberadoPorCliqueDePonteiro": true,
+     "liberadoPorTab": false,
+     "digitadoAposTab": ""
+    }
+   },
+   "origem": "script da página (o atributo muda após clique; não muda após foco por Tab)",
+   "medidaArquivo": "medidas/EA-05.json"
+  },
+  {
+   "id": "EA-06",
+   "instancia": "inp-codigo",
+   "chave": "familia-tipografica",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/tipografia.md",
+     "citacao": "Interfaces digitais do governo devem utilizar a família de fonte definida sempre que possível."
+    },
+    {
+     "arquivo": "fundamentos-visuais/tipografia.md",
+     "citacao": "Para a apresentação dos elementos textuais do *Design System* do Governo Federal, somente uma família de fonte é utilizada: a *Rawline*."
+    }
+   ],
+   "tambem": [],
+   "esperado": "Rawline (--font-family-base) no rótulo, no campo e no texto auxiliar",
+   "ancora": {
+    "texto": "campo de rótulo 'Código do país (opcional)'",
+    "seletor": "#inp-codigo"
+   },
+   "medida": {
+    "S0": {
+     "label": "Arial, Helvetica, sans-serif",
+     "campo": "Arial, Helvetica, sans-serif",
+     "apoio": "Arial, Helvetica, sans-serif",
+     "seletorVencedor": {
+      "seletor": ".campo-codigo .br-input",
+      "valor": "Arial,Helvetica,sans-serif",
+      "imp": false
+     }
+    },
+    "S1": {
+     "label": "Arial, Helvetica, sans-serif",
+     "campo": "Arial, Helvetica, sans-serif",
+     "apoio": "Arial, Helvetica, sans-serif",
+     "seletorVencedor": {
+      "seletor": ".campo-codigo .br-input",
+      "valor": "Arial,Helvetica,sans-serif",
+      "imp": false
+     }
+    },
+    "S2": {
+     "label": "Arial, Helvetica, sans-serif",
+     "campo": "Arial, Helvetica, sans-serif",
+     "apoio": "Arial, Helvetica, sans-serif",
+     "seletorVencedor": {
+      "seletor": ".campo-codigo .br-input",
+      "valor": "Arial,Helvetica,sans-serif",
+      "imp": false
+     }
+    }
+   },
+   "origem": "CSS da página: `.campo-codigo .br-input { font-family: Arial, Helvetica, sans-serif }`",
+   "medidaArquivo": "medidas/EA-06.json"
+  },
+  {
+   "id": "EA-07",
+   "instancia": "inp-codigo",
+   "chave": "texto-auxiliar-espec",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/input__designer.md",
+     "citacao": "| Texto auxiliar                             | margin-top                 |   `--spacing-scale-base`    |"
+    },
+    {
+     "arquivo": "componentes/input__designer.md",
+     "citacao": "| Texto auxiliar | `--font-size-scale-base` | `--font-weight-regular` |        -         |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "texto auxiliar 14 px, regular, margin-top 8 px (--spacing-scale-base)",
+   "ancora": {
+    "texto": "campo de rótulo 'Código do país (opcional)'",
+    "seletor": "#inp-codigo"
+   },
+   "medida": {
+    "S0": {
+     "fontSize": "14px",
+     "fontWeight": "400",
+     "marginTop": "4px",
+     "seletores": {
+      "font-size": {
+       "seletor": ".apoio-campo",
+       "valor": "var(--font-size-scale-base)",
+       "imp": false,
+       "origem": "regular"
+      },
+      "font-weight": {
+       "seletor": "p",
+       "valor": "var(--font-weight-regular)",
+       "imp": false,
+       "origem": "regular"
+      },
+      "color": {
+       "seletor": "p",
+       "valor": "var(--color)",
+       "imp": false,
+       "origem": "regular"
+      },
+      "margin-top": {
+       "seletor": ".apoio-campo",
+       "valor": "var(--spacing-scale-half)",
+       "imp": false,
+       "origem": "regular"
+      }
+     }
+    },
+    "S1": {
+     "fontSize": "14px",
+     "fontWeight": "400",
+     "marginTop": "4px",
+     "seletores": {
+      "font-size": {
+       "seletor": ".apoio-campo",
+       "valor": "var(--font-size-scale-base)",
+       "imp": false,
+       "origem": "regular"
+      },
+      "font-weight": {
+       "seletor": "p",
+       "valor": "var(--font-weight-regular)",
+       "imp": false,
+       "origem": "regular"
+      },
+      "color": {
+       "seletor": "p",
+       "valor": "var(--color)",
+       "imp": false,
+       "origem": "regular"
+      },
+      "margin-top": {
+       "seletor": ".apoio-campo",
+       "valor": "var(--spacing-scale-half)",
+       "imp": false,
+       "origem": "regular"
+      }
+     }
+    },
+    "S2": {
+     "fontSize": "14px",
+     "fontWeight": "400",
+     "marginTop": "4px",
+     "seletores": {
+      "font-size": {
+       "seletor": ".apoio-campo",
+       "valor": "var(--font-size-scale-base)",
+       "imp": false,
+       "origem": "regular"
+      },
+      "font-weight": {
+       "seletor": "p",
+       "valor": "var(--font-weight-regular)",
+       "imp": false,
+       "origem": "regular"
+      },
+      "color": {
+       "seletor": "p",
+       "valor": "var(--color)",
+       "imp": false,
+       "origem": "regular"
+      },
+      "margin-top": {
+       "seletor": ".apoio-campo",
+       "valor": "var(--spacing-scale-half)",
+       "imp": false,
+       "origem": "regular"
+      }
+     }
+    }
+   },
+   "origem": "CSS da página: `.apoio-campo { margin-top: var(--spacing-scale-half) }`",
+   "medidaArquivo": "medidas/EA-07.json"
+  },
+  {
+   "id": "EA-08",
+   "instancia": "sel-continente",
+   "chave": "contraste-rotulos-opcoes",
+   "estados": [
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/cores.md",
+     "citacao": "O *nível AA* indica que é necessária uma taxa de contraste de pelo menos *4,5:1* para que o texto seja considerado normal e tenha boa legibilidade."
+    },
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "As cores do plano de fundo e do primeiro plano deverão ser suficientemente contrastantes"
+    }
+   ],
+   "tambem": [],
+   "esperado": "≥ 4,5:1 (texto 14 px, peso 500)",
+   "ancora": {
+    "texto": "select de rótulo 'Continente'",
+    "seletor": "#sel-continente"
+   },
+   "medida": {
+    "S2": [
+     "Continente: rgb(51, 51, 51) sobre rgb(255, 255, 255) = 12.63:1",
+     "África: rgb(170, 170, 170) sobre rgb(255, 255, 255) = 2.32:1",
+     "América do Norte: rgb(170, 170, 170) sobre rgb(255, 255, 255) = 2.32:1",
+     "América do Sul: rgb(170, 170, 170) sobre rgb(255, 255, 255) = 2.32:1",
+     "Ásia: rgb(170, 170, 170) sobre rgb(255, 255, 255) = 2.32:1",
+     "Europa: rgb(170, 170, 170) sobre rgb(255, 255, 255) = 2.32:1",
+     "Oceania: rgb(170, 170, 170) sobre rgb(255, 255, 255) = 2.32:1"
+    ]
+   },
+   "origem": "CSS da página: `.campo-continente .br-item { --text-color: #aaa }` (sobrescreve `.br-select .br-item { --text-color: var(--color-light) }` do DS)",
+   "medidaArquivo": "medidas/EA-08.json"
+  },
+  {
+   "id": "EA-09",
+   "instancia": "sel-continente",
+   "chave": "cor-fora-da-paleta",
+   "estados": [
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/cores.md",
+     "citacao": "Interfaces digitais do governo devem utilizar sempre as cores pré-definidas."
+    }
+   ],
+   "tambem": [],
+   "esperado": "cores da paleta do DS (fundamentos-visuais/cores.md)",
+   "ancora": {
+    "texto": "select de rótulo 'Continente'",
+    "seletor": "#sel-continente"
+   },
+   "medida": {
+    "S2": [
+     "label color #aaaaaa"
+    ]
+   },
+   "origem": "CSS da página: `.campo-continente .br-item { --text-color: #aaa }`",
+   "medidaArquivo": "medidas/EA-09.json"
+  },
+  {
+   "id": "EA-10",
+   "instancia": "msg-orientacao",
+   "chave": "texto-curto-claro-objetivo",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/message__designer.md",
+     "citacao": "Deve-se optar por um texto curto, claro e objetivo, compreendendo toda informação necessária ao usuário."
+    }
+   ],
+   "tambem": [
+    {
+     "arquivo": "componentes/message__acessibilidade.md",
+     "citacao": "Use uma linguagem clara e compreensível para seu público. Evite jargões ou textos complexos;"
+    },
+    {
+     "arquivo": "padroes/writing/microcopy.md",
+     "citacao": "Os textos devem ser escritos em uma linguagem simples e fácil de serem compreendidas pelos usuários não técnicos."
+    }
+   ],
+   "esperado": "orientação sobre como cadastrar, em linguagem do usuário",
+   "ancora": {
+    "texto": "mensagem informativa 'Como cadastrar.'",
+    "seletor": "#msg-orientacao"
+   },
+   "medida": {
+    "S0": {
+     "titulo": "Como cadastrar.",
+     "corpo": "Os dados do país são persistidos no banco após o commit da transação, e a listagem abaixo é renderizada a partir do cache do endpoint de consulta.",
+     "termosTecnicos": [
+      "persistidos",
+      "banco",
+      "commit",
+      "transação",
+      "renderizada",
+      "cache",
+      "endpoint"
+     ]
+    },
+    "S1": {
+     "titulo": "Como cadastrar.",
+     "corpo": "Os dados do país são persistidos no banco após o commit da transação, e a listagem abaixo é renderizada a partir do cache do endpoint de consulta.",
+     "termosTecnicos": [
+      "persistidos",
+      "banco",
+      "commit",
+      "transação",
+      "renderizada",
+      "cache",
+      "endpoint"
+     ]
+    },
+    "S2": {
+     "titulo": "Como cadastrar.",
+     "corpo": "Os dados do país são persistidos no banco após o commit da transação, e a listagem abaixo é renderizada a partir do cache do endpoint de consulta.",
+     "termosTecnicos": [
+      "persistidos",
+      "banco",
+      "commit",
+      "transação",
+      "renderizada",
+      "cache",
+      "endpoint"
+     ]
+    }
+   },
+   "origem": "texto da marcação servida",
+   "medidaArquivo": "medidas/EA-10.json"
+  },
+  {
+   "id": "EA-11",
+   "instancia": "msg-orientacao",
+   "chave": "leitura-ensino-fundamental",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "O texto de um sítio deve ser de fácil leitura e compreensão, não exigindo do usuário um nível de instrução mais avançado do que o ensino fundamental completo."
+    }
+   ],
+   "tambem": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Ao menos na primeira ocorrência de siglas, abreviaturas ou palavras incomuns (ambíguas, desconhecidas ou utilizadas de forma muito específica), deve ser disponibilizada sua explicação ou forma completa."
+    }
+   ],
+   "esperado": "texto sem jargão técnico, ou com explicação dos termos",
+   "ancora": {
+    "texto": "mensagem informativa 'Como cadastrar.'",
+    "seletor": "#msg-orientacao"
+   },
+   "medida": {
+    "S0": {
+     "corpo": "Os dados do país são persistidos no banco após o commit da transação, e a listagem abaixo é renderizada a partir do cache do endpoint de consulta.",
+     "termosSemExplicacao": [
+      "commit",
+      "cache",
+      "endpoint",
+      "persistidos",
+      "renderizada"
+     ],
+     "abbrOuGlossario": 0
+    },
+    "S1": {
+     "corpo": "Os dados do país são persistidos no banco após o commit da transação, e a listagem abaixo é renderizada a partir do cache do endpoint de consulta.",
+     "termosSemExplicacao": [
+      "commit",
+      "cache",
+      "endpoint",
+      "persistidos",
+      "renderizada"
+     ],
+     "abbrOuGlossario": 0
+    },
+    "S2": {
+     "corpo": "Os dados do país são persistidos no banco após o commit da transação, e a listagem abaixo é renderizada a partir do cache do endpoint de consulta.",
+     "termosSemExplicacao": [
+      "commit",
+      "cache",
+      "endpoint",
+      "persistidos",
+      "renderizada"
+     ],
+     "abbrOuGlossario": 0
+    }
+   },
+   "origem": null,
+   "medidaArquivo": "medidas/EA-11.json"
+  },
+  {
+   "id": "EA-12",
+   "instancia": "msg-erro",
+   "chave": "cor-semantica-erro",
+   "estados": [
+    "S1"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/cores.md",
+     "citacao": "A cor deve indicar o estado e hierarquia dos elementos dispostos em uma interface, facilitando o *feedback* e comunicação entre a interface e o usuário, enquanto se mantêm consistentes ao longo de toda a navegação."
+    },
+    {
+     "arquivo": "componentes/message__designer.md",
+     "citacao": "| Superfície do Message              | background | `--red-vivid-10` |"
+    }
+   ],
+   "tambem": [
+    {
+     "arquivo": "componentes/message__acessibilidade.md",
+     "citacao": "Use as cores semânticas recomendadas para cada tipo de mensagem: informação, sucesso, alerta e erro. Isto ajuda a garantir os padrões de acessibilidade;"
+    }
+   ],
+   "esperado": "superfície --red-vivid-10 (#fde0db), ícone --red-vivid-50, texto --gray-80",
+   "ancora": {
+    "texto": "mensagem 'Não foi possível salvar o país.'",
+    "seletor": "#msg-erro"
+   },
+   "medida": {
+    "S1": {
+     "fundo": "rgb(38, 112, 232)",
+     "icone": "rgb(255, 255, 255)",
+     "texto": "rgb(255, 255, 255)",
+     "fundoEsperadoDanger": "#fde0db",
+     "sobrescrita": {
+      "nivelAncestral": 0,
+      "seletor": ".formulario-pais .retorno-envio",
+      "valor": "var(--blue-warm-vivid-50)"
+     }
+    }
+   },
+   "origem": "CSS da página: `.formulario-pais .retorno-envio { --message-background: var(--blue-warm-vivid-50); --message-text: var(--pure-0) }` sobrescreve `.br-message.danger`",
+   "medidaArquivo": "medidas/EA-12.json"
+  },
+  {
+   "id": "EA-13",
+   "instancia": "msg-erro",
+   "chave": "icone-de-confirmacao-em-erro",
+   "estados": [
+    "S1"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/iconografia.md",
+     "citacao": "É fundamental atribuir os significados recomendados na tabela, evitando duplo sentido e facilitando o reconhecimento e memorização por parte do usuário."
+    },
+    {
+     "arquivo": "fundamentos-visuais/iconografia.md",
+     "citacao": "| <i class=\"fas fa-check\"></i>                | Confirmar                               |        `fa-check`         |"
+    },
+    {
+     "arquivo": "componentes/message__designer.md",
+     "citacao": "| Ícone Erro - Tipo Padrão         | <i class=\"times-circle\"></i>         | `--icon-size-lg`   | `times-circle`         |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "só o ícone de erro (times-circle); nenhum ícone de confirmação/sucesso",
+   "ancora": {
+    "texto": "mensagem 'Não foi possível salvar o país.'",
+    "seletor": "#msg-erro"
+   },
+   "medida": {
+    "S1": {
+     "icones": [
+      "fas fa-times-circle fa-lg (U+f057, visível true)",
+      "fas fa-check marca-retorno (U+f00c, visível true)"
+     ],
+     "pixelsDoCheck": {
+      "largura": 24,
+      "altura": 16,
+      "pixelsDiferentesDoCanto": 53,
+      "coresDistintas": 15,
+      "corDoCanto": "38,112,232"
+     }
+    }
+   },
+   "origem": "marcação servida: `<i class=\"fas fa-check marca-retorno\">` dentro do conteúdo da mensagem de erro",
+   "medidaArquivo": "medidas/EA-13.json"
+  }
+ ]
+}

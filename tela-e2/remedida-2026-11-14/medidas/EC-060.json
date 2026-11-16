@@ -1,0 +1,28 @@
+{
+ "id": "EC-060",
+ "classe": "conforme",
+ "instancia": "rad-situacao",
+ "chave": "tab-space",
+ "porEstado": {
+  "S0": {
+   "valor": {
+    "paradas": 13,
+    "aposSpace": [
+     true,
+     false,
+     false
+    ],
+    "aposArrowDown": {
+     "marcados": [
+      false,
+      true,
+      false
+     ],
+     "foco": "input#situacao-suspenso"
+    },
+    "focoVisivel": true
+   },
+   "viola": false
+  }
+ }
+}

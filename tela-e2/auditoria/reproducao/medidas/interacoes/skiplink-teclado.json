@@ -1,0 +1,43 @@
+{
+ "sonda": "skiplink-teclado",
+ "estado": "S0",
+ "passos": [
+  {
+   "tecla": "Tab 1",
+   "foco": "a.br-item",
+   "item1": {
+    "x": 16,
+    "y": 0,
+    "w": 300,
+    "h": 36.296875
+   },
+   "item1Visivel": true
+  },
+  {
+   "tecla": "Tab 2",
+   "foco": "a.br-item",
+   "item2": {
+    "x": 16,
+    "y": 0,
+    "w": 300,
+    "h": 36.296875
+   },
+   "item2Visivel": true,
+   "item1Visivel": false
+  },
+  {
+   "tecla": "Tab 3",
+   "foco": "a#sgn-usuaria.br-sign-in.conta-usuaria",
+   "item1Visivel": false,
+   "item2Visivel": false
+  }
+ ],
+ "ativacao": {
+  "focoAntes": "a.br-item",
+  "hash": "#main-content",
+  "focoDepois": "body",
+  "mainTopo": 0.0625,
+  "proximoTab": "button.br-button.circle.small.fechar-mensagem"
+ },
+ "errosPagina": []
+}

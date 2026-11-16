@@ -1,0 +1,1163 @@
+{
+ "a2-390c1fc05363": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Indentação de subagrupamentos; o formulário não tem agrupamento dentro de agrupamento (o único fieldset é o do grupo de radios)."
+ },
+ "a2-ba97fe048b1b": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Item da seção de proteção de dados pessoais; o único campo opcional (código do país) é dado administrativo de um país, não dado da pessoa usuária."
+ },
+ "a2-c19c64886df5": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "'Esteja atento' é orientação de cuidado ao projetar, sem exigência sobre um observável da página."
+ },
+ "a2-d89456b2b61e": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Tabela de estilização do fieldset do formulário: borda nula e margin-bottom --spacing-scale-5x. O fieldset da página é o do grupo de radios. Medida: margin-bottom computado do fieldset = valor de --spacing-scale-5x.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "fieldset-margem-reduzida",
+    "descricao": "O fieldset do grupo 'Situação do cadastro' passa a ter margin-bottom = var(--spacing-scale-2x) em vez de --spacing-scale-5x.",
+    "clausula": "l.307: --spacing-scale-5x",
+    "efeitos": {
+     "toca": [
+      "$:grupo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só a margem inferior do fieldset muda; o switch abaixo apenas sobe"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "valor de token de espaçamento do fieldset"
+ },
+ "a2-013c62c522df": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Hierarquia de navegação de um site ou sistema inteiro; a tela é uma página interna de formulário."
+ },
+ "a2-a452374c9960": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Topo da hierarquia de navegação do site; a tela é uma página interna, sem camadas de conteúdo a dar acesso."
+ },
+ "a2-6be62adc3519": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Trata da página inicial (Home); esta é uma página interna."
+ },
+ "a2-0685bc48e056": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "O acesso entre nível pai e filho é dado pelo breadcrumb e pelo botão Cancelar, ambos andaime."
+ },
+ "a2-40b8af421136": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Navegação lateral; a tela não tem menu nem navegação lateral."
+ },
+ "a2-6f189e017640": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Navegação descendente; nenhuma instância sorteável leva a nível inferior (a lista de países não tem links)."
+ },
+ "a2-983f688f7874": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "Retorno ao ponto de partida e caminho percorrido são o breadcrumb e o Cancelar, andaime."
+ },
+ "a2-5b3287f0865b": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Estado de tela anterior indisponível; não existe na tela."
+ },
+ "a2-23142cba82ab": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "A relação entre tela pai e filha é mostrada pelo breadcrumb, andaime."
+ },
+ "a2-00049d03d19f": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "Acesso à tela pai e retrocesso são o breadcrumb e o Cancelar, andaime."
+ },
+ "a2-9e58968bba21": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "O caminho de conclusão da tarefa é o botão primário Salvar país, andaime."
+ },
+ "a2-46c7beba4a43": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Navegação sequencial em etapas; a tela não tem wizard nem botões de avançar etapa."
+ },
+ "a2-46c418f28680": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (b). Texto de elemento de ação assertivo, conciso e com as palavras certas. Na tela: rótulo do botão Limpar campos. Medida: número de palavras e forma do texto do botão.",
+  "instancias": [
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-acao-prolixo",
+    "descricao": "O texto do botão passa a ser 'Limpar Cada Campo deste Formulário Preenchido até Agora' (8 palavras, com verbo, sem artigo, iniciais maiúsculas).",
+    "clausula": "esse tipo de microcopy precisa ser bem assertivo, conciso e com as palavras certas para impactar quem lê",
+    "efeitos": {
+     "toca": [
+      "$:texto",
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o texto do botão (e por ele o nome acessível) muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "redação do texto do botão"
+ },
+ "a2-274ebf4959e8": {
+  "aceita": false,
+  "motivo": "duplicada:a2-46c418f28680",
+  "justificativa": "Mesmo predicado (texto de ação curto e direto), mesma condição e mesmo observável do texto do botão; o 'no máximo duas palavras' é só ideal."
+ },
+ "a2-770d03a2586e": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Rótulos de tag; a tela não tem tag."
+ },
+ "a2-36013fffe17a": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (b). Termos familiares no rótulo de ação; caso flagrante: jargão de informática no botão. Medida: leitura do texto do botão.",
+  "instancias": [
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-jargao-tecnico",
+    "descricao": "O texto do botão passa a ser 'Resetar Inputs'.",
+    "clausula": "Utilize termos familiares para os usuários.",
+    "efeitos": {
+     "toca": [
+      "$:texto",
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o texto do botão (e por ele o nome acessível) muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "redação do texto do botão"
+ },
+ "a2-c678d7f46286": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Vale para rótulos de ação que não são botões (link, tag, magic button); os únicos elementos de ação sorteáveis são botões, a exceção declarada."
+ },
+ "a2-73e03945d5cc": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (a). Nos buttons, inicial maiúscula em toda palavra que não seja artigo ou preposição (contável). A referência precisa grafar 'Limpar Campos'. Medida: caixa da inicial de cada palavra do texto do botão.",
+  "instancias": [
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-botao-so-primeira-maiuscula",
+    "descricao": "O texto do botão passa de 'Limpar Campos' para 'Limpar campos'.",
+    "clausula": "Nos buttons, as letras iniciais de todas as palavras devem ser maiúsculas, exceto artigos e preposições.",
+    "efeitos": {
+     "toca": [
+      "$:texto",
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o texto do botão muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "grafia do texto do botão"
+ },
+ "a2-12afa1f3c1f0": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (a). Rótulo de ação com verbo que especifica a ação (presença de verbo é contável). Medida: o texto do botão contém verbo.",
+  "instancias": [
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-sem-verbo",
+    "descricao": "O texto do botão passa a ser só 'Campos'.",
+    "clausula": "Use verbos que especifiquem claramente a ação pretendida.",
+    "efeitos": {
+     "toca": [
+      "$:texto",
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o texto do botão (e por ele o nome acessível) muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "redação do texto do botão"
+ },
+ "a2-5a1fcf660ae1": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (a). Sem artigos no rótulo de ação (contável). Medida: palavras do texto do botão.",
+  "instancias": [
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-com-artigo",
+    "descricao": "O texto do botão passa a ser 'Limpar os Campos'.",
+    "clausula": "Não use artigos.",
+    "efeitos": {
+     "toca": [
+      "$:texto",
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o texto do botão (e por ele o nome acessível) muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "redação do texto do botão"
+ },
+ "a2-d47f4c470491": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (b). Componente de ação sem texto precisa de ícone que expresse a ação. Na tela: botão de ajuda só com ícone e botão Fechar da mensagem informativa. Caso flagrante: ícone de significado alheio à ação. Medida: glifo do ícone do controle.",
+  "instancias": [
+   "btn-ajuda",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "ajuda-com-icone-lixeira",
+    "descricao": "O botão de ajuda passa a mostrar o ícone de lixeira no lugar do ícone de ajuda; o nome acessível fica igual.",
+    "instancias": [
+     "btn-ajuda"
+    ],
+    "clausula": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada.",
+    "efeitos": {
+     "toca": [
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só a classe do ícone muda"
+    }
+   },
+   {
+    "id": "fechar-com-icone-adicionar",
+    "descricao": "O botão Fechar da mensagem informativa passa a mostrar o ícone '+' (adicionar) no lugar do 'x'.",
+    "instancias": [
+     "msg-orientacao"
+    ],
+    "clausula": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada.",
+    "efeitos": {
+     "toca": [
+      "$:fechar"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o ícone do botão Fechar muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "glifo do ícone do botão"
+ },
+ "a2-9e7fe5702498": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Rótulos de tag; a tela não tem tag."
+ },
+ "a2-86c0aa8329ae": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Hyperlinks; nenhuma instância sorteável tem link."
+ },
+ "a2-dd8a921bfeeb": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Microcopy de hiperlink; nenhuma instância sorteável tem link."
+ },
+ "a2-5b6ffd6ad400": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Rótulos de magic button; não há magic button na tela."
+ },
+ "a2-06a47f68f4fd": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "No contexto, rótulo de magic button (call-to-action); não há magic button na tela."
+ },
+ "a2-9a86ce8f82e4": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "No contexto, texto de magic button; não há magic button na tela."
+ },
+ "a2-dfd5ce237dbb": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum texto sorteável se refere a conteúdo externo; não há links no conteúdo sorteável."
+ },
+ "a2-015f84774222": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (a). Rótulo de elemento de entrada de dados não fica todo em caixa alta (contável). Medida: texto renderizado do rótulo/legenda não é todo maiúsculo.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-campo-caixa-alta",
+    "descricao": "O rótulo do campo (a legenda, no grupo de radios) é escrito inteiro em maiúsculas (ex.: 'NOME DO PAÍS', 'SITUAÇÃO DO CADASTRO').",
+    "clausula": "Não deixe o texto todo em caixa alta.",
+    "efeitos": {
+     "porHospedeiro": {
+      "inp-nome-pais": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto do rótulo/legenda muda"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto do rótulo/legenda muda"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto do rótulo/legenda muda"
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:legenda"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto do rótulo/legenda muda"
+      },
+      "swt-certificado": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto do rótulo/legenda muda"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "redação do rótulo de campo"
+ },
+ "a2-1f45d0dc0c3a": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (a). Uso de ':' no fim do rótulo consistente em todo o formulário (contável). Medida: os rótulos e a legenda terminam todos com ':' ou nenhum termina.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "dois-pontos-em-um-rotulo",
+    "descricao": "Só o rótulo deste campo (ou a legenda, no grupo de radios) passa a terminar com ':'; os demais ficam sem.",
+    "clausula": "se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário",
+    "efeitos": {
+     "porHospedeiro": {
+      "inp-nome-pais": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto de um rótulo ganha ':'"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto de um rótulo ganha ':'"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto de um rótulo ganha ':'"
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:legenda"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto de um rótulo ganha ':'"
+      },
+      "swt-certificado": {
+       "toca": [
+        "$:rotulo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto de um rótulo ganha ':'"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "redação do rótulo de campo"
+ },
+ "a2-7562e56b2290": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "O título do formulário (e o h1) é andaime do documento; nenhuma instância sorteável é título de formulário."
+ },
+ "a2-7278a9812cac": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (b). Rótulos positivos, breves, claros e diretos; caso flagrante o do próprio texto: rótulo em forma negativa. Medida: o rótulo é afirmativo.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-negativo",
+    "descricao": "O rótulo passa a forma negativa (ex.: switch 'Não deixar de emitir certificado sanitário para este país'; select 'Não deixe de informar o continente').",
+    "clausula": "Os textos dos rótulos devem ser positivos, breves, claros e diretos.",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o texto do rótulo muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "redação do rótulo de campo"
+ },
+ "a2-d07b05c07838": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Componentes de seleção múltipla; o select da tela é simples."
+ },
+ "a2-d6b3f0e36943": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (b). Linguagem simples para usuário não técnico; caso flagrante: jargão técnico de sistema no texto da mensagem. Medida: termos técnicos no texto da mensagem.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-jargao-tecnico",
+    "descricao": "O texto da mensagem passa a usar jargão de sistema (ex.: msg-erro 'HTTP 422: payload com campos required nulos; reenvie o POST').",
+    "clausula": "Os textos devem ser escritos em uma linguagem simples e fácil de serem compreendidas pelos usuários não técnicos.",
+    "efeitos": {
+     "toca": [
+      "$:texto"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o texto da mensagem muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "redação do texto da mensagem"
+ },
+ "a2-689468fd37ad": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Vídeos; a tela não tem vídeo."
+ },
+ "a2-0483c9e36f92": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Vídeos; a tela não tem vídeo."
+ },
+ "a2-3f23afca6972": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (b). Títulos e subtítulos objetivos e concisos; caso flagrante o do próprio exemplo (título inchado). Na tela: o título da lista de países (parte da lista; h1 e títulos de seção são andaime). Medida: palavras do título da lista.",
+  "instancias": [
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "titulo-lista-prolixo",
+    "descricao": "O título da lista passa a 'Lista com Todos os Países Importadores Já Cadastrados neste Sistema'.",
+    "clausula": "Os títulos e subtítulos precisam ser objetivos e concisos.",
+    "efeitos": {
+     "toca": [
+      "$:titulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o texto do título da lista muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "redação do título da lista"
+ },
+ "a2-cfb74fcd34b4": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Texto alternativo de imagem; a tela não tem imagem de conteúdo."
+ },
+ "a2-61f7e680f11b": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (a): a mensagem de erro diz que houve erro, por quê e o que fazer (três elementos contáveis). Medida: texto da mensagem de erro em S1.",
+  "instancias": [
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "erro-generico",
+    "descricao": "O texto da mensagem de erro do envio passa a ser só 'Ocorreu um erro.'",
+    "clausula": "As mensagens de erro devem permitir que os usuários entendam que ocorreu um erro, por que ocorreu e o que fazer para contornar a situação.",
+    "efeitos": {
+     "toca": [
+      "$:texto"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o texto da mensagem muda; S1 continua alcançável"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "interacao"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "redação do texto da mensagem de erro do envio"
+ },
+ "a2-f2daf2bc982b": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Páginas de erro (404 e outras); a tela não tem página de erro."
+ },
+ "a2-909e5f61d661": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (b). Proibição de zombar do usuário (contexto: humor em mensagem de erro). Caso flagrante: mensagem que ridiculariza a pessoa. Medida: texto da mensagem de erro em S1.",
+  "instancias": [
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "erro-zombeteiro",
+    "descricao": "O texto da mensagem de erro passa a 'Esqueceu de novo? Até uma criança preencheria estes campos. Preencha os campos obrigatórios para salvar.'",
+    "clausula": "Não zombe de seus usuários.",
+    "efeitos": {
+     "toca": [
+      "$:texto"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o texto da mensagem muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "interacao"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "redação do texto da mensagem de erro"
+ },
+ "a2-88a7e911426f": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum estado da tela mostra o formulário validado com sucesso."
+ },
+ "a2-0ea33ff35779": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (b). Não culpar o usuário; o próprio contexto dá o caso ('você fez'/'você não fez'). Medida: texto da mensagem de erro em S1.",
+  "instancias": [
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "erro-culpa-usuario",
+    "descricao": "O texto da mensagem de erro passa a 'Você não preencheu os campos obrigatórios. Preencha-os para salvar o país.'",
+    "clausula": "Não culpe o usuário.",
+    "efeitos": {
+     "toca": [
+      "$:texto"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o texto da mensagem muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "interacao"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "redação do texto da mensagem de erro"
+ },
+ "a2-a6d3b956c667": {
+  "aceita": false,
+  "motivo": "duplicada:a2-61f7e680f11b",
+  "justificativa": "A diretiva do que fazer para remediar é o 'o que fazer para contornar' de a2-61f7e680f11b, mesmo observável (texto da mensagem de erro) e mesma condição."
+ },
+ "a2-8e2c52a8c21b": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Empty states; a tela não tem empty state."
+ },
+ "a2-5eddaf90c132": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Navegação de link em link; nenhuma instância sorteável tem link."
+ },
+ "a2-61ab1f9dab6c": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Texto de hiperlinks; não há links no conteúdo sorteável."
+ },
+ "a2-dac20e0ed128": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há números grandes nem quantias na tela."
+ },
+ "a2-8f86684de1e2": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Alinhamento em tabela; a tela não tem tabela."
+ },
+ "a2-0beebbed1495": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Números e IDs em tabela; a tela não tem tabela."
+ },
+ "a2-0f0fbb274ed5": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "SEO; tela de serviço interna, sem conteúdo para mecanismos de pesquisa."
+ },
+ "a2-598ca56880b1": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (a). Títulos e subtítulos com inicial maiúscula em cada palavra, menos artigos e preposições (contável). Na tela: título da lista de países; a referência precisa grafá-lo 'Países Cadastrados'. Medida: caixa da inicial de cada palavra do título.",
+  "instancias": [
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "titulo-lista-caixa-de-sentenca",
+    "descricao": "O título da lista passa de 'Países Cadastrados' para 'Países cadastrados'.",
+    "clausula": "Títulos e subtítulos são escritos com iniciais das palavras em maiúsculas (exceto artigos, preposições, etc).",
+    "efeitos": {
+     "toca": [
+      "$:titulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o texto do título da lista muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "grafia do título da lista"
+ },
+ "a2-0c628b618382": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "SEO e compartilhamento; tela de serviço interna."
+ },
+ "a2-6c531e6437e8": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (b). Terminologia consistente; caso flagrante: o mesmo valor chamado por dois nomes na mesma tela. Medida: o termo da situação num item da lista é o mesmo da opção do grupo de radios.",
+  "instancias": [
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "situacao-com-outro-nome",
+    "descricao": "Num item da lista, a situação 'Habilitado' passa a 'Ativo', enquanto o grupo de radios segue com 'Habilitado'.",
+    "clausula": "O conteúdo precisa manter consistência quanto ao estilo, tom, voz e terminologias.",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o texto de situação de um item muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "terminologia do texto dos itens"
+ },
+ "a2-e0663017fccc": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (b). O mais importante aparece primeiro na mensagem. Medida: posição da frase com o fato principal no texto da mensagem.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "fato-principal-no-fim",
+    "descricao": "As frases do texto da mensagem são reordenadas, sem acrescentar palavras: a frase com o fato principal (o que a pessoa precisa saber/fazer) passa para o fim, depois das secundárias.",
+    "clausula": "A mensagem deve apresentar imediatamente o que é mais importante para o público-alvo.",
+    "efeitos": {
+     "toca": [
+      "$:texto"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só a ordem das frases do texto muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "redação do texto da mensagem"
+ },
+ "a2-5610d5df55f0": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (b). O necessário com o mínimo de palavras; caso flagrante: texto curto inchado com dezenas de palavras redundantes. Medida: número de palavras do texto.",
+  "instancias": [
+   "msg-orientacao",
+   "inp-codigo"
+  ],
+  "variantes": [
+   {
+    "id": "texto-inchado",
+    "descricao": "O texto da mensagem informativa (ou o texto de apoio do código) ganha frases redundantes que repetem o que já diz, triplicando o número de palavras (ex.: apoio 'Neste campo você deverá digitar, se assim desejar, o código do país, que é composto por exatamente três letras, nem mais nem menos, conforme o formato').",
+    "clausula": "Escreva o que for necessário para que o leitor seja capaz de compreender completamente a mensagem com o mínimo de palavras possível.",
+    "efeitos": {
+     "porHospedeiro": {
+      "msg-orientacao": {
+       "toca": [
+        "$:texto"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto da mensagem cresce"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:apoio"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "só o texto de apoio cresce"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "redação do texto; no código é instrução de campo"
+ },
+ "a2-d9b38b2e638c": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Números em elemento tabular; a tela não tem tabela nem números."
+ },
+ "a2-12ee2ce5c650": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Datas em elemento tabular; a tela não exibe datas."
+ },
+ "a2-b1113ccfbc0a": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Primeira ocorrência de sigla; o conteúdo sorteável não traz siglas."
+ },
+ "a2-276e1210af43": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Grafia de siglas de até três letras; o conteúdo sorteável não traz siglas."
+ },
+ "a2-c0b99a02cf6b": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (b). Português neutro, sem regionalismo nem gíria (o contexto explicita). Caso flagrante: expressão regional marcada no texto. Medida: texto da mensagem.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-regionalismo",
+    "descricao": "O texto da mensagem passa a usar expressões regionais marcadas (ex.: 'Bah, tchê, faltou preencher uns campos aí, guri').",
+    "clausula": "Escreva em Língua Portuguesa neutra.",
+    "efeitos": {
+     "toca": [
+      "$:texto"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o texto da mensagem muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "redação do texto da mensagem"
+ },
+ "a2-7e05c5c8e09c": {
+  "aceita": false,
+  "motivo": "duplicada:a2-c0b99a02cf6b",
+  "justificativa": "Regionalismos e gírias são o conteúdo do 'Língua Portuguesa neutra' da frase anterior; mesmo observável (texto) e mesma condição."
+ },
+ "a2-dc9581fdd59d": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Texto de hiperlinks; não há links no conteúdo sorteável."
+ },
+ "a2-47c7c28cd674": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "No contexto, texto de hiperlink; nenhuma instância sorteável tem link."
+ },
+ "a2-e941effe15bf": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Atributo title em hiperlinks; não há links no conteúdo sorteável."
+ },
+ "a2-65886f54f938": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Title de hiperlink; não há links no conteúdo sorteável."
+ },
+ "a2-9250e991e04f": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Classificação importante por cor tem identificação textual. Na tela: a situação de cada país na lista, hoje em texto. Medida: a situação do item tem texto, não só cor.",
+  "instancias": [
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "situacao-so-por-cor",
+    "descricao": "Num item da lista, o texto da situação é trocado por um marcador colorido sem texto (verde para Habilitado, vermelho para Suspenso).",
+    "clausula": "Qualquer classificação importante feita por meio de cores deve possuir também uma identificação textual.",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "o texto da situação de um item vira marcador de cor"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "alternativa textual da informação dada por cor"
+ },
+ "a2-583567fdff39": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Imagem com informação incorporada; a tela não tem imagem de conteúdo."
+ },
+ "a2-0a006339769b": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Legendas de imagem ou de conteúdo audiovisual; não há."
+ },
+ "a2-34f077a575d0": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Infográficos ou vídeos; não há."
+ },
+ "a2-8384621310b5": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Conteúdo audiovisual; não há."
+ },
+ "a2-3319c0939c3e": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Gráficos de dados; não há."
+ },
+ "a2-77c11eaf9a44": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum texto da tela fala de pessoas ou deficiências."
+ },
+ "a2-fd486bdf1404": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum texto da tela menciona deficiência."
+ },
+ "a2-2a76238410db": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Condição 'ao escrever sobre pessoa com deficiência' não ocorre na tela."
+ },
+ "a2-6a045b31f05d": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "R-ED (b). Proibição de palavrão ou baixo calão em texto para o público; o texto da interface é texto para quem usa o serviço. Caso flagrante: palavrão na mensagem. Medida: texto da mensagem.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-com-palavrao",
+    "descricao": "O texto da mensagem passa a incluir um palavrão leve (ex.: 'Droga, faltou preencher os campos obrigatórios. Preencha-os para salvar.').",
+    "clausula": "Não use palavrões ou palavras de baixo calão em textos, documentos e apresentação para clientes.",
+    "efeitos": {
+     "toca": [
+      "$:texto"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o texto da mensagem muda"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "redação do texto da mensagem"
+ },
+ "a2-d5f9ed80c0fd": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Siglas de quatro letras ou mais; o conteúdo sorteável não traz siglas."
+ },
+ "a2-e4aa913467f1": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Condição 'muitos termos complexos' é falsa na tela."
+ },
+ "a2-d89e6bfe79d5": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Texto alternativo de imagem; a tela não tem imagem de conteúdo."
+ }
+}

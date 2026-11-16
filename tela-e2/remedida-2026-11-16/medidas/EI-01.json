@@ -1,0 +1,32 @@
+{
+ "id": "EI-01",
+ "classe": "incerto",
+ "instancia": "btn-ajuda",
+ "chave": "acao-observavel-tooltip",
+ "porEstado": {
+  "S0": {
+   "valor": {
+    "tooltipsHover": 0,
+    "tooltipsFoco": 0,
+    "domAntes": {
+     "n": 178,
+     "texto": 1310,
+     "visiveis": 120
+    },
+    "domAposClique": {
+     "n": 178,
+     "texto": 1310,
+     "visiveis": 120,
+     "url": "http://127.0.0.1:3219/cadastro-pais.html",
+     "expanded": null,
+     "dialogs": 0
+    },
+    "aposEnter": {
+     "visiveis": 120,
+     "texto": 1310
+    }
+   },
+   "viola": null
+  }
+ }
+}

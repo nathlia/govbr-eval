@@ -1,0 +1,1282 @@
+[
+ {
+  "celula": "btn-limpar::a2-033815886ead",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-033815886ead",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Hover › Especificação para Estado Hover",
+  "texto": "Além disso, nos elementos Interativos, o cursor do mouse deve ser alterado para a \"mão fechada com indicador esticado\".",
+  "contexto": "A cor do elemento Overlay será sempre a cor do Primeiro Plano do elemento hover. O valor da opacidade deve variar de acordo com Fundo (Claro ou Escuro) para gerar percepção (contraste) suficiente do Estado. Além disso, nos elementos Interativos, o cursor do mouse deve ser alterado para a \"mão fechada com indicador esticado\".",
+  "antecedente": "É importante a possibilidade de herança com outros estados mesmo com hover. Desta forma, o recurso de Overlay é utilizado como feedback.",
+  "colocacao": [
+   {
+    "variante": "cursor-padrao",
+    "descricao": "O elemento interativo (o botão; o gatilho do select) mostra o cursor padrão (seta).",
+    "clausula": "nos elementos Interativos, o cursor do mouse deve ser alterado para a \"mão fechada com indicador esticado\"."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-033815886ead",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-033815886ead",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Hover › Especificação para Estado Hover",
+  "texto": "Além disso, nos elementos Interativos, o cursor do mouse deve ser alterado para a \"mão fechada com indicador esticado\".",
+  "contexto": "A cor do elemento Overlay será sempre a cor do Primeiro Plano do elemento hover. O valor da opacidade deve variar de acordo com Fundo (Claro ou Escuro) para gerar percepção (contraste) suficiente do Estado. Além disso, nos elementos Interativos, o cursor do mouse deve ser alterado para a \"mão fechada com indicador esticado\".",
+  "antecedente": "É importante a possibilidade de herança com outros estados mesmo com hover. Desta forma, o recurso de Overlay é utilizado como feedback.",
+  "colocacao": [
+   {
+    "variante": "cursor-padrao",
+    "descricao": "O elemento interativo (o botão; o gatilho do select) mostra o cursor padrão (seta).",
+    "clausula": "nos elementos Interativos, o cursor do mouse deve ser alterado para a \"mão fechada com indicador esticado\"."
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-04639abccf53",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-04639abccf53",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Selecionado › Evitar estado selecionado",
+  "texto": "Button",
+  "contexto": null,
+  "antecedente": "O estado Selecionado não pode ser aplicado nos seguintes componentes:",
+  "colocacao": [
+   {
+    "variante": "botao-com-visual-selecionado",
+    "descricao": "O botão passa a exibir fundo --blue-warm-vivid-50 e um ícone fa-check (visual do estado Selecionado): em btn-limpar o check entra antes do texto; em btn-ajuda o check se soma ao ícone de ajuda.",
+    "clausula": "Button"
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-04639abccf53",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-04639abccf53",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Selecionado › Evitar estado selecionado",
+  "texto": "Button",
+  "contexto": null,
+  "antecedente": "O estado Selecionado não pode ser aplicado nos seguintes componentes:",
+  "colocacao": [
+   {
+    "variante": "botao-com-visual-selecionado",
+    "descricao": "O botão passa a exibir fundo --blue-warm-vivid-50 e um ícone fa-check (visual do estado Selecionado): em btn-limpar o check entra antes do texto; em btn-ajuda o check se soma ao ícone de ajuda.",
+    "clausula": "Button"
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-0cb58cc75f6f",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-0cb58cc75f6f",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Foco › Especificação para Foco",
+  "texto": "Essa borda deve ser criada em volta do elemento e deve ter um espaçamento de segurança (para que a borda não se confunda com qualquer outra propriedade do elemento \"focado\", ou com a herança de outros estados).",
+  "contexto": "A principal propriedade (visual) que demonstra que um elemento está em foco é uma borda (ou contorno). Essa borda deve ser criada em volta do elemento e deve ter um espaçamento de segurança (para que a borda não se confunda com qualquer outra propriedade do elemento \"focado\", ou com a herança de outros estados).",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "foco-colado",
+    "descricao": "O indicador de foco fica colado ao elemento (outline-offset 0, sem espaçamento).",
+    "clausula": "Essa borda deve ser criada em volta do elemento e deve ter um espaçamento de segurança"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-0cb58cc75f6f",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-0cb58cc75f6f",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Foco › Especificação para Foco",
+  "texto": "Essa borda deve ser criada em volta do elemento e deve ter um espaçamento de segurança (para que a borda não se confunda com qualquer outra propriedade do elemento \"focado\", ou com a herança de outros estados).",
+  "contexto": "A principal propriedade (visual) que demonstra que um elemento está em foco é uma borda (ou contorno). Essa borda deve ser criada em volta do elemento e deve ter um espaçamento de segurança (para que a borda não se confunda com qualquer outra propriedade do elemento \"focado\", ou com a herança de outros estados).",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "foco-colado",
+    "descricao": "O indicador de foco fica colado ao elemento (outline-offset 0, sem espaçamento).",
+    "clausula": "Essa borda deve ser criada em volta do elemento e deve ter um espaçamento de segurança"
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-0cb58cc75f6f",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-0cb58cc75f6f",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Foco › Especificação para Foco",
+  "texto": "Essa borda deve ser criada em volta do elemento e deve ter um espaçamento de segurança (para que a borda não se confunda com qualquer outra propriedade do elemento \"focado\", ou com a herança de outros estados).",
+  "contexto": "A principal propriedade (visual) que demonstra que um elemento está em foco é uma borda (ou contorno). Essa borda deve ser criada em volta do elemento e deve ter um espaçamento de segurança (para que a borda não se confunda com qualquer outra propriedade do elemento \"focado\", ou com a herança de outros estados).",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "foco-colado",
+    "descricao": "O indicador de foco fica colado ao elemento (outline-offset 0, sem espaçamento).",
+    "clausula": "Essa borda deve ser criada em volta do elemento e deve ter um espaçamento de segurança"
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-1754a39d9a39",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-1754a39d9a39",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Foco › Cuidados para Foco",
+  "texto": "Por padrão, a ação de \"clicar/tocar\" em um elemento não deve gerar foco visual.",
+  "contexto": "Por padrão, a ação de \"clicar/tocar\" em um elemento não deve gerar foco visual. Entretanto, o foco por outras vias (como teclado ou entrada de voz) ainda devem existir. O Foco via \"clique/toque\" só será utilizado quando especificado na diretriz do elemento.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "foco-no-clique",
+    "descricao": "O indicador de foco aparece também depois de clique de mouse (:focus em vez de :focus-visible).",
+    "clausula": "Por padrão, a ação de \"clicar/tocar\" em um elemento não deve gerar foco visual."
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-1754a39d9a39",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-1754a39d9a39",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Foco › Cuidados para Foco",
+  "texto": "Por padrão, a ação de \"clicar/tocar\" em um elemento não deve gerar foco visual.",
+  "contexto": "Por padrão, a ação de \"clicar/tocar\" em um elemento não deve gerar foco visual. Entretanto, o foco por outras vias (como teclado ou entrada de voz) ainda devem existir. O Foco via \"clique/toque\" só será utilizado quando especificado na diretriz do elemento.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "foco-no-clique",
+    "descricao": "O indicador de foco aparece também depois de clique de mouse (:focus em vez de :focus-visible).",
+    "clausula": "Por padrão, a ação de \"clicar/tocar\" em um elemento não deve gerar foco visual."
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-1c18ad657e0d",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-1c18ad657e0d",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Pressionado › Especificação para Estado Pressionado",
+  "texto": "Características visuais referentes à elevação do componente na tela, como sombra por exemplo, devem ser retiradas ou amenizadas.",
+  "contexto": null,
+  "antecedente": "A cor do elemento Overlay será sempre a cor do Primeiro Plano do elemento Pressionado. O valor da opacidade deve variar de acordo com Fundo (Claro ou Escuro) para que gera percepção (contraste) suficiente do Estado. Além disso, o cursor do mouse deve ser alterado para a \"mão fechada com indicador esticado\".",
+  "colocacao": [
+   {
+    "variante": "pressionado-com-sombra",
+    "descricao": "Ao ser pressionado, o botão ganha sombra de elevação (box-shadow de --surface-shadow-md) que não tem em repouso.",
+    "clausula": "Características visuais referentes à elevação do componente na tela, como sombra por exemplo, devem ser retiradas ou amenizadas."
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-1c18ad657e0d",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-1c18ad657e0d",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Pressionado › Especificação para Estado Pressionado",
+  "texto": "Características visuais referentes à elevação do componente na tela, como sombra por exemplo, devem ser retiradas ou amenizadas.",
+  "contexto": null,
+  "antecedente": "A cor do elemento Overlay será sempre a cor do Primeiro Plano do elemento Pressionado. O valor da opacidade deve variar de acordo com Fundo (Claro ou Escuro) para que gera percepção (contraste) suficiente do Estado. Além disso, o cursor do mouse deve ser alterado para a \"mão fechada com indicador esticado\".",
+  "colocacao": [
+   {
+    "variante": "pressionado-com-sombra",
+    "descricao": "Ao ser pressionado, o botão ganha sombra de elevação (box-shadow de --surface-shadow-md) que não tem em repouso.",
+    "clausula": "Características visuais referentes à elevação do componente na tela, como sombra por exemplo, devem ser retiradas ou amenizadas."
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-2e6f1c681ecd",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-2e6f1c681ecd",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Hover › Cuidados para Estado Hover",
+  "texto": "Só pode existir um elemento com hover por vez na tela.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "hover-preso",
+    "descricao": "Depois que o ponteiro sai do 'Limpar campos' (ou de um item da lista do select em S2), o overlay de hover fica nele; com o ponteiro em outro elemento, dois mostram hover.",
+    "clausula": "Só pode existir um elemento com hover por vez na tela."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-2e6f1c681ecd",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-2e6f1c681ecd",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Hover › Cuidados para Estado Hover",
+  "texto": "Só pode existir um elemento com hover por vez na tela.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "hover-preso",
+    "descricao": "Depois que o ponteiro sai do 'Limpar campos' (ou de um item da lista do select em S2), o overlay de hover fica nele; com o ponteiro em outro elemento, dois mostram hover.",
+    "clausula": "Só pode existir um elemento com hover por vez na tela."
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-3a4b0fa9ed9e",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-3a4b0fa9ed9e",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Foco › Cuidados para Foco",
+  "texto": "Só pode existir 1 tipo de Foco por elemento.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "dois-focos",
+    "descricao": "Ao receber foco, o elemento mostra ao mesmo tempo o contorno tracejado de foco e uma borda sólida dourada de foco tênue.",
+    "clausula": "Só pode existir 1 tipo de Foco por elemento."
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-3a4b0fa9ed9e",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-3a4b0fa9ed9e",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Foco › Cuidados para Foco",
+  "texto": "Só pode existir 1 tipo de Foco por elemento.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "dois-focos",
+    "descricao": "Ao receber foco, o elemento mostra ao mesmo tempo o contorno tracejado de foco e uma borda sólida dourada de foco tênue.",
+    "clausula": "Só pode existir 1 tipo de Foco por elemento."
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-45f0252cdcc1",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-45f0252cdcc1",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Pressionado › Cuidados para Estado Pressionado",
+  "texto": "Só pode existir um elemento com pressionado por vez na tela.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "pressionado-preso",
+    "descricao": "O botão mantém o overlay de pressionado depois do clique; ao pressionar outro elemento, dois aparecem pressionados.",
+    "clausula": "Só pode existir um elemento com pressionado por vez na tela."
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-45f0252cdcc1",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-45f0252cdcc1",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Pressionado › Cuidados para Estado Pressionado",
+  "texto": "Só pode existir um elemento com pressionado por vez na tela.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "pressionado-preso",
+    "descricao": "O botão mantém o overlay de pressionado depois do clique; ao pressionar outro elemento, dois aparecem pressionados.",
+    "clausula": "Só pode existir um elemento com pressionado por vez na tela."
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-46523775b9da",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-46523775b9da",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Erro",
+  "texto": "Importante que o estado persista até até que seja resolvido o erro.",
+  "contexto": "Importante que o estado persista até até que seja resolvido o erro.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "erro-campo-some-ao-sair",
+    "descricao": "Em S1, ao sair do campo Nome do país ainda vazio (blur), o estado de erro e a mensagem do campo são retirados.",
+    "clausula": "Importante que o estado persista até até que seja resolvido o erro."
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-46523775b9da",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-46523775b9da",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Erro",
+  "texto": "Importante que o estado persista até até que seja resolvido o erro.",
+  "contexto": "Importante que o estado persista até até que seja resolvido o erro.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "erro-envio-some-ao-focar",
+    "descricao": "Em S1, a mensagem de erro do envio é removida quando qualquer campo do formulário recebe foco, ainda sem nenhum valor preenchido.",
+    "clausula": "Importante que o estado persista até até que seja resolvido o erro."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-46523775b9da",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-46523775b9da",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Erro",
+  "texto": "Importante que o estado persista até até que seja resolvido o erro.",
+  "contexto": "Importante que o estado persista até até que seja resolvido o erro.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "erro-select-some-ao-abrir",
+    "descricao": "Em S1, abrir e fechar a lista de continentes sem escolher nada retira o estado de erro e a mensagem do select.",
+    "clausula": "Importante que o estado persista até até que seja resolvido o erro."
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-78f11cbcb280",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-78f11cbcb280",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Pressionado › Especificação para Estado Pressionado",
+  "texto": "É importante manter heranças de outros Estados mesmo com Pressionado.",
+  "contexto": "É importante manter heranças de outros Estados mesmo com Pressionado. Desta forma, o recurso de Overlay é utilizado como feedback.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "pressionado-apaga-estado",
+    "descricao": "Durante o pressionar, o estilo de pressionado substitui o do estado: o switch ligado (ou o radio marcado) aparece desligado/desmarcado.",
+    "clausula": "É importante manter heranças de outros Estados mesmo com Pressionado."
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-78f11cbcb280",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-78f11cbcb280",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Pressionado › Especificação para Estado Pressionado",
+  "texto": "É importante manter heranças de outros Estados mesmo com Pressionado.",
+  "contexto": "É importante manter heranças de outros Estados mesmo com Pressionado. Desta forma, o recurso de Overlay é utilizado como feedback.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "pressionado-apaga-estado",
+    "descricao": "Durante o pressionar, o estilo de pressionado substitui o do estado: o switch ligado (ou o radio marcado) aparece desligado/desmarcado.",
+    "clausula": "É importante manter heranças de outros Estados mesmo com Pressionado."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-9bcf4f01a6bb",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-9bcf4f01a6bb",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Selecionado › Especificação para Estado Selecionado",
+  "texto": "Cor de fundo e um elemento gráfico devem ser utilizados para representar o estado.",
+  "contexto": "Cor de fundo e um elemento gráfico devem ser utilizados para representar o estado. O elemento gráfico pode ser um ícone que represente seleção/escolha, ou os componentes checkbox ou radio.",
+  "antecedente": "O estado selecionado deve ser facilmente identificável.",
+  "colocacao": [
+   {
+    "variante": "escolhido-so-fundo",
+    "descricao": "O círculo de radio dos itens da lista de continentes fica oculto por CSS; o item escolhido mostra só a cor de fundo.",
+    "clausula": "Cor de fundo e um elemento gráfico devem ser utilizados para representar o estado."
+   },
+   {
+    "variante": "escolhido-so-marca",
+    "descricao": "O item escolhido na lista de continentes fica com fundo transparente, só com o radio marcado.",
+    "clausula": "Cor de fundo e um elemento gráfico devem ser utilizados para representar o estado."
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-b8a08dfb8771",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-b8a08dfb8771",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Foco › Cuidados para Foco",
+  "texto": "Só pode existir um elemento com foco por vez na tela.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "foco-preso",
+    "descricao": "O contorno de foco fica aplicado de forma permanente ao elemento e continua visível quando o foco vai para outro, que também mostra o seu.",
+    "clausula": "Só pode existir um elemento com foco por vez na tela."
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-b8a08dfb8771",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-b8a08dfb8771",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Foco › Cuidados para Foco",
+  "texto": "Só pode existir um elemento com foco por vez na tela.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "foco-preso",
+    "descricao": "O contorno de foco fica aplicado de forma permanente ao elemento e continua visível quando o foco vai para outro, que também mostra o seu.",
+    "clausula": "Só pode existir um elemento com foco por vez na tela."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-b8a08dfb8771",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-b8a08dfb8771",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Foco › Cuidados para Foco",
+  "texto": "Só pode existir um elemento com foco por vez na tela.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "foco-preso",
+    "descricao": "O contorno de foco fica aplicado de forma permanente ao elemento e continua visível quando o foco vai para outro, que também mostra o seu.",
+    "clausula": "Só pode existir um elemento com foco por vez na tela."
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-cdd2382da97b",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-cdd2382da97b",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Hover › Especificação para Estado Hover",
+  "texto": "É importante a possibilidade de herança com outros estados mesmo com hover.",
+  "contexto": "É importante a possibilidade de herança com outros estados mesmo com hover. Desta forma, o recurso de Overlay é utilizado como feedback.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "hover-apaga-foco",
+    "descricao": "Com o 'Limpar campos' focado por Tab, o hover substitui o estilo: o contorno de foco some enquanto o ponteiro está sobre ele.",
+    "clausula": "É importante a possibilidade de herança com outros estados mesmo com hover."
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-cdd2382da97b",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-cdd2382da97b",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Hover › Especificação para Estado Hover",
+  "texto": "É importante a possibilidade de herança com outros estados mesmo com hover.",
+  "contexto": "É importante a possibilidade de herança com outros estados mesmo com hover. Desta forma, o recurso de Overlay é utilizado como feedback.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "hover-apaga-ligado",
+    "descricao": "Com o switch ligado, o hover mostra o visual de desligado enquanto o ponteiro está sobre ele.",
+    "clausula": "É importante a possibilidade de herança com outros estados mesmo com hover."
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-eb4a9da83395",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-eb4a9da83395",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Pressionado › Cuidados para Estado Pressionado",
+  "texto": "O feedback visual deve ser feito no objeto que está em estado Pressionado.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "pressionado-sem-feedback",
+    "descricao": "O botão não muda nada ao ser pressionado (:active igual ao repouso).",
+    "clausula": "O feedback visual deve ser feito no objeto que está em estado Pressionado."
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-eb4a9da83395",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-eb4a9da83395",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Pressionado › Cuidados para Estado Pressionado",
+  "texto": "O feedback visual deve ser feito no objeto que está em estado Pressionado.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "pressionado-sem-feedback",
+    "descricao": "O botão não muda nada ao ser pressionado (:active igual ao repouso).",
+    "clausula": "O feedback visual deve ser feito no objeto que está em estado Pressionado."
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-ec1111e4b2a1",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-ec1111e4b2a1",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Hover › Cuidados para Estado Hover",
+  "texto": "O feedback visual deve ser feito no objeto que está em hover.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "hover-sem-feedback",
+    "descricao": "O elemento não muda com hover (o 'Limpar campos'; os itens da lista do select em S2; o Fechar da mensagem).",
+    "clausula": "O feedback visual deve ser feito no objeto que está em hover."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-ec1111e4b2a1",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-ec1111e4b2a1",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Hover › Cuidados para Estado Hover",
+  "texto": "O feedback visual deve ser feito no objeto que está em hover.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "hover-sem-feedback",
+    "descricao": "O elemento não muda com hover (o 'Limpar campos'; os itens da lista do select em S2; o Fechar da mensagem).",
+    "clausula": "O feedback visual deve ser feito no objeto que está em hover."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-ec1111e4b2a1",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-ec1111e4b2a1",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Hover › Cuidados para Estado Hover",
+  "texto": "O feedback visual deve ser feito no objeto que está em hover.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "hover-sem-feedback",
+    "descricao": "O elemento não muda com hover (o 'Limpar campos'; os itens da lista do select em S2; o Fechar da mensagem).",
+    "clausula": "O feedback visual deve ser feito no objeto que está em hover."
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-ef29db5bb4ac",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-ef29db5bb4ac",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Selecionado › Evitar estado selecionado",
+  "texto": "Message",
+  "contexto": null,
+  "antecedente": "O estado Selecionado não pode ser aplicado nos seguintes componentes:",
+  "colocacao": [
+   {
+    "variante": "mensagem-com-visual-selecionado",
+    "descricao": "A mensagem recebe fundo --blue-warm-vivid-50 e um ícone fa-check de seleção antes do texto, além do ícone do seu tipo.",
+    "clausula": "Message"
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-ef29db5bb4ac",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-ef29db5bb4ac",
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Selecionado › Evitar estado selecionado",
+  "texto": "Message",
+  "contexto": null,
+  "antecedente": "O estado Selecionado não pode ser aplicado nos seguintes componentes:",
+  "colocacao": [
+   {
+    "variante": "mensagem-com-visual-selecionado",
+    "descricao": "A mensagem recebe fundo --blue-warm-vivid-50 e um ícone fa-check de seleção antes do texto, além do ícone do seu tipo.",
+    "clausula": "Message"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-386b2c116eb3",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-386b2c116eb3",
+  "arquivo": "fundamentos-visuais/grid.md",
+  "secao": "Grid › Comportamentos › 4. Objetos Temporários",
+  "texto": "Observação: é importante que o elemento temporário esteja localizado próxima da área de conteúdo (Max-width) ou no limite do tamanho mínimo da margem da grid principalmente quando utilizadas grids fixas que podem possuir margens muito extensas.",
+  "contexto": null,
+  "antecedente": "Objetos temporários são elementos ou regiões que surgem temporariamente. Podem ser ocultados ou visualizados ao interagir com um item da interface. Podem ser categorizados em flutuantes ou persistentes.",
+  "colocacao": [
+   {
+    "variante": "lista-longe-do-conteudo",
+    "descricao": "A lista de continentes, ao abrir, fica em posição fixa colada à borda direita da janela, fora da área de conteúdo e longe do campo.",
+    "clausula": "é importante que o elemento temporário esteja localizado próxima da área de conteúdo (Max-width)"
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-6a99b79819ae",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-6a99b79819ae",
+  "arquivo": "fundamentos-visuais/grid.md",
+  "secao": "Grid › Comportamentos › 2. Sangria na Grid (Bleed)",
+  "texto": "Os conteúdos informativos devem respeitar as margens da grid.",
+  "contexto": "Atenção: somente elementos com funções visuais podem utilizar a sangria (como um container/background, por exemplo). Os conteúdos informativos devem respeitar as margens da grid.",
+  "antecedente": "Quando a sangria na grid acontece, a largura do box/container do elemento deve ocupar todo o espaço da margem enquanto o conteúdo informativo permanece dentro das colunas.",
+  "colocacao": [
+   {
+    "variante": "itens-fora-da-margem",
+    "descricao": "O texto dos itens da lista de países é deslocado 48px para a esquerda (margem negativa), começando dentro da margem da grid.",
+    "clausula": "Os conteúdos informativos devem respeitar as margens da grid."
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-7cf0838736be",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-7cf0838736be",
+  "arquivo": "fundamentos-visuais/grid.md",
+  "secao": "Grid › Comportamentos › 2. Sangria na Grid (Bleed)",
+  "texto": "Atenção: somente elementos com funções visuais podem utilizar a sangria (como um container/background, por exemplo).",
+  "contexto": "Atenção: somente elementos com funções visuais podem utilizar a sangria (como um container/background, por exemplo). Os conteúdos informativos devem respeitar as margens da grid.",
+  "antecedente": "Quando a sangria na grid acontece, a largura do box/container do elemento deve ocupar todo o espaço da margem enquanto o conteúdo informativo permanece dentro das colunas.",
+  "colocacao": [
+   {
+    "variante": "mensagem-em-sangria",
+    "descricao": "A mensagem recebe margens laterais negativas e passa a ocupar a margem da grid até as bordas da janela, com o texto começando dentro da margem.",
+    "clausula": "somente elementos com funções visuais podem utilizar a sangria"
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-7cf0838736be",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-7cf0838736be",
+  "arquivo": "fundamentos-visuais/grid.md",
+  "secao": "Grid › Comportamentos › 2. Sangria na Grid (Bleed)",
+  "texto": "Atenção: somente elementos com funções visuais podem utilizar a sangria (como um container/background, por exemplo).",
+  "contexto": "Atenção: somente elementos com funções visuais podem utilizar a sangria (como um container/background, por exemplo). Os conteúdos informativos devem respeitar as margens da grid.",
+  "antecedente": "Quando a sangria na grid acontece, a largura do box/container do elemento deve ocupar todo o espaço da margem enquanto o conteúdo informativo permanece dentro das colunas.",
+  "colocacao": [
+   {
+    "variante": "mensagem-em-sangria",
+    "descricao": "A mensagem recebe margens laterais negativas e passa a ocupar a margem da grid até as bordas da janela, com o texto começando dentro da margem.",
+    "clausula": "somente elementos com funções visuais podem utilizar a sangria"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-1d6a18d52408",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-1d6a18d52408",
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Acessibilidade › 1. Ícones Decorativos",
+  "texto": "Se os ícones são puramente decorativos é necessário adicionar manualmente um atributo aria-hidden a cada um deles para que sejam acessíveis.",
+  "contexto": null,
+  "antecedente": "São usados apenas para reforço visual ou de branding. Se forem removidos da página, os usuários ainda entenderiam e poderiam utilizar a página.",
+  "colocacao": [
+   {
+    "variante": "icone-erro-campo-exposto",
+    "descricao": "Em S1, o ícone da mensagem de erro do campo perde o aria-hidden.",
+    "clausula": "é necessário adicionar manualmente um atributo aria-hidden a cada um deles"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-1d6a18d52408",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-1d6a18d52408",
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Acessibilidade › 1. Ícones Decorativos",
+  "texto": "Se os ícones são puramente decorativos é necessário adicionar manualmente um atributo aria-hidden a cada um deles para que sejam acessíveis.",
+  "contexto": null,
+  "antecedente": "São usados apenas para reforço visual ou de branding. Se forem removidos da página, os usuários ainda entenderiam e poderiam utilizar a página.",
+  "colocacao": [
+   {
+    "variante": "icone-erro-campo-exposto",
+    "descricao": "Em S1, o ícone da mensagem de erro do campo perde o aria-hidden.",
+    "clausula": "é necessário adicionar manualmente um atributo aria-hidden a cada um deles"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-1d6a18d52408",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-1d6a18d52408",
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Acessibilidade › 1. Ícones Decorativos",
+  "texto": "Se os ícones são puramente decorativos é necessário adicionar manualmente um atributo aria-hidden a cada um deles para que sejam acessíveis.",
+  "contexto": null,
+  "antecedente": "São usados apenas para reforço visual ou de branding. Se forem removidos da página, os usuários ainda entenderiam e poderiam utilizar a página.",
+  "colocacao": [
+   {
+    "variante": "icone-erro-campo-exposto",
+    "descricao": "Em S1, o ícone da mensagem de erro do campo perde o aria-hidden.",
+    "clausula": "é necessário adicionar manualmente um atributo aria-hidden a cada um deles"
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-35afb7e6ee7c",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-35afb7e6ee7c",
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Acessibilidade › 2. Ícones Semânticos",
+  "texto": "Forneça uma alternativa de texto dentro de um elemento <span> (ou similar).",
+  "contexto": "Forneça uma alternativa de texto dentro de um elemento <span> (ou similar). Inclua também o CSS apropriado para ocultar visualmente o elemento, mantendo-o acessível a tecnologias assistivas.",
+  "antecedente": "Se os ícones tiverem significado semântico, é preciso adicionar manualmente algumas coisas para que ele seja acessado apropriadamente:",
+  "colocacao": [
+   {
+    "variante": "botao-icone-sem-alternativa",
+    "descricao": "O botão só com ícone (ajuda, Fechar da mensagem, gatilho do select) perde a alternativa em texto (sem aria-label e sem span), ficando sem nome acessível.",
+    "clausula": "Forneça uma alternativa de texto dentro de um elemento <span> (ou similar)."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-35afb7e6ee7c",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-35afb7e6ee7c",
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Acessibilidade › 2. Ícones Semânticos",
+  "texto": "Forneça uma alternativa de texto dentro de um elemento <span> (ou similar).",
+  "contexto": "Forneça uma alternativa de texto dentro de um elemento <span> (ou similar). Inclua também o CSS apropriado para ocultar visualmente o elemento, mantendo-o acessível a tecnologias assistivas.",
+  "antecedente": "Se os ícones tiverem significado semântico, é preciso adicionar manualmente algumas coisas para que ele seja acessado apropriadamente:",
+  "colocacao": [
+   {
+    "variante": "botao-icone-sem-alternativa",
+    "descricao": "O botão só com ícone (ajuda, Fechar da mensagem, gatilho do select) perde a alternativa em texto (sem aria-label e sem span), ficando sem nome acessível.",
+    "clausula": "Forneça uma alternativa de texto dentro de um elemento <span> (ou similar)."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-35afb7e6ee7c",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-35afb7e6ee7c",
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Acessibilidade › 2. Ícones Semânticos",
+  "texto": "Forneça uma alternativa de texto dentro de um elemento <span> (ou similar).",
+  "contexto": "Forneça uma alternativa de texto dentro de um elemento <span> (ou similar). Inclua também o CSS apropriado para ocultar visualmente o elemento, mantendo-o acessível a tecnologias assistivas.",
+  "antecedente": "Se os ícones tiverem significado semântico, é preciso adicionar manualmente algumas coisas para que ele seja acessado apropriadamente:",
+  "colocacao": [
+   {
+    "variante": "botao-icone-sem-alternativa",
+    "descricao": "O botão só com ícone (ajuda, Fechar da mensagem, gatilho do select) perde a alternativa em texto (sem aria-label e sem span), ficando sem nome acessível.",
+    "clausula": "Forneça uma alternativa de texto dentro de um elemento <span> (ou similar)."
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-5542b7528b3d",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-5542b7528b3d",
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Anatomia e Comportamento › Área Mínima de Interação › Área de Clique",
+  "texto": "Essa área, deve ser de no mínimo 24x24px.",
+  "contexto": "Utilizada em interfaces não tácteis, como, por exemplo, dispositivos que utilizam o mouse. Essa área, deve ser de no mínimo 24x24px.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "alvo-icone-20px",
+    "descricao": "O botão só com ícone (ajuda, Fechar da mensagem, gatilho do select) fica com 20×20px.",
+    "clausula": "Essa área, deve ser de no mínimo 24x24px."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-5542b7528b3d",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-5542b7528b3d",
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Anatomia e Comportamento › Área Mínima de Interação › Área de Clique",
+  "texto": "Essa área, deve ser de no mínimo 24x24px.",
+  "contexto": "Utilizada em interfaces não tácteis, como, por exemplo, dispositivos que utilizam o mouse. Essa área, deve ser de no mínimo 24x24px.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "alvo-icone-20px",
+    "descricao": "O botão só com ícone (ajuda, Fechar da mensagem, gatilho do select) fica com 20×20px.",
+    "clausula": "Essa área, deve ser de no mínimo 24x24px."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-5542b7528b3d",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-5542b7528b3d",
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Anatomia e Comportamento › Área Mínima de Interação › Área de Clique",
+  "texto": "Essa área, deve ser de no mínimo 24x24px.",
+  "contexto": "Utilizada em interfaces não tácteis, como, por exemplo, dispositivos que utilizam o mouse. Essa área, deve ser de no mínimo 24x24px.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "alvo-icone-20px",
+    "descricao": "O botão só com ícone (ajuda, Fechar da mensagem, gatilho do select) fica com 20×20px.",
+    "clausula": "Essa área, deve ser de no mínimo 24x24px."
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-76c8506bbc99",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-76c8506bbc99",
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Acessibilidade › 2. Ícones Semânticos",
+  "texto": "Atributo aria-hidden.",
+  "contexto": null,
+  "antecedente": "Se os ícones tiverem significado semântico, é preciso adicionar manualmente algumas coisas para que ele seja acessado apropriadamente:",
+  "colocacao": [
+   {
+    "variante": "icone-semantico-exposto",
+    "descricao": "O <i> do botão só com ícone (ajuda, Fechar da mensagem, gatilho do select) perde o aria-hidden.",
+    "clausula": "Atributo aria-hidden."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-76c8506bbc99",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-76c8506bbc99",
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Acessibilidade › 2. Ícones Semânticos",
+  "texto": "Atributo aria-hidden.",
+  "contexto": null,
+  "antecedente": "Se os ícones tiverem significado semântico, é preciso adicionar manualmente algumas coisas para que ele seja acessado apropriadamente:",
+  "colocacao": [
+   {
+    "variante": "icone-semantico-exposto",
+    "descricao": "O <i> do botão só com ícone (ajuda, Fechar da mensagem, gatilho do select) perde o aria-hidden.",
+    "clausula": "Atributo aria-hidden."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-76c8506bbc99",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-76c8506bbc99",
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Acessibilidade › 2. Ícones Semânticos",
+  "texto": "Atributo aria-hidden.",
+  "contexto": null,
+  "antecedente": "Se os ícones tiverem significado semântico, é preciso adicionar manualmente algumas coisas para que ele seja acessado apropriadamente:",
+  "colocacao": [
+   {
+    "variante": "icone-semantico-exposto",
+    "descricao": "O <i> do botão só com ícone (ajuda, Fechar da mensagem, gatilho do select) perde o aria-hidden.",
+    "clausula": "Atributo aria-hidden."
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-db50df136f86",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-db50df136f86",
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Eficiência e Clareza",
+  "texto": "Quando utilizado como um elemento de ação (seja um hiperlink, um botão ou qualquer outro elemento interativo) é importante que o ícone represente a ação a ser executada.",
+  "contexto": null,
+  "antecedente": "Para uma melhor legibilidade é recomendado que quando possível um label ou hint apareça ao lado do ícone reforçando a ideia a que foi atribuído.",
+  "colocacao": [
+   {
+    "variante": "icone-de-acao-oposta",
+    "descricao": "O ícone do botão indica ação oposta ou alheia: btn-ajuda com fa-trash, Fechar da mensagem com fa-plus, gatilho do select com fa-times.",
+    "clausula": "é importante que o ícone represente a ação a ser executada"
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-db50df136f86",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-db50df136f86",
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Eficiência e Clareza",
+  "texto": "Quando utilizado como um elemento de ação (seja um hiperlink, um botão ou qualquer outro elemento interativo) é importante que o ícone represente a ação a ser executada.",
+  "contexto": null,
+  "antecedente": "Para uma melhor legibilidade é recomendado que quando possível um label ou hint apareça ao lado do ícone reforçando a ideia a que foi atribuído.",
+  "colocacao": [
+   {
+    "variante": "icone-de-acao-oposta",
+    "descricao": "O ícone do botão indica ação oposta ou alheia: btn-ajuda com fa-trash, Fechar da mensagem com fa-plus, gatilho do select com fa-times.",
+    "clausula": "é importante que o ícone represente a ação a ser executada"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-db50df136f86",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-db50df136f86",
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Eficiência e Clareza",
+  "texto": "Quando utilizado como um elemento de ação (seja um hiperlink, um botão ou qualquer outro elemento interativo) é importante que o ícone represente a ação a ser executada.",
+  "contexto": null,
+  "antecedente": "Para uma melhor legibilidade é recomendado que quando possível um label ou hint apareça ao lado do ícone reforçando a ideia a que foi atribuído.",
+  "colocacao": [
+   {
+    "variante": "icone-de-acao-oposta",
+    "descricao": "O ícone do botão indica ação oposta ou alheia: btn-ajuda com fa-trash, Fechar da mensagem com fa-plus, gatilho do select com fa-times.",
+    "clausula": "é importante que o ícone represente a ação a ser executada"
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-05a3253b3a06",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-05a3253b3a06",
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Escala Tipográfica",
+  "texto": "Com exceção da fonte base, utilize a unidade em para todos os outros valores da escala.",
+  "contexto": "O tamanho fonte base é de 14px (1em) e peso da fonte normal (400). A unidade em é uma medida relativa que permite que o usuário altere o tamanho de exibição do texto na interface. Com exceção da fonte base, utilize a unidade em para todos os outros valores da escala. Assim, caso o valor do tamanho base padrão seja alterado, toda a interface se adapta ao novo valor.",
+  "antecedente": "Existem muitas escalas diferentes, mas dentro do Design System do Governo Federal foi escolhida a escala Minor Third (1,2) já que permitem números que possuem contraste necessário para enriquecer e flexibilizar a hierarquia de uma interface.",
+  "colocacao": [
+   {
+    "variante": "tamanho-em-px",
+    "descricao": "Uma regra própria declara font-size: 16.8px (px fixo) para o texto dos itens da lista ou para o título da mensagem.",
+    "clausula": "Com exceção da fonte base, utilize a unidade em para todos os outros valores da escala."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-05a3253b3a06",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-05a3253b3a06",
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Escala Tipográfica",
+  "texto": "Com exceção da fonte base, utilize a unidade em para todos os outros valores da escala.",
+  "contexto": "O tamanho fonte base é de 14px (1em) e peso da fonte normal (400). A unidade em é uma medida relativa que permite que o usuário altere o tamanho de exibição do texto na interface. Com exceção da fonte base, utilize a unidade em para todos os outros valores da escala. Assim, caso o valor do tamanho base padrão seja alterado, toda a interface se adapta ao novo valor.",
+  "antecedente": "Existem muitas escalas diferentes, mas dentro do Design System do Governo Federal foi escolhida a escala Minor Third (1,2) já que permitem números que possuem contraste necessário para enriquecer e flexibilizar a hierarquia de uma interface.",
+  "colocacao": [
+   {
+    "variante": "tamanho-em-px",
+    "descricao": "Uma regra própria declara font-size: 16.8px (px fixo) para o texto dos itens da lista ou para o título da mensagem.",
+    "clausula": "Com exceção da fonte base, utilize a unidade em para todos os outros valores da escala."
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-b66ac3a5b212",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-b66ac3a5b212",
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Line-height (entrelinha)",
+  "texto": "Para utilizar corretamente o valor do entrelinhamento é preciso trabalhar com valores em porcentagem ou relativos (como rem ou em), pois o valor vai depender do tamanho da fonte que ele está sendo aplicado.",
+  "contexto": "Para utilizar corretamente o valor do entrelinhamento é preciso trabalhar com valores em porcentagem ou relativos (como rem ou em), pois o valor vai depender do tamanho da fonte que ele está sendo aplicado. Por padrão, utilize entrelinha de 1.45 para valores até a fonte base, após isso, utilize o valor de 1,15.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "entrelinha-em-px",
+    "descricao": "Uma regra própria declara line-height: 22px para o texto dos itens da lista ou para o texto da mensagem.",
+    "clausula": "é preciso trabalhar com valores em porcentagem ou relativos (como rem ou em)"
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-b66ac3a5b212",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-b66ac3a5b212",
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Line-height (entrelinha)",
+  "texto": "Para utilizar corretamente o valor do entrelinhamento é preciso trabalhar com valores em porcentagem ou relativos (como rem ou em), pois o valor vai depender do tamanho da fonte que ele está sendo aplicado.",
+  "contexto": "Para utilizar corretamente o valor do entrelinhamento é preciso trabalhar com valores em porcentagem ou relativos (como rem ou em), pois o valor vai depender do tamanho da fonte que ele está sendo aplicado. Por padrão, utilize entrelinha de 1.45 para valores até a fonte base, após isso, utilize o valor de 1,15.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "entrelinha-em-px",
+    "descricao": "Uma regra própria declara line-height: 22px para o texto dos itens da lista ou para o texto da mensagem.",
+    "clausula": "é preciso trabalhar com valores em porcentagem ou relativos (como rem ou em)"
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-bc2dd4c6ab14",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-bc2dd4c6ab14",
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Estilos da Fonte Rawline › Peso da fonte (Font-Weight)",
+  "texto": "Utilize os valores abaixo para representar os diferentes estilos da fonte Rawline em uma interface web.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "botao-peso-650",
+    "descricao": "O texto do botão Limpar campos fica com font-weight 650.",
+    "clausula": "Utilize os valores abaixo para representar os diferentes estilos da fonte Rawline"
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-bc2dd4c6ab14",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-bc2dd4c6ab14",
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Estilos da Fonte Rawline › Peso da fonte (Font-Weight)",
+  "texto": "Utilize os valores abaixo para representar os diferentes estilos da fonte Rawline em uma interface web.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "itens-peso-550",
+    "descricao": "O nome do país nos itens da lista fica com font-weight 550.",
+    "clausula": "Utilize os valores abaixo para representar os diferentes estilos da fonte Rawline"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-11b459a3885c",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-11b459a3885c",
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "secao": "Padrão de Codificação HTML › Formatação",
+  "texto": "NÃO incluir valor nos atributos boleanos",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "required-com-valor-campo",
+    "descricao": "O atributo booleano required do input 'Nome do país' passa a ser escrito required=\"required\" (a obrigatoriedade não muda).",
+    "clausula": "NÃO incluir valor nos atributos boleanos"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-11b459a3885c",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-11b459a3885c",
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "secao": "Padrão de Codificação HTML › Formatação",
+  "texto": "NÃO incluir valor nos atributos boleanos",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "required-com-valor-opcoes",
+    "descricao": "Os inputs do grupo 'Situação do cadastro' passam a ter o atributo booleano required escrito required=\"true\" (a obrigatoriedade não muda).",
+    "clausula": "NÃO incluir valor nos atributos boleanos"
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-6afb3201269f",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-6afb3201269f",
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "secao": "Padrão de Codificação HTML › Formatação",
+  "texto": "Escrever estilos e scripts em seus próprios arquivos",
+  "contexto": "1. Escrever estilos e scripts em seus próprios arquivos",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "clique-escrito-no-botao",
+    "descricao": "O código que trata o clique do botão sai do arquivo .js da página e passa para um atributo onclick escrito no próprio botão, com o mesmo efeito.",
+    "clausula": "Escrever estilos e scripts em seus próprios arquivos"
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-6afb3201269f",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-6afb3201269f",
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "secao": "Padrão de Codificação HTML › Formatação",
+  "texto": "Escrever estilos e scripts em seus próprios arquivos",
+  "contexto": "1. Escrever estilos e scripts em seus próprios arquivos",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "clique-escrito-no-botao",
+    "descricao": "O código que trata o clique do botão sai do arquivo .js da página e passa para um atributo onclick escrito no próprio botão, com o mesmo efeito.",
+    "clausula": "Escrever estilos e scripts em seus próprios arquivos"
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-6afb3201269f",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-6afb3201269f",
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "secao": "Padrão de Codificação HTML › Formatação",
+  "texto": "Escrever estilos e scripts em seus próprios arquivos",
+  "contexto": "1. Escrever estilos e scripts em seus próprios arquivos",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "estilo-escrito-no-elemento",
+    "descricao": "Uma regra de CSS da página aplicada à instância (por exemplo, a margem superior) sai do arquivo .css e passa para um atributo style no elemento raiz da instância, com o mesmo valor.",
+    "clausula": "Escrever estilos e scripts em seus próprios arquivos"
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-6afb3201269f",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-6afb3201269f",
+  "arquivo": "guias/boas-praticas-de-html.md",
+  "secao": "Padrão de Codificação HTML › Formatação",
+  "texto": "Escrever estilos e scripts em seus próprios arquivos",
+  "contexto": "1. Escrever estilos e scripts em seus próprios arquivos",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "estilo-escrito-no-elemento",
+    "descricao": "Uma regra de CSS da página aplicada à instância (por exemplo, a margem superior) sai do arquivo .css e passa para um atributo style no elemento raiz da instância, com o mesmo valor.",
+    "clausula": "Escrever estilos e scripts em seus próprios arquivos"
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-a39f3ad397d4",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-a39f3ad397d4",
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Tipografia",
+  "texto": "Utilize a família tipográfica Rawline com suas variações de peso e estilo.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "fonte-do-sistema",
+    "descricao": "O texto da instância passa a usar Arial (pilha sans-serif do sistema) em vez de Rawline, declarado no elemento raiz da instância.",
+    "clausula": "Utilize a família tipográfica Rawline com suas variações de peso e estilo."
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-a39f3ad397d4",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-a39f3ad397d4",
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Tipografia",
+  "texto": "Utilize a família tipográfica Rawline com suas variações de peso e estilo.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "fonte-do-sistema",
+    "descricao": "O texto da instância passa a usar Arial (pilha sans-serif do sistema) em vez de Rawline, declarado no elemento raiz da instância.",
+    "clausula": "Utilize a família tipográfica Rawline com suas variações de peso e estilo."
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-a39f3ad397d4",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-a39f3ad397d4",
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Tipografia",
+  "texto": "Utilize a família tipográfica Rawline com suas variações de peso e estilo.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "fonte-do-sistema",
+    "descricao": "O texto da instância passa a usar Arial (pilha sans-serif do sistema) em vez de Rawline, declarado no elemento raiz da instância.",
+    "clausula": "Utilize a família tipográfica Rawline com suas variações de peso e estilo."
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-a39f3ad397d4",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-a39f3ad397d4",
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Tipografia",
+  "texto": "Utilize a família tipográfica Rawline com suas variações de peso e estilo.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "fonte-do-sistema",
+    "descricao": "O texto da instância passa a usar Arial (pilha sans-serif do sistema) em vez de Rawline, declarado no elemento raiz da instância.",
+    "clausula": "Utilize a família tipográfica Rawline com suas variações de peso e estilo."
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-a39f3ad397d4",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-a39f3ad397d4",
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Tipografia",
+  "texto": "Utilize a família tipográfica Rawline com suas variações de peso e estilo.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "fonte-do-sistema",
+    "descricao": "O texto da instância passa a usar Arial (pilha sans-serif do sistema) em vez de Rawline, declarado no elemento raiz da instância.",
+    "clausula": "Utilize a família tipográfica Rawline com suas variações de peso e estilo."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-a39f3ad397d4",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-a39f3ad397d4",
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Tipografia",
+  "texto": "Utilize a família tipográfica Rawline com suas variações de peso e estilo.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "fonte-do-sistema",
+    "descricao": "O texto da instância passa a usar Arial (pilha sans-serif do sistema) em vez de Rawline, declarado no elemento raiz da instância.",
+    "clausula": "Utilize a família tipográfica Rawline com suas variações de peso e estilo."
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-a39f3ad397d4",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-a39f3ad397d4",
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Tipografia",
+  "texto": "Utilize a família tipográfica Rawline com suas variações de peso e estilo.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "fonte-do-sistema",
+    "descricao": "O texto da instância passa a usar Arial (pilha sans-serif do sistema) em vez de Rawline, declarado no elemento raiz da instância.",
+    "clausula": "Utilize a família tipográfica Rawline com suas variações de peso e estilo."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-a39f3ad397d4",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-a39f3ad397d4",
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Tipografia",
+  "texto": "Utilize a família tipográfica Rawline com suas variações de peso e estilo.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "fonte-do-sistema",
+    "descricao": "O texto da instância passa a usar Arial (pilha sans-serif do sistema) em vez de Rawline, declarado no elemento raiz da instância.",
+    "clausula": "Utilize a família tipográfica Rawline com suas variações de peso e estilo."
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-a39f3ad397d4",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-a39f3ad397d4",
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Tipografia",
+  "texto": "Utilize a família tipográfica Rawline com suas variações de peso e estilo.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "fonte-do-sistema",
+    "descricao": "O texto da instância passa a usar Arial (pilha sans-serif do sistema) em vez de Rawline, declarado no elemento raiz da instância.",
+    "clausula": "Utilize a família tipográfica Rawline com suas variações de peso e estilo."
+   }
+  ]
+ }
+]

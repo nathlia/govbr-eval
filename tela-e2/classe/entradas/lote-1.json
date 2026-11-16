@@ -1,0 +1,1277 @@
+[
+ {
+  "celula": "btn-ajuda::a2-fee39db9eda4",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-fee39db9eda4",
+  "arquivo": "componentes/button__acessibilidade.md",
+  "secao": "Acessibilidade no Button › Recomendações para Código",
+  "texto": "Ao utilizar botões com apenas ícones, certifique-se de usar os atributos title ou aria-label;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "nome-so-no-texto-oculto",
+    "descricao": "O botão circular fica sem title e sem aria-label; o nome acessível vem de um texto oculto dentro do botão.",
+    "clausula": "Ao utilizar botões com apenas ícones, certifique-se de usar os atributos title ou aria-label;"
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-fee39db9eda4",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-fee39db9eda4",
+  "arquivo": "componentes/button__acessibilidade.md",
+  "secao": "Acessibilidade no Button › Recomendações para Código",
+  "texto": "Ao utilizar botões com apenas ícones, certifique-se de usar os atributos title ou aria-label;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "nome-so-no-texto-oculto",
+    "descricao": "O botão circular fica sem title e sem aria-label; o nome acessível vem de um texto oculto dentro do botão.",
+    "clausula": "Ao utilizar botões com apenas ícones, certifique-se de usar os atributos title ou aria-label;"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-fee39db9eda4",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-fee39db9eda4",
+  "arquivo": "componentes/button__acessibilidade.md",
+  "secao": "Acessibilidade no Button › Recomendações para Código",
+  "texto": "Ao utilizar botões com apenas ícones, certifique-se de usar os atributos title ou aria-label;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "nome-so-no-texto-oculto",
+    "descricao": "O botão circular fica sem title e sem aria-label; o nome acessível vem de um texto oculto dentro do botão.",
+    "clausula": "Ao utilizar botões com apenas ícones, certifique-se de usar os atributos title ou aria-label;"
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-923a3ee74050",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-923a3ee74050",
+  "arquivo": "componentes/button__desenvolvedor.md",
+  "secao": "Button (Botão) › Informações adicionais › Acessibilidade",
+  "texto": "Ícones decorativos precisam ter o atributo aria-hidden=\"true\"",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "icone-sem-aria-hidden",
+    "descricao": "O ícone dentro do botão circular fica sem aria-hidden=\"true\".",
+    "clausula": "Ícones decorativos precisam ter o atributo aria-hidden=\"true\""
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-923a3ee74050",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-923a3ee74050",
+  "arquivo": "componentes/button__desenvolvedor.md",
+  "secao": "Button (Botão) › Informações adicionais › Acessibilidade",
+  "texto": "Ícones decorativos precisam ter o atributo aria-hidden=\"true\"",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "icone-sem-aria-hidden",
+    "descricao": "O ícone dentro do botão circular fica sem aria-hidden=\"true\".",
+    "clausula": "Ícones decorativos precisam ter o atributo aria-hidden=\"true\""
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-923a3ee74050",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-923a3ee74050",
+  "arquivo": "componentes/button__desenvolvedor.md",
+  "secao": "Button (Botão) › Informações adicionais › Acessibilidade",
+  "texto": "Ícones decorativos precisam ter o atributo aria-hidden=\"true\"",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "icone-sem-aria-hidden",
+    "descricao": "O ícone dentro do botão circular fica sem aria-hidden=\"true\".",
+    "clausula": "Ícones decorativos precisam ter o atributo aria-hidden=\"true\""
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-c7ac4e76783e",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-c7ac4e76783e",
+  "arquivo": "componentes/button__desenvolvedor.md",
+  "secao": "Button (Botão) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-button · Container do componente.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "botao-sem-br-button",
+    "descricao": "O botão usa classe própria com a aparência copiada à mão, sem br-button.",
+    "clausula": "class · string · br-button · Container do componente."
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-c7ac4e76783e",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-c7ac4e76783e",
+  "arquivo": "componentes/button__desenvolvedor.md",
+  "secao": "Button (Botão) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-button · Container do componente.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "botao-sem-br-button",
+    "descricao": "O botão usa classe própria com a aparência copiada à mão, sem br-button.",
+    "clausula": "class · string · br-button · Container do componente."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-c7ac4e76783e",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-c7ac4e76783e",
+  "arquivo": "componentes/button__desenvolvedor.md",
+  "secao": "Button (Botão) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-button · Container do componente.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "botao-sem-br-button",
+    "descricao": "O botão usa classe própria com a aparência copiada à mão, sem br-button.",
+    "clausula": "class · string · br-button · Container do componente."
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-dc561d157556",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-dc561d157556",
+  "arquivo": "componentes/button__desenvolvedor.md",
+  "secao": "Button (Botão) › Informações adicionais › Acessibilidade",
+  "texto": "Inclua o atributo aria-label no componente",
+  "contexto": "O Tipo Circular precisa de texto alternativo para o ícone decorativo. Inclua o atributo aria-label no componente",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "nome-so-em-title",
+    "descricao": "O botão circular perde o atributo aria-label; o mesmo nome fica no title e num texto oculto, e o nome acessível não muda.",
+    "clausula": "Inclua o atributo aria-label no componente"
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-dc561d157556",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-dc561d157556",
+  "arquivo": "componentes/button__desenvolvedor.md",
+  "secao": "Button (Botão) › Informações adicionais › Acessibilidade",
+  "texto": "Inclua o atributo aria-label no componente",
+  "contexto": "O Tipo Circular precisa de texto alternativo para o ícone decorativo. Inclua o atributo aria-label no componente",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "nome-so-em-title",
+    "descricao": "O botão circular perde o atributo aria-label; o mesmo nome fica no title e num texto oculto, e o nome acessível não muda.",
+    "clausula": "Inclua o atributo aria-label no componente"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-dc561d157556",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-dc561d157556",
+  "arquivo": "componentes/button__desenvolvedor.md",
+  "secao": "Button (Botão) › Informações adicionais › Acessibilidade",
+  "texto": "Inclua o atributo aria-label no componente",
+  "contexto": "O Tipo Circular precisa de texto alternativo para o ícone decorativo. Inclua o atributo aria-label no componente",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "nome-so-em-title",
+    "descricao": "O botão circular perde o atributo aria-label; o mesmo nome fica no title e num texto oculto, e o nome acessível não muda.",
+    "clausula": "Inclua o atributo aria-label no componente"
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-21ca39426148",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-21ca39426148",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Anatomia",
+  "texto": "3 · Superfície · Fundamento Superfície · Obrigatório",
+  "contexto": null,
+  "antecedente": "2 · Rótulo · Fundamento Tipografia · Obrigatório",
+  "colocacao": [
+   {
+    "variante": "limpar-sem-superficie",
+    "descricao": "O btn-limpar perde a superfície: sem borda e sem fundo, só o texto azul visível (classe de ênfase mantida).",
+    "clausula": "3 · Superfície · Fundamento Superfície · Obrigatório"
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-3241a9611f30",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-3241a9611f30",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 6. Área de Proteção",
+  "texto": "Utilize algum espaçamento da escala de layout, listado no Fundamento Espaçamento, de forma consistente ao longo de sua interface.",
+  "contexto": null,
+  "antecedente": "Exemplos área de proteção no botão",
+  "colocacao": [
+   {
+    "variante": "protecao-fora-da-escala",
+    "descricao": "A margem entre o botão e o vizinho passa a 5 px, valor fora da escala.",
+    "clausula": "Utilize algum espaçamento da escala de layout"
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-3241a9611f30",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-3241a9611f30",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 6. Área de Proteção",
+  "texto": "Utilize algum espaçamento da escala de layout, listado no Fundamento Espaçamento, de forma consistente ao longo de sua interface.",
+  "contexto": null,
+  "antecedente": "Exemplos área de proteção no botão",
+  "colocacao": [
+   {
+    "variante": "protecao-fora-da-escala",
+    "descricao": "A margem entre o botão e o vizinho passa a 5 px, valor fora da escala.",
+    "clausula": "Utilize algum espaçamento da escala de layout"
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-4f6b7bd068c4",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-4f6b7bd068c4",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Ênfases › 1. Ênfase Primária",
+  "texto": "Utilizados com maior frequência, devem ser aplicados em ações cruciais da tela, informando ao usuário sua importância.",
+  "contexto": "É utilizada em botões que possuem maior importância ou prioridade. Utilizados com maior frequência, devem ser aplicados em ações cruciais da tela, informando ao usuário sua importância.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "ajuda-primario",
+    "descricao": "O btn-ajuda recebe ênfase primária (círculo azul sólido).",
+    "clausula": "devem ser aplicados em ações cruciais da tela"
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-4f6b7bd068c4",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-4f6b7bd068c4",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Ênfases › 1. Ênfase Primária",
+  "texto": "Utilizados com maior frequência, devem ser aplicados em ações cruciais da tela, informando ao usuário sua importância.",
+  "contexto": "É utilizada em botões que possuem maior importância ou prioridade. Utilizados com maior frequência, devem ser aplicados em ações cruciais da tela, informando ao usuário sua importância.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "limpar-primario",
+    "descricao": "O btn-limpar recebe ênfase primária (fundo azul sólido), ficando dois primários na barra de ações.",
+    "clausula": "devem ser aplicados em ações cruciais da tela"
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-59c1236e3ebd",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-59c1236e3ebd",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Anatomia › Detalhamento dos Itens › Tamanho dos Rótulos",
+  "texto": "Nunca utilize quebra de linhas no rótulodo botão.",
+  "contexto": "Naturalmente as palavras usadas nos rótulos variam bastante de tamanho. O ideal é que seja utilizado apenas uma ou duas palavras no máximo. Deve-se evitar usar três ou mais palavras no rótulo. Nunca utilize quebra de linhas no rótulodo botão.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-em-duas-linhas",
+    "descricao": "O btn-limpar fica com largura máxima de 72 px e o rótulo 'Limpar campos' quebra em duas linhas.",
+    "clausula": "Nunca utilize quebra de linhas no rótulodo botão."
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-5b47246a41c1",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-5b47246a41c1",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Anatomia › Detalhamento dos Itens › 1. Ícone (Opcional)",
+  "texto": "Nos botões do tipo circular a utilização é obrigatória, visto que a mensagem da ação é transmitida apenas pelo ícone.",
+  "contexto": null,
+  "antecedente": "Uso do ícone no botão padrão",
+  "colocacao": [
+   {
+    "variante": "circular-sem-icone",
+    "descricao": "O botão circular fica sem o ícone (círculo vazio), com o nome acessível mantido.",
+    "clausula": "Nos botões do tipo circular a utilização é obrigatória"
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-5b47246a41c1",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-5b47246a41c1",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Anatomia › Detalhamento dos Itens › 1. Ícone (Opcional)",
+  "texto": "Nos botões do tipo circular a utilização é obrigatória, visto que a mensagem da ação é transmitida apenas pelo ícone.",
+  "contexto": null,
+  "antecedente": "Uso do ícone no botão padrão",
+  "colocacao": [
+   {
+    "variante": "circular-sem-icone",
+    "descricao": "O botão circular fica sem o ícone (círculo vazio), com o nome acessível mantido.",
+    "clausula": "Nos botões do tipo circular a utilização é obrigatória"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-5b47246a41c1",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-5b47246a41c1",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Anatomia › Detalhamento dos Itens › 1. Ícone (Opcional)",
+  "texto": "Nos botões do tipo circular a utilização é obrigatória, visto que a mensagem da ação é transmitida apenas pelo ícone.",
+  "contexto": null,
+  "antecedente": "Uso do ícone no botão padrão",
+  "colocacao": [
+   {
+    "variante": "circular-sem-icone",
+    "descricao": "O botão circular fica sem o ícone (círculo vazio), com o nome acessível mantido.",
+    "clausula": "Nos botões do tipo circular a utilização é obrigatória"
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-a9890f9d0039",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-a9890f9d0039",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Anatomia › Detalhamento dos Itens › Tamanho dos Rótulos › Tom e Voz nos Rótulos",
+  "texto": "Deve estar alinhado com o tom de voz da sua marca, além de orientar de forma clara qual ação esperada.",
+  "contexto": "O tom e voz utilizado no rótulo é, essencialmente, como ele vai comunicar a sua ação. Deve estar alinhado com o tom de voz da sua marca, além de orientar de forma clara qual ação esperada.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "limpar-rotulo-generico",
+    "descricao": "O btn-limpar passa a ter o rótulo 'OK'.",
+    "clausula": "orientar de forma clara qual ação esperada"
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-c23f336807f4",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-c23f336807f4",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 6. Área de Proteção",
+  "texto": "Quando o botão estiver próximo a algum outro componente, mantenha um espaçamento mínimo para que a o botão seja notado na tela e que sua área de interação não se confunda com as de outros componentes.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "ajuda-colado-ao-titulo",
+    "descricao": "O btn-ajuda fica com margem negativa, a caixa encostada (0 px) e sobreposta ao fim do título h1.",
+    "clausula": "mantenha um espaçamento mínimo"
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-c23f336807f4",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-c23f336807f4",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 6. Área de Proteção",
+  "texto": "Quando o botão estiver próximo a algum outro componente, mantenha um espaçamento mínimo para que a o botão seja notado na tela e que sua área de interação não se confunda com as de outros componentes.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "limpar-colado-ao-cancelar",
+    "descricao": "O btn-limpar fica com margem negativa, a caixa encostada (0 px) ao botão vizinho da barra.",
+    "clausula": "mantenha um espaçamento mínimo"
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-df449a7d5cd8",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-df449a7d5cd8",
+  "arquivo": "componentes/button__designer.md",
+  "secao": "Button (Botão) › Comportamentos › 3. Posicionamento",
+  "texto": "Tendo em vista a utilização das diferentes ênfases nos botões com o intuito de manter uma hierarquia visual na interface, é necessário posicioná-los de forma coerente em relação ao grau de importância de cada um dessas ênfases.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "limpar-a-direita-do-salvar",
+    "descricao": "O btn-limpar (secundário) passa para depois do btn-salvar (primário) na barra de ações, ficando na ponta direita.",
+    "clausula": "é necessário posicioná-los de forma coerente em relação ao grau de importância de cada um dessas ênfases"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-020f0b4f0964",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-020f0b4f0964",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Recomendações para Estilo e Design",
+  "texto": "Utilize rótulos (labels) claros e descritivos para que o usuário compreenda o propósito do campo de texto;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-generico",
+    "descricao": "O rótulo do campo vira 'Campo 1'.",
+    "clausula": "Utilize rótulos (labels) claros e descritivos"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-020f0b4f0964",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-020f0b4f0964",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Recomendações para Estilo e Design",
+  "texto": "Utilize rótulos (labels) claros e descritivos para que o usuário compreenda o propósito do campo de texto;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-generico",
+    "descricao": "O rótulo do campo vira 'Campo 1'.",
+    "clausula": "Utilize rótulos (labels) claros e descritivos"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-328f62cfe4ce",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-328f62cfe4ce",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Navegação e Comportamento",
+  "texto": "Após o input receber o foco, permita que o usuário possa digitar o texto na sequência, sem necessidade de qualquer outro passo anterior;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "campo-readonly-ate-clique",
+    "descricao": "O campo fica readonly até receber um clique; com foco por Tab não aceita digitação.",
+    "clausula": "permita que o usuário possa digitar o texto na sequência, sem necessidade de qualquer outro passo anterior"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-328f62cfe4ce",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-328f62cfe4ce",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Navegação e Comportamento",
+  "texto": "Após o input receber o foco, permita que o usuário possa digitar o texto na sequência, sem necessidade de qualquer outro passo anterior;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "campo-readonly-ate-clique",
+    "descricao": "O campo fica readonly até receber um clique; com foco por Tab não aceita digitação.",
+    "clausula": "permita que o usuário possa digitar o texto na sequência, sem necessidade de qualquer outro passo anterior"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-56357b049872",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-56357b049872",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Recomendações para Código",
+  "texto": "Caso seja necessário, use o atributo aria-describedby para vincular a um elemento de ajuda ou instrução e fornecer informações adicionais aos usuários que podem precisar de mais contexto.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "apoio-sem-describedby",
+    "descricao": "O texto de apoio sobre o formato aparece, mas o campo não tem aria-describedby apontando para ele.",
+    "clausula": "use o atributo aria-describedby para vincular a um elemento de ajuda ou instrução"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-56357b049872",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-56357b049872",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Recomendações para Código",
+  "texto": "Caso seja necessário, use o atributo aria-describedby para vincular a um elemento de ajuda ou instrução e fornecer informações adicionais aos usuários que podem precisar de mais contexto.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "erro-sem-describedby",
+    "descricao": "Em S1 a mensagem de erro do campo aparece, mas o campo não tem aria-describedby apontando para ela.",
+    "clausula": "use o atributo aria-describedby para vincular a um elemento de ajuda ou instrução"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-59c41d3b1085",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-59c41d3b1085",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Recomendações para Código",
+  "texto": "Utilize a marcação semântica correta no código HTML, com a tag <input> e o valor do atributo type correspondente a sua função.",
+  "contexto": "Utilize a marcação semântica correta no código HTML, com a tag <input> e o valor do atributo type correspondente a sua função. Por exemplo: type = \"text\", type = \"date\", type = \"email\", type = \"password\", etc; Veja mais detalhes em MDN Web Docs - Input Element;",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "codigo-type-tel",
+    "descricao": "O campo inp-codigo recebe type=\"tel\" (as letras continuam aceitas no navegador de mesa).",
+    "clausula": "o valor do atributo type correspondente a sua função"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-7bdc66f1d99d",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-7bdc66f1d99d",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Recomendações para Estilo e Design",
+  "texto": "Marque o input com a cor correspondente ao estado de sucesso, se o usuário preencher corretamente, ou cor correspondente ao estado de erro, se houver algum problema no preenchimento do campo.",
+  "contexto": "Para validação em campos de texto, é importante fornecer feedback visual imediato quando o usuário preencher o input. Marque o input com a cor correspondente ao estado de sucesso, se o usuário preencher corretamente, ou cor correspondente ao estado de erro, se houver algum problema no preenchimento do campo.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "erro-sem-cor",
+    "descricao": "Em S1 o campo mostra o texto de erro, mas a borda continua na cor neutra.",
+    "clausula": "cor correspondente ao estado de erro, se houver algum problema no preenchimento do campo"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-7bdc66f1d99d",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-7bdc66f1d99d",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Recomendações para Estilo e Design",
+  "texto": "Marque o input com a cor correspondente ao estado de sucesso, se o usuário preencher corretamente, ou cor correspondente ao estado de erro, se houver algum problema no preenchimento do campo.",
+  "contexto": "Para validação em campos de texto, é importante fornecer feedback visual imediato quando o usuário preencher o input. Marque o input com a cor correspondente ao estado de sucesso, se o usuário preencher corretamente, ou cor correspondente ao estado de erro, se houver algum problema no preenchimento do campo.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "erro-sem-cor",
+    "descricao": "Em S1 o campo mostra o texto de erro, mas a borda continua na cor neutra.",
+    "clausula": "cor correspondente ao estado de erro, se houver algum problema no preenchimento do campo"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-7c43824db106",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-7c43824db106",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Recomendações para Código",
+  "texto": "Associe o input ao rótulo usando o atributo for na tag <label> e um id com mesmo valor na tag <input>;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-por-labelledby",
+    "descricao": "O rótulo é ligado ao campo só por aria-labelledby, sem for/id.",
+    "clausula": "usando o atributo for na tag <label> e um id com mesmo valor na tag <input>"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-7c43824db106",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-7c43824db106",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Recomendações para Código",
+  "texto": "Associe o input ao rótulo usando o atributo for na tag <label> e um id com mesmo valor na tag <input>;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-por-labelledby",
+    "descricao": "O rótulo é ligado ao campo só por aria-labelledby, sem for/id.",
+    "clausula": "usando o atributo for na tag <label> e um id com mesmo valor na tag <input>"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-7c43824db106",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-7c43824db106",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Recomendações para Código",
+  "texto": "Associe o input ao rótulo usando o atributo for na tag <label> e um id com mesmo valor na tag <input>;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-por-labelledby",
+    "descricao": "O rótulo é ligado ao campo só por aria-labelledby, sem for/id.",
+    "clausula": "usando o atributo for na tag <label> e um id com mesmo valor na tag <input>"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-e1a8fbf8ec5c",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-e1a8fbf8ec5c",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Navegação e Comportamento",
+  "texto": "Utilize a marcação correta para o estado de foco, previsto na diretriz de estados, quando o foco estiver ativo no input;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "foco-fora-do-padrao",
+    "descricao": "O campo focado mostra contorno sólido vermelho de 1 px no lugar do foco do DS.",
+    "clausula": "Utilize a marcação correta para o estado de foco, previsto na diretriz de estados"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-e1a8fbf8ec5c",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-e1a8fbf8ec5c",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Navegação e Comportamento",
+  "texto": "Utilize a marcação correta para o estado de foco, previsto na diretriz de estados, quando o foco estiver ativo no input;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "foco-fora-do-padrao",
+    "descricao": "O campo focado mostra contorno sólido vermelho de 1 px no lugar do foco do DS.",
+    "clausula": "Utilize a marcação correta para o estado de foco, previsto na diretriz de estados"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-e1a8fbf8ec5c",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-e1a8fbf8ec5c",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Navegação e Comportamento",
+  "texto": "Utilize a marcação correta para o estado de foco, previsto na diretriz de estados, quando o foco estiver ativo no input;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "foco-fora-do-padrao",
+    "descricao": "O campo focado mostra contorno sólido vermelho de 1 px no lugar do foco do DS.",
+    "clausula": "Utilize a marcação correta para o estado de foco, previsto na diretriz de estados"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-ec99c6922afa",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-ec99c6922afa",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Navegação e Comportamento",
+  "texto": "Por padrão, o usuário deve conseguir navegar entre as palavras do texto digitado, com o uso das teclas Ctrl + left/right no Windows ou Option + left/right no Mac.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "ctrl-seta-bloqueado",
+    "descricao": "Um script cancela Ctrl+setas (preventDefault) no campo e o cursor não pula palavras.",
+    "clausula": "navegar entre as palavras do texto digitado, com o uso das teclas Ctrl + left/right"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-ec99c6922afa",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-ec99c6922afa",
+  "arquivo": "componentes/input__acessibilidade.md",
+  "secao": "Acessibilidade no Input › Navegação e Comportamento",
+  "texto": "Por padrão, o usuário deve conseguir navegar entre as palavras do texto digitado, com o uso das teclas Ctrl + left/right no Windows ou Option + left/right no Mac.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "ctrl-seta-bloqueado",
+    "descricao": "Um script cancela Ctrl+setas (preventDefault) no campo e o cursor não pula palavras.",
+    "clausula": "navegar entre as palavras do texto digitado, com o uso das teclas Ctrl + left/right"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-05e0365f1c3c",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-05e0365f1c3c",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Comportamentos › 3. Estados › Estado foco",
+  "texto": "Além disso, quando está \"focado\", o estado hover não precisa ser aplicado na superfície do componente, porém, o cursor do mouse ainda deve sofrer as alterações referentes.",
+  "contexto": "Umas das interações para receber foco é por meio de clique/toque. Por tanto, o estado \"pressionado padrão\" não existe neste componente. Além disso, quando está \"focado\", o estado hover não precisa ser aplicado na superfície do componente, porém, o cursor do mouse ainda deve sofrer as alterações referentes.",
+  "antecedente": "Estado foco em fundo claro e escuro.",
+  "colocacao": [
+   {
+    "variante": "cursor-some-no-foco",
+    "descricao": "Quando o campo está focado, o cursor volta à seta no hover.",
+    "clausula": "o cursor do mouse ainda deve sofrer as alterações referentes"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-05e0365f1c3c",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-05e0365f1c3c",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Comportamentos › 3. Estados › Estado foco",
+  "texto": "Além disso, quando está \"focado\", o estado hover não precisa ser aplicado na superfície do componente, porém, o cursor do mouse ainda deve sofrer as alterações referentes.",
+  "contexto": "Umas das interações para receber foco é por meio de clique/toque. Por tanto, o estado \"pressionado padrão\" não existe neste componente. Além disso, quando está \"focado\", o estado hover não precisa ser aplicado na superfície do componente, porém, o cursor do mouse ainda deve sofrer as alterações referentes.",
+  "antecedente": "Estado foco em fundo claro e escuro.",
+  "colocacao": [
+   {
+    "variante": "cursor-some-no-foco",
+    "descricao": "Quando o campo está focado, o cursor volta à seta no hover.",
+    "clausula": "o cursor do mouse ainda deve sofrer as alterações referentes"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-05e0365f1c3c",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-05e0365f1c3c",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Comportamentos › 3. Estados › Estado foco",
+  "texto": "Além disso, quando está \"focado\", o estado hover não precisa ser aplicado na superfície do componente, porém, o cursor do mouse ainda deve sofrer as alterações referentes.",
+  "contexto": "Umas das interações para receber foco é por meio de clique/toque. Por tanto, o estado \"pressionado padrão\" não existe neste componente. Além disso, quando está \"focado\", o estado hover não precisa ser aplicado na superfície do componente, porém, o cursor do mouse ainda deve sofrer as alterações referentes.",
+  "antecedente": "Estado foco em fundo claro e escuro.",
+  "colocacao": [
+   {
+    "variante": "cursor-some-no-foco",
+    "descricao": "Quando o campo está focado, o cursor volta à seta no hover.",
+    "clausula": "o cursor do mouse ainda deve sofrer as alterações referentes"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-3312a3e57512",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-3312a3e57512",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Detalhamento dos itens › 5. Placeholder (Opcional)",
+  "texto": "Deve trazer informações mais completas que a contida no Rótulo/Label, e desaparece quando o usuário iniciar o preenchimento do campo.",
+  "contexto": "Deve trazer informações mais completas que a contida no Rótulo/Label, e desaparece quando o usuário iniciar o preenchimento do campo. No caso de exclusão da do texto digitado, o placeholder deve reaparecer.",
+  "antecedente": "O placeholder tem a função de auxiliar o usuário a preencher os dados solicitados.",
+  "colocacao": [
+   {
+    "variante": "placeholder-igual-rotulo",
+    "descricao": "O placeholder do campo do select repete exatamente o rótulo 'Continente'.",
+    "clausula": "Deve trazer informações mais completas que a contida no Rótulo/Label"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-3452a785e45d",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-3452a785e45d",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Detalhamento dos itens › 1. Rótulo/Label (Opcional)",
+  "texto": "O texto do Rótulo deve ser curto e objetivo possível.",
+  "contexto": "Auxilia o usuário, indicando o tipo de informação que deve ser digitado no Campo de Texto. O texto do Rótulo deve ser curto e objetivo possível.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-longo",
+    "descricao": "O rótulo do campo vira uma frase de mais de 20 palavras explicando para que serve o dado.",
+    "clausula": "O texto do Rótulo deve ser curto e objetivo possível."
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-3452a785e45d",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-3452a785e45d",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Detalhamento dos itens › 1. Rótulo/Label (Opcional)",
+  "texto": "O texto do Rótulo deve ser curto e objetivo possível.",
+  "contexto": "Auxilia o usuário, indicando o tipo de informação que deve ser digitado no Campo de Texto. O texto do Rótulo deve ser curto e objetivo possível.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-longo",
+    "descricao": "O rótulo do campo vira uma frase de mais de 20 palavras explicando para que serve o dado.",
+    "clausula": "O texto do Rótulo deve ser curto e objetivo possível."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-3452a785e45d",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-3452a785e45d",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Detalhamento dos itens › 1. Rótulo/Label (Opcional)",
+  "texto": "O texto do Rótulo deve ser curto e objetivo possível.",
+  "contexto": "Auxilia o usuário, indicando o tipo de informação que deve ser digitado no Campo de Texto. O texto do Rótulo deve ser curto e objetivo possível.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-longo",
+    "descricao": "O rótulo do campo vira uma frase de mais de 20 palavras explicando para que serve o dado.",
+    "clausula": "O texto do Rótulo deve ser curto e objetivo possível."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-76f24d309b17",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-76f24d309b17",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Detalhamento dos itens › 5. Placeholder (Opcional)",
+  "texto": "No caso de exclusão da do texto digitado, o placeholder deve reaparecer.",
+  "contexto": "Deve trazer informações mais completas que a contida no Rótulo/Label, e desaparece quando o usuário iniciar o preenchimento do campo. No caso de exclusão da do texto digitado, o placeholder deve reaparecer.",
+  "antecedente": "O placeholder tem a função de auxiliar o usuário a preencher os dados solicitados.",
+  "colocacao": [
+   {
+    "variante": "placeholder-nao-volta",
+    "descricao": "Depois que o usuário digita no campo do select, um script zera o placeholder e ele não reaparece ao apagar o texto.",
+    "clausula": "No caso de exclusão da do texto digitado, o placeholder deve reaparecer."
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-db9f9aa4a02e",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-db9f9aa4a02e",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Comportamentos › 3. Estados › Estado Hover",
+  "texto": "O cursor deve mudar para o formato Text.",
+  "contexto": "Este estado ocorre quando o usuário posiciona o mouse sobre o campo de texto. O cursor deve mudar para o formato Text.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "cursor-padrao-no-campo",
+    "descricao": "O campo mostra o cursor padrão (seta) no hover.",
+    "clausula": "O cursor deve mudar para o formato Text."
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-db9f9aa4a02e",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-db9f9aa4a02e",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Comportamentos › 3. Estados › Estado Hover",
+  "texto": "O cursor deve mudar para o formato Text.",
+  "contexto": "Este estado ocorre quando o usuário posiciona o mouse sobre o campo de texto. O cursor deve mudar para o formato Text.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "cursor-padrao-no-campo",
+    "descricao": "O campo mostra o cursor padrão (seta) no hover.",
+    "clausula": "O cursor deve mudar para o formato Text."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-db9f9aa4a02e",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-db9f9aa4a02e",
+  "arquivo": "componentes/input__designer.md",
+  "secao": "Input (Campo de Entrada de Texto) › Comportamentos › 3. Estados › Estado Hover",
+  "texto": "O cursor deve mudar para o formato Text.",
+  "contexto": "Este estado ocorre quando o usuário posiciona o mouse sobre o campo de texto. O cursor deve mudar para o formato Text.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "cursor-padrao-no-campo",
+    "descricao": "O campo mostra o cursor padrão (seta) no hover.",
+    "clausula": "O cursor deve mudar para o formato Text."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-2f900cc3509d",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-2f900cc3509d",
+  "arquivo": "componentes/item__acessibilidade.md",
+  "secao": "Acessibilidade no Item › Recomendações para Estilo e Design",
+  "texto": "Aplique os estados corretamente para fornecer feedback.",
+  "contexto": "Deixe claro para o usuário quais são os elementos interativos que o item contém ou se o próprio item é interativo. Aplique os estados corretamente para fornecer feedback.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "item-sem-hover",
+    "descricao": "Os itens da lista aberta do select não mudam de aparência no hover nem no destaque por teclado.",
+    "clausula": "Aplique os estados corretamente para fornecer feedback."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-145591b8b938",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-145591b8b938",
+  "arquivo": "componentes/item__designer.md",
+  "secao": "Item › Comportamentos › 1. Hover",
+  "texto": "Um item pode ser interativo. Neste caso, toda a superfície do item é interativa e assume o estado hover.",
+  "contexto": "Um item pode ser interativo. Neste caso, toda a superfície do item é interativa e assume o estado hover.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "so-texto-clicavel",
+    "descricao": "Na lista do select, clicar na parte vazia à direita do texto de um item não o escolhe; só o texto.",
+    "clausula": "toda a superfície do item é interativa e assume o estado hover"
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-e06d4991a48e",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-e06d4991a48e",
+  "arquivo": "componentes/item__designer.md",
+  "secao": "Item › Regras para criação de itens › 3. Margens Internas",
+  "texto": "Os componentes dentro dos itens devem respeitar as margens internas (padding) entre cada um dos lados da superfície, conforme definido no documento de Fundamentos.",
+  "contexto": "Os componentes dentro dos itens devem respeitar as margens internas (padding) entre cada um dos lados da superfície, conforme definido no documento de Fundamentos. Somente elementos de mídias (como fotos e ilustrações) podem quando necessário \"sangrar\".",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "item-sem-padding",
+    "descricao": "Os itens (da lista do select e de lst-paises) ficam com padding 0; o texto encosta na borda da superfície.",
+    "clausula": "devem respeitar as margens internas (padding)"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-e06d4991a48e",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-e06d4991a48e",
+  "arquivo": "componentes/item__designer.md",
+  "secao": "Item › Regras para criação de itens › 3. Margens Internas",
+  "texto": "Os componentes dentro dos itens devem respeitar as margens internas (padding) entre cada um dos lados da superfície, conforme definido no documento de Fundamentos.",
+  "contexto": "Os componentes dentro dos itens devem respeitar as margens internas (padding) entre cada um dos lados da superfície, conforme definido no documento de Fundamentos. Somente elementos de mídias (como fotos e ilustrações) podem quando necessário \"sangrar\".",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "item-sem-padding",
+    "descricao": "Os itens (da lista do select e de lst-paises) ficam com padding 0; o texto encosta na borda da superfície.",
+    "clausula": "devem respeitar as margens internas (padding)"
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-2ee1137ba80b",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-2ee1137ba80b",
+  "arquivo": "componentes/list__acessibilidade.md",
+  "secao": "Acessibilidade no List › Recomendações para Estilo e Design",
+  "texto": "Forneça informações claras e concisas que sejam de fácil entendimento para os usuários;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "pais-prolixo",
+    "descricao": "O 1º item de lst-paises traz uma frase de mais de 30 palavras em vez do nome do país e da situação.",
+    "clausula": "Forneça informações claras e concisas"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-2ee1137ba80b",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-2ee1137ba80b",
+  "arquivo": "componentes/list__acessibilidade.md",
+  "secao": "Acessibilidade no List › Recomendações para Estilo e Design",
+  "texto": "Forneça informações claras e concisas que sejam de fácil entendimento para os usuários;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "opcao-prolixa",
+    "descricao": "Uma opção da lista do select traz uma frase de mais de 30 palavras em vez do nome do continente.",
+    "clausula": "Forneça informações claras e concisas"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-9ca0ad49a63a",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-9ca0ad49a63a",
+  "arquivo": "componentes/list__acessibilidade.md",
+  "secao": "Acessibilidade no List › Navegação e Comportamento",
+  "texto": "Certifique-se de que os elementos interativos dentro do list sejam acessíveis por teclado, com o uso das teclas Space ou Enter.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "item-nao-aciona-por-tecla",
+    "descricao": "Na lista aberta do select, Enter e Space não escolhem o item destacado; só o clique escolhe.",
+    "clausula": "acessíveis por teclado, com o uso das teclas Space ou Enter"
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-312e000d6784",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-312e000d6784",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Anatomia",
+  "texto": "2 · Item · Componente Item · Obrigatório",
+  "contexto": null,
+  "antecedente": "1 · Header · --- · Opcional",
+  "colocacao": [
+   {
+    "variante": "lista-sem-itens",
+    "descricao": "lst-paises mostra só o título; os 4 itens de país são retirados.",
+    "clausula": "2 · Item · Componente Item · Obrigatório"
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-39c30a5ea7ee",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-39c30a5ea7ee",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 4. Dividers e Espaçamento (Opcional)",
+  "texto": "Quando presentes, devem, estar localizados sempre abaixo da borda inferior de cada item, quando se tratar de uma list vertical ou após a borda direita, no caso de lists horizontais.",
+  "contexto": "Dividers são recursos opcionais que auxiliam visualmente a percepção do final do item de uma list favorecendo a distinção dos seus itens. Quando presentes, devem, estar localizados sempre abaixo da borda inferior de cada item, quando se tratar de uma list vertical ou após a borda direita, no caso de lists horizontais. Dividers podem ser utilizados também como agrupadores.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "divisor-vertical",
+    "descricao": "Os divisores de lst-paises ficam como borda vertical à direita de cada item, não abaixo dele.",
+    "clausula": "devem, estar localizados sempre abaixo da borda inferior de cada item, quando se tratar de uma list vertical"
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-56e1c02fed30",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-56e1c02fed30",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 2. Item (Obrigatório) › Área Principal",
+  "texto": "Texto Principal: texto obrigatório, onde o conteúdo principal da list será exibido;",
+  "contexto": null,
+  "antecedente": "A área principal suporta o conteúdo principal da list que geralmente é representado por textos. Podemos organizar o texto pensando na hierarquia da informação e para isso é recomendado utilizar as sugestões abaixo:",
+  "colocacao": [
+   {
+    "variante": "pais-sem-nome",
+    "descricao": "O 2º item de lst-paises perde o nome do país; fica só a linha de situação.",
+    "clausula": "Texto Principal: texto obrigatório"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-56e1c02fed30",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-56e1c02fed30",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 2. Item (Obrigatório) › Área Principal",
+  "texto": "Texto Principal: texto obrigatório, onde o conteúdo principal da list será exibido;",
+  "contexto": null,
+  "antecedente": "A área principal suporta o conteúdo principal da list que geralmente é representado por textos. Podemos organizar o texto pensando na hierarquia da informação e para isso é recomendado utilizar as sugestões abaixo:",
+  "colocacao": [
+   {
+    "variante": "opcao-sem-texto",
+    "descricao": "Um item da lista do select mostra só o controle de seleção, sem o nome do continente.",
+    "clausula": "Texto Principal: texto obrigatório"
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-66f76b92ffb0",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-66f76b92ffb0",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 2. Item (Obrigatório)",
+  "texto": "No entanto, esteja atento em manter a formatação e consistência dentro de uma mesma list.",
+  "contexto": "Pode-se utilizar as três áreas sugeridas em conjunto ou isoladamente. É permitida ainda a criação de novas áreas ou utilizar qualquer uma delas isoladamente. No entanto, esteja atento em manter a formatação e consistência dentro de uma mesma list.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "item-destoante",
+    "descricao": "Um item (da lista do select e de lst-paises) aparece em negrito e fonte maior que os demais.",
+    "clausula": "esteja atento em manter a formatação e consistência dentro de uma mesma list"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-66f76b92ffb0",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-66f76b92ffb0",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 2. Item (Obrigatório)",
+  "texto": "No entanto, esteja atento em manter a formatação e consistência dentro de uma mesma list.",
+  "contexto": "Pode-se utilizar as três áreas sugeridas em conjunto ou isoladamente. É permitida ainda a criação de novas áreas ou utilizar qualquer uma delas isoladamente. No entanto, esteja atento em manter a formatação e consistência dentro de uma mesma list.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "item-destoante",
+    "descricao": "Um item (da lista do select e de lst-paises) aparece em negrito e fonte maior que os demais.",
+    "clausula": "esteja atento em manter a formatação e consistência dentro de uma mesma list"
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-a14d31901423",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-a14d31901423",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 2. Item (Obrigatório)",
+  "texto": "Atenção: os itens de uma list podem apresentar a quantidade de conteúdo que for necessária e consequentemente a altura deve variar de acordo com o conteúdo.",
+  "contexto": "Atenção: os itens de uma list podem apresentar a quantidade de conteúdo que for necessária e consequentemente a altura deve variar de acordo com o conteúdo. Tenha cuidado ao utilizar alturas flexíveis de itens em uma mesma list.",
+  "antecedente": "Exemplos de variação das alturas dos itens de uma list",
+  "colocacao": [
+   {
+    "variante": "item-altura-fixa",
+    "descricao": "Os itens de lst-paises ficam com altura fixa de 24px e overflow escondido, cortando a linha da situação.",
+    "clausula": "a altura deve variar de acordo com o conteúdo"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-a14d31901423",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-a14d31901423",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 2. Item (Obrigatório)",
+  "texto": "Atenção: os itens de uma list podem apresentar a quantidade de conteúdo que for necessária e consequentemente a altura deve variar de acordo com o conteúdo.",
+  "contexto": "Atenção: os itens de uma list podem apresentar a quantidade de conteúdo que for necessária e consequentemente a altura deve variar de acordo com o conteúdo. Tenha cuidado ao utilizar alturas flexíveis de itens em uma mesma list.",
+  "antecedente": "Exemplos de variação das alturas dos itens de uma list",
+  "colocacao": [
+   {
+    "variante": "opcao-altura-fixa",
+    "descricao": "Os itens da lista do select ficam com altura fixa de 16px e overflow escondido, cortando o nome do continente.",
+    "clausula": "a altura deve variar de acordo com o conteúdo"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-aa386be53f7e",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-aa386be53f7e",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Anatomia",
+  "texto": "5 · Superfície · Fundamento Superfície · Obrigatório",
+  "contexto": null,
+  "antecedente": "4 · Divider · Componente Divider · Opcional",
+  "colocacao": [
+   {
+    "variante": "lista-sem-superficie",
+    "descricao": "A lista aberta do select fica com fundo transparente, deixando o formulário aparecer por baixo das opções.",
+    "clausula": "5 · Superfície · Fundamento Superfície · Obrigatório"
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-b145544e8477",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-b145544e8477",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 4. Dividers e Espaçamento (Opcional)",
+  "texto": "Atenção: os espaçamentos devem seguir as orientações especificadas no documento de Fundamentos/Espaçamentos.",
+  "contexto": null,
+  "antecedente": "Exemplo de list horizontal com dividers verticais",
+  "colocacao": [
+   {
+    "variante": "espaco-fora-da-escala",
+    "descricao": "Todos os itens (da lista do select e de lst-paises) ficam separados por 3px, valor fora da escala.",
+    "clausula": "os espaçamentos devem seguir as orientações especificadas no documento de Fundamentos/Espaçamentos"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-b145544e8477",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-b145544e8477",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 4. Dividers e Espaçamento (Opcional)",
+  "texto": "Atenção: os espaçamentos devem seguir as orientações especificadas no documento de Fundamentos/Espaçamentos.",
+  "contexto": null,
+  "antecedente": "Exemplo de list horizontal com dividers verticais",
+  "colocacao": [
+   {
+    "variante": "espaco-fora-da-escala",
+    "descricao": "Todos os itens (da lista do select e de lst-paises) ficam separados por 3px, valor fora da escala.",
+    "clausula": "os espaçamentos devem seguir as orientações especificadas no documento de Fundamentos/Espaçamentos"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-bebc6bb692e0",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-bebc6bb692e0",
+  "arquivo": "componentes/list__designer.md",
+  "secao": "List (Lista) › Detalhamento dos Itens › 2. Item (Obrigatório) › Recurso Visual ou Complementar",
+  "texto": "Atenção: mantenha a consistência de uma lista em relação ao posicionamento e tipos de recursos visuais/interativos utilizados.",
+  "contexto": null,
+  "antecedente": "Exemplos de possibilidades de uso dos recursos visuais/interativos em uma list representados em azul",
+  "colocacao": [
+   {
+    "variante": "controle-fora-de-posicao",
+    "descricao": "Num dos itens da lista do select o controle de seleção fica à direita do texto; nos demais, à esquerda.",
+    "clausula": "mantenha a consistência de uma lista em relação ao posicionamento e tipos de recursos visuais/interativos utilizados"
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-14f2e6c3226f",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-14f2e6c3226f",
+  "arquivo": "componentes/message__acessibilidade.md",
+  "secao": "Acessibilidade no Message › Navegação e Comportamento",
+  "texto": "É importante que após o fechamento da mensagem, o foco do navegador volte ao local original no fluxo de navegação.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "foco-perdido-ao-fechar",
+    "descricao": "Depois de fechar a mensagem pelo teclado, o foco cai no body (início do documento).",
+    "clausula": "após o fechamento da mensagem, o foco do navegador volte ao local original no fluxo de navegação"
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-55dab9d0155c",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-55dab9d0155c",
+  "arquivo": "componentes/message__acessibilidade.md",
+  "secao": "Acessibilidade no Message › Recomendações para Estilo e Design",
+  "texto": "Lembre-se que o uso de cores semânticas não atende a todos os públicos, sempre forneça uma alternativa para usuários de leitores de tela;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "tipo-mudo-no-leitor",
+    "descricao": "O ícone fica aria-hidden e o texto que dizia o tipo ('Informação'/'Erro') é retirado: o leitor de tela não sabe o tipo.",
+    "clausula": "sempre forneça uma alternativa para usuários de leitores de tela"
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-55dab9d0155c",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-55dab9d0155c",
+  "arquivo": "componentes/message__acessibilidade.md",
+  "secao": "Acessibilidade no Message › Recomendações para Estilo e Design",
+  "texto": "Lembre-se que o uso de cores semânticas não atende a todos os públicos, sempre forneça uma alternativa para usuários de leitores de tela;",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "tipo-mudo-no-leitor",
+    "descricao": "O ícone fica aria-hidden e o texto que dizia o tipo ('Informação'/'Erro') é retirado: o leitor de tela não sabe o tipo.",
+    "clausula": "sempre forneça uma alternativa para usuários de leitores de tela"
+   }
+  ]
+ }
+]

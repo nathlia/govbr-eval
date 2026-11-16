@@ -1,0 +1,186 @@
+{
+ "inp-codigo.apoio": {
+  "font-size": {
+   "seletor": ".apoio-campo",
+   "valor": "var(--font-size-scale-base)",
+   "imp": false,
+   "origem": "regular"
+  },
+  "font-weight": {
+   "seletor": "p",
+   "valor": "var(--font-weight-regular)",
+   "imp": false,
+   "origem": "regular"
+  },
+  "color": {
+   "seletor": "p",
+   "valor": "var(--color)",
+   "imp": false,
+   "origem": "regular"
+  },
+  "margin-top": {
+   "seletor": ".apoio-campo",
+   "valor": "var(--spacing-scale-half)",
+   "imp": false,
+   "origem": "regular"
+  }
+ },
+ "pagina.h1": {
+  "font-size": {
+   "seletor": ".h1, h1",
+   "valor": "var(--font-size-scale-up-06)",
+   "imp": false,
+   "origem": "regular"
+  },
+  "font-weight": {
+   "seletor": ".h1, h1",
+   "valor": "var(--font-weight-light)",
+   "imp": false,
+   "origem": "regular"
+  },
+  "color": {
+   "seletor": ".h1, h1",
+   "valor": "var(--color)",
+   "imp": false,
+   "origem": "regular"
+  }
+ },
+ "pagina.formTitulo": {
+  "font-size": {
+   "seletor": ".h2, h2",
+   "valor": "var(--font-size-scale-up-05)",
+   "imp": false,
+   "origem": "regular"
+  },
+  "font-weight": {
+   "seletor": ".h2, h2",
+   "valor": "var(--font-weight-regular)",
+   "imp": false,
+   "origem": "regular"
+  }
+ },
+ "pagina.secaoTitulo": {
+  "font-size": {
+   "seletor": ".h2, h2",
+   "valor": "var(--font-size-scale-up-05)",
+   "imp": false,
+   "origem": "regular"
+  },
+  "font-weight": {
+   "seletor": ".h2, h2",
+   "valor": "var(--font-weight-regular)",
+   "imp": false,
+   "origem": "regular"
+  }
+ },
+ "lst-paises.titulo": {
+  "font-size": {
+   "seletor": ".h2, h2",
+   "valor": "var(--font-size-scale-up-05)",
+   "imp": false,
+   "origem": "regular"
+  },
+  "font-weight": {
+   "seletor": ".h2, h2",
+   "valor": "var(--font-weight-regular)",
+   "imp": false,
+   "origem": "regular"
+  }
+ },
+ "rad-situacao.legend": {
+  "font-size": {
+   "seletor": ".legend, legend",
+   "valor": "var(--font-size-scale-up-01)",
+   "imp": false,
+   "origem": "regular"
+  },
+  "font-weight": {
+   "seletor": ".legend, legend",
+   "valor": "var(--font-weight-semi-bold)",
+   "imp": false,
+   "origem": "regular"
+  }
+ },
+ "btn-ajuda": {
+  "width": {
+   "seletor": ".br-button.circle, .br-button.is-circle, .br-button[circle]",
+   "valor": "var(--button-size)",
+   "imp": false,
+   "origem": "regular"
+  },
+  "height": {
+   "seletor": ".br-button",
+   "valor": "var(--button-size)",
+   "imp": false,
+   "origem": "regular"
+  },
+  "background-color": {
+   "seletor": ".br-button",
+   "valor": "rgba(0, 0, 0, 0)",
+   "imp": false,
+   "origem": "regular"
+  },
+  "color": {
+   "seletor": ".br-button",
+   "valor": "var(--interactive)",
+   "imp": false,
+   "origem": "regular"
+  }
+ },
+ "brd-trilha.atual": {
+  "font-weight": {
+   "seletor": ".br-breadcrumb .crumb:last-child span",
+   "valor": "var(--font-weight-medium)",
+   "imp": false,
+   "origem": "regular"
+  }
+ },
+ "msg-orientacao": {
+  "background-color": {
+   "seletor": ".br-message",
+   "valor": "",
+   "imp": false,
+   "origem": "regular"
+  },
+  "margin-left": null,
+  "padding-left": {
+   "seletor": ".mensagem-servico",
+   "valor": "calc((100% - min(100%, var(--faixa-largura))) / 2 + var(--faixa-margem))",
+   "imp": false,
+   "origem": "regular"
+  },
+  "width": null
+ },
+ "msg-erro.iconeConteudo": {
+  "display": {
+   "seletor": ".fa, .fab, .fad, .fal, .far, .fas, .svg-inline--fa",
+   "valor": "inline-block",
+   "imp": false,
+   "origem": "regular"
+  },
+  "color": null,
+  "font-size": {
+   "seletor": ".fa, .fab, .fad, .fal, .far, .fas, .svg-inline--fa",
+   "valor": "var(--icon-size)",
+   "imp": false,
+   "origem": "regular"
+  }
+ },
+ "lst-paises.secundario1": {
+  "font-size": null,
+  "color": null
+ },
+ "lst-paises.principal1": {
+  "font-size": null,
+  "color": null,
+  "font-weight": null
+ },
+ "sel-continente.lista": {
+  "box-shadow": {
+   "seletor": ".br-select .br-list",
+   "valor": "var(--select-shadow)",
+   "imp": false,
+   "origem": "regular"
+  }
+ }
+}

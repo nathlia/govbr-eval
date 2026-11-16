@@ -1,0 +1,148 @@
+{
+ "sonda": "switch-teclado",
+ "estado": "S0",
+ "paradasAte": 17,
+ "focoVisual": {
+  "before": {
+   "outline": "none 3px rgb(51, 51, 51)",
+   "boxShadow": "rgb(194, 133, 12) 0px 0px 0px 2px",
+   "borda": "solid 1px rgb(194, 133, 12)",
+   "w": "52px",
+   "h": "30px",
+   "fundo": "rgb(255, 255, 255)"
+  },
+  "after": {
+   "boxShadow": "none",
+   "w": "22px",
+   "h": "22px",
+   "fundo": "rgb(204, 204, 204)",
+   "left": "469.047px"
+  },
+  "focusVisible": true
+ },
+ "difFoco": {
+  "clip": {
+   "x": 50,
+   "y": 580.046875,
+   "width": 537.046875,
+   "height": 50
+  },
+  "iguais": false,
+  "bytesCom": 5122,
+  "bytesSem": 4330
+ },
+ "inicial": {
+  "checked": false,
+  "ariaChecked": "false",
+  "ax": {
+   "papel": "switch",
+   "nome": "Emitir certificado sanitário automaticamente para países habilitados",
+   "ignorado": false,
+   "props": {
+    "invalid": "false",
+    "focusable": true,
+    "focused": true,
+    "checked": "false"
+   }
+  },
+  "situacao": "",
+  "rotuloEstado": "\"Desligada\"",
+  "caixaRaiz": {
+   "x": 60,
+   "y": 590.046875,
+   "w": 589.5,
+   "h": 30
+  },
+  "chave": {
+   "left": "469.047px",
+   "fundo": "rgb(204, 204, 204)",
+   "transform": "none"
+  }
+ },
+ "aposSpace": {
+  "checked": true,
+  "ariaChecked": "true",
+  "ax": {
+   "papel": "switch",
+   "nome": "Emitir certificado sanitário automaticamente para países habilitados",
+   "ignorado": false,
+   "props": {
+    "invalid": "false",
+    "focusable": true,
+    "focused": true,
+    "checked": "true"
+   }
+  },
+  "situacao": "Emissão automática ligada.",
+  "rotuloEstado": "\"Ligada\"",
+  "caixaRaiz": {
+   "x": 60,
+   "y": 590.046875,
+   "w": 568.859375,
+   "h": 30
+  },
+  "chave": {
+   "left": "491.047px",
+   "fundo": "rgb(89, 146, 237)",
+   "transform": "none"
+  }
+ },
+ "aposEnter": {
+  "checked": true,
+  "ariaChecked": "true",
+  "ax": {
+   "papel": "switch",
+   "nome": "Emitir certificado sanitário automaticamente para países habilitados",
+   "ignorado": false,
+   "props": {
+    "invalid": "false",
+    "focusable": true,
+    "focused": true,
+    "checked": "true"
+   }
+  },
+  "situacao": "Emissão automática ligada.",
+  "rotuloEstado": "\"Ligada\"",
+  "caixaRaiz": {
+   "x": 60,
+   "y": 590.046875,
+   "w": 568.859375,
+   "h": 30
+  },
+  "chave": {
+   "left": "491.047px",
+   "fundo": "rgb(89, 146, 237)",
+   "transform": "none"
+  }
+ },
+ "aposSpace2": {
+  "checked": false,
+  "ariaChecked": "false",
+  "ax": {
+   "papel": "switch",
+   "nome": "Emitir certificado sanitário automaticamente para países habilitados",
+   "ignorado": false,
+   "props": {
+    "invalid": "false",
+    "focusable": true,
+    "focused": true,
+    "checked": "false"
+   }
+  },
+  "situacao": "Emissão automática desligada.",
+  "rotuloEstado": "\"Desligada\"",
+  "caixaRaiz": {
+   "x": 60,
+   "y": 590.046875,
+   "w": 589.5,
+   "h": 30
+  },
+  "chave": {
+   "left": "469.047px",
+   "fundo": "rgb(204, 204, 204)",
+   "transform": "none"
+  }
+ },
+ "navegacoes": "http://127.0.0.1:3219/cadastro-pais.html",
+ "errosPagina": []
+}

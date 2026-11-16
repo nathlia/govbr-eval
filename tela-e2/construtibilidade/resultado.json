@@ -1,0 +1,97 @@
+{
+ "core": "3.7.0",
+ "checks": {
+  "S0-carga-sem-erro": {
+   "ok": true,
+   "fato": []
+  },
+  "rawline": {
+   "ok": true,
+   "fato": [
+    "Rawline, Raleway, sans-serif",
+    true
+   ]
+  },
+  "S0-msg-erro-oculta": {
+   "ok": true,
+   "fato": null
+  },
+  "select-gatilho-no-tab": {
+   "ok": true,
+   "fato": [
+    "sel-gatilho"
+   ]
+  },
+  "switch-estado-imediato": {
+   "ok": true,
+   "fato": {
+    "antes": {
+     "textoEstado": "\"Desligada\"",
+     "checked": false,
+     "aria": "false"
+    },
+    "depois": {
+     "textoEstado": "\"Ligada\"",
+     "checked": true,
+     "aria": "true"
+    }
+   }
+  },
+  "message-fechar-e-ajuda": {
+   "ok": true,
+   "fato": {
+    "fechou": true,
+    "voltou": true
+   }
+  },
+  "radio-setas": {
+   "ok": true,
+   "fato": "sit1"
+  },
+  "botao-hover-muda": {
+   "ok": true,
+   "fato": {
+    "bg0": "none|rgb(255, 255, 255)",
+    "bg1": "linear-gradient(rgba(19, 81, 180, 0.16), rgba(19, 81, 180, 0.16))|rgb(255, 255, 255)"
+   }
+  },
+  "botao-foco-visivel": {
+   "ok": true,
+   "fato": "dashed 4px rgb(194, 133, 12)"
+  },
+  "lista-itens": {
+   "ok": true,
+   "fato": null
+  },
+  "S1-alcancavel": {
+   "ok": true,
+   "fato": {
+    "msg": true,
+    "nome": true,
+    "cont": true,
+    "sit": true,
+    "borda": "rgb(229, 34, 7)"
+   }
+  },
+  "S2-alcancavel": {
+   "ok": true,
+   "fato": {
+    "fechada": "none",
+    "aberta": {
+     "display": "block",
+     "expanded": true,
+     "itens": 6
+    }
+   }
+  },
+  "select-simples-escolhe": {
+   "ok": true,
+   "fato": "América"
+  }
+ },
+ "resumo": {
+  "checks": 13,
+  "ok": 13,
+  "falhas": []
+ }
+}

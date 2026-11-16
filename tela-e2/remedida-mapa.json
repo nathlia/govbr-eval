@@ -1,0 +1,113 @@
+{
+ "_meta": {
+  "regra": "Regra do coordenador, fixada antes de qualquer resultado: uma sorteada DS conta como confirmada às cegas para o portão se a 1ª auditoria a achou com a cláusula sorteada OU se o 2º auditor cego, perguntado de forma neutra entre iscas, mede o observável sorteado como violado. 'Achada com outra cláusula' sozinha continua sendo o item 1 da autora.",
+  "semente": 20261114,
+  "prng": "mulberry32 + Fisher–Yates (montar-pedido-remedida.mjs)",
+  "pedido": {
+   "arquivo": "auditoria-e2/remedida/pedido.json (fora do repositório)",
+   "sha256": "0e1b2e3c57f51249c06f61a779836319bb6e008dccdcb354847c2229ad123229"
+  },
+  "iscas": "10: controles conformes (btn-cancelar, swt-certificado) e obrigações conformes de outros hospedeiros (msg-orientacao, inp-nome-pais, inp-codigo), medidas conformes nesta preparação (headless, corpus 386a8d8). Tipos espelham os das 4 sorteadas: posição/alinhamento, corte a 200 %, visual de estado na mensagem, contraste.",
+  "paraOPortao": "Só as DS contam: rad-situacao (não achada) e msg-erro (outra cláusula). lst-paises e sel-continente são G e entram para disfarce e sensibilidade."
+ },
+ "mapa": [
+  {
+   "id": "R-01",
+   "tipo": "isca-controle",
+   "chave": "isca:btn-cancelar:posicao",
+   "instancia": "btn-cancelar",
+   "medidaNestaPreparacao": "botão abaixo dos campos, na barra alinhada à direita do formulário (borda direita da barra = borda direita do formulário, 700)"
+  },
+  {
+   "id": "R-02",
+   "tipo": "isca-outro-hospedeiro",
+   "chave": "isca:msg-orientacao:cor-informativo",
+   "instancia": "msg-orientacao",
+   "medidaNestaPreparacao": "rgb(212, 229, 255)"
+  },
+  {
+   "id": "R-03",
+   "tipo": "sorteada-outra-clausula",
+   "chave": "sel-continente::a2-7348bce34289",
+   "instancia": "sel-continente",
+   "medidaNestaPreparacao": null
+  },
+  {
+   "id": "R-04",
+   "tipo": "isca-outro-hospedeiro",
+   "chave": "isca:msg-orientacao:200",
+   "instancia": "msg-orientacao",
+   "medidaNestaPreparacao": "conteúdo 121/121 px de altura, 460/460 de largura; nada fora"
+  },
+  {
+   "id": "R-05",
+   "tipo": "sorteada-nao-achada",
+   "chave": "rad-situacao::a2-f838b54da560",
+   "instancia": "rad-situacao",
+   "medidaNestaPreparacao": null
+  },
+  {
+   "id": "R-06",
+   "tipo": "isca-outro-hospedeiro",
+   "chave": "isca:inp-nome-pais:contraste",
+   "instancia": "inp-nome-pais",
+   "medidaNestaPreparacao": "rgb(51, 51, 51) sobre branco = 12,63:1"
+  },
+  {
+   "id": "R-07",
+   "tipo": "isca-controle",
+   "chave": "isca:swt-certificado:200",
+   "instancia": "swt-certificado",
+   "medidaNestaPreparacao": "rótulo 41/41 px de altura, 488/488 de largura; nada fora"
+  },
+  {
+   "id": "R-08",
+   "tipo": "isca-outro-hospedeiro",
+   "chave": "isca:msg-orientacao:posicao",
+   "instancia": "msg-orientacao",
+   "medidaNestaPreparacao": "ícone em x 76 (esquerda); Fechar em x 1180–1212, y 123 (topo, direita) numa superfície 0–1280"
+  },
+  {
+   "id": "R-09",
+   "tipo": "isca-outro-hospedeiro",
+   "chave": "isca:inp-codigo:200",
+   "instancia": "inp-codigo",
+   "medidaNestaPreparacao": "rótulo 41/41 px, 200/200 de largura; apoio dentro da janela; nada fora"
+  },
+  {
+   "id": "R-10",
+   "tipo": "isca-controle",
+   "chave": "isca:swt-certificado:contraste",
+   "instancia": "swt-certificado",
+   "medidaNestaPreparacao": "rgb(51, 51, 51) sobre branco = 12,63:1"
+  },
+  {
+   "id": "R-11",
+   "tipo": "sorteada-outra-clausula",
+   "chave": "msg-erro::a2-ef29db5bb4ac",
+   "instancia": "msg-erro",
+   "medidaNestaPreparacao": null
+  },
+  {
+   "id": "R-12",
+   "tipo": "isca-controle",
+   "chave": "isca:btn-cancelar:contraste",
+   "instancia": "btn-cancelar",
+   "medidaNestaPreparacao": "rgb(19, 81, 180) sobre branco = 7,33:1"
+  },
+  {
+   "id": "R-13",
+   "tipo": "isca-outro-hospedeiro",
+   "chave": "isca:msg-orientacao:estados",
+   "instancia": "msg-orientacao",
+   "medidaNestaPreparacao": "fundo rgb(212, 229, 255); ícones fa-info-circle e fa-times; nenhum visual de Selecionado"
+  },
+  {
+   "id": "R-14",
+   "tipo": "sorteada-nao-achada",
+   "chave": "lst-paises::a2-5432c282d0d7",
+   "instancia": "lst-paises",
+   "medidaNestaPreparacao": null
+  }
+ ]
+}

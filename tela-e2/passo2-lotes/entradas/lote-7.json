@@ -1,0 +1,2775 @@
+[
+ {
+  "id": "a2-84ab6302d6fd",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Evite conteúdos extensos: Muito conteúdo não é necessariamente a melhor solução.",
+  "contexto": "Evite conteúdos extensos: Muito conteúdo não é necessariamente a melhor solução. Essa prática implica em maior tempo de leitura e aprendizado pelo usuário. A informação deve ser absorvida de forma rápida pelo leitor.",
+  "antecedente": "1. Orientações Gerais:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-8867ed50c2b9",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "A informação deve ser absorvida de forma rápida pelo leitor.",
+  "contexto": "Evite conteúdos extensos: Muito conteúdo não é necessariamente a melhor solução. Essa prática implica em maior tempo de leitura e aprendizado pelo usuário. A informação deve ser absorvida de forma rápida pelo leitor.",
+  "antecedente": "1. Orientações Gerais:",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-0c096d7d2cc0",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Utilize a mensagem para orientar tomadas de decisão do usuário, não apenas para informá-lo sobre o ocorrido;",
+  "contexto": "Eduque os usuários: Empty States são uma ótima oportunidade para ensinar seus usuários utilizarem seu produto. Utilize a mensagem para orientar tomadas de decisão do usuário, não apenas para informá-lo sobre o ocorrido;",
+  "antecedente": "1. Orientações Gerais:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-4e655f426491",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Mantenha a consistência: Situações semelhantes em Empty States devem possuir o mesmo padrão na ilustração e informação textual;",
+  "contexto": null,
+  "antecedente": "1. Orientações Gerais:",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-af8bc35e90fd",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Utilize este tipo em situações simples ou em recursos menos prioritários, quando a quantidade de informação a ser exibida for pequena;",
+  "contexto": null,
+  "antecedente": "2. Melhores Práticas em Ausência de Dados:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-91a79f4d8b09",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Não use termos técnicos ou desconhecidos pelo usuário;",
+  "contexto": null,
+  "antecedente": "2. Melhores Práticas em Ausência de Dados:",
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-bbe6bd5b4475",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Use poucas palavras para que o usuário entenda e atue de forma rápida;",
+  "contexto": null,
+  "antecedente": "2. Melhores Práticas em Ausência de Dados:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-17d72cea5113",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Ofereça opções de soluções ao usuário.",
+  "contexto": "Ofereça opções de soluções ao usuário. Evite deixá-lo num beco sem saída.",
+  "antecedente": "2. Melhores Práticas em Ausência de Dados:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-91e8e34880dc",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Evite deixá-lo num beco sem saída.",
+  "contexto": "Ofereça opções de soluções ao usuário. Evite deixá-lo num beco sem saída.",
+  "antecedente": "2. Melhores Práticas em Ausência de Dados:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-293375edc322",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Caso haja ação a ser tomada pelo usuário, inclua um botão ou link para tal e oriente o usuário sobre o que fazer;",
+  "contexto": null,
+  "antecedente": "2. Melhores Práticas em Ausência de Dados:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-523430a38747",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Não induza o usuário a resolver vários problemas.",
+  "contexto": "Não induza o usuário a resolver vários problemas. Oriente sobre o ponto mais importante a ser resolvido;",
+  "antecedente": "2. Melhores Práticas em Ausência de Dados:",
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-9c047f730ae6",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Oriente sobre o ponto mais importante a ser resolvido;",
+  "contexto": "Não induza o usuário a resolver vários problemas. Oriente sobre o ponto mais importante a ser resolvido;",
+  "antecedente": "2. Melhores Práticas em Ausência de Dados:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b750cb586664",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Não relacione conteúdos de outras áreas da aplicação;",
+  "contexto": "Seja contextual. Não relacione conteúdos de outras áreas da aplicação;",
+  "antecedente": "2. Melhores Práticas em Ausência de Dados:",
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-9d423ce53af1",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Use linguajar claro e conciso;",
+  "contexto": null,
+  "antecedente": "3. Melhores Práticas em Gerenciamento de Erros:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-d07728d0f144",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Evite linguagem petulante, respeite o usuário;",
+  "contexto": null,
+  "antecedente": "3. Melhores Práticas em Gerenciamento de Erros:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-4e78a369a124",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Evite usar conteúdo relacionados a outras situações;",
+  "contexto": "Seja contextual. Evite usar conteúdo relacionados a outras situações;",
+  "antecedente": "3. Melhores Práticas em Gerenciamento de Erros:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-39ee21ef92a6",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Utilize ilustrações adequadas ao contexto do erro;",
+  "contexto": null,
+  "antecedente": "3. Melhores Práticas em Gerenciamento de Erros:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-c88ee44de98e",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Ofereça opções de soluções ao usuário;",
+  "contexto": null,
+  "antecedente": "3. Melhores Práticas em Gerenciamento de Erros:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-d2a892bab815",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Seja claro e direto: Mantenha uma relação clara entre a situação que esta ocorrendo e o conteúdo apresentado ao usuário;",
+  "contexto": "- Seja claro e direto: Mantenha uma relação clara entre a situação que esta ocorrendo e o conteúdo apresentado ao usuário;",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Melhores práticas de empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-9697ca7c6fb2",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Agrade o usuário: Fortaleça um laço de empatia com seu público-alvo e reforce uma boa impressão sobre seu produto, utilizando uma comunicação humana e amigável",
+  "contexto": "- Agrade o usuário: Fortaleça um laço de empatia com seu público-alvo e reforce uma boa impressão sobre seu produto, utilizando uma comunicação humana e amigável nas ilustrações e mensagens textuais.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Melhores práticas de empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-56daed191da1",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Seja claro sobre qual tipo de dado será exibido quando a informação for inserida;",
+  "contexto": "- Seja claro sobre qual tipo de dado será exibido quando a informação for inserida;",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Melhores práticas de empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-84eb88766d68",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Seja contextual.",
+  "contexto": "- Seja contextual. Não relacione conteúdos de outras áreas da aplicação;",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Melhores práticas de empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-8f9228b406c9",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Se houver ações corretivas oriente sobre como executá-las e inclua um link ou botão para acioná-las;",
+  "contexto": "- Se houver ações corretivas oriente sobre como executá-las e inclua um link ou botão para acioná-las;",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Melhores práticas de empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-7131132f5bd0",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Melhores Práticas",
+  "texto": "Caso haja várias etapas a seguir, conduza o usuário à etapa inicial.",
+  "contexto": "- Caso haja várias etapas a seguir, conduza o usuário à etapa inicial.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Melhores práticas de empty state; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-c8902b7754f0",
+  "componente": null,
+  "arquivo": "padroes/design/emptystates.md",
+  "secao": "Empty States › Tipos Comuns de Empty States e como Usá-los › 3. Gerenciamento de Erros em Empty States",
+  "texto": "Tabela normativa — Empty States › Tipos Comuns de Empty States e como Usá-los › 3. Gerenciamento de Erros em Empty States (a partir da linha 108)",
+  "contexto": "l.108: Explique a ausência dos dados || l.108: Explique ao usuário o que fazer || l.110: Oriente sobre as etapas necessárias para contornar o problema || l.111: Deixe claro ao usuário quais tipos de arquivos são suportados || l.112: Oriente sobre as etapas necessárias para solicitar o acesso || l.113: Forneça ao usuário uma explicação pontual sobre como iniciar a configuração necessária",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Tabela de mensagens de empty state de erro; nenhum estado da tela tem conteúdo vazio.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-3d935c4b833a",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 1. Título e Subtítulo",
+  "texto": "Os títulos e subtítulos do formulário são textos que descrevem o objetivo do formulário e devem ter o maior tamanho de texto entre todos os elementos do formulário.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Título do formulário com o maior tamanho de texto do formulário. Medida: font-size do título do formulário contra rótulos e textos do formulário.",
+   "instancias": [
+    "pagina"
+   ],
+   "variantes": [
+    {
+     "id": "titulo-form-menor",
+     "descricao": "O título do formulário da aba Documentos fica com font-size menor que os rótulos dos campos."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-98916290fb39",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 1. Título e Subtítulo",
+  "texto": "Se o formulário for o único elemento da página o título do formulário deve ser o próprio título da página.",
+  "contexto": "Se o formulário for o único elemento da página o título do formulário deve ser o próprio título da página. O título também pode ser seguido por um subtítulo que ajuda a descrevê-lo.",
+  "antecedente": "Os títulos e subtítulos do formulário são textos que descrevem o objetivo do formulário e devem ter o maior tamanho de texto entre todos os elementos do formulário.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "O formulário não é o único elemento da página.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-489a52bad95a",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 1. Título e Subtítulo",
+  "texto": "Faça com que títulos e subtítulos sejam os mais breves e específicos possíveis.",
+  "contexto": "Faça com que títulos e subtítulos sejam os mais breves e específicos possíveis. Pode-se adicionar um subtítulo com uma breve descrição se necessário.",
+  "antecedente": "Se o formulário for o único elemento da página o título do formulário deve ser o próprio título da página. O título também pode ser seguido por um subtítulo que ajuda a descrevê-lo.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Título/subtítulo do formulário breve e específico. R-ED (b): caso flagrante e oposto ao texto. Medida: nº de palavras do título do formulário da aba Documentos.",
+   "instancias": [
+    "pagina"
+   ],
+   "variantes": [
+    {
+     "id": "titulo-form-prolixo",
+     "descricao": "O título do formulário da aba Documentos vira uma frase de ~30 palavras explicando todo o processo de envio.",
+     "clausula": "Faça com que títulos e subtítulos sejam os mais breves e específicos possíveis."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-A.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-3778203c3941",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos",
+  "texto": "Utilize rótulos concisos e que auxiliem os usuários a entender quais informações estão sendo solicitadas.",
+  "contexto": null,
+  "antecedente": "Para boas práticas na elaboração dos rótulos:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Rótulos concisos. R-ED (b): rótulo-parágrafo é flagrante e oposto a \"concisos\". Medida: nº de palavras do rótulo.",
+   "instancias": [
+    "sel-tipo-documento",
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-prolixo",
+     "descricao": "O rótulo do campo vira uma frase de ~25 palavras (ex.: 'Selecione abaixo, dentre as opções disponíveis, qual é o tipo de documento que você pretende anexar a este requerimento agora').",
+     "clausula": "Utilize rótulos concisos"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "lote-A.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-cad7cafa42d7",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos",
+  "texto": "Mantenha os rótulos sempre visíveis e precisos.",
+  "contexto": "Mantenha os rótulos sempre visíveis e precisos. Nunca os substitua por placeholders ou elementos que se desloquem pela página.",
+  "antecedente": "Para boas práticas na elaboração dos rótulos:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — rotulo-so-leitor-de-tela → a2-a70181ba5638 (A caixa do checkbox, pseudo-elemento do rótulo, some junto: outro nó, visível e obrigatório.); a2-402eef83153c (Nos switches, a chave desenhada no label some junto: outro nó, visível e obrigatório.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Rótulo sempre visível (vai além da 6.2: a etiqueta pode estar associada e escondida). Medida: rótulo do campo renderizado com área visível (sem recorte/clip, dentro da tela).)",
+   "origem": "revisao-2"
+  },
+  "porque": "acoplada"
+ },
+ {
+  "id": "a2-31c6d22fa5eb",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos",
+  "texto": "Mantenha a consistência: se optar pelos dois pontos \":\" no final do rótulo mantenha esse padrão em todos os formulários do sistema.",
+  "contexto": null,
+  "antecedente": "Para boas práticas na elaboração dos rótulos:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Uso consistente de ':' no fim dos rótulos. R-ED (a): presença do caractere é contável. Medida: último caractere de cada rótulo do formulário.",
+   "instancias": [
+    "sel-tipo-documento",
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "dois-pontos-em-um-so",
+     "descricao": "Só o rótulo deste campo termina com ':'; os demais rótulos do formulário ficam sem.",
+     "clausula": "se optar pelos dois pontos \":\" no final do rótulo mantenha esse padrão em todos os formulários do sistema"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-A.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-f2afb51765c7",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos",
+  "texto": "Posicione os rótulos sempre próximos aos campos que os descrevem.",
+  "contexto": "Posicione os rótulos sempre próximos aos campos que os descrevem. Nos componentes de entrada de texto (input, textarea, etc.), é recomendável que os rótulos estejam localizados na parte superior do campo.",
+  "antecedente": "Para boas práticas na elaboração dos rótulos:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Rótulo próximo do campo que descreve. Medida: distância vertical entre a base do rótulo e o topo do campo (getBoundingClientRect).",
+   "instancias": [
+    "sel-tipo-documento",
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-afastado",
+     "descricao": "O rótulo fica separado do seu campo por ~120px de espaço vazio (margem inferior grande).",
+     "clausula": "Posicione os rótulos sempre próximos aos campos que os descrevem."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-A.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-b174afd9a294",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos › Campos obrigatórios/opcionais",
+  "texto": "Caso seja necessário oferecer campos opcionais, sinalize-os com um texto entre parênteses ao lado direito do texto de cada rótulo.",
+  "contexto": null,
+  "antecedente": "Prefira criar formulários cujos os campos de entrada sejam obrigatórios. Utilize o subtítulo do formulário para deixar esta decisão clara para o usuário.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Condição \"oferecer campos opcionais\" falsa: tipo de documento e arquivo são exigidos e os switches são preferências com estado, não campos opcionais a preencher.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-624afa51bbaf",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos › Campos obrigatórios/opcionais",
+  "texto": "Atenção: não utilize as regras acima concomitantemente; isto é, evite sinalizar ao mesmo tempo os campos obrigatórios e opcionais.",
+  "contexto": null,
+  "antecedente": "Evite o excesso de campos de entrada opcionais/obrigatórios. Se necessário, considere dedicar um grupo inteiro de campos opcionais/obrigatórios a fim de evitar repetições desnecessárias.",
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Não marcar ao mesmo tempo campos obrigatórios e opcionais. Medida: textos de marcação nos rótulos do formulário.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "marca-os-dois",
+     "descricao": "O rótulo do select ganha '(obrigatório)' e o do switch de SMS, '(opcional)'."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-bfb3c1909154",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados",
+  "texto": "A largura dos campos de entrada não deve ser alterada conforme o tamanho do texto inserido.",
+  "contexto": "A largura dos campos de entrada não deve ser alterada conforme o tamanho do texto inserido. Caso o texto de entrada seja muito longo, considere técnicas de truncamento.",
+  "antecedente": "Siga as recomendações:",
+  "forca": "proibida",
+  "marcador": "nao-modal",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Largura do campo não muda com o texto. Medida: largura do campo antes e depois de escolher a opção mais longa.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "largura-cresce",
+     "descricao": "A largura do campo do select acompanha o texto escolhido."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-cf130efa2e85",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados",
+  "texto": "Os campos de entrada de texto devem sugerir um tamanho compatível com a entrada esperada.",
+  "contexto": "Os campos de entrada de texto devem sugerir um tamanho compatível com a entrada esperada. O usuário fica extremamente suscetível a erros quando não consegue ver sua entrada completa.",
+  "antecedente": "Siga as recomendações:",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Campos de entrada de texto livre; o formulário não tem campo de texto (select e upload).",
+   "origem": "revisao-1"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-dd6755387798",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Senhas",
+  "texto": "Disponibilize componentes de anonimização de senhas.",
+  "contexto": "Disponibilize componentes de anonimização de senhas. É recomendável utilizar uma alternativa para que o usuário visualize e oculte o conteúdo durante o preenchimento.",
+  "antecedente": "As senhas permitem autenticar usuários em uma determinada interface, muitas vezes concedendo privilégios específicos e permitindo acesso a informações personalizadas.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Senha/autenticação; a tela não tem campo de senha nem login.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-66dab8e5616b",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Senhas",
+  "texto": "Oriente o usuário que sua senha ou chave é segura.",
+  "contexto": "Oriente o usuário que sua senha ou chave é segura. Adicione um feedback visual e textual com níveis de segurança como Baixa, Média e Alta. Não deixe de dar dicas para criar senha com segurança alta, tais como:",
+  "antecedente": "As senhas permitem autenticar usuários em uma determinada interface, muitas vezes concedendo privilégios específicos e permitindo acesso a informações personalizadas.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Senha/autenticação; a tela não tem campo de senha nem login.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-f6a3d82a870e",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Senhas",
+  "texto": "Adicione um feedback visual e textual com níveis de segurança como Baixa, Média e Alta.",
+  "contexto": "Oriente o usuário que sua senha ou chave é segura. Adicione um feedback visual e textual com níveis de segurança como Baixa, Média e Alta. Não deixe de dar dicas para criar senha com segurança alta, tais como:",
+  "antecedente": "As senhas permitem autenticar usuários em uma determinada interface, muitas vezes concedendo privilégios específicos e permitindo acesso a informações personalizadas.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Senha/autenticação; a tela não tem campo de senha nem login.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-4459124a7579",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Senhas",
+  "texto": "Não deixe de dar dicas para criar senha com segurança alta, tais como:",
+  "contexto": "Oriente o usuário que sua senha ou chave é segura. Adicione um feedback visual e textual com níveis de segurança como Baixa, Média e Alta. Não deixe de dar dicas para criar senha com segurança alta, tais como:",
+  "antecedente": "As senhas permitem autenticar usuários em uma determinada interface, muitas vezes concedendo privilégios específicos e permitindo acesso a informações personalizadas.",
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Senha/autenticação; a tela não tem campo de senha nem login.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-0f5a8d9af0cd",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Senhas",
+  "texto": "Incluir números, letras maiúsculas e minúsculas e caracteres especiais;",
+  "contexto": null,
+  "antecedente": "As senhas permitem autenticar usuários em uma determinada interface, muitas vezes concedendo privilégios específicos e permitindo acesso a informações personalizadas.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Senha/autenticação; a tela não tem campo de senha nem login.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-a87b2a845894",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Senhas",
+  "texto": "Não conter seu nome de usuário, nome real ou da empresa, ou uma palavra completa;",
+  "contexto": null,
+  "antecedente": "As senhas permitem autenticar usuários em uma determinada interface, muitas vezes concedendo privilégios específicos e permitindo acesso a informações personalizadas.",
+  "forca": "a-julgar",
+  "marcador": "restritivo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Senha/autenticação; a tela não tem campo de senha nem login.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b07629546d9c",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Senhas",
+  "texto": "Sempre forneça a opção de alterar ou recuperar a senha.",
+  "contexto": "Sempre forneça a opção de alterar ou recuperar a senha. Essas opções devem estar visíveis e de fácil acesso para o usuário.",
+  "antecedente": "As senhas permitem autenticar usuários em uma determinada interface, muitas vezes concedendo privilégios específicos e permitindo acesso a informações personalizadas.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há senha.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-78612395b3bd",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Senhas",
+  "texto": "Essas opções devem estar visíveis e de fácil acesso para o usuário.",
+  "contexto": "Sempre forneça a opção de alterar ou recuperar a senha. Essas opções devem estar visíveis e de fácil acesso para o usuário.",
+  "antecedente": "As senhas permitem autenticar usuários em uma determinada interface, muitas vezes concedendo privilégios específicos e permitindo acesso a informações personalizadas.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há senha.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-3d8de30133b5",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Senhas",
+  "texto": "Caso o usuário tenha mais de uma opção para se autenticar em uma interface (certificado digital, senha...), agrupe as opções de forma simples e compreensível para o usuário.",
+  "contexto": null,
+  "antecedente": "As senhas permitem autenticar usuários em uma determinada interface, muitas vezes concedendo privilégios específicos e permitindo acesso a informações personalizadas.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Senha/autenticação; a tela não tem campo de senha nem login.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-bfe9de3d991b",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Edição",
+  "texto": "Nestes casos, informe claramente essa funcionalidade para o usuário.",
+  "contexto": "Há situações em que dados de entrada já enviados para o servidor precisam ser editados ou retificados. Nestes casos, informe claramente essa funcionalidade para o usuário.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Edição de dado já enviado; a tela não tem modo de edição.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-4cdc9d7a999d",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Edição",
+  "texto": "Insira um elemento identificador (ícone, texto, etc.) próximo à informação editável que deixe claro que a informação pode ser editada.",
+  "contexto": null,
+  "antecedente": "Há situações em que dados de entrada já enviados para o servidor precisam ser editados ou retificados. Nestes casos, informe claramente essa funcionalidade para o usuário.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Edição de dado já enviado; a tela não tem modo de edição.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-0ae0ad7cc0fc",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Edição",
+  "texto": "Forneça possibilidades para cancelar e salvar as alterações.",
+  "contexto": null,
+  "antecedente": "Há situações em que dados de entrada já enviados para o servidor precisam ser editados ou retificados. Nestes casos, informe claramente essa funcionalidade para o usuário.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Edição de dado já enviado; a tela não tem modo de edição.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-47018c352c2e",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Edição",
+  "texto": "1- Caso alguns campos possam ser editáveis, é importante informar quais podem ser editáveis, caso todos sejam editáveis não é necessário indicar. 2- Pode-se utilizar o próprio indicador para acionar a edição de forma individual, ou ter um acionador \"global\". 3- Quando estiver no modo edição, é sempre importante dar a opção de salvar ou cancelar a edição.",
+  "contexto": null,
+  "antecedente": "Forneça possibilidades para cancelar e salvar as alterações.",
+  "forca": "obrigatoria",
+  "marcador": "necessario",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Edição de dado já enviado; a tela não tem modo de edição.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-ac1b95753264",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Edição",
+  "texto": "Atenção: o acionador deve ser compatível com a informação a ser editada; isto é, select para casos de dados pré-determinados, input, para casos de textos livres e assim por diante.",
+  "contexto": null,
+  "antecedente": "1- Caso alguns campos possam ser editáveis, é importante informar quais podem ser editáveis, caso todos sejam editáveis não é necessário indicar. 2- Pode-se utilizar o próprio indicador para acionar a edição de forma individual, ou ter um acionador \"global\". 3- Quando estiver no modo edição, é sempre importante dar a opção de salvar ou cancelar a edição.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Edição de dado já enviado; não há.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-20a2754d88ff",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Orientações de Preenchimento › 1. Placeholder",
+  "texto": "Atenção: não utilize placeholders no lugar de rótulos.",
+  "contexto": null,
+  "antecedente": "Exemplos de Placeholders.",
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Proibição específica: placeholder no lugar de rótulo (o e-MAG 6.2 trata da associação do LABEL). Medida: rótulo visível presente além do placeholder.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "placeholder-como-rotulo",
+     "descricao": "O rótulo visível do select some; 'Tipo de documento' fica só como placeholder (com aria-label).",
+     "clausula": "Atenção: não utilize placeholders no lugar de rótulos."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-24bb665c67e9",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Orientações de Preenchimento › 2. Máscara",
+  "texto": "Não divida o input em campos separados, isso aumenta o custo de interação do usuário, além de causar problemas para usuários internacionais, visto que utilizam padrões diferenciados.",
+  "contexto": "Não divida o input em campos separados, isso aumenta o custo de interação do usuário, além de causar problemas para usuários internacionais, visto que utilizam padrões diferenciados. Por exemplo, o formato do telefone nos EUA é bem diferente do brasileiro: +1 (xxx) xxx-xx-xx.",
+  "antecedente": "Fique atento para as seguintes dicas:",
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Máscara/campo de texto com formato; a tela não tem campo de texto livre.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-af2c234f5730",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Orientações de Preenchimento › 2. Máscara",
+  "texto": "Em caso de internacionalização, forneça o seletor de código do país.",
+  "contexto": "Em caso de internacionalização, forneça o seletor de código do país. O seletor deverá utilizar o padrão dropdown e oferecer ao usuário a possibilidade de escolher o código de cada país, além de permitir a implementação do padrão de máscaras de cada localidade específica.",
+  "antecedente": "Fique atento para as seguintes dicas:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Internacionalização/seletor de código de país; a tela não tem campo de telefone nem internacionalização.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-382bb2936b69",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Orientações de Preenchimento › 2. Máscara",
+  "texto": "O seletor deverá utilizar o padrão dropdown e oferecer ao usuário a possibilidade de escolher o código de cada país, além de permitir a implementação do padrão de máscaras de cada localidade específica.",
+  "contexto": "Em caso de internacionalização, forneça o seletor de código do país. O seletor deverá utilizar o padrão dropdown e oferecer ao usuário a possibilidade de escolher o código de cada país, além de permitir a implementação do padrão de máscaras de cada localidade específica.",
+  "antecedente": "Fique atento para as seguintes dicas:",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Seletor de código de país; não há.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-6b25644d6264",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Orientações de Preenchimento › 2. Máscara",
+  "texto": "A máscara deverá oferecer espaçamentos e separadores específicos para cada trecho do número, código ou protocolo digitado.",
+  "contexto": "A máscara deverá oferecer espaçamentos e separadores específicos para cada trecho do número, código ou protocolo digitado. Esta prática oferece ao usuário uma melhor visualização do texto, além de prevenir possíveis erros de digitação.",
+  "antecedente": "Fique atento para as seguintes dicas:",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Máscara/campo de texto com formato; a tela não tem campo de texto livre.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-2ceedc253459",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Orientações de Preenchimento › 3. Texto Auxiliar",
+  "texto": "Atenção: textos auxiliares devem ser compactos e objetivos.",
+  "contexto": null,
+  "antecedente": "Exemplo de texto auxiliar.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b). Textos auxiliares compactos e objetivos. Medida: palavras do texto de apoio do upload.",
+   "instancias": [
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "apoio-prolixo",
+     "descricao": "O texto de apoio do upload vira um parágrafo de 110 palavras.",
+     "clausula": "Atenção: textos auxiliares devem ser compactos e objetivos."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-a4bf60541c53",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Orientações de Preenchimento › 4. Ícone Ajuda",
+  "texto": "Utilize o ícone Ajuda somente para os casos que a informação complementar não precisa estar visível em um primeiro momento.",
+  "contexto": "Utilize o ícone Ajuda somente para os casos que a informação complementar não precisa estar visível em um primeiro momento. Costuma ser utilizado para esclarecer questões legais ou para justificar a coleta de determinados dados.",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-modal",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone Ajuda de campo de formulário (anatomia do formulário, ao lado do rótulo); as ajudas da tela ficam no card, não em campo.",
+   "origem": "revisao-1"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-d43497944f79",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Orientações de Preenchimento › 4. Ícone Ajuda",
+  "texto": "Para acionar esse componente deve ser utilizado um botão de ênfase terciária com um ícone ou texto indicando sua finalidade, posicionado na mesma linha á direita a uma unidade de espaçamento mínimo do rótulo do campo a ser preenchido.",
+  "contexto": null,
+  "antecedente": "Utilize o ícone Ajuda somente para os casos que a informação complementar não precisa estar visível em um primeiro momento. Costuma ser utilizado para esclarecer questões legais ou para justificar a coleta de determinados dados.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ajuda junto a rótulo de campo; as ajudas da tela ficam no card.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-d9aa1b2d1d9a",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Orientações de Preenchimento › 4. Ícone Ajuda",
+  "texto": "Atenção: não use este recurso para obter informações vitais para a conclusão da tarefa, instruções ou outras informações diretamente acionáveis, como requisitos de campo.",
+  "contexto": "Atenção: não use este recurso para obter informações vitais para a conclusão da tarefa, instruções ou outras informações diretamente acionáveis, como requisitos de campo. Os usuários não devem precisar desse tipo de ajuda para concluir sua tarefa.",
+  "antecedente": "Exemplo do uso do ícone de ajuda.",
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Mesmo recurso (ícone Ajuda de campo de formulário); não há na tela.",
+   "origem": "revisao-1"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-3b08e1a472b9",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 3. Botões",
+  "texto": "Use ênfase primária para ações mais importante do formulário como, por exemplo, \"Incluir Registro\" ou \"Enviar Formulário\".",
+  "contexto": null,
+  "antecedente": "Formulários podem exigir botões com até três ênfases:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "Ação principal do formulário é btn-enviar (primário), moldura protegida.",
+   "origem": "lote-A.json"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-c71a21ed13c6",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 3. Botões",
+  "texto": "Use ênfase secundária para ações secundárias como \"Cancelar\" ou \"Salvar Rascunho\".",
+  "contexto": null,
+  "antecedente": "Formulários podem exigir botões com até três ênfases:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "Ação secundária do formulário é btn-voltar (secundário), moldura protegida.",
+   "origem": "lote-A.json"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-39813471d8ec",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 3. Botões",
+  "texto": "Use ênfase terciária para ações menos importantes, como \"Exibir Informações Adicionais\" ou \"Documentos Acessórios\".",
+  "contexto": null,
+  "antecedente": "Formulários podem exigir botões com até três ênfases:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "O formulário não tem ação terciária; suas ações são btn-enviar e btn-voltar.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-2ac598dc24db",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 3. Botões",
+  "texto": "Quando utilizar mais de um botão, o elemento com ênfase primária deve estar necessariamente posicionado à direita dos botões de ênfase secundária e estes sempre mais à direita dos botões de ênfase terciária.",
+  "contexto": "Quando utilizar mais de um botão, o elemento com ênfase primária deve estar necessariamente posicionado à direita dos botões de ênfase secundária e estes sempre mais à direita dos botões de ênfase terciária. Estes podem alinhados à esquerda do formulário.",
+  "antecedente": "Use ênfase terciária para ações menos importantes, como \"Exibir Informações Adicionais\" ou \"Documentos Acessórios\".",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "Ordem de botões primário/secundário; os botões são andaime.",
+   "origem": "rodada-0"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-f2a3e883d74b",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 3. Botões",
+  "texto": "Quando a disposição da tela permitir que os botões sejam posicionados apenas verticalmente, o botão de ênfase primária deve estar posicionado mais abaixo.",
+  "contexto": null,
+  "antecedente": "Ordem da hierarquia das ênfases: primária (1), secundária (2) e terciária (3).",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Botões em coluna; não há.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-2a54996a9365",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Layout e Estrutura › 1. Grid (Colunas e Linhas)",
+  "texto": "Atenção: nos formulários ou nos agrupamentos de campos de entrada em que é possível dispor todos os campos de entrada em uma única linha, é importante manter a consistência entre as larguras dos campos e as larguras das colunas.",
+  "contexto": null,
+  "antecedente": "Exemplo de uso se colunas dentro do formulário. Para formulários curtos é preferível dispor os campos em uma única coluna. Formulários mais complexos podem exigir um estudo mais detalhado na distribuição dos campos.",
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Campos dispostos numa única linha com colunas; o formulário da tela é em coluna única.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-2e4efd30789f",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Layout e Estrutura › 2. Fieldset e Legend",
+  "texto": "Seu tamanho deve ter menos ênfase do que o título do formulário e deve manter a consistência sem variação no tamanho do corpo de texto em todo o formulário, a menos que tenha conceitos de hierarquia envolvidos (veja \"4- Indentação e Subagrupamentos\").",
+  "contexto": "Legends funcionam como títulos de agrupamentos e antecipam o tipo de informação que o usuário poderá encontrar naquele grupo de campos de entrada. Seu tamanho deve ter menos ênfase do que o título do formulário e deve manter a consistência sem variação no tamanho do corpo de texto em todo o formulário, a menos que tenha conceitos de hierarquia envolvidos (veja \"4- Indentação e Subagrupamentos\").",
+  "antecedente": "Fieldsets servem para agrupar elementos de formulários, muito parecido com o Label, porém, ele necessita de um elemento textual (não obrigatório) para representá-lo como rótulo: o legend.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Legend com menos ênfase que o título do formulário. Medida: font-size do legend dos avisos contra o do título do formulário.",
+   "instancias": [
+    "swt-aviso-email"
+   ],
+   "variantes": [
+    {
+     "id": "legend-maior",
+     "descricao": "O legend dos avisos fica com font-size maior que o título do formulário."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-86f6a0b9425c",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Layout e Estrutura › 2. Fieldset e Legend",
+  "texto": "Neste caso, mantenha a área da legend como ativador conforme a diretriz do padrão collapse.",
+  "contexto": "Os agrupamentos podem ser apresentados na forma contraída (padrão collapse). Neste caso, mantenha a área da legend como ativador conforme a diretriz do padrão collapse.",
+  "antecedente": "Agrupamentos com fieldset melhoram a acessibilidade.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Agrupamento em collapse com legend ativadora; o fieldset dos avisos não é recolhível.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-02ccd4221688",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Layout e Estrutura › 2. Fieldset e Legend",
+  "texto": "Importante: dentro do Design System, o Fieldset é usado somente como um elemento semântico dentro de um formulário, não tendo nenhum tipo de estilização visual (delimitação de uma borda visual).",
+  "contexto": "Importante: dentro do Design System, o Fieldset é usado somente como um elemento semântico dentro de um formulário, não tendo nenhum tipo de estilização visual (delimitação de uma borda visual). Portanto, deve-se utilizar o legend para aumentar sua acessibilidade. Nas imagens acima, o uso de bordas no fieldset é feito apenas por questões didáticas.",
+  "antecedente": "Agrupamentos apresentados em collapse com uso de fieldset e legend.",
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Fieldset só semântico, sem delimitação visual (borda). Medida: border-style/border-width computados do fieldset dos avisos.",
+   "instancias": [
+    "swt-aviso-email"
+   ],
+   "variantes": [
+    {
+     "id": "fieldset-com-moldura",
+     "descricao": "O fieldset \"Avisos sobre o requerimento\" ganha borda visível de 1px sólida cinza em volta do grupo.",
+     "clausula": "o Fieldset é usado somente como um elemento semântico dentro de um formulário, não tendo nenhum tipo de estilização visual (delimitação de uma borda visual)"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-A.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-83bfe4ed2cf5",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Layout e Estrutura › 3. Indentação e Subagrupamentos",
+  "texto": "Utilize a escala de layout definida no fundamento Espaçamento para identar os subagrupamentos.",
+  "contexto": "Utilize a escala de layout definida no fundamento Espaçamento para identar os subagrupamentos. Utilize um valor que fique claro este comportamento tendo como referência o agrupamento que o contêm.",
+  "antecedente": "Subagrupamentos são agrupamentos dentro de agrupamentos. Para tornar mais clara e hierarquizada a informação utilize indentação evidente para os subagrupamentos.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Subagrupamentos (agrupamento dentro de agrupamento); a tela tem um só fieldset, sem subgrupo.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-6ceb6e2d93dc",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Layout e Estrutura › 3. Indentação e Subagrupamentos",
+  "texto": "Utilize um valor que fique claro este comportamento tendo como referência o agrupamento que o contêm.",
+  "contexto": "Utilize a escala de layout definida no fundamento Espaçamento para identar os subagrupamentos. Utilize um valor que fique claro este comportamento tendo como referência o agrupamento que o contêm.",
+  "antecedente": "Subagrupamentos são agrupamentos dentro de agrupamentos. Para tornar mais clara e hierarquizada a informação utilize indentação evidente para os subagrupamentos.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Indentação de subagrupamentos; não há subagrupamento.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-0cb2e580195d",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Layout e Estrutura › 4. Outras Formas de Agrupamento › Por Espaçamento › Separando entradas, ações e grupos",
+  "texto": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela e em todo o produto.",
+  "contexto": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela e em todo o produto. (Veja mais no fundamento Espaçamento.)",
+  "antecedente": "um espaçamento menor entre os campos de entrada de dados, texto ou opções.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Espaçamentos constantes para a mesma função. Medida: distância rótulo→campo em cada campo do formulário.",
+   "instancias": [
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "espaco-irregular",
+     "descricao": "A distância entre o rótulo e o campo do upload fica 2px, diferente dos demais campos."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-50ff18a836d4",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Lei Geral de Proteção de Dados",
+  "texto": "Exiba sempre explicações sobre o motivo da coleta dos dados, principalmente dados pessoais e sensíveis.",
+  "contexto": null,
+  "antecedente": "Respeite a Lei Geral de Proteção de Dados e outros regulamentos de privacidade, solicitando o mínimo de informações absolutamente necessárias.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "O formulário não coleta dado pessoal ou sensível (tipo de documento, arquivo da pendência e preferência de aviso).",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b818d065250a",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Lei Geral de Proteção de Dados",
+  "texto": "Exiba os campos de opção de consentimento sem marcação prévia.",
+  "contexto": null,
+  "antecedente": "Respeite a Lei Geral de Proteção de Dados e outros regulamentos de privacidade, solicitando o mínimo de informações absolutamente necessárias.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há campo de consentimento de tratamento de dados; os switches são preferência de aviso.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-89965775338d",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Lei Geral de Proteção de Dados",
+  "texto": "Ofereça explicações de como o usuário pode retirar seu consentimento, quando for o caso.",
+  "contexto": null,
+  "antecedente": "Respeite a Lei Geral de Proteção de Dados e outros regulamentos de privacidade, solicitando o mínimo de informações absolutamente necessárias.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Política de privacidade/consentimento; a tela não tem texto de política nem campo de consentimento.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-56bd5865c48f",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Lei Geral de Proteção de Dados",
+  "texto": "Disponibilize recursos de anonimização de senhas e dados pessoais sensíveis.",
+  "contexto": null,
+  "antecedente": "Respeite a Lei Geral de Proteção de Dados e outros regulamentos de privacidade, solicitando o mínimo de informações absolutamente necessárias.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há senha nem dado pessoal sensível exibido.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b0601e9daa37",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Lei Geral de Proteção de Dados › Dados Sigilosos e Dados Anonimizados",
+  "texto": "Para exibição de campos de formulários em que os dados foram anonimizados, principalmente em adequação à LGPD, utilize uma mensagem do sistema (como o componente message) informando que o dado foi anonimizado.",
+  "contexto": "Para exibição de campos de formulários em que os dados foram anonimizados, principalmente em adequação à LGPD, utilize uma mensagem do sistema (como o componente message) informando que o dado foi anonimizado. Pode-se ainda acrescentar um ícone ou ilustração para reforçar esta condição.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há dado anonimizado exibido.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-58e29e56c70c",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Lei Geral de Proteção de Dados › Boas Práticas de LGPD em Políticas de Privacidade",
+  "texto": "Use termos simples e de fácil entendimento a um número maior de usuários.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Política de privacidade/consentimento; a tela não tem texto de política nem campo de consentimento.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-1418d2403848",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Lei Geral de Proteção de Dados › Boas Práticas de LGPD em Políticas de Privacidade",
+  "texto": "Evite termos técnicos e “juridiquês”.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Política de privacidade/consentimento; a tela não tem texto de política nem campo de consentimento.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-104625827227",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Lei Geral de Proteção de Dados › Boas Práticas de LGPD em Políticas de Privacidade",
+  "texto": "Ofereça opções de consentimento de forma granular para que o usuário possa decidir de forma individual quais dados e de que forma ele poderá ser armazenado, divulgado ou compartilhado.",
+  "contexto": "Ofereça opções de consentimento de forma granular para que o usuário possa decidir de forma individual quais dados e de que forma ele poderá ser armazenado, divulgado ou compartilhado. É recomendável a utilização dos componentes checkbox, switch ou equivalente posicionados imediatamente junto ao texto do questionamento sobre o consentimento.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Política de privacidade/consentimento; a tela não tem texto de política nem campo de consentimento.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-5718addd2fba",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Lei Geral de Proteção de Dados › Boas Práticas de LGPD em Políticas de Privacidade",
+  "texto": "Apresente o conteúdo de forma visual.",
+  "contexto": "Apresente o conteúdo de forma visual. Divida o conteúdo por assunto, tornando-o mais compreensível e escaneável para facilitar a assimilação do conteúdo.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Política de privacidade/consentimento; a tela não tem texto de política nem campo de consentimento.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-9c1fe9faf68c",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Lei Geral de Proteção de Dados › Boas Práticas de LGPD em Políticas de Privacidade",
+  "texto": "Divida o conteúdo por assunto, tornando-o mais compreensível e escaneável para facilitar a assimilação do conteúdo.",
+  "contexto": "Apresente o conteúdo de forma visual. Divida o conteúdo por assunto, tornando-o mais compreensível e escaneável para facilitar a assimilação do conteúdo.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Política de privacidade/consentimento; a tela não tem texto de política nem campo de consentimento.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-5f8cc152c597",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Melhores Práticas",
+  "texto": "Informe qualquer situação em que o usuário tenha que aguardar o sistema processar um comando, realizar verificações ou carregar dados.",
+  "contexto": "Informe qualquer situação em que o usuário tenha que aguardar o sistema processar um comando, realizar verificações ou carregar dados. Utilize os componentes loading ou mesmo o componente message para informar a situação geral do sistema.",
+  "antecedente": "Exemplo de formulário com exibição progressiva.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Espera de processamento/carregamento; nenhum estado da tela (S0–S2) tem espera.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-1f3a0f8ef57f",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Melhores Práticas",
+  "texto": "Utilize os componentes loading ou mesmo o componente message para informar a situação geral do sistema.",
+  "contexto": "Informe qualquer situação em que o usuário tenha que aguardar o sistema processar um comando, realizar verificações ou carregar dados. Utilize os componentes loading ou mesmo o componente message para informar a situação geral do sistema.",
+  "antecedente": "Exemplo de formulário com exibição progressiva.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Loading/message para situação de espera; nenhum estado da tela tem espera.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-77f619357b64",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Senhas",
+  "texto": "Durante a definição de uma senha, sempre confirme a senha que será cadastrada com um outro campo similar e mostre o usuário que existe um erro entre duas senhas",
+  "contexto": "- Durante a definição de uma senha, sempre confirme a senha que será cadastrada com um outro campo similar e mostre o usuário que existe um erro entre duas senhas caso exista algum problema durante o processo.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Confirmação de senha; a tela não tem campo de senha.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-7b6b4e989ae3",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Senhas",
+  "texto": "Ter pelo menos seis a oito caracteres;",
+  "contexto": "- Ter pelo menos seis a oito caracteres;",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Requisito de senha; a tela não tem campo de senha.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-4fc1cd5d74dd",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados › Senhas",
+  "texto": "Ser bastante diferente das senhas anteriores;",
+  "contexto": "- Ser bastante diferente das senhas anteriores;",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Requisito de senha; a tela não tem campo de senha.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-69c06d5fd1ad",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Orientações de Preenchimento",
+  "texto": "O mesmo se aplica às regras de sintaxe, como pontuação ou espaçamento para números de telefone ou cartões de crédito.",
+  "contexto": "Atenção: explique claramente quaisquer requisitos de entrada ou formatação. Se um campo de entrada de dados exigir um formato ou tipo específico de entrada, indique as instruções exatas. O mesmo se aplica às regras de sintaxe, como pontuação ou espaçamento para números de telefone ou cartões de crédito.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Regras de sintaxe de digitação (pontuação, espaçamento); a tela não tem campo de texto livre. O requisito de formato do upload já está em e-MAG 6.5.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ }
+]

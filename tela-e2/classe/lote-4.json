@@ -1,0 +1,548 @@
+{
+ "msg-orientacao::a2-05db50db6619": {
+  "categorias": [
+   "componente"
+  ],
+  "classe": "DS",
+  "razao": "Muda o conteúdo do texto da mensagem de orientação (parte da anatomia), sem tocar propriedade acessível nem campo."
+ },
+ "btn-ajuda::a2-460f5696acde": {
+  "categorias": [
+   "componente"
+  ],
+  "classe": "DS",
+  "razao": "Troca o ícone do botão de ajuda; o nome acessível permanece igual."
+ },
+ "btn-ajuda::a2-66cc8c46f14a": {
+  "categorias": [
+   "token",
+   "estrutura"
+  ],
+  "classe": "DS",
+  "razao": "Desloca o botão de ajuda para longe do título; o observável é a proximidade visual."
+ },
+ "btn-ajuda::a2-c7d20a2735ef": {
+  "categorias": [
+   "comportamento"
+  ],
+  "classe": "DS",
+  "razao": "Atrasa a reação ao acionar o botão de ajuda: efeito da interação."
+ },
+ "inp-codigo::a2-0cb2e580195d": {
+  "categorias": [
+   "token"
+  ],
+  "classe": "DS",
+  "razao": "Altera valores de espaçamento (rótulo-campo e entre campos) num só campo."
+ },
+ "inp-nome-pais::a2-0cb2e580195d": {
+  "categorias": [
+   "token"
+  ],
+  "classe": "DS",
+  "razao": "Altera valores de espaçamento (rótulo-campo e entre campos) num só campo."
+ },
+ "sel-continente::a2-0cb2e580195d": {
+  "categorias": [
+   "token"
+  ],
+  "classe": "DS",
+  "razao": "Altera valores de espaçamento (rótulo-campo e entre campos) num só campo."
+ },
+ "inp-codigo::a2-20a2754d88ff": {
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Remove o rótulo visível e o substitui por placeholder: o observável é o rótulo do campo."
+ },
+ "inp-nome-pais::a2-20a2754d88ff": {
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Remove o rótulo visível e o substitui por placeholder: o observável é o rótulo do campo."
+ },
+ "sel-continente::a2-20a2754d88ff": {
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Remove o rótulo visível e o substitui por placeholder: o observável é o rótulo do campo."
+ },
+ "inp-codigo::a2-24bb665c67e9": {
+  "categorias": [
+   "estrutura",
+   "formulario",
+   "acessibilidade"
+  ],
+  "classe": "G",
+  "razao": "Divide o campo em três inputs com nomes acessíveis próprios: muda marcação, rotulagem do campo e nomes acessíveis."
+ },
+ "btn-limpar::a2-2ac598dc24db": {
+  "categorias": [
+   "token"
+  ],
+  "classe": "DS",
+  "razao": "Inverte só a posição visual dos botões (order), sem mudar a ordem do DOM."
+ },
+ "inp-codigo::a2-2ceedc253459": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Torna prolixo o texto de apoio do campo, que é instrução de preenchimento."
+ },
+ "rad-situacao::a2-2e4efd30789f": {
+  "categorias": [
+   "tipografia"
+  ],
+  "classe": "DS",
+  "razao": "Aumenta o tamanho de fonte da legend acima do título do formulário."
+ },
+ "inp-codigo::a2-3778203c3941": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Altera o texto do rótulo do campo (ou legend) para frase longa: o observável é o rótulo."
+ },
+ "inp-nome-pais::a2-3778203c3941": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Altera o texto do rótulo do campo (ou legend) para frase longa: o observável é o rótulo."
+ },
+ "rad-situacao::a2-3778203c3941": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Altera o texto do rótulo do campo (ou legend) para frase longa: o observável é o rótulo."
+ },
+ "sel-continente::a2-3778203c3941": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Altera o texto do rótulo do campo (ou legend) para frase longa: o observável é o rótulo."
+ },
+ "btn-limpar::a2-3d935c4b833a": {
+  "categorias": [
+   "tipografia"
+  ],
+  "classe": "DS",
+  "razao": "Aumenta o tamanho de fonte de um texto do formulário acima do título."
+ },
+ "inp-codigo::a2-3d935c4b833a": {
+  "categorias": [
+   "tipografia"
+  ],
+  "classe": "DS",
+  "razao": "Aumenta o tamanho de fonte de um texto do formulário acima do título."
+ },
+ "inp-nome-pais::a2-3d935c4b833a": {
+  "categorias": [
+   "tipografia"
+  ],
+  "classe": "DS",
+  "razao": "Aumenta o tamanho de fonte de um texto do formulário acima do título."
+ },
+ "sel-continente::a2-3d935c4b833a": {
+  "categorias": [
+   "tipografia"
+  ],
+  "classe": "DS",
+  "razao": "Aumenta o tamanho de fonte de um texto do formulário acima do título."
+ },
+ "inp-nome-pais::a2-624afa51bbaf": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Marca obrigatoriedade e opcionalidade ao mesmo tempo nos rótulos: o observável é a obrigatoriedade sinalizada."
+ },
+ "rad-situacao::a2-624afa51bbaf": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Marca obrigatoriedade e opcionalidade ao mesmo tempo nos rótulos: o observável é a obrigatoriedade sinalizada."
+ },
+ "sel-continente::a2-624afa51bbaf": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Marca obrigatoriedade e opcionalidade ao mesmo tempo nos rótulos: o observável é a obrigatoriedade sinalizada."
+ },
+ "inp-codigo::a2-b174afd9a294": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Muda ou retira a marca de campo opcional no rótulo: observável de obrigatoriedade do campo."
+ },
+ "inp-codigo::a2-bfb3c1909154": {
+  "categorias": [
+   "token",
+   "comportamento"
+  ],
+  "classe": "DS",
+  "razao": "A largura do campo passa a variar conforme o conteúdo digitado ou escolhido."
+ },
+ "inp-nome-pais::a2-bfb3c1909154": {
+  "categorias": [
+   "token",
+   "comportamento"
+  ],
+  "classe": "DS",
+  "razao": "A largura do campo passa a variar conforme o conteúdo digitado ou escolhido."
+ },
+ "sel-continente::a2-bfb3c1909154": {
+  "categorias": [
+   "token",
+   "comportamento"
+  ],
+  "classe": "DS",
+  "razao": "A largura do campo passa a variar conforme o conteúdo digitado ou escolhido."
+ },
+ "inp-codigo::a2-cad7cafa42d7": {
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Oculta visualmente o rótulo do campo, mantendo a associação: o observável é o rótulo visível."
+ },
+ "inp-nome-pais::a2-cad7cafa42d7": {
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Oculta visualmente o rótulo do campo, mantendo a associação: o observável é o rótulo visível."
+ },
+ "sel-continente::a2-cad7cafa42d7": {
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Oculta visualmente o rótulo do campo, mantendo a associação: o observável é o rótulo visível."
+ },
+ "inp-codigo::a2-cf130efa2e85": {
+  "categorias": [
+   "token"
+  ],
+  "classe": "DS",
+  "razao": "Reduz a largura do campo a 16px: valor de tamanho."
+ },
+ "inp-nome-pais::a2-cf130efa2e85": {
+  "categorias": [
+   "token"
+  ],
+  "classe": "DS",
+  "razao": "Reduz a largura do campo a 16px: valor de tamanho."
+ },
+ "inp-codigo::a2-f2afb51765c7": {
+  "categorias": [
+   "token"
+  ],
+  "classe": "DS",
+  "razao": "Afasta o rótulo do campo com margem de ~120px: valor de espaçamento."
+ },
+ "inp-nome-pais::a2-f2afb51765c7": {
+  "categorias": [
+   "token"
+  ],
+  "classe": "DS",
+  "razao": "Afasta o rótulo do campo com margem de ~120px: valor de espaçamento."
+ },
+ "sel-continente::a2-f2afb51765c7": {
+  "categorias": [
+   "token"
+  ],
+  "classe": "DS",
+  "razao": "Afasta o rótulo do campo com margem de ~120px: valor de espaçamento."
+ },
+ "inp-codigo::a2-015f84774222": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Reescreve o texto do rótulo do campo em caixa alta: o observável é o rótulo."
+ },
+ "inp-nome-pais::a2-015f84774222": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Reescreve o texto do rótulo do campo em caixa alta: o observável é o rótulo."
+ },
+ "rad-situacao::a2-015f84774222": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Reescreve o texto do rótulo do campo em caixa alta: o observável é o rótulo."
+ },
+ "sel-continente::a2-015f84774222": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Reescreve o texto do rótulo do campo em caixa alta: o observável é o rótulo."
+ },
+ "swt-certificado::a2-015f84774222": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Reescreve o texto do rótulo do campo em caixa alta: o observável é o rótulo."
+ },
+ "msg-erro::a2-0ea33ff35779": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Reescreve a mensagem de erro dos campos obrigatórios culpando o usuário."
+ },
+ "btn-limpar::a2-12afa1f3c1f0": {
+  "categorias": [
+   "componente"
+  ],
+  "classe": "DS",
+  "razao": "Troca o texto do botão por um substantivo sem verbo; o botão continua nomeado."
+ },
+ "inp-codigo::a2-1f45d0dc0c3a": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Só um rótulo de campo ganha dois-pontos: inconsistência no rótulo."
+ },
+ "inp-nome-pais::a2-1f45d0dc0c3a": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Só um rótulo de campo ganha dois-pontos: inconsistência no rótulo."
+ },
+ "rad-situacao::a2-1f45d0dc0c3a": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Só um rótulo de campo ganha dois-pontos: inconsistência no rótulo."
+ },
+ "sel-continente::a2-1f45d0dc0c3a": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Só um rótulo de campo ganha dois-pontos: inconsistência no rótulo."
+ },
+ "btn-limpar::a2-36013fffe17a": {
+  "categorias": [
+   "componente"
+  ],
+  "classe": "DS",
+  "razao": "Troca o texto do botão por jargão técnico; o botão continua nomeado."
+ },
+ "lst-paises::a2-3f23afca6972": {
+  "categorias": [
+   "componente"
+  ],
+  "classe": "DS",
+  "razao": "Torna prolixo o título da lista (parte da anatomia)."
+ },
+ "btn-limpar::a2-46c418f28680": {
+  "categorias": [
+   "componente"
+  ],
+  "classe": "DS",
+  "razao": "Torna prolixo o texto do botão; o botão continua nomeado."
+ },
+ "btn-limpar::a2-5a1fcf660ae1": {
+  "categorias": [
+   "componente"
+  ],
+  "classe": "DS",
+  "razao": "Insere artigo no texto do botão."
+ },
+ "inp-codigo::a2-7278a9812cac": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Reescreve o rótulo do campo em forma negativa: o observável é o rótulo."
+ },
+ "inp-nome-pais::a2-7278a9812cac": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Reescreve o rótulo do campo em forma negativa: o observável é o rótulo."
+ },
+ "sel-continente::a2-7278a9812cac": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Reescreve o rótulo do campo em forma negativa: o observável é o rótulo."
+ },
+ "swt-certificado::a2-7278a9812cac": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Reescreve o rótulo do campo em forma negativa: o observável é o rótulo."
+ },
+ "btn-limpar::a2-73e03945d5cc": {
+  "categorias": [
+   "componente"
+  ],
+  "classe": "DS",
+  "razao": "Muda a capitalização do texto do botão."
+ },
+ "msg-erro::a2-909e5f61d661": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Reescreve a mensagem de erro dos campos com tom zombeteiro."
+ },
+ "btn-ajuda::a2-d47f4c470491": {
+  "categorias": [
+   "componente"
+  ],
+  "classe": "DS",
+  "razao": "Troca o ícone do botão por um que não expressa a ação; o nome acessível fica igual."
+ },
+ "msg-orientacao::a2-d47f4c470491": {
+  "categorias": [
+   "componente"
+  ],
+  "classe": "DS",
+  "razao": "Troca o ícone do botão por um que não expressa a ação; o nome acessível fica igual."
+ },
+ "msg-erro::a2-d6b3f0e36943": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Reescreve a mensagem de erro dos campos com jargão técnico."
+ },
+ "msg-orientacao::a2-d6b3f0e36943": {
+  "categorias": [
+   "componente"
+  ],
+  "classe": "DS",
+  "razao": "Reescreve o texto da mensagem de orientação com jargão técnico."
+ },
+ "inp-codigo::a2-5610d5df55f0": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Incha o texto de apoio do campo, que é instrução de preenchimento."
+ },
+ "msg-orientacao::a2-5610d5df55f0": {
+  "categorias": [
+   "componente"
+  ],
+  "classe": "DS",
+  "razao": "Incha o texto da mensagem de orientação com frases redundantes."
+ },
+ "msg-erro::a2-6a045b31f05d": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Insere palavrão na mensagem de erro dos campos."
+ },
+ "msg-orientacao::a2-6a045b31f05d": {
+  "categorias": [
+   "componente"
+  ],
+  "classe": "DS",
+  "razao": "Insere palavrão no texto da mensagem de orientação."
+ },
+ "lst-paises::a2-6c531e6437e8": {
+  "categorias": [
+   "componente"
+  ],
+  "classe": "DS",
+  "razao": "Usa termo diferente para a mesma situação num item da lista."
+ },
+ "lst-paises::a2-9250e991e04f": {
+  "categorias": [
+   "componente",
+   "acessibilidade"
+  ],
+  "classe": "G",
+  "razao": "Remove o texto da situação e deixa só a cor: mesma exigência do e-MAG sobre informação só por cor (alternativa textual)."
+ },
+ "msg-erro::a2-c0b99a02cf6b": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Reescreve a mensagem de erro dos campos com regionalismo."
+ },
+ "msg-orientacao::a2-c0b99a02cf6b": {
+  "categorias": [
+   "componente"
+  ],
+  "classe": "DS",
+  "razao": "Reescreve o texto da mensagem de orientação com regionalismo."
+ },
+ "msg-erro::a2-e0663017fccc": {
+  "categorias": [
+   "componente",
+   "formulario"
+  ],
+  "classe": "G",
+  "razao": "Reordena as frases da mensagem de erro dos campos, deixando o fato principal no fim."
+ },
+ "msg-orientacao::a2-e0663017fccc": {
+  "categorias": [
+   "componente"
+  ],
+  "classe": "DS",
+  "razao": "Reordena as frases da mensagem de orientação, deixando o fato principal no fim."
+ }
+}

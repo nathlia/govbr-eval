@@ -1,0 +1,581 @@
+
+== medir-html-servido.mjs
+{ vazios: 0, booleanos: 0, headInd: [ 0, 0, 0, 0 ] }
+
+== medir.mjs
+S0: foco na chegada body; 38 textos; 82 cores; 18 paradas de Tab; erros 0
+S1: foco na chegada button#btn-salvar.br-button.primary.acao-salvar; 43 textos; 96 cores; 18 paradas de Tab; erros 0
+S2: foco na chegada input#continente; 44 textos; 100 cores; 18 paradas de Tab; erros 0
+
+== interagir.mjs
+skiplink-teclado {"sonda":"skiplink-teclado","estado":"S0","passos":[{"tecla":"Tab 1","foco":"a.br-item","item1":{"x":16,"y":0,"w":300,"h":36.296875},"item1Visivel":true},{"tecla":"Tab 2","foco":"a.br-item","item2":{"x":16,"y":0,"w":300,"h":36.296875},"item2Visivel":true,"item1Visivel":false},{"tecla":"Tab 3","foco":"a#sgn-usuaria.br-sign-in.conta-usuaria","item1Visivel":false,"item2Visivel":false}],"ativacao":{"f
+skiplink-ponteiro {"0":{"ponteiro":[20,5],"item1Visivel":false,"item1":{"x":16,"y":-900,"w":300,"h":36.296875}},"1":{"ponteiro":[60,15],"item1Visivel":false,"item1":{"x":16,"y":-900,"w":300,"h":36.296875}},"2":{"ponteiro":[160,20],"item1Visivel":false,"item1":{"x":16,"y":-900,"w":300,"h":36.296875}},"3":{"ponteiro":[300,10],"item1Visivel":false,"item1":{"x":16,"y":-900,"w":300,"h":36.296875}},"sonda":"skiplink-pont
+nome-digitar {"sonda":"nome-digitar","estado":"S0","porClique":{"valor":"Brasil","readOnly":false,"foco":"input#nome-pais"},"porTab":{"valor":"Chile","foco":"input#nome-pais","paradasAte":9},"cursor":"text","errosPagina":[]}
+nome-salvar-preenchido {"sonda":"nome-salvar-preenchido","estado":"S0","continente":"América do Sul","situacao":true,"nome":"","msgErroVisivel":true,"errosCampo":["Informe o nome do país."],"errosPagina":[]}
+codigo-digitar {"sonda":"codigo-digitar","estado":"S0","valor":"A B","cursor":3,"ctrlEsq1":2,"ctrlEsq2":0,"ctrlDir":2,"errosPagina":[]}
+select-teclado {"sonda":"select-teclado","estado":"S0","paradas":11,"aoFocar":{"listaVisivel":false,"expanded":"false"},"aposArrowDown":{"listaVisivel":true,"foco":"div.br-item","focoTexto":"África"},"aposArrowDown2":{"foco":"div.br-item","focoTexto":"América do Norte"},"aposArrowUp":{"foco":"div.br-item","focoTexto":"África"},"aposEnter":{"valor":"América do Norte","listaVisivel":false,"foco":"body"},"aposSpace
+select-filtro {"sonda":"select-filtro","estado":"S0","filtrado":["Europa"],"vazio":[{"texto":"Não encontramos o que você está procurando!","classes":"br-item not-found","caixa":{"x":60,"y":791.7,"w":400,"h":98}}],"campo":{"x":60,"y":749.6875,"w":400,"h":40},"errosPagina":[]}
+select-clique {"sonda":"select-clique","estado":"S2","hoverAntes":"rgb(255, 255, 255)","hoverDepois":"none | rgb(255, 255, 255)","depois":{"valor":"","listaVisivel":false,"selecionado":[]},"itensReabertos":[{"texto":"África","classes":"br-item","corRotulo":"rgb(170, 170, 170)","fundo":"rgb(255, 255, 255)","ax":null},{"texto":"América do Norte","classes":"br-item","corRotulo":"rgb(170, 170, 170)","fundo":"rgb(25
+radio-teclado {"sonda":"radio-teclado","estado":"S0","paradasAte":13,"primeiroFoco":"input#situacao-habilitado","anelFoco":{"outline":"none 3px rgb(51, 51, 51) 0px","boxShadow":"rgb(194, 133, 12) 0px 0px 0px 2px","borda":"solid 1px rgb(194, 133, 12)","w":"24px","h":"24px","fundo":"rgb(255, 255, 255)"},"difFocoLabel":{"clip":{"x":52,"y":839,"width":119.078125,"height":44},"iguais":false,"bytesCom":2026,"bytesSem
+switch-teclado {"sonda":"switch-teclado","estado":"S0","paradasAte":17,"focoVisual":{"before":{"outline":"none 3px rgb(51, 51, 51)","boxShadow":"rgb(194, 133, 12) 0px 0px 0px 2px","borda":"solid 1px rgb(194, 133, 12)","w":"52px","h":"30px","fundo":"rgb(255, 255, 255)"},"after":{"boxShadow":"none","w":"22px","h":"22px","fundo":"rgb(204, 204, 204)","left":"469.047px"},"focusVisible":true},"difFoco":{"clip":{"x":50
+switch-clique {"sonda":"switch-clique","estado":"S0","inicial":{"checked":false,"ariaChecked":"false","situacao":""},"aposClique1":{"checked":true,"ariaChecked":"true","situacao":"Emissão automática ligada."},"aposClique2":{"checked":false,"ariaChecked":"false","situacao":"Emissão automática desligada."},"errosPagina":[]}
+mensagem-fechar-teclado {"sonda":"mensagem-fechar-teclado","estado":"S0","paradasAte":4,"visivelAposEnter":null,"presente":false,"focoApos":"h1.titulo-pagina","proximoTab":"button#btn-ajuda.br-button.circle.acao-ajuda","errosPagina":[]}
+mensagem-fechar-espaco {"sonda":"mensagem-fechar-espaco","estado":"S0","visivel":null,"foco":"h1.titulo-pagina","errosPagina":[]}
+mensagem-fechar-clique {"sonda":"mensagem-fechar-clique","estado":"S0","visivel":null,"foco":"h1.titulo-pagina","errosPagina":[]}
+ajuda-acao {"sonda":"ajuda-acao","estado":"S0","antes":{"n":178,"texto":1310,"visiveis":120},"hover":{"tooltips":0,"title":null},"depois":{"n":178,"texto":1310,"visiveis":120,"url":"http://127.0.0.1:3219/cadastro-pais.html","expanded":null,"dialogs":0},"teclado":{"visiveis":120,"texto":1310},"pixels":{"largura":40,"altura":40,"pixelsDiferentesDoCanto":1222,"coresDistintas":50,"corDoCanto":"255,255,255"},"pse
+icones-glifos {"sonda":"icones-glifos","estado":"S1","ajuda":[{"el":"button#btn-ajuda.br-button.circle.acao-ajuda","classes":"br-button circle acao-ajuda","codigo":null,"visivel":true,"cor":"rgb(19, 81, 180)"}],"msgOrientacao":[{"el":"i.fas.fa-info-circle.fa-lg","classes":"fas fa-info-circle fa-lg","codigo":"f05a","visivel":true,"cor":"rgb(21, 91, 203)"},{"el":"i.fas.fa-times","classes":"fas fa-times","codigo":
+botoes-ordem {"sonda":"botoes-ordem","estado":"S0","container":{"display":"flex","flexDirection":"row","justifyContent":"flex-end","gap":"16px","columnGap":"16px"},"botoes":[{"domIndice":0,"id":"btn-cancelar","texto":"Cancelar","classes":"br-button secondary acao-cancelar","order":"0","x":239.15625,"direita":360.203125,"y":985,"marginLeft":"0px","marginRight":"0px","linhasRotulo":2},{"domIndice":1,"id":"btn-li
+limpar-acao {"sonda":"limpar-acao","estado":"S1","antes":{"erros":3,"msg":true},"depois":{"codigo":"","erros":0,"msg":false,"foco":"button#btn-limpar.br-button.secondary.acao-limpar"},"errosPagina":[]}
+cancelar-acao {"sonda":"cancelar-acao","estado":"S0","url":"http://127.0.0.1:3219/paises-importadores.html","errosPagina":[]}
+salvar-teclado {"sonda":"salvar-teclado","estado":"S0","msgErroVisivel":true,"foco":"button#btn-salvar.br-button.primary.acao-salvar","errosPagina":[]}
+clique-sem-foco-visual {"sonda":"clique-sem-foco-visual","estado":"S0","#btn-limpar":{"focado":true,"focusVisible":false,"outline":"none 3px"},"#btn-ajuda":{"focado":false,"focusVisible":false,"outline":"none 3px"},"#btn-cancelar":null,"errosPagina":[]}
+cursores {"sonda":"cursores","estado":"S0","#btn-limpar":"pointer","#btn-ajuda":"pointer","#nome-pais":"text","#codigo-pais":"text","#continente":"text","#sel-continente [data-trigger]":"pointer","label[for=situacao-habilitado]":"pointer","#swt-certificado label":"pointer","#msg-orientacao .close button":"pointer","#brd-trilha a":"pointer","errosPagina":[]}
+cabecalho-titulo-linhas {"sonda":"cabecalho-titulo-linhas","estado":"S0","altura":35.0625,"lineHeight":"35.0784px","linhas":1,"errosPagina":[]}
+lista-geometria {"sonda":"lista-geometria","estado":"S0","itens":[{"texto":"Argentina","top":1381.09375,"bottom":1455.09375,"h":74,"pt":"16px","pb":"16px","pl":"16px"},{"texto":"Chile","top":1456.09375,"bottom":1530.09375,"h":74,"pt":"16px","pb":"16px","pl":"16px"},{"texto":"Japão","top":1531.09375,"bottom":1605.09375,"h":74,"pt":"16px","pb":"16px","pl":"16px"},{"texto":"Egito","top":1606.09375,"bottom":1680.0937
+radio-geometria {"sonda":"radio-geometria","estado":"S1","legend":{"x":62,"top":335.3125,"bottom":354.625},"fieldset":{"borda":"none 0px","marginBottom":"40px"},"labels":[{"texto":"Habilitado","x":62,"top":370.625,"bottom":394.625,"caixaOpcao":{"w":"24px","h":"24px","left":"0px","borda":"1px rgb(229, 34, 7)","raio":"50%"}},{"texto":"Suspenso","x":62,"top":402.625,"bottom":426.625,"caixaOpcao":{"w":"24px","h":"24p
+mensagem-erro-foco {"sonda":"mensagem-erro-foco","estado":"S0","foco":"button#btn-salvar.br-button.primary.acao-salvar","msgTemFechar":false,"role":"alert","errosPagina":[]}
+redimensionar {"S0":{"scrollWidth":640,"clientWidth":640,"alemDaLargura":[]},"S1":{"scrollWidth":640,"clientWidth":640,"alemDaLargura":[]},"S2":{"scrollWidth":640,"clientWidth":640,"alemDaLargura":[]}}
+
+== sondas-extra.mjs
+{
+ "ajudaRepouso": {
+  "botao": {
+   "w": 40,
+   "h": 40,
+   "pixelsNaoBrancos": 0
+  },
+  "referenciaFechar": {
+   "w": 32,
+   "h": 32,
+   "pixelsNaoBrancos": 1024
+  },
+  "fundoBotao": {
+   "bg": "rgba(0, 0, 0, 0)",
+   "bgImg": "none",
+   "borda": "0px",
+   "mask": "none"
+  }
+ },
+ "proveniencia": {
+  "skiplinkTop": {
+   "top": [
+    {
+     "seletor": ".br-skiplink a",
+     "valor": "-100vh",
+     "imp": false
+    },
+    {
+     "seletor": ".br-skiplink a",
+     "valor": "-100vh",
+     "imp": false
+    }
+   ],
+   "position": [
+    {
+     "seletor": ".br-skiplink a",
+     "valor": "absolute",
+     "imp": false
+    },
+    {
+     "seletor": ".br-skiplink a",
+     "valor": "absolute",
+     "imp": false
+    }
+   ]
+  },
+  "codigoFonte": {
+   "font-family": [
+    {
+     "seletor": ".campo-codigo .br-input",
+     "valor": "Arial,Helvetica,sans-serif",
+     "imp": false
+    },
+    {
+     "seletor": ".campo-codigo .br-input",
+     "valor": "Arial, Helvetica, sans-serif",
+     "imp": false
+    }
+   ]
+  },
+  "codigoLabelFonte": {
+   "font-family": []
+  },
+  "limparOrder": {
+   "order": [
+    {
+     "seletor": ".acoes-formulario .acao-limpar",
+     "valor": "1",
+     "imp": false
+    },
+    {
+     "seletor": ".acoes-formulario .acao-limpar",
+     "valor": "1",
+     "imp": false
+    }
+   ]
+  },
+  "rotuloOpcaoCor": {
+   "color": [
+    {
+     "seletor": ".label, label",
+     "valor": "var(--color)",
+     "imp": false
+    },
+    {
+     "seletor": ".br-select .br-item .br-radio input + label",
+     "valor": "var(--text-color)",
+     "imp": false
+    },
+    {
+     "seletor": ".br-select .br-item .br-radio input + label",
+     "valor": "var(--text-color)",
+     "imp": false
+    }
+   ]
+  },
+  "msgErroFundo": {
+   "background-color": [
+    {
+     "seletor": ".br-message",
+     "valor": "",
+     "imp": false
+    }
+   ],
+   "--background": [],
+   "background": [
+    {
+     "seletor": ".br-message",
+     "valor": "var(--message-background)",
+     "imp": false
+    }
+   ]
+  },
+  "msgErroCor": {
+   "color": [
+    {
+     "seletor": ".br-message .content",
+     "valor": "var(--message-text)",
+     "imp": false
+    },
+    {
+     "seletor": ".br-message .content",
+     "valor": "var(--message-text)",
+     "imp": false
+    }
+   ]
+  },
+  "marcaRetorno": {
+   "display": [
+    {
+     "seletor": ".fa, .fa-brands, .fa-classic, .fa-regular, .fa-sharp-solid, .fa-solid, .fab, .far, .fas",
+     "valor": "var(--fa-display,inline-block)",
+     "imp": false
+    },
+    {
+     "seletor": ".fa, .fab, .fad, .fal, .far, .fas, .svg-inline--fa",
+     "valor": "inline-block",
+     "imp": false
+    },
+    {
+     "seletor": ".fa, .fab, .fad, .fal, .far, .fas, .svg-inline--fa",
+     "valor": "inline-block",
+     "imp": false
+    }
+   ],
+   "color": [],
+   "visibility": []
+  },
+  "breadcrumbAtual": {
+   "font-weight": [
+    {
+     "seletor": ".br-breadcrumb .crumb:last-child span",
+     "valor": "var(--font-weight-medium)",
+     "imp": false
+    },
+    {
+     "seletor": ".br-breadcrumb .crumb:last-child span",
+     "valor": "var(--font-weight-medium)",
+     "imp": false
+    }
+   ]
+  },
+  "tituloLista": {
+   "font-size": [
+    {
+     "seletor": ".h2, h2",
+     "valor": "var(--font-size-scale-up-03)",
+     "imp": false
+    },
+    {
+     "seletor": ".h2, h2",
+     "valor": "var(--font-size-scale-up-05)",
+     "imp": false
+    },
+    {
+     "seletor": ".h2, h2",
+     "valor": "var(--font-size-scale-up-05)",
+     "imp": false
+    }
+   ],
+   "font-weight": [
+    {
+     "seletor": ".h2, h2",
+     "valor": "var(--font-weight-semi-bold)",
+     "imp": false
+    },
+    {
+     "seletor": ".h2, h2",
+     "valor": "var(--font-weight-regular)",
+     "imp": false
+    },
+    {
+     "seletor": ".h2, h2",
+     "valor": "var(--font-weight-regular)",
+     "imp": false
+    }
+   ]
+  },
+  "feedbackFundo": {
+   "color": [
+    {
+     "seletor": ".br-input",
+     "valor": "var(--color)",
+     "imp": false
+    },
+    {
+     "seletor": ".br-input",
+     "valor": "var(--color)",
+     "imp": false
+    }
+   ]
+  }
+ },
+ "nomeReadonly": {
+  "antesDoFoco": true,
+  "aposFocoPorTab": true,
+  "valorDigitado": "",
+  "S1": true
+ },
+ "hoverItem": {
+  "pixelsMudaram": true,
+  "bytes": [
+   940,
+   1100
+  ]
+ },
+ "cliqueOpcaoS2": {
+  "valor": "Ásia",
+  "aberta": false,
+  "foco": "body"
+ },
+ "cliqueCoordS2": {
+  "valor": "Ásia"
+ },
+ "tabAposEscolha": {
+  "focoAposEnter": "body",
+  "proximoTab": "input#situacao-habilitado situacao-habilitado",
+  "valor": "África"
+ },
+ "ajudaFocoTeclado": {
+  "tooltips": 0,
+  "describedby": null
+ }
+}
+
+== proveniencia-variaveis.mjs
+{
+ "rotuloOpcao": {
+  "--text-color": [
+   {
+    "nivelAncestral": 2,
+    "seletor": ".br-select .br-item",
+    "valor": "var(--color-light)"
+   },
+   {
+    "nivelAncestral": 2,
+    "seletor": ".br-select .br-item",
+    "valor": "var(--color-light)"
+   },
+   {
+    "nivelAncestral": 2,
+    "seletor": ".campo-continente .br-item",
+    "valor": "#aaa"
+   },
+   {
+    "nivelAncestral": 2,
+    "seletor": ".campo-continente .br-item",
+    "valor": "#aaa"
+   },
+   {
+    "nivelAncestral": 9,
+    "seletor": "body",
+    "valor": "var(--color)"
+   },
+   {
+    "nivelAncestral": 9,
+    "seletor": "body",
+    "valor": "var(--color)"
+   }
+  ],
+  "--color": [
+   {
+    "nivelAncestral": 2,
+    "seletor": ".br-select .br-item",
+    "valor": "var(--color-light)"
+   },
+   {
+    "nivelAncestral": 2,
+    "seletor": ".br-select .br-item",
+    "valor": "var(--color-light)"
+   },
+   {
+    "nivelAncestral": 10,
+    "seletor": ":root",
+    "valor": "var(--color-light)"
+   },
+   {
+    "nivelAncestral": 10,
+    "seletor": ":root",
+    "valor": "var(--color-light)"
+   }
+  ]
+ },
+ "msgErro": {
+  "--message-background": [
+   {
+    "nivelAncestral": 1,
+    "seletor": ".br-message",
+    "valor": "var(--background)"
+   },
+   {
+    "nivelAncestral": 1,
+    "seletor": ".br-message",
+    "valor": "var(--background)"
+   },
+   {
+    "nivelAncestral": 1,
+    "seletor": ".br-message.danger, .br-message.is-danger, .br-message[danger]",
+    "valor": "var(--danger-alternative)"
+   },
+   {
+    "nivelAncestral": 1,
+    "seletor": ".br-message.danger, .br-message.is-danger, .br-message[danger]",
+    "valor": "var(--danger-alternative)"
+   },
+   {
+    "nivelAncestral": 1,
+    "seletor": ".formulario-pais .retorno-envio",
+    "valor": "var(--blue-warm-vivid-50)"
+   },
+   {
+    "nivelAncestral": 1,
+    "seletor": ".formulario-pais .retorno-envio",
+    "valor": "var(--blue-warm-vivid-50)"
+   }
+  ],
+  "--message-text": [
+   {
+    "nivelAncestral": 1,
+    "seletor": ".br-message",
+    "valor": "var(--color)"
+   },
+   {
+    "nivelAncestral": 1,
+    "seletor": ".br-message",
+    "valor": "var(--color)"
+   },
+   {
+    "nivelAncestral": 1,
+    "seletor": ".formulario-pais .retorno-envio",
+    "valor": "var(--pure-0)"
+   },
+   {
+    "nivelAncestral": 1,
+    "seletor": ".formulario-pais .retorno-envio",
+    "valor": "var(--pure-0)"
+   }
+  ],
+  "--background": [
+   {
+    "nivelAncestral": 6,
+    "seletor": ":root",
+    "valor": "var(--background-light)"
+   },
+   {
+    "nivelAncestral": 6,
+    "seletor": ":root",
+    "valor": "var(--background-light)"
+   }
+  ],
+  "--color": [
+   {
+    "nivelAncestral": 6,
+    "seletor": ":root",
+    "valor": "var(--color-light)"
+   },
+   {
+    "nivelAncestral": 6,
+    "seletor": ":root",
+    "valor": "var(--color-light)"
+   }
+  ]
+ },
+ "msgErroRaiz": {
+  "--message-background": [
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message",
+    "valor": "var(--background)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message",
+    "valor": "var(--background)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message.danger, .br-message.is-danger, .br-message[danger]",
+    "valor": "var(--danger-alternative)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message.danger, .br-message.is-danger, .br-message[danger]",
+    "valor": "var(--danger-alternative)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".formulario-pais .retorno-envio",
+    "valor": "var(--blue-warm-vivid-50)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".formulario-pais .retorno-envio",
+    "valor": "var(--blue-warm-vivid-50)"
+   }
+  ],
+  "--message-text": [
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message",
+    "valor": "var(--color)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message",
+    "valor": "var(--color)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".formulario-pais .retorno-envio",
+    "valor": "var(--pure-0)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".formulario-pais .retorno-envio",
+    "valor": "var(--pure-0)"
+   }
+  ],
+  "--feedback-background": [
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message",
+    "valor": "var(--background)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message",
+    "valor": "var(--background)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message.danger, .br-message.is-danger, .br-message[danger]",
+    "valor": "var(--danger)"
+   },
+   {
+    "nivelAncestral": 0,
+    "seletor": ".br-message.danger, .br-message.is-danger, .br-message[danger]",
+    "valor": "var(--danger)"
+   }
+  ]
+ },
+ "valores": {
+  "textColorRotulo": "#aaa",
+  "msgBg": "#2670e8",
+  "msgOrientBg": "#d4e5ff",
+  "danger": "#e52207",
+  "dangerAlt": "#fde0db"
+ }
+}
+
+== avaliar.mjs
+{
+  verificacoes: 145,
+  achados: 12,
+  achadosDS: 8,
+  achadosGeral: 4,
+  conformes: 114,
+  incertos: 19
+}
+EA-01 btn-limpar posicao-enfase-primaria-a-direita S0,S1,S2 DS
+EA-02 btn-limpar ordem-tab-igual-ordem-visual S0,S1,S2 geral
+EA-03 btn-ajuda circular-icone-obrigatorio S0,S1,S2 DS
+EA-04 inp-nome-pais usuario-insere-informacao-teclado S0,S1,S2 DS
+EA-05 inp-nome-pais funcao-script-por-teclado S0,S1,S2 geral
+EA-06 inp-codigo familia-tipografica S0,S1,S2 DS
+EA-07 sel-continente contraste-rotulos-opcoes S2 geral
+EA-08 sel-continente cor-fora-da-paleta S2 DS
+EA-09 msg-orientacao texto-curto-claro-objetivo S0,S1,S2 DS
+EA-10 msg-orientacao leitura-ensino-fundamental S0,S1,S2 geral
+EA-11 msg-erro cor-semantica-erro S1 DS
+EA-12 msg-erro icone-de-confirmacao-em-erro S1 DS
+EI-01 btn-ajuda acao-observavel-tooltip
+EI-02 inp-nome-pais obrigatorio-indicado
+EI-03 sel-continente obrigatorio-indicado
+EI-04 rad-situacao obrigatorio-indicado
+EI-05 inp-nome-pais primeiro-obrigatorio-recebe-foco
+EI-06 sel-continente foco-aciona-lista
+EI-07 sel-continente rotulo-combobox
+EI-08 sel-continente icone-botao-caret
+EI-09 lst-paises navegacao-teclado-list
+EI-10 lst-paises marcacao-de-lista
+EI-11 lst-paises tipografia-titulo-textos
+EI-12 msg-orientacao foco-no-fechar-ao-exibir
+EI-13 msg-orientacao foco-volta-apos-fechar
+EI-14 msg-orientacao idioma-termos-ingles
+EI-15 skp-conteudo visivel-ao-ponteiro
+EI-16 pagina ancoras-name-id
+EI-17 brd-trilha classes-e-semibold-atual
+EI-18 brd-trilha nao-substitui-menu
+EI-19 sgn-usuaria classes-obrigatorias-signin
+
+== conferir-auditoria.mjs
+EA-01 S0 OK  borda direita: {"btn-cancelar":360.203125,"btn-limpar":700,"btn-salvar":509.125}
+EA-01 S1 OK  borda direita: {"btn-cancelar":360.203125,"btn-limpar":700,"btn-salvar":509.125}
+EA-01 S2 OK  borda direita: {"btn-cancelar":360.203125,"btn-limpar":700,"btn-salvar":509.125}
+EA-02 S0 OK  Tab btn-cancelar → btn-limpar → btn-salvar | visual btn-cancelar → btn-salvar → btn-limpar
+EA-02 S1 OK  Tab btn-cancelar → btn-limpar → btn-salvar | visual btn-cancelar → btn-salvar → btn-limpar
+EA-02 S2 OK  Tab btn-cancelar → btn-limpar → btn-salvar | visual btn-cancelar → btn-salvar → btn-limpar
+EA-03 S0 OK  pixels não brancos 0; ícones-filho 0
+EA-03 S1 OK  pixels não brancos 0; ícones-filho 0
+EA-03 S2 OK  pixels não brancos 0; ícones-filho 0
+EA-04 S0 OK  readonly true; digitado após Tab: ''
+EA-04 S1 OK  readonly true; digitado após Tab: ''
+EA-04 S2 OK  readonly true; digitado após Tab: ''
+EA-05 S0 OK  readonly após Tab true; após clique false
+EA-05 S1 OK  readonly após Tab true; após clique false
+EA-05 S2 OK  readonly após Tab true; após clique false
+EA-06 S0 OK  Arial, Helvetica, sans-serif | Arial, Helvetica, sans-serif | Arial, Helvetica, sans-serif
+EA-06 S1 OK  Arial, Helvetica, sans-serif | Arial, Helvetica, sans-serif | Arial, Helvetica, sans-serif
+EA-06 S2 OK  Arial, Helvetica, sans-serif | Arial, Helvetica, sans-serif | Arial, Helvetica, sans-serif
+EA-07 S2 OK  razões 2.32, 2.32, 2.32, 2.32, 2.32, 2.32
+EA-08 S2 OK  cor rgb(170, 170, 170) (#aaaaaa não está em cores.md)
+EA-09 S0 OK  termos: commit, cache, endpoint, persistidos, renderizada
+EA-09 S1 OK  termos: commit, cache, endpoint, persistidos, renderizada
+EA-09 S2 OK  termos: commit, cache, endpoint, persistidos, renderizada
+EA-10 S0 OK  termos commit, cache, endpoint; abbr/dfn 0
+EA-10 S1 OK  termos commit, cache, endpoint; abbr/dfn 0
+EA-10 S2 OK  termos commit, cache, endpoint; abbr/dfn 0
+EA-11 S1 OK  fundo rgb(38, 112, 232)
+EA-12 S1 OK  fa-check visível: true
+citações: 199/199 encontradas
+achados × estados reproduzidos: 28/28

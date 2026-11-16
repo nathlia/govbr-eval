@@ -1,0 +1,3537 @@
+[
+ {
+  "id": "a2-41f0168a6cbb",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Anatomia",
+  "texto": "2 · container · Superfície · Obrigatório",
+  "contexto": null,
+  "antecedente": "1 · Label · Tipografia · Opcional",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Container (superfície/trilho) obrigatório. Medida: fundo e borda computados do trilho.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "sem-trilho",
+     "descricao": "O trilho do switch fica transparente e sem borda; só a chave aparece."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "Container (trilho) obrigatório. Medida: fundo e borda computados do trilho.",
+   "instancias": [
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "sem-trilho",
+     "descricao": "O trilho do switch fica transparente e sem borda; só a chave aparece.",
+     "clausula": "2 · container · Superfície · Obrigatório",
+     "efeitos": {
+      "toca": [
+       "$:chave",
+       "$:rotulo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "CSS do pseudo-elemento do trilho (no label)"
+     }
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao"
+   ],
+   "categorias": [
+    "token"
+   ],
+   "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-402eef83153c",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Anatomia",
+  "texto": "3 · Chave de alternância · --- · Obrigatório",
+  "contexto": null,
+  "antecedente": "2 · container · Superfície · Obrigatório",
+  "forca": "obrigatoria",
+  "marcador": "obrigatorio",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Chave de alternância obrigatória. Medida: a chave (pseudo-elemento) tem tamanho e cor visíveis.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "sem-chave",
+     "descricao": "A chave de alternância fica oculta; só o trilho aparece."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "Chave de alternância obrigatória. Medida: tamanho e cor visíveis da chave.",
+   "instancias": [
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "sem-chave",
+     "descricao": "A chave de alternância fica oculta; só o trilho aparece.",
+     "clausula": "3 · Chave de alternância · --- · Obrigatório",
+     "efeitos": {
+      "toca": [
+       "$:chave",
+       "$:rotulo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "CSS do pseudo-elemento da chave (no label)"
+     }
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao"
+   ],
+   "categorias": [
+    "token"
+   ],
+   "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-ae1397ab72d5",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Detalhamento dos Itens › 1. Label (Opcional)",
+  "texto": "Uma vez definido como serão aplicados os labels em seu produto, mantenha sempre a consistência.",
+  "contexto": "O label pode estar localizado à esquerda, à direita ou acima do switch e a distância entre o label e o switch pode ser determinado pelo layout da tela. Uma vez definido como serão aplicados os labels em seu produto, mantenha sempre a consistência.",
+  "antecedente": "Labels são itens opcionais. Muitas vezes switches podem funcionar adequadamente sem labels, porém, se houver necessidade de deixar o entendimento mais claro, não hesite em utilizar labels que devem descrever concisamente o que o componente faz quando a alternância estiver ativada.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Consistência na aplicação dos rótulos. Medida: posição do rótulo de cada switch em relação à chave.",
+   "instancias": [
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-do-outro-lado",
+     "descricao": "O rótulo do switch de SMS fica à esquerda da chave; o de e-mail, à direita."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Consistência entre switches do produto; a tela tem um único switch, nada a comparar."
+  }
+ },
+ {
+  "id": "a2-771cb345f19e",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Detalhamento dos Itens › 4. Rótulo (Opcional)",
+  "texto": "Use rótulos curtos e concisos.",
+  "contexto": null,
+  "antecedente": "Rótulos favorecem a usabilidade, pois auxiliam no entendimento da posição em que a chave se encontra.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos de ligado/desligado (item 4 da anatomia); os switches da tela não os usam.",
+   "origem": "lote-D.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos de ligado/desligado (item 4 da anatomia); o switch da tela não os usa."
+  }
+ },
+ {
+  "id": "a2-6990d98db92a",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Comportamentos › 2. Área interativa",
+  "texto": "Atenção: nos casos em que o label e o container não estejam próximos apenas o container deverá ser interativo.",
+  "contexto": null,
+  "antecedente": "A interatividade do componente switch ocorre tanto na área compreendida pelo container como pelo label correspondente.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Label distante do container; nos switches da tela o label fica ao lado.",
+   "origem": "lote-D.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Label distante do container; na tela o label fica ao lado do switch."
+  }
+ },
+ {
+  "id": "a2-3c18fb6c1dbc",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Comportamentos › 4. Agrupamento",
+  "texto": "No entanto, quando utilizados de forma agrupada, deverão vir associados a um componente checkbox principal, permitindo ao usuário selecionar e desselecionar todas, além de ter o feedback relacionado ao estado intermediário.",
+  "contexto": "O componente switch, funciona basicamente como um interruptor de alternância, permitindo aos usuários ligar ou desligar as opções apresentadas. No entanto, quando utilizados de forma agrupada, deverão vir associados a um componente checkbox principal, permitindo ao usuário selecionar e desselecionar todas, além de ter o feedback relacionado ao estado intermediário. Para maiores informações consultar \"Estado Intermediário\" na documentação do componente checkbox. Exemplo de switches agrupados em uma lista associado a um checkbox principal.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Switches agrupados vêm com checkbox principal que seleciona/desseleciona todos e mostra o estado intermediário (inventário emendado). Medida: com só um switch ligado, o checkbox principal fica intermediário; marcar/desmarcar o principal liga/desliga os dois.",
+   "instancias": [
+    "chk-avisos-todos"
+   ],
+   "variantes": [
+    {
+     "id": "principal-sem-intermediario",
+     "descricao": "Com só um switch ligado, o checkbox principal aparece desmarcado (sem o estado intermediário).",
+     "clausula": "No entanto, quando utilizados de forma agrupada, deverão vir associados a um componente checkbox principal, permitindo ao usuário selecionar e desselecionar todas, além de ter o feedback relacionado ao estado intermediário."
+    },
+    {
+     "id": "principal-inerte",
+     "descricao": "Marcar o checkbox principal não liga os switches.",
+     "clausula": "No entanto, quando utilizados de forma agrupada, deverão vir associados a um componente checkbox principal, permitindo ao usuário selecionar e desselecionar todas"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Switches agrupados com checkbox principal; a tela tem um só switch e nenhum checkbox."
+  }
+ },
+ {
+  "id": "a2-8f7b9c91d55e",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Switches devem ter efeito imediato e não devem exigir que o usuário clique em botões de \"Salvar\" ou \"Enviar\" para aplicar o novo estado.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-modal",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Efeito imediato, sem exigir Salvar/Enviar. Medida: depois de alternar, o estado é aplicado (aviso de preferência salva) sem outro clique.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "so-com-enviar",
+     "descricao": "Alternar não aplica nada; o texto de apoio diz que a preferência será salva ao clicar em Enviar documento."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "O switch da tela é campo de um formulário de cadastro novo, gravado só por Salvar país (andaime); não há preferência a aplicar de imediato."
+  }
+ },
+ {
+  "id": "a2-89d5e6e47d30",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Mantenha os rótulos dos switches curtos e diretos.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos de ligado/desligado; os switches da tela não os usam.",
+   "origem": "lote-D.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos de ligado/desligado; o switch da tela não os usa."
+  }
+ },
+ {
+  "id": "a2-002bf9be74ec",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "O Switch deve ser posicionado na interface de forma firme e consistente durante o movimento da chave de alternância ou alternância de labels e surgimento de bordas de foco, evitando mudar o posicionamento do seu container.",
+  "contexto": "O Switch deve ser posicionado na interface de forma firme e consistente durante o movimento da chave de alternância ou alternância de labels e surgimento de bordas de foco, evitando mudar o posicionamento do seu container. Caso contrário, poderá confundir ou atrapalhar o processo de interação do usuário com o componente.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Posição firme durante a alternância. Medida: getBoundingClientRect do contêiner antes e depois de alternar.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "container-se-move",
+     "descricao": "Alternar muda a largura do contêiner e desloca o switch."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "Posição firme durante a alternância. Medida: getBoundingClientRect do contêiner antes e depois de alternar.",
+   "instancias": [
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "container-se-move",
+     "descricao": "Ao ligar, o contêiner do switch muda de largura e desloca a chave e o label.",
+     "clausula": "O Switch deve ser posicionado na interface de forma firme e consistente durante o movimento da chave de alternância",
+     "efeitos": {
+      "toca": [
+       "$:raiz",
+       "$:chave"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "CSS em :checked altera a largura do contêiner"
+     }
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao"
+   ],
+   "categorias": [
+    "token"
+   ],
+   "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-c5776632fd52",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Os rótulos devem descrever o que o switch fará quando a chave estiver ligada ou desligada.",
+  "contexto": "Os rótulos devem descrever o que o switch fará quando a chave estiver ligada ou desligada. Eles não devem ser neutros ou ambíguos.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b). Rótulo do switch diz o que ele faz ligado/desligado. Medida: o texto do rótulo nomeia a ação.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-neutro",
+     "descricao": "O rótulo do switch fica 'Opção'.",
+     "clausula": "Os rótulos devem descrever o que o switch fará quando a chave estiver ligada ou desligada."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "R-ED (b): o rótulo diz o que o switch faz. Medida: texto do label nomeia a ação.",
+   "instancias": [
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-neutro",
+     "descricao": "O label do switch passa de \"Emitir certificado sanitário para este país\" para \"Opção\".",
+     "clausula": "Os rótulos devem descrever o que o switch fará quando a chave estiver ligada ou desligada.",
+     "efeitos": {
+      "toca": [
+       "$:rotulo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "texto do label"
+     }
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "categorias": [
+    "estrutura",
+    "formulario"
+   ],
+   "razaoCategorias": "o observável é o conteúdo do rótulo do campo",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-44a57ddcc53f",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Use rótulos sempre na mesma posição em relação ao switch.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Posição dos rótulos de ligado/desligado; os switches da tela não os usam.",
+   "origem": "lote-D.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Posição dos rótulos de ligado/desligado; o switch da tela não os usa."
+  }
+ },
+ {
+  "id": "a2-b20a134b4c05",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Use rótulos curtos e concisos.",
+  "contexto": null,
+  "antecedente": "Evite utilizar rótulo apenas para um estado possível.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos de ligado/desligado; os switches da tela não os usam.",
+   "origem": "lote-D.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos de ligado/desligado; o switch da tela não os usa."
+  }
+ },
+ {
+  "id": "a2-c0e948f338ec",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Não alterne a posição dos rótulos.",
+  "contexto": null,
+  "antecedente": "Use rótulos curtos e concisos.",
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Posição dos rótulos de ligado/desligado; não há.",
+   "origem": "lote-D.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Posição dos rótulos de ligado/desligado; não há."
+  }
+ },
+ {
+  "id": "a2-c1af8ea16c40",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Melhores Práticas",
+  "texto": "Use os rótulos sempre em pares.",
+  "contexto": null,
+  "antecedente": "Não alterne a posição dos rótulos.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos de ligado/desligado em pares; não há.",
+   "origem": "lote-D.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos de ligado/desligado em pares; não há."
+  }
+ },
+ {
+  "id": "a2-1854c7b2badd",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Especificações › Alinhamento",
+  "texto": "Tabela de especificação — Switch (Controle Interruptor) › Especificações › Alinhamento",
+  "contexto": "Name · Spacing Token || Label · --spacing-vertical-center || Label · --spacing-horizontal-left",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Label do switch centrado na vertical em relação à chave e alinhado à esquerda. Medida: posição vertical do texto em relação ao centro da chave.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "label-no-topo",
+     "descricao": "O texto do switch fica alinhado ao topo da chave, deslocado do centro vertical.",
+     "clausula": "Label · --spacing-vertical-center"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "Label centrado na vertical em relação à chave. Medida: centro vertical do texto contra o da chave.",
+   "instancias": [
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "label-no-topo",
+     "descricao": "O texto do switch fica alinhado ao topo da chave, fora do centro vertical.",
+     "clausula": "Label · --spacing-vertical-center",
+     "efeitos": {
+      "toca": [
+       "$:rotulo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "CSS de alinhamento vertical do texto"
+     }
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao"
+   ],
+   "categorias": [
+    "token"
+   ],
+   "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-2a5f1cb5a078",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Especificações › Espaçamento",
+  "texto": "Tabela de especificação — Switch (Controle Interruptor) › Especificações › Espaçamento",
+  "contexto": "Name · Property · Token/Value || Label (depende da posição) · margin-right/margin-left/margin-botton · --spacing-scale-2x || Rótulo (depende da posição) · margin-right/margin-left · --spacing-scale-base || container (alta) · padding-all · --spacing-scale-half || container (média) · padding-all · --spacing-scale-half || container (baixa) · padding-left, padding-right · --spacing-scale-half || container (baixa) · padding-top, padding-botton · --spacing-scale-half || container · margin-bottom · --spacing-scale-base || Chave (ligado) · horizontal align · right || Chave (desligado) · horizontal align · left",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Espaçamentos do switch: label afastado da chave por --spacing-scale-2x, container com margin-bottom base, chave à direita quando ligado e à esquerda quando desligado. Medida: distância label–chave e posição da chave.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "label-colado",
+     "descricao": "O label fica encostado na chave (margem 0).",
+     "clausula": "Label (depende da posição) · margin-right/margin-left/margin-botton · --spacing-scale-2x"
+    },
+    {
+     "id": "chave-ligada-a-esquerda",
+     "descricao": "Ao ligar, a chave de alternância permanece à esquerda (só a cor muda).",
+     "clausula": "Chave (ligado) · horizontal align · right"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "Espaçamentos do switch: label a --spacing-scale-2x da chave; chave à direita quando ligado. Medida: distância label–trilho e posição da chave.",
+   "instancias": [
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "label-colado",
+     "descricao": "O label fica encostado no trilho (margem 0).",
+     "clausula": "Label (depende da posição) · margin-right/margin-left/margin-botton · --spacing-scale-2x",
+     "efeitos": {
+      "toca": [
+       "$:rotulo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "CSS de margem do texto"
+     }
+    },
+    {
+     "id": "chave-ligada-a-esquerda",
+     "descricao": "Ao ligar, a chave permanece à esquerda (só a cor muda).",
+     "clausula": "Chave (ligado) · horizontal align · right",
+     "efeitos": {
+      "toca": [
+       "$:chave"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "CSS em :checked não desloca a chave"
+     }
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "interacao"
+   ],
+   "categorias": [
+    "token"
+   ],
+   "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-89b4537e8260",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Especificações › Dimensão",
+  "texto": "Tabela de especificação — Switch (Controle Interruptor) › Especificações › Dimensão",
+  "contexto": "Name · Property · Token/Value || container (alta) · width · 40px || container (alta) · height · 24px || Chave de alternância (alta) · width · 16px || Chave de alternância (alta) · height · 16px || container (média) · width · 52px || container (média) · height · 30px || Chave de alternância (média) · width · 22px || Chave de alternância (média) · height · 22px || container (baixa) · width · 64px || container (baixa) · height · 36px || Chave de alternância (baixa) · width · 28px || Chave de alternância (baixa) · height · 28px",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Switch de densidade média: container 52×30px, chave 22×22px. Medida: dimensões computadas do trilho e da chave.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "chave-pequena",
+     "descricao": "A chave de alternância fica com 14×14px dentro do container 52×30.",
+     "clausula": "Chave de alternância (média) · width · 22px"
+    },
+    {
+     "id": "trilho-largo",
+     "descricao": "O container fica com 64×30px.",
+     "clausula": "container (média) · width · 52px"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "Switch de densidade média: container 52×30px, chave 22×22px. Medida: dimensões computadas do trilho e da chave.",
+   "instancias": [
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "chave-pequena",
+     "descricao": "A chave fica com 14×14px dentro do container 52×30.",
+     "clausula": "Chave de alternância (média) · width · 22px",
+     "efeitos": {
+      "toca": [
+       "$:chave"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "CSS do pseudo-elemento da chave"
+     }
+    },
+    {
+     "id": "trilho-largo",
+     "descricao": "O container fica com 64×30px.",
+     "clausula": "container (média) · width · 52px",
+     "efeitos": {
+      "toca": [
+       "$:chave",
+       "$:rotulo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "CSS do pseudo-elemento do trilho"
+     }
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao"
+   ],
+   "categorias": [
+    "token"
+   ],
+   "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-86176aff4a89",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Especificações › Cor",
+  "texto": "Tabela de especificação — Switch (Controle Interruptor) › Especificações › Cor",
+  "contexto": "Name · Property · Color Token || Superfície · background · --pure-0 || Label · text · --gray-80 || Rótulo · text · --gray-80 || chave de alternância - on · icon · --blue-warm-vivid-40 || chave de alternância - off · icon · --gray-20 || Ícones · icon · --pure-0",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Cores do switch: superfície --pure-0, label --gray-80, chave ligada --blue-warm-vivid-40, desligada --gray-20. Medida: cores computadas no estado desligado e ligado.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "desligado-escuro",
+     "descricao": "O switch desligado fica com a cor de alternância --gray-80.",
+     "clausula": "chave de alternância - off · icon · --gray-20"
+    },
+    {
+     "id": "ligado-verde",
+     "descricao": "O switch ligado fica com a cor --green-cool-vivid-50.",
+     "clausula": "chave de alternância - on · icon · --blue-warm-vivid-40"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "Cores do switch por token. Medida: cor da chave desligada e ligada, cor do label.",
+   "instancias": [
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "desligado-escuro",
+     "descricao": "O switch desligado fica com a cor de alternância --gray-80.",
+     "clausula": "chave de alternância - off · icon · --gray-20",
+     "efeitos": {
+      "toca": [
+       "$:chave"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "CSS de cor no estado desligado"
+     }
+    },
+    {
+     "id": "ligado-verde",
+     "descricao": "O switch ligado fica com a cor --green-cool-vivid-50.",
+     "clausula": "chave de alternância - on · icon · --blue-warm-vivid-40",
+     "efeitos": {
+      "toca": [
+       "$:chave"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "CSS de cor no estado ligado"
+     }
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "interacao"
+   ],
+   "categorias": [
+    "token"
+   ],
+   "razaoCategorias": "visual-token do DS: observável geométrico/visual, sem propriedade acessível nem conteúdo de campo",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-463dea60790d",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Especificações › Tipografia",
+  "texto": "Tabela de especificação — Switch (Controle Interruptor) › Especificações › Tipografia",
+  "contexto": "Name · Property · Token/Value || Label · size · --font-size-scale-base || Label · font-weight · --font-weight-semi-bold || Rótulo · size · --font-size-scale-base || Rótulo · font-weight · --font-weight-regular",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Label do switch em --font-size-scale-base semi-bold. Medida: font-size/font-weight computados do label.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "label-regular",
+     "descricao": "O label do switch fica em --font-weight-regular.",
+     "clausula": "Label · font-weight · --font-weight-semi-bold"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G1.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "Label do switch em --font-size-scale-base semi-bold. Medida: font-weight/font-size computados do label.",
+   "instancias": [
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "label-regular",
+     "descricao": "O label do switch fica em --font-weight-regular.",
+     "clausula": "Label · font-weight · --font-weight-semi-bold",
+     "efeitos": {
+      "toca": [
+       "$:rotulo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "CSS de peso do label"
+     }
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao"
+   ],
+   "categorias": [
+    "tipografia"
+   ],
+   "razaoCategorias": "visual-token cujo observável é peso de texto",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-33de62f95ce7",
+  "componente": "switch",
+  "arquivo": "componentes/switch__desenvolvedor.md",
+  "secao": "Switch (Controle Interruptor) › Como usar › Propriedades obrigatórias",
+  "texto": "class · string · br-switch · Container do componente",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "titulo-obrigatorio",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Container br-switch. Medida: classe da raiz.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "sem-br-switch",
+     "descricao": "A raiz do switch usa classe própria (aparência copiada à mão), sem br-switch."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "Contêiner br-switch. Medida: classe da raiz.",
+   "instancias": [
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "sem-classe-do-componente",
+     "descricao": "A raiz do switch usa classe própria com a aparência copiada à mão, sem br-switch.",
+     "clausula": "class · string · br-switch · Container do componente",
+     "efeitos": {
+      "toca": [
+       "$:raiz"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "classe da raiz e CSS copiado"
+     }
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "categorias": [
+    "estrutura"
+   ],
+   "razaoCategorias": "estrutura-classe: classe do contêiner, sem propriedade acessível",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-52394d43a884",
+  "componente": "switch",
+  "arquivo": "componentes/switch__desenvolvedor.md",
+  "secao": "Switch (Controle Interruptor) › Informações adicionais › Switch com rótulos adicionais",
+  "texto": "Os textos de ligado e desligado devem ficar em atributos data-\\:",
+  "contexto": "Para o rótulo adiciona use a classe switch-data. Os textos de ligado e desligado devem ficar em atributos data-\\:",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Switch com rótulos adicionais de ligado/desligado; os switches da tela não os usam.",
+   "origem": "rodada-0"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Switch com rótulos adicionais de ligado/desligado; o da tela não os usa."
+  }
+ },
+ {
+  "id": "a2-5b4b95d8e2e0",
+  "componente": "switch",
+  "arquivo": "componentes/switch__desenvolvedor.md",
+  "secao": "Switch (Controle Interruptor) › Informações adicionais › Switch com rótulos adicionais",
+  "texto": "data-enabled: é mostrado quando o componente está \"ligado\"",
+  "contexto": null,
+  "antecedente": "Para o rótulo adiciona use a classe switch-data. Os textos de ligado e desligado devem ficar em atributos data-\\:",
+  "forca": "obrigatoria",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Switch com rótulos adicionais de ligado/desligado; os switches da tela não os usam.",
+   "origem": "lote-D.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Switch com rótulos adicionais de ligado/desligado; o da tela não os usa."
+  }
+ },
+ {
+  "id": "a2-159612f619b5",
+  "componente": "switch",
+  "arquivo": "componentes/switch__desenvolvedor.md",
+  "secao": "Switch (Controle Interruptor) › Informações adicionais › Switch com rótulos adicionais",
+  "texto": "data-disabled: é mostrado quando o componente está \"desligado\"",
+  "contexto": null,
+  "antecedente": "Para o rótulo adiciona use a classe switch-data. Os textos de ligado e desligado devem ficar em atributos data-\\:",
+  "forca": "obrigatoria",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Switch com rótulos adicionais de ligado/desligado; os switches da tela não os usam.",
+   "origem": "lote-D.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Switch com rótulos adicionais de ligado/desligado; o da tela não os usa."
+  }
+ },
+ {
+  "id": "a2-f2a468af452d",
+  "componente": "switch",
+  "arquivo": "componentes/switch__acessibilidade.md",
+  "secao": "Acessibilidade no Switch › Navegação e Comportamento",
+  "texto": "Os usuários devem poder acessar o switch por meio da tecla Tab e alternar seu estado (ligado/desligado) por meio das teclas Space ou Enter;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Switch por Tab e alternado por Espaço ou Enter (teclas prescritas). Medida: Tab para no switch; Espaço e Enter alternam.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "switch-fora-do-tab",
+     "descricao": "O input do switch recebe tabindex=-1.",
+     "clausula": "Os usuários devem poder acessar o switch por meio da tecla Tab e alternar seu estado (ligado/desligado) por meio das teclas Space ou Enter;"
+    },
+    {
+     "id": "enter-inerte",
+     "descricao": "Com foco no switch, Enter não alterna (só Espaço).",
+     "clausula": "Os usuários devem poder acessar o switch por meio da tecla Tab e alternar seu estado (ligado/desligado) por meio das teclas Space ou Enter;"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "Switch alcançável por Tab e alternado por Espaço ou Enter. Medida: Tab para no switch; a tecla alterna.",
+   "instancias": [
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "switch-fora-do-tab",
+     "descricao": "O input do switch recebe tabindex=-1.",
+     "clausula": "Os usuários devem poder acessar o switch por meio da tecla Tab",
+     "efeitos": {
+      "toca": [
+       "$:input"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "atributo tabindex no input"
+     }
+    },
+    {
+     "id": "espaco-inerte",
+     "descricao": "Com foco no switch, Espaço não alterna (keydown cancelado por script).",
+     "clausula": "alternar seu estado (ligado/desligado) por meio das teclas Space ou Enter",
+     "efeitos": {
+      "toca": [
+       "$:input",
+       "pagina:scripts"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "listener de teclado que cancela Espaço"
+     }
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "categorias": [
+    "comportamento",
+    "acessibilidade"
+   ],
+   "razaoCategorias": "operação por teclado é propriedade de acessibilidade",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-33e661bc4435",
+  "componente": "switch",
+  "arquivo": "componentes/switch__acessibilidade.md",
+  "secao": "Acessibilidade no Switch › Navegação e Comportamento",
+  "texto": "Para que usuários com deficiência visual possam entender completamente a opção selecionada, os leitores de tela devem anunciar o rótulo descritivo e o estado atual do switch.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "Revisão 2 (isolamento): a variante especificada, sem compensação, quebra outro observável — estado-nao-exposto → a2-3c18fb6c1dbc (O checkbox principal, outro nó, deixa de ir ao intermediário porque o div não tem estado checked.); a2-f4237d13520b (A associação label[for]/id, outra propriedade, se perde porque um div não é rotulável por for.). A obrigação continua no universo; não se afirma que seja impossível violá-la isoladamente, só que nenhuma variante fixada antes da semente o faz (Revisão Codex 3). (Antes: Leitor de tela anuncia rótulo E estado atual; a parte residual, que o e-MAG 6.2 não cobre, é o estado. Medida: estado (checked/aria-checked) exposto na árvore de acessibilidade igual ao visual.)",
+   "origem": "revisao-2"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "Leitor de tela anuncia o rótulo e o estado atual. Medida: na árvore de acessibilidade o switch tem nome e estado ligado/desligado igual ao visual.",
+   "instancias": [
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "estado-nao-exposto",
+     "descricao": "O input do switch recebe role=\"button\" sem aria-pressed: o nome continua, o estado deixa de ser exposto.",
+     "clausula": "os leitores de tela devem anunciar o rótulo descritivo e o estado atual do switch",
+     "efeitos": {
+      "toca": [
+       "$:input"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "atributo role no input"
+     }
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "axe",
+    "interacao"
+   ],
+   "categorias": [
+    "comportamento",
+    "acessibilidade"
+   ],
+   "razaoCategorias": "estado acessível do controle",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-4a2e16cecb19",
+  "componente": "switch",
+  "arquivo": "componentes/switch__acessibilidade.md",
+  "secao": "Acessibilidade no Switch › Recomendações para Estilo e Design",
+  "texto": "Forneça feedback visual e/ou auditivo indicando qual é o estado atual da opção selecionada.",
+  "contexto": "Forneça feedback visual e/ou auditivo indicando qual é o estado atual da opção selecionada. Observe as indicações de cores de estado na diretriz do componente;",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "\"Visual e/ou auditivo\": violar exige tirar ao mesmo tempo a indicação visual (chave/cor) e o estado exposto (aria-checked), já julgados em outras unidades.",
+   "origem": "lote-D.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": false,
+   "motivo": "acoplada",
+   "justificativa": "\"Visual e/ou auditivo\": violar exige tirar ao mesmo tempo a indicação visual da chave e o estado exposto."
+  }
+ },
+ {
+  "id": "a2-e9ded28efe9c",
+  "componente": "switch",
+  "arquivo": "componentes/switch__acessibilidade.md",
+  "secao": "Acessibilidade no Switch › Recomendações para Código",
+  "texto": "Quando ativado, o elemento switch deve ter o atributo aria-checked definido como true e quando desativado, o atributo aria-checked definido como false;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "aria-checked acompanha o estado. Medida: aria-checked depois de ligar e de desligar.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "aria-checked-fixo",
+     "descricao": "aria-checked fica 'false' mesmo com o switch ligado."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "axe",
+    "interacao"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "aria-checked acompanha o estado. Medida: aria-checked em S0 (desligado) e depois de ligar.",
+   "instancias": [
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "aria-checked-fixo",
+     "descricao": "aria-checked fica 'true' com o switch desligado e não muda ao alternar.",
+     "clausula": "quando desativado, o atributo aria-checked definido como false",
+     "efeitos": {
+      "toca": [
+       "$:input",
+       "pagina:scripts"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "valor fixo de aria-checked"
+     }
+    },
+    {
+     "id": "sem-aria-checked",
+     "descricao": "O elemento do switch fica sem o atributo aria-checked.",
+     "clausula": "o elemento switch deve ter o atributo aria-checked definido como true e quando desativado, o atributo aria-checked definido como false",
+     "efeitos": {
+      "toca": [
+       "$:input",
+       "pagina:scripts"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "atributo aria-checked removido"
+     }
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "axe",
+    "interacao"
+   ],
+   "categorias": [
+    "comportamento",
+    "acessibilidade"
+   ],
+   "razaoCategorias": "estado acessível do controle",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-cdd2382da97b",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Hover › Especificação para Estado Hover",
+  "texto": "É importante a possibilidade de herança com outros estados mesmo com hover.",
+  "contexto": "É importante a possibilidade de herança com outros estados mesmo com hover. Desta forma, o recurso de Overlay é utilizado como feedback.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Hover aplicado por overlay preservando os outros estados do elemento (herança). Medida: ao passar o ponteiro sobre a aba ativa, sobre um switch ligado ou sobre o checkbox marcado/intermediário, o indicador do estado (cor/borda de ativo, trilho ligado, marca) continua visível e só se soma o overlay.",
+   "instancias": [
+    "tab-requerimento",
+    "swt-aviso-email",
+    "swt-aviso-sms",
+    "chk-avisos-todos"
+   ],
+   "variantes": [
+    {
+     "id": "hover-apaga-estado",
+     "descricao": "Em hover, o estilo de hover substitui o do estado: a aba ativa perde a cor e a borda de ativa; o switch ligado e o checkbox marcado aparecem com o visual de desligado/desmarcado enquanto o ponteiro está sobre eles.",
+     "clausula": "É importante a possibilidade de herança com outros estados mesmo com hover."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "equivalenteEmag": null,
+   "justificativa": "Hover herda os outros estados (overlay, não substituição). Medida: com o estado aplicado (foco por Tab; switch ligado), passar o ponteiro e ver se o estado continua visível.",
+   "instancias": [
+    "btn-limpar",
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "hover-apaga-foco",
+     "instancias": [
+      "btn-limpar"
+     ],
+     "descricao": "Com o 'Limpar campos' focado por Tab, o hover substitui o estilo: o contorno de foco some enquanto o ponteiro está sobre ele.",
+     "clausula": "É importante a possibilidade de herança com outros estados mesmo com hover.",
+     "efeitos": {
+      "toca": [
+       "$:raiz"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "hover anula o estilo de foco"
+     }
+    },
+    {
+     "id": "hover-apaga-ligado",
+     "instancias": [
+      "swt-certificado"
+     ],
+     "descricao": "Com o switch ligado, o hover mostra o visual de desligado enquanto o ponteiro está sobre ele.",
+     "clausula": "É importante a possibilidade de herança com outros estados mesmo com hover.",
+     "efeitos": {
+      "toca": [
+       "$:chave"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "hover anula o visual de ligado"
+     }
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "categorias": [
+    "comportamento",
+    "acessibilidade"
+   ],
+   "razaoCategorias": "Comportamento de estado; uma variante apaga o foco visível."
+  }
+ },
+ {
+  "id": "a2-78f11cbcb280",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Pressionado › Especificação para Estado Pressionado",
+  "texto": "É importante manter heranças de outros Estados mesmo com Pressionado.",
+  "contexto": "É importante manter heranças de outros Estados mesmo com Pressionado. Desta forma, o recurso de Overlay é utilizado como feedback.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Pressionado por overlay, mantendo os outros estados do elemento. Medida: durante o pressionar (mousedown) na aba ativa, no switch ligado ou no checkbox marcado/intermediário, o indicador do estado continua visível.",
+   "instancias": [
+    "tab-requerimento",
+    "swt-aviso-email",
+    "swt-aviso-sms",
+    "chk-avisos-todos"
+   ],
+   "variantes": [
+    {
+     "id": "pressionado-apaga-estado",
+     "descricao": "Durante o pressionar, o estilo de pressionado substitui o do estado: a aba ativa perde a marcação de ativa; o switch ligado e o checkbox marcado perdem a cor/marca de ligado/marcado.",
+     "clausula": "É importante manter heranças de outros Estados mesmo com Pressionado."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "equivalenteEmag": null,
+   "justificativa": "Pressionado herda os outros estados. Medida: com o controle ligado/marcado, pressionar e ver se o estado continua visível.",
+   "instancias": [
+    "swt-certificado",
+    "rad-situacao"
+   ],
+   "variantes": [
+    {
+     "id": "pressionado-apaga-estado",
+     "descricao": "Durante o pressionar, o estilo de pressionado substitui o do estado: o switch ligado (ou o radio marcado) aparece desligado/desmarcado.",
+     "clausula": "É importante manter heranças de outros Estados mesmo com Pressionado.",
+     "efeitos": {
+      "porHospedeiro": {
+       "swt-certificado": {
+        "toca": [
+         "$:chave"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "pressionado anula o visual de ligado"
+       },
+       "rad-situacao": {
+        "toca": [
+         "$:inputs"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "pressionado anula a marca de selecionado"
+       }
+      }
+     }
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "categorias": [
+    "comportamento"
+   ],
+   "razaoCategorias": "Comportamento de estado."
+  }
+ },
+ {
+  "id": "a2-0cb58cc75f6f",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Foco › Especificação para Foco",
+  "texto": "Essa borda deve ser criada em volta do elemento e deve ter um espaçamento de segurança (para que a borda não se confunda com qualquer outra propriedade do elemento \"focado\", ou com a herança de outros estados).",
+  "contexto": "A principal propriedade (visual) que demonstra que um elemento está em foco é uma borda (ou contorno). Essa borda deve ser criada em volta do elemento e deve ter um espaçamento de segurança (para que a borda não se confunda com qualquer outra propriedade do elemento \"focado\", ou com a herança de outros estados).",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Borda de foco em volta, com espaçamento de segurança. Medida: outline-offset/afastamento do indicador de foco.",
+   "instancias": [
+    "sel-tipo-documento",
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "foco-colado",
+     "descricao": "O indicador de foco fica colado ao elemento (sem espaçamento de segurança)."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "equivalenteEmag": null,
+   "justificativa": "Borda de foco em volta do elemento com espaçamento de segurança. Medida: outline-offset/padding do indicador em :focus-visible.",
+   "instancias": [
+    "btn-limpar",
+    "inp-codigo",
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "foco-colado",
+     "descricao": "O indicador de foco fica colado ao elemento (outline-offset 0, sem espaçamento).",
+     "clausula": "Essa borda deve ser criada em volta do elemento e deve ter um espaçamento de segurança",
+     "efeitos": {
+      "porHospedeiro": {
+       "btn-limpar": {
+        "toca": [
+         "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "foco sem espaçamento"
+       },
+       "inp-codigo": {
+        "toca": [
+         "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "foco sem espaçamento"
+       },
+       "swt-certificado": {
+        "toca": [
+         "$:input",
+         "$:chave"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "foco sem espaçamento"
+       }
+      }
+     }
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao"
+   ],
+   "categorias": [
+    "token",
+    "acessibilidade"
+   ],
+   "razaoCategorias": "Token de espaçamento do foco; observável é o foco visível."
+  }
+ },
+ {
+  "id": "a2-2b5c2bc4358b",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Foco › Especificação para Foco",
+  "texto": "Tabela de especificação — Estados › Foco › Especificação para Foco",
+  "contexto": "Element · Property · Token/Value || border (Sobre um fundo Claro) · color · --gold-vivid-40 || border (Sobre um fundo Escuro) · color · --gold-vivid-20",
+  "antecedente": "Para foco tênue a borda deve possuir menos ênfase e não há necessidade de um espaçamento de segurança.",
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Tabela de Foco: em fundo claro, a borda de foco tem a cor --gold-vivid-40. As unidades aceitas sobre foco tratam de existir (a2-a6e2601837a7), espaçamento (a2-0cb58cc75f6f) e unicidade; a cor do token é nova. Medida: outline-color computado no foco por teclado.",
+   "instancias": [
+    "sel-tipo-documento",
+    "acc-duvidas",
+    "tab-requerimento",
+    "swt-aviso-email",
+    "swt-aviso-sms",
+    "chk-avisos-todos"
+   ],
+   "variantes": [
+    {
+     "id": "foco-cor-fora",
+     "descricao": "O contorno de foco do controle fica na cor #1351B4 (azul de interação) em vez de --gold-vivid-40; continua visível e tracejado.",
+     "clausula": "border (Sobre um fundo Claro) · color · --gold-vivid-40"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "equivalenteEmag": null,
+   "justificativa": "Borda de foco em fundo claro na cor --gold-vivid-40. Medida: outline-color em :focus-visible.",
+   "instancias": [
+    "btn-limpar",
+    "btn-ajuda",
+    "inp-codigo",
+    "sel-continente",
+    "swt-certificado",
+    "rad-situacao"
+   ],
+   "variantes": [
+    {
+     "id": "foco-cor-fora",
+     "descricao": "O contorno de foco do controle fica #1351B4 (azul de interação) em vez de --gold-vivid-40; continua visível e tracejado.",
+     "clausula": "border (Sobre um fundo Claro) · color · --gold-vivid-40",
+     "efeitos": {
+      "porHospedeiro": {
+       "btn-limpar": {
+        "toca": [
+         "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "cor do contorno de foco"
+       },
+       "btn-ajuda": {
+        "toca": [
+         "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "cor do contorno de foco"
+       },
+       "inp-codigo": {
+        "toca": [
+         "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "cor do contorno de foco"
+       },
+       "sel-continente": {
+        "toca": [
+         "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "cor do contorno de foco"
+       },
+       "swt-certificado": {
+        "toca": [
+         "$:input",
+         "$:chave"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "cor do contorno de foco"
+       },
+       "rad-situacao": {
+        "toca": [
+         "$:inputs"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "cor do contorno de foco"
+       }
+      }
+     }
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao"
+   ],
+   "categorias": [
+    "token",
+    "acessibilidade"
+   ],
+   "razaoCategorias": "Token de cor do foco; observável é o foco visível."
+  }
+ },
+ {
+  "id": "a2-235056fad007",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Ligado e Desligado › Especificação para Ligado e Desligado",
+  "texto": "Tabela de especificação — Estados › Ligado e Desligado › Especificação para Ligado e Desligado",
+  "contexto": "Element · Property · Token/Value || background/foreground (Ligado) · color · --blue-warm-vivid-40 || background/foreground (Desligado) · color · --gray-40",
+  "antecedente": "Exemplo dos estados ligado e desligado sendo aplicado em um texto e um objeto, tanto no fundo claro como no escuro.",
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Tabela Ligado/Desligado: ligado = --blue-warm-vivid-40. Na tela: os dois switches. Medida: cor computada da chave do switch ligado (conforme: #5992ed = --blue-warm-vivid-40, tela-a2/construtibilidade/resultado.json). Conflito registrado na conferência de construtibilidade: a linha Desligado desta tabela (--gray-40) contradiz a tabela Cor do próprio Switch (desligada --gray-20, a2-86176aff4a89); o core 3.7.0 desenha a chave desligada em #ccc = --gray-20 (medido). A página segue a especificação do componente (mais específica) e o core; a linha Desligado é conflito declarado, não defeito, e não tem variante.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "ligado-cor-fora",
+     "descricao": "Quando ligado, o switch usa #1351B4 (--blue-warm-vivid-70) em vez de --blue-warm-vivid-40.",
+     "clausula": "background/foreground (Ligado) · color · --blue-warm-vivid-40"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-2"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "Tabela Ligado/Desligado: ligado = --blue-warm-vivid-40. Na página: o switch de certificado ligado. Medida: cor computada da chave com o switch ligado. A linha Desligado (--gray-40) diverge da especificação do próprio Switch; fica sem variante.",
+   "instancias": [
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "ligado-cor-fora",
+     "descricao": "Com o switch ligado, a chave fica #1351B4 (--blue-warm-vivid-70) em vez de --blue-warm-vivid-40.",
+     "clausula": "background/foreground (Ligado) · color · --blue-warm-vivid-40",
+     "efeitos": {
+      "toca": [
+       "$:chave",
+       "pagina:estilos"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "Regra de estilo da cor da chave no estado ligado."
+     }
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "categorias": [
+    "token"
+   ],
+   "razaoCategorias": "Observável é cor (token).",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-3d935c4b833a",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 1. Título e Subtítulo",
+  "texto": "Os títulos e subtítulos do formulário são textos que descrevem o objetivo do formulário e devem ter o maior tamanho de texto entre todos os elementos do formulário.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Título do formulário com o maior tamanho de texto do formulário. Medida: font-size do título do formulário contra rótulos e textos do formulário.",
+   "instancias": [
+    "pagina"
+   ],
+   "variantes": [
+    {
+     "id": "titulo-form-menor",
+     "descricao": "O título do formulário da aba Documentos fica com font-size menor que os rótulos dos campos."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "O título do formulário tem de ter o maior tamanho de texto entre os elementos do formulário. Medida: font-size computado do título do formulário contra rótulos dos campos e texto do botão Limpar.",
+   "instancias": [
+    "inp-nome-pais",
+    "inp-codigo",
+    "sel-continente",
+    "swt-certificado",
+    "btn-limpar"
+   ],
+   "variantes": [
+    {
+     "id": "texto-maior-que-titulo-form",
+     "descricao": "O rótulo do campo (no botão, o texto 'Limpar campos') recebe font-size de 40px, maior que o do título do formulário.",
+     "clausula": "devem ter o maior tamanho de texto entre todos os elementos do formulário",
+     "efeitos": {
+      "porHospedeiro": {
+       "inp-nome-pais": {
+        "toca": [
+         "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-size do rótulo acima do título do formulário"
+       },
+       "inp-codigo": {
+        "toca": [
+         "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-size do rótulo acima do título do formulário"
+       },
+       "sel-continente": {
+        "toca": [
+         "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-size do rótulo acima do título do formulário"
+       },
+       "swt-certificado": {
+        "toca": [
+         "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-size do rótulo acima do título do formulário"
+       },
+       "btn-limpar": {
+        "toca": [
+         "$:texto"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-size do texto do botão acima do título do formulário"
+       }
+      }
+     }
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "categorias": [
+    "tipografia",
+    "formulario"
+   ],
+   "razaoCategorias": "Observável é tamanho de fonte (tipografia) de rótulo de campo (formulario).",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-3778203c3941",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos",
+  "texto": "Utilize rótulos concisos e que auxiliem os usuários a entender quais informações estão sendo solicitadas.",
+  "contexto": null,
+  "antecedente": "Para boas práticas na elaboração dos rótulos:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Rótulos concisos. R-ED (b): rótulo-parágrafo é flagrante e oposto a \"concisos\". Medida: nº de palavras do rótulo.",
+   "instancias": [
+    "sel-tipo-documento",
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-prolixo",
+     "descricao": "O rótulo do campo vira uma frase de ~25 palavras (ex.: 'Selecione abaixo, dentre as opções disponíveis, qual é o tipo de documento que você pretende anexar a este requerimento agora').",
+     "clausula": "Utilize rótulos concisos"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "lote-A.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "Rótulos concisos. R-ED (b): rótulo-parágrafo é flagrante e oposto a 'concisos'. Medida: número de palavras do rótulo/legend.",
+   "instancias": [
+    "inp-nome-pais",
+    "inp-codigo",
+    "sel-continente",
+    "rad-situacao",
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-prolixo",
+     "descricao": "O rótulo do campo (a legend, no grupo de radios) vira uma frase de ~25 palavras explicando por extenso o que se pede e por quê.",
+     "clausula": "Utilize rótulos concisos",
+     "efeitos": {
+      "porHospedeiro": {
+       "inp-nome-pais": {
+        "toca": [
+         "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto do rótulo alongado"
+       },
+       "inp-codigo": {
+        "toca": [
+         "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto do rótulo alongado"
+       },
+       "sel-continente": {
+        "toca": [
+         "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto do rótulo alongado"
+       },
+       "rad-situacao": {
+        "toca": [
+         "$:legenda"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto da legend alongado"
+       },
+       "swt-certificado": {
+        "toca": [
+         "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "texto do rótulo alongado"
+       }
+      }
+     }
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "categorias": [
+    "estrutura",
+    "formulario"
+   ],
+   "razaoCategorias": "Texto do rótulo de campo (formulario), cláusula de redação sobre a estrutura do formulário.",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-31c6d22fa5eb",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos",
+  "texto": "Mantenha a consistência: se optar pelos dois pontos \":\" no final do rótulo mantenha esse padrão em todos os formulários do sistema.",
+  "contexto": null,
+  "antecedente": "Para boas práticas na elaboração dos rótulos:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Uso consistente de ':' no fim dos rótulos. R-ED (a): presença do caractere é contável. Medida: último caractere de cada rótulo do formulário.",
+   "instancias": [
+    "sel-tipo-documento",
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "dois-pontos-em-um-so",
+     "descricao": "Só o rótulo deste campo termina com ':'; os demais rótulos do formulário ficam sem.",
+     "clausula": "se optar pelos dois pontos \":\" no final do rótulo mantenha esse padrão em todos os formulários do sistema"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-A.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "Uso consistente de ':' no fim dos rótulos. R-ED (a): presença do caractere é contável. Medida: último caractere de cada rótulo do formulário.",
+   "instancias": [
+    "inp-nome-pais",
+    "inp-codigo",
+    "sel-continente",
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "dois-pontos-em-um-so",
+     "descricao": "Só o rótulo deste campo termina com ':'; os demais rótulos do formulário ficam sem.",
+     "clausula": "se optar pelos dois pontos \":\" no final do rótulo mantenha esse padrão",
+     "efeitos": {
+      "toca": [
+       "$:rotulo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "um ':' acrescentado ao texto do rótulo"
+     }
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "categorias": [
+    "estrutura",
+    "formulario"
+   ],
+   "razaoCategorias": "Texto do rótulo de campo (formulario).",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-0cb2e580195d",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Layout e Estrutura › 4. Outras Formas de Agrupamento › Por Espaçamento › Separando entradas, ações e grupos",
+  "texto": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela e em todo o produto.",
+  "contexto": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela e em todo o produto. (Veja mais no fundamento Espaçamento.)",
+  "antecedente": "um espaçamento menor entre os campos de entrada de dados, texto ou opções.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Espaçamentos constantes para a mesma função. Medida: distância rótulo→campo em cada campo do formulário.",
+   "instancias": [
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "espaco-irregular",
+     "descricao": "A distância entre o rótulo e o campo do upload fica 2px, diferente dos demais campos."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "Espaçamentos constantes para a mesma função na tela. Medida: distância rótulo–campo e distância entre campos consecutivos, comparadas entre os campos do formulário.",
+   "instancias": [
+    "inp-nome-pais",
+    "inp-codigo",
+    "sel-continente",
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-campo-colado",
+     "instancias": [
+      "inp-nome-pais",
+      "inp-codigo",
+      "sel-continente"
+     ],
+     "descricao": "A distância entre o rótulo e o campo deste campo fica 2px, diferente dos demais campos.",
+     "clausula": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela",
+     "efeitos": {
+      "toca": [
+       "$:rotulo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "margem do label reduzida a 2px"
+     }
+    },
+    {
+     "id": "espaco-entre-campos-desigual",
+     "descricao": "A margem abaixo deste campo fica 64px, enquanto entre os demais campos segue o espaçamento padrão.",
+     "clausula": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela",
+     "efeitos": {
+      "toca": [
+       "$:raiz"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "margem inferior do campo de 64px"
+     }
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao"
+   ],
+   "categorias": [
+    "token"
+   ],
+   "razaoCategorias": "Espaçamento: token.",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-015f84774222",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Boas práticas",
+  "texto": "Não deixe o texto todo em caixa alta.",
+  "contexto": "Considere apenas a letra inicial da sentença maiúscula. Não deixe o texto todo em caixa alta.",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (a): rótulo de elemento de entrada de dados não pode estar todo em caixa alta (contável). Medida: texto renderizado do rótulo (incl. text-transform) não é todo maiúsculo.",
+   "instancias": [
+    "sel-tipo-documento",
+    "upl-documento",
+    "swt-aviso-email",
+    "swt-aviso-sms",
+    "chk-avisos-todos"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-campo-caixa-alta",
+     "descricao": "O rótulo do campo é escrito inteiro em maiúsculas (ex.: 'TIPO DE DOCUMENTO', 'RECEBER AVISOS POR SMS').",
+     "clausula": "Não deixe o texto todo em caixa alta."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "equivalenteEmag": null,
+   "justificativa": "R-ED (a). Rótulo de elemento de entrada de dados não fica todo em caixa alta (contável). Medida: texto renderizado do rótulo/legenda não é todo maiúsculo.",
+   "instancias": [
+    "inp-nome-pais",
+    "inp-codigo",
+    "sel-continente",
+    "rad-situacao",
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-campo-caixa-alta",
+     "descricao": "O rótulo do campo (a legenda, no grupo de radios) é escrito inteiro em maiúsculas (ex.: 'NOME DO PAÍS', 'SITUAÇÃO DO CADASTRO').",
+     "clausula": "Não deixe o texto todo em caixa alta.",
+     "efeitos": {
+      "porHospedeiro": {
+       "inp-nome-pais": {
+        "toca": [
+         "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "só o texto do rótulo/legenda muda"
+       },
+       "inp-codigo": {
+        "toca": [
+         "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "só o texto do rótulo/legenda muda"
+       },
+       "sel-continente": {
+        "toca": [
+         "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "só o texto do rótulo/legenda muda"
+       },
+       "rad-situacao": {
+        "toca": [
+         "$:legenda"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "só o texto do rótulo/legenda muda"
+       },
+       "swt-certificado": {
+        "toca": [
+         "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "só o texto do rótulo/legenda muda"
+       }
+      }
+     }
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "categorias": [
+    "estrutura",
+    "formulario"
+   ],
+   "razaoCategorias": "redação do rótulo de campo"
+  }
+ },
+ {
+  "id": "a2-1f45d0dc0c3a",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Boas práticas",
+  "texto": "Mantenha a consistência: se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (a): uso de ':' no fim do rótulo consistente em todos os campos do formulário (contável). Medida: rótulos do formulário terminam todos com ':' ou nenhum termina.",
+   "instancias": [
+    "sel-tipo-documento",
+    "upl-documento",
+    "swt-aviso-email",
+    "swt-aviso-sms",
+    "chk-avisos-todos"
+   ],
+   "variantes": [
+    {
+     "id": "dois-pontos-em-um-rotulo",
+     "descricao": "Só o rótulo deste campo passa a terminar com ':'; os demais rótulos do formulário ficam sem.",
+     "clausula": "se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "equivalenteEmag": null,
+   "justificativa": "R-ED (a). Uso de ':' no fim do rótulo consistente em todo o formulário (contável). Medida: os rótulos e a legenda terminam todos com ':' ou nenhum termina.",
+   "instancias": [
+    "inp-nome-pais",
+    "inp-codigo",
+    "sel-continente",
+    "rad-situacao",
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "dois-pontos-em-um-rotulo",
+     "descricao": "Só o rótulo deste campo (ou a legenda, no grupo de radios) passa a terminar com ':'; os demais ficam sem.",
+     "clausula": "se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário",
+     "efeitos": {
+      "porHospedeiro": {
+       "inp-nome-pais": {
+        "toca": [
+         "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "só o texto de um rótulo ganha ':'"
+       },
+       "inp-codigo": {
+        "toca": [
+         "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "só o texto de um rótulo ganha ':'"
+       },
+       "sel-continente": {
+        "toca": [
+         "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "só o texto de um rótulo ganha ':'"
+       },
+       "rad-situacao": {
+        "toca": [
+         "$:legenda"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "só o texto de um rótulo ganha ':'"
+       },
+       "swt-certificado": {
+        "toca": [
+         "$:rotulo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "só o texto de um rótulo ganha ':'"
+       }
+      }
+     }
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "categorias": [
+    "estrutura",
+    "formulario"
+   ],
+   "razaoCategorias": "redação do rótulo de campo"
+  }
+ },
+ {
+  "id": "a2-7278a9812cac",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Orientações específicas",
+  "texto": "Os textos dos rótulos devem ser positivos, breves, claros e diretos.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (a/b). Rótulos positivos, breves, claros. Medida: o rótulo do select é afirmativo e curto.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-negativo",
+     "descricao": "O rótulo do select fica 'Não deixe de informar o tipo do documento que não foi enviado'.",
+     "clausula": "Os textos dos rótulos devem ser positivos, breves, claros e diretos."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "equivalenteEmag": null,
+   "justificativa": "R-ED (b). Rótulos positivos, breves, claros e diretos; caso flagrante o do próprio texto: rótulo em forma negativa. Medida: o rótulo é afirmativo.",
+   "instancias": [
+    "inp-nome-pais",
+    "inp-codigo",
+    "sel-continente",
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-negativo",
+     "descricao": "O rótulo passa a forma negativa (ex.: switch 'Não deixar de emitir certificado sanitário para este país'; select 'Não deixe de informar o continente').",
+     "clausula": "Os textos dos rótulos devem ser positivos, breves, claros e diretos.",
+     "efeitos": {
+      "toca": [
+       "$:rotulo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "só o texto do rótulo muda"
+     }
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "categorias": [
+    "estrutura",
+    "formulario"
+   ],
+   "razaoCategorias": "redação do rótulo de campo"
+  }
+ },
+ {
+  "id": "a2-971db6a57c75",
+  "componente": null,
+  "arquivo": "guias/wai-aria.md",
+  "secao": "Como usar o WAI-ARIA",
+  "texto": "Os autores precisam associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos, a menos que os elementos já tenham a semântica WAI-ARIA implícita apropriada para os states e properties.",
+  "contexto": null,
+  "antecedente": "O WAI-ARIA divide a semântica entre roles (o tipo que define o elemento da interface de usuário) e states e properties relacionado aos roles.",
+  "forca": "obrigatoria",
+  "marcador": "precisa",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Role e states/properties ARIA mantidos durante o ciclo de vida do elemento. Medida: após interagir, o estado ARIA reflete o estado visual (aria-selected da aba, aria-expanded do item).",
+   "instancias": [
+    "tab-requerimento",
+    "acc-duvidas"
+   ],
+   "variantes": [
+    {
+     "id": "aba-estado-desatualizado",
+     "descricao": "Ao selecionar a aba Documentos, aria-selected continua true em Andamento e false em Documentos.",
+     "instancias": [
+      "tab-requerimento"
+     ],
+     "clausula": "associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos"
+    },
+    {
+     "id": "item-expandido-sem-estado",
+     "descricao": "Ao abrir um item do accordion, o cabeçalho continua com aria-expanded=false.",
+     "instancias": [
+      "acc-duvidas"
+     ],
+     "clausula": "associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos"
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "Role e states/properties ARIA acompanham o elemento durante o ciclo de vida, salvo quando a semântica implícita já basta. Na página: o estado de expansão do select ao abrir a lista (S2) e o estado ligado/desligado do switch. Medida: após a interação, o estado na árvore de acessibilidade (expanded, checked) reflete o estado visual.",
+   "instancias": [
+    "sel-continente",
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "expansao-desatualizada",
+     "descricao": "Ao abrir a lista de continentes (S2), o atributo aria-expanded do select continua false; a lista abre normalmente.",
+     "instancias": [
+      "sel-continente"
+     ],
+     "clausula": "associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos",
+     "efeitos": {
+      "toca": [
+       "$:campo",
+       "$:gatilho",
+       "pagina:scripts"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "Só o estado acessível de expansão deixa de ser atualizado; S2 continua alcançável."
+     }
+    },
+    {
+     "id": "chave-com-estado-fixo",
+     "descricao": "O input do switch ganha aria-checked=\"false\" fixo, que não muda quando a chave é ligada; visualmente a chave liga normalmente.",
+     "instancias": [
+      "swt-certificado"
+     ],
+     "clausula": "associar elementos no documento a um role WAI-ARIA e aos states e properties apropriados (aria- \\ attributes) durante o ciclo de vida dos elementos",
+     "efeitos": {
+      "toca": [
+       "$:input"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "Estado acessível congelado em desligado; aparência e envio iguais."
+     }
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao"
+   ],
+   "categorias": [
+    "comportamento",
+    "acessibilidade"
+   ],
+   "razaoCategorias": "Guia geral de WAI-ARIA (exige acessibilidade); o observável é o estado acessível após a interação.",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-a39f3ad397d4",
+  "componente": null,
+  "arquivo": "introducao/padrao-minimo.md",
+  "secao": "Aplique os fundamentos visuais mínimos › Tipografia",
+  "texto": "Utilize a família tipográfica Rawline com suas variações de peso e estilo.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Família tipográfica Rawline. Medida: font-family computado do texto da instância.",
+   "instancias": [
+    "crd-resumo",
+    "tbl-movimentacoes",
+    "acc-duvidas",
+    "msg-pendencia"
+   ],
+   "variantes": [
+    {
+     "id": "fonte-do-sistema",
+     "descricao": "O texto da instância passa a usar a fonte Arial (pilha sans-serif do sistema) em vez de Rawline.",
+     "clausula": "Utilize a família tipográfica Rawline com suas variações de peso e estilo."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-A.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "O texto usa a família Rawline. Medida: font-family computado do texto de cada instância com texto visível (btn-ajuda só tem ícone e fica de fora).",
+   "instancias": [
+    "btn-limpar",
+    "inp-nome-pais",
+    "inp-codigo",
+    "sel-continente",
+    "rad-situacao",
+    "swt-certificado",
+    "lst-paises",
+    "msg-orientacao",
+    "msg-erro"
+   ],
+   "variantes": [
+    {
+     "id": "fonte-do-sistema",
+     "descricao": "O texto da instância passa a usar Arial (pilha sans-serif do sistema) em vez de Rawline, declarado no elemento raiz da instância.",
+     "clausula": "Utilize a família tipográfica Rawline com suas variações de peso e estilo.",
+     "efeitos": {
+      "porHospedeiro": {
+       "btn-limpar": {
+        "toca": [
+         "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+       },
+       "inp-nome-pais": {
+        "toca": [
+         "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+       },
+       "inp-codigo": {
+        "toca": [
+         "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+       },
+       "sel-continente": {
+        "toca": [
+         "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+       },
+       "rad-situacao": {
+        "toca": [
+         "$:grupo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+       },
+       "swt-certificado": {
+        "toca": [
+         "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+       },
+       "lst-paises": {
+        "toca": [
+         "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+       },
+       "msg-orientacao": {
+        "toca": [
+         "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+       },
+       "msg-erro": {
+        "toca": [
+         "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "font-family da instância trocada; o texto herda a fonte do sistema."
+       }
+      }
+     }
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "categorias": [
+    "tipografia"
+   ],
+   "razaoCategorias": "Unidade do DS cujo observável é a família da fonte do texto.",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-18acbf7b4c9c",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 3.12 – Disponibilizar uma explicação para siglas, abreviaturas e palavras incomuns",
+  "contexto": "*[Ver WCAG 2.0 Critérios de Sucesso 3.1.3](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/meaning-idioms.html) e [Ver WCAG 2.0 Critérios de Sucesso3.1.4](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/meaning-located.html)* Ao menos na primeira ocorrência de siglas, abreviaturas ou palavras incomuns (ambíguas, desconhecidas ou utilizadas de forma muito específica), deve ser disponibilizada sua explicação ou forma completa. Essa explicação pode estar expressa no próprio texto, pode estar presente em um glossário ou, então, através da utilização do elemento abbr, conforme exemplos a seguir. Exemplo 1 – Explicação no próprio texto <p>A ONU (Organização das Nações Unidas) é um órgão internacional criado em 1945.</p> Exemplo 2 – Utilização de glossário Um site sobre desenvolvimento Web fornece um link de menu para o Glossário, que contém explicações para termos como HTML, CSS, Tag, atributo, etc. Exemplo 3 – Utilização do elementos abbr <p>Bem-vindo à <abbr title=\"World Wide Web\" lang=\"en\">WWW</abbr>!</p>",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "emag-recomendacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "e-MAG 3.1, Recomendação 3.12. Sigla explicada na primeira ocorrência. Medida: primeira ocorrência de 'NUP' tem forma completa (texto, abbr ou glossário).",
+   "instancias": [
+    "crd-resumo"
+   ],
+   "variantes": [
+    {
+     "id": "sigla-sem-explicacao",
+     "descricao": "O card mostra 'NUP' sem forma completa em lugar nenhum da página.",
+     "clausula": "Ao menos na primeira ocorrência de siglas, abreviaturas ou palavras incomuns (ambíguas, desconhecidas ou utilizadas de forma muito específica), deve ser disponibilizada sua explicação ou forma completa."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "alternativasValidas": [],
+   "notaRevisao2": "Alternativa 'sigla-com-abbr' retirada: a sigla só com abbr title na primeira ocorrência é exatamente a infração de a2-b1113ccfbc0a (aceita: na primeira vez, nome completo e a sigla entre parênteses); deixou de ser forma conforme da página.",
+   "origem": "revisao-2"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "equivalenteEmag": null,
+   "justificativa": "e-MAG 3.12: sigla com explicação ou forma completa ao menos na primeira ocorrência (R-ED b: sigla sem expansão em lugar nenhum). Medida: texto visível e abbr/title da página.",
+   "instancias": [
+    "inp-codigo",
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "sigla-sem-explicacao",
+     "instancias": [
+      "swt-certificado"
+     ],
+     "descricao": "O rótulo do switch vira 'Emitir CSI para este país', sem forma completa de CSI em lugar nenhum da página.",
+     "clausula": "Ao menos na primeira ocorrência de siglas, abreviaturas ou palavras incomuns (ambíguas, desconhecidas ou utilizadas de forma muito específica), deve ser disponibilizada sua explicação ou forma completa.",
+     "efeitos": {
+      "toca": [
+       "$:rotulo"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "rótulo troca a expressão por sigla não explicada"
+     }
+    },
+    {
+     "id": "sigla-no-apoio",
+     "instancias": [
+      "inp-codigo"
+     ],
+     "descricao": "O texto de apoio vira 'Use o código de 3 letras do SISCOMEX', sem forma completa de SISCOMEX em lugar nenhum da página.",
+     "clausula": "Ao menos na primeira ocorrência de siglas, abreviaturas ou palavras incomuns (ambíguas, desconhecidas ou utilizadas de forma muito específica), deve ser disponibilizada sua explicação ou forma completa.",
+     "efeitos": {
+      "toca": [
+       "$:apoio"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "texto de apoio cita sigla não explicada"
+     }
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "categorias": [
+    "acessibilidade",
+    "formulario"
+   ],
+   "razaoCategorias": "e-MAG; o observável é rótulo/instrução de campo com sigla."
+  }
+ },
+ {
+  "id": "a2-a6e2601837a7",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 4.4 – Possibilitar que o elemento com foco seja visualmente evidente",
+  "contexto": "*[Ver WCAG 2.0 Critério de Sucesso 2.4.7](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/navigation-mechanisms-focus-visible.html)* A área que recebe o foco pelo teclado deve ser claramente marcada, devendo a área de seleção ser passível de ser clicada. Por padrão, links e elementos de formulário já apresentam a borda destacada ao receberem o foco do teclado. Essa borda pode ser modificada via CSS para melhorar o destaque, mas não deverá ser removida. Recomenda-se que a espessura mínima da borda seja de 2px. Exemplo CSS a:focus, a:hover { border: 2px solid #F00; } HTML <ul> <li><a href=\"/acessibilidade/index.php\">Página Inicial</a></li> <li><a href=\"/acessibilidade/eventos.php\">Eventos</a></li> <li><a href=\"/acessibilidade/quemsomos.php\">Quem Somos</a></li> <li><a href=\"/acessibilidade/ead.php\">Ensino a Distância (EaD)</a></li> <li><a href=\"/acessibilidade/videoaulas.php\">Vídeoaulas</a></li> <li><a href=\"/acessibilidade/video.php\">Ví¬deo em Libras</a></li> <li><a href=\"/acessibilidade/oa.php\">Objetos de Aprendizagem</a></li> <li><a href=\"/acessibilidade/trabalhos.php\">Trabalhos Realizados</a></li> <li><a href=\"/acessibilidade/mapa.php\">Mapa do Site</a></li> </ul> ![Exemplo de foco visível em menu](imagens/foco.png) Exemplo de foco visível em menu A pseudo-classe **:focus** é utilizada para definir o estilo de qualquer elemento HTML que receber o foco do teclado, como links e elementos de formulário. A pseudo-classe **:hover** é utilizada para definir o estilo de um elemento quando passa-se o mouse sobre ele.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "emag-recomendacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "e-MAG 3.1, Recomendação 4.4. Foco claramente marcado; a borda pode mudar mas não pode ser removida. Medida: indicador de foco computado no foco por teclado.",
+   "instancias": [
+    "sel-tipo-documento",
+    "swt-aviso-email",
+    "swt-aviso-sms",
+    "acc-duvidas",
+    "chk-avisos-todos"
+   ],
+   "variantes": [
+    {
+     "id": "foco-invisivel",
+     "descricao": "O indicador de foco do controle é suprimido (outline none, sem box-shadow nem borda de foco).",
+     "clausula": "Essa borda pode ser modificada via CSS para melhorar o destaque, mas não deverá ser removida."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "equivalenteEmag": null,
+   "justificativa": "e-MAG 4.4: a área com foco de teclado claramente marcada; a borda pode mudar, não ser removida. Medida: estilo em :focus-visible ao chegar por Tab.",
+   "instancias": [
+    "btn-limpar",
+    "btn-ajuda",
+    "inp-codigo",
+    "sel-continente",
+    "rad-situacao",
+    "swt-certificado",
+    "msg-orientacao"
+   ],
+   "variantes": [
+    {
+     "id": "foco-invisivel",
+     "descricao": "O indicador de foco do controle é suprimido (outline none, sem box-shadow nem borda de foco).",
+     "clausula": "Essa borda pode ser modificada via CSS para melhorar o destaque, mas não deverá ser removida.",
+     "efeitos": {
+      "porHospedeiro": {
+       "btn-limpar": {
+        "toca": [
+         "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "indicador de foco removido"
+       },
+       "btn-ajuda": {
+        "toca": [
+         "$:raiz"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "indicador de foco removido"
+       },
+       "inp-codigo": {
+        "toca": [
+         "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "indicador de foco removido"
+       },
+       "sel-continente": {
+        "toca": [
+         "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "indicador de foco removido"
+       },
+       "rad-situacao": {
+        "toca": [
+         "$:inputs"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "indicador de foco removido"
+       },
+       "swt-certificado": {
+        "toca": [
+         "$:input",
+         "$:chave"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "indicador de foco removido"
+       },
+       "msg-orientacao": {
+        "toca": [
+         "$:fechar"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "indicador de foco removido"
+       }
+      }
+     }
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao"
+   ],
+   "categorias": [
+    "acessibilidade"
+   ],
+   "razaoCategorias": "e-MAG; o observável é foco visível."
+  }
+ },
+ {
+  "id": "a2-f4237d13520b",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 6.2 – Associar etiquetas aos seus campos",
+  "contexto": "*[Ver WCAG 2.0 Critério de Sucesso 1.3.1 (Técnica H44)](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/content-structure-separation-programmatic.html)* As etiquetas de texto (elemento LABEL) devem estar associadas aos seus campos (elementos INPUT, SELECT e TEXTAREA, à exceção do elemento BUTTON) correspondentes no formulário, através dos atributos for do label e id do input, os quais deverão ter o mesmo valor. Exemplo <label for=\"nome\">Nome: </label> <input type=\"text\" name=\"nome\" id=\"nome\"> <label>Sexo:</label> <input type=\"radio\" id=\"fem\" name=\"sexo\"> <label for=\"fem\">Feminino</label> <input type=\"radio\" id=\"mas\" name=\"sexo\"> <label for=\"mas\">Masculino</label> <label for=\"msg\">Mensagem: </label> <textarea name=\"msg\" id=\"msg\">Digite sua mensagem</textarea> <input type=\"checkbox\" id=\"receber\" name=\"receber\"> <label for=\"receber\">Deseja receber nossa newsletter?</label> [Ir ao exemplo navegável Recomendação 6.2](recomendacao-039.php \"Ir ao exemplo navegável Recomendação 6.2\")",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "emag-recomendacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "e-MAG 3.1, Recomendação 6.2. LABEL associado ao campo por for/id. Medida: label[for] = id do campo.",
+   "instancias": [
+    "upl-documento",
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-desassociado",
+     "descricao": "O rótulo visível do campo continua lá, mas sem for/id: não está associado ao campo.",
+     "clausula": "As etiquetas de texto (elemento LABEL) devem estar associadas aos seus campos (elementos INPUT, SELECT e TEXTAREA, à exceção do elemento BUTTON) correspondentes no formulário, através dos atributos for do label e id do input",
+     "instancias": [
+      "upl-documento",
+      "sel-tipo-documento"
+     ]
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "axe",
+    "medicao"
+   ],
+   "variantesAcopladas": [
+    {
+     "id": "rotulo-desassociado",
+     "hospedeiros": [
+      "swt-aviso-email",
+      "swt-aviso-sms",
+      "chk-avisos-todos"
+     ],
+     "viola": [
+      "a2-14fa162258a8",
+      "a2-8465edac53a3"
+     ],
+     "porque": "a2-14fa162258a8 (Clicar no rótulo deixa de alternar o switch: outro comportamento.); a2-8465edac53a3 (Clicar no texto descritivo deixa de marcar o checkbox: outro comportamento.)"
+    }
+   ],
+   "origem": "revisao-2"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "equivalenteEmag": null,
+   "justificativa": "e-MAG 6.2: label associado ao campo por for/id. Medida: for do label = id do campo; nome acessível do campo.",
+   "instancias": [
+    "inp-nome-pais",
+    "inp-codigo",
+    "sel-continente",
+    "rad-situacao",
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-desassociado",
+     "descricao": "O rótulo visível continua lá, mas sem for/id (nem aria-labelledby): não está associado ao campo (no radio, os rótulos das 3 opções).",
+     "clausula": "As etiquetas de texto (elemento LABEL) devem estar associadas aos seus campos (elementos INPUT, SELECT e TEXTAREA, à exceção do elemento BUTTON) correspondentes no formulário",
+     "efeitos": {
+      "porHospedeiro": {
+       "inp-nome-pais": {
+        "toca": [
+         "$:rotulo",
+         "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "label sem for"
+       },
+       "inp-codigo": {
+        "toca": [
+         "$:rotulo",
+         "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "label sem for"
+       },
+       "sel-continente": {
+        "toca": [
+         "$:rotulo",
+         "$:campo"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "label sem for"
+       },
+       "rad-situacao": {
+        "toca": [
+         "$:rotulos",
+         "$:inputs"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "labels das opções sem for"
+       },
+       "swt-certificado": {
+        "toca": [
+         "$:rotulo",
+         "$:input"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "label sem for"
+       }
+      }
+     }
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "axe",
+    "medicao"
+   ],
+   "categorias": [
+    "acessibilidade",
+    "formulario"
+   ],
+   "razaoCategorias": "e-MAG; o observável é rótulo de campo."
+  }
+ },
+ {
+  "id": "a2-0f20577609d3",
+  "componente": null,
+  "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+  "secao": "e-MAG 3.1",
+  "texto": "Recomendação 6.3 – Estabelecer uma ordem lógica de navegação",
+  "contexto": "*[Ver WCAG 2.0 Critério de Sucesso 2.4.3](http://www.acessibilidade.gov.pt/w3/TR/UNDERSTANDING-WCAG20/navigation-mechanisms-focus-order.html)* Os elementos do formulário devem ser distribuídos corretamente através do código HTML, criando, assim, uma sequência lógica de navegação. Assim, os formulários devem primeiro ser codificados considerando a ordem lógica de navegação para depois serem organizados visualmente via CSS. **OBS:** O atributo tabindex (ver recomendação 4) somente deverá ser utilizado quando existir real necessidade.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "emag-recomendacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "e-MAG 3.1, Recomendação 6.3. Ordem lógica no código do formulário; tabindex só com real necessidade. Medida: ordem de Tab entre os campos do formulário contra a ordem visual.",
+   "instancias": [
+    "sel-tipo-documento",
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "ordem-codigo-trocada",
+     "descricao": "O upload vem antes do select no código e é exibido depois por CSS (order); o Tab passa pelo upload primeiro.",
+     "clausula": "Os elementos do formulário devem ser distribuídos corretamente através do código HTML, criando, assim, uma sequência lógica de navegação."
+    },
+    {
+     "id": "tabindex-positivo",
+     "descricao": "O controle recebe tabindex=1 e sai da ordem do formulário.",
+     "clausula": "O atributo tabindex (ver recomendação 4) somente deverá ser utilizado quando existir real necessidade."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "equivalenteEmag": null,
+   "justificativa": "e-MAG 6.3: ordem do código do formulário = ordem lógica de navegação; tabindex só com real necessidade. Medida: ordem de Tab no formulário.",
+   "instancias": [
+    "inp-codigo",
+    "rad-situacao",
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "ordem-codigo-trocada",
+     "instancias": [
+      "inp-codigo"
+     ],
+     "descricao": "O campo 'Código do país' vem antes de 'Nome do país' no código e é reposto depois por CSS (order): o Tab passa pelo código primeiro.",
+     "clausula": "os formulários devem primeiro ser codificados considerando a ordem lógica de navegação para depois serem organizados visualmente via CSS.",
+     "efeitos": {
+      "toca": [
+       "$:raiz",
+       "pagina:formulario"
+      ],
+      "remove": [],
+      "cascata": [
+       "inp-nome-pais"
+      ],
+      "estado": null,
+      "nota": "ordem no DOM trocada, visual reposto por CSS"
+     }
+    },
+    {
+     "id": "tabindex-no-formulario",
+     "instancias": [
+      "rad-situacao",
+      "swt-certificado"
+     ],
+     "descricao": "O controle recebe tabindex=1 e sai da ordem do formulário (é a primeira parada de Tab).",
+     "clausula": "Os elementos do formulário devem ser distribuídos corretamente através do código HTML, criando, assim, uma sequência lógica de navegação.",
+     "efeitos": {
+      "porHospedeiro": {
+       "rad-situacao": {
+        "toca": [
+         "$:inputs"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "tabindex positivo nos radios"
+       },
+       "swt-certificado": {
+        "toca": [
+         "$:input"
+        ],
+        "remove": [],
+        "cascata": [],
+        "estado": null,
+        "nota": "tabindex positivo no switch"
+       }
+      }
+     }
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao"
+   ],
+   "categorias": [
+    "acessibilidade",
+    "navegacao",
+    "formulario"
+   ],
+   "razaoCategorias": "e-MAG; o observável é a ordem de navegação do formulário."
+  }
+ },
+ {
+  "id": "a2-14fa162258a8",
+  "componente": "switch",
+  "arquivo": "componentes/switch__designer.md",
+  "secao": "Switch (Controle Interruptor) › Comportamentos › 2. Área interativa",
+  "texto": "A interatividade do componente switch ocorre tanto na área compreendida pelo container como pelo label correspondente.",
+  "contexto": "A interatividade do componente switch ocorre tanto na área compreendida pelo container como pelo label correspondente.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "A área interativa do switch inclui o container e o label. Medida: clicar no texto do rótulo alterna o switch.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-nao-clicavel",
+     "descricao": "Clicar no texto do rótulo do switch não o alterna (o rótulo ignora o ponteiro), só a chave.",
+     "clausula": "A interatividade do componente switch ocorre tanto na área compreendida pelo container como pelo label correspondente."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": true,
+   "justificativa": "A área interativa inclui o container e o label. Medida: clicar no texto do label alterna o switch.",
+   "instancias": [
+    "swt-certificado"
+   ],
+   "variantes": [
+    {
+     "id": "texto-fora-do-label",
+     "descricao": "O texto do switch sai do <label> para um span ao lado (nome mantido por aria-labelledby); clicar no texto não alterna.",
+     "clausula": "A interatividade do componente switch ocorre tanto na área compreendida pelo container como pelo label correspondente.",
+     "efeitos": {
+      "toca": [
+       "$:rotulo",
+       "$:input"
+      ],
+      "remove": [],
+      "cascata": [],
+      "estado": null,
+      "nota": "texto movido para fora do label; aria-labelledby no input"
+     }
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "categorias": [
+    "comportamento"
+   ],
+   "razaoCategorias": "comportamento do DS (área clicável), nome acessível preservado",
+   "equivalenteEmag": null
+  }
+ },
+ {
+  "id": "a2-dc662beb73b3",
+  "componente": "switch",
+  "arquivo": "componentes/switch__desenvolvedor.md",
+  "secao": "Switch (Controle Interruptor) › Informações adicionais › Switch com rótulos adicionais",
+  "texto": "Para o rótulo adiciona use a classe switch-data.",
+  "contexto": "Para o rótulo adiciona use a classe switch-data. Os textos de ligado e desligado devem ficar em atributos data-\\:",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "swt-certificado"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos adicionais de ligado/desligado; os switches não os usam.",
+   "origem": "lote-r2-G2.json"
+  },
+  "porque": "rejulgamento: inventário iteração 2 (switch de efeito imediato, fora do formulário)",
+  "decisaoAnterior": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos adicionais de ligado/desligado; o switch da tela não os usa."
+  }
+ }
+]

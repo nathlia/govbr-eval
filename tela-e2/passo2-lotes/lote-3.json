@@ -1,0 +1,2731 @@
+{
+ "a2-21ca39426148": {
+  "aceita": true,
+  "justificativa": "Superfície obrigatória do botão: o btn-limpar (secundário) tem superfície com fundo e borda. Medida: border e background computados do botão.",
+  "instancias": [
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "limpar-sem-superficie",
+    "descricao": "O btn-limpar perde a superfície: sem borda e sem fundo, só o texto azul visível (classe de ênfase mantida).",
+    "clausula": "3 · Superfície · Fundamento Superfície · Obrigatório",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o CSS da raiz do btn-limpar"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Observável é fundo/borda computados (token visual).",
+  "equivalenteEmag": null
+ },
+ "a2-5b47246a41c1": {
+  "aceita": true,
+  "justificativa": "Botão circular (só ícone) tem ícone obrigatório: btn-ajuda, gatilho do select e Fechar da mensagem. Medida: elemento de ícone visível dentro do botão.",
+  "instancias": [
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "circular-sem-icone",
+    "descricao": "O botão circular fica sem o ícone (círculo vazio), com o nome acessível mantido.",
+    "clausula": "Nos botões do tipo circular a utilização é obrigatória",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-ajuda": {
+       "toca": [
+        "$:raiz",
+        "$:icone"
+       ],
+       "remove": [
+        "$:icone"
+       ],
+       "cascata": [],
+       "estado": null,
+       "nota": "ícone retirado do btn-ajuda"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:gatilho"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "ícone retirado do gatilho"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "ícone retirado do Fechar"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Ícone é parte da anatomia do botão circular.",
+  "equivalenteEmag": null
+ },
+ "a2-d495bfd02867": {
+  "aceita": true,
+  "justificativa": "Rótulo obrigatório no botão que não é circular; na tela, o btn-limpar. Medida: texto visível dentro do botão.",
+  "instancias": [
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "limpar-so-icone",
+    "descricao": "O btn-limpar mostra só um ícone de borracha, sem texto visível; o nome 'Limpar campos' fica num aria-label.",
+    "clausula": "O rótulo é um elemento obrigatório.",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:texto",
+      "$:icone"
+     ],
+     "remove": [
+      "$:texto"
+     ],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto visível retirado, ícone acrescentado, nome acessível mantido"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Rótulo é parte da anatomia do botão; nome acessível não muda.",
+  "equivalenteEmag": null
+ },
+ "a2-59c1236e3ebd": {
+  "aceita": true,
+  "justificativa": "Proíbe quebra de linha no rótulo do botão; na tela, 'Limpar campos'. Medida: número de linhas do rótulo (getClientRects / altura do texto).",
+  "instancias": [
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-em-duas-linhas",
+    "descricao": "O btn-limpar fica com largura máxima de 72 px e o rótulo 'Limpar campos' quebra em duas linhas.",
+    "clausula": "Nunca utilize quebra de linhas no rótulodo botão.",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:texto"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "largura do botão limitada"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Observável é a disposição do texto no botão (medida de layout).",
+  "equivalenteEmag": null
+ },
+ "a2-6d5f38f9bab8": {
+  "aceita": true,
+  "justificativa": "O botão cresce com o rótulo respeitando as margens internas. Medida: padding horizontal computado do btn-limpar.",
+  "instancias": [
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "limpar-sem-margem-interna",
+    "descricao": "O btn-limpar fica com padding horizontal 0, texto encostado na borda.",
+    "clausula": "porém as margens internas devem ser respeitadas",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "padding da raiz do btn-limpar"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Padding computado (espaçamento).",
+  "equivalenteEmag": null
+ },
+ "a2-a9890f9d0039": {
+  "aceita": true,
+  "justificativa": "R-ED (b): o rótulo deve orientar claramente a ação; caso flagrante oposto é rótulo genérico. Medida: texto do btn-limpar.",
+  "instancias": [
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "limpar-rotulo-generico",
+    "descricao": "O btn-limpar passa a ter o rótulo 'OK'.",
+    "clausula": "orientar de forma clara qual ação esperada",
+    "efeitos": {
+     "toca": [
+      "$:texto",
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto visível e nome acessível do botão mudam"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Conteúdo do rótulo; muda também o nome acessível do botão.",
+  "equivalenteEmag": null
+ },
+ "a2-7d805a2b0e75": {
+  "aceita": false,
+  "motivo": "duplicada:a2-21ca39426148",
+  "justificativa": "Mesmo predicado (superfície obrigatória do botão) e mesmo observável de a2-21ca39426148; a aparência por tipo é a tabela de cores."
+ },
+ "a2-4f6b7bd068c4": {
+  "aceita": true,
+  "justificativa": "Ênfase primária só em ação crucial da tela; Limpar campos e Ajuda não são (a crucial é Salvar). Medida: classe/fundo de ênfase primária no botão.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda"
+  ],
+  "variantes": [
+   {
+    "id": "limpar-primario",
+    "descricao": "O btn-limpar recebe ênfase primária (fundo azul sólido), ficando dois primários na barra de ações.",
+    "instancias": [
+     "btn-limpar"
+    ],
+    "clausula": "devem ser aplicados em ações cruciais da tela",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "classe de ênfase do btn-limpar"
+    }
+   },
+   {
+    "id": "ajuda-primario",
+    "descricao": "O btn-ajuda recebe ênfase primária (círculo azul sólido).",
+    "instancias": [
+     "btn-ajuda"
+    ],
+    "clausula": "devem ser aplicados em ações cruciais da tela",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "classe de ênfase do btn-ajuda; ícone fica branco"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Ênfase lida pelas cores/classe do botão.",
+  "equivalenteEmag": null
+ },
+ "a2-5f85eeafe863": {
+  "aceita": true,
+  "justificativa": "Rótulo e ícone sempre centralizados na largura e na altura do botão. Medida: centro do ícone contra o centro do botão (getBoundingClientRect).",
+  "instancias": [
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "icone-no-canto",
+    "descricao": "O ícone dentro do botão circular fica alinhado ao canto superior esquerdo, fora do centro.",
+    "clausula": "o rótulo do botão e o ícone permanecem sempre centralizados tanto na largura quanto na altura",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-ajuda": {
+       "toca": [
+        "$:icone",
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "alinhamento do ícone"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:gatilho"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "alinhamento do ícone (gatilho do select)"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "alinhamento do ícone (Fechar da mensagem)"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Posição medida do ícone (layout).",
+  "equivalenteEmag": null
+ },
+ "a2-df449a7d5cd8": {
+  "aceita": true,
+  "justificativa": "Botões de ênfases diferentes posicionados pela importância (maior relevância à direita, a2-66f05213a674); na barra de ações há o primário Salvar e o secundário Limpar campos. Medida: posição x do btn-limpar contra a do btn-salvar.",
+  "instancias": [
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "limpar-a-direita-do-salvar",
+    "descricao": "O btn-limpar (secundário) passa para depois do btn-salvar (primário) na barra de ações, ficando na ponta direita.",
+    "clausula": "é necessário posicioná-los de forma coerente em relação ao grau de importância de cada um dessas ênfases",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "pagina:acoes"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só o btn-limpar muda de lugar no DOM da barra; Salvar e Cancelar ficam como estão"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token",
+   "navegacao"
+  ],
+  "razaoCategorias": "Posição na barra; a ordem de tabulação muda junto.",
+  "equivalenteEmag": null
+ },
+ "a2-66f05213a674": {
+  "aceita": false,
+  "motivo": "duplicada:a2-df449a7d5cd8",
+  "justificativa": "Princípio que concretiza a2-df449a7d5cd8 (mesmo predicado, condição e observável: posição do btn-limpar contra o Salvar)."
+ },
+ "a2-c23f336807f4": {
+  "aceita": true,
+  "justificativa": "Botão perto de outro componente mantém espaçamento mínimo; btn-ajuda ao lado do h1 e btn-limpar ao lado do Cancelar. Medida: distância entre as caixas (getBoundingClientRect).",
+  "instancias": [
+   "btn-ajuda",
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "ajuda-colado-ao-titulo",
+    "descricao": "O btn-ajuda fica com margem negativa, a caixa encostada (0 px) e sobreposta ao fim do título h1.",
+    "instancias": [
+     "btn-ajuda"
+    ],
+    "clausula": "mantenha um espaçamento mínimo",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "margem do btn-ajuda"
+    }
+   },
+   {
+    "id": "limpar-colado-ao-cancelar",
+    "descricao": "O btn-limpar fica com margem negativa, a caixa encostada (0 px) ao botão vizinho da barra.",
+    "instancias": [
+     "btn-limpar"
+    ],
+    "clausula": "mantenha um espaçamento mínimo",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "margem do btn-limpar"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Espaçamento medido.",
+  "equivalenteEmag": null
+ },
+ "a2-3241a9611f30": {
+  "aceita": true,
+  "justificativa": "O espaçamento de proteção do botão vem da escala de layout. Medida: margem computada contra os valores da escala de espaçamento.",
+  "instancias": [
+   "btn-ajuda",
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "protecao-fora-da-escala",
+    "descricao": "A margem entre o botão e o vizinho passa a 5 px, valor fora da escala.",
+    "clausula": "Utilize algum espaçamento da escala de layout",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "margem do botão"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Valor de espaçamento contra a escala de tokens.",
+  "equivalenteEmag": null
+ },
+ "a2-72ddeddc1ac8": {
+  "aceita": true,
+  "justificativa": "Ícone de botão circular em --icon-size-base. Medida: font-size/largura computada do ícone em btn-ajuda, gatilho do select e Fechar.",
+  "instancias": [
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "icone-circular-maior",
+    "descricao": "O ícone do botão circular fica com --icon-size-lg; o botão mantém o tamanho.",
+    "clausula": "Ícone (Circular) · --icon-size-base",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-ajuda": {
+       "toca": [
+        "$:icone"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "tamanho do ícone"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:gatilho"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "tamanho do ícone (gatilho do select)"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "tamanho do ícone (Fechar da mensagem)"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Tamanho de ícone por token.",
+  "equivalenteEmag": null
+ },
+ "a2-9fc840ceb22d": {
+  "aceita": true,
+  "justificativa": "Cores do botão em fundo claro: secundário (btn-limpar) com borda e texto --blue-warm-vivid-70 e fundo --pure-0; terciário circular (btn-ajuda, gatilho) com ícone --blue-warm-vivid-70 e superfície transparente. O Fechar segue a cor do Message. Medida: color, border-color e background-color computados.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "limpar-borda-cinza",
+    "descricao": "A borda do btn-limpar fica --gray-40 em vez do azul.",
+    "instancias": [
+     "btn-limpar"
+    ],
+    "clausula": "Superfície (Secundária) · border color · --blue-warm-vivid-70",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "cor da borda do btn-limpar"
+    }
+   },
+   {
+    "id": "icone-terciario-cinza",
+    "descricao": "O ícone do botão terciário circular fica --gray-80.",
+    "instancias": [
+     "btn-ajuda",
+     "sel-continente"
+    ],
+    "clausula": "Ícone, Rótulo (Terciária) · text color · --blue-warm-vivid-70",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-ajuda": {
+       "toca": [
+        "$:icone"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do ícone do btn-ajuda"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:gatilho"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do ícone do gatilho"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Cores por token.",
+  "equivalenteEmag": null
+ },
+ "a2-b0f874b8b2cf": {
+  "aceita": true,
+  "justificativa": "Dimensões: botão padrão com 40 px de altura (densidade padrão); circular 40×40 (btn-ajuda) e 32×32 na densidade alta (gatilho do select, Fechar). Medida: width/height computados.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "limpar-altura-36",
+    "descricao": "O btn-limpar fica com 36 px de altura.",
+    "instancias": [
+     "btn-limpar"
+    ],
+    "clausula": "Superfície (Padrão - Densidade Padrão) · 40px · variável",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "altura do btn-limpar"
+    }
+   },
+   {
+    "id": "ajuda-oval",
+    "descricao": "O btn-ajuda fica com 40 px de altura e 52 px de largura.",
+    "instancias": [
+     "btn-ajuda"
+    ],
+    "clausula": "Superfície (Circular - Densidade Padrão) · 40px · 40px",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "largura do btn-ajuda"
+    }
+   },
+   {
+    "id": "circular-alta-36",
+    "descricao": "O botão circular de densidade alta fica com 36×36 px.",
+    "instancias": [
+     "sel-continente",
+     "msg-orientacao"
+    ],
+    "clausula": "Superfície (Circular - Densidade Alta) · 32px · 32px",
+    "efeitos": {
+     "porHospedeiro": {
+      "sel-continente": {
+       "toca": [
+        "$:gatilho"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "tamanho do gatilho"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "tamanho do Fechar"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Dimensões por token.",
+  "equivalenteEmag": null
+ },
+ "a2-40e233d8affd": {
+  "aceita": true,
+  "justificativa": "Botão padrão (btn-limpar) com border-radius --surface-rounder-pill. Medida: border-radius computado.",
+  "instancias": [
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "limpar-cantos-retos",
+    "descricao": "O btn-limpar fica com border-radius de 4 px.",
+    "clausula": "Superfície (Padrão) · border-radius · --surface-rounder-pill",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "raio do btn-limpar"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Raio por token.",
+  "equivalenteEmag": null
+ },
+ "a2-c7ac4e76783e": {
+  "aceita": true,
+  "justificativa": "Container do botão com a classe br-button (btn-limpar, btn-ajuda, Fechar da mensagem; o gatilho do select tem unidade própria do select). Medida: classe do botão.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "botao-sem-br-button",
+    "descricao": "O botão usa classe própria com a aparência copiada à mão, sem br-button.",
+    "clausula": "class · string · br-button · Container do componente.",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "classe da raiz do btn-limpar"
+      },
+      "btn-ajuda": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "classe da raiz do btn-ajuda"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "classe do Fechar"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "Classe estrutural do componente.",
+  "equivalenteEmag": null
+ },
+ "a2-923a3ee74050": {
+  "aceita": true,
+  "justificativa": "Ícone decorativo do botão (o nome vem do aria-label) com aria-hidden=\"true\". Medida: atributo aria-hidden no ícone.",
+  "instancias": [
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "icone-sem-aria-hidden",
+    "descricao": "O ícone dentro do botão circular fica sem aria-hidden=\"true\".",
+    "clausula": "Ícones decorativos precisam ter o atributo aria-hidden=\"true\"",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-ajuda": {
+       "toca": [
+        "$:icone"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "atributo do ícone"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:gatilho"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "atributo do ícone (gatilho do select)"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "atributo do ícone (Fechar da mensagem)"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Muda propriedade da árvore de acessibilidade (ocultação).",
+  "equivalenteEmag": null
+ },
+ "a2-dc561d157556": {
+  "aceita": true,
+  "justificativa": "Botão circular com o nome no atributo aria-label. Medida: aria-label presente e não vazio.",
+  "instancias": [
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "nome-so-em-title",
+    "descricao": "O botão circular perde o atributo aria-label; o mesmo nome fica no title e num texto oculto, e o nome acessível não muda.",
+    "clausula": "Inclua o atributo aria-label no componente",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-ajuda": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "atributos do btn-ajuda"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:gatilho"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "atributos do gatilho"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "atributos do Fechar"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Atributo ARIA de nome.",
+  "equivalenteEmag": null
+ },
+ "a2-be0b9ab18685": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não usa o componente tooltip; exibir o rótulo em tooltip depende de componente ausente da tela."
+ },
+ "a2-ff6a961f006f": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum botão sorteável tem ícone de apoio ao lado do rótulo: btn-limpar é só texto; btn-ajuda, gatilho e Fechar são só ícone."
+ },
+ "a2-fee39db9eda4": {
+  "aceita": true,
+  "justificativa": "Botão só com ícone usa title ou aria-label (o atributo, além do nome). Medida: atributos title e aria-label ausentes; nome acessível continua não vazio.",
+  "instancias": [
+   "btn-ajuda",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "nome-so-no-texto-oculto",
+    "descricao": "O botão circular fica sem title e sem aria-label; o nome acessível vem de um texto oculto dentro do botão.",
+    "clausula": "Ao utilizar botões com apenas ícones, certifique-se de usar os atributos title ou aria-label;",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-ajuda": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "atributos do btn-ajuda"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:gatilho"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "atributos do gatilho"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "atributos do Fechar"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Atributos ARIA/title de nome.",
+  "equivalenteEmag": null
+ },
+ "a2-2bef68e79f2d": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum botão sorteável é de alternância: btn-ajuda só volta a mostrar a mensagem; a abertura da lista é estado do próprio select."
+ },
+ "a2-49acced70a42": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Tirar o campo de entrada desfaz o input (ou o select) inteiro: o componente some e o rótulo fica sem campo."
+ },
+ "a2-3452a785e45d": {
+  "aceita": true,
+  "justificativa": "R-ED (b): rótulo curto e objetivo; caso flagrante oposto é rótulo longo. Medida: número de palavras do rótulo.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-longo",
+    "descricao": "O rótulo do campo vira uma frase de mais de 20 palavras explicando para que serve o dado.",
+    "clausula": "O texto do Rótulo deve ser curto e objetivo possível.",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto do label; muda o nome acessível do campo"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Rótulo de campo; muda o nome acessível.",
+  "equivalenteEmag": null
+ },
+ "a2-d817fab151df": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Mesmo caso de a2-49acced70a42: tirar o campo de entrada desfaz o componente."
+ },
+ "a2-438a309adabe": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum campo da tela tem ícone ilustrativo."
+ },
+ "a2-54dca6a2c217": {
+  "aceita": true,
+  "justificativa": "Ação interna do campo (gatilho do select) com ícone que representa a ação de abrir a lista. Medida: classe do ícone do gatilho.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-icone-errado",
+    "descricao": "O gatilho do select mostra uma lupa em vez da seta para baixo.",
+    "clausula": "o ícone deve representar a ação a ser realizada na interação",
+    "efeitos": {
+     "toca": [
+      "$:gatilho"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "classe do ícone do gatilho"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Ícone da ação interna, parte da anatomia.",
+  "equivalenteEmag": null
+ },
+ "a2-6b41cb544272": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há ação interna em botão textual (caso excepcional) na tela."
+ },
+ "a2-3312a3e57512": {
+  "aceita": true,
+  "justificativa": "R-ED (b): o placeholder traz informação mais completa que o rótulo; caso flagrante oposto é repetir o rótulo. Medida: placeholder do campo do select contra o texto do rótulo.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "placeholder-igual-rotulo",
+    "descricao": "O placeholder do campo do select repete exatamente o rótulo 'Continente'.",
+    "clausula": "Deve trazer informações mais completas que a contida no Rótulo/Label",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "atributo placeholder"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "Instrução de preenchimento do campo.",
+  "equivalenteEmag": null
+ },
+ "a2-76f24d309b17": {
+  "aceita": true,
+  "justificativa": "Apagado o texto digitado no campo do select (filtro), o placeholder volta. Medida: digitar e apagar e ler o placeholder exibido.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "placeholder-nao-volta",
+    "descricao": "Depois que o usuário digita no campo do select, um script zera o placeholder e ele não reaparece ao apagar o texto.",
+    "clausula": "No caso de exclusão da do texto digitado, o placeholder deve reaparecer.",
+    "efeitos": {
+     "toca": [
+      "$:campo",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "script acrescentado no arquivo de inicialização"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "formulario"
+  ],
+  "razaoCategorias": "Comportamento da instrução do campo.",
+  "equivalenteEmag": null
+ },
+ "a2-aed330b42967": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum campo apresenta estado informativo que peça destaque; inp-codigo tem só texto de apoio neutro."
+ },
+ "a2-eec6bc910f55": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum campo fica desabilitado na tela."
+ },
+ "a2-db9f9aa4a02e": {
+  "aceita": true,
+  "justificativa": "No hover sobre o campo o cursor vira o de texto. Medida: cursor computado do campo com hover.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "cursor-padrao-no-campo",
+    "descricao": "O campo mostra o cursor padrão (seta) no hover.",
+    "clausula": "O cursor deve mudar para o formato Text.",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "cursor do input"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "medicao",
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Resposta ao hover.",
+  "equivalenteEmag": null
+ },
+ "a2-05e0365f1c3c": {
+  "aceita": true,
+  "justificativa": "Com o campo focado, o cursor continua mudando no hover (condição diferente de a2-db9f9aa4a02e). Medida: cursor computado do campo focado com hover.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "cursor-some-no-foco",
+    "descricao": "Quando o campo está focado, o cursor volta à seta no hover.",
+    "clausula": "o cursor do mouse ainda deve sofrer as alterações referentes",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "cursor do input em :focus"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Resposta ao hover no foco.",
+  "equivalenteEmag": null
+ },
+ "a2-06f818bc75a5": {
+  "aceita": false,
+  "motivo": "forca",
+  "justificativa": "Legenda de exemplo que repete o 'Evite dividir o input...' do parágrafo anterior, em Melhores práticas: orientação de uso."
+ },
+ "a2-eca300840220": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum campo usa máscara: nome é texto livre e o código tem 3 letras sem separadores."
+ },
+ "a2-fc1517207533": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum campo usa máscara com trechos a separar."
+ },
+ "a2-8424f75a80a8": {
+  "aceita": true,
+  "justificativa": "Cores do campo em fundo claro: rótulo, placeholder e texto auxiliar --gray-80, campo --pure-0, borda --gray-40. Medida: cores computadas.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "borda-campo-clara",
+    "descricao": "A borda do campo fica --gray-20.",
+    "clausula": "Borda campo de texto · background · --gray-40",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "cor da borda do input"
+    }
+   },
+   {
+    "id": "apoio-claro",
+    "descricao": "O texto de apoio de inp-codigo fica --gray-40.",
+    "instancias": [
+     "inp-codigo"
+    ],
+    "clausula": "Texto auxiliar · color · --gray-80",
+    "efeitos": {
+     "toca": [
+      "$:apoio"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "cor do texto de apoio"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra",
+   "axe"
+  ],
+  "categorias": [
+   "token",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Cores por token; o texto de apoio claro perde contraste.",
+  "equivalenteEmag": null
+ },
+ "a2-bc172ac96406": {
+  "aceita": true,
+  "justificativa": "Rótulo no estilo Label e texto auxiliar em --font-size-scale-base regular. Medida: font-size/font-weight computados do rótulo e do apoio.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-peso-regular",
+    "descricao": "O rótulo do campo fica em peso regular (fora do estilo Label).",
+    "clausula": "Rótulo/Label · - · - · Label",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "peso do label"
+    }
+   },
+   {
+    "id": "apoio-menor",
+    "descricao": "O texto de apoio de inp-codigo fica em --font-size-scale-down-01.",
+    "instancias": [
+     "inp-codigo"
+    ],
+    "clausula": "Texto auxiliar · --font-size-scale-base · --font-weight-regular",
+    "efeitos": {
+     "toca": [
+      "$:apoio"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "tamanho do texto de apoio"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "Observável é tamanho/peso de texto.",
+  "equivalenteEmag": null
+ },
+ "a2-3169f339a8e1": {
+  "aceita": true,
+  "justificativa": "Campo de densidade média (padrão) com altura --spacing-scale-5x e raio --surface-rounder-sm. Medida: height e border-radius computados do input.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "campo-sem-raio",
+    "descricao": "O campo fica com border-radius 0.",
+    "clausula": "Campo de texto · border-radius · --surface-rounder-sm",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "raio do input"
+    }
+   },
+   {
+    "id": "campo-alto",
+    "descricao": "O campo fica com 52 px de altura.",
+    "clausula": "Campo de texto - Densidade Média · height · --spacing-scale-5x",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "altura do input"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Dimensões por token.",
+  "equivalenteEmag": null
+ },
+ "a2-8fcc793aaed1": {
+  "aceita": true,
+  "justificativa": "Espaçamentos do campo: rótulo topo margin-bottom half, padding-left 2x etc. Medida: padding/margens computados do input e do label.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "texto-colado-borda",
+    "descricao": "O campo fica com padding-left 0 (texto encostado na borda).",
+    "clausula": "Campo de entrada de texto · padding-left · --spacing-scale-2x",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "padding do input"
+    }
+   },
+   {
+    "id": "rotulo-afastado",
+    "descricao": "O rótulo fica com margin-bottom de 24 px acima do campo.",
+    "clausula": "Rótulo/Label topo · margin-bottom · --spacing-scale-half",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "margem do label"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Espaçamentos por token.",
+  "equivalenteEmag": null
+ },
+ "a2-5ef3ffb3d9b1": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Tirar o core.min.js quebra todos os componentes da página, inclusive o andaime."
+ },
+ "a2-614b66b81ee0": {
+  "aceita": false,
+  "motivo": "sem-medicao",
+  "justificativa": "Num campo de texto simples, sem ação interna, deixar de instanciar a classe não muda nada observável; o campo do select é instanciado pelo próprio select."
+ },
+ "a2-5574128c6a03": {
+  "aceita": false,
+  "motivo": "duplicada:a2-614b66b81ee0",
+  "justificativa": "Parâmetro da mesma instrução de instanciação de a2-614b66b81ee0."
+ },
+ "a2-501efb342336": {
+  "aceita": false,
+  "motivo": "duplicada:a2-614b66b81ee0",
+  "justificativa": "Parâmetro da mesma instrução de instanciação de a2-614b66b81ee0."
+ },
+ "a2-4aeca513aeeb": {
+  "aceita": true,
+  "justificativa": "Cada input é ponto de foco alcançado pela tecla Tab (tecla específica); o select tem unidade própria de Tab. Medida: a sequência de Tab para no campo.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo"
+  ],
+  "variantes": [
+   {
+    "id": "campo-fora-do-tab",
+    "descricao": "O campo recebe tabindex=\"-1\" e o Tab passa direto por ele.",
+    "clausula": "por meio da tecla Tab, onde cada input deve ser um ponto de foco na ordem da tabulação",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "tabindex do input"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade",
+   "navegacao"
+  ],
+  "razaoCategorias": "Operação por teclado e ordem de foco.",
+  "equivalenteEmag": null
+ },
+ "a2-e1a8fbf8ec5c": {
+  "aceita": true,
+  "justificativa": "O campo focado usa a marcação de foco da diretriz de Estados do DS. Medida: outline computado do campo focado contra o foco do DS.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "foco-fora-do-padrao",
+    "descricao": "O campo focado mostra contorno sólido vermelho de 1 px no lugar do foco do DS.",
+    "clausula": "Utilize a marcação correta para o estado de foco, previsto na diretriz de estados",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "estilo :focus do input"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Foco visível por token do DS.",
+  "equivalenteEmag": null
+ },
+ "a2-328f62cfe4ce": {
+  "aceita": true,
+  "justificativa": "Com o foco no campo, o usuário digita sem passo anterior. Medida: focar por Tab e digitar; o texto entra no campo.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo"
+  ],
+  "variantes": [
+   {
+    "id": "campo-readonly-ate-clique",
+    "descricao": "O campo fica readonly até receber um clique; com foco por Tab não aceita digitação.",
+    "clausula": "permita que o usuário possa digitar o texto na sequência, sem necessidade de qualquer outro passo anterior",
+    "efeitos": {
+     "toca": [
+      "$:campo",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "readonly no input e script que o retira no clique"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Operação por teclado.",
+  "equivalenteEmag": null
+ },
+ "a2-81fd932c0990": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Os campos de texto não têm controle interno; o gatilho do select segue o modelo de teclado do próprio select (foco no campo abre a lista, setas, Esc), não o de controle interno de input."
+ },
+ "a2-13c4de8de18e": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum campo tem botão de informação junto ao rótulo nem controle interno próprio de input; o gatilho do select segue o modelo de teclado do select."
+ },
+ "a2-ec99c6922afa": {
+  "aceita": true,
+  "justificativa": "No campo, Ctrl+seta navega por palavras. Medida: digitar duas palavras, Ctrl+seta esquerda e ler selectionStart.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo"
+  ],
+  "variantes": [
+   {
+    "id": "ctrl-seta-bloqueado",
+    "descricao": "Um script cancela Ctrl+setas (preventDefault) no campo e o cursor não pula palavras.",
+    "clausula": "navegar entre as palavras do texto digitado, com o uso das teclas Ctrl + left/right",
+    "efeitos": {
+     "toca": [
+      "$:campo",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "listener de teclado no input"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Operação por teclado.",
+  "equivalenteEmag": null
+ },
+ "a2-020f0b4f0964": {
+  "aceita": true,
+  "justificativa": "R-ED (b): rótulo claro e descritivo do propósito do campo; caso flagrante oposto é rótulo genérico. O select tem unidade própria de rótulo. Medida: texto do rótulo.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-generico",
+    "descricao": "O rótulo do campo vira 'Campo 1'.",
+    "clausula": "Utilize rótulos (labels) claros e descritivos",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto do label; muda o nome acessível"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Rótulo de campo e nome acessível.",
+  "equivalenteEmag": null
+ },
+ "a2-7bdc66f1d99d": {
+  "aceita": true,
+  "justificativa": "Campo com problema marcado com a cor do estado de erro. Medida: em S1, border-color computado do campo obrigatório contra a cor de erro do DS.",
+  "instancias": [
+   "inp-nome-pais",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "erro-sem-cor",
+    "descricao": "Em S1 o campo mostra o texto de erro, mas a borda continua na cor neutra.",
+    "clausula": "cor correspondente ao estado de erro, se houver algum problema no preenchimento do campo",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "cor da borda no estado inválido"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token",
+   "formulario"
+  ],
+  "razaoCategorias": "Cor do estado de erro do campo.",
+  "equivalenteEmag": null
+ },
+ "a2-59c41d3b1085": {
+  "aceita": true,
+  "justificativa": "Campo em <input> com type correspondente à função; o código do país é texto. Medida: atributo type do input.",
+  "instancias": [
+   "inp-codigo"
+  ],
+  "variantes": [
+   {
+    "id": "codigo-type-tel",
+    "descricao": "O campo inp-codigo recebe type=\"tel\" (as letras continuam aceitas no navegador de mesa).",
+    "clausula": "o valor do atributo type correspondente a sua função",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "atributo type do input"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario"
+  ],
+  "razaoCategorias": "Semântica do campo de formulário.",
+  "equivalenteEmag": null
+ },
+ "a2-7c43824db106": {
+  "aceita": true,
+  "justificativa": "Associação rótulo–campo pelo par for/id (diz mais que e-MAG 6.2: o mecanismo). Medida: label[for] igual ao id do input.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-por-labelledby",
+    "descricao": "O rótulo é ligado ao campo só por aria-labelledby, sem for/id.",
+    "clausula": "usando o atributo for na tag <label> e um id com mesmo valor na tag <input>",
+    "efeitos": {
+     "toca": [
+      "$:rotulo",
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "atributo for retirado, aria-labelledby no input"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "formulario",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Associação de rótulo (nome acessível).",
+  "equivalenteEmag": null
+ },
+ "a2-56357b049872": {
+  "aceita": true,
+  "justificativa": "Instrução/erro do campo vinculado por aria-describedby: texto de apoio de inp-codigo e mensagem de erro de inp-nome-pais em S1 (o select tem unidade própria igual). Medida: aria-describedby do campo aponta para o texto.",
+  "instancias": [
+   "inp-codigo",
+   "inp-nome-pais"
+  ],
+  "variantes": [
+   {
+    "id": "apoio-sem-describedby",
+    "descricao": "O texto de apoio sobre o formato aparece, mas o campo não tem aria-describedby apontando para ele.",
+    "instancias": [
+     "inp-codigo"
+    ],
+    "clausula": "use o atributo aria-describedby para vincular a um elemento de ajuda ou instrução",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "aria-describedby retirado"
+    }
+   },
+   {
+    "id": "erro-sem-describedby",
+    "descricao": "Em S1 a mensagem de erro do campo aparece, mas o campo não tem aria-describedby apontando para ela.",
+    "instancias": [
+     "inp-nome-pais"
+    ],
+    "clausula": "use o atributo aria-describedby para vincular a um elemento de ajuda ou instrução",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "aria-describedby retirado"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura",
+   "acessibilidade",
+   "formulario"
+  ],
+  "razaoCategorias": "Descrição acessível de instrução/erro de campo.",
+  "equivalenteEmag": null
+ },
+ "a2-544adb3c8b26": {
+  "aceita": true,
+  "justificativa": "Superfície do message obrigatória. Medida: background-color computado da raiz da mensagem.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "sem-superficie",
+    "descricao": "A mensagem fica com fundo transparente (sem a superfície do tipo).",
+    "clausula": "1 · Superfície do Message · Fundamento Superfície · Obrigatório",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "fundo da raiz"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Fundo computado.",
+  "equivalenteEmag": null
+ },
+ "a2-50affb0576ef": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Tirar o texto da mensagem apaga também a informação que ela transmite; não há mudança local isolada."
+ },
+ "a2-5df30996e1c5": {
+  "aceita": true,
+  "justificativa": "Ícone semântico à esquerda; Fechar no topo à direita. Medida: posição (getBoundingClientRect) do ícone e do Fechar.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "fechar-a-esquerda",
+    "descricao": "Em msg-orientacao o Fechar troca de lado com o ícone: Fechar à esquerda, ícone à direita.",
+    "instancias": [
+     "msg-orientacao"
+    ],
+    "clausula": "o Botão Fechar, deve ser posicionado no topo e à direita",
+    "efeitos": {
+     "toca": [
+      "$:fechar",
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "ordem/posição dos dois elementos"
+    }
+   },
+   {
+    "id": "icone-a-direita",
+    "descricao": "Em msg-erro o ícone semântico passa para a direita do texto.",
+    "instancias": [
+     "msg-erro"
+    ],
+    "clausula": "Os ícones de função semântica devem ser posicionados à esquerda na Superfície do Message",
+    "efeitos": {
+     "toca": [
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "posição do ícone"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Posição medida.",
+  "equivalenteEmag": null
+ },
+ "a2-db30195b0e66": {
+  "aceita": true,
+  "justificativa": "R-ED (b): texto da mensagem curto, claro e objetivo. Medida: número de palavras e presença da informação necessária.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-prolixa",
+    "descricao": "A mensagem ganha 90 palavras de explicação institucional antes de dizer o que importa.",
+    "clausula": "Deve-se optar por um texto curto, claro e objetivo, compreendendo toda informação necessária ao usuário.",
+    "efeitos": {
+     "toca": [
+      "$:texto"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto da mensagem"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "Conteúdo textual.",
+  "equivalenteEmag": null
+ },
+ "a2-1efbf2a4b525": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "As duas mensagens sorteáveis são do tipo padrão; as mensagens contextuais (feedback de campo) não são hospedeiras desta unidade."
+ },
+ "a2-7ce46ea1d9b8": {
+  "aceita": true,
+  "justificativa": "msg-orientacao é a mensagem de uso geral da página: fica entre o cabeçalho e o breadcrumb, na largura toda. Medida: posição da mensagem contra cabeçalho e breadcrumb.",
+  "instancias": [
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "orientacao-abaixo-do-titulo",
+    "descricao": "A msg-orientacao passa para depois do h1, logo acima do formulário (abaixo do breadcrumb).",
+    "clausula": "deverá ser apresentado entre o cabeçalho e o componente breadcrumb",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "só a mensagem muda de lugar no DOM"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token",
+   "navegacao"
+  ],
+  "razaoCategorias": "Posição; a ordem de leitura muda.",
+  "equivalenteEmag": null
+ },
+ "a2-b141828d5580": {
+  "aceita": true,
+  "justificativa": "Na mensagem de uso geral, a superfície sangra a grid e o conteúdo respeita as margens da área útil. Medida: largura da superfície contra a da grid e margens do conteúdo.",
+  "instancias": [
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "superficie-sem-sangria",
+    "descricao": "A superfície da msg-orientacao fica restrita à largura da coluna de conteúdo, sem sangrar a grid.",
+    "clausula": "a superfície do Message deverá se estender, sangrando a área da Grid",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "largura da raiz"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Medida de layout.",
+  "equivalenteEmag": null
+ },
+ "a2-50718f0da5ac": {
+  "aceita": true,
+  "justificativa": "R-ED (b): informação neutra usa o tipo Informativo; msg-orientacao é neutra. Medida: classe/tipo da mensagem contra o conteúdo.",
+  "instancias": [
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "orientacao-tipo-sucesso",
+    "descricao": "A msg-orientacao usa o tipo Sucesso (cor e ícone de sucesso), com o mesmo texto de orientação.",
+    "clausula": "Deve ser usado quando o objetivo da mensagem for uma informação neutra.",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "classe de tipo e ícone"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "Tipo do componente por classe.",
+  "equivalenteEmag": null
+ },
+ "a2-fe00b737d272": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhuma mensagem da tela transmite conclusão de tarefa."
+ },
+ "a2-77f3dd74508b": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhuma mensagem da tela é de advertência."
+ },
+ "a2-1adbb9c1a3ca": {
+  "aceita": true,
+  "justificativa": "Erro usa o tipo Erro. Medida: classe/tipo de msg-erro contra o conteúdo de erro.",
+  "instancias": [
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "erro-com-tipo-info",
+    "descricao": "A msg-erro usa o tipo Informação (cor e ícone de informação), com o mesmo texto de erro.",
+    "clausula": "Deve ser usado quando o objetivo da mensagem for transmitir um alerta de erro",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "classe de tipo e ícone"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "Tipo do componente por classe.",
+  "equivalenteEmag": null
+ },
+ "a2-ada49eff27b5": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A mensagem de erro da tela não traz informação complementar."
+ },
+ "a2-6c82acf760ae": {
+  "aceita": true,
+  "justificativa": "Mensagem Informativa (padrão): superfície --blue-warm-vivid-10, ícone e Fechar --blue-warm-vivid-60, título --gray-80. Medida: cores computadas de msg-orientacao.",
+  "instancias": [
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "info-icone-cinza",
+    "descricao": "O ícone de msg-orientacao fica --gray-80.",
+    "clausula": "Ícone · color · --blue-warm-vivid-60",
+    "efeitos": {
+     "toca": [
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "cor do ícone"
+    }
+   },
+   {
+    "id": "info-fechar-cinza",
+    "descricao": "O Fechar de msg-orientacao fica --gray-80.",
+    "clausula": "Botão Fechar · color · --blue-warm-vivid-60",
+    "efeitos": {
+     "toca": [
+      "$:fechar"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "cor do Fechar"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Cores por token.",
+  "equivalenteEmag": null
+ },
+ "a2-fd04ea926801": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Cores do estado Sucesso; as mensagens da tela são Informativa e Erro."
+ },
+ "a2-5606a51d1ba1": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Cores do estado Alerta; as mensagens da tela são Informativa e Erro."
+ },
+ "a2-90ea0bde7e04": {
+  "aceita": true,
+  "justificativa": "Mensagem de Erro (padrão): superfície --red-vivid-10, ícone --red-vivid-50, texto --gray-80. Medida: cores computadas de msg-erro em S1.",
+  "instancias": [
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "erro-icone-cinza",
+    "descricao": "O ícone de msg-erro fica --gray-80.",
+    "clausula": "Ícone · color · --red-vivid-50",
+    "efeitos": {
+     "toca": [
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "cor do ícone"
+    }
+   },
+   {
+    "id": "erro-fundo-branco",
+    "descricao": "A superfície de msg-erro fica --pure-0.",
+    "clausula": "Superfície do Message · background · --red-vivid-10",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "fundo da raiz"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Cores por token.",
+  "equivalenteEmag": null
+ },
+ "a2-fb8e73f4ce50": {
+  "aceita": true,
+  "justificativa": "Texto da mensagem padrão em --font-size-scale-up-01 regular. Medida: font-size/font-weight computados do texto.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-pequena",
+    "descricao": "O texto da mensagem fica em --font-size-scale-base.",
+    "clausula": "Mensagem · --font-size-scale-up-01 · --font-weight-regular",
+    "efeitos": {
+     "toca": [
+      "$:texto"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "tamanho do texto"
+    }
+   },
+   {
+    "id": "mensagem-negrito",
+    "descricao": "O texto da mensagem fica em --font-weight-bold.",
+    "clausula": "Mensagem · --font-size-scale-up-01 · --font-weight-regular",
+    "efeitos": {
+     "toca": [
+      "$:texto"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "peso do texto"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "Tamanho/peso de texto.",
+  "equivalenteEmag": null
+ },
+ "a2-b13bd6797498": {
+  "aceita": true,
+  "justificativa": "Ícones do Message: Informativo padrão info-circle e Erro padrão times-circle em --icon-size-lg. Medida: glifo/classe e tamanho do ícone de cada mensagem.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "orientacao-icone-trocado",
+    "descricao": "A msg-orientacao usa o ícone check-circle em vez de info-circle.",
+    "instancias": [
+     "msg-orientacao"
+    ],
+    "clausula": "Ícone Informativo - Tipo Padrão · <i class=\"info-circle\"></i> · --icon-size-lg · info-circle",
+    "efeitos": {
+     "toca": [
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "classe do ícone"
+    }
+   },
+   {
+    "id": "erro-icone-pequeno",
+    "descricao": "O ícone times-circle de msg-erro fica em --icon-size-base.",
+    "instancias": [
+     "msg-erro"
+    ],
+    "clausula": "Ícone Erro - Tipo Padrão · <i class=\"times-circle\"></i> · --icon-size-lg · times-circle",
+    "efeitos": {
+     "toca": [
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "tamanho do ícone"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Ícone e tamanho por token.",
+  "equivalenteEmag": null
+ },
+ "a2-4124b4181a77": {
+  "aceita": true,
+  "justificativa": "Espaçamentos do Message padrão (padding da superfície, margens do ícone). Medida: padding/margens computados.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-sem-padding-vertical",
+    "descricao": "A superfície da mensagem fica com padding-top e padding-bottom 0.",
+    "clausula": "Superfície do Message Tipo Padrão · padding-top · --spacing-scale-3x",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "padding da raiz"
+    }
+   },
+   {
+    "id": "icone-colado-texto",
+    "descricao": "O ícone semântico fica sem margin-right (encostado no texto).",
+    "clausula": "Ícone Tipo Padrão · margin-right · --spacing-scale-2x",
+    "efeitos": {
+     "toca": [
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "margem do ícone"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Espaçamentos por token.",
+  "equivalenteEmag": null
+ },
+ "a2-a7417adc8e5b": {
+  "aceita": true,
+  "justificativa": "Container do message padrão com a classe br-message; em msg-erro (sem Fechar) a troca não afeta comportamento. Medida: classe da raiz.",
+  "instancias": [
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "erro-sem-br-message",
+    "descricao": "A raiz de msg-erro usa classe própria com a aparência copiada à mão, sem br-message.",
+    "clausula": "class · string · br-message · Container para Tipo Padrão",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "classe da raiz; estilos copiados"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "Classe estrutural.",
+  "equivalenteEmag": null
+ },
+ "a2-b069c3031aa0": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "As mensagens sorteáveis são do tipo padrão; o container .feedback é das mensagens contextuais de campo, que não hospedam esta unidade."
+ },
+ "a2-333cfef507cf": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Tirar o core.min.js quebra todos os componentes da página, inclusive o andaime."
+ },
+ "a2-8536d91ce5b9": {
+  "aceita": true,
+  "justificativa": "A mensagem é instanciada por BRMessage, que dá função ao Fechar. Medida: clicar em Fechar oculta a msg-orientacao.",
+  "instancias": [
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "fechar-sem-efeito",
+    "descricao": "A msg-orientacao fica fora da instanciação do script: clicar em Fechar não a oculta.",
+    "clausula": "Usar o seguinte código JavaScript para instanciar a classe BRMessage",
+    "efeitos": {
+     "toca": [
+      "$:fechar",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "a inicialização pula esta mensagem"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Comportamento do Fechar.",
+  "equivalenteEmag": null
+ },
+ "a2-f8e02fcd7de2": {
+  "aceita": true,
+  "justificativa": "A msg-erro, que aparece em resposta ao envio (S1), é anunciada de imediato. Medida: região viva (role=alert ou aria-live) na mensagem quando surge.",
+  "instancias": [
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "erro-sem-regiao-viva",
+    "descricao": "A msg-erro aparece em S1 sem role de alerta nem aria-live.",
+    "clausula": "permita que o leitor de tela leia imediatamente a mensagem",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "role/aria-live retirados"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Propriedade ARIA de região viva.",
+  "equivalenteEmag": null
+ },
+ "a2-db25bc1d1653": {
+  "aceita": true,
+  "justificativa": "Ao exibir a mensagem com Fechar (msg-orientacao, reexibida pelo btn-ajuda), o foco vai para o Fechar. Medida: document.activeElement logo depois de reexibir.",
+  "instancias": [
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "foco-fica-na-ajuda",
+    "descricao": "Fechada a msg-orientacao, acionar o btn-ajuda a mostra de novo, mas o foco fica no btn-ajuda em vez de ir para o Fechar.",
+    "clausula": "No momento da exibição da mensagem, o foco do navegador deve estar sobre o botão fechar, quando houver.",
+    "efeitos": {
+     "toca": [
+      "$:fechar",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "script de reexibição não move o foco"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Gestão de foco por teclado.",
+  "equivalenteEmag": null
+ },
+ "a2-14f2e6c3226f": {
+  "aceita": true,
+  "justificativa": "Ao fechar a msg-orientacao, o foco volta ao ponto do fluxo. Medida: document.activeElement depois de acionar Fechar pelo teclado.",
+  "instancias": [
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "foco-perdido-ao-fechar",
+    "descricao": "Depois de fechar a mensagem pelo teclado, o foco cai no body (início do documento).",
+    "clausula": "após o fechamento da mensagem, o foco do navegador volte ao local original no fluxo de navegação",
+    "efeitos": {
+     "toca": [
+      "$:fechar",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "script do Fechar não devolve o foco"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade",
+   "navegacao"
+  ],
+  "razaoCategorias": "Foco e ordem de navegação.",
+  "equivalenteEmag": null
+ },
+ "a2-55dab9d0155c": {
+  "aceita": true,
+  "justificativa": "Alternativa às cores semânticas para o leitor de tela (diz mais que e-MAG 4.2). Medida: texto (visível ou oculto) ou nome do ícone que diga o tipo.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "tipo-mudo-no-leitor",
+    "descricao": "O ícone fica aria-hidden e o texto que dizia o tipo ('Informação'/'Erro') é retirado: o leitor de tela não sabe o tipo.",
+    "clausula": "sempre forneça uma alternativa para usuários de leitores de tela",
+    "efeitos": {
+     "toca": [
+      "$:icone",
+      "$:titulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto do tipo retirado"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "estrutura",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Alternativa textual para leitor de tela.",
+  "equivalenteEmag": null
+ },
+ "a2-507dbd6cdee4": {
+  "aceita": true,
+  "justificativa": "O Fechar da msg-orientacao é botão de ênfase terciária e densidade alta. Medida: classes de ênfase/densidade e altura do Fechar.",
+  "instancias": [
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "fechar-densidade-padrao",
+    "descricao": "O Fechar fica na densidade padrão (40 px) em vez da alta.",
+    "clausula": "Este elemento é o Componente Botão - Ênfase Terciária de Alta Densidade.",
+    "efeitos": {
+     "toca": [
+      "$:fechar"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "classe de densidade"
+    }
+   },
+   {
+    "id": "fechar-secundario",
+    "descricao": "O Fechar recebe ênfase secundária (contorno azul).",
+    "clausula": "Este elemento é o Componente Botão - Ênfase Terciária de Alta Densidade.",
+    "efeitos": {
+     "toca": [
+      "$:fechar"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "classe de ênfase"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Parte da anatomia do Message.",
+  "equivalenteEmag": null
+ },
+ "a2-e175765df557": {
+  "aceita": true,
+  "justificativa": "A superfície da mensagem padrão se estende até o limite direito. Medida: right da mensagem contra o do contêiner.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "mensagem-encolhida",
+    "descricao": "A mensagem fica com a largura do texto (fit-content), terminando bem antes do limite direito.",
+    "clausula": "A Superfície do Message se estenderá até o limite à direita da tela",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "largura da raiz"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Medida de layout.",
+  "equivalenteEmag": null
+ },
+ "a2-9e3f0f34fd0a": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Regra da mensagem contextual; as hospedeiras são do tipo padrão."
+ },
+ "a2-eb940c804923": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Constância do espaçamento ao mudar a densidade; nenhum botão sorteável alterna densidade."
+ },
+ "a2-b60eebdd6306": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há três botões de ênfases diferentes juntos: a barra tem um primário e dois secundários."
+ },
+ "a2-99da0d5abad3": {
+  "aceita": false,
+  "motivo": "duplicada:a2-df449a7d5cd8",
+  "justificativa": "Par primário+secundário é a condição da barra já coberta por a2-df449a7d5cd8 (mesmo observável)."
+ },
+ "a2-0bbeccc63fca": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há par secundário+terciário juntos."
+ },
+ "a2-75f137ee2a1d": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há par primário+terciário juntos."
+ },
+ "a2-35c752299c82": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Os botões da barra ficam lado a lado em 1280×900; não há disposição vertical."
+ },
+ "a2-0010742096a9": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum botão sorteável tem estado progress com loading."
+ },
+ "a2-dc18106452ce": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum botão sorteável tem estado progress com loading."
+ },
+ "a2-c595957b223a": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há botão ativado num conjunto de opções."
+ },
+ "a2-728a2fafbf41": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum campo tem ícone ilustrativo."
+ },
+ "a2-8f7ac4185fde": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum campo fica desabilitado."
+ },
+ "a2-8da85415cc63": {
+  "aceita": true,
+  "justificativa": "O campo não tem estado pressionado. Medida: estilo computado do campo durante mousedown (:active) igual ao de foco.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "campo-com-pressionado",
+    "descricao": "Pressionar o mouse sobre o campo escurece o fundo dele (estado pressionado).",
+    "clausula": "Por tanto, o estado \"pressionado padrão\" não existe neste componente.",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "estilo :active do input"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Resposta à interação.",
+  "equivalenteEmag": null
+ },
+ "a2-b36164f696c2": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum campo tem autocomplete com sugestões."
+ },
+ "a2-b85ef2761050": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Trata do input desativado; nenhum campo fica desativado."
+ }
+}

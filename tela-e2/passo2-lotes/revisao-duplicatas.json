@@ -1,0 +1,9 @@
+{
+ "_meta": {
+  "o_que_e": "Revisão de duplicatas ENTRE lotes (os lotes foram julgados em paralelo e não se viam), feita pelo coordenador antes de qualquer contagem por classe e de qualquer sorteio, como a auditoria-duplicatas da A2.",
+  "criterio": "CRITERIOS.md item 6: mesmo predicado, mesma condição e mesmo observável na página; fica a de id menor. Candidatos: pares de unidades elegíveis com hospedeiro comum e Jaccard das palavras ≥ 0,45 (10 pares); 9 têm observável distinto (estado, atributo ou objeto diferente) e ficam; 1 é duplicata."
+ },
+ "regras": {
+  "a2-31c6d22fa5eb": { "aceita": false, "motivo": "duplicada:a2-1f45d0dc0c3a", "justificativa": "Mesma exigência de consistência do sinal no fim dos rótulos; numa página com um formulário só, o observável é o mesmo (rótulos dos campos)." }
+ }
+}

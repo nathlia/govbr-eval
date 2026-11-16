@@ -1,0 +1,38 @@
+{
+ "sonda": "select-teclado",
+ "estado": "S0",
+ "paradas": 11,
+ "aoFocar": {
+  "listaVisivel": false,
+  "expanded": "false"
+ },
+ "aposArrowDown": {
+  "listaVisivel": true,
+  "foco": "div.br-item",
+  "focoTexto": "África"
+ },
+ "aposArrowDown2": {
+  "foco": "div.br-item",
+  "focoTexto": "América do Norte"
+ },
+ "aposArrowUp": {
+  "foco": "div.br-item",
+  "focoTexto": "África"
+ },
+ "aposEnter": {
+  "valor": "América do Norte",
+  "listaVisivel": false,
+  "foco": "body"
+ },
+ "aposSpace": {
+  "alvo": "América do Sul",
+  "valor": "América do Sul",
+  "listaVisivel": false
+ },
+ "esc": {
+  "abertaAntesEsc": true,
+  "listaVisivelDepois": false,
+  "valor": "América do Sul"
+ },
+ "errosPagina": []
+}

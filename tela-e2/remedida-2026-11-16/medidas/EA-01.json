@@ -1,0 +1,68 @@
+{
+ "id": "EA-01",
+ "classe": "achado",
+ "instancia": "btn-limpar",
+ "chave": "posicao-enfase-primaria-a-direita",
+ "porEstado": {
+  "S0": {
+   "valor": {
+    "ordemVisualEsqDir": [
+     "Cancelar(secundário, order 0)",
+     "Salvar País(primário, order 0)",
+     "Limpar Campos(secundário, order 1)"
+    ],
+    "ordemDOM": [
+     "Cancelar",
+     "Limpar Campos",
+     "Salvar País"
+    ],
+    "seletorOrder": {
+     "seletor": ".acoes-formulario .acao-limpar",
+     "valor": "1",
+     "imp": false
+    }
+   },
+   "viola": true
+  },
+  "S1": {
+   "valor": {
+    "ordemVisualEsqDir": [
+     "Cancelar(secundário, order 0)",
+     "Salvar País(primário, order 0)",
+     "Limpar Campos(secundário, order 1)"
+    ],
+    "ordemDOM": [
+     "Cancelar",
+     "Limpar Campos",
+     "Salvar País"
+    ],
+    "seletorOrder": {
+     "seletor": ".acoes-formulario .acao-limpar",
+     "valor": "1",
+     "imp": false
+    }
+   },
+   "viola": true
+  },
+  "S2": {
+   "valor": {
+    "ordemVisualEsqDir": [
+     "Cancelar(secundário, order 0)",
+     "Salvar País(primário, order 0)",
+     "Limpar Campos(secundário, order 1)"
+    ],
+    "ordemDOM": [
+     "Cancelar",
+     "Limpar Campos",
+     "Salvar País"
+    ],
+    "seletorOrder": {
+     "seletor": ".acoes-formulario .acao-limpar",
+     "valor": "1",
+     "imp": false
+    }
+   },
+   "viola": true
+  }
+ }
+}

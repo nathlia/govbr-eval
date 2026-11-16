@@ -1,0 +1,790 @@
+{
+ "_meta": {
+  "data": "2026-11-16",
+  "criterio": "ver cabeçalho de tela-e2/conferir-ids-base.mjs",
+  "validator": {
+   "dir": "F:/Dev Nath/TCC/govbr-ds-validator",
+   "commit": "816f4bae41f4486b7055f0ac265167e87ce0d5e5",
+   "versao": "3.7.12",
+   "somenteLeitura": true
+  },
+  "base": {
+   "versao": "3.7.0-literal-2026-10-15",
+   "ruleFiles": {
+    "normalized/rules.jsonl": {
+     "sha256": "ca8f428a52063ac8c208cca96432a40c84af8e75b4742744367a47717f9f28b8",
+     "declaradoNoManifesto": "ca8f428a52063ac8c208cca96432a40c84af8e75b4742744367a47717f9f28b8"
+    },
+    "normalized/carried-over.jsonl": {
+     "sha256": "16e0a764e4a0f05b3f116df83f1400598a95173f5dec34f775c0a9b843cade19",
+     "declaradoNoManifesto": "16e0a764e4a0f05b3f116df83f1400598a95173f5dec34f775c0a9b843cade19"
+    }
+   },
+   "rulesSha256": "ca8f428a52063ac8c208cca96432a40c84af8e75b4742744367a47717f9f28b8",
+   "registros": 5490
+  },
+  "referencia": {
+   "arquivo": "tela-e2/referencia-candidata.json",
+   "sha256": "dfd6c72f0f0a15314c3330aadcd28b4f2d9e68352df8d4c363eb6b01d7f358b5",
+   "version": "1.0.0-candidata",
+   "rulesSha256": "939b0333d3ed6a7b9c20a5c8178363900604a7b0ff760d06c86de0bcd93fb4f1"
+  },
+  "contagens": {
+   "conferidos": 26,
+   "casam": 26,
+   "divergem": 0,
+   "idsDistintos": 26,
+   "ds": 20,
+   "emag": 6,
+   "principal": 24,
+   "comU09": 2,
+   "textoIgual": 20,
+   "igualSoSemCrases": 1,
+   "forcaServidaNaoObrigatoria": [
+    {
+     "spec": "U-03",
+     "id": "govbr-3.7.0-pattern-global-35721a49577b",
+     "force": "recommended"
+    },
+    {
+     "spec": "U-03",
+     "id": "govbr-3.7.0-pattern-global-e3346215185f",
+     "force": "recommended"
+    },
+    {
+     "spec": "U-03",
+     "id": "govbr-3.7.0-foundation-global-813be193bb27",
+     "force": "recommended"
+    },
+    {
+     "spec": "U-04",
+     "id": "govbr-3.7.0-page-global-881fe9380b81",
+     "force": "recommended"
+    },
+    {
+     "spec": "U-07",
+     "id": "govbr-3.7.0-accessibility-select-fc1a1281fbbc",
+     "force": "recommended"
+    },
+    {
+     "spec": "U-08",
+     "id": "govbr-3.7.0-accessibility-input-cacdb7dbe765",
+     "force": "recommended"
+    },
+    {
+     "spec": "U-09",
+     "id": "govbr-3.7.0-component-list-ffbd8612ae1b",
+     "force": "permitted"
+    }
+   ],
+   "textoContido": 0
+  },
+  "divergentes": []
+ },
+ "linhas": [
+  {
+   "spec": "U-01",
+   "onde": "principal",
+   "id": "govbr-3.7.0-pattern-global-a0e5ee1b1a71",
+   "unidades": [
+    "a2-2ac598dc24db"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-2ac598dc24db",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "obrigatoria"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "padroes/design/formulario.md",
+    "charRange": [
+     14117,
+     14324
+    ],
+    "force": "required"
+   }
+  },
+  {
+   "spec": "U-01",
+   "onde": "principal",
+   "id": "govbr-3.7.0-component-button-3b591843f42b",
+   "unidades": [
+    "a2-df449a7d5cd8"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-df449a7d5cd8",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "obrigatoria"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "componentes/button__designer.md",
+    "charRange": [
+     9916,
+     10143
+    ],
+    "force": "required"
+   }
+  },
+  {
+   "spec": "U-01",
+   "onde": "principal",
+   "id": "emag:1.4",
+   "unidades": [
+    "a2-bde476da44c9"
+   ],
+   "existe": true,
+   "texto": {
+    "titulo": "igual",
+    "frases": [
+     {
+      "de": "EA-02",
+      "literalNaBase": true
+     }
+    ]
+   },
+   "resultado": "casa",
+   "nota": "recomendação 1.4 servida; título igual; 1 frase(s) de apoio literais",
+   "servido": {
+    "getEmagRulesId": "1.4",
+    "clausulas": 6
+   }
+  },
+  {
+   "spec": "U-01",
+   "onde": "principal",
+   "id": "govbr-3.7.0-component-button-77dfc156b422",
+   "unidades": [
+    "a2-66f05213a674"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-66f05213a674",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "obrigatoria"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "componentes/button__designer.md",
+    "charRange": [
+     10145,
+     10247
+    ],
+    "force": "required"
+   }
+  },
+  {
+   "spec": "U-01",
+   "onde": "principal",
+   "id": "emag:6.3",
+   "unidades": [
+    "a2-0f20577609d3"
+   ],
+   "existe": true,
+   "texto": {
+    "titulo": "igual",
+    "frases": [
+     {
+      "de": "EA-02",
+      "literalNaBase": true
+     }
+    ]
+   },
+   "resultado": "casa",
+   "nota": "recomendação 6.3 servida; título igual; 1 frase(s) de apoio literais",
+   "servido": {
+    "getEmagRulesId": "6.3",
+    "clausulas": 4
+   }
+  },
+  {
+   "spec": "U-02",
+   "onde": "principal",
+   "id": "govbr-3.7.0-pattern-global-5dfbb109d8d4",
+   "unidades": [
+    "a2-d6b3f0e36943"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-d6b3f0e36943",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "obrigatoria"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "padroes/writing/microcopy.md",
+    "charRange": [
+     9090,
+     9203
+    ],
+    "force": "required"
+   }
+  },
+  {
+   "spec": "U-02",
+   "onde": "principal",
+   "id": "govbr-3.7.0-component-message-3b6fb4ad1e0e",
+   "unidades": [
+    "a2-db30195b0e66"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-db30195b0e66",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "obrigatoria"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "componentes/message__designer.md",
+    "charRange": [
+     4293,
+     4397
+    ],
+    "force": "required"
+   }
+  },
+  {
+   "spec": "U-02",
+   "onde": "principal",
+   "id": "emag:3.11",
+   "unidades": [
+    "a2-a06dc9ebbfe4"
+   ],
+   "existe": true,
+   "texto": {
+    "titulo": "igual",
+    "frases": [
+     {
+      "de": "EA-11",
+      "literalNaBase": true
+     }
+    ]
+   },
+   "resultado": "casa",
+   "nota": "recomendação 3.11 servida; título igual; 1 frase(s) de apoio literais",
+   "servido": {
+    "getEmagRulesId": "3.11",
+    "clausulas": 11
+   }
+  },
+  {
+   "spec": "U-03",
+   "onde": "principal",
+   "id": "govbr-3.7.0-component-button-627dd3089562",
+   "unidades": [
+    "a2-5b47246a41c1"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-5b47246a41c1",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "obrigatoria"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "componentes/button__designer.md",
+    "charRange": [
+     2270,
+     2387
+    ],
+    "force": "required"
+   }
+  },
+  {
+   "spec": "U-03",
+   "onde": "principal",
+   "id": "govbr-3.7.0-pattern-global-35721a49577b",
+   "unidades": [
+    "a2-460f5696acde"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-460f5696acde",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "a-julgar"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "padroes/design/ajuda-comunicacao.md",
+    "charRange": [
+     1636,
+     1853
+    ],
+    "force": "recommended"
+   }
+  },
+  {
+   "spec": "U-03",
+   "onde": "principal",
+   "id": "govbr-3.7.0-pattern-global-e3346215185f",
+   "unidades": [
+    "a2-d47f4c470491"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-d47f4c470491",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "a-julgar"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "padroes/writing/microcopy.md",
+    "charRange": [
+     4205,
+     4298
+    ],
+    "force": "recommended"
+   }
+  },
+  {
+   "spec": "U-03",
+   "onde": "principal",
+   "id": "govbr-3.7.0-foundation-global-813be193bb27",
+   "unidades": [
+    "a2-db50df136f86"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-db50df136f86",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "a-julgar"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "fundamentos-visuais/iconografia.md",
+    "charRange": [
+     2292,
+     2461
+    ],
+    "force": "recommended"
+   }
+  },
+  {
+   "spec": "U-03",
+   "onde": "principal",
+   "id": "govbr-3.7.0-pattern-global-e7baadab728a",
+   "unidades": [
+    "a2-d43497944f79"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-d43497944f79",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "obrigatoria"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "padroes/design/formulario.md",
+    "charRange": [
+     12062,
+     12296
+    ],
+    "force": "required"
+   }
+  },
+  {
+   "spec": "U-04",
+   "onde": "principal",
+   "id": "govbr-3.7.0-page-global-881fe9380b81",
+   "unidades": [
+    "a2-a39f3ad397d4"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-a39f3ad397d4",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "a-julgar"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "introducao/padrao-minimo.md",
+    "charRange": [
+     1786,
+     1864
+    ],
+    "force": "recommended"
+   }
+  },
+  {
+   "spec": "U-05",
+   "onde": "principal",
+   "id": "govbr-3.7.0-component-radio-331797975ce6",
+   "unidades": [
+    "a2-f838b54da560"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-f838b54da560",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "obrigatoria"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "componentes/radio__designer.md",
+    "charRange": [
+     5317,
+     5387
+    ],
+    "force": "required"
+   }
+  },
+  {
+   "spec": "U-06",
+   "onde": "principal",
+   "id": "govbr-3.7.0-foundation-global-ced823e7339b",
+   "unidades": [
+    "a2-ef29db5bb4ac"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-ef29db5bb4ac",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "proibida"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "fundamentos-visuais/estados.md",
+    "charRange": [
+     25069,
+     25078
+    ],
+    "force": "prohibited"
+   }
+  },
+  {
+   "spec": "U-06",
+   "onde": "principal",
+   "id": "govbr-3.7.0-foundation-global-db534e78f2b3",
+   "unidades": [
+    "a2-0b6ac0a6bc42"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-0b6ac0a6bc42",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "obrigatoria"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "fundamentos-visuais/cores.md",
+    "charRange": [
+     1358,
+     1572
+    ],
+    "force": "required"
+   }
+  },
+  {
+   "spec": "U-07",
+   "onde": "principal",
+   "id": "govbr-3.7.0-accessibility-select-fc1a1281fbbc",
+   "unidades": [
+    "a2-7348bce34289"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-7348bce34289",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": true,
+     "forcaNoUniverso": "obrigatoria"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "componentes/select__acessibilidade.md",
+    "charRange": [
+     1346,
+     1518
+    ],
+    "force": "recommended"
+   }
+  },
+  {
+   "spec": "U-07",
+   "onde": "principal",
+   "id": "govbr-3.7.0-foundation-global-606524c94570",
+   "unidades": [
+    "a2-2f6900335a84"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-2f6900335a84",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "obrigatoria"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "fundamentos-visuais/cores.md",
+    "charRange": [
+     2284,
+     2431
+    ],
+    "force": "required"
+   }
+  },
+  {
+   "spec": "U-07",
+   "onde": "principal",
+   "id": "emag:4.1",
+   "unidades": [
+    "a2-66fbdcf13772"
+   ],
+   "existe": true,
+   "texto": {
+    "titulo": "igual",
+    "frases": [
+     {
+      "de": "EA-08",
+      "literalNaBase": true
+     }
+    ]
+   },
+   "resultado": "casa",
+   "nota": "recomendação 4.1 servida; título igual; 1 frase(s) de apoio literais",
+   "servido": {
+    "getEmagRulesId": "4.1",
+    "clausulas": 4
+   }
+  },
+  {
+   "spec": "U-07",
+   "onde": "principal",
+   "id": "govbr-3.7.0-foundation-global-21b1a2733f7b",
+   "unidades": [
+    "a2-3fb37eb25f3c"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-3fb37eb25f3c",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "obrigatoria"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "fundamentos-visuais/cores.md",
+    "charRange": [
+     4353,
+     4429
+    ],
+    "force": "required"
+   }
+  },
+  {
+   "spec": "U-08",
+   "onde": "principal",
+   "id": "govbr-3.7.0-accessibility-input-cacdb7dbe765",
+   "unidades": [
+    "a2-328f62cfe4ce"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-328f62cfe4ce",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "a-julgar"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "componentes/input__acessibilidade.md",
+    "charRange": [
+     751,
+     889
+    ],
+    "force": "recommended"
+   }
+  },
+  {
+   "spec": "U-08",
+   "onde": "principal",
+   "id": "govbr-3.7.0-component-input-acbd0e607b75",
+   "unidades": [
+    "a2-d817fab151df"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-d817fab151df",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "obrigatoria"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "componentes/input__designer.md",
+    "charRange": [
+     3137,
+     3193
+    ],
+    "force": "required"
+   }
+  },
+  {
+   "spec": "U-08",
+   "onde": "principal",
+   "id": "emag:2.1",
+   "unidades": [
+    "a2-acc4801af71c"
+   ],
+   "existe": true,
+   "texto": {
+    "titulo": "igual",
+    "frases": [
+     {
+      "de": "EA-05",
+      "literalNaBase": true
+     }
+    ]
+   },
+   "resultado": "casa",
+   "nota": "recomendação 2.1 servida; título igual; 1 frase(s) de apoio literais",
+   "servido": {
+    "getEmagRulesId": "2.1",
+    "clausulas": 8
+   }
+  },
+  {
+   "spec": "U-09",
+   "onde": "comU09",
+   "id": "emag:4.3",
+   "unidades": [
+    "a2-5432c282d0d7"
+   ],
+   "existe": true,
+   "texto": {
+    "titulo": "igual",
+    "frases": [
+     {
+      "de": "variante altura-fixa-corta",
+      "literalNaBase": true
+     }
+    ]
+   },
+   "resultado": "casa",
+   "nota": "recomendação 4.3 servida; título igual; 1 frase(s) de apoio literais",
+   "servido": {
+    "getEmagRulesId": "4.3",
+    "clausulas": 4
+   }
+  },
+  {
+   "spec": "U-09",
+   "onde": "comU09",
+   "id": "govbr-3.7.0-component-list-ffbd8612ae1b",
+   "unidades": [
+    "a2-a14d31901423"
+   ],
+   "existe": true,
+   "texto": [
+    {
+     "unidade": "a2-a14d31901423",
+     "naPonte": true,
+     "comparacao": "igual",
+     "soDepoisDeTirarCrasesDeCodigo": false,
+     "forcaNoUniverso": "obrigatoria"
+    }
+   ],
+   "resultado": "casa",
+   "nota": "igual",
+   "servido": {
+    "corpusFile": "componentes/list__designer.md",
+    "charRange": [
+     3648,
+     3810
+    ],
+    "force": "permitted"
+   }
+  }
+ ]
+}

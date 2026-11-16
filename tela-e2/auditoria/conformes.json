@@ -1,0 +1,4783 @@
+{
+ "_meta": {
+  "tela": "cadastro-pais.html (E2)",
+  "auditoria": "cega, por medição (Playwright + CDP; sem oráculo, sem axe)",
+  "corpus": "F:/Dev Nath/TCC/ds-rules/govbr-ds-3.7.0-corpus",
+  "geradoPor": "avaliar.mjs",
+  "geradoEm": "2026-11-15T01:34:20.670Z",
+  "contagens": {
+   "verificacoes": 145,
+   "achados": 13,
+   "achadosDS": 9,
+   "achadosGeral": 4,
+   "conformes": 113,
+   "incertos": 19
+  }
+ },
+ "conformes": [
+  {
+   "id": "EC-001",
+   "instancia": "btn-limpar",
+   "chave": "classe-br-button",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__desenvolvedor.md",
+     "citacao": "| class | string | **br-button** | Container do componente. |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "classe br-button na raiz",
+   "ancora": {
+    "texto": "botão 'Limpar Campos'",
+    "seletor": "#btn-limpar"
+   },
+   "medida": {
+    "S0": [
+     "br-button",
+     "secondary",
+     "acao-limpar"
+    ],
+    "S1": [
+     "br-button",
+     "secondary",
+     "acao-limpar"
+    ],
+    "S2": [
+     "br-button",
+     "secondary",
+     "acao-limpar"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-001.json"
+  },
+  {
+   "id": "EC-002",
+   "instancia": "btn-limpar",
+   "chave": "sem-title",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__acessibilidade.md",
+     "citacao": "não utilize atributo `title`"
+    }
+   ],
+   "tambem": [],
+   "esperado": "sem atributo title",
+   "ancora": {
+    "texto": "botão 'Limpar Campos'",
+    "seletor": "#btn-limpar"
+   },
+   "medida": {
+    "S0": null,
+    "S1": null,
+    "S2": null
+   },
+   "medidaArquivo": "medidas/EC-002.json"
+  },
+  {
+   "id": "EC-003",
+   "instancia": "btn-limpar",
+   "chave": "teclado-foco-visivel",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "A área que recebe o foco pelo teclado deve ser claramente marcada"
+    }
+   ],
+   "tambem": [],
+   "esperado": "parada de Tab com mudança visual (diferença de pixels > 0)",
+   "ancora": {
+    "texto": "botão 'Limpar Campos'",
+    "seletor": "#btn-limpar"
+   },
+   "medida": {
+    "S0": {
+     "parada": 15,
+     "outline": "dashed 4px rgb(194, 133, 12) 4px",
+     "difPx": 1738
+    },
+    "S1": {
+     "parada": 15,
+     "outline": "dashed 4px rgb(194, 133, 12) 4px",
+     "difPx": 1740
+    },
+    "S2": {
+     "parada": 15,
+     "outline": "dashed 4px rgb(194, 133, 12) 4px",
+     "difPx": 1738
+    }
+   },
+   "medidaArquivo": "medidas/EC-003.json"
+  },
+  {
+   "id": "EC-004",
+   "instancia": "btn-limpar",
+   "chave": "superficie-dimensao",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "| Superfície (Padrão - Densidade Padrão) | `40px` | `variável` |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "altura 40 px (densidade padrão)",
+   "ancora": {
+    "texto": "botão 'Limpar Campos'",
+    "seletor": "#btn-limpar"
+   },
+   "medida": {
+    "S0": "174.875px × 40px",
+    "S1": "174.875px × 40px",
+    "S2": "174.875px × 40px"
+   },
+   "medidaArquivo": "medidas/EC-004.json"
+  },
+  {
+   "id": "EC-005",
+   "instancia": "btn-salvar",
+   "chave": "classe-br-button",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__desenvolvedor.md",
+     "citacao": "| class | string | **br-button** | Container do componente. |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "classe br-button na raiz",
+   "ancora": {
+    "texto": "botão 'Salvar País'",
+    "seletor": "#btn-salvar"
+   },
+   "medida": {
+    "S0": [
+     "br-button",
+     "primary",
+     "acao-salvar"
+    ],
+    "S1": [
+     "br-button",
+     "primary",
+     "acao-salvar"
+    ],
+    "S2": [
+     "br-button",
+     "primary",
+     "acao-salvar"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-005.json"
+  },
+  {
+   "id": "EC-006",
+   "instancia": "btn-salvar",
+   "chave": "sem-title",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__acessibilidade.md",
+     "citacao": "não utilize atributo `title`"
+    }
+   ],
+   "tambem": [],
+   "esperado": "sem atributo title",
+   "ancora": {
+    "texto": "botão 'Salvar País'",
+    "seletor": "#btn-salvar"
+   },
+   "medida": {
+    "S0": null,
+    "S1": null,
+    "S2": null
+   },
+   "medidaArquivo": "medidas/EC-006.json"
+  },
+  {
+   "id": "EC-007",
+   "instancia": "btn-salvar",
+   "chave": "teclado-foco-visivel",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "A área que recebe o foco pelo teclado deve ser claramente marcada"
+    }
+   ],
+   "tambem": [],
+   "esperado": "parada de Tab com mudança visual (diferença de pixels > 0)",
+   "ancora": {
+    "texto": "botão 'Salvar País'",
+    "seletor": "#btn-salvar"
+   },
+   "medida": {
+    "S0": {
+     "parada": 16,
+     "outline": "dashed 4px rgb(194, 133, 12) 4px",
+     "difPx": 1680
+    },
+    "S1": {
+     "parada": 16,
+     "outline": "dashed 4px rgb(194, 133, 12) 4px",
+     "difPx": 1680
+    },
+    "S2": {
+     "parada": 16,
+     "outline": "dashed 4px rgb(194, 133, 12) 4px",
+     "difPx": 1680
+    }
+   },
+   "medidaArquivo": "medidas/EC-007.json"
+  },
+  {
+   "id": "EC-008",
+   "instancia": "btn-salvar",
+   "chave": "superficie-dimensao",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "| Superfície (Padrão - Densidade Padrão) | `40px` | `variável` |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "altura 40 px (densidade padrão)",
+   "ancora": {
+    "texto": "botão 'Salvar País'",
+    "seletor": "#btn-salvar"
+   },
+   "medida": {
+    "S0": "132.922px × 40px",
+    "S1": "132.922px × 40px",
+    "S2": "132.922px × 40px"
+   },
+   "medidaArquivo": "medidas/EC-008.json"
+  },
+  {
+   "id": "EC-009",
+   "instancia": "btn-cancelar",
+   "chave": "classe-br-button",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__desenvolvedor.md",
+     "citacao": "| class | string | **br-button** | Container do componente. |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "classe br-button na raiz",
+   "ancora": {
+    "texto": "botão 'Cancelar'",
+    "seletor": "#btn-cancelar"
+   },
+   "medida": {
+    "S0": [
+     "br-button",
+     "secondary",
+     "acao-cancelar"
+    ],
+    "S1": [
+     "br-button",
+     "secondary",
+     "acao-cancelar"
+    ],
+    "S2": [
+     "br-button",
+     "secondary",
+     "acao-cancelar"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-009.json"
+  },
+  {
+   "id": "EC-010",
+   "instancia": "btn-cancelar",
+   "chave": "sem-title",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__acessibilidade.md",
+     "citacao": "não utilize atributo `title`"
+    }
+   ],
+   "tambem": [],
+   "esperado": "sem atributo title",
+   "ancora": {
+    "texto": "botão 'Cancelar'",
+    "seletor": "#btn-cancelar"
+   },
+   "medida": {
+    "S0": null,
+    "S1": null,
+    "S2": null
+   },
+   "medidaArquivo": "medidas/EC-010.json"
+  },
+  {
+   "id": "EC-011",
+   "instancia": "btn-cancelar",
+   "chave": "teclado-foco-visivel",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "A área que recebe o foco pelo teclado deve ser claramente marcada"
+    }
+   ],
+   "tambem": [],
+   "esperado": "parada de Tab com mudança visual (diferença de pixels > 0)",
+   "ancora": {
+    "texto": "botão 'Cancelar'",
+    "seletor": "#btn-cancelar"
+   },
+   "medida": {
+    "S0": {
+     "parada": 14,
+     "outline": "dashed 4px rgb(194, 133, 12) 4px",
+     "difPx": 1677
+    },
+    "S1": {
+     "parada": 14,
+     "outline": "dashed 4px rgb(194, 133, 12) 4px",
+     "difPx": 1677
+    },
+    "S2": {
+     "parada": 14,
+     "outline": "dashed 4px rgb(194, 133, 12) 4px",
+     "difPx": 1677
+    }
+   },
+   "medidaArquivo": "medidas/EC-011.json"
+  },
+  {
+   "id": "EC-012",
+   "instancia": "btn-cancelar",
+   "chave": "superficie-dimensao",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "| Superfície (Padrão - Densidade Padrão) | `40px` | `variável` |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "altura 40 px (densidade padrão)",
+   "ancora": {
+    "texto": "botão 'Cancelar'",
+    "seletor": "#btn-cancelar"
+   },
+   "medida": {
+    "S0": "121.047px × 40px",
+    "S1": "121.047px × 40px",
+    "S2": "121.047px × 40px"
+   },
+   "medidaArquivo": "medidas/EC-012.json"
+  },
+  {
+   "id": "EC-013",
+   "instancia": "btn-ajuda",
+   "chave": "classe-br-button",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__desenvolvedor.md",
+     "citacao": "| class | string | **br-button** | Container do componente. |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "classe br-button na raiz",
+   "ancora": {
+    "texto": "botão circular de nome 'Ajuda sobre o cadastro' ao lado do h1",
+    "seletor": "#btn-ajuda"
+   },
+   "medida": {
+    "S0": [
+     "br-button",
+     "circle",
+     "acao-ajuda"
+    ],
+    "S1": [
+     "br-button",
+     "circle",
+     "acao-ajuda"
+    ],
+    "S2": [
+     "br-button",
+     "circle",
+     "acao-ajuda"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-013.json"
+  },
+  {
+   "id": "EC-014",
+   "instancia": "btn-ajuda",
+   "chave": "sem-title",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__acessibilidade.md",
+     "citacao": "não utilize atributo `title`"
+    }
+   ],
+   "tambem": [],
+   "esperado": "sem atributo title",
+   "ancora": {
+    "texto": "botão circular de nome 'Ajuda sobre o cadastro' ao lado do h1",
+    "seletor": "#btn-ajuda"
+   },
+   "medida": {
+    "S0": null,
+    "S1": null,
+    "S2": null
+   },
+   "medidaArquivo": "medidas/EC-014.json"
+  },
+  {
+   "id": "EC-015",
+   "instancia": "btn-ajuda",
+   "chave": "teclado-foco-visivel",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "A área que recebe o foco pelo teclado deve ser claramente marcada"
+    }
+   ],
+   "tambem": [],
+   "esperado": "parada de Tab com mudança visual (diferença de pixels > 0)",
+   "ancora": {
+    "texto": "botão circular de nome 'Ajuda sobre o cadastro' ao lado do h1",
+    "seletor": "#btn-ajuda"
+   },
+   "medida": {
+    "S0": {
+     "parada": 8,
+     "outline": "dashed 4px rgb(194, 133, 12) 4px",
+     "difPx": 1836
+    },
+    "S1": {
+     "parada": 8,
+     "outline": "dashed 4px rgb(194, 133, 12) 4px",
+     "difPx": 1836
+    },
+    "S2": {
+     "parada": 8,
+     "outline": "dashed 4px rgb(194, 133, 12) 4px",
+     "difPx": 1836
+    }
+   },
+   "medidaArquivo": "medidas/EC-015.json"
+  },
+  {
+   "id": "EC-016",
+   "instancia": "btn-ajuda",
+   "chave": "superficie-dimensao",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "| Superfície (Padrão - Densidade Padrão) | `40px` | `variável` |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "altura 40 px (densidade padrão)",
+   "ancora": {
+    "texto": "botão circular de nome 'Ajuda sobre o cadastro' ao lado do h1",
+    "seletor": "#btn-ajuda"
+   },
+   "medida": {
+    "S0": "40px × 40px",
+    "S1": "40px × 40px",
+    "S2": "40px × 40px"
+   },
+   "medidaArquivo": "medidas/EC-016.json"
+  },
+  {
+   "id": "EC-017",
+   "instancia": "btn-limpar",
+   "chave": "rotulo-obrigatorio-uma-linha",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "O rótulo é um elemento obrigatório."
+    },
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "Nunca utilize quebra de linhas no rótulo_do botão."
+    }
+   ],
+   "tambem": [],
+   "esperado": "rótulo presente, altura de uma linha (40 px)",
+   "ancora": {
+    "texto": "botão 'Limpar Campos'",
+    "seletor": "#btn-limpar"
+   },
+   "medida": {
+    "S0": {
+     "rotulo": "Limpar Campos",
+     "altura": "40px"
+    },
+    "S1": {
+     "rotulo": "Limpar Campos",
+     "altura": "40px"
+    },
+    "S2": {
+     "rotulo": "Limpar Campos",
+     "altura": "40px"
+    }
+   },
+   "medidaArquivo": "medidas/EC-017.json"
+  },
+  {
+   "id": "EC-018",
+   "instancia": "btn-limpar",
+   "chave": "margens-internas",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "o crescimento do botão deve acompanhar o tamanho do rótulo, porém as margens internas devem ser respeitadas."
+    },
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "| Superfície | padding-right, padding-left | `--spacing-scale-3x` |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "padding lateral 24 px",
+   "ancora": {
+    "texto": "botão 'Limpar Campos'",
+    "seletor": "#btn-limpar"
+   },
+   "medida": {
+    "S0": [
+     "24px",
+     "24px"
+    ],
+    "S1": [
+     "24px",
+     "24px"
+    ],
+    "S2": [
+     "24px",
+     "24px"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-018.json"
+  },
+  {
+   "id": "EC-019",
+   "instancia": "btn-limpar",
+   "chave": "tipografia-rotulo",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "| Rótulo (Padrão) | `--font-size-scale-up-01` | `--font-weight-semi-bold` | `none` |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "16,8 px, peso 600",
+   "ancora": {
+    "texto": "botão 'Limpar Campos'",
+    "seletor": "#btn-limpar"
+   },
+   "medida": {
+    "S0": [
+     "16.8px",
+     "600"
+    ],
+    "S1": [
+     "16.8px",
+     "600"
+    ],
+    "S2": [
+     "16.8px",
+     "600"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-019.json"
+  },
+  {
+   "id": "EC-020",
+   "instancia": "btn-limpar",
+   "chave": "microcopy-iniciais",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "padroes/writing/microcopy.md",
+     "citacao": "Nos *buttons*, as letras iniciais de todas as palavras devem ser maiúsculas, exceto artigos e preposições."
+    }
+   ],
+   "tambem": [],
+   "esperado": "iniciais maiúsculas (exceto artigos/preposições)",
+   "ancora": {
+    "texto": "botão 'Limpar Campos'",
+    "seletor": "#btn-limpar"
+   },
+   "medida": {
+    "S0": "Limpar Campos",
+    "S1": "Limpar Campos",
+    "S2": "Limpar Campos"
+   },
+   "medidaArquivo": "medidas/EC-020.json"
+  },
+  {
+   "id": "EC-021",
+   "instancia": "btn-salvar",
+   "chave": "rotulo-obrigatorio-uma-linha",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "O rótulo é um elemento obrigatório."
+    },
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "Nunca utilize quebra de linhas no rótulo_do botão."
+    }
+   ],
+   "tambem": [],
+   "esperado": "rótulo presente, altura de uma linha (40 px)",
+   "ancora": {
+    "texto": "botão 'Salvar País'",
+    "seletor": "#btn-salvar"
+   },
+   "medida": {
+    "S0": {
+     "rotulo": "Salvar País",
+     "altura": "40px"
+    },
+    "S1": {
+     "rotulo": "Salvar País",
+     "altura": "40px"
+    },
+    "S2": {
+     "rotulo": "Salvar País",
+     "altura": "40px"
+    }
+   },
+   "medidaArquivo": "medidas/EC-021.json"
+  },
+  {
+   "id": "EC-022",
+   "instancia": "btn-salvar",
+   "chave": "margens-internas",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "o crescimento do botão deve acompanhar o tamanho do rótulo, porém as margens internas devem ser respeitadas."
+    },
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "| Superfície | padding-right, padding-left | `--spacing-scale-3x` |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "padding lateral 24 px",
+   "ancora": {
+    "texto": "botão 'Salvar País'",
+    "seletor": "#btn-salvar"
+   },
+   "medida": {
+    "S0": [
+     "24px",
+     "24px"
+    ],
+    "S1": [
+     "24px",
+     "24px"
+    ],
+    "S2": [
+     "24px",
+     "24px"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-022.json"
+  },
+  {
+   "id": "EC-023",
+   "instancia": "btn-salvar",
+   "chave": "tipografia-rotulo",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "| Rótulo (Padrão) | `--font-size-scale-up-01` | `--font-weight-semi-bold` | `none` |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "16,8 px, peso 600",
+   "ancora": {
+    "texto": "botão 'Salvar País'",
+    "seletor": "#btn-salvar"
+   },
+   "medida": {
+    "S0": [
+     "16.8px",
+     "600"
+    ],
+    "S1": [
+     "16.8px",
+     "600"
+    ],
+    "S2": [
+     "16.8px",
+     "600"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-023.json"
+  },
+  {
+   "id": "EC-024",
+   "instancia": "btn-salvar",
+   "chave": "microcopy-iniciais",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "padroes/writing/microcopy.md",
+     "citacao": "Nos *buttons*, as letras iniciais de todas as palavras devem ser maiúsculas, exceto artigos e preposições."
+    }
+   ],
+   "tambem": [],
+   "esperado": "iniciais maiúsculas (exceto artigos/preposições)",
+   "ancora": {
+    "texto": "botão 'Salvar País'",
+    "seletor": "#btn-salvar"
+   },
+   "medida": {
+    "S0": "Salvar País",
+    "S1": "Salvar País",
+    "S2": "Salvar País"
+   },
+   "medidaArquivo": "medidas/EC-024.json"
+  },
+  {
+   "id": "EC-025",
+   "instancia": "btn-cancelar",
+   "chave": "rotulo-obrigatorio-uma-linha",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "O rótulo é um elemento obrigatório."
+    },
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "Nunca utilize quebra de linhas no rótulo_do botão."
+    }
+   ],
+   "tambem": [],
+   "esperado": "rótulo presente, altura de uma linha (40 px)",
+   "ancora": {
+    "texto": "botão 'Cancelar'",
+    "seletor": "#btn-cancelar"
+   },
+   "medida": {
+    "S0": {
+     "rotulo": "Cancelar",
+     "altura": "40px"
+    },
+    "S1": {
+     "rotulo": "Cancelar",
+     "altura": "40px"
+    },
+    "S2": {
+     "rotulo": "Cancelar",
+     "altura": "40px"
+    }
+   },
+   "medidaArquivo": "medidas/EC-025.json"
+  },
+  {
+   "id": "EC-026",
+   "instancia": "btn-cancelar",
+   "chave": "margens-internas",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "o crescimento do botão deve acompanhar o tamanho do rótulo, porém as margens internas devem ser respeitadas."
+    },
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "| Superfície | padding-right, padding-left | `--spacing-scale-3x` |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "padding lateral 24 px",
+   "ancora": {
+    "texto": "botão 'Cancelar'",
+    "seletor": "#btn-cancelar"
+   },
+   "medida": {
+    "S0": [
+     "24px",
+     "24px"
+    ],
+    "S1": [
+     "24px",
+     "24px"
+    ],
+    "S2": [
+     "24px",
+     "24px"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-026.json"
+  },
+  {
+   "id": "EC-027",
+   "instancia": "btn-cancelar",
+   "chave": "tipografia-rotulo",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "| Rótulo (Padrão) | `--font-size-scale-up-01` | `--font-weight-semi-bold` | `none` |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "16,8 px, peso 600",
+   "ancora": {
+    "texto": "botão 'Cancelar'",
+    "seletor": "#btn-cancelar"
+   },
+   "medida": {
+    "S0": [
+     "16.8px",
+     "600"
+    ],
+    "S1": [
+     "16.8px",
+     "600"
+    ],
+    "S2": [
+     "16.8px",
+     "600"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-027.json"
+  },
+  {
+   "id": "EC-028",
+   "instancia": "btn-cancelar",
+   "chave": "microcopy-iniciais",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "padroes/writing/microcopy.md",
+     "citacao": "Nos *buttons*, as letras iniciais de todas as palavras devem ser maiúsculas, exceto artigos e preposições."
+    }
+   ],
+   "tambem": [],
+   "esperado": "iniciais maiúsculas (exceto artigos/preposições)",
+   "ancora": {
+    "texto": "botão 'Cancelar'",
+    "seletor": "#btn-cancelar"
+   },
+   "medida": {
+    "S0": "Cancelar",
+    "S1": "Cancelar",
+    "S2": "Cancelar"
+   },
+   "medidaArquivo": "medidas/EC-028.json"
+  },
+  {
+   "id": "EC-029",
+   "instancia": "btn-limpar",
+   "chave": "teclado-aciona",
+   "estados": [
+    "S1"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Todas as funções da página desenvolvidas utilizando-se linguagens de script (javascript) devem ser programadas, primeiramente, para o uso com teclado."
+    }
+   ],
+   "tambem": [],
+   "esperado": "Space no botão limpa o formulário",
+   "ancora": {
+    "texto": "botão 'Limpar Campos'",
+    "seletor": "#btn-limpar"
+   },
+   "medida": {
+    "S1": {
+     "sonda": "limpar-acao",
+     "estado": "S1",
+     "antes": {
+      "erros": 3,
+      "msg": true
+     },
+     "depois": {
+      "codigo": "",
+      "erros": 0,
+      "msg": false,
+      "foco": "button#btn-limpar.br-button.secondary.acao-limpar"
+     },
+     "errosPagina": []
+    }
+   },
+   "medidaArquivo": "medidas/EC-029.json"
+  },
+  {
+   "id": "EC-030",
+   "instancia": "btn-limpar",
+   "chave": "clique-sem-foco-visual",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/estados.md",
+     "citacao": "Por padrão, a ação de \"clicar/tocar\" em um elemento não deve gerar foco visual."
+    }
+   ],
+   "tambem": [],
+   "esperado": "após clique de ponteiro, sem :focus-visible",
+   "ancora": {
+    "texto": "botão 'Limpar Campos'",
+    "seletor": "#btn-limpar"
+   },
+   "medida": {
+    "S0": {
+     "focado": true,
+     "focusVisible": false,
+     "outline": "none 3px"
+    }
+   },
+   "medidaArquivo": "medidas/EC-030.json"
+  },
+  {
+   "id": "EC-031",
+   "instancia": "btn-limpar",
+   "chave": "cursor-interativo",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/estados.md",
+     "citacao": "Além disso, nos elementos Interativos, o cursor do *mouse* deve ser alterado para a \"mão fechada com indicador esticado\"."
+    }
+   ],
+   "tambem": [],
+   "esperado": "cursor pointer",
+   "ancora": {
+    "texto": "botão 'Limpar Campos'",
+    "seletor": "#btn-limpar"
+   },
+   "medida": {
+    "S0": "pointer"
+   },
+   "medidaArquivo": "medidas/EC-031.json"
+  },
+  {
+   "id": "EC-032",
+   "instancia": "btn-limpar",
+   "chave": "cores-secundaria",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "| Ícone, Rótulo (Secundária)                |    text color    | `--blue-warm-vivid-70` |     -     |"
+    },
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "| Superfície (Secundária)                   |   border color   | `--blue-warm-vivid-70` |     -     |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "texto e borda #1351b4, fundo branco",
+   "ancora": {
+    "texto": "botão 'Limpar Campos'",
+    "seletor": "#btn-limpar"
+   },
+   "medida": {
+    "S0": [
+     "rgb(19, 81, 180)",
+     "rgb(19, 81, 180)",
+     "rgb(255, 255, 255)"
+    ],
+    "S1": [
+     "rgb(19, 81, 180)",
+     "rgb(19, 81, 180)",
+     "rgb(255, 255, 255)"
+    ],
+    "S2": [
+     "rgb(19, 81, 180)",
+     "rgb(19, 81, 180)",
+     "rgb(255, 255, 255)"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-032.json"
+  },
+  {
+   "id": "EC-033",
+   "instancia": "btn-ajuda",
+   "chave": "circular-aria-label",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__desenvolvedor.md",
+     "citacao": "O **Tipo Circular** precisa de texto alternativo para o ícone decorativo. Inclua o atributo `aria-label` no componente"
+    }
+   ],
+   "tambem": [],
+   "esperado": "aria-label não vazio; nome acessível",
+   "ancora": {
+    "texto": "botão circular de nome 'Ajuda sobre o cadastro' ao lado do h1",
+    "seletor": "#btn-ajuda"
+   },
+   "medida": {
+    "S0": {
+     "ariaLabel": "Ajuda sobre o cadastro",
+     "nomeAX": "Ajuda sobre o cadastro"
+    },
+    "S1": {
+     "ariaLabel": "Ajuda sobre o cadastro",
+     "nomeAX": "Ajuda sobre o cadastro"
+    },
+    "S2": {
+     "ariaLabel": "Ajuda sobre o cadastro",
+     "nomeAX": "Ajuda sobre o cadastro"
+    }
+   },
+   "medidaArquivo": "medidas/EC-033.json"
+  },
+  {
+   "id": "EC-034",
+   "instancia": "btn-ajuda",
+   "chave": "terciario-sem-superficie",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "| Superfície (Circular - Densidade Padrão) | `40px` |   `40px`   |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "40 × 40 px",
+   "ancora": {
+    "texto": "botão circular de nome 'Ajuda sobre o cadastro' ao lado do h1",
+    "seletor": "#btn-ajuda"
+   },
+   "medida": {
+    "S0": [
+     "40px",
+     "40px"
+    ],
+    "S1": [
+     "40px",
+     "40px"
+    ],
+    "S2": [
+     "40px",
+     "40px"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-034.json"
+  },
+  {
+   "id": "EC-035",
+   "instancia": "inp-nome-pais",
+   "chave": "classe-br-input",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/input__desenvolvedor.md",
+     "citacao": "| class    | string | **br-input** | Container do componente. |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "classe br-input",
+   "ancora": {
+    "texto": "campo de rótulo 'Nome do país'",
+    "seletor": "#inp-nome-pais"
+   },
+   "medida": {
+    "S0": [
+     "br-input"
+    ],
+    "S1": [
+     "br-input",
+     "danger"
+    ],
+    "S2": [
+     "br-input"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-035.json"
+  },
+  {
+   "id": "EC-036",
+   "instancia": "inp-nome-pais",
+   "chave": "rotulo-associado",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "As etiquetas de texto (elemento LABEL) devem estar associadas aos seus campos"
+    }
+   ],
+   "tambem": [],
+   "esperado": "label[for] = id do campo; nome acessível = rótulo",
+   "ancora": {
+    "texto": "campo de rótulo 'Nome do país'",
+    "seletor": "#inp-nome-pais"
+   },
+   "medida": {
+    "S0": {
+     "for": "nome-pais",
+     "id": "nome-pais",
+     "nomeAX": "Nome do país"
+    },
+    "S1": {
+     "for": "nome-pais",
+     "id": "nome-pais",
+     "nomeAX": "Nome do país"
+    },
+    "S2": {
+     "for": "nome-pais",
+     "id": "nome-pais",
+     "nomeAX": "Nome do país"
+    }
+   },
+   "medidaArquivo": "medidas/EC-036.json"
+  },
+  {
+   "id": "EC-037",
+   "instancia": "inp-nome-pais",
+   "chave": "tab-ponto-de-foco",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/input__acessibilidade.md",
+     "citacao": "Os *inputs* ou *input Text* devem ser acessíveis por meio de navegação via teclado, por meio da tecla `Tab`, onde cada *input* deve ser um ponto de foco na ordem da tabulação;"
+    }
+   ],
+   "tambem": [],
+   "esperado": "campo é parada de Tab com foco visível",
+   "ancora": {
+    "texto": "campo de rótulo 'Nome do país'",
+    "seletor": "#inp-nome-pais"
+   },
+   "medida": {
+    "S0": {
+     "parada": 9,
+     "difPx": 270,
+     "boxShadow": "rgb(194, 133, 12) 0px 0px 0px 2px"
+    },
+    "S1": {
+     "parada": 9,
+     "difPx": 149,
+     "boxShadow": "rgb(194, 133, 12) 0px 0px 0px 2px"
+    },
+    "S2": {
+     "parada": 9,
+     "difPx": 270,
+     "boxShadow": "rgb(194, 133, 12) 0px 0px 0px 2px"
+    }
+   },
+   "medidaArquivo": "medidas/EC-037.json"
+  },
+  {
+   "id": "EC-038",
+   "instancia": "inp-nome-pais",
+   "chave": "cursor-text",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/input__designer.md",
+     "citacao": "O cursor deve mudar para o formato `Text`."
+    }
+   ],
+   "tambem": [],
+   "esperado": "cursor text",
+   "ancora": {
+    "texto": "campo de rótulo 'Nome do país'",
+    "seletor": "#inp-nome-pais"
+   },
+   "medida": {
+    "S0": "text"
+   },
+   "medidaArquivo": "medidas/EC-038.json"
+  },
+  {
+   "id": "EC-039",
+   "instancia": "inp-nome-pais",
+   "chave": "dimensao-campo",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/input__designer.md",
+     "citacao": "| Campo de texto - Densidade Média | height        |  `--spacing-scale-5x`  |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "altura 40 px",
+   "ancora": {
+    "texto": "campo de rótulo 'Nome do país'",
+    "seletor": "#inp-nome-pais"
+   },
+   "medida": {
+    "S0": "40px",
+    "S1": "40px",
+    "S2": "40px"
+   },
+   "medidaArquivo": "medidas/EC-039.json"
+  },
+  {
+   "id": "EC-040",
+   "instancia": "inp-codigo",
+   "chave": "classe-br-input",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/input__desenvolvedor.md",
+     "citacao": "| class    | string | **br-input** | Container do componente. |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "classe br-input",
+   "ancora": {
+    "texto": "campo de rótulo 'Código do país (opcional)'",
+    "seletor": "#inp-codigo"
+   },
+   "medida": {
+    "S0": [
+     "br-input"
+    ],
+    "S1": [
+     "br-input"
+    ],
+    "S2": [
+     "br-input"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-040.json"
+  },
+  {
+   "id": "EC-041",
+   "instancia": "inp-codigo",
+   "chave": "rotulo-associado",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "As etiquetas de texto (elemento LABEL) devem estar associadas aos seus campos"
+    }
+   ],
+   "tambem": [],
+   "esperado": "label[for] = id do campo; nome acessível = rótulo",
+   "ancora": {
+    "texto": "campo de rótulo 'Código do país (opcional)'",
+    "seletor": "#inp-codigo"
+   },
+   "medida": {
+    "S0": {
+     "for": "codigo-pais",
+     "id": "codigo-pais",
+     "nomeAX": "Código do país (opcional)"
+    },
+    "S1": {
+     "for": "codigo-pais",
+     "id": "codigo-pais",
+     "nomeAX": "Código do país (opcional)"
+    },
+    "S2": {
+     "for": "codigo-pais",
+     "id": "codigo-pais",
+     "nomeAX": "Código do país (opcional)"
+    }
+   },
+   "medidaArquivo": "medidas/EC-041.json"
+  },
+  {
+   "id": "EC-042",
+   "instancia": "inp-codigo",
+   "chave": "tab-ponto-de-foco",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/input__acessibilidade.md",
+     "citacao": "Os *inputs* ou *input Text* devem ser acessíveis por meio de navegação via teclado, por meio da tecla `Tab`, onde cada *input* deve ser um ponto de foco na ordem da tabulação;"
+    }
+   ],
+   "tambem": [],
+   "esperado": "campo é parada de Tab com foco visível",
+   "ancora": {
+    "texto": "campo de rótulo 'Código do país (opcional)'",
+    "seletor": "#inp-codigo"
+   },
+   "medida": {
+    "S0": {
+     "parada": 10,
+     "difPx": 247,
+     "boxShadow": "rgb(194, 133, 12) 0px 0px 0px 2px"
+    },
+    "S1": {
+     "parada": 10,
+     "difPx": 254,
+     "boxShadow": "rgb(194, 133, 12) 0px 0px 0px 2px"
+    },
+    "S2": {
+     "parada": 10,
+     "difPx": 247,
+     "boxShadow": "rgb(194, 133, 12) 0px 0px 0px 2px"
+    }
+   },
+   "medidaArquivo": "medidas/EC-042.json"
+  },
+  {
+   "id": "EC-043",
+   "instancia": "inp-codigo",
+   "chave": "cursor-text",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/input__designer.md",
+     "citacao": "O cursor deve mudar para o formato `Text`."
+    }
+   ],
+   "tambem": [],
+   "esperado": "cursor text",
+   "ancora": {
+    "texto": "campo de rótulo 'Código do país (opcional)'",
+    "seletor": "#inp-codigo"
+   },
+   "medida": {
+    "S0": "text"
+   },
+   "medidaArquivo": "medidas/EC-043.json"
+  },
+  {
+   "id": "EC-044",
+   "instancia": "inp-codigo",
+   "chave": "dimensao-campo",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/input__designer.md",
+     "citacao": "| Campo de texto - Densidade Média | height        |  `--spacing-scale-5x`  |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "altura 40 px",
+   "ancora": {
+    "texto": "campo de rótulo 'Código do país (opcional)'",
+    "seletor": "#inp-codigo"
+   },
+   "medida": {
+    "S0": "40px",
+    "S1": "40px",
+    "S2": "40px"
+   },
+   "medidaArquivo": "medidas/EC-044.json"
+  },
+  {
+   "id": "EC-045",
+   "instancia": "inp-codigo",
+   "chave": "ctrl-setas-palavras",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/input__acessibilidade.md",
+     "citacao": "Por padrão, o usuário deve conseguir navegar entre as palavras do texto digitado, com o uso das teclas `Ctrl + left/right` no Windows ou `Option + left/right` no Mac."
+    }
+   ],
+   "tambem": [],
+   "esperado": "Ctrl+← move o cursor por palavra",
+   "ancora": {
+    "texto": "campo de rótulo 'Código do país (opcional)'",
+    "seletor": "#inp-codigo"
+   },
+   "medida": {
+    "S0": {
+     "sonda": "codigo-digitar",
+     "estado": "S0",
+     "valor": "A B",
+     "cursor": 3,
+     "ctrlEsq1": 2,
+     "ctrlEsq2": 0,
+     "ctrlDir": 2,
+     "errosPagina": []
+    }
+   },
+   "medidaArquivo": "medidas/EC-045.json"
+  },
+  {
+   "id": "EC-046",
+   "instancia": "inp-codigo",
+   "chave": "descricao-associada",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Para conteúdo que exigir entrada de dados por parte do usuário, devem ser fornecidas quando necessário, instruções de preenchimento juntamente com as etiquetas (elemento LABEL)."
+    }
+   ],
+   "tambem": [],
+   "esperado": "instrução de formato visível e ligada ao campo",
+   "ancora": {
+    "texto": "campo de rótulo 'Código do país (opcional)'",
+    "seletor": "#inp-codigo"
+   },
+   "medida": {
+    "S0": {
+     "describedby": "codigo-pais-apoio",
+     "apoio": "Três letras, como ARG para Argentina."
+    },
+    "S1": {
+     "describedby": "codigo-pais-apoio",
+     "apoio": "Três letras, como ARG para Argentina."
+    },
+    "S2": {
+     "describedby": "codigo-pais-apoio",
+     "apoio": "Três letras, como ARG para Argentina."
+    }
+   },
+   "medidaArquivo": "medidas/EC-046.json"
+  },
+  {
+   "id": "EC-047",
+   "instancia": "inp-codigo",
+   "chave": "opcional-sinalizado",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "padroes/design/formulario.md",
+     "citacao": "Caso seja necessário oferecer campos opcionais, sinalize-os com um texto entre parênteses ao lado direito do texto de cada rótulo."
+    }
+   ],
+   "tambem": [],
+   "esperado": "rótulo com '(opcional)'",
+   "ancora": {
+    "texto": "campo de rótulo 'Código do país (opcional)'",
+    "seletor": "#inp-codigo"
+   },
+   "medida": {
+    "S0": "Código do país (opcional)",
+    "S1": "Código do país (opcional)",
+    "S2": "Código do país (opcional)"
+   },
+   "medidaArquivo": "medidas/EC-047.json"
+  },
+  {
+   "id": "EC-048",
+   "instancia": "inp-nome-pais",
+   "chave": "erro-descrito-por-texto",
+   "estados": [
+    "S1"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Quando um erro de entrada de dados for automaticamente detectado, o item que apresenta erro deve ser identificado e descrito ao usuário por texto."
+    }
+   ],
+   "tambem": [],
+   "esperado": "texto de erro visível junto ao campo, aria-invalid e aria-describedby",
+   "ancora": {
+    "texto": "campo de rótulo 'Nome do país'",
+    "seletor": "#inp-nome-pais"
+   },
+   "medida": {
+    "S1": {
+     "texto": "Informe o nome do país.",
+     "visivel": true
+    }
+   },
+   "medidaArquivo": "medidas/EC-048.json"
+  },
+  {
+   "id": "EC-049",
+   "instancia": "sel-continente",
+   "chave": "erro-descrito-por-texto",
+   "estados": [
+    "S1"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Quando um erro de entrada de dados for automaticamente detectado, o item que apresenta erro deve ser identificado e descrito ao usuário por texto."
+    }
+   ],
+   "tambem": [],
+   "esperado": "texto de erro visível junto ao campo, aria-invalid e aria-describedby",
+   "ancora": {
+    "texto": "select de rótulo 'Continente'",
+    "seletor": "#sel-continente"
+   },
+   "medida": {
+    "S1": {
+     "texto": "Selecione o continente.",
+     "visivel": true
+    }
+   },
+   "medidaArquivo": "medidas/EC-049.json"
+  },
+  {
+   "id": "EC-050",
+   "instancia": "rad-situacao",
+   "chave": "erro-descrito-por-texto",
+   "estados": [
+    "S1"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Quando um erro de entrada de dados for automaticamente detectado, o item que apresenta erro deve ser identificado e descrito ao usuário por texto."
+    }
+   ],
+   "tambem": [],
+   "esperado": "texto de erro visível junto ao campo, aria-invalid e aria-describedby",
+   "ancora": {
+    "texto": "grupo 'Situação do cadastro'",
+    "seletor": "#rad-situacao"
+   },
+   "medida": {
+    "S1": {
+     "texto": "Selecione a situação do cadastro.",
+     "visivel": true
+    }
+   },
+   "medidaArquivo": "medidas/EC-050.json"
+  },
+  {
+   "id": "EC-051",
+   "instancia": "sel-continente",
+   "chave": "estrutura-obrigatoria",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/select__desenvolvedor.md",
+     "citacao": "| class    | string | **br-select**   | Container do componente Select                                  |"
+    },
+    {
+     "arquivo": "componentes/select__designer.md",
+     "citacao": "| 2   | Componente *button* |    [Button](/ds/components/button?tab=designer)    | Obrigatório |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "br-select > br-input + br-button[data-trigger] + br-list > br-item; radios com name e value",
+   "ancora": {
+    "texto": "select de rótulo 'Continente'",
+    "seletor": "#sel-continente"
+   },
+   "medida": {
+    "S0": {
+     "raiz": [
+      "br-select"
+     ],
+     "gatilho": true,
+     "lista": [
+      "br-list"
+     ]
+    },
+    "S1": {
+     "raiz": [
+      "br-select"
+     ],
+     "gatilho": true,
+     "lista": [
+      "br-list"
+     ]
+    },
+    "S2": {
+     "raiz": [
+      "br-select"
+     ],
+     "gatilho": true,
+     "lista": [
+      "br-list"
+     ]
+    }
+   },
+   "medidaArquivo": "medidas/EC-051.json"
+  },
+  {
+   "id": "EC-052",
+   "instancia": "sel-continente",
+   "chave": "tab-acessa",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/select__acessibilidade.md",
+     "citacao": "O componente *select* deve ser acessado via navegação por teclado por meio da tecla `Tab`;"
+    }
+   ],
+   "tambem": [],
+   "esperado": "campo do select é parada de Tab",
+   "ancora": {
+    "texto": "select de rótulo 'Continente'",
+    "seletor": "#sel-continente"
+   },
+   "medida": {
+    "S0": 11,
+    "S1": 11,
+    "S2": 11
+   },
+   "medidaArquivo": "medidas/EC-052.json"
+  },
+  {
+   "id": "EC-053",
+   "instancia": "sel-continente",
+   "chave": "setas-navegam",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/select__acessibilidade.md",
+     "citacao": "Após aberta a lista de itens, o usuário deve conseguir navegar através dela por meio das teclas de seta `Up` e `Down`;"
+    }
+   ],
+   "tambem": [],
+   "esperado": "ArrowDown/ArrowUp movem entre opções",
+   "ancora": {
+    "texto": "select de rótulo 'Continente'",
+    "seletor": "#sel-continente"
+   },
+   "medida": {
+    "S0": [
+     "África",
+     "América do Norte",
+     "África"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-053.json"
+  },
+  {
+   "id": "EC-054",
+   "instancia": "sel-continente",
+   "chave": "enter-space-esc",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/select__designer.md",
+     "citacao": "O tipo *select* é utilizado para as opções de seleção única. O item selecionado será apresentado no \"Campo de Entrada de Texto\" seguindo as diretrizes do componente *input*."
+    }
+   ],
+   "tambem": [],
+   "esperado": "Enter/Space escolhem e recolhem; Esc recolhe sem escolher; campo mostra a opção",
+   "ancora": {
+    "texto": "select de rótulo 'Continente'",
+    "seletor": "#sel-continente"
+   },
+   "medida": {
+    "S0": {
+     "enter": {
+      "valor": "América do Norte",
+      "listaVisivel": false,
+      "foco": "body"
+     },
+     "space": {
+      "alvo": "América do Sul",
+      "valor": "América do Sul",
+      "listaVisivel": false
+     },
+     "esc": {
+      "abertaAntesEsc": true,
+      "listaVisivelDepois": false,
+      "valor": "América do Sul"
+     },
+     "cliqueS2": {
+      "valor": "Ásia",
+      "aberta": false,
+      "foco": "body"
+     }
+    }
+   },
+   "medidaArquivo": "medidas/EC-054.json"
+  },
+  {
+   "id": "EC-055",
+   "instancia": "sel-continente",
+   "chave": "sombra-lista",
+   "estados": [
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/select__designer.md",
+     "citacao": "O componente *list* será apresentado flutuando sobre a tela e uma sombra deve ser utilizada para proporcionar contraste entre o componente e o conteúdo de tela ao fundo."
+    }
+   ],
+   "tambem": [],
+   "esperado": "box-shadow na lista aberta",
+   "ancora": {
+    "texto": "select de rótulo 'Continente'",
+    "seletor": "#sel-continente"
+   },
+   "medida": {
+    "S2": {
+     "visivel": true,
+     "boxShadow": "rgba(0, 0, 0, 0.16) 0px 3px 6px 0px"
+    }
+   },
+   "medidaArquivo": "medidas/EC-055.json"
+  },
+  {
+   "id": "EC-056",
+   "instancia": "sel-continente",
+   "chave": "botao-extremidade-direita",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/select__designer.md",
+     "citacao": "Este botão deve estar posicionado na extremidade direita ao componente *input*."
+    }
+   ],
+   "tambem": [],
+   "esperado": "gatilho dentro do campo, junto à borda direita",
+   "ancora": {
+    "texto": "select de rótulo 'Continente'",
+    "seletor": "#sel-continente"
+   },
+   "medida": {
+    "S0": {
+     "folgaDireita": 4,
+     "campo": {
+      "x": 60,
+      "y": 705.3,
+      "w": 400,
+      "h": 40
+     },
+     "gatilho": {
+      "x": 424,
+      "y": 709.3,
+      "w": 32,
+      "h": 32
+     }
+    },
+    "S1": {
+     "folgaDireita": 4,
+     "campo": {
+      "x": 60,
+      "y": 890.7,
+      "w": 400,
+      "h": 40
+     },
+     "gatilho": {
+      "x": 424,
+      "y": 894.7,
+      "w": 32,
+      "h": 32
+     }
+    },
+    "S2": {
+     "folgaDireita": 4,
+     "campo": {
+      "x": 60,
+      "y": 705.3,
+      "w": 400,
+      "h": 40
+     },
+     "gatilho": {
+      "x": 424,
+      "y": 709.3,
+      "w": 32,
+      "h": 32
+     }
+    }
+   },
+   "medidaArquivo": "medidas/EC-056.json"
+  },
+  {
+   "id": "EC-057",
+   "instancia": "sel-continente",
+   "chave": "empty-state-sem-resultado",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/select__designer.md",
+     "citacao": "Quando o usuário optar por utilizar a função de pesquisa e não for localizado o item procurado, o componente *input* deverá exibir, logo abaixo, uma mensagem de *feedback* do tipo \"Empty State\""
+    }
+   ],
+   "tambem": [],
+   "esperado": "mensagem de não encontrado logo abaixo do campo",
+   "ancora": {
+    "texto": "select de rótulo 'Continente'",
+    "seletor": "#sel-continente"
+   },
+   "medida": {
+    "S0": {
+     "sonda": "select-filtro",
+     "estado": "S0",
+     "filtrado": [
+      "Europa"
+     ],
+     "vazio": [
+      {
+       "texto": "Não encontramos o que você está procurando!",
+       "classes": "br-item not-found",
+       "caixa": {
+        "x": 60,
+        "y": 747.3,
+        "w": 400,
+        "h": 98
+       }
+      }
+     ],
+     "campo": {
+      "x": 60,
+      "y": 705.34375,
+      "w": 400,
+      "h": 40
+     },
+     "errosPagina": []
+    }
+   },
+   "medidaArquivo": "medidas/EC-057.json"
+  },
+  {
+   "id": "EC-058",
+   "instancia": "rad-situacao",
+   "chave": "classe-e-input-radio",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/radio__desenvolvedor.md",
+     "citacao": "| class    | string | **br-radio** | Container do componente |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "br-radio com input type=radio",
+   "ancora": {
+    "texto": "grupo 'Situação do cadastro'",
+    "seletor": "#rad-situacao"
+   },
+   "medida": {
+    "S0": "radio",
+    "S1": "radio",
+    "S2": "radio"
+   },
+   "medidaArquivo": "medidas/EC-058.json"
+  },
+  {
+   "id": "EC-059",
+   "instancia": "rad-situacao",
+   "chave": "tab-space",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/radio__acessibilidade.md",
+     "citacao": "*Radio buttons* devem ser navegáveis pelo teclado por meio da tecla `Tab` e acionados com a tecla `Space`."
+    }
+   ],
+   "tambem": [],
+   "esperado": "Tab chega ao grupo; Space marca",
+   "ancora": {
+    "texto": "grupo 'Situação do cadastro'",
+    "seletor": "#rad-situacao"
+   },
+   "medida": {
+    "S0": {
+     "paradas": 13,
+     "aposSpace": [
+      true,
+      false,
+      false
+     ],
+     "aposArrowDown": {
+      "marcados": [
+       false,
+       true,
+       false
+      ],
+      "foco": "input#situacao-suspenso"
+     },
+     "focoVisivel": true
+    }
+   },
+   "medidaArquivo": "medidas/EC-059.json"
+  },
+  {
+   "id": "EC-060",
+   "instancia": "rad-situacao",
+   "chave": "rotulos-associados",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/radio__acessibilidade.md",
+     "citacao": "*Radio button* devem ter rótulos associados que expliquem seu objetivo e esteja claramente vinculado a eles;"
+    }
+   ],
+   "tambem": [],
+   "esperado": "cada opção com nome acessível do rótulo",
+   "ancora": {
+    "texto": "grupo 'Situação do cadastro'",
+    "seletor": "#rad-situacao"
+   },
+   "medida": {
+    "S0": "Habilitado",
+    "S1": "Habilitado",
+    "S2": "Habilitado"
+   },
+   "medidaArquivo": "medidas/EC-060.json"
+  },
+  {
+   "id": "EC-061",
+   "instancia": "rad-situacao",
+   "chave": "legend-do-grupo",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "O agrupamento deverá ser feito de maneira lógica, associando o elemento LEGEND explicando claramente o propósito ou natureza dos agrupamentos."
+    }
+   ],
+   "tambem": [],
+   "esperado": "fieldset com legend; grupo AX nomeado",
+   "ancora": {
+    "texto": "grupo 'Situação do cadastro'",
+    "seletor": "#rad-situacao"
+   },
+   "medida": {
+    "S0": {
+     "tag": "fieldset",
+     "papelAX": "group",
+     "nomeAX": "Situação do cadastro"
+    },
+    "S1": {
+     "tag": "fieldset",
+     "papelAX": "group",
+     "nomeAX": "Situação do cadastro"
+    },
+    "S2": {
+     "tag": "fieldset",
+     "papelAX": "group",
+     "nomeAX": "Situação do cadastro"
+    }
+   },
+   "medidaArquivo": "medidas/EC-061.json"
+  },
+  {
+   "id": "EC-062",
+   "instancia": "rad-situacao",
+   "chave": "rotulo-topo-esquerda-caixa",
+   "estados": [
+    "S1"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/radio__designer.md",
+     "citacao": "O rótulo deve se posicionar no topo do componente alinhado à esquerda."
+    },
+    {
+     "arquivo": "componentes/radio__designer.md",
+     "citacao": "Deverá ser escrito com sua primeira letra em maiúsculo e o restante em minúsculo."
+    },
+    {
+     "arquivo": "componentes/radio__designer.md",
+     "citacao": "Os textos descritivos deverão ser escritos com sua primeira letra em maiúsculo e o restante em minúsculo."
+    }
+   ],
+   "tambem": [],
+   "esperado": "legend acima e alinhada às opções; textos em caixa de frase",
+   "ancora": {
+    "texto": "grupo 'Situação do cadastro'",
+    "seletor": "#rad-situacao"
+   },
+   "medida": {
+    "S1": {
+     "legend": "Situação do cadastro",
+     "legendX": 62,
+     "opcoesX": [
+      62,
+      62,
+      62
+     ],
+     "textos": [
+      "Habilitado",
+      "Suspenso",
+      "Em análise"
+     ]
+    }
+   },
+   "medidaArquivo": "medidas/EC-062.json"
+  },
+  {
+   "id": "EC-063",
+   "instancia": "rad-situacao",
+   "chave": "texto-a-direita",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/radio__designer.md",
+     "citacao": "o texto descritivo deve se posicionar sempre à direita do container respeitando o espaçamento lateral da caixa de opção."
+    }
+   ],
+   "tambem": [],
+   "esperado": "texto após a caixa de 24 px",
+   "ancora": {
+    "texto": "grupo 'Situação do cadastro'",
+    "seletor": "#rad-situacao"
+   },
+   "medida": {
+    "S0": {
+     "paddingLeftRotulo": "32px"
+    },
+    "S1": {
+     "paddingLeftRotulo": "32px"
+    },
+    "S2": {
+     "paddingLeftRotulo": "32px"
+    }
+   },
+   "medidaArquivo": "medidas/EC-063.json"
+  },
+  {
+   "id": "EC-064",
+   "instancia": "rad-situacao",
+   "chave": "uma-mensagem-abaixo",
+   "estados": [
+    "S1"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/radio__designer.md",
+     "citacao": "Deverá haver apenas uma mensagem para todo o conjunto da lista de opções."
+    },
+    {
+     "arquivo": "componentes/radio__designer.md",
+     "citacao": "Deve se posicionar abaixo do último item da lista de opções, alinhado à esquerda e respeitando uma margem superior de acordo com suas diretrizes."
+    }
+   ],
+   "tambem": [],
+   "esperado": "1 mensagem, abaixo do último item, alinhada à esquerda",
+   "ancora": {
+    "texto": "grupo 'Situação do cadastro'",
+    "seletor": "#rad-situacao"
+   },
+   "medida": {
+    "S1": {
+     "x": 62,
+     "top": 470.28125,
+     "n": 1
+    }
+   },
+   "medidaArquivo": "medidas/EC-064.json"
+  },
+  {
+   "id": "EC-065",
+   "instancia": "rad-situacao",
+   "chave": "fieldset-sem-borda",
+   "estados": [
+    "S1"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "padroes/design/formulario.md",
+     "citacao": "| border        | `--surface-width-none` |"
+    },
+    {
+     "arquivo": "padroes/design/formulario.md",
+     "citacao": "| margin-bottom |   `--spacing-scale-5x` |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "sem borda, margin-bottom 40 px",
+   "ancora": {
+    "texto": "grupo 'Situação do cadastro'",
+    "seletor": "#rad-situacao"
+   },
+   "medida": {
+    "S1": {
+     "borda": "none 0px",
+     "marginBottom": "40px"
+    }
+   },
+   "medidaArquivo": "medidas/EC-065.json"
+  },
+  {
+   "id": "EC-066",
+   "instancia": "rad-situacao",
+   "chave": "caixa-opcao-24",
+   "estados": [
+    "S1"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/radio__designer.md",
+     "citacao": "| Caixa de opção | width         | 24px  |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "caixa 24 × 24, circular",
+   "ancora": {
+    "texto": "grupo 'Situação do cadastro'",
+    "seletor": "#rad-situacao"
+   },
+   "medida": {
+    "S1": [
+     {
+      "w": "24px",
+      "h": "24px",
+      "left": "0px",
+      "borda": "1px rgb(229, 34, 7)",
+      "raio": "50%"
+     },
+     {
+      "w": "24px",
+      "h": "24px",
+      "left": "0px",
+      "borda": "1px rgb(229, 34, 7)",
+      "raio": "50%"
+     },
+     {
+      "w": "24px",
+      "h": "24px",
+      "left": "0px",
+      "borda": "1px rgb(229, 34, 7)",
+      "raio": "50%"
+     }
+    ]
+   },
+   "medidaArquivo": "medidas/EC-066.json"
+  },
+  {
+   "id": "EC-067",
+   "instancia": "swt-certificado",
+   "chave": "classe-br-switch",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/switch__desenvolvedor.md",
+     "citacao": "| class    | string | **br-switch** | Container do componente |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "br-switch",
+   "ancora": {
+    "texto": "switch 'Emitir certificado sanitário automaticamente…'",
+    "seletor": "#swt-certificado"
+   },
+   "medida": {
+    "S0": [
+     "br-switch",
+     "configuracao-certificado"
+    ],
+    "S1": [
+     "br-switch",
+     "configuracao-certificado"
+    ],
+    "S2": [
+     "br-switch",
+     "configuracao-certificado"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-067.json"
+  },
+  {
+   "id": "EC-068",
+   "instancia": "swt-certificado",
+   "chave": "tab-space-enter",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/switch__acessibilidade.md",
+     "citacao": "Os usuários devem poder acessar o *switch* por meio da tecla `Tab` e alternar seu estado (ligado/desligado) por meio das teclas `Space` ou `Enter`;"
+    }
+   ],
+   "tambem": [],
+   "esperado": "Tab alcança; Space ou Enter alternam",
+   "ancora": {
+    "texto": "switch 'Emitir certificado sanitário automaticamente…'",
+    "seletor": "#swt-certificado"
+   },
+   "medida": {
+    "S0": {
+     "paradas": 17,
+     "inicial": false,
+     "aposSpace": true,
+     "aposEnter": true,
+     "aposSpace2": false
+    }
+   },
+   "medidaArquivo": "medidas/EC-068.json"
+  },
+  {
+   "id": "EC-069",
+   "instancia": "swt-certificado",
+   "chave": "foco-visivel",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "A área que recebe o foco pelo teclado deve ser claramente marcada"
+    }
+   ],
+   "tambem": [],
+   "esperado": "mudança visual com foco por teclado",
+   "ancora": {
+    "texto": "switch 'Emitir certificado sanitário automaticamente…'",
+    "seletor": "#swt-certificado"
+   },
+   "medida": {
+    "S0": {
+     "difFoco": {
+      "clip": {
+       "x": 50,
+       "y": 579.703125,
+       "width": 537.046875,
+       "height": 50
+      },
+      "iguais": false,
+      "bytesCom": 5122,
+      "bytesSem": 4330
+     },
+     "anel": "rgb(194, 133, 12) 0px 0px 0px 2px"
+    }
+   },
+   "medidaArquivo": "medidas/EC-069.json"
+  },
+  {
+   "id": "EC-070",
+   "instancia": "swt-certificado",
+   "chave": "aria-checked-acompanha",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/switch__acessibilidade.md",
+     "citacao": "Quando ativado, o elemento *switch* deve ter o atributo `aria-checked` definido como `true` e quando desativado, o atributo `aria-checked` definido como `false`;"
+    },
+    {
+     "arquivo": "componentes/switch__acessibilidade.md",
+     "citacao": "os leitores de tela devem anunciar o rótulo descritivo e o estado atual do *switch*."
+    }
+   ],
+   "tambem": [],
+   "esperado": "aria-checked e estado AX = checked a cada alternância",
+   "ancora": {
+    "texto": "switch 'Emitir certificado sanitário automaticamente…'",
+    "seletor": "#swt-certificado"
+   },
+   "medida": {
+    "S0": [
+     {
+      "checked": false,
+      "ariaChecked": "false",
+      "axChecked": "false",
+      "nome": "Emitir certificado sanitário automaticamente para países habilitados"
+     },
+     {
+      "checked": true,
+      "ariaChecked": "true",
+      "axChecked": "true",
+      "nome": "Emitir certificado sanitário automaticamente para países habilitados"
+     },
+     {
+      "checked": true,
+      "ariaChecked": "true",
+      "axChecked": "true",
+      "nome": "Emitir certificado sanitário automaticamente para países habilitados"
+     },
+     {
+      "checked": false,
+      "ariaChecked": "false",
+      "axChecked": "false",
+      "nome": "Emitir certificado sanitário automaticamente para países habilitados"
+     }
+    ]
+   },
+   "medidaArquivo": "medidas/EC-070.json"
+  },
+  {
+   "id": "EC-071",
+   "instancia": "swt-certificado",
+   "chave": "efeito-imediato",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/switch__designer.md",
+     "citacao": "*Switches* devem ter efeito imediato e não devem exigir que o usuário clique em botões de \"Salvar\" ou \"Enviar\" para aplicar o novo estado."
+    }
+   ],
+   "tambem": [],
+   "esperado": "texto de estado atualizado ao alternar, sem Salvar, fora do formulário",
+   "ancora": {
+    "texto": "switch 'Emitir certificado sanitário automaticamente…'",
+    "seletor": "#swt-certificado"
+   },
+   "medida": {
+    "S0": {
+     "aposSpace": "Emissão automática ligada.",
+     "aposClique": "Emissão automática ligada.",
+     "dentroDoForm": false
+    }
+   },
+   "medidaArquivo": "medidas/EC-071.json"
+  },
+  {
+   "id": "EC-072",
+   "instancia": "swt-certificado",
+   "chave": "container-firme",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/switch__designer.md",
+     "citacao": "O *Switch* deve ser posicionado na interface de forma firme e consistente durante o movimento da *chave de alternância* ou alternância de *labels* e surgimento de bordas de foco, evitando mudar o posicionamento do seu *container*."
+    }
+   ],
+   "tambem": [],
+   "esperado": "posição (x, y) do componente igual antes/depois de alternar",
+   "ancora": {
+    "texto": "switch 'Emitir certificado sanitário automaticamente…'",
+    "seletor": "#swt-certificado"
+   },
+   "medida": {
+    "S0": [
+     {
+      "x": 60,
+      "y": 589.703125,
+      "w": 589.5,
+      "h": 30
+     },
+     {
+      "x": 60,
+      "y": 589.703125,
+      "w": 568.859375,
+      "h": 30
+     }
+    ]
+   },
+   "medidaArquivo": "medidas/EC-072.json"
+  },
+  {
+   "id": "EC-073",
+   "instancia": "swt-certificado",
+   "chave": "rotulos-de-estado",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/switch__desenvolvedor.md",
+     "citacao": "**data-enabled**: é mostrado quando o componente está \"ligado\""
+    },
+    {
+     "arquivo": "componentes/switch__desenvolvedor.md",
+     "citacao": "**data-disabled**: é mostrado quando o componente está \"desligado\""
+    }
+   ],
+   "tambem": [],
+   "esperado": "'Ligada' quando ligado, 'Desligada' quando desligado",
+   "ancora": {
+    "texto": "switch 'Emitir certificado sanitário automaticamente…'",
+    "seletor": "#swt-certificado"
+   },
+   "medida": {
+    "S0": [
+     "\"Desligada\"",
+     "\"Ligada\""
+    ]
+   },
+   "medidaArquivo": "medidas/EC-073.json"
+  },
+  {
+   "id": "EC-074",
+   "instancia": "swt-certificado",
+   "chave": "label-descreve",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/switch__acessibilidade.md",
+     "citacao": "O *switch* deve ter um rótulo claro e de fácil entendimento, que explica seu propósito;"
+    }
+   ],
+   "tambem": [],
+   "esperado": "rótulo associado descrevendo o efeito",
+   "ancora": {
+    "texto": "switch 'Emitir certificado sanitário automaticamente…'",
+    "seletor": "#swt-certificado"
+   },
+   "medida": {
+    "S0": "Emitir certificado sanitário automaticamente para países habilitados",
+    "S1": "Emitir certificado sanitário automaticamente para países habilitados",
+    "S2": "Emitir certificado sanitário automaticamente para países habilitados"
+   },
+   "medidaArquivo": "medidas/EC-074.json"
+  },
+  {
+   "id": "EC-075",
+   "instancia": "lst-paises",
+   "chave": "classes-list-item",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/list__desenvolvedor.md",
+     "citacao": "| `br-list` | classe | Container do componente List                   |"
+    },
+    {
+     "arquivo": "componentes/list__desenvolvedor.md",
+     "citacao": "| `br-item` | classe | Container do componente Item                   |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "br-list com br-item",
+   "ancora": {
+    "texto": "lista 'Países Cadastrados'",
+    "seletor": "#lst-paises"
+   },
+   "medida": {
+    "S0": [
+     [
+      "br-list",
+      "lista-paises"
+     ],
+     [
+      "br-item",
+      "py-3",
+      "item-pais"
+     ]
+    ],
+    "S1": [
+     [
+      "br-list",
+      "lista-paises"
+     ],
+     [
+      "br-item",
+      "py-3",
+      "item-pais"
+     ]
+    ],
+    "S2": [
+     [
+      "br-list",
+      "lista-paises"
+     ],
+     [
+      "br-item",
+      "py-3",
+      "item-pais"
+     ]
+    ]
+   },
+   "medidaArquivo": "medidas/EC-075.json"
+  },
+  {
+   "id": "EC-076",
+   "instancia": "lst-paises",
+   "chave": "texto-principal",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/list__designer.md",
+     "citacao": "**Texto Principal**: texto obrigatório, onde o conteúdo principal da *list* será exibido;"
+    }
+   ],
+   "tambem": [],
+   "esperado": "cada item com texto principal",
+   "ancora": {
+    "texto": "lista 'Países Cadastrados'",
+    "seletor": "#lst-paises"
+   },
+   "medida": {
+    "S0": [
+     "Argentina",
+     "Chile",
+     "Japão",
+     "Egito"
+    ],
+    "S1": [
+     "Argentina",
+     "Chile",
+     "Japão",
+     "Egito"
+    ],
+    "S2": [
+     "Argentina",
+     "Chile",
+     "Japão",
+     "Egito"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-076.json"
+  },
+  {
+   "id": "EC-077",
+   "instancia": "lst-paises",
+   "chave": "dividers-abaixo",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/list__designer.md",
+     "citacao": "Quando presentes, devem, estar localizados sempre abaixo da borda inferior de cada item, quando se tratar de uma *list* vertical"
+    }
+   ],
+   "tambem": [],
+   "esperado": "um divider na borda inferior de cada item",
+   "ancora": {
+    "texto": "lista 'Países Cadastrados'",
+    "seletor": "#lst-paises"
+   },
+   "medida": {
+    "S0": [
+     [
+      1410.75,
+      1410.75
+     ],
+     [
+      1485.75,
+      1485.75
+     ],
+     [
+      1560.75,
+      1560.75
+     ],
+     [
+      1635.75,
+      1635.75
+     ]
+    ],
+    "S1": [
+     [
+      1410.75,
+      1410.75
+     ],
+     [
+      1485.75,
+      1485.75
+     ],
+     [
+      1560.75,
+      1560.75
+     ],
+     [
+      1635.75,
+      1635.75
+     ]
+    ],
+    "S2": [
+     [
+      1410.75,
+      1410.75
+     ],
+     [
+      1485.75,
+      1485.75
+     ],
+     [
+      1560.75,
+      1560.75
+     ],
+     [
+      1635.75,
+      1635.75
+     ]
+    ]
+   },
+   "medidaArquivo": "medidas/EC-077.json"
+  },
+  {
+   "id": "EC-078",
+   "instancia": "lst-paises",
+   "chave": "espacamento-constante",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/list__designer.md",
+     "citacao": "Não é permitido variar o espaçamento dos itens dentro de uma mesma *list*."
+    }
+   ],
+   "tambem": [],
+   "esperado": "paddings iguais em todos os itens",
+   "ancora": {
+    "texto": "lista 'Países Cadastrados'",
+    "seletor": "#lst-paises"
+   },
+   "medida": {
+    "S0": [
+     [
+      "16px",
+      "16px",
+      "16px"
+     ],
+     [
+      "16px",
+      "16px",
+      "16px"
+     ],
+     [
+      "16px",
+      "16px",
+      "16px"
+     ],
+     [
+      "16px",
+      "16px",
+      "16px"
+     ]
+    ],
+    "S1": [
+     [
+      "16px",
+      "16px",
+      "16px"
+     ],
+     [
+      "16px",
+      "16px",
+      "16px"
+     ],
+     [
+      "16px",
+      "16px",
+      "16px"
+     ],
+     [
+      "16px",
+      "16px",
+      "16px"
+     ]
+    ],
+    "S2": [
+     [
+      "16px",
+      "16px",
+      "16px"
+     ],
+     [
+      "16px",
+      "16px",
+      "16px"
+     ],
+     [
+      "16px",
+      "16px",
+      "16px"
+     ],
+     [
+      "16px",
+      "16px",
+      "16px"
+     ]
+    ]
+   },
+   "medidaArquivo": "medidas/EC-078.json"
+  },
+  {
+   "id": "EC-079",
+   "instancia": "lst-paises",
+   "chave": "datas-mesmo-digitos",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "padroes/writing/principios-writing.md",
+     "citacao": "As datas devem ser formatadas com a mesma quantidade de dígitos"
+    }
+   ],
+   "tambem": [],
+   "esperado": "dd/mm/aaaa em todas",
+   "ancora": {
+    "texto": "lista 'Países Cadastrados'",
+    "seletor": "#lst-paises"
+   },
+   "medida": {
+    "S0": [
+     "31/12/2026",
+     "30/06/2027"
+    ],
+    "S1": [
+     "31/12/2026",
+     "30/06/2027"
+    ],
+    "S2": [
+     "31/12/2026",
+     "30/06/2027"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-079.json"
+  },
+  {
+   "id": "EC-080",
+   "instancia": "msg-orientacao",
+   "chave": "classe-br-message-info",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/message__desenvolvedor.md",
+     "citacao": "| class    | string | **br-message** | Container para Tipo Padrão     |"
+    },
+    {
+     "arquivo": "componentes/message__designer.md",
+     "citacao": "Deve ser usado quando o objetivo da mensagem for uma informação neutra."
+    }
+   ],
+   "tambem": [],
+   "esperado": "br-message info para informação neutra",
+   "ancora": {
+    "texto": "mensagem informativa 'Como cadastrar.'",
+    "seletor": "#msg-orientacao"
+   },
+   "medida": {
+    "S0": [
+     "br-message",
+     "info",
+     "mensagem-servico"
+    ],
+    "S1": [
+     "br-message",
+     "info",
+     "mensagem-servico"
+    ],
+    "S2": [
+     "br-message",
+     "info",
+     "mensagem-servico"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-080.json"
+  },
+  {
+   "id": "EC-081",
+   "instancia": "msg-orientacao",
+   "chave": "posicao-global",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/message__designer.md",
+     "citacao": "deverá ser apresentado entre o cabeçalho e o componente *breadcrumb*, se estendendo até o limite da sua largura."
+    },
+    {
+     "arquivo": "componentes/message__designer.md",
+     "citacao": "Neste tipo de posicionamento, a superfície do *Message* deverá se estender, sangrando a área da *Grid*, enquanto seu conteúdo interno deverá respeitar as margens da área útil."
+    }
+   ],
+   "tambem": [],
+   "esperado": "entre header e breadcrumb, largura total, conteúdo dentro das margens da área útil",
+   "ancora": {
+    "texto": "mensagem informativa 'Como cadastrar.'",
+    "seletor": "#msg-orientacao"
+   },
+   "medida": {
+    "S0": {
+     "msg": {
+      "x": 0,
+      "y": 115.1,
+      "w": 1280,
+      "h": 96.7
+     },
+     "fimHeader": 115.1,
+     "inicioBreadcrumb": 227.8,
+     "iconeX": 76,
+     "fecharDir": 1212,
+     "areaUtil": {
+      "esq": 60,
+      "dir": 1220
+     }
+    },
+    "S1": {
+     "msg": {
+      "x": 0,
+      "y": 115.1,
+      "w": 1280,
+      "h": 96.7
+     },
+     "fimHeader": 115.1,
+     "inicioBreadcrumb": 227.8,
+     "iconeX": 76,
+     "fecharDir": 1212,
+     "areaUtil": {
+      "esq": 60,
+      "dir": 1220
+     }
+    },
+    "S2": {
+     "msg": {
+      "x": 0,
+      "y": 115.1,
+      "w": 1280,
+      "h": 96.7
+     },
+     "fimHeader": 115.1,
+     "inicioBreadcrumb": 227.8,
+     "iconeX": 76,
+     "fecharDir": 1212,
+     "areaUtil": {
+      "esq": 60,
+      "dir": 1220
+     }
+    }
+   },
+   "medidaArquivo": "medidas/EC-081.json"
+  },
+  {
+   "id": "EC-082",
+   "instancia": "msg-orientacao",
+   "chave": "icones-posicao",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/message__designer.md",
+     "citacao": "Os ícones de função semântica devem ser posicionados à esquerda na Superfície do *Message*, enquanto o *Botão Fechar*, deve ser posicionado no topo e à direita."
+    }
+   ],
+   "tambem": [],
+   "esperado": "ícone à esquerda do texto; Fechar no topo à direita",
+   "ancora": {
+    "texto": "mensagem informativa 'Como cadastrar.'",
+    "seletor": "#msg-orientacao"
+   },
+   "medida": {
+    "S0": {
+     "icone": 76,
+     "conteudo": 120,
+     "fechar": {
+      "x": 1180,
+      "y": 123.1,
+      "w": 32,
+      "h": 32
+     },
+     "msgTopo": 115.1
+    },
+    "S1": {
+     "icone": 76,
+     "conteudo": 120,
+     "fechar": {
+      "x": 1180,
+      "y": 123.1,
+      "w": 32,
+      "h": 32
+     },
+     "msgTopo": 115.1
+    },
+    "S2": {
+     "icone": 76,
+     "conteudo": 120,
+     "fechar": {
+      "x": 1180,
+      "y": 123.1,
+      "w": 32,
+      "h": 32
+     },
+     "msgTopo": 115.1
+    }
+   },
+   "medidaArquivo": "medidas/EC-082.json"
+  },
+  {
+   "id": "EC-083",
+   "instancia": "msg-orientacao",
+   "chave": "cores-tipografia-info",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/message__designer.md",
+     "citacao": "| Superfície do Message              | background | `--blue-warm-vivid-10` |"
+    },
+    {
+     "arquivo": "componentes/message__designer.md",
+     "citacao": "| Título do Message     | `--font-size-scale-up-01` | `--font-weight-semi-bold` |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "fundo #d4e5ff, ícone/fechar #155bcb, título 16,8/600, mensagem 16,8/400",
+   "ancora": {
+    "texto": "mensagem informativa 'Como cadastrar.'",
+    "seletor": "#msg-orientacao"
+   },
+   "medida": {
+    "S0": {
+     "fundo": "rgb(212, 229, 255)",
+     "icone": "rgb(21, 91, 203)",
+     "fechar": "rgb(21, 91, 203)",
+     "titulo": [
+      "16.8px",
+      "600"
+     ],
+     "corpo": [
+      "16.8px",
+      "400"
+     ]
+    },
+    "S1": {
+     "fundo": "rgb(212, 229, 255)",
+     "icone": "rgb(21, 91, 203)",
+     "fechar": "rgb(21, 91, 203)",
+     "titulo": [
+      "16.8px",
+      "600"
+     ],
+     "corpo": [
+      "16.8px",
+      "400"
+     ]
+    },
+    "S2": {
+     "fundo": "rgb(212, 229, 255)",
+     "icone": "rgb(21, 91, 203)",
+     "fechar": "rgb(21, 91, 203)",
+     "titulo": [
+      "16.8px",
+      "600"
+     ],
+     "corpo": [
+      "16.8px",
+      "400"
+     ]
+    }
+   },
+   "medidaArquivo": "medidas/EC-083.json"
+  },
+  {
+   "id": "EC-084",
+   "instancia": "msg-orientacao",
+   "chave": "botao-fechar-terciario-alta-densidade",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/message__designer.md",
+     "citacao": "Este elemento é o **Componente Botão - Ênfase Terciária de Alta Densidade**."
+    }
+   ],
+   "tambem": [],
+   "esperado": "botão circular 32 px, sem superfície, ícone fa-times, nome 'Fechar'",
+   "ancora": {
+    "texto": "mensagem informativa 'Como cadastrar.'",
+    "seletor": "#msg-orientacao"
+   },
+   "medida": {
+    "S0": {
+     "caixa": [
+      "32px",
+      "32px"
+     ],
+     "fundo": "rgba(0, 0, 0, 0)",
+     "nome": "Fechar",
+     "icone": [
+      "fas",
+      "fa-times"
+     ]
+    },
+    "S1": {
+     "caixa": [
+      "32px",
+      "32px"
+     ],
+     "fundo": "rgba(0, 0, 0, 0)",
+     "nome": "Fechar",
+     "icone": [
+      "fas",
+      "fa-times"
+     ]
+    },
+    "S2": {
+     "caixa": [
+      "32px",
+      "32px"
+     ],
+     "fundo": "rgba(0, 0, 0, 0)",
+     "nome": "Fechar",
+     "icone": [
+      "fas",
+      "fa-times"
+     ]
+    }
+   },
+   "medidaArquivo": "medidas/EC-084.json"
+  },
+  {
+   "id": "EC-085",
+   "instancia": "msg-orientacao",
+   "chave": "fechar-por-teclado",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Todas as funções da página desenvolvidas utilizando-se linguagens de script (javascript) devem ser programadas, primeiramente, para o uso com teclado."
+    }
+   ],
+   "tambem": [],
+   "esperado": "Enter e Space no Fechar ocultam a mensagem",
+   "ancora": {
+    "texto": "mensagem informativa 'Como cadastrar.'",
+    "seletor": "#msg-orientacao"
+   },
+   "medida": {
+    "S0": {
+     "enter": false,
+     "space": null
+    }
+   },
+   "medidaArquivo": "medidas/EC-085.json"
+  },
+  {
+   "id": "EC-086",
+   "instancia": "msg-erro",
+   "chave": "classe-danger-e-role",
+   "estados": [
+    "S1"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/message__designer.md",
+     "citacao": "Deve ser usado quando o objetivo da mensagem for transmitir um alerta de erro por parte do sistema ou por parte do usuário."
+    },
+    {
+     "arquivo": "componentes/message__acessibilidade.md",
+     "citacao": "Ao exibir uma mensagem de *feedback* em resposta à ação do usuário, permita que o leitor de tela leia imediatamente a mensagem;"
+    }
+   ],
+   "tambem": [],
+   "esperado": "br-message danger; região alert",
+   "ancora": {
+    "texto": "mensagem 'Não foi possível salvar o país.'",
+    "seletor": "#msg-erro"
+   },
+   "medida": {
+    "S1": {
+     "classes": [
+      "br-message",
+      "danger",
+      "retorno-envio"
+     ],
+     "papelConteudo": "alert"
+    }
+   },
+   "medidaArquivo": "medidas/EC-086.json"
+  },
+  {
+   "id": "EC-087",
+   "instancia": "msg-erro",
+   "chave": "contraste-texto",
+   "estados": [
+    "S1"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/cores.md",
+     "citacao": "O *nível AA* indica que é necessária uma taxa de contraste de pelo menos *4,5:1* para que o texto seja considerado normal e tenha boa legibilidade."
+    }
+   ],
+   "tambem": [],
+   "esperado": "≥ 4,5:1",
+   "ancora": {
+    "texto": "mensagem 'Não foi possível salvar o país.'",
+    "seletor": "#msg-erro"
+   },
+   "medida": {
+    "S1": [
+     "Não foi possível salvar o país: 4.6",
+     "Faltam informações obrigatória: 4.6"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-087.json"
+  },
+  {
+   "id": "EC-088",
+   "instancia": "msg-erro",
+   "chave": "texto-erro-explica",
+   "estados": [
+    "S1"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "padroes/writing/microcopy.md",
+     "citacao": "As mensagens de erro devem permitir que os usuários entendam que ocorreu um erro, por que ocorreu e o que fazer para contornar a situação."
+    }
+   ],
+   "tambem": [],
+   "esperado": "diz que houve erro, por quê e o que fazer",
+   "ancora": {
+    "texto": "mensagem 'Não foi possível salvar o país.'",
+    "seletor": "#msg-erro"
+   },
+   "medida": {
+    "S1": "Não foi possível salvar o país. Faltam informações obrigatórias. Preencha o nome do país, o continente e a situação do cadastro e salve novamente."
+   },
+   "medidaArquivo": "medidas/EC-088.json"
+  },
+  {
+   "id": "EC-089",
+   "instancia": "skp-conteudo",
+   "chave": "primeiro-foco-e-exibido",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/skiplink__acessibilidade.md",
+     "citacao": "O *skip link* deve ser o primeiro elemento a receber o foco na navegação por teclado e deve ser exibido imediatamente para o usuário;"
+    }
+   ],
+   "tambem": [],
+   "esperado": "1º Tab no skip link, visível",
+   "ancora": {
+    "texto": "nav.br-skiplink (texto 'Ir para o conteúdo')",
+    "seletor": ".br-skiplink"
+   },
+   "medida": {
+    "S0": {
+     "tecla": "Tab 1",
+     "foco": "a.br-item",
+     "item1": {
+      "x": 16,
+      "y": 0,
+      "w": 300,
+      "h": 36.296875
+     },
+     "item1Visivel": true
+    }
+   },
+   "medidaArquivo": "medidas/EC-089.json"
+  },
+  {
+   "id": "EC-090",
+   "instancia": "skp-conteudo",
+   "chave": "mesma-posicao-e-oculta-ao-sair",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/skiplink__designer.md",
+     "citacao": "**Atenção:** ao navegar com a tecla *TAB* as opções de itens de atalho devem ser apresentadas na mesma posição do item anterior."
+    },
+    {
+     "arquivo": "componentes/skiplink__designer.md",
+     "citacao": "Ao sair do *skip link* ele deve voltar ao estado oculto."
+    }
+   ],
+   "tambem": [],
+   "esperado": "item 2 na posição do item 1; oculto após sair",
+   "ancora": {
+    "texto": "nav.br-skiplink (texto 'Ir para o conteúdo')",
+    "seletor": ".br-skiplink"
+   },
+   "medida": {
+    "S0": [
+     {
+      "tecla": "Tab 1",
+      "foco": "a.br-item",
+      "item1": {
+       "x": 16,
+       "y": 0,
+       "w": 300,
+       "h": 36.296875
+      },
+      "item1Visivel": true
+     },
+     {
+      "tecla": "Tab 2",
+      "foco": "a.br-item",
+      "item2": {
+       "x": 16,
+       "y": 0,
+       "w": 300,
+       "h": 36.296875
+      },
+      "item2Visivel": true,
+      "item1Visivel": false
+     },
+     {
+      "tecla": "Tab 3",
+      "foco": "a#sgn-usuaria.br-sign-in.conta-usuaria",
+      "item1Visivel": false,
+      "item2Visivel": false
+     }
+    ]
+   },
+   "medidaArquivo": "medidas/EC-090.json"
+  },
+  {
+   "id": "EC-091",
+   "instancia": "skp-conteudo",
+   "chave": "logo-apos-body-primeiro-link",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "componentes/skiplink__designer.md",
+     "citacao": "Este componente deve estar logo após a *tag body*"
+    },
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "É importante ressaltar que o primeiro link da página deve ser o de ir para o conteúdo"
+    }
+   ],
+   "tambem": [],
+   "esperado": "1º filho do body; 1º link = ir para o conteúdo",
+   "ancora": {
+    "texto": "nav.br-skiplink (texto 'Ir para o conteúdo')",
+    "seletor": ".br-skiplink"
+   },
+   "medida": {
+    "S0": {
+     "primeiroFilho": "nav.br-skiplink.atalhos-pagina",
+     "primeiroLink": {
+      "texto": "Ir para o conteúdo (1/2)",
+      "href": "#main-content"
+     }
+    },
+    "S1": {
+     "primeiroFilho": "nav.br-skiplink.atalhos-pagina",
+     "primeiroLink": {
+      "texto": "Ir para o conteúdo (1/2)",
+      "href": "#main-content"
+     }
+    },
+    "S2": {
+     "primeiroFilho": "nav.br-skiplink.atalhos-pagina",
+     "primeiroLink": {
+      "texto": "Ir para o conteúdo (1/2)",
+      "href": "#main-content"
+     }
+    }
+   },
+   "medidaArquivo": "medidas/EC-091.json"
+  },
+  {
+   "id": "EC-092",
+   "instancia": "skp-conteudo",
+   "chave": "accesskey-unico-destinos",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Não pode haver repetição do mesmo accesskey em uma página."
+    },
+    {
+     "arquivo": "componentes/skiplink__designer.md",
+     "citacao": "O *skip link* deve dirigir o usuário para cada um desses blocos de informação."
+    }
+   ],
+   "tambem": [],
+   "esperado": "accesskeys únicos; destinos existentes",
+   "ancora": {
+    "texto": "nav.br-skiplink (texto 'Ir para o conteúdo')",
+    "seletor": ".br-skiplink"
+   },
+   "medida": {
+    "S0": {
+     "accesskeys": [
+      "1",
+      "2"
+     ],
+     "ancoras": [
+      {
+       "id": "main-content",
+       "existe": true,
+       "tag": "MAIN",
+       "name": null
+      },
+      {
+       "id": "rodape",
+       "existe": true,
+       "tag": "FOOTER",
+       "name": null
+      }
+     ]
+    },
+    "S1": {
+     "accesskeys": [
+      "1",
+      "2"
+     ],
+     "ancoras": [
+      {
+       "id": "main-content",
+       "existe": true,
+       "tag": "MAIN",
+       "name": null
+      },
+      {
+       "id": "rodape",
+       "existe": true,
+       "tag": "FOOTER",
+       "name": null
+      }
+     ]
+    },
+    "S2": {
+     "accesskeys": [
+      "1",
+      "2"
+     ],
+     "ancoras": [
+      {
+       "id": "main-content",
+       "existe": true,
+       "tag": "MAIN",
+       "name": null
+      },
+      {
+       "id": "rodape",
+       "existe": true,
+       "tag": "FOOTER",
+       "name": null
+      }
+     ]
+    }
+   },
+   "medidaArquivo": "medidas/EC-092.json"
+  },
+  {
+   "id": "EC-093",
+   "instancia": "brd-trilha",
+   "chave": "atual-nao-link-links-em-lista",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "componentes/breadcrumb__acessibilidade.md",
+     "citacao": "A página atual ou último elemento do *breadcrumb*, não deve ser considerado um link"
+    },
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Na migalha de pão, todas as páginas do caminho, com exceção da qual está o usuário (posição atual), deverão estar implementadas como links e contidas dentro de uma lista."
+    }
+   ],
+   "tambem": [],
+   "esperado": "atual em span não focável; ancestrais em links dentro de ol/li",
+   "ancora": {
+    "texto": "nav[aria-label='Trilha de navegação']",
+    "seletor": "nav.br-breadcrumb"
+   },
+   "medida": {
+    "S0": {
+     "atualTag": "span",
+     "atualTabindex": null,
+     "paradasNaTrilha": [
+      "Início",
+      "Administração",
+      "Países Importadores"
+     ]
+    },
+    "S1": {
+     "atualTag": "span",
+     "atualTabindex": null,
+     "paradasNaTrilha": [
+      "Início",
+      "Administração",
+      "Países Importadores"
+     ]
+    },
+    "S2": {
+     "atualTag": "span",
+     "atualTabindex": null,
+     "paradasNaTrilha": [
+      "Início",
+      "Administração",
+      "Países Importadores"
+     ]
+    }
+   },
+   "medidaArquivo": "medidas/EC-093.json"
+  },
+  {
+   "id": "EC-094",
+   "instancia": "brd-trilha",
+   "chave": "home-tela-inicial",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/breadcrumb__designer.md",
+     "citacao": "O Botão terciário Home deve estar sempre presente no *breadcrumb* (exceto no tipo especial) e direcionado para a tela inicial do *website* ou sistema."
+    }
+   ],
+   "tambem": [],
+   "esperado": "botão Home presente para a tela inicial do sistema",
+   "ancora": {
+    "texto": "nav[aria-label='Trilha de navegação']",
+    "seletor": "nav.br-breadcrumb"
+   },
+   "medida": {
+    "S0": {
+     "home": "servicos-defesa.html",
+     "nome": "Início",
+     "tituloDestino": "Início — Defesa Agropecuária gov.br (GET servicos-defesa.html)"
+    },
+    "S1": {
+     "home": "servicos-defesa.html",
+     "nome": "Início",
+     "tituloDestino": "Início — Defesa Agropecuária gov.br (GET servicos-defesa.html)"
+    },
+    "S2": {
+     "home": "servicos-defesa.html",
+     "nome": "Início",
+     "tituloDestino": "Início — Defesa Agropecuária gov.br (GET servicos-defesa.html)"
+    }
+   },
+   "medidaArquivo": "medidas/EC-094.json"
+  },
+  {
+   "id": "EC-095",
+   "instancia": "brd-trilha",
+   "chave": "chevron-fora-do-tab",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/breadcrumb__acessibilidade.md",
+     "citacao": "A navegação por teclado **não** deve percorrer os ícones decorativos `chevron-right`;"
+    }
+   ],
+   "tambem": [],
+   "esperado": "chevrons aria-hidden e fora do Tab",
+   "ancora": {
+    "texto": "nav[aria-label='Trilha de navegação']",
+    "seletor": "nav.br-breadcrumb"
+   },
+   "medida": {
+    "S0": {
+     "sep": "true"
+    },
+    "S1": {
+     "sep": "true"
+    },
+    "S2": {
+     "sep": "true"
+    }
+   },
+   "medidaArquivo": "medidas/EC-095.json"
+  },
+  {
+   "id": "EC-096",
+   "instancia": "hdr-govbr",
+   "chave": "titulo-e-banner",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/header__designer.md",
+     "citacao": "No *Header* deve sempre existir um título que identifique o site, sistema ou aplicativo."
+    },
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "A primeira é a de conter as informações do topo da página e, para isso, deverá ser utilizado o role banner."
+    }
+   ],
+   "tambem": [],
+   "esperado": "header-title; papel banner",
+   "ancora": {
+    "texto": "header.br-header (título 'Cadastro de Países Importadores')",
+    "seletor": "header.br-header"
+   },
+   "medida": {
+    "S0": {
+     "titulo": "Cadastro de Países Importadores",
+     "papel": "banner",
+     "linhas": 1
+    },
+    "S1": {
+     "titulo": "Cadastro de Países Importadores",
+     "papel": "banner",
+     "linhas": 1
+    },
+    "S2": {
+     "titulo": "Cadastro de Países Importadores",
+     "papel": "banner",
+     "linhas": 1
+    }
+   },
+   "medidaArquivo": "medidas/EC-096.json"
+  },
+  {
+   "id": "EC-097",
+   "instancia": "ava-usuaria",
+   "chave": "avatar-circular",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/avatar__designer.md",
+     "citacao": "A representação do usuário deve estar contida em uma superfície circular."
+    }
+   ],
+   "tambem": [],
+   "esperado": "border-radius 50%",
+   "ancora": {
+    "texto": "avatar 'H' no cabeçalho",
+    "seletor": "header .br-avatar"
+   },
+   "medida": {
+    "S0": "50%",
+    "S1": "50%",
+    "S2": "50%"
+   },
+   "medidaArquivo": "medidas/EC-097.json"
+  },
+  {
+   "id": "EC-098",
+   "instancia": "ftr-govbr",
+   "chave": "rodape-logo-divider-contentinfo",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/footer__designer.md",
+     "citacao": "Os *Dividers* devem ser utilizados para separar o *Footer* do restante do conteudo de uma página e a área de \"Logo + Mapa do Site + Secundária\" da área de Informação Legal."
+    },
+    {
+     "arquivo": "componentes/footer__desenvolvedor.md",
+     "citacao": "| logo      | Container para o logo   |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "br-footer com .logo, divider entre logo e informação legal; papel contentinfo",
+   "ancora": {
+    "texto": "footer.br-footer",
+    "seletor": "footer.br-footer"
+   },
+   "medida": {
+    "S0": {
+     "classes": [
+      "br-footer",
+      "rodape-servico"
+     ],
+     "logo": true,
+     "divisor": true,
+     "papel": "contentinfo",
+     "bordaTopo": "1px"
+    },
+    "S1": {
+     "classes": [
+      "br-footer",
+      "rodape-servico"
+     ],
+     "logo": true,
+     "divisor": true,
+     "papel": "contentinfo",
+     "bordaTopo": "1px"
+    },
+    "S2": {
+     "classes": [
+      "br-footer",
+      "rodape-servico"
+     ],
+     "logo": true,
+     "divisor": true,
+     "papel": "contentinfo",
+     "bordaTopo": "1px"
+    }
+   },
+   "medidaArquivo": "medidas/EC-098.json"
+  },
+  {
+   "id": "EC-099",
+   "instancia": "div-secoes",
+   "chave": "divider-decorativo-visivel",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/divider__acessibilidade.md",
+     "citacao": "Por se tratar de um elemento decorativo, o *divider* deve ser **ignorado** pelos leitores de tela e o foco não deve passar por ele."
+    },
+    {
+     "arquivo": "componentes/divider__designer.md",
+     "citacao": "Os *dividers* devem ser visíveis em um *layout*"
+    }
+   ],
+   "tambem": [],
+   "esperado": "sem texto/nome, fora do Tab, borda visível",
+   "ancora": {
+    "texto": "divisor entre a seção 'Configuração do Serviço' e 'Países Cadastrados'",
+    "seletor": "main > .container-lg > .br-divider"
+   },
+   "medida": {
+    "S0": {
+     "texto": "",
+     "nome": "",
+     "tabindex": null,
+     "borda": "1px rgb(204, 204, 204)"
+    },
+    "S1": {
+     "texto": "",
+     "nome": "",
+     "tabindex": null,
+     "borda": "1px rgb(204, 204, 204)"
+    },
+    "S2": {
+     "texto": "",
+     "nome": "",
+     "tabindex": null,
+     "borda": "1px rgb(204, 204, 204)"
+    }
+   },
+   "medidaArquivo": "medidas/EC-099.json"
+  },
+  {
+   "id": "EC-100",
+   "instancia": "pagina",
+   "chave": "idioma-titulo",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Deve-se identificar o principal idioma utilizado nos documentos."
+    },
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "O título da página deve ser descritivo e informativo"
+    }
+   ],
+   "tambem": [],
+   "esperado": "lang pt-BR; title descritivo",
+   "ancora": {
+    "texto": "documento (html)",
+    "seletor": "html"
+   },
+   "medida": {
+    "S0": {
+     "lang": "pt-BR",
+     "titulo": "Cadastrar país importador — Defesa Agropecuária gov.br"
+    },
+    "S1": {
+     "lang": "pt-BR",
+     "titulo": "Cadastrar país importador — Defesa Agropecuária gov.br"
+    },
+    "S2": {
+     "lang": "pt-BR",
+     "titulo": "Cadastrar país importador — Defesa Agropecuária gov.br"
+    }
+   },
+   "medidaArquivo": "medidas/EC-100.json"
+  },
+  {
+   "id": "EC-101",
+   "instancia": "pagina",
+   "chave": "cabecalhos-hierarquicos",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Os níveis de cabeçalho (elementos HTML H1 a H6) devem ser utilizados de forma hierárquica"
+    }
+   ],
+   "tambem": [],
+   "esperado": "um h1, depois h2",
+   "ancora": {
+    "texto": "documento (html)",
+    "seletor": "html"
+   },
+   "medida": {
+    "S0": [
+     "H1",
+     "H2",
+     "H2",
+     "H2"
+    ],
+    "S1": [
+     "H1",
+     "H2",
+     "H2",
+     "H2"
+    ],
+    "S2": [
+     "H1",
+     "H2",
+     "H2",
+     "H2"
+    ]
+   },
+   "medidaArquivo": "medidas/EC-101.json"
+  },
+  {
+   "id": "EC-102",
+   "instancia": "pagina",
+   "chave": "noscript-sem-refresh-sem-blank",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "e o elemento NOSCRIPT deve ser utilizado para abranger os casos em que scripts não são suportados."
+    },
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Não devem ser utilizadas marcações para redirecionar a uma nova página"
+    },
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "A decisão de utilizar-se de novas instâncias – por exemplo abas ou janelas - para acesso a páginas e serviços ou qualquer informação deve ser de escolha do usuário."
+    }
+   ],
+   "tambem": [],
+   "esperado": "noscript presente; sem meta refresh; sem target=_blank",
+   "ancora": {
+    "texto": "documento (html)",
+    "seletor": "html"
+   },
+   "medida": {
+    "S0": {
+     "noscript": 1,
+     "metaRefresh": null,
+     "targetBlank": 0
+    },
+    "S1": {
+     "noscript": 1,
+     "metaRefresh": null,
+     "targetBlank": 0
+    },
+    "S2": {
+     "noscript": 1,
+     "metaRefresh": null,
+     "targetBlank": 0
+    }
+   },
+   "medidaArquivo": "medidas/EC-102.json"
+  },
+  {
+   "id": "EC-103",
+   "instancia": "pagina",
+   "chave": "alt-imagens",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Deve ser fornecida uma descrição para as imagens da página, utilizando-se, para tanto o atributo alt."
+    }
+   ],
+   "tambem": [],
+   "esperado": "alt em todas as img",
+   "ancora": {
+    "texto": "documento (html)",
+    "seletor": "html"
+   },
+   "medida": {
+    "S0": [
+     {
+      "src": "/cadastro-pais/marca-govbr.svg",
+      "alt": "gov.br"
+     },
+     {
+      "src": "/cadastro-pais/marca-govbr-negativa.svg",
+      "alt": "gov.br"
+     }
+    ],
+    "S1": [
+     {
+      "src": "/cadastro-pais/marca-govbr.svg",
+      "alt": "gov.br"
+     },
+     {
+      "src": "/cadastro-pais/marca-govbr-negativa.svg",
+      "alt": "gov.br"
+     }
+    ],
+    "S2": [
+     {
+      "src": "/cadastro-pais/marca-govbr.svg",
+      "alt": "gov.br"
+     },
+     {
+      "src": "/cadastro-pais/marca-govbr-negativa.svg",
+      "alt": "gov.br"
+     }
+    ]
+   },
+   "medidaArquivo": "medidas/EC-103.json"
+  },
+  {
+   "id": "EC-104",
+   "instancia": "pagina",
+   "chave": "links-descricao",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Da mesma forma, links que remetem ao mesmo destino devem ter a mesma descrição."
+    },
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "É preciso tomar cuidado para não utilizar a mesma descrição para dois ou mais links que apontem para destinos diferentes."
+    }
+   ],
+   "tambem": [],
+   "esperado": "descrição ↔ destino coerentes",
+   "ancora": {
+    "texto": "documento (html)",
+    "seletor": "html"
+   },
+   "medida": {
+    "S0": [
+     {
+      "texto": "Ir para o conteúdo (1/2)",
+      "href": "#main-content",
+      "title": null
+     },
+     {
+      "texto": "Ir para o rodapé (2/2)",
+      "href": "#rodape",
+      "title": null
+     },
+     {
+      "texto": "HConta de Helena",
+      "href": "minha-conta.html",
+      "title": null
+     },
+     {
+      "texto": "Início",
+      "href": "servicos-defesa.html",
+      "title": null
+     },
+     {
+      "texto": "Administração",
+      "href": "administracao.html",
+      "title": null
+     },
+     {
+      "texto": "Países Importadores",
+      "href": "paises-importadores.html",
+      "title": null
+     }
+    ],
+    "S1": [
+     {
+      "texto": "Ir para o conteúdo (1/2)",
+      "href": "#main-content",
+      "title": null
+     },
+     {
+      "texto": "Ir para o rodapé (2/2)",
+      "href": "#rodape",
+      "title": null
+     },
+     {
+      "texto": "HConta de Helena",
+      "href": "minha-conta.html",
+      "title": null
+     },
+     {
+      "texto": "Início",
+      "href": "servicos-defesa.html",
+      "title": null
+     },
+     {
+      "texto": "Administração",
+      "href": "administracao.html",
+      "title": null
+     },
+     {
+      "texto": "Países Importadores",
+      "href": "paises-importadores.html",
+      "title": null
+     }
+    ],
+    "S2": [
+     {
+      "texto": "Ir para o conteúdo (1/2)",
+      "href": "#main-content",
+      "title": null
+     },
+     {
+      "texto": "Ir para o rodapé (2/2)",
+      "href": "#rodape",
+      "title": null
+     },
+     {
+      "texto": "HConta de Helena",
+      "href": "minha-conta.html",
+      "title": null
+     },
+     {
+      "texto": "Início",
+      "href": "servicos-defesa.html",
+      "title": null
+     },
+     {
+      "texto": "Administração",
+      "href": "administracao.html",
+      "title": null
+     },
+     {
+      "texto": "Países Importadores",
+      "href": "paises-importadores.html",
+      "title": null
+     }
+    ]
+   },
+   "medidaArquivo": "medidas/EC-104.json"
+  },
+  {
+   "id": "EC-105",
+   "instancia": "pagina",
+   "chave": "contraste-geral",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/cores.md",
+     "citacao": "O *nível AA* indica que é necessária uma taxa de contraste de pelo menos *4,5:1* para que o texto seja considerado normal e tenha boa legibilidade."
+    }
+   ],
+   "tambem": [],
+   "esperado": "≥ 4,5:1 (3:1 texto grande) em todo texto visível fora do select",
+   "ancora": {
+    "texto": "documento (html)",
+    "seletor": "html"
+   },
+   "medida": {
+    "S0": {
+     "textos": 36,
+     "minimo": 7.33,
+     "abaixo": []
+    },
+    "S1": {
+     "textos": 40,
+     "minimo": 4.6,
+     "abaixo": []
+    },
+    "S2": {
+     "textos": 36,
+     "minimo": 7.33,
+     "abaixo": []
+    }
+   },
+   "medidaArquivo": "medidas/EC-105.json"
+  },
+  {
+   "id": "EC-106",
+   "instancia": "pagina",
+   "chave": "paleta-geral",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/cores.md",
+     "citacao": "Interfaces digitais do governo devem utilizar sempre as cores pré-definidas."
+    }
+   ],
+   "tambem": [],
+   "esperado": "todas as cores computadas opacas na paleta (fora do select, avaliado à parte)",
+   "ancora": {
+    "texto": "documento (html)",
+    "seletor": "html"
+   },
+   "medida": {
+    "S0": {
+     "coresMedidas": 81,
+     "fora": []
+    },
+    "S1": {
+     "coresMedidas": 95,
+     "fora": []
+    },
+    "S2": {
+     "coresMedidas": 99,
+     "fora": []
+    }
+   },
+   "medidaArquivo": "medidas/EC-106.json"
+  },
+  {
+   "id": "EC-107",
+   "instancia": "pagina",
+   "chave": "escala-tipografica",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/tipografia.md",
+     "citacao": "Dessa forma, nenhuma fonte deve estar fora da escala definida no DS: *Minor Third*."
+    }
+   ],
+   "tambem": [],
+   "esperado": "tamanhos ∈ {8,1; 9,72; 11,67; 14; 16,8; 20,16; 24,19; 29,03; 34,84; 41,8; 50,16}",
+   "ancora": {
+    "texto": "documento (html)",
+    "seletor": "html"
+   },
+   "medida": {
+    "S0": [
+     14,
+     24.19,
+     16.8,
+     11.66,
+     41.8,
+     34.83
+    ],
+    "S1": [
+     14,
+     24.19,
+     16.8,
+     11.66,
+     41.8,
+     34.83
+    ],
+    "S2": [
+     14,
+     24.19,
+     16.8,
+     11.66,
+     41.8,
+     34.83
+    ]
+   },
+   "medidaArquivo": "medidas/EC-107.json"
+  },
+  {
+   "id": "EC-108",
+   "instancia": "pagina",
+   "chave": "rawline-geral",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/tipografia.md",
+     "citacao": "Interfaces digitais do governo devem utilizar a família de fonte definida sempre que possível."
+    }
+   ],
+   "tambem": [],
+   "esperado": "Rawline em todo texto fora do inp-codigo (avaliado à parte)",
+   "ancora": {
+    "texto": "documento (html)",
+    "seletor": "html"
+   },
+   "medida": {
+    "S0": [],
+    "S1": [],
+    "S2": []
+   },
+   "medidaArquivo": "medidas/EC-108.json"
+  },
+  {
+   "id": "EC-109",
+   "instancia": "pagina",
+   "chave": "foco-visivel-geral",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "A área que recebe o foco pelo teclado deve ser claramente marcada"
+    }
+   ],
+   "tambem": [],
+   "esperado": "todas as paradas de Tab com mudança visual (exceto skip link, medido à parte com espera de transição)",
+   "ancora": {
+    "texto": "documento (html)",
+    "seletor": "html"
+   },
+   "medida": {
+    "S0": {
+     "paradas": 15,
+     "semMudanca": [],
+     "nota": "input do switch (opacidade 0) avaliado pela sonda switch-teclado, que mede o anel no rótulo"
+    },
+    "S1": {
+     "paradas": 15,
+     "semMudanca": [],
+     "nota": "input do switch (opacidade 0) avaliado pela sonda switch-teclado, que mede o anel no rótulo"
+    },
+    "S2": {
+     "paradas": 15,
+     "semMudanca": [],
+     "nota": "input do switch (opacidade 0) avaliado pela sonda switch-teclado, que mede o anel no rótulo"
+    }
+   },
+   "medidaArquivo": "medidas/EC-109.json"
+  },
+  {
+   "id": "EC-110",
+   "instancia": "pagina",
+   "chave": "sem-tabindex-positivo",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "**OBS:** O atributo tabindex (ver recomendação 4) somente deverá ser utilizado quando existir real necessidade."
+    }
+   ],
+   "tambem": [],
+   "esperado": "nenhum tabindex > 0",
+   "ancora": {
+    "texto": "documento (html)",
+    "seletor": "html"
+   },
+   "medida": {
+    "S0": [
+     [
+      "h1.titulo-pagina",
+      "-1"
+     ],
+     [
+      "div#list-2659.br-list",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ]
+    ],
+    "S1": [
+     [
+      "h1.titulo-pagina",
+      "-1"
+     ],
+     [
+      "div#list-1784.br-list",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ]
+    ],
+    "S2": [
+     [
+      "h1.titulo-pagina",
+      "-1"
+     ],
+     [
+      "div#list-1509.br-list",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ],
+     [
+      "div.br-item",
+      "-1"
+     ]
+    ]
+   },
+   "medidaArquivo": "medidas/EC-110.json"
+  },
+  {
+   "id": "EC-111",
+   "instancia": "pagina",
+   "chave": "redimensionar-200",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "A página deve continuar legível e funcional mesmo quando redimensionada para até 200%."
+    },
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Assim, é preciso garantir que, quando a página for redimensionada, não ocorram sobreposições nem o aparecimento de uma barra horizontal."
+    }
+   ],
+   "tambem": [],
+   "esperado": "sem rolagem horizontal a 640 × 450",
+   "ancora": {
+    "texto": "documento (html)",
+    "seletor": "html"
+   },
+   "medida": {
+    "S0": {
+     "scrollWidth": 640,
+     "clientWidth": 640,
+     "alemDaLargura": []
+    },
+    "S1": {
+     "scrollWidth": 640,
+     "clientWidth": 640,
+     "alemDaLargura": []
+    },
+    "S2": {
+     "scrollWidth": 640,
+     "clientWidth": 640,
+     "alemDaLargura": []
+    }
+   },
+   "medidaArquivo": "medidas/EC-111.json"
+  },
+  {
+   "id": "EC-112",
+   "instancia": "pagina",
+   "chave": "html-boas-praticas",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "guias/boas-praticas-de-html.md",
+     "citacao": "NÃO fechar tags de **fecho automático**"
+    },
+    {
+     "arquivo": "guias/boas-praticas-de-html.md",
+     "citacao": "NÃO incluir valor nos **atributos boleanos**"
+    },
+    {
+     "arquivo": "guias/boas-praticas-de-html.md",
+     "citacao": "**NÃO indentar** as tags `head` e `body` em relação à tag `html`"
+    }
+   ],
+   "tambem": [],
+   "esperado": "sem '/>', sem valor em booleanos, head/body na coluna 0",
+   "ancora": {
+    "texto": "documento (html)",
+    "seletor": "html"
+   },
+   "medida": {
+    "S0": {
+     "url": "http://127.0.0.1:3219/cadastro-pais.html",
+     "bytes": 11654,
+     "vaziosFechadosComBarra": [],
+     "booleanosComValor": [],
+     "indentacaoHeadBody": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "metaRefresh": false,
+     "noscript": 1
+    }
+   },
+   "medidaArquivo": "medidas/EC-112.json"
+  },
+  {
+   "id": "EC-113",
+   "instancia": "pagina",
+   "chave": "titulo-formulario-maior",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "padroes/design/formulario.md",
+     "citacao": "Os títulos e subtítulos do formulário são textos que descrevem o objetivo do formulário e devem ter o maior tamanho de texto entre todos os elementos do formulário."
+    },
+    {
+     "arquivo": "padroes/design/formulario.md",
+     "citacao": "Seu tamanho deve ter menos ênfase do que o título do formulário"
+    }
+   ],
+   "tambem": [],
+   "esperado": "h2 do formulário maior que legend e demais textos do form",
+   "ancora": {
+    "texto": "documento (html)",
+    "seletor": "html"
+   },
+   "medida": {
+    "S0": {
+     "tituloForm": 34.83,
+     "maiorOutro": 16.8,
+     "legend": 16.8
+    },
+    "S1": {
+     "tituloForm": 34.83,
+     "maiorOutro": 16.8,
+     "legend": 16.8
+    },
+    "S2": {
+     "tituloForm": 34.83,
+     "maiorOutro": 16.8,
+     "legend": 16.8
+    }
+   },
+   "medidaArquivo": "medidas/EC-113.json"
+  }
+ ]
+}

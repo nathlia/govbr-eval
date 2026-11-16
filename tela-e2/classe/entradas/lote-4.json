@@ -1,0 +1,1246 @@
+[
+ {
+  "celula": "msg-orientacao::a2-05db50db6619",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-05db50db6619",
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Tipos de Ajuda › 2. Contextual › Como Usar",
+  "texto": "Apresente um texto curto, direto e contextual a respeito da ajuda solicitada;",
+  "contexto": "- 3. Escrita: Apresente um texto curto, direto e contextual a respeito da ajuda solicitada;",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "ajuda-fora-do-contexto",
+    "descricao": "O texto da mensagem de orientação passa a tratar de outro serviço (como emitir a segunda via de um boleto de taxa), sem falar do cadastro de país importador.",
+    "clausula": "Apresente um texto curto, direto e contextual a respeito da ajuda solicitada;"
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-460f5696acde",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-460f5696acde",
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Iconografia em Ajuda",
+  "texto": "É importante seguir esta referência dentro do contexto do Design System, desta forma pode-se deixar bem claro aos usuários o acesso à ajuda apenas com o uso de ícone, sem necessidade de textos explicativos adicionais.",
+  "contexto": "Dentro do imaginário coletivo dos usuários de sistemas, aplicativos, e sítios web, já existe uma forte referência iconográfica que representa um contexto de ajuda, a representação iconográfica do símbolo de interrogação, por exemplo: question ou question-circle. É importante seguir esta referência dentro do contexto do Design System, desta forma pode-se deixar bem claro aos usuários o acesso à ajuda apenas com o uso de ícone, sem necessidade de textos explicativos adicionais. Evite utilizar outras simbologias que trazem dúvidas ao usuário com relação a informação semântica.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "ajuda-com-icone-estranho",
+    "descricao": "O botão de ajuda ao lado do título usa o ícone de lâmpada (lightbulb) em vez de interrogação; o nome acessível continua 'Ajuda sobre o cadastro'.",
+    "clausula": "É importante seguir esta referência dentro do contexto do Design System, desta forma pode-se deixar bem claro aos usuários o acesso à ajuda apenas com o uso de ícone"
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-66cc8c46f14a",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-66cc8c46f14a",
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Ajuda › Tipos de Ajuda › 2. Contextual › Como Usar",
+  "texto": "Posicione o ícone padrão de ajuda próximo ao elemento referência da ajuda.",
+  "contexto": "- 2. Posicionamento: Posicione o ícone padrão de ajuda próximo ao elemento referência da ajuda.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "ajuda-longe-da-referencia",
+    "descricao": "O botão de ajuda sai da faixa do título e passa para o fim da seção da lista de países, abaixo da lista, longe do título do cadastro.",
+    "clausula": "Posicione o ícone padrão de ajuda próximo ao elemento referência da ajuda."
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-c7d20a2735ef",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-c7d20a2735ef",
+  "arquivo": "padroes/design/ajuda-comunicacao.md",
+  "secao": "Ajuda e Comunicação › Melhores Práticas › Acesso Imediato",
+  "texto": "Após acionar o botão de ajuda, é importante que o usuário seja conduzido imediatamente ao conteúdo de ajuda.",
+  "contexto": "Após acionar o botão de ajuda, é importante que o usuário seja conduzido imediatamente ao conteúdo de ajuda. Evite exibir um conteúdo intermediário, como menus de opções que trazem tópicos não relacionados à ajuda.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "ajuda-com-atraso",
+    "descricao": "Ao acionar o botão de ajuda, a mensagem de orientação só reaparece 4 segundos depois, sem nenhum retorno nesse intervalo.",
+    "clausula": "Após acionar o botão de ajuda, é importante que o usuário seja conduzido imediatamente ao conteúdo de ajuda."
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-0cb2e580195d",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-0cb2e580195d",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Layout e Estrutura › 4. Outras Formas de Agrupamento › Por Espaçamento › Separando entradas, ações e grupos",
+  "texto": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela e em todo o produto.",
+  "contexto": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela e em todo o produto. (Veja mais no fundamento Espaçamento.)",
+  "antecedente": "um espaçamento menor entre os campos de entrada de dados, texto ou opções.",
+  "colocacao": [
+   {
+    "variante": "rotulo-campo-colado",
+    "descricao": "A distância entre o rótulo e o campo deste campo fica 2px, diferente dos demais campos.",
+    "clausula": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela"
+   },
+   {
+    "variante": "espaco-entre-campos-desigual",
+    "descricao": "A margem abaixo deste campo fica 64px, enquanto entre os demais campos segue o espaçamento padrão.",
+    "clausula": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-0cb2e580195d",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-0cb2e580195d",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Layout e Estrutura › 4. Outras Formas de Agrupamento › Por Espaçamento › Separando entradas, ações e grupos",
+  "texto": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela e em todo o produto.",
+  "contexto": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela e em todo o produto. (Veja mais no fundamento Espaçamento.)",
+  "antecedente": "um espaçamento menor entre os campos de entrada de dados, texto ou opções.",
+  "colocacao": [
+   {
+    "variante": "rotulo-campo-colado",
+    "descricao": "A distância entre o rótulo e o campo deste campo fica 2px, diferente dos demais campos.",
+    "clausula": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela"
+   },
+   {
+    "variante": "espaco-entre-campos-desigual",
+    "descricao": "A margem abaixo deste campo fica 64px, enquanto entre os demais campos segue o espaçamento padrão.",
+    "clausula": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-0cb2e580195d",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-0cb2e580195d",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Layout e Estrutura › 4. Outras Formas de Agrupamento › Por Espaçamento › Separando entradas, ações e grupos",
+  "texto": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela e em todo o produto.",
+  "contexto": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela e em todo o produto. (Veja mais no fundamento Espaçamento.)",
+  "antecedente": "um espaçamento menor entre os campos de entrada de dados, texto ou opções.",
+  "colocacao": [
+   {
+    "variante": "rotulo-campo-colado",
+    "descricao": "A distância entre o rótulo e o campo deste campo fica 2px, diferente dos demais campos.",
+    "clausula": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela"
+   },
+   {
+    "variante": "espaco-entre-campos-desigual",
+    "descricao": "A margem abaixo deste campo fica 64px, enquanto entre os demais campos segue o espaçamento padrão.",
+    "clausula": "Esses espaçamentos devem ser constantes para uma mesma função, em toda a tela"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-20a2754d88ff",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-20a2754d88ff",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Orientações de Preenchimento › 1. Placeholder",
+  "texto": "Atenção: não utilize placeholders no lugar de rótulos.",
+  "contexto": null,
+  "antecedente": "Exemplos de Placeholders.",
+  "colocacao": [
+   {
+    "variante": "placeholder-no-lugar-do-rotulo",
+    "descricao": "O label visível do campo some; o texto do rótulo fica só como placeholder (o nome acessível vem de aria-label).",
+    "clausula": "não utilize placeholders no lugar de rótulos"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-20a2754d88ff",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-20a2754d88ff",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Orientações de Preenchimento › 1. Placeholder",
+  "texto": "Atenção: não utilize placeholders no lugar de rótulos.",
+  "contexto": null,
+  "antecedente": "Exemplos de Placeholders.",
+  "colocacao": [
+   {
+    "variante": "placeholder-no-lugar-do-rotulo",
+    "descricao": "O label visível do campo some; o texto do rótulo fica só como placeholder (o nome acessível vem de aria-label).",
+    "clausula": "não utilize placeholders no lugar de rótulos"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-20a2754d88ff",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-20a2754d88ff",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Orientações de Preenchimento › 1. Placeholder",
+  "texto": "Atenção: não utilize placeholders no lugar de rótulos.",
+  "contexto": null,
+  "antecedente": "Exemplos de Placeholders.",
+  "colocacao": [
+   {
+    "variante": "placeholder-no-lugar-do-rotulo",
+    "descricao": "O label visível do campo some; o texto do rótulo fica só como placeholder (o nome acessível vem de aria-label).",
+    "clausula": "não utilize placeholders no lugar de rótulos"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-24bb665c67e9",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-24bb665c67e9",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Orientações de Preenchimento › 2. Máscara",
+  "texto": "Não divida o input em campos separados, isso aumenta o custo de interação do usuário, além de causar problemas para usuários internacionais, visto que utilizam padrões diferenciados.",
+  "contexto": "Não divida o input em campos separados, isso aumenta o custo de interação do usuário, além de causar problemas para usuários internacionais, visto que utilizam padrões diferenciados. Por exemplo, o formato do telefone nos EUA é bem diferente do brasileiro: +1 (xxx) xxx-xx-xx.",
+  "antecedente": "Fique atento para as seguintes dicas:",
+  "colocacao": [
+   {
+    "variante": "codigo-em-tres-caixas",
+    "descricao": "O campo do código vira três inputs de 1 caractere lado a lado, cada um com aria-label próprio ('letra 1', 'letra 2', 'letra 3').",
+    "clausula": "Não divida o input em campos separados"
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-2ac598dc24db",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-2ac598dc24db",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 3. Botões",
+  "texto": "Quando utilizar mais de um botão, o elemento com ênfase primária deve estar necessariamente posicionado à direita dos botões de ênfase secundária e estes sempre mais à direita dos botões de ênfase terciária.",
+  "contexto": "Quando utilizar mais de um botão, o elemento com ênfase primária deve estar necessariamente posicionado à direita dos botões de ênfase secundária e estes sempre mais à direita dos botões de ênfase terciária. Estes podem alinhados à esquerda do formulário.",
+  "antecedente": "Use ênfase terciária para ações menos importantes, como \"Exibir Informações Adicionais\" ou \"Documentos Acessórios\".",
+  "colocacao": [
+   {
+    "variante": "secundario-a-direita-do-primario",
+    "descricao": "Limpar campos passa a ser exibido à direita de Salvar país (order no próprio botão), sem mudar a ordem do DOM.",
+    "clausula": "o elemento com ênfase primária deve estar necessariamente posicionado à direita dos botões de ênfase secundária"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-2ceedc253459",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-2ceedc253459",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Orientações de Preenchimento › 3. Texto Auxiliar",
+  "texto": "Atenção: textos auxiliares devem ser compactos e objetivos.",
+  "contexto": null,
+  "antecedente": "Exemplo de texto auxiliar.",
+  "colocacao": [
+   {
+    "variante": "apoio-prolixo",
+    "descricao": "O texto de apoio sobre o formato vira um parágrafo de ~110 palavras com histórico da norma de códigos de país.",
+    "clausula": "textos auxiliares devem ser compactos e objetivos"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-2e4efd30789f",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-2e4efd30789f",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Layout e Estrutura › 2. Fieldset e Legend",
+  "texto": "Seu tamanho deve ter menos ênfase do que o título do formulário e deve manter a consistência sem variação no tamanho do corpo de texto em todo o formulário, a menos que tenha conceitos de hierarquia envolvidos (veja \"4- Indentação e Subagrupamentos\").",
+  "contexto": "Legends funcionam como títulos de agrupamentos e antecipam o tipo de informação que o usuário poderá encontrar naquele grupo de campos de entrada. Seu tamanho deve ter menos ênfase do que o título do formulário e deve manter a consistência sem variação no tamanho do corpo de texto em todo o formulário, a menos que tenha conceitos de hierarquia envolvidos (veja \"4- Indentação e Subagrupamentos\").",
+  "antecedente": "Fieldsets servem para agrupar elementos de formulários, muito parecido com o Label, porém, ele necessita de um elemento textual (não obrigatório) para representá-lo como rótulo: o legend.",
+  "colocacao": [
+   {
+    "variante": "legend-maior-que-titulo",
+    "descricao": "A legend 'Situação do cadastro' fica com font-size de 40px, maior que o título do formulário.",
+    "clausula": "Seu tamanho deve ter menos ênfase do que o título do formulário"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-3778203c3941",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-3778203c3941",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos",
+  "texto": "Utilize rótulos concisos e que auxiliem os usuários a entender quais informações estão sendo solicitadas.",
+  "contexto": null,
+  "antecedente": "Para boas práticas na elaboração dos rótulos:",
+  "colocacao": [
+   {
+    "variante": "rotulo-prolixo",
+    "descricao": "O rótulo do campo (a legend, no grupo de radios) vira uma frase de ~25 palavras explicando por extenso o que se pede e por quê.",
+    "clausula": "Utilize rótulos concisos"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-3778203c3941",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-3778203c3941",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos",
+  "texto": "Utilize rótulos concisos e que auxiliem os usuários a entender quais informações estão sendo solicitadas.",
+  "contexto": null,
+  "antecedente": "Para boas práticas na elaboração dos rótulos:",
+  "colocacao": [
+   {
+    "variante": "rotulo-prolixo",
+    "descricao": "O rótulo do campo (a legend, no grupo de radios) vira uma frase de ~25 palavras explicando por extenso o que se pede e por quê.",
+    "clausula": "Utilize rótulos concisos"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-3778203c3941",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-3778203c3941",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos",
+  "texto": "Utilize rótulos concisos e que auxiliem os usuários a entender quais informações estão sendo solicitadas.",
+  "contexto": null,
+  "antecedente": "Para boas práticas na elaboração dos rótulos:",
+  "colocacao": [
+   {
+    "variante": "rotulo-prolixo",
+    "descricao": "O rótulo do campo (a legend, no grupo de radios) vira uma frase de ~25 palavras explicando por extenso o que se pede e por quê.",
+    "clausula": "Utilize rótulos concisos"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-3778203c3941",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-3778203c3941",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos",
+  "texto": "Utilize rótulos concisos e que auxiliem os usuários a entender quais informações estão sendo solicitadas.",
+  "contexto": null,
+  "antecedente": "Para boas práticas na elaboração dos rótulos:",
+  "colocacao": [
+   {
+    "variante": "rotulo-prolixo",
+    "descricao": "O rótulo do campo (a legend, no grupo de radios) vira uma frase de ~25 palavras explicando por extenso o que se pede e por quê.",
+    "clausula": "Utilize rótulos concisos"
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-3d935c4b833a",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-3d935c4b833a",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 1. Título e Subtítulo",
+  "texto": "Os títulos e subtítulos do formulário são textos que descrevem o objetivo do formulário e devem ter o maior tamanho de texto entre todos os elementos do formulário.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "texto-maior-que-titulo-form",
+    "descricao": "O rótulo do campo (no botão, o texto 'Limpar campos') recebe font-size de 40px, maior que o do título do formulário.",
+    "clausula": "devem ter o maior tamanho de texto entre todos os elementos do formulário"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-3d935c4b833a",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-3d935c4b833a",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 1. Título e Subtítulo",
+  "texto": "Os títulos e subtítulos do formulário são textos que descrevem o objetivo do formulário e devem ter o maior tamanho de texto entre todos os elementos do formulário.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "texto-maior-que-titulo-form",
+    "descricao": "O rótulo do campo (no botão, o texto 'Limpar campos') recebe font-size de 40px, maior que o do título do formulário.",
+    "clausula": "devem ter o maior tamanho de texto entre todos os elementos do formulário"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-3d935c4b833a",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-3d935c4b833a",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 1. Título e Subtítulo",
+  "texto": "Os títulos e subtítulos do formulário são textos que descrevem o objetivo do formulário e devem ter o maior tamanho de texto entre todos os elementos do formulário.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "texto-maior-que-titulo-form",
+    "descricao": "O rótulo do campo (no botão, o texto 'Limpar campos') recebe font-size de 40px, maior que o do título do formulário.",
+    "clausula": "devem ter o maior tamanho de texto entre todos os elementos do formulário"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-3d935c4b833a",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-3d935c4b833a",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 1. Título e Subtítulo",
+  "texto": "Os títulos e subtítulos do formulário são textos que descrevem o objetivo do formulário e devem ter o maior tamanho de texto entre todos os elementos do formulário.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "texto-maior-que-titulo-form",
+    "descricao": "O rótulo do campo (no botão, o texto 'Limpar campos') recebe font-size de 40px, maior que o do título do formulário.",
+    "clausula": "devem ter o maior tamanho de texto entre todos os elementos do formulário"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-624afa51bbaf",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-624afa51bbaf",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos › Campos obrigatórios/opcionais",
+  "texto": "Atenção: não utilize as regras acima concomitantemente; isto é, evite sinalizar ao mesmo tempo os campos obrigatórios e opcionais.",
+  "contexto": null,
+  "antecedente": "Evite o excesso de campos de entrada opcionais/obrigatórios. Se necessário, considere dedicar um grupo inteiro de campos opcionais/obrigatórios a fim de evitar repetições desnecessárias.",
+  "colocacao": [
+   {
+    "variante": "marca-obrigatorio-tambem",
+    "descricao": "O rótulo do campo obrigatório (a legend, no grupo de radios) ganha '(obrigatório)', enquanto 'Código do país' segue com '(opcional)'.",
+    "clausula": "evite sinalizar ao mesmo tempo os campos obrigatórios e opcionais"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-624afa51bbaf",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-624afa51bbaf",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos › Campos obrigatórios/opcionais",
+  "texto": "Atenção: não utilize as regras acima concomitantemente; isto é, evite sinalizar ao mesmo tempo os campos obrigatórios e opcionais.",
+  "contexto": null,
+  "antecedente": "Evite o excesso de campos de entrada opcionais/obrigatórios. Se necessário, considere dedicar um grupo inteiro de campos opcionais/obrigatórios a fim de evitar repetições desnecessárias.",
+  "colocacao": [
+   {
+    "variante": "marca-obrigatorio-tambem",
+    "descricao": "O rótulo do campo obrigatório (a legend, no grupo de radios) ganha '(obrigatório)', enquanto 'Código do país' segue com '(opcional)'.",
+    "clausula": "evite sinalizar ao mesmo tempo os campos obrigatórios e opcionais"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-624afa51bbaf",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-624afa51bbaf",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos › Campos obrigatórios/opcionais",
+  "texto": "Atenção: não utilize as regras acima concomitantemente; isto é, evite sinalizar ao mesmo tempo os campos obrigatórios e opcionais.",
+  "contexto": null,
+  "antecedente": "Evite o excesso de campos de entrada opcionais/obrigatórios. Se necessário, considere dedicar um grupo inteiro de campos opcionais/obrigatórios a fim de evitar repetições desnecessárias.",
+  "colocacao": [
+   {
+    "variante": "marca-obrigatorio-tambem",
+    "descricao": "O rótulo do campo obrigatório (a legend, no grupo de radios) ganha '(obrigatório)', enquanto 'Código do país' segue com '(opcional)'.",
+    "clausula": "evite sinalizar ao mesmo tempo os campos obrigatórios e opcionais"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-b174afd9a294",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-b174afd9a294",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos › Campos obrigatórios/opcionais",
+  "texto": "Caso seja necessário oferecer campos opcionais, sinalize-os com um texto entre parênteses ao lado direito do texto de cada rótulo.",
+  "contexto": null,
+  "antecedente": "Prefira criar formulários cujos os campos de entrada sejam obrigatórios. Utilize o subtítulo do formulário para deixar esta decisão clara para o usuário.",
+  "colocacao": [
+   {
+    "variante": "opcional-antes-sem-parenteses",
+    "descricao": "O rótulo vira 'Opcional – Código do país': a marca fica à esquerda e sem parênteses.",
+    "clausula": "sinalize-os com um texto entre parênteses ao lado direito do texto de cada rótulo"
+   },
+   {
+    "variante": "opcional-sem-marca",
+    "descricao": "O rótulo fica só 'Código do país', sem nenhuma marca de opcional; o campo segue opcional.",
+    "clausula": "sinalize-os com um texto entre parênteses"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-bfb3c1909154",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-bfb3c1909154",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados",
+  "texto": "A largura dos campos de entrada não deve ser alterada conforme o tamanho do texto inserido.",
+  "contexto": "A largura dos campos de entrada não deve ser alterada conforme o tamanho do texto inserido. Caso o texto de entrada seja muito longo, considere técnicas de truncamento.",
+  "antecedente": "Siga as recomendações:",
+  "colocacao": [
+   {
+    "variante": "largura-acompanha-texto",
+    "descricao": "O campo passa a ter largura ajustada ao conteúdo (field-sizing: content): cresce a cada caractere digitado ou com a opção escolhida.",
+    "clausula": "A largura dos campos de entrada não deve ser alterada conforme o tamanho do texto inserido."
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-bfb3c1909154",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-bfb3c1909154",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados",
+  "texto": "A largura dos campos de entrada não deve ser alterada conforme o tamanho do texto inserido.",
+  "contexto": "A largura dos campos de entrada não deve ser alterada conforme o tamanho do texto inserido. Caso o texto de entrada seja muito longo, considere técnicas de truncamento.",
+  "antecedente": "Siga as recomendações:",
+  "colocacao": [
+   {
+    "variante": "largura-acompanha-texto",
+    "descricao": "O campo passa a ter largura ajustada ao conteúdo (field-sizing: content): cresce a cada caractere digitado ou com a opção escolhida.",
+    "clausula": "A largura dos campos de entrada não deve ser alterada conforme o tamanho do texto inserido."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-bfb3c1909154",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-bfb3c1909154",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados",
+  "texto": "A largura dos campos de entrada não deve ser alterada conforme o tamanho do texto inserido.",
+  "contexto": "A largura dos campos de entrada não deve ser alterada conforme o tamanho do texto inserido. Caso o texto de entrada seja muito longo, considere técnicas de truncamento.",
+  "antecedente": "Siga as recomendações:",
+  "colocacao": [
+   {
+    "variante": "largura-acompanha-texto",
+    "descricao": "O campo passa a ter largura ajustada ao conteúdo (field-sizing: content): cresce a cada caractere digitado ou com a opção escolhida.",
+    "clausula": "A largura dos campos de entrada não deve ser alterada conforme o tamanho do texto inserido."
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-cad7cafa42d7",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-cad7cafa42d7",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos",
+  "texto": "Mantenha os rótulos sempre visíveis e precisos.",
+  "contexto": "Mantenha os rótulos sempre visíveis e precisos. Nunca os substitua por placeholders ou elementos que se desloquem pela página.",
+  "antecedente": "Para boas práticas na elaboração dos rótulos:",
+  "colocacao": [
+   {
+    "variante": "rotulo-so-leitor-de-tela",
+    "descricao": "O label do campo fica visualmente oculto (recorte de 1px, posição absoluta) e continua associado ao campo pelo for/id.",
+    "clausula": "Mantenha os rótulos sempre visíveis"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-cad7cafa42d7",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-cad7cafa42d7",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos",
+  "texto": "Mantenha os rótulos sempre visíveis e precisos.",
+  "contexto": "Mantenha os rótulos sempre visíveis e precisos. Nunca os substitua por placeholders ou elementos que se desloquem pela página.",
+  "antecedente": "Para boas práticas na elaboração dos rótulos:",
+  "colocacao": [
+   {
+    "variante": "rotulo-so-leitor-de-tela",
+    "descricao": "O label do campo fica visualmente oculto (recorte de 1px, posição absoluta) e continua associado ao campo pelo for/id.",
+    "clausula": "Mantenha os rótulos sempre visíveis"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-cad7cafa42d7",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-cad7cafa42d7",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos",
+  "texto": "Mantenha os rótulos sempre visíveis e precisos.",
+  "contexto": "Mantenha os rótulos sempre visíveis e precisos. Nunca os substitua por placeholders ou elementos que se desloquem pela página.",
+  "antecedente": "Para boas práticas na elaboração dos rótulos:",
+  "colocacao": [
+   {
+    "variante": "rotulo-so-leitor-de-tela",
+    "descricao": "O label do campo fica visualmente oculto (recorte de 1px, posição absoluta) e continua associado ao campo pelo for/id.",
+    "clausula": "Mantenha os rótulos sempre visíveis"
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-cf130efa2e85",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-cf130efa2e85",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados",
+  "texto": "Os campos de entrada de texto devem sugerir um tamanho compatível com a entrada esperada.",
+  "contexto": "Os campos de entrada de texto devem sugerir um tamanho compatível com a entrada esperada. O usuário fica extremamente suscetível a erros quando não consegue ver sua entrada completa.",
+  "antecedente": "Siga as recomendações:",
+  "colocacao": [
+   {
+    "variante": "campo-estreito",
+    "descricao": "O campo fica com largura fixa de 16px, menos de um caractere visível.",
+    "clausula": "Os campos de entrada de texto devem sugerir um tamanho compatível com a entrada esperada."
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-cf130efa2e85",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-cf130efa2e85",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Entradas de Dados",
+  "texto": "Os campos de entrada de texto devem sugerir um tamanho compatível com a entrada esperada.",
+  "contexto": "Os campos de entrada de texto devem sugerir um tamanho compatível com a entrada esperada. O usuário fica extremamente suscetível a erros quando não consegue ver sua entrada completa.",
+  "antecedente": "Siga as recomendações:",
+  "colocacao": [
+   {
+    "variante": "campo-estreito",
+    "descricao": "O campo fica com largura fixa de 16px, menos de um caractere visível.",
+    "clausula": "Os campos de entrada de texto devem sugerir um tamanho compatível com a entrada esperada."
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-f2afb51765c7",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-f2afb51765c7",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos",
+  "texto": "Posicione os rótulos sempre próximos aos campos que os descrevem.",
+  "contexto": "Posicione os rótulos sempre próximos aos campos que os descrevem. Nos componentes de entrada de texto (input, textarea, etc.), é recomendável que os rótulos estejam localizados na parte superior do campo.",
+  "antecedente": "Para boas práticas na elaboração dos rótulos:",
+  "colocacao": [
+   {
+    "variante": "rotulo-afastado",
+    "descricao": "O rótulo fica separado do seu campo por ~120px de espaço vazio (margem inferior grande no label).",
+    "clausula": "Posicione os rótulos sempre próximos aos campos que os descrevem."
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-f2afb51765c7",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-f2afb51765c7",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos",
+  "texto": "Posicione os rótulos sempre próximos aos campos que os descrevem.",
+  "contexto": "Posicione os rótulos sempre próximos aos campos que os descrevem. Nos componentes de entrada de texto (input, textarea, etc.), é recomendável que os rótulos estejam localizados na parte superior do campo.",
+  "antecedente": "Para boas práticas na elaboração dos rótulos:",
+  "colocacao": [
+   {
+    "variante": "rotulo-afastado",
+    "descricao": "O rótulo fica separado do seu campo por ~120px de espaço vazio (margem inferior grande no label).",
+    "clausula": "Posicione os rótulos sempre próximos aos campos que os descrevem."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-f2afb51765c7",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-f2afb51765c7",
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Anatomia › 2. Componentes de Entrada de Dados › Rótulos",
+  "texto": "Posicione os rótulos sempre próximos aos campos que os descrevem.",
+  "contexto": "Posicione os rótulos sempre próximos aos campos que os descrevem. Nos componentes de entrada de texto (input, textarea, etc.), é recomendável que os rótulos estejam localizados na parte superior do campo.",
+  "antecedente": "Para boas práticas na elaboração dos rótulos:",
+  "colocacao": [
+   {
+    "variante": "rotulo-afastado",
+    "descricao": "O rótulo fica separado do seu campo por ~120px de espaço vazio (margem inferior grande no label).",
+    "clausula": "Posicione os rótulos sempre próximos aos campos que os descrevem."
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-015f84774222",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-015f84774222",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Boas práticas",
+  "texto": "Não deixe o texto todo em caixa alta.",
+  "contexto": "Considere apenas a letra inicial da sentença maiúscula. Não deixe o texto todo em caixa alta.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-campo-caixa-alta",
+    "descricao": "O rótulo do campo (a legenda, no grupo de radios) é escrito inteiro em maiúsculas (ex.: 'NOME DO PAÍS', 'SITUAÇÃO DO CADASTRO').",
+    "clausula": "Não deixe o texto todo em caixa alta."
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-015f84774222",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-015f84774222",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Boas práticas",
+  "texto": "Não deixe o texto todo em caixa alta.",
+  "contexto": "Considere apenas a letra inicial da sentença maiúscula. Não deixe o texto todo em caixa alta.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-campo-caixa-alta",
+    "descricao": "O rótulo do campo (a legenda, no grupo de radios) é escrito inteiro em maiúsculas (ex.: 'NOME DO PAÍS', 'SITUAÇÃO DO CADASTRO').",
+    "clausula": "Não deixe o texto todo em caixa alta."
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-015f84774222",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-015f84774222",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Boas práticas",
+  "texto": "Não deixe o texto todo em caixa alta.",
+  "contexto": "Considere apenas a letra inicial da sentença maiúscula. Não deixe o texto todo em caixa alta.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-campo-caixa-alta",
+    "descricao": "O rótulo do campo (a legenda, no grupo de radios) é escrito inteiro em maiúsculas (ex.: 'NOME DO PAÍS', 'SITUAÇÃO DO CADASTRO').",
+    "clausula": "Não deixe o texto todo em caixa alta."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-015f84774222",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-015f84774222",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Boas práticas",
+  "texto": "Não deixe o texto todo em caixa alta.",
+  "contexto": "Considere apenas a letra inicial da sentença maiúscula. Não deixe o texto todo em caixa alta.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-campo-caixa-alta",
+    "descricao": "O rótulo do campo (a legenda, no grupo de radios) é escrito inteiro em maiúsculas (ex.: 'NOME DO PAÍS', 'SITUAÇÃO DO CADASTRO').",
+    "clausula": "Não deixe o texto todo em caixa alta."
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-015f84774222",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-015f84774222",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Boas práticas",
+  "texto": "Não deixe o texto todo em caixa alta.",
+  "contexto": "Considere apenas a letra inicial da sentença maiúscula. Não deixe o texto todo em caixa alta.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-campo-caixa-alta",
+    "descricao": "O rótulo do campo (a legenda, no grupo de radios) é escrito inteiro em maiúsculas (ex.: 'NOME DO PAÍS', 'SITUAÇÃO DO CADASTRO').",
+    "clausula": "Não deixe o texto todo em caixa alta."
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-0ea33ff35779",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-0ea33ff35779",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 4. Feedback › Orientações Específicas",
+  "texto": "Não culpe o usuário.",
+  "contexto": "Não culpe o usuário. Os usuários já ficarão frustrados quando receberem uma mensagem de erro. Evite usar frases como “você fez” ou “você não fez” ao explicar o que deu errado. Em vez disso, mantenha as diretivas específicas sobre o que o usuário precisa fazer para remediar a ação problemática.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "erro-culpa-usuario",
+    "descricao": "O texto da mensagem de erro passa a 'Você não preencheu os campos obrigatórios. Preencha-os para salvar o país.'",
+    "clausula": "Não culpe o usuário."
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-12afa1f3c1f0",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-12afa1f3c1f0",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Orientações específicas",
+  "texto": "Use verbos que especifiquem claramente a ação pretendida.",
+  "contexto": "Use verbos que especifiquem claramente a ação pretendida. O ideal é que o usuário saiba o que a ação vai causar, sem necessariamente ler todo o conteúdo. Uma boa dica é utilizar o mesmo verbo da pergunta, isso ajuda a completar o sentido da ação. Evite rótulos com apenas \"Sim\" e \"Não\".",
+  "antecedente": "<b>Não recomendável:</b> Gerar relatório",
+  "colocacao": [
+   {
+    "variante": "rotulo-sem-verbo",
+    "descricao": "O texto do botão passa a ser só 'Campos'.",
+    "clausula": "Use verbos que especifiquem claramente a ação pretendida."
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-1f45d0dc0c3a",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-1f45d0dc0c3a",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Boas práticas",
+  "texto": "Mantenha a consistência: se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "dois-pontos-em-um-rotulo",
+    "descricao": "Só o rótulo deste campo (ou a legenda, no grupo de radios) passa a terminar com ':'; os demais ficam sem.",
+    "clausula": "se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário"
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-1f45d0dc0c3a",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-1f45d0dc0c3a",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Boas práticas",
+  "texto": "Mantenha a consistência: se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "dois-pontos-em-um-rotulo",
+    "descricao": "Só o rótulo deste campo (ou a legenda, no grupo de radios) passa a terminar com ':'; os demais ficam sem.",
+    "clausula": "se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário"
+   }
+  ]
+ },
+ {
+  "celula": "rad-situacao::a2-1f45d0dc0c3a",
+  "hospedeiro": "rad-situacao",
+  "unidade": "a2-1f45d0dc0c3a",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Boas práticas",
+  "texto": "Mantenha a consistência: se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "dois-pontos-em-um-rotulo",
+    "descricao": "Só o rótulo deste campo (ou a legenda, no grupo de radios) passa a terminar com ':'; os demais ficam sem.",
+    "clausula": "se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário"
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-1f45d0dc0c3a",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-1f45d0dc0c3a",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Boas práticas",
+  "texto": "Mantenha a consistência: se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "dois-pontos-em-um-rotulo",
+    "descricao": "Só o rótulo deste campo (ou a legenda, no grupo de radios) passa a terminar com ':'; os demais ficam sem.",
+    "clausula": "se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário"
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-36013fffe17a",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-36013fffe17a",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Boas práticas",
+  "texto": "Utilize termos familiares para os usuários.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-jargao-tecnico",
+    "descricao": "O texto do botão passa a ser 'Resetar Inputs'.",
+    "clausula": "Utilize termos familiares para os usuários."
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-3f23afca6972",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-3f23afca6972",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 3. Estrutura de Layout › Orientações específicas",
+  "texto": "Os títulos e subtítulos precisam ser objetivos e concisos.",
+  "contexto": "Os títulos e subtítulos precisam ser objetivos e concisos. Eles organizam o conteúdo para os leitores. Devem incluir as palavras-chave mais relevantes e destacar os principais pontos da página.",
+  "antecedente": "<b>Não recomendável:</b> Lei de acesso à informação.",
+  "colocacao": [
+   {
+    "variante": "titulo-lista-prolixo",
+    "descricao": "O título da lista passa a 'Lista com Todos os Países Importadores Já Cadastrados neste Sistema'.",
+    "clausula": "Os títulos e subtítulos precisam ser objetivos e concisos."
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-46c418f28680",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-46c418f28680",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação",
+  "texto": "Portanto, esse tipo de microcopy precisa ser bem assertivo, conciso e com as palavras certas para impactar quem lê.",
+  "contexto": "Os textos para interação têm a função de chamar a atenção do usuário, guiar e incentivá-lo a interagir com os elementos. Portanto, esse tipo de microcopy precisa ser bem assertivo, conciso e com as palavras certas para impactar quem lê.",
+  "antecedente": "Elementos de ação permitem ao usuário realizar uma ação específica dentro da interface, por meio de uma interação com o intuito de obter informações.",
+  "colocacao": [
+   {
+    "variante": "rotulo-acao-prolixo",
+    "descricao": "O texto do botão passa a ser 'Limpar Cada Campo deste Formulário Preenchido até Agora' (8 palavras, com verbo, sem artigo, iniciais maiúsculas).",
+    "clausula": "esse tipo de microcopy precisa ser bem assertivo, conciso e com as palavras certas para impactar quem lê"
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-5a1fcf660ae1",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-5a1fcf660ae1",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Orientações específicas",
+  "texto": "Não use artigos.",
+  "contexto": "Não use artigos. Eles podem confundir algo que é mais simples, aumentando o comprimento de uma linha, além de gerar outros efeitos indesejados.",
+  "antecedente": "<b>Não recomendável:</b> Acessar / Cancelar / Enviar",
+  "colocacao": [
+   {
+    "variante": "rotulo-com-artigo",
+    "descricao": "O texto do botão passa a ser 'Limpar os Campos'.",
+    "clausula": "Não use artigos."
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-7278a9812cac",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-7278a9812cac",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Orientações específicas",
+  "texto": "Os textos dos rótulos devem ser positivos, breves, claros e diretos.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-negativo",
+    "descricao": "O rótulo passa a forma negativa (ex.: switch 'Não suspender a emissão automática de certificado sanitário'; select 'Não deixe de informar o continente').",
+    "clausula": "Os textos dos rótulos devem ser positivos, breves, claros e diretos."
+   }
+  ]
+ },
+ {
+  "celula": "inp-nome-pais::a2-7278a9812cac",
+  "hospedeiro": "inp-nome-pais",
+  "unidade": "a2-7278a9812cac",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Orientações específicas",
+  "texto": "Os textos dos rótulos devem ser positivos, breves, claros e diretos.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-negativo",
+    "descricao": "O rótulo passa a forma negativa (ex.: switch 'Não suspender a emissão automática de certificado sanitário'; select 'Não deixe de informar o continente').",
+    "clausula": "Os textos dos rótulos devem ser positivos, breves, claros e diretos."
+   }
+  ]
+ },
+ {
+  "celula": "sel-continente::a2-7278a9812cac",
+  "hospedeiro": "sel-continente",
+  "unidade": "a2-7278a9812cac",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Orientações específicas",
+  "texto": "Os textos dos rótulos devem ser positivos, breves, claros e diretos.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-negativo",
+    "descricao": "O rótulo passa a forma negativa (ex.: switch 'Não suspender a emissão automática de certificado sanitário'; select 'Não deixe de informar o continente').",
+    "clausula": "Os textos dos rótulos devem ser positivos, breves, claros e diretos."
+   }
+  ]
+ },
+ {
+  "celula": "swt-certificado::a2-7278a9812cac",
+  "hospedeiro": "swt-certificado",
+  "unidade": "a2-7278a9812cac",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Orientações específicas",
+  "texto": "Os textos dos rótulos devem ser positivos, breves, claros e diretos.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "rotulo-negativo",
+    "descricao": "O rótulo passa a forma negativa (ex.: switch 'Não suspender a emissão automática de certificado sanitário'; select 'Não deixe de informar o continente').",
+    "clausula": "Os textos dos rótulos devem ser positivos, breves, claros e diretos."
+   }
+  ]
+ },
+ {
+  "celula": "btn-limpar::a2-73e03945d5cc",
+  "hospedeiro": "btn-limpar",
+  "unidade": "a2-73e03945d5cc",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Orientações específicas",
+  "texto": "Nos buttons, as letras iniciais de todas as palavras devem ser maiúsculas, exceto artigos e preposições.",
+  "contexto": null,
+  "antecedente": "<b>Não recomendável:</b> Remover usuários",
+  "colocacao": [
+   {
+    "variante": "rotulo-botao-so-primeira-maiuscula",
+    "descricao": "O texto do botão passa de 'Limpar Campos' para 'Limpar campos'.",
+    "clausula": "Nos buttons, as letras iniciais de todas as palavras devem ser maiúsculas, exceto artigos e preposições."
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-909e5f61d661",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-909e5f61d661",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 4. Feedback › Boas Práticas",
+  "texto": "Não zombe de seus usuários.",
+  "contexto": "Não zombe de seus usuários. É permitido utilizar uma linguagem mais leve e amigável, mas evite fazer humor em mensagens de erro.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "erro-zombeteiro",
+    "descricao": "O texto da mensagem de erro passa a 'Esqueceu de novo? Até uma criança preencheria estes campos. Preencha os campos obrigatórios para salvar.'",
+    "clausula": "Não zombe de seus usuários."
+   }
+  ]
+ },
+ {
+  "celula": "btn-ajuda::a2-d47f4c470491",
+  "hospedeiro": "btn-ajuda",
+  "unidade": "a2-d47f4c470491",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Orientações específicas",
+  "texto": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada.",
+  "contexto": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada. Se for necessário, utilize tooltip para reforçar.",
+  "antecedente": "<b>Não recomendável:</b> Adicionar uma marcação",
+  "colocacao": [
+   {
+    "variante": "ajuda-com-icone-lixeira",
+    "descricao": "O botão de ajuda passa a mostrar o ícone de lixeira no lugar do ícone de ajuda; o nome acessível fica igual.",
+    "clausula": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-d47f4c470491",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-d47f4c470491",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Orientações específicas",
+  "texto": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada.",
+  "contexto": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada. Se for necessário, utilize tooltip para reforçar.",
+  "antecedente": "<b>Não recomendável:</b> Adicionar uma marcação",
+  "colocacao": [
+   {
+    "variante": "fechar-com-icone-adicionar",
+    "descricao": "O botão Fechar da mensagem informativa passa a mostrar o ícone '+' (adicionar) no lugar do 'x'.",
+    "clausula": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada."
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-d6b3f0e36943",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-d6b3f0e36943",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 3. Estrutura de Layout › Boas práticas",
+  "texto": "Os textos devem ser escritos em uma linguagem simples e fácil de serem compreendidas pelos usuários não técnicos.",
+  "contexto": "Os textos devem ser escritos em uma linguagem simples e fácil de serem compreendidas pelos usuários não técnicos. Instruções devem ser simples de modo que os usuários não tenham que memorizá-las para corrigir o erro.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "mensagem-jargao-tecnico",
+    "descricao": "O texto da mensagem passa a usar jargão de sistema (ex.: msg-erro 'HTTP 422: payload com campos required nulos; reenvie o POST').",
+    "clausula": "Os textos devem ser escritos em uma linguagem simples e fácil de serem compreendidas pelos usuários não técnicos."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-d6b3f0e36943",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-d6b3f0e36943",
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 3. Estrutura de Layout › Boas práticas",
+  "texto": "Os textos devem ser escritos em uma linguagem simples e fácil de serem compreendidas pelos usuários não técnicos.",
+  "contexto": "Os textos devem ser escritos em uma linguagem simples e fácil de serem compreendidas pelos usuários não técnicos. Instruções devem ser simples de modo que os usuários não tenham que memorizá-las para corrigir o erro.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "mensagem-jargao-tecnico",
+    "descricao": "O texto da mensagem passa a usar jargão de sistema (ex.: msg-erro 'HTTP 422: payload com campos required nulos; reenvie o POST').",
+    "clausula": "Os textos devem ser escritos em uma linguagem simples e fácil de serem compreendidas pelos usuários não técnicos."
+   }
+  ]
+ },
+ {
+  "celula": "inp-codigo::a2-5610d5df55f0",
+  "hospedeiro": "inp-codigo",
+  "unidade": "a2-5610d5df55f0",
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Boas práticas para escrever bons textos em produtos digitais › Seja Conciso",
+  "texto": "Escreva o que for necessário para que o leitor seja capaz de compreender completamente a mensagem com o mínimo de palavras possível.",
+  "contexto": "Ser conciso não significa omitir informações relevantes. Escreva o que for necessário para que o leitor seja capaz de compreender completamente a mensagem com o mínimo de palavras possível.",
+  "antecedente": "<b>Não recomendado:</b> Basta preencher seu e-mail favorito abaixo e você terá acesso instantâneo à primeira aula.",
+  "colocacao": [
+   {
+    "variante": "texto-inchado",
+    "descricao": "O texto da mensagem informativa (ou o texto de apoio do código) ganha frases redundantes que repetem o que já diz, triplicando o número de palavras (ex.: apoio 'Neste campo você deverá digitar, se assim desejar, o código do país, que é composto por exatamente três letras, nem mais nem menos, conforme o formato').",
+    "clausula": "Escreva o que for necessário para que o leitor seja capaz de compreender completamente a mensagem com o mínimo de palavras possível."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-5610d5df55f0",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-5610d5df55f0",
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Boas práticas para escrever bons textos em produtos digitais › Seja Conciso",
+  "texto": "Escreva o que for necessário para que o leitor seja capaz de compreender completamente a mensagem com o mínimo de palavras possível.",
+  "contexto": "Ser conciso não significa omitir informações relevantes. Escreva o que for necessário para que o leitor seja capaz de compreender completamente a mensagem com o mínimo de palavras possível.",
+  "antecedente": "<b>Não recomendado:</b> Basta preencher seu e-mail favorito abaixo e você terá acesso instantâneo à primeira aula.",
+  "colocacao": [
+   {
+    "variante": "texto-inchado",
+    "descricao": "O texto da mensagem informativa (ou o texto de apoio do código) ganha frases redundantes que repetem o que já diz, triplicando o número de palavras (ex.: apoio 'Neste campo você deverá digitar, se assim desejar, o código do país, que é composto por exatamente três letras, nem mais nem menos, conforme o formato').",
+    "clausula": "Escreva o que for necessário para que o leitor seja capaz de compreender completamente a mensagem com o mínimo de palavras possível."
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-6a045b31f05d",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-6a045b31f05d",
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Dicionário de vocabulário controlado › Palavras para evitar › Palavras de baixo calão",
+  "texto": "Não use palavrões ou palavras de baixo calão em textos, documentos e apresentação para clientes.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "mensagem-com-palavrao",
+    "descricao": "O texto da mensagem passa a incluir um palavrão leve (ex.: 'Droga, faltou preencher os campos obrigatórios. Preencha-os para salvar.').",
+    "clausula": "Não use palavrões ou palavras de baixo calão em textos, documentos e apresentação para clientes."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-6a045b31f05d",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-6a045b31f05d",
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Dicionário de vocabulário controlado › Palavras para evitar › Palavras de baixo calão",
+  "texto": "Não use palavrões ou palavras de baixo calão em textos, documentos e apresentação para clientes.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "mensagem-com-palavrao",
+    "descricao": "O texto da mensagem passa a incluir um palavrão leve (ex.: 'Droga, faltou preencher os campos obrigatórios. Preencha-os para salvar.').",
+    "clausula": "Não use palavrões ou palavras de baixo calão em textos, documentos e apresentação para clientes."
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-6c531e6437e8",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-6c531e6437e8",
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Princípios do writing › 1. Experiência única",
+  "texto": "O conteúdo precisa manter consistência quanto ao estilo, tom, voz e terminologias.",
+  "contexto": "O conteúdo precisa manter consistência quanto ao estilo, tom, voz e terminologias. Para isso é importante utilizar um guia de estilo e um método que oriente o processo. O usuário deve perceber que a forma que os diversos produtos de Governo se comunicam com ele é constante e uniforme.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "situacao-com-outro-nome",
+    "descricao": "Num item da lista, a situação 'Habilitado' passa a 'Ativo', enquanto o grupo de radios segue com 'Habilitado'.",
+    "clausula": "O conteúdo precisa manter consistência quanto ao estilo, tom, voz e terminologias."
+   }
+  ]
+ },
+ {
+  "celula": "lst-paises::a2-9250e991e04f",
+  "hospedeiro": "lst-paises",
+  "unidade": "a2-9250e991e04f",
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Escrevendo para acessibilidade e linguagem inclusiva › Utilize elementos textuais em conjunto com elementos sensoriais › A) Cor",
+  "texto": "Qualquer classificação importante feita por meio de cores deve possuir também uma identificação textual.",
+  "contexto": null,
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "situacao-so-por-cor",
+    "descricao": "Num item da lista, o texto da situação é trocado por um marcador colorido sem texto (verde para Habilitado, vermelho para Suspenso).",
+    "clausula": "Qualquer classificação importante feita por meio de cores deve possuir também uma identificação textual."
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-c0b99a02cf6b",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-c0b99a02cf6b",
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Boas práticas para escrever bons textos em produtos digitais › Evite gíria, regionalismo e abreviação",
+  "texto": "Escreva em Língua Portuguesa neutra.",
+  "contexto": "Escreva em Língua Portuguesa neutra. Não utilize palavras, expressões e gírias típicas de regiões do país. Evite abreviar palavras de forma popular.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "mensagem-regionalismo",
+    "descricao": "O texto da mensagem passa a usar expressões regionais marcadas (ex.: 'Bah, tchê, faltou preencher uns campos aí, guri').",
+    "clausula": "Escreva em Língua Portuguesa neutra."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-c0b99a02cf6b",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-c0b99a02cf6b",
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Boas práticas para escrever bons textos em produtos digitais › Evite gíria, regionalismo e abreviação",
+  "texto": "Escreva em Língua Portuguesa neutra.",
+  "contexto": "Escreva em Língua Portuguesa neutra. Não utilize palavras, expressões e gírias típicas de regiões do país. Evite abreviar palavras de forma popular.",
+  "antecedente": null,
+  "colocacao": [
+   {
+    "variante": "mensagem-regionalismo",
+    "descricao": "O texto da mensagem passa a usar expressões regionais marcadas (ex.: 'Bah, tchê, faltou preencher uns campos aí, guri').",
+    "clausula": "Escreva em Língua Portuguesa neutra."
+   }
+  ]
+ },
+ {
+  "celula": "msg-erro::a2-e0663017fccc",
+  "hospedeiro": "msg-erro",
+  "unidade": "a2-e0663017fccc",
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Princípios do writing › 2. Eficiência",
+  "texto": "A mensagem deve apresentar imediatamente o que é mais importante para o público-alvo.",
+  "contexto": "Para os usuários, o tempo está cada vez mais escasso. Poucos têm disposição para perder mais de um minuto analisando um texto. Esse contexto faz com que a concisão, isto é, a capacidade de escrever uma mensagem com poucas palavras, seja muito valorizada. A mensagem deve apresentar imediatamente o que é mais importante para o público-alvo. Dessa maneira, as possibilidades de chamar a atenção e de atingir a meta serão bem maiores. Pense que a escrita precisa ser sucinta e eficiente ao mesmo tempo.",
+  "antecedente": "#### B) Concisão",
+  "colocacao": [
+   {
+    "variante": "fato-principal-no-fim",
+    "descricao": "As frases do texto da mensagem são reordenadas, sem acrescentar palavras: a frase com o fato principal (o que a pessoa precisa saber/fazer) passa para o fim, depois das secundárias.",
+    "clausula": "A mensagem deve apresentar imediatamente o que é mais importante para o público-alvo."
+   }
+  ]
+ },
+ {
+  "celula": "msg-orientacao::a2-e0663017fccc",
+  "hospedeiro": "msg-orientacao",
+  "unidade": "a2-e0663017fccc",
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Princípios do writing › 2. Eficiência",
+  "texto": "A mensagem deve apresentar imediatamente o que é mais importante para o público-alvo.",
+  "contexto": "Para os usuários, o tempo está cada vez mais escasso. Poucos têm disposição para perder mais de um minuto analisando um texto. Esse contexto faz com que a concisão, isto é, a capacidade de escrever uma mensagem com poucas palavras, seja muito valorizada. A mensagem deve apresentar imediatamente o que é mais importante para o público-alvo. Dessa maneira, as possibilidades de chamar a atenção e de atingir a meta serão bem maiores. Pense que a escrita precisa ser sucinta e eficiente ao mesmo tempo.",
+  "antecedente": "#### B) Concisão",
+  "colocacao": [
+   {
+    "variante": "fato-principal-no-fim",
+    "descricao": "As frases do texto da mensagem são reordenadas, sem acrescentar palavras: a frase com o fato principal (o que a pessoa precisa saber/fazer) passa para o fim, depois das secundárias.",
+    "clausula": "A mensagem deve apresentar imediatamente o que é mais importante para o público-alvo."
+   }
+  ]
+ }
+]

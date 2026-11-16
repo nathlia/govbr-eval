@@ -1,0 +1,849 @@
+{
+ "_meta": {
+  "version": "0.9.0-rascunho",
+  "status": "RASCUNHO, não congelado (2026-11-14). Decisões da autora pendentes: tela-e2/decisoes-da-autora.md. Nenhuma execução de agente sobre a tela.",
+  "version_note": "Rascunho a partir do sorteio único (tela-e2/sorteio.json, semente f82c2f7c…, selo c2de436), da construção (tela-e2/construcao.md; conferir-construcao 100 % antes e depois da correção F-01, corpus 386a8d8) e da auditoria cega por medição (tela-e2/auditoria/, re-medida em tela-e2/remedida-2026-11-14). Ids U-* = unidades sorteadas (9: 6 DS + 3 G); EA-*/EC-*/EI-* = achados, conformes e incertos da auditoria. Regras de co-violação: R-CV (coviolacoes.mjs).",
+  "page": "Cadastrar país importador — tela E2 (página construída pelo procedimento da A2; plano B da tela E, D-200)",
+  "url": "/cadastro-pais.html",
+  "waitFor": "#main-content",
+  "suite": "cadastro-pais",
+  "ds": "gov.br Design System 3.7.0 (página com @govbr-ds/core 3.7.0)",
+  "unit_of_evaluation": "(elemento × defeito), no estado aplicável — a mesma unidade das telas A, A2, B e D. 'composicao' vale uma unidade com vários participantes.",
+  "viewport": {
+   "width": 1280,
+   "height": 900
+  },
+  "setup": [
+   {
+    "action": "click",
+    "selector": "#btn-salvar"
+   },
+   {
+    "action": "wait",
+    "selector": "#msg-erro:not([hidden])"
+   },
+   {
+    "action": "click",
+    "selector": "#sel-continente [data-trigger]"
+   },
+   {
+    "action": "wait",
+    "selector": "#sel-continente .br-list[expanded]"
+   }
+  ],
+  "setup_rationale": "Paradas da construção, em sequência aditiva: clicar Salvar País com o formulário vazio e esperar a mensagem de retorno (S1); clicar o gatilho do select Continente e esperar a lista aberta (S2). Conferido em tela-e2/conferir-ancoras.mjs: tudo o que se ancora em S0 e S1 continua visível em S2.",
+  "states": [
+   {
+    "id": "S0",
+    "afterStep": 0,
+    "path": "/cadastro-pais.html",
+    "note": "carga inicial"
+   },
+   {
+    "id": "S1",
+    "afterStep": 2,
+    "path": "/cadastro-pais.html",
+    "note": "Salvar País acionado com o formulário vazio"
+   },
+   {
+    "id": "S2",
+    "afterStep": 4,
+    "path": "/cadastro-pais.html",
+    "note": "gatilho do select Continente acionado (lista aberta), depois de S1"
+   }
+  ],
+  "sorteio": {
+   "arquivo": "tela-e2/sorteio.json",
+   "sha256": "eda4ff57a59d247ee1545747abf76ee71c10f7716a7958ad6084119cad551bb8",
+   "semente": "f82c2f7c16baed0ce04fea9f27909c1a1fbe2fa8",
+   "selo": "c2de4360e1269535b3be20424833c874767195a6",
+   "vigentes": "tela-e2/sementes-vigentes.json",
+   "decisao": "D-200"
+  },
+  "estratos": {
+   "semeada": {
+    "nota": "As 9 unidades sorteadas e em vigor; classe = a selada da célula (categorias do passo 2, regra CLASSE_DA_CATEGORIA). O desfecho coprimário da E é sobre as DS.",
+    "DS": [
+     "U-01",
+     "U-02",
+     "U-03",
+     "U-04",
+     "U-05",
+     "U-06"
+    ],
+    "G": [
+     "U-07",
+     "U-08",
+     "U-09"
+    ]
+   },
+   "naturais": {
+    "nota": "Página construída: não há defeitos naturais de rota. O único defeito acidental achado pela auditoria (F-01) foi corrigido; os incertos ficam em `fundo`.",
+    "specs": []
+   },
+   "exposto": {
+    "nota": "Nenhuma unidade sorteada é exposta (a exposição foi exclusão antes do sorteio). Ids expostos que entraram como co-violação estão em coviolacoes.idsExpostos.",
+    "specs": []
+   }
+  },
+  "classes": {
+   "U-01": "DS",
+   "U-02": "DS",
+   "U-03": "DS",
+   "U-04": "DS",
+   "U-05": "DS",
+   "U-06": "DS",
+   "U-07": "G",
+   "U-08": "G",
+   "U-09": "G"
+  },
+  "coviolacoes": {
+   "regra": "R-CV (tela-e2/coviolacoes.mjs; reconciliacao.md § 5): mesmo defeito no mesmo hospedeiro = regras adicionais da mesma spec; não criam spec nem contam para o portão.",
+   "idsExpostos": {
+    "U-01": [
+     "emag:1.4",
+     "emag:6.3"
+    ],
+    "U-07": [
+     "emag:4.1",
+     "govbr-3.7.0-foundation-global-21b1a2733f7b"
+    ],
+    "U-08": [
+     "emag:2.1"
+    ]
+   }
+  },
+  "conformes": {
+   "note": "Controles conformes pela regra de reconciliacao.md § 8: instância do inventário (sorteável sem semente ou andaime) que não hospeda unidade sorteada nem participa do observável de uma, com 0 achados e 0 incertos na auditoria cega, e medida conforme na conferência de construção. A E2 não sorteou chamarizes nem alternativas válidas.",
+   "itens": [
+    {
+     "id": "K-01",
+     "state": "S0",
+     "selector": "#cabecalho",
+     "count": 1,
+     "rules": [],
+     "status": "conta",
+     "medida": "andaime hdr-govbr: cabeçalho visível no topo, antes do main (conferência de construção); auditoria: 0 achado, 0 incerto."
+    },
+    {
+     "id": "K-02",
+     "state": "S0",
+     "selector": "#rodape",
+     "count": 1,
+     "rules": [],
+     "status": "conta",
+     "medida": "andaime ftr-govbr: rodapé visível depois do main (construção); auditoria: 0 achado, 0 incerto."
+    },
+    {
+     "id": "K-03",
+     "state": "S0",
+     "selector": "#div-secoes",
+     "count": 1,
+     "rules": [],
+     "status": "conta",
+     "medida": "andaime div-secoes: divisor entre a configuração e a lista, fora do foco (construção); auditoria: 0 achado, 0 incerto."
+    },
+    {
+     "id": "K-04",
+     "state": "S0",
+     "selector": "#swt-certificado",
+     "count": 1,
+     "rules": [],
+     "status": "conta",
+     "medida": "sorteável sem semente swt-certificado: role switch, aria-checked acompanha o estado, texto de estado pelos data-*, efeito imediato, Espaço alterna (construção); auditoria: 8 conformes, 0 achado, 0 incerto."
+    },
+    {
+     "id": "K-05",
+     "state": "S0",
+     "selector": "#btn-cancelar",
+     "count": 1,
+     "rules": [],
+     "status": "conta",
+     "medida": "andaime btn-cancelar: secundário, 40 px, rótulo em uma linha com inicial maiúscula, à esquerda de Salvar (construção); auditoria: 8 conformes, 0 achado, 0 incerto."
+    }
+   ]
+  },
+  "fundo": "Condições que não são unidades (alegação correta = descoberta; reconciliacao.md § 3): EI-01 (btn-ajuda): tooltip (componente em `fora` no inventário) e efeito do clique; não é o observável da variante (ícone). Frases: uma `nao-se-aplica`, outra `sem-medicao` no passo 2. · EI-05 (inp-nome-pais): foco no 1º campo obrigatório: frase `conflito` no passo 2 selado (conflita com o atalho como 1º foco). · EI-06 (sel-continente): abrir a lista ao receber foco: frase ambígua, e abrir sozinho contrariaria o e-MAG 6.4; o select do core 3.7.0 abre por seta. · EI-07 (sel-continente): role=combobox sem nome no contêiner: posto pelo BRSelect do core 3.7.0 em tempo de execução (precedente A2 E-08, A2-24). · EI-09 (lst-paises): lista estática sem paradas de Tab: a frase é `duplicada` no passo 2 e não distingue lista estática. · EI-10 (lst-paises): div + role=list em vez de ul: marcação do exemplo oficial do List 3.7.0; semântica exposta na árvore AX; e-MAG 1.2 exposto (célula excluída). · EI-11 (lst-paises): tamanho e cor do título e dos textos vêm do CSS do DS (h2 e .br-item), sem sobrescrita da página (precedente A2 E-08). · EI-12 (msg-orientacao): foco no Fechar quando a mensagem aparece na carga: conflita com o atalho como 1º foco; a construção mediu conforme o caso da reexibição pela ajuda. · EI-13 (msg-orientacao): foco depois de fechar vai ao h1 (decisão da construção, medida conforme); o auditor lê a frase como recomendação. · EI-15 (skp-conteudo): atalho invisível ao ponteiro: CSS do core 3.7.0 (precedente A2 E-08, A2-07). · EI-16 (pagina): name + id nas âncoras: name não é atributo válido em main/footer; e-MAG 1.5 `so-andaime` no passo 2. · EI-17 (brd-trilha): peso 500 no item atual da trilha: CSS do core 3.7.0 (precedente A2 E-08, A2-09). · EI-18 (brd-trilha): trilha como única navegação: não há menu na página (andaime da rota real). · EI-19 (sgn-usuaria): a.br-sign-in no cabeçalho (padrão de usuário logado do header) em vez de br-button sign-in: decisão de construção registrada; andaime.",
+  "fora_de_escopo": "Outras janelas e zoom (salvo os 200 % da U-09), outros navegadores, leitor de tela real, envio com sucesso (fora dos estados), redação salvo a regra sorteada, normas que saíram antes da semente (elegibilidade-passo2.json, exclusões). Alegação correta sobre o que está fora vira descoberta.",
+  "nunca_agregar_com": "ground-truth-processos.json (tela D), ground-truth-acompanhamento.json (A2), ground-truth-solicitacao.json (A), ground-truth-vistorias.json (B) e as demais referências — páginas diferentes (D-13, D-49). D e E nunca se somam (protocolo § 3.8).",
+  "baselines": "MEDIDAS sob o carimbo de cada bateria; nenhuma expectativa de detecção por ferramenta é declarada aqui (D-06).",
+  "rules_nota": "Ids da base literal 3.7.0 pelo localizador de proveniência (tela-e2/ponte-base.json: só id, source.corpusFile e source.charRange de normalizacao/rules.jsonl, sha256 408402bd…). e-MAG como emag:X.Y. Conferir contra a base que o oráculo congelado serve antes de congelar (não feito aqui: fora das entradas permitidas).",
+  "portao": {
+   "regra": "protocolo NAT-78 REVISÃO 2026-11-12 § 3.7 (≥ 5 specs do DS semeadas que pegaram; cada uma 1. confirmada por medição por auditor cego só com a documentação do DS, 2. num estado alcançável pelas paradas declaradas, 3. violando cláusula que existe na base literal); metodo.md § 6 (E-02: sorteada medida fica na referência, mas para o portão só conta se o auditor cego a confirmar)",
+   "regraDaRemedida": "fixada pelo coordenador antes da medida: confirmada às cegas = 1ª auditoria achou com a cláusula sorteada (mesma-clausula: principal, tambem ou duplicata selada) OU o 2º auditor cego, perguntado de forma neutra entre 10 iscas, decidiu 'viola' no observável sorteado. 'Achada com outra cláusula' sozinha não conta.",
+   "n_estrito": 6,
+   "passaEstrito": true,
+   "folga": 1,
+   "n_soPrimeiraAuditoria": 4,
+   "n_estritoSeItens2e3ForemB": 4,
+   "iscas": {
+    "satisfaz": 10,
+    "total": 10,
+    "viola": []
+   },
+   "arquivo": "tela-e2/portao.json"
+  },
+  "semConfirmacaoCega": {
+   "nota": "Sorteadas que nenhum auditor cego confirmou (as duas medidas julgaram conforme): ficam pela E-02, com confirmacaoCega: false em porSpec; recall relatado com e sem elas; item 5 de decisoes-da-autora.md.",
+   "specs": [
+    "U-09"
+   ]
+  },
+  "porSpec": {
+   "U-01": {
+    "celula": "btn-limpar::a2-2ac598dc24db",
+    "regra": "a2-2ac598dc24db",
+    "idsBase": [
+     "govbr-3.7.0-pattern-global-a0e5ee1b1a71"
+    ],
+    "fonte": "padroes/design/formulario.md",
+    "estrato": "semeada",
+    "classe": "DS",
+    "categoriasSeladas": [
+     "estrutura"
+    ],
+    "tipo": "estrutura-classe",
+    "variante": "secundario-a-direita-do-primario",
+    "instancia": "btn-limpar",
+    "posicaoNaOrdemDaClasse": 0,
+    "ancoraTexto": "botão 'Limpar Campos' da barra de ações do formulário",
+    "construcao": {
+     "violado": true,
+     "fato": {
+      "limparX": 525.1,
+      "salvarDireita": 509.1
+     }
+    },
+    "auditoria": {
+     "resultado": "mesma-clausula",
+     "via": "principal",
+     "achados": [
+      "EA-01"
+     ],
+     "conformeContrario": null,
+     "porque": "EA-01 cita a frase sorteada (formulário) como cláusula, no mesmo botão, S0–S2."
+    },
+    "coviolacoes": {
+     "emRules": [
+      "a2-df449a7d5cd8",
+      "a2-bde476da44c9",
+      "a2-66f05213a674",
+      "a2-0f20577609d3"
+     ],
+     "fora": [],
+     "idsExpostosEmRules": [
+      "emag:1.4",
+      "emag:6.3"
+     ]
+    },
+    "remedidaCega": null,
+    "confirmacaoCega": true,
+    "contaParaPortao": true,
+    "decisao": null
+   },
+   "U-02": {
+    "celula": "msg-orientacao::a2-d6b3f0e36943",
+    "regra": "a2-d6b3f0e36943",
+    "idsBase": [
+     "govbr-3.7.0-pattern-global-5dfbb109d8d4"
+    ],
+    "fonte": "padroes/writing/microcopy.md",
+    "estrato": "semeada",
+    "classe": "DS",
+    "categoriasSeladas": [
+     "estrutura"
+    ],
+    "tipo": "estrutura-classe",
+    "variante": "mensagem-jargao-tecnico",
+    "instancia": "msg-orientacao",
+    "posicaoNaOrdemDaClasse": 3,
+    "ancoraTexto": "corpo da mensagem informativa 'Como cadastrar.'",
+    "construcao": {
+     "violado": true,
+     "fato": {
+      "termosTecnicos": 7
+     }
+    },
+    "auditoria": {
+     "resultado": "mesma-clausula",
+     "via": "tambem",
+     "achados": [
+      "EA-10"
+     ],
+     "conformeContrario": null,
+     "porque": "EA-10 mede o mesmo jargão no corpo da mensagem (S0–S2); a cláusula principal é a co-violação declarada (texto curto, claro e objetivo); a frase sorteada (microcopy) aparece em `tambem`, literal."
+    },
+    "coviolacoes": {
+     "emRules": [
+      "a2-db30195b0e66",
+      "a2-a06dc9ebbfe4"
+     ],
+     "fora": [],
+     "idsExpostosEmRules": []
+    },
+    "remedidaCega": null,
+    "confirmacaoCega": true,
+    "contaParaPortao": true,
+    "decisao": null
+   },
+   "U-03": {
+    "celula": "btn-ajuda::a2-5b47246a41c1",
+    "regra": "a2-5b47246a41c1",
+    "idsBase": [
+     "govbr-3.7.0-component-button-627dd3089562"
+    ],
+    "fonte": "componentes/button__designer.md",
+    "estrato": "semeada",
+    "classe": "DS",
+    "categoriasSeladas": [
+     "componente"
+    ],
+    "tipo": "estrutura-classe",
+    "variante": "circular-sem-icone",
+    "instancia": "btn-ajuda",
+    "posicaoNaOrdemDaClasse": 4,
+    "ancoraTexto": "botão circular 'Ajuda sobre o cadastro' ao lado do título",
+    "construcao": {
+     "violado": true,
+     "fato": {
+      "iconesVisiveis": 0
+     }
+    },
+    "auditoria": {
+     "resultado": "mesma-clausula",
+     "via": "principal",
+     "achados": [
+      "EA-03"
+     ],
+     "conformeContrario": null,
+     "porque": "EA-03 cita a frase sorteada (ícone obrigatório no circular) como 1ª cláusula, 0 pixel de ícone, S0–S2."
+    },
+    "coviolacoes": {
+     "emRules": [
+      "a2-460f5696acde",
+      "a2-d47f4c470491",
+      "a2-db50df136f86",
+      "a2-d43497944f79"
+     ],
+     "fora": [
+      {
+       "unidade": "a2-952e88a5af0d",
+       "motivo": "sem-clausula-na-base"
+      },
+      {
+       "unidade": "a2-72ddeddc1ac8",
+       "motivo": "sem-clausula-na-base"
+      }
+     ],
+     "idsExpostosEmRules": []
+    },
+    "remedidaCega": null,
+    "confirmacaoCega": true,
+    "contaParaPortao": true,
+    "decisao": null
+   },
+   "U-04": {
+    "celula": "inp-codigo::a2-a39f3ad397d4",
+    "regra": "a2-a39f3ad397d4",
+    "idsBase": [
+     "govbr-3.7.0-page-global-881fe9380b81"
+    ],
+    "fonte": "introducao/padrao-minimo.md",
+    "estrato": "semeada",
+    "classe": "DS",
+    "categoriasSeladas": [
+     "tipografia"
+    ],
+    "tipo": "visual-token",
+    "variante": "fonte-do-sistema",
+    "instancia": "inp-codigo",
+    "posicaoNaOrdemDaClasse": 6,
+    "ancoraTexto": "campo 'Código do país (opcional)' (rótulo, campo e texto de apoio)",
+    "construcao": {
+     "violado": true,
+     "fato": {
+      "usadas": [
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ],
+       [
+        "Arial"
+       ]
+      ],
+      "declaradas": [
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif",
+       "Arial, Helvetica, sans-serif"
+      ]
+     }
+    },
+    "auditoria": {
+     "resultado": "mesma-clausula",
+     "via": "duplicata-selada",
+     "achados": [
+      "EA-06"
+     ],
+     "conformeContrario": null,
+     "porque": "EA-06 mede Arial no rótulo, no campo e no apoio (S0–S2) e cita tipografia.md; uma das duas frases citadas (a2-f82d600db413) é `duplicada:a2-a39f3ad397d4` no passo 2 selado; a frase sorteada (padrão mínimo) não é citada literalmente."
+    },
+    "coviolacoes": {
+     "emRules": [],
+     "fora": [
+      {
+       "unidade": "a2-05763ed77f2d",
+       "motivo": "nao-obrigacao"
+      },
+      {
+       "unidade": "a2-f82d600db413",
+       "motivo": "sem-clausula-na-base"
+      }
+     ],
+     "idsExpostosEmRules": []
+    },
+    "remedidaCega": null,
+    "confirmacaoCega": true,
+    "contaParaPortao": true,
+    "decisao": null
+   },
+   "U-05": {
+    "celula": "rad-situacao::a2-f838b54da560",
+    "regra": "a2-f838b54da560",
+    "idsBase": [
+     "govbr-3.7.0-component-radio-331797975ce6"
+    ],
+    "fonte": "componentes/radio__designer.md",
+    "estrato": "semeada",
+    "classe": "DS",
+    "categoriasSeladas": [
+     "token"
+    ],
+    "tipo": "visual-token",
+    "variante": "legenda-centralizada",
+    "instancia": "rad-situacao",
+    "posicaoNaOrdemDaClasse": 9,
+    "ancoraTexto": "legenda do grupo 'Situação do cadastro'",
+    "construcao": {
+     "violado": true,
+     "fato": {
+      "esquerdaTexto": 296.1,
+      "centroTexto": 380,
+      "centroGrupo": 380,
+      "esquerdaOpcao": 62
+     }
+    },
+    "auditoria": {
+     "resultado": "nao-achada",
+     "via": null,
+     "achados": [],
+     "conformeContrario": "EC-062",
+     "porque": "Nenhum achado no hospedeiro. O auditor deu a frase sorteada como CONFORME (EC-062, só S1) medindo o x da caixa da legend (62 = x das opções); a variante centraliza o TEXTO numa legend de largura 100 %, e a conferência de construção mede o início do texto (296,1 px contra 62 px da 1ª opção, centrado no grupo). Julgamento contrário por observável diferente."
+    },
+    "coviolacoes": {
+     "emRules": [],
+     "fora": [],
+     "idsExpostosEmRules": []
+    },
+    "remedidaCega": {
+     "item": "R-05",
+     "decisao": "viola"
+    },
+    "confirmacaoCega": true,
+    "contaParaPortao": true,
+    "decisao": null
+   },
+   "U-06": {
+    "celula": "msg-erro::a2-ef29db5bb4ac",
+    "regra": "a2-ef29db5bb4ac",
+    "idsBase": [
+     "govbr-3.7.0-foundation-global-ced823e7339b"
+    ],
+    "fonte": "fundamentos-visuais/estados.md",
+    "estrato": "semeada",
+    "classe": "DS",
+    "categoriasSeladas": [
+     "token"
+    ],
+    "tipo": "visual-token",
+    "variante": "mensagem-com-visual-selecionado",
+    "instancia": "msg-erro",
+    "posicaoNaOrdemDaClasse": 10,
+    "ancoraTexto": "mensagem 'Não foi possível salvar o país.'",
+    "construcao": {
+     "violado": true,
+     "fato": {
+      "fundo": "rgb(38, 112, 232)",
+      "marcas": 1
+     }
+    },
+    "auditoria": {
+     "resultado": "outra-clausula",
+     "via": null,
+     "achados": [
+      "EA-12",
+      "EA-13"
+     ],
+     "conformeContrario": null,
+     "porque": "EA-12 mede o fundo #2670e8 (= --blue-warm-vivid-50, o da variante) no lugar da superfície de Erro, e EA-13 mede o fa-check visível dentro da mensagem de erro, em S1: são os dois observáveis da variante. O auditor citou cores.md (a cor indica o estado), a tabela de cores do Erro (co-violação declarada, sem cláusula na base) e iconografia; a frase sorteada (estados.md › Selecionado › evitar em Message) não é citada."
+    },
+    "coviolacoes": {
+     "emRules": [
+      "a2-0b6ac0a6bc42"
+     ],
+     "fora": [
+      {
+       "unidade": "a2-90ea0bde7e04",
+       "motivo": "sem-clausula-na-base"
+      },
+      {
+       "unidade": "a2-19a22fa26e63",
+       "motivo": "sem-clausula-na-base"
+      },
+      {
+       "unidade": "a2-3c3ddc93a261",
+       "motivo": "nao-obrigacao"
+      },
+      {
+       "unidade": "a2-7ae4ad55ed25",
+       "motivo": "sem-clausula-na-base"
+      },
+      {
+       "unidade": "a2-b13bd6797498",
+       "motivo": "sem-clausula-na-base"
+      }
+     ],
+     "idsExpostosEmRules": []
+    },
+    "remedidaCega": {
+     "item": "R-11",
+     "decisao": "viola"
+    },
+    "confirmacaoCega": true,
+    "contaParaPortao": true,
+    "decisao": null
+   },
+   "U-07": {
+    "celula": "sel-continente::a2-7348bce34289",
+    "regra": "a2-7348bce34289",
+    "idsBase": [
+     "govbr-3.7.0-accessibility-select-fc1a1281fbbc"
+    ],
+    "fonte": "componentes/select__acessibilidade.md",
+    "estrato": "semeada",
+    "classe": "G",
+    "categoriasSeladas": [
+     "token",
+     "acessibilidade"
+    ],
+    "tipo": "visual-token",
+    "variante": "opcoes-texto-claro",
+    "instancia": "sel-continente",
+    "posicaoNaOrdemDaClasse": 0,
+    "ancoraTexto": "rótulos das 6 opções da lista do select 'Continente'",
+    "construcao": {
+     "violado": true,
+     "fato": {
+      "cores": [
+       "rgb(170, 170, 170)"
+      ],
+      "contrasteMin": 2.32
+     }
+    },
+    "auditoria": {
+     "resultado": "outra-clausula",
+     "via": null,
+     "achados": [
+      "EA-08",
+      "EA-09"
+     ],
+     "conformeContrario": null,
+     "porque": "EA-08 mede 2,32:1 nas 6 opções em S2 (o observável da variante) e cita cores.md 4,5:1 e e-MAG 4.1; a frase sorteada (acessibilidade do select) não é citada."
+    },
+    "coviolacoes": {
+     "emRules": [
+      "a2-2f6900335a84",
+      "a2-66fbdcf13772",
+      "a2-3fb37eb25f3c"
+     ],
+     "fora": [],
+     "idsExpostosEmRules": [
+      "emag:4.1",
+      "govbr-3.7.0-foundation-global-21b1a2733f7b"
+     ]
+    },
+    "remedidaCega": {
+     "item": "R-03",
+     "decisao": "viola"
+    },
+    "confirmacaoCega": true,
+    "contaParaPortao": false,
+    "decisao": null
+   },
+   "U-08": {
+    "celula": "inp-nome-pais::a2-328f62cfe4ce",
+    "regra": "a2-328f62cfe4ce",
+    "idsBase": [
+     "govbr-3.7.0-accessibility-input-cacdb7dbe765"
+    ],
+    "fonte": "componentes/input__acessibilidade.md",
+    "estrato": "semeada",
+    "classe": "G",
+    "categoriasSeladas": [
+     "comportamento",
+     "acessibilidade"
+    ],
+    "tipo": "comportamento",
+    "variante": "campo-readonly-ate-clique",
+    "instancia": "inp-nome-pais",
+    "posicaoNaOrdemDaClasse": 2,
+    "ancoraTexto": "campo 'Nome do país'",
+    "construcao": {
+     "violado": true,
+     "fato": {
+      "focado": "nome-pais",
+      "valor": ""
+     }
+    },
+    "auditoria": {
+     "resultado": "mesma-clausula",
+     "via": "principal",
+     "achados": [
+      "EA-04",
+      "EA-05"
+     ],
+     "conformeContrario": null,
+     "porque": "EA-04 cita a frase sorteada (input › acessibilidade, digitar logo após o foco) como 2ª cláusula; Tab → digitar → valor vazio, S0–S2. A classe da cláusula que o auditor deu (DS) difere da selada (G); vale a selada."
+    },
+    "coviolacoes": {
+     "emRules": [
+      "a2-d817fab151df",
+      "a2-acc4801af71c"
+     ],
+     "fora": [
+      {
+       "unidade": "a2-121e2f176704",
+       "motivo": "nao-obrigacao"
+      }
+     ],
+     "idsExpostosEmRules": [
+      "emag:2.1"
+     ]
+    },
+    "remedidaCega": null,
+    "confirmacaoCega": true,
+    "contaParaPortao": false,
+    "decisao": null
+   },
+   "U-09": {
+    "celula": "lst-paises::a2-5432c282d0d7",
+    "regra": "a2-5432c282d0d7",
+    "idsBase": [
+     "emag:4.3"
+    ],
+    "fonte": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+    "estrato": "semeada",
+    "classe": "G",
+    "categoriasSeladas": [
+     "acessibilidade"
+    ],
+    "tipo": "visual-token",
+    "variante": "altura-fixa-corta",
+    "instancia": "lst-paises",
+    "posicaoNaOrdemDaClasse": 18,
+    "ancoraTexto": "os 4 itens da lista 'Países Cadastrados'",
+    "construcao": {
+     "violado": true,
+     "fato": {
+      "cortados": 4,
+      "faltaPx": [
+       19,
+       19,
+       19,
+       19
+      ]
+     }
+    },
+    "auditoria": {
+     "resultado": "nao-achada",
+     "via": null,
+     "achados": [],
+     "conformeContrario": "EC-111",
+     "porque": "Nenhum achado no hospedeiro. O auditor deu o e-MAG 4.3 como CONFORME no nível da página (EC-111), medindo só rolagem horizontal e elementos além da largura a 640×450; não mediu corte DENTRO dos itens (overflow hidden), que é o observável da variante (19 px perdidos em cada um dos 4 itens). Julgamento contrário por observável diferente."
+    },
+    "coviolacoes": {
+     "emRules": [
+      "a2-a14d31901423"
+     ],
+     "fora": [],
+     "idsExpostosEmRules": []
+    },
+    "remedidaCega": {
+     "item": "R-14",
+     "decisao": "satisfaz"
+    },
+    "confirmacaoCega": false,
+    "contaParaPortao": false,
+    "decisao": null
+   }
+  },
+  "escaladas": {
+   "fonte": "tela-e2/decisoes-da-autora.md",
+   "status": "pendente"
+  },
+  "auditoria": "tela-e2/auditoria/ (cópia sem edição; auditoria.md · achados.json · conformes.json · incertos.json · medidas/)",
+  "remedida": "tela-e2/remedida-2026-11-14/ (rodar.mjs do 1º auditor na página corrigida: 12 achados, 0 novos; corrigidos.json) · tela-e2/remedida/ (2º auditor cego, pedido neutro de 14 itens com 10 iscas: 10/10 iscas satisfaz; remedida-juncao.json)",
+  "construcao": "tela-e2/construcao.md · node tela-e2/conferir-construcao.mjs (100 %)",
+  "reconciliacao": "tela-e2/reconciliacao.md · reconciliacao.json · coviolacoes.json · ancoras-referencia.json · portao.json"
+ },
+ "violations": [
+  {
+   "id": "U-01",
+   "anchor": "#btn-limpar",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "sempre",
+   "rules": [
+    "govbr-3.7.0-pattern-global-a0e5ee1b1a71",
+    "govbr-3.7.0-component-button-3b591843f42b",
+    "emag:1.4",
+    "govbr-3.7.0-component-button-77dfc156b422",
+    "emag:6.3"
+   ],
+   "categories": [
+    "estrutura"
+   ],
+   "description": "Estrato semeada · classe DS · variante secundario-a-direita-do-primario · sorteada (a2-2ac598dc24db). Limpar Campos (secundário) aparece à direita de Salvar País (primário) na barra de ações: `order: 1` na folha da página; DOM e ordem de Tab inalterados (Cancelar → Limpar → Salvar). Medido: x do Limpar 525,1 > borda direita do Salvar 509,1."
+  },
+  {
+   "id": "U-02",
+   "anchor": "#msg-orientacao .message-body",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "sempre",
+   "rules": [
+    "govbr-3.7.0-pattern-global-5dfbb109d8d4",
+    "govbr-3.7.0-component-message-3b6fb4ad1e0e",
+    "emag:3.11"
+   ],
+   "categories": [
+    "estrutura"
+   ],
+   "description": "Estrato semeada · classe DS · variante mensagem-jargao-tecnico · sorteada (a2-d6b3f0e36943). O corpo da mensagem informativa de orientação usa jargão de sistema (persistidos, banco, commit, transação, renderizada, cache, endpoint), sem explicação, no mesmo assunto do cadastro. Medido: 7 termos técnicos."
+  },
+  {
+   "id": "U-03",
+   "anchor": "#btn-ajuda",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "sempre",
+   "rules": [
+    "govbr-3.7.0-component-button-627dd3089562",
+    "govbr-3.7.0-pattern-global-35721a49577b",
+    "govbr-3.7.0-pattern-global-e3346215185f",
+    "govbr-3.7.0-foundation-global-813be193bb27",
+    "govbr-3.7.0-pattern-global-e7baadab728a"
+   ],
+   "categories": [
+    "componente"
+   ],
+   "description": "Estrato semeada · classe DS · variante circular-sem-icone · sorteada (a2-5b47246a41c1). Botão circular de ajuda (40×40) sem ícone: só o texto oculto; nome acessível mantido. Medido: 0 ícone visível, 0 pixel não branco em repouso."
+  },
+  {
+   "id": "U-04",
+   "anchor": "#inp-codigo",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "sempre",
+   "rules": [
+    "govbr-3.7.0-page-global-881fe9380b81"
+   ],
+   "categories": [
+    "tipografia"
+   ],
+   "description": "Estrato semeada · classe DS · variante fonte-do-sistema · sorteada (a2-a39f3ad397d4). O campo do código usa Arial (`font-family: Arial, Helvetica, sans-serif` na raiz .br-input pela folha da página): rótulo, campo e texto de apoio com Arial declarada e usada, não Rawline."
+  },
+  {
+   "id": "U-05",
+   "anchor": "#rad-situacao legend",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "sempre",
+   "rules": [
+    "govbr-3.7.0-component-radio-331797975ce6"
+   ],
+   "categories": [
+    "token"
+   ],
+   "description": "Estrato semeada · classe DS · variante legenda-centralizada · sorteada (a2-f838b54da560). A legenda do grupo de opções fica centralizada (legend com `width: 100%; text-align: center`): o texto começa em 296,1 px, centrado no grupo, enquanto as opções começam em 62 px. A caixa da legend continua em 62 px; o desvio é do texto. A 1ª auditoria cega deu a frase como conforme medindo a caixa (EC-062); o 2º auditor cego, no pedido neutro, mediu o texto em 296,09 px e decidiu viola (R-05)."
+  },
+  {
+   "id": "U-06",
+   "anchor": "#msg-erro",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "S1",
+   "rules": [
+    "govbr-3.7.0-foundation-global-ced823e7339b",
+    "govbr-3.7.0-foundation-global-db534e78f2b3"
+   ],
+   "categories": [
+    "token"
+   ],
+   "description": "Estrato semeada · classe DS · variante mensagem-com-visual-selecionado · sorteada (a2-ef29db5bb4ac). Em S1, a mensagem de erro (classe danger, ícone times-circle) recebe o visual do estado Selecionado: fundo --blue-warm-vivid-50 (#2670e8), ícone e texto --pure-0, e um ícone fa-check antes do título."
+  },
+  {
+   "id": "U-07",
+   "anchor": "#sel-continente .br-list .br-item label",
+   "scope": "composicao",
+   "expectedCount": 1,
+   "participantCount": 6,
+   "state": "S2",
+   "rules": [
+    "govbr-3.7.0-accessibility-select-fc1a1281fbbc",
+    "govbr-3.7.0-foundation-global-606524c94570",
+    "emag:4.1",
+    "govbr-3.7.0-foundation-global-21b1a2733f7b"
+   ],
+   "categories": [
+    "token",
+    "acessibilidade"
+   ],
+   "description": "Estrato semeada · classe G · variante opcoes-texto-claro · sorteada (a2-7348bce34289). Em S2 (lista aberta), os rótulos das 6 opções do select ficam #AAAAAA sobre branco: 2,32:1 (texto 14 px, peso 500); o item selecionado mantém a cor do core."
+  },
+  {
+   "id": "U-08",
+   "anchor": "#nome-pais",
+   "scope": "unico",
+   "expectedCount": 1,
+   "state": "sempre",
+   "rules": [
+    "govbr-3.7.0-accessibility-input-cacdb7dbe765",
+    "govbr-3.7.0-component-input-acbd0e607b75",
+    "emag:2.1"
+   ],
+   "categories": [
+    "comportamento",
+    "acessibilidade"
+   ],
+   "description": "Estrato semeada · classe G · variante campo-readonly-ate-clique · sorteada (a2-328f62cfe4ce). O campo Nome do país é `readonly` até receber um clique de ponteiro (script da página): com foco por Tab o texto digitado não entra (valor vazio)."
+  },
+  {
+   "id": "U-09",
+   "anchor": "#lst-paises .item-pais",
+   "scope": "composicao",
+   "expectedCount": 1,
+   "participantCount": 4,
+   "state": "sempre",
+   "rules": [
+    "emag:4.3",
+    "govbr-3.7.0-component-list-ffbd8612ae1b"
+   ],
+   "categories": [
+    "acessibilidade"
+   ],
+   "description": "Estrato semeada · classe G · variante altura-fixa-corta · sorteada (a2-5432c282d0d7). Os 4 itens da lista de países têm `height: 74px; overflow: hidden`: a 1280×900 nada é cortado; a 640×450 (equivalente a 200 %) o conteúdo de cada item passa 19 px da altura visível. Medida da conferência de construção (E-02), que compara scrollHeight (93 px, inclui o padding-bottom de 16 px) com a altura visível (74 px). Os dois auditores cegos julgaram conforme: a 1ª auditoria mediu só a rolagem horizontal da página (EC-111); o 2º mediu a tinta do texto inteira a 640×450 (0 px de glifo cortado; só a caixa de linha passa ~1,6 px) (R-14). confirmacaoCega: false."
+  }
+ ]
+}

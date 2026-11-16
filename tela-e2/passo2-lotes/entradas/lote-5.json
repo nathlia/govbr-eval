@@ -1,0 +1,3341 @@
+[
+ {
+  "id": "a2-3e410f36c0cd",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Ativo › Cuidados para Estado Ativo",
+  "texto": "Elementos desabilitados não podem receber Ativo.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-modal",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Desabilitado não recebe Ativo. Medida: estado/classe ativo em etapa desabilitada.",
+   "instancias": [
+    "stp-andamento"
+   ],
+   "variantes": [
+    {
+     "id": "desabilitada-ativa",
+     "descricao": "A 3ª etapa (desabilitada) também carrega o estado ativo."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-fc8874ac7e03",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Ativo › Cuidados para Estado Ativo",
+  "texto": "Não utilize em componentes que possam existir vários itens Ativos ao mesmo tempo, como em listagens com expansão.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Vários itens ativos ao mesmo tempo; o accordion da tela abre um item por vez (decisão de construção registrada no plano).",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-bfc5ebd36c20",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Ativo › Estado ativo vs selecionado",
+  "texto": "Apenas um item pode ser ativado por vez.",
+  "contexto": "Ativo: a ação geralmente é executada imediatamente após a escolha (exibir um conteúdo, mudar o tipo de alinhamento de texto...). Apenas um item pode ser ativado por vez.",
+  "antecedente": "Se a própria definição dos estado não for clara para diferenciar um estado do outro, podemos resumir o embate com o seguinte comportamento:",
+  "forca": "a-julgar",
+  "marcador": "restritivo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Num conjunto de opções, só um item ativo por vez. Medida: número de itens de aba com marcação/estilo de ativo = 1; número de etapas do step marcadas como atuais (ativas) = 1.",
+   "instancias": [
+    "tab-requerimento",
+    "stp-andamento"
+   ],
+   "variantes": [
+    {
+     "id": "duas-abas-ativas",
+     "descricao": "As abas Andamento e Documentos aparecem ambas com o estilo e a marcação de aba ativa.",
+     "instancias": [
+      "tab-requerimento"
+     ],
+     "clausula": "Apenas um item pode ser ativado por vez."
+    },
+    {
+     "id": "duas-etapas-atuais",
+     "descricao": "As etapas 2 e 3 do step aparecem ambas como etapa atual (ativa).",
+     "instancias": [
+      "stp-andamento"
+     ],
+     "clausula": "Apenas um item pode ser ativado por vez."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-76dbeded6662",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Ativo › Especificação para Estado Ativo",
+  "texto": "O estado deve ter uma alta ênfase entre os demais elementos do seu conjunto mas uma média ênfase entre os outros elementos em uma interface.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Estado ativo com alta ênfase no conjunto. Medida: o item ativo se distingue (classe e aparência) dos demais do conjunto.",
+   "instancias": [
+    "tab-requerimento",
+    "stp-andamento"
+   ],
+   "variantes": [
+    {
+     "id": "ativa-sem-estado",
+     "descricao": "A aba ativa perde o estado ativo e fica igual às interativas (o painel continua trocando).",
+     "instancias": [
+      "tab-requerimento"
+     ]
+    },
+    {
+     "id": "atual-sem-destaque",
+     "descricao": "A etapa atual fica igual às concluídas, sem o destaque do estado ativo.",
+     "instancias": [
+      "stp-andamento"
+     ]
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-7ecb601ffa09",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Ativo › Especificação para Estado Ativo",
+  "texto": "Tabela de especificação — Estados › Ativo › Especificação para Estado Ativo",
+  "contexto": "Element · Property · Token/Value || background/foreground/border · color · --blue-warm-vivid-80 || background/foreground/border · color · --pure-0 || border · width · --surface-width-lg || border · style · solid",
+  "antecedente": "Exemplos do estado ativo sendo aplicado em um texto e um objeto, tanto no fundo claro como no escuro.",
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Tabela do estado Ativo: cor --blue-warm-vivid-80, borda --surface-width-lg (4px) sólida. Na tela: a aba ativa. Medida: border-bottom-width/style e color computados do item de aba ativo.",
+   "instancias": [
+    "tab-requerimento"
+   ],
+   "variantes": [
+    {
+     "id": "ativo-borda-fina",
+     "descricao": "A marcação da aba ativa fica com borda inferior de 1px em vez de 4px (--surface-width-lg), mesma cor.",
+     "clausula": "border · width · --surface-width-lg"
+    },
+    {
+     "id": "ativo-cor-fora",
+     "descricao": "O texto e a borda da aba ativa ficam #1351B4 (--blue-warm-vivid-70) em vez de --blue-warm-vivid-80.",
+     "clausula": "background/foreground/border · color · --blue-warm-vivid-80"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-99d29fc4b1bf",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Selecionado › Evitar estado selecionado",
+  "texto": "Componentes de Navegação (Menu, Abas...)",
+  "contexto": null,
+  "antecedente": "O estado Selecionado não pode ser aplicado nos seguintes componentes:",
+  "forca": "proibida",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Proibição herdada de \"O estado Selecionado não pode ser aplicado nos seguintes componentes\" a navegação (Abas). Estado Selecionado = fundo --blue-warm-vivid-50 + ícone fa-check. Medida: nenhum item de aba com esse fundo/ícone de seleção.",
+   "instancias": [
+    "tab-requerimento"
+   ],
+   "variantes": [
+    {
+     "id": "aba-com-selecao",
+     "descricao": "A aba ativa passa a exibir fundo azul --blue-warm-vivid-50 e um ícone de check (estado Selecionado) no lugar do estilo de aba ativa.",
+     "clausula": "Componentes de Navegação (Menu, Abas...)"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-b9005476f6a4",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Selecionado › Evitar estado selecionado",
+  "texto": "Modal",
+  "contexto": null,
+  "antecedente": "O estado Selecionado não pode ser aplicado nos seguintes componentes:",
+  "forca": "proibida",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há modal na tela.",
+   "origem": "lote-C.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-a02a690a8d63",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Selecionado › Evitar estado selecionado",
+  "texto": "Tooltip",
+  "contexto": null,
+  "antecedente": "O estado Selecionado não pode ser aplicado nos seguintes componentes:",
+  "forca": "proibida",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Proibição herdada de \"O estado Selecionado não pode ser aplicado nos seguintes componentes\" a tooltip. Medida: tooltip aberta sem fundo --blue-warm-vivid-50 e sem ícone fa-check de seleção.",
+   "instancias": [
+    "tip-prazo",
+    "tip-protocolo"
+   ],
+   "variantes": [
+    {
+     "id": "tooltip-selecionada",
+     "descricao": "Ao abrir, a tooltip aparece com fundo azul --blue-warm-vivid-50 e um ícone de check ao lado do texto (visual de Selecionado).",
+     "clausula": "Tooltip"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-04639abccf53",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Selecionado › Evitar estado selecionado",
+  "texto": "Button",
+  "contexto": null,
+  "antecedente": "O estado Selecionado não pode ser aplicado nos seguintes componentes:",
+  "forca": "proibida",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Proibição herdada de \"O estado Selecionado não pode ser aplicado nos seguintes componentes\" botões. Medida: botões embutidos (cabeçalho de item do accordion, gatilho da tooltip) não recebem fundo --blue-warm-vivid-50 + fa-check após acionados.",
+   "instancias": [
+    "acc-duvidas",
+    "tip-prazo",
+    "tip-protocolo"
+   ],
+   "variantes": [
+    {
+     "id": "botao-selecionado",
+     "descricao": "Depois de acionado, o botão do cabeçalho do item aberto do accordion (ou o botão-gatilho da tooltip) fica com fundo --blue-warm-vivid-50 e ícone de check, como item selecionado.",
+     "clausula": "Button"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-ef29db5bb4ac",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Selecionado › Evitar estado selecionado",
+  "texto": "Message",
+  "contexto": null,
+  "antecedente": "O estado Selecionado não pode ser aplicado nos seguintes componentes:",
+  "forca": "proibida",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Proibição herdada de \"O estado Selecionado não pode ser aplicado nos seguintes componentes\" message. Medida: a mensagem não exibe fundo --blue-warm-vivid-50 nem ícone fa-check de seleção.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "mensagem-selecionada",
+     "descricao": "A mensagem recebe fundo --blue-warm-vivid-50 e ícone de check de seleção à esquerda do texto, além do seu ícone de tipo.",
+     "clausula": "Message"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-9bcf4f01a6bb",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Selecionado › Especificação para Estado Selecionado",
+  "texto": "Cor de fundo e um elemento gráfico devem ser utilizados para representar o estado.",
+  "contexto": "Cor de fundo e um elemento gráfico devem ser utilizados para representar o estado. O elemento gráfico pode ser um ícone que represente seleção/escolha, ou os componentes checkbox ou radio.",
+  "antecedente": "O estado selecionado deve ser facilmente identificável.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Selecionado = cor de fundo + elemento gráfico. Medida: no item escolhido, fundo e marca gráfica.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "selecionado-so-fundo",
+     "descricao": "O item escolhido mostra só a cor de fundo, sem a marca gráfica."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-0895138d72a0",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Selecionado › Especificação para Estado Selecionado",
+  "texto": "Tabela de especificação — Estados › Selecionado › Especificação para Estado Selecionado",
+  "contexto": "Element · Property · Token/Value || background/foreground · color · --blue-warm-vivid-50 || icon · class · fa-check",
+  "antecedente": "Exemplo do estado selecionado sendo aplicado em um texto e um objeto, tanto no fundo claro como no escuro.",
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Tabela do estado Selecionado: fundo --blue-warm-vivid-50 (e marca gráfica, já tratada em a2-9bcf4f01a6bb). Na tela: o item escolhido na lista do select. Medida: background-color computado do item escolhido = --blue-warm-vivid-50.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "selecionado-fundo-claro",
+     "descricao": "O item escolhido na lista do select fica com fundo #D4E5FF (--blue-warm-vivid-10) em vez de --blue-warm-vivid-50, mantendo a marca gráfica.",
+     "clausula": "background/foreground · color · --blue-warm-vivid-50"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-c401529da18a",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastando › Cuidados para Estado Arrastando",
+  "texto": "Só pode existir um elemento com Arrastando por vez na tela.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "restritivo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há elementos da página arrastáveis (estado Arrastando).",
+   "origem": "lote-C.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-0bc9d331721d",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastando › Cuidados para Estado Arrastando",
+  "texto": "Quando vários elementos precisarem ser arrastados, deve existir uma solução que agrupe (visualmente) todos os elementos em uma única solução.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Arrastar objeto; não há objeto arrastável na tela.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-7a4cc459f05c",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastando › Cuidados para Estado Arrastando",
+  "texto": "Elementos desabilitados não podem receber Arrastando.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-modal",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Arrastar objeto; não há objeto arrastável na tela.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-94c20d374840",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastando › Estado arrastando vs arrastar",
+  "texto": "É importante que o usuário entenda quais elementos da tela podem ser arrastados.",
+  "contexto": "É importante que o usuário entenda quais elementos da tela podem ser arrastados. Portanto, enquanto o Arrastar é o feedback que determina quais os elementos que podem ser arrastados (antes da ação), o estado Arrastando é o feedback da ação do usuário sobre o objeto em questão (durante a ação).",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há elementos da página que possam ser arrastados (o upload recebe arquivos do sistema, não elementos da tela).",
+   "origem": "lote-C.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-8e637084832f",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastando › Especificação para Estado Arrastando",
+  "texto": "O feedback do objeto \"agarrado\" deve ser claro, mostrando a diferença entre outros objetos semelhantes na tela.",
+  "contexto": "O feedback do objeto \"agarrado\" deve ser claro, mostrando a diferença entre outros objetos semelhantes na tela. Como se moverá \"acima\" de outros itens, uma sombra e um contorno deve ser utilizado para garantir a mudança do Estado tanto em um fundo claro como no escuro; a angulação e a opacidade do objeto também deve ser alterada para gerar um efeito \"fantasma\".",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Arrastar objeto; não há objeto arrastável na tela.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-a2cda6883389",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastando › Especificação para Estado Arrastando",
+  "texto": "Como se moverá \"acima\" de outros itens, uma sombra e um contorno deve ser utilizado para garantir a mudança do Estado tanto em um fundo claro como no escuro; a angulação e a opacidade do objeto também deve ser alterada para gerar um efeito \"fantasma\".",
+  "contexto": "O feedback do objeto \"agarrado\" deve ser claro, mostrando a diferença entre outros objetos semelhantes na tela. Como se moverá \"acima\" de outros itens, uma sombra e um contorno deve ser utilizado para garantir a mudança do Estado tanto em um fundo claro como no escuro; a angulação e a opacidade do objeto também deve ser alterada para gerar um efeito \"fantasma\".",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Arrastar objeto; não há objeto arrastável na tela.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-280e09b93085",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastando › Especificação para Estado Arrastando",
+  "texto": "A cor utilizada (tanto no contorno como na sombra) deve ser a mesma utilizada no Estado Interativo.",
+  "contexto": null,
+  "antecedente": "O feedback do objeto \"agarrado\" deve ser claro, mostrando a diferença entre outros objetos semelhantes na tela. Como se moverá \"acima\" de outros itens, uma sombra e um contorno deve ser utilizado para garantir a mudança do Estado tanto em um fundo claro como no escuro; a angulação e a opacidade do objeto também deve ser alterada para gerar um efeito \"fantasma\".",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Arrastar objeto; não há objeto arrastável na tela.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-1716781bd268",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastando › Especificação para Estado Arrastando",
+  "texto": "O cursor do mouse deve ser alterado para a \"mão fechada\".",
+  "contexto": null,
+  "antecedente": "A cor utilizada (tanto no contorno como na sombra) deve ser a mesma utilizada no Estado Interativo.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Arrastar objeto; não há objeto arrastável na tela.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-6bbf1a76d8a1",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastando › Especificação para Estado Arrastando",
+  "texto": "Tabela de especificação — Estados › Arrastando › Especificação para Estado Arrastando",
+  "contexto": "Element · Property · Token/Value || border · color · Cor do Estado Interativo || border · width · --surface-width-md || border · style · solid || background · shadow-offset-x · --surface-offset-none || background · shadow-offset-y · --surface-offset-md || background · shadow-blur · --surface-blur-lg || background · shadow-color · Cor do Estado Interativo || background · shadow-opacity · --surface-opacity-sm || background/foreground · opacity · --surface-opacity-xl || background/foreground · rotate · -5° || cursor · cursor · grabbing",
+  "antecedente": "Exemplo do estado arrastando sendo aplicado em um texto e um objeto, tanto no fundo claro como no escuro.",
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Estado Arrastando; não há objeto arrastável na tela.",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-532e06e9b442",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastar › Cuidados para Estado Arrastar",
+  "texto": "O feedback Arrastar é somente para objetos que possam ser movimentados (com o evento de \"agarrar\"), não incluindo, por exemplo, elementos redimensionáveis (neste caso, outras características de respostas devem ser estudadas).",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Arrastar objeto; não há objeto arrastável na tela.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-0ac55a690dad",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastar › Cuidados para Estado Arrastar",
+  "texto": "Elementos desabilitados não podem receber Arrastar (veja Especificação maiores detalhes).",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-modal",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Arrastar objeto; não há objeto arrastável na tela.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-158f519cdfea",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastar › Estado arrastar vs arrastando",
+  "texto": "É importante que o usuário entenda quais elementos da tela podem ser arrastados.",
+  "contexto": "É importante que o usuário entenda quais elementos da tela podem ser arrastados. Portanto, enquanto o Arrastar é o feedback que determina quais os elementos que podem ser arrastados (antes da ação), o estado Arrastando é o feedback da ação do usuário sobre o objeto em questão (durante a ação).",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há elementos da página que possam ser arrastados.",
+   "origem": "lote-C.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-6ba31c373664",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastar › Especificação para Estado Arrastar",
+  "texto": "O cursor estilizado deve ser exibido somente quando o mesmo estiver posicionado sobre o elemento.",
+  "contexto": "Prefira o posicionamento do ícone a esquerda e/ou no topo do elemento. O cursor estilizado deve ser exibido somente quando o mesmo estiver posicionado sobre o elemento. Em elemento desabilitados o cursor não sofre mudança.",
+  "antecedente": "No Design System escolhemos o ícone de \"6 círculos\" e o cursor do mouse \"mão totalmente aberta\" como elementos que simbolizam este estado Arrastar.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Arrastar objeto; não há objeto arrastável na tela.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-065bc0d01f43",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastar › Especificação para Estado Arrastar",
+  "texto": "Tabela de especificação — Estados › Arrastar › Especificação para Estado Arrastar",
+  "contexto": "Element · Property · Token/Value || icon · class · grip-vertical || cursor · cursor · grab",
+  "antecedente": "Exemplo do estado arrastar sendo aplicado em um texto e um objeto, tanto no fundo claro como no escuro.",
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Estado Arrastar; não há objeto arrastável na tela.",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-253f67dc1b85",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Dropzone › Cuidados para Dropzone",
+  "texto": "Utilize o estado Dropzone Ativo (veja adiante) para gerar uma resposta clara para o usuário.",
+  "contexto": "A área/zona de \"soltura\" do elemento pode ser maior, mas não menor, do que a área visível/exibida na tela. Utilize o estado Dropzone Ativo (veja adiante) para gerar uma resposta clara para o usuário.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "A área de soltura do upload deve responder com o estado Dropzone Ativo quando um arquivo é arrastado sobre ela. Medida: disparar dragenter/dragover com DataTransfer de arquivo sobre a área e verificar mudança visual (borda/classe de dropzone ativo).",
+   "instancias": [
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "arrastar-sem-resposta",
+     "descricao": "Ao arrastar um arquivo sobre a área do upload, nada muda no visual (sem estado de dropzone ativo), embora soltar ainda funcione.",
+     "clausula": "Utilize o estado Dropzone Ativo (veja adiante) para gerar uma resposta clara para o usuário."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-b1de44d95577",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Dropzone › Especificação para Dropzone",
+  "texto": "Tabela de especificação — Estados › Dropzone › Especificação para Dropzone",
+  "contexto": "Element · Property · Token/Value || border · color · Cor do Estado Interativo || border · width · --surface-width-sm || border · style · dashed",
+  "antecedente": "Exemplo do estado dropzone sendo aplicado em um texto e um objeto, tanto no fundo claro como no escuro.",
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Tabela do Dropzone: borda na cor de interação, --surface-width-sm, estilo dashed. Na tela: a área de transferência do upload. Medida: border-style/width/color computados da área.",
+   "instancias": [
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "dropzone-borda-solida",
+     "descricao": "A borda da área de transferência do upload fica solid em vez de dashed, mesma cor e espessura.",
+     "clausula": "border · style · dashed"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-57fb3e795aae",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Dropzone ativo › Cuidados para Dropzone Ativo",
+  "texto": "Só pode existir um área com dropzone ativo por vez na tela.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "restritivo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "A tela tem uma única área de dropzone (o upload); não há como haver duas ativas.",
+   "origem": "lote-C.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-9b8acd4a8f59",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Dropzone ativo › Cuidados para Dropzone Ativo",
+  "texto": "Elementos desabilitados não podem receber dropzone ativo.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-modal",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Dropzone desabilitada; o upload não fica desabilitado.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-5612fb499d07",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Dropzone ativo › Estado dropzone ativo e arrastando",
+  "texto": "Sempre que estiver Arrastando um objeto sobre uma dropzone, o estado Dropzone Ativo deve ser imediatamente exibido!",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Dropzone ativo exibido ao arrastar sobre a área. Medida: classe/estilo da área depois de dragenter sintético.",
+   "instancias": [
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "sem-dropzone-ativo",
+     "descricao": "Arrastar um arquivo sobre a área não muda a aparência dela."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-33f8d78aa04b",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Dropzone ativo › Estado dropzone ativo e arrastando › Especificação para Dropzone Ativo e Arrastando",
+  "texto": "Tabela de especificação — Estados › Dropzone ativo › Estado dropzone ativo e arrastando › Especificação para Dropzone Ativo e Arrastando",
+  "contexto": "Element · Property · Token/Value || background · color · Cor do Estado Interativo || background · opacity · --surface-opacity-sm || cursor · cursor · copy",
+  "antecedente": "Exemplo do estado dropzone ativo sendo aplicado em um texto e um objeto, tanto no fundo claro como no escuro.",
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Tabela do Dropzone ativo: fundo na cor do estado Interativo com opacidade --surface-opacity-sm, cursor copy. A exibição do estado já está aceita (a2-5612fb499d07); aqui é o valor. Medida: com dragenter/dragover de arquivo sobre a área, background computado (cor e alfa).",
+   "instancias": [
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "dropzone-ativo-cor-fora",
+     "descricao": "Ao arrastar um arquivo sobre a área do upload, o overlay de dropzone ativo aparece em verde (--green-cool-vivid-50) em vez da cor de interação.",
+     "clausula": "background · color · Cor do Estado Interativo"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-497723f9f278",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Visitado › Especificação para Visitado",
+  "texto": "Além de herdar características básicas de hiperlinks, é necessário o uso de uma cor diferenciada para realizar o feedback de forma eficiente.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "necessario",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Cor de visitado exige hiperlinks; não há links no conteúdo sorteável.",
+   "origem": "lote-C.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-4de381049bd4",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Visitado › Especificação para Visitado",
+  "texto": "Por motivos de legibilidade, a cor em fundos Escuros deve ser alterada.",
+  "contexto": null,
+  "antecedente": "Além de herdar características básicas de hiperlinks, é necessário o uso de uma cor diferenciada para realizar o feedback de forma eficiente.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Fundo escuro; não há.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-479f5042a47c",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Visitado › Especificação para Visitado",
+  "texto": "Tabela de especificação — Estados › Visitado › Especificação para Visitado",
+  "contexto": "Element · Property · Token/Value || Text (Sobre um fundo Claro) · color · --blue-warm-vivid-80 || Text (Sobre um fundo Escuro) · color · --gray-20",
+  "antecedente": "Exemplo do estado visitado sendo aplicado em um texto, tanto no fundo claro como no escuro.",
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Estado Visitado é de hiperlinks; não há links no conteúdo sorteável.",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-235056fad007",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Ligado e Desligado › Especificação para Ligado e Desligado",
+  "texto": "Tabela de especificação — Estados › Ligado e Desligado › Especificação para Ligado e Desligado",
+  "contexto": "Element · Property · Token/Value || background/foreground (Ligado) · color · --blue-warm-vivid-40 || background/foreground (Desligado) · color · --gray-40",
+  "antecedente": "Exemplo dos estados ligado e desligado sendo aplicado em um texto e um objeto, tanto no fundo claro como no escuro.",
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Tabela Ligado/Desligado: ligado = --blue-warm-vivid-40. Na tela: os dois switches. Medida: cor computada da chave do switch ligado (conforme: #5992ed = --blue-warm-vivid-40, tela-a2/construtibilidade/resultado.json). Conflito registrado na conferência de construtibilidade: a linha Desligado desta tabela (--gray-40) contradiz a tabela Cor do próprio Switch (desligada --gray-20, a2-86176aff4a89); o core 3.7.0 desenha a chave desligada em #ccc = --gray-20 (medido). A página segue a especificação do componente (mais específica) e o core; a linha Desligado é conflito declarado, não defeito, e não tem variante.",
+   "instancias": [
+    "swt-aviso-email",
+    "swt-aviso-sms"
+   ],
+   "variantes": [
+    {
+     "id": "ligado-cor-fora",
+     "descricao": "Quando ligado, o switch usa #1351B4 (--blue-warm-vivid-70) em vez de --blue-warm-vivid-40.",
+     "clausula": "background/foreground (Ligado) · color · --blue-warm-vivid-40"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "interacao",
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-2"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-fe133882c34a",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Erro › Especificação para Estado Erro",
+  "texto": "Tabela de especificação — Estados › Erro › Especificação para Estado Erro",
+  "contexto": "Element · Property · Token/Value || background/foreground · color · --red-vivid-50 || icon · class · times-circle",
+  "antecedente": "Exemplo do estado erro sendo aplicado em um texto e um objeto, tanto no fundo claro como no escuro.",
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Tabela do estado Erro: cor --red-vivid-50 e ícone times-circle (o ícone já está em a2-952e88a5af0d). Na tela: a mensagem de erro. Medida: color computado do ícone da mensagem de erro = --red-vivid-50 (#E52207).",
+   "instancias": [
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "erro-vermelho-fora",
+     "descricao": "O ícone da mensagem de erro fica #A23737 (--red-60) em vez de #E52207 (--red-vivid-50).",
+     "clausula": "background/foreground · color · --red-vivid-50"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-a8421dd4efff",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Alerta › Especificação para Estado Alerta",
+  "texto": "Tabela de especificação — Estados › Alerta › Especificação para Estado Alerta",
+  "contexto": "Element · Property · Token/Value || background/foreground · color · --yellow-vivid-20 || icon · class · exclamation-triangle",
+  "antecedente": "Exemplo do estado alerta sendo aplicado em um texto e um objeto, tanto no fundo claro como no escuro.",
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Tabela do estado Alerta: cor --yellow-vivid-20 e ícone exclamation-triangle (ícone já em a2-952e88a5af0d). Na tela: a mensagem de pendência. Medida: color computado do ícone da mensagem = --yellow-vivid-20 (#FFCD07).",
+   "instancias": [
+    "msg-pendencia"
+   ],
+   "variantes": [
+    {
+     "id": "alerta-amarelo-fora",
+     "descricao": "O ícone da mensagem de alerta fica --orange-vivid-30 (laranja) em vez de #FFCD07 (--yellow-vivid-20).",
+     "clausula": "background/foreground · color · --yellow-vivid-20"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-622c6c318ee6",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Sucesso › Especificação para Estado Sucesso",
+  "texto": "Tabela de especificação — Estados › Sucesso › Especificação para Estado Sucesso",
+  "contexto": "Element · Property · Token/Value || background/foreground · color · --green-cool-vivid-50 || icon · class · check-circle",
+  "antecedente": "Exemplo do estado sucesso sendo aplicado em um texto e um objeto, tanto no fundo claro como no escuro.",
+  "forca": "a-julgar",
+  "marcador": "tabela-especificacao",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Tabela do estado Sucesso: cor --green-cool-vivid-50 e ícone check-circle. Na tela: o marcador de concluído da 1ª etapa do step (data-alert=\"success\"). Medida: color computado do marcador = #168821 e classe/conteúdo do ícone.",
+   "instancias": [
+    "stp-andamento"
+   ],
+   "variantes": [
+    {
+     "id": "sucesso-verde-fora",
+     "descricao": "O marcador de concluído da 1ª etapa fica em --green-50 (família Green) em vez de #168821 (--green-cool-vivid-50).",
+     "clausula": "background/foreground · color · --green-cool-vivid-50"
+    },
+    {
+     "id": "sucesso-icone-fora",
+     "descricao": "O marcador de concluído da 1ª etapa usa o ícone check (sem círculo) em vez de check-circle.",
+     "clausula": "icon · class · check-circle"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-27cf363853e4",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Princípios › Acessibilidade",
+  "texto": "Caso as especificações contidas no estado forem insuficientes para promover um bom contraste entre fundo e texto/ícone, inverta as cores do elemento.",
+  "contexto": "Dependendo do fundo aplicado, o estado do componente deve ser revisto para atender a todos os princípios estabelecidos dos estados. Caso as especificações contidas no estado forem insuficientes para promover um bom contraste entre fundo e texto/ícone, inverta as cores do elemento. Se mesmo assim não houver um contraste satisfatório, utilize as informações localizadas do Fundamento Cores como guia para atender suas necessidades.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Condição (especificação do estado insuficiente para contraste) não ocorre: a tela só tem fundo claro com os tokens do estado.",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-143bf14a2ef8",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Interativo › Especificação para Estado Interativo",
+  "texto": "Para que hiperlinks sejam destacados utilize underline.",
+  "contexto": "Para que hiperlinks sejam destacados utilize underline. Esse recurso pode ser dispensado nos casos em que a legibilidade fique comprometida.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Sublinhado de hiperlinks; não há links no conteúdo sorteável.",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-6b21a16d1975",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastando › Cuidados para Estado Arrastando",
+  "texto": "Arrastando não sofre herança do estado Pressionado.",
+  "contexto": "- Arrastando não sofre herança do estado Pressionado.",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Estado Arrastando; não há objeto arrastável na tela.",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-a08500e3b759",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastar › Especificação para Estado Arrastar",
+  "texto": "No Design System escolhemos o ícone de \"6 círculos\" e o cursor do mouse \"mão totalmente aberta\" como elementos que simbolizam este estado Arrastar.",
+  "contexto": "No Design System escolhemos o ícone de \"6 círculos\" e o cursor do mouse \"mão totalmente aberta\" como elementos que simbolizam este estado Arrastar.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone e cursor do estado Arrastar; não há objeto arrastável na tela.",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-98243a6d8f3a",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Arrastar › Especificação para Estado Arrastar",
+  "texto": "Em elemento desabilitados o cursor não sofre mudança.",
+  "contexto": "Prefira o posicionamento do ícone a esquerda e/ou no topo do elemento. O cursor estilizado deve ser exibido somente quando o mesmo estiver posicionado sobre o elemento. Em elemento desabilitados o cursor não sofre mudança.",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Cursor do estado Arrastar em desabilitados; não há objeto arrastável na tela.",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-590d318946bc",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Dropzone › Cuidados para Dropzone",
+  "texto": "A área/zona de \"soltura\" do elemento pode ser maior, mas não menor, do que a área visível/exibida na tela.",
+  "contexto": "- A área/zona de \"soltura\" do elemento pode ser maior, mas não menor, do que a área visível/exibida na tela. Utilize o estado Dropzone Ativo (veja adiante) para gerar uma resposta clara para o usuário.",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "A zona de soltura não pode ser menor que a área visível do dropzone. Medida: disparar dragenter/dragover/drop com arquivo perto dos cantos da área tracejada do upload e ver se a área responde.",
+   "instancias": [
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "soltura-menor",
+     "descricao": "Só o botão central do upload aceita o arquivo arrastado; perto das bordas da área tracejada visível nada acontece (sem dropzone ativo e sem receber o arquivo).",
+     "clausula": "A área/zona de \"soltura\" do elemento pode ser maior, mas não menor, do que a área visível/exibida na tela."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-46523775b9da",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/estados.md",
+  "secao": "Estados › Erro",
+  "texto": "Importante que o estado persista até até que seja resolvido o erro.",
+  "contexto": "Importante que o estado persista até até que seja resolvido o erro.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "O estado de erro persiste até o erro ser resolvido. Na tela: a mensagem de erro do envio sem arquivo (S2). Medida: esperar sem alterar o formulário e verificar que a mensagem de erro continua exibida.",
+   "instancias": [
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "erro-some-sozinho",
+     "descricao": "A mensagem de erro do envio desaparece sozinha 4 segundos depois de exibida, sem que nenhum arquivo tenha sido escolhido.",
+     "clausula": "Importante que o estado persista até até que seja resolvido o erro."
+    }
+   ],
+   "tipo": "comportamento",
+   "caminhoDeteccao": [
+    "interacao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-e7608cf1c46d",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/grid.md",
+  "secao": "Grid › Comportamentos › 2. Sangria na Grid (Bleed)",
+  "texto": "Quando a sangria na grid acontece, a largura do box/container do elemento deve ocupar todo o espaço da margem enquanto o conteúdo informativo permanece dentro das colunas.",
+  "contexto": null,
+  "antecedente": "As margens são o espaço de segurança entre o conteúdo e as bordas direita e esquerda de uma tela. Por padrão, os elementos dentro da grid nunca devem ultrapassar as margens. Porém, alguns componentes podem ter elementos que quebram essa regra e ocupam o espaço da margem, é o que chamamos de sangria na grid.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Sangria; não há.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-7cf0838736be",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/grid.md",
+  "secao": "Grid › Comportamentos › 2. Sangria na Grid (Bleed)",
+  "texto": "Atenção: somente elementos com funções visuais podem utilizar a sangria (como um container/background, por exemplo).",
+  "contexto": "Atenção: somente elementos com funções visuais podem utilizar a sangria (como um container/background, por exemplo). Os conteúdos informativos devem respeitar as margens da grid.",
+  "antecedente": "Quando a sangria na grid acontece, a largura do box/container do elemento deve ocupar todo o espaço da margem enquanto o conteúdo informativo permanece dentro das colunas.",
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Em 1280, só fundos/containers podem invadir a margem da grid (sangria); o conteúdo informativo fica dentro das margens. Medida: getBoundingClientRect do texto/células da instância contido na área de conteúdo do container (left/right dentro das margens da grid).",
+   "instancias": [
+    "crd-resumo",
+    "tbl-movimentacoes",
+    "msg-pendencia"
+   ],
+   "variantes": [
+    {
+     "id": "conteudo-na-sangria",
+     "descricao": "O card de resumo (ou a tabela, ou a mensagem de pendência) passa a ocupar a largura total da janela e seu texto começa encostado na borda esquerda da viewport, invadindo a margem da grid.",
+     "clausula": "Os conteúdos informativos devem respeitar as margens da grid."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-6a99b79819ae",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/grid.md",
+  "secao": "Grid › Comportamentos › 2. Sangria na Grid (Bleed)",
+  "texto": "Os conteúdos informativos devem respeitar as margens da grid.",
+  "contexto": "Atenção: somente elementos com funções visuais podem utilizar a sangria (como um container/background, por exemplo). Os conteúdos informativos devem respeitar as margens da grid.",
+  "antecedente": "Quando a sangria na grid acontece, a largura do box/container do elemento deve ocupar todo o espaço da margem enquanto o conteúdo informativo permanece dentro das colunas.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Conteúdo dentro das margens da grid. Medida: borda do elemento contra a margem do contêiner da grid.",
+   "instancias": [
+    "tbl-movimentacoes",
+    "crd-resumo"
+   ],
+   "variantes": [
+    {
+     "id": "ultrapassa-margem",
+     "descricao": "A instância ganha margem negativa e passa da margem da grid."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-386b2c116eb3",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/grid.md",
+  "secao": "Grid › Comportamentos › 4. Objetos Temporários",
+  "texto": "Observação: é importante que o elemento temporário esteja localizado próxima da área de conteúdo (Max-width) ou no limite do tamanho mínimo da margem da grid principalmente quando utilizadas grids fixas que podem possuir margens muito extensas.",
+  "contexto": null,
+  "antecedente": "Objetos temporários são elementos ou regiões que surgem temporariamente. Podem ser ocultados ou visualizados ao interagir com um item da interface. Podem ser categorizados em flutuantes ou persistentes.",
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Objeto temporário (tooltip flutuante) aparece junto à área de conteúdo (max-width do container), não deslocado para longe dela. Medida: getBoundingClientRect da tooltip aberta dentro da área de conteúdo do container (ou no limite da margem) e junto ao gatilho.",
+   "instancias": [
+    "tip-prazo",
+    "tip-protocolo"
+   ],
+   "variantes": [
+    {
+     "id": "tooltip-fora-da-area",
+     "descricao": "A tooltip abre fixada no canto superior direito da janela, sobre o cabeçalho e fora da área de conteúdo, longe do gatilho no card.",
+     "clausula": "é importante que o elemento temporário esteja localizado próxima da área de conteúdo (Max-width) ou no limite do tamanho mínimo da margem da grid"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra",
+    "interacao"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-8dbdbd523f41",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Experiência Única",
+  "texto": "Então as características gráficas, como preenchimento, peso visual devem ser preservadas no momento de construção de novos ícones.",
+  "contexto": "Além da diversidade, foi considerado que o Font Awesome traria uma padronização visual dos ícones bastante importante no processo de reconhecimento e memorização pelos usuários. Optou-se pelo uso dos estilos solid (style prefix: fas) e a brand (style prefix: fab). Então as características gráficas, como preenchimento, peso visual devem ser preservadas no momento de construção de novos ícones.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Construção de ícone novo; não há.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-952e88a5af0d",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Experiência Única",
+  "texto": "Sendo assim, é imprescindível que o designer e o desenvolvedor priorizem a utilização dos ícones, como demonstrado na Tabela de Orientações de Uso.",
+  "contexto": "Sendo assim, é imprescindível que o designer e o desenvolvedor priorizem a utilização dos ícones, como demonstrado na Tabela de Orientações de Uso. É fundamental atribuir os significados recomendados na tabela, evitando duplo sentido e facilitando o reconhecimento e memorização por parte do usuário.",
+  "antecedente": "Espera-se por tanto, que o padrão gráfico dos ícones por ser utilizado em vários sistemas do governo federal, passe a exercer um papel importante no reconhecimento dos usuários, no que diz respeito a interfaces governamentais.",
+  "forca": "obrigatoria",
+  "marcador": "necessario",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ícones com os significados da Tabela de Orientações de Uso (texto): Mensagem Alerta = fa-exclamation-triangle, Mensagem Erro = fa-times-circle, Expandir/Retrair = fa-chevron-down/up, Upload = fa-upload. Medida: classe do ícone em cada instância.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno",
+    "acc-duvidas",
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "icone-de-tipo-trocado",
+     "descricao": "A mensagem de alerta usa o ícone de mensagem informativa (fa-info-circle) e a de erro usa o de sucesso (fa-check-circle).",
+     "instancias": [
+      "msg-pendencia",
+      "msg-retorno"
+     ],
+     "clausula": "É fundamental atribuir os significados recomendados na tabela"
+    },
+    {
+     "id": "icone-fora-da-tabela",
+     "descricao": "O indicador de expandir do accordion usa fa-plus em vez de chevron, e o botão do upload usa fa-paperclip em vez de fa-upload.",
+     "instancias": [
+      "acc-duvidas",
+      "upl-documento"
+     ],
+     "clausula": "priorizem a utilização dos ícones, como demonstrado na Tabela de Orientações de Uso"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-db50df136f86",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Eficiência e Clareza",
+  "texto": "Quando utilizado como um elemento de ação (seja um hiperlink, um botão ou qualquer outro elemento interativo) é importante que o ícone represente a ação a ser executada.",
+  "contexto": null,
+  "antecedente": "Para uma melhor legibilidade é recomendado que quando possível um label ou hint apareça ao lado do ícone reforçando a ideia a que foi atribuído.",
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ícone de elemento de ação representa a ação executada (R-ED b: caso flagrante e oposto). Medida: classe do ícone do botão vs ação (Fechar = fa-times; abrir lista = chevron/caret para baixo).",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno",
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "icone-de-outra-acao",
+     "descricao": "O botão Fechar da mensagem mostra um ícone de lixeira (fa-trash); o botão que abre a lista do select mostra um ícone de download.",
+     "clausula": "é importante que o ícone represente a ação a ser executada"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-1d6a18d52408",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Acessibilidade › 1. Ícones Decorativos",
+  "texto": "Se os ícones são puramente decorativos é necessário adicionar manualmente um atributo aria-hidden a cada um deles para que sejam acessíveis.",
+  "contexto": null,
+  "antecedente": "São usados apenas para reforço visual ou de branding. Se forem removidos da página, os usuários ainda entenderiam e poderiam utilizar a página.",
+  "forca": "obrigatoria",
+  "marcador": "necessario",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ícones decorativos (ao lado de texto que já diz o mesmo) recebem aria-hidden. Medida: atributo aria-hidden nos <i> do chevron do cabeçalho do accordion e do ícone do botão de escolher arquivo.",
+   "instancias": [
+    "acc-duvidas",
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "decorativo-exposto",
+     "descricao": "O ícone de chevron do cabeçalho do item do accordion (ou o ícone ao lado do texto do botão do upload) fica sem aria-hidden.",
+     "clausula": "é necessário adicionar manualmente um atributo aria-hidden a cada um deles"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-76c8506bbc99",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Acessibilidade › 2. Ícones Semânticos",
+  "texto": "Atributo aria-hidden.",
+  "contexto": null,
+  "antecedente": "Se os ícones tiverem significado semântico, é preciso adicionar manualmente algumas coisas para que ele seja acessado apropriadamente:",
+  "forca": "obrigatoria",
+  "marcador": "herdado-antecedente",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ícone semântico (botão só com ícone) leva aria-hidden no próprio ícone; o nome vem do texto alternativo. Medida: aria-hidden=\"true\" no <i> dentro dos botões só com ícone.",
+   "instancias": [
+    "tip-prazo",
+    "tip-protocolo",
+    "msg-pendencia",
+    "msg-retorno",
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "icone-semantico-exposto",
+     "descricao": "O ícone dentro do botão só com ícone (gatilho da tooltip, Fechar da mensagem ou gatilho do select) fica sem aria-hidden.",
+     "clausula": "Atributo aria-hidden."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-35afb7e6ee7c",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Acessibilidade › 2. Ícones Semânticos",
+  "texto": "Forneça uma alternativa de texto dentro de um elemento <span> (ou similar).",
+  "contexto": "Forneça uma alternativa de texto dentro de um elemento <span> (ou similar). Inclua também o CSS apropriado para ocultar visualmente o elemento, mantendo-o acessível a tecnologias assistivas.",
+  "antecedente": "Se os ícones tiverem significado semântico, é preciso adicionar manualmente algumas coisas para que ele seja acessado apropriadamente:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ícone semântico sem texto ao lado precisa de alternativa em texto (span oculto ou similar, p.ex. aria-label no botão). Medida: nome acessível não vazio dos botões só com ícone.",
+   "instancias": [
+    "tip-prazo",
+    "tip-protocolo",
+    "msg-pendencia",
+    "msg-retorno",
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "botao-icone-sem-texto",
+     "descricao": "O botão só com ícone (gatilho da tooltip, Fechar da mensagem ou gatilho do select) fica sem nenhuma alternativa em texto: sem span oculto e sem aria-label.",
+     "clausula": "Forneça uma alternativa de texto dentro de um elemento <span> (ou similar)."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "axe",
+    "medicao"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-e99c92f13ac0",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Acessibilidade › 2. Ícones Semânticos",
+  "texto": "Inclua também o CSS apropriado para ocultar visualmente o elemento, mantendo-o acessível a tecnologias assistivas.",
+  "contexto": "Forneça uma alternativa de texto dentro de um elemento <span> (ou similar). Inclua também o CSS apropriado para ocultar visualmente o elemento, mantendo-o acessível a tecnologias assistivas.",
+  "antecedente": "Se os ícones tiverem significado semântico, é preciso adicionar manualmente algumas coisas para que ele seja acessado apropriadamente:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Quando a alternativa em texto do ícone semântico é um span, ele é ocultado visualmente e continua acessível. Medida: span da alternativa com recorte/posição de ocultação (sr-only) e presente na árvore de acessibilidade.",
+   "instancias": [
+    "tip-prazo",
+    "tip-protocolo",
+    "msg-pendencia",
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "texto-alternativo-visivel",
+     "descricao": "O texto alternativo do botão só com ícone é um span sem a ocultação visual, e aparece escrito ao lado do ícone.",
+     "clausula": "Inclua também o CSS apropriado para ocultar visualmente o elemento"
+    },
+    {
+     "id": "texto-alternativo-inacessivel",
+     "descricao": "O span de texto alternativo é ocultado com display:none, sumindo também da árvore de acessibilidade.",
+     "clausula": "mantendo-o acessível a tecnologias assistivas"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao",
+    "axe"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-6a6c6a49ec0b",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Princípios › Acessibilidade › 2. Ícones Semânticos › SVG com JavaScript - Ícones Semânticos",
+  "texto": "Se o ícone possuir significado semântico, coloque um atributo title=“meaning”.",
+  "contexto": "Se o ícone possuir significado semântico, coloque um atributo title=“meaning”. A acessibilidade automática cuida do resto, adicionando o seguinte:",
+  "antecedente": "Obter a acessibilidade correta pode ser difícil, por isso, o Font Awesome simplifica o processo com o recurso de acessibilidade automática. Usando um pouco de JS, adicionando elementos e atributos no HTML de suporte para que os ícones fiquem acessíveis ao público mais amplo possível.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Vale para ícones Font Awesome em SVG com JavaScript (acessibilidade automática); a tela usa os ícones <i class=\"fas\"> por webfont do DS.",
+   "origem": "lote-C.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-8b6f099effdd",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Font Awesome",
+  "texto": "Caso haja alguma funcionalidade, que não seja facilmente representada pelos que foram aqui apresentados, deve-se primeiro procurar uma opção dentro dos demais disponíveis na família de ícones e caso não haja, pode-se desenhar um novo, desde que, seja mantido o padrão visual já definido e passe posteriormente pela validação da equipe de Design.",
+  "contexto": "A versão 5.10.2 possui uma grande variedade de ícones. Foram expostos aqui, apenas alguns, para que seja constatado sua variedade. Caso haja alguma funcionalidade, que não seja facilmente representada pelos que foram aqui apresentados, deve-se primeiro procurar uma opção dentro dos demais disponíveis na família de ícones e caso não haja, pode-se desenhar um novo, desde que, seja mantido o padrão visual já definido e passe posteriormente pela validação da equipe de Design.",
+  "antecedente": "Font Awesome É um conjunto de ferramentas de fontes e ícones com base em CSS e LESS. Foi criado por Dave Gandy para uso com o Twitter Bootstrap e mais tarde foi incorporado no BootstrapCDN.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone novo; não há.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b889b938c32d",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Font Awesome",
+  "texto": "No final deste documento, foi incluído as orientações de uso de alguns dos ícones e essa tabela deve ser seguida para que haja consistência entre os sistemas do governo.",
+  "contexto": null,
+  "antecedente": "A versão 5.10.2 possui uma grande variedade de ícones. Foram expostos aqui, apenas alguns, para que seja constatado sua variedade. Caso haja alguma funcionalidade, que não seja facilmente representada pelos que foram aqui apresentados, deve-se primeiro procurar uma opção dentro dos demais disponíveis na família de ícones e caso não haja, pode-se desenhar um novo, desde que, seja mantido o padrão visual já definido e passe posteriormente pela validação da equipe de Design.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Seguir a tabela de uso de ícones do DS. Medida: classe do ícone semântico contra a tabela de iconografia.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "icone-trocado",
+     "descricao": "O ícone semântico da mensagem é trocado por fa-bell."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-312798bd96aa",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Ícones Personalizados",
+  "texto": "Independente da forma utilizada, deve-se seguir todas as características visuais de construção já padronizadas do Font Awesome Solid.",
+  "contexto": "Em algumas situações, a família Font Awesome pode não suprir todas as necessidades de uma interface. Nestas situações, pode-se criar ícones para representar as ações específicas de uma aplicação. Essa criação poderá ser feita tanto por técnicas de transformação (utilizando os próprios ícones da família) tal como o Layering; como na criação do zero de algum novo ícone. Independente da forma utilizada, deve-se seguir todas as características visuais de construção já padronizadas do Font Awesome Solid.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ícones no estilo Font Awesome Solid. Medida: classe/família do ícone.",
+   "instancias": [
+    "tip-prazo",
+    "tip-protocolo"
+   ],
+   "variantes": [
+    {
+     "id": "icone-regular",
+     "descricao": "O ícone do gatilho usa a família Regular (far) em vez da Solid."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-dd7a65ef1946",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Anatomia e Comportamento › Grid do Font Awesome",
+  "texto": "Então, caso haja necessidade de criar ícones, deve-se seguir a mesma grid para que sejam conservadas as proporções e características estéticas dos mesmos.",
+  "contexto": "Os ícones do Font Awesome foram determinados em uma grid de 20x16px. Então, caso haja necessidade de criar ícones, deve-se seguir a mesma grid para que sejam conservadas as proporções e características estéticas dos mesmos.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ícone novo; não há.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-5542b7528b3d",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Anatomia e Comportamento › Área Mínima de Interação › Área de Clique",
+  "texto": "Essa área, deve ser de no mínimo 24x24px.",
+  "contexto": "Utilizada em interfaces não tácteis, como, por exemplo, dispositivos que utilizam o mouse. Essa área, deve ser de no mínimo 24x24px.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Área mínima de interação de 24×24px no ícone interativo. Medida: getBoundingClientRect do gatilho.",
+   "instancias": [
+    "tip-prazo",
+    "tip-protocolo"
+   ],
+   "variantes": [
+    {
+     "id": "area-pequena",
+     "descricao": "O gatilho só de ícone fica com 16×16px."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "axe",
+    "medicao"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-d4db34492294",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Orientações de Uso",
+  "texto": "Observação: Lembre-se que quando utilizado para representar uma ação, o ícone deve corresponder a ação que será executada ao interagir com o elemento.",
+  "contexto": "Observação: Lembre-se que quando utilizado para representar uma ação, o ícone deve corresponder a ação que será executada ao interagir com o elemento. Quando utilizado junto com um elemento não interativo, ele pode representar outras situações, como por exemplo algum tipo de estado.",
+  "antecedente": "As principais funcionalidades dos sistemas do governo foram mapeadas e atribuídas a cada uma delas um símbolo representativo - os ícones da versão sólida do FontAwesome. É fundamental que os desenvolvedores e designers utilizem os ícones abaixo com mesma ação que lhe foi atribuída, isso garante que cada sistema acessado pelo cidadão utilize a mesma linguagem e significado, tornando mais rápida a experiência e o reconhecimento do público ao acessar as funcionalidades dos diversos sistemas do governo federal.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Ícone corresponde à ação. Medida: classe do ícone do cabeçalho do item contra a ação (expandir/recolher).",
+   "instancias": [
+    "acc-duvidas"
+   ],
+   "variantes": [
+    {
+     "id": "icone-de-fechar",
+     "descricao": "O ícone dos cabeçalhos do accordion vira fa-times (fechar) em vez do de expandir."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-629a5a1701cc",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Anatomia e Comportamento › Grid do Font Awesome",
+  "texto": "Os ícones do Font Awesome foram determinados em uma grid de 20x16px.",
+  "contexto": "Os ícones do Font Awesome foram determinados em uma grid de 20x16px. Então, caso haja necessidade de criar ícones, deve-se seguir a mesma grid para que sejam conservadas as proporções e características estéticas dos mesmos.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Grid de construção de ícones novos; não há ícone novo (como a2-dd7a65ef1946).",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-c72a64d5d504",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/iconografia.md",
+  "secao": "Iconografia › Anatomia e Comportamento › Tamanho Padrão no Design System",
+  "texto": "Tabela normativa — Iconografia › Anatomia e Comportamento › Tamanho Padrão no Design System (a partir da linha 212)",
+  "contexto": "l.214: 16px (1em) || l.215: .5em (8px) || l.216: .75em (12px) || l.217: 1.25em (20px) || l.218: 2em (32px) || l.219: 3em (48px) || l.220: 4em (64px) || l.221: 5em (80px) || l.222: 6em (96px) || l.223: 7em (112px) || l.224: 8em (128px) || l.225: 9em (144px) || l.226: 10em (160px)",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Tamanhos de ícone só na escala de tokens (16px base; .5em, .75em, 1.25em, 2em…10em). Medida: valor declarado de font-size dos ícones da instância (CSSOM) pertence à tabela.",
+   "instancias": [
+    "tip-prazo",
+    "tip-protocolo",
+    "msg-pendencia",
+    "msg-retorno",
+    "acc-duvidas"
+   ],
+   "variantes": [
+    {
+     "id": "icone-fora-da-escala",
+     "descricao": "O ícone do gatilho da tooltip (ou o ícone da mensagem, ou o chevron do cabeçalho do accordion) fica com font-size 1.1em, fora da escala de tokens.",
+     "clausula": "--icon-size-base | 16px (1em)"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-2f4eadc23b2c",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Princípios › Eficiência e Clareza",
+  "texto": "Dessa forma, nenhuma fonte deve estar fora da escala definida no DS: Minor Third.",
+  "contexto": "As escalas tipográficas foram definidas para manter a harmonia e coesão dentro do texto. Dessa forma, nenhuma fonte deve estar fora da escala definida no DS: Minor Third. Veja Escala tipográfica para maiores detalhes.",
+  "antecedente": "A diversidade de pesos da Rawline facilita a definição de níveis de hierarquias entre os elementos da tela. Isso torna a leitura mais agradável, e também fica mais claro para o usuário o papel que esses elementos ocupam na tela.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Nenhuma fonte fora da escala Minor Third. Medida: font-size computado contra os valores da escala.",
+   "instancias": [
+    "crd-resumo",
+    "acc-duvidas",
+    "tbl-movimentacoes",
+    "msg-pendencia"
+   ],
+   "variantes": [
+    {
+     "id": "fonte-fora-da-escala",
+     "descricao": "O texto principal da instância fica com font-size 15px."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-0e0c2cbf4714",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Princípios › Eficiência e Clareza",
+  "texto": "Além disso, os demais itens da tabela de estilo devem ser revistos mantendo a escala proporcional, ou seja, aumentando ou diminuindo conforme a necessidade.",
+  "contexto": "A Tabela de Estilo Padrão foi criada para manter a mesma experiência do usuário na maioria dos dispositivos. Caso seja necessário alterar algum valor, deve-se seguir a escala tipográfica. Além disso, os demais itens da tabela de estilo devem ser revistos mantendo a escala proporcional, ou seja, aumentando ou diminuindo conforme a necessidade.",
+  "antecedente": "As escalas tipográficas foram definidas para manter a harmonia e coesão dentro do texto. Dessa forma, nenhuma fonte deve estar fora da escala definida no DS: Minor Third. Veja Escala tipográfica para maiores detalhes.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Alteração da escala base; não há.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-bc2dd4c6ab14",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Estilos da Fonte Rawline › Peso da fonte (Font-Weight)",
+  "texto": "Utilize os valores abaixo para representar os diferentes estilos da fonte Rawline em uma interface web.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Pesos de fonte só entre os valores da tabela (100, 200, ..., 900). Medida: font-weight computado dos textos da instância pertence a {100..900 de 100 em 100}.",
+   "instancias": [
+    "crd-resumo",
+    "tbl-movimentacoes",
+    "acc-duvidas"
+   ],
+   "variantes": [
+    {
+     "id": "peso-fora-da-tabela",
+     "descricao": "O texto de destaque do card (ou o cabeçalho da tabela, ou o título dos itens do accordion) usa font-weight 650.",
+     "clausula": "Utilize os valores abaixo para representar os diferentes estilos da fonte Rawline"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-05a3253b3a06",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Escala Tipográfica",
+  "texto": "Com exceção da fonte base, utilize a unidade em para todos os outros valores da escala.",
+  "contexto": "O tamanho fonte base é de 14px (1em) e peso da fonte normal (400). A unidade em é uma medida relativa que permite que o usuário altere o tamanho de exibição do texto na interface. Com exceção da fonte base, utilize a unidade em para todos os outros valores da escala. Assim, caso o valor do tamanho base padrão seja alterado, toda a interface se adapta ao novo valor.",
+  "antecedente": "Existem muitas escalas diferentes, mas dentro do Design System do Governo Federal foi escolhida a escala Minor Third (1,2) já que permitem números que possuem contraste necessário para enriquecer e flexibilizar a hierarquia de uma interface.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Tamanhos da escala (exceto a base) em unidade relativa em, não em px fixo. Medida: valor declarado de font-size na folha de estilo (CSSOM) para os textos da instância.",
+   "instancias": [
+    "crd-resumo",
+    "acc-duvidas",
+    "tbl-movimentacoes"
+   ],
+   "variantes": [
+    {
+     "id": "tamanho-em-px",
+     "descricao": "O título do card (ou o título dos itens do accordion, ou o cabeçalho da tabela) tem font-size declarado em px absoluto (ex.: 20.16px), com o mesmo tamanho visual.",
+     "clausula": "Com exceção da fonte base, utilize a unidade em para todos os outros valores da escala."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-dadcee8e1cc6",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Escala Tipográfica",
+  "texto": "Caso o tamanho não atenda sua interface, utilize um valor diferente para a fonte base, porém, a escala deve se manter a mesma (ou seja, com a mesma proporção entre os estilos).",
+  "contexto": null,
+  "antecedente": "Dica: utilize alguma calculadora Type Scale (como o site Modular Scale) para calcular os tamanhos dentro da escala.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Fonte base diferente; não há.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-b66ac3a5b212",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Line-height (entrelinha)",
+  "texto": "Para utilizar corretamente o valor do entrelinhamento é preciso trabalhar com valores em porcentagem ou relativos (como rem ou em), pois o valor vai depender do tamanho da fonte que ele está sendo aplicado.",
+  "contexto": "Para utilizar corretamente o valor do entrelinhamento é preciso trabalhar com valores em porcentagem ou relativos (como rem ou em), pois o valor vai depender do tamanho da fonte que ele está sendo aplicado. Por padrão, utilize entrelinha de 1.45 para valores até a fonte base, após isso, utilize o valor de 1,15.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "necessario",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Entrelinha em valor relativo (sem unidade, %, em ou rem), nunca px fixo. Medida: valor declarado de line-height na folha de estilo (CSSOM) para os textos da instância.",
+   "instancias": [
+    "crd-resumo",
+    "tbl-movimentacoes",
+    "acc-duvidas"
+   ],
+   "variantes": [
+    {
+     "id": "entrelinha-em-px",
+     "descricao": "O texto do card (ou das células da tabela, ou do conteúdo do accordion) tem line-height declarado em px fixo (ex.: 20.3px).",
+     "clausula": "é preciso trabalhar com valores em porcentagem ou relativos (como rem ou em)"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-329f74d7646c",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Tabelas de Estilos",
+  "texto": "Utilize a tabela de estilo para determinar o visual de cada estilo de tipografia utilizada.",
+  "contexto": "Utilize a tabela de estilo para determinar o visual de cada estilo de tipografia utilizada. Todos os estilos são elementos nativos do HTML.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Elementos nativos seguem a Tabela de Estilos (valores em texto): H2 = --font-size-scale-up-05, peso regular, line-height low; Label = scale-base, semi-bold. Medida: font-size/font-weight/line-height computados dos títulos da página e dos rótulos do select e do upload.",
+   "instancias": [
+    "pagina",
+    "sel-tipo-documento",
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "titulo-fora-da-tabela",
+     "descricao": "Um h2 da página fica com font-weight 700 e font-size de 16px.",
+     "instancias": [
+      "pagina"
+     ],
+     "clausula": "Utilize a tabela de estilo para determinar o visual de cada estilo de tipografia utilizada."
+    },
+    {
+     "id": "rotulo-fora-da-tabela",
+     "descricao": "O rótulo do select (ou o rótulo \"Envio de documentos\" do upload) fica com font-weight 400 em vez de semi-bold.",
+     "instancias": [
+      "sel-tipo-documento",
+      "upl-documento"
+     ],
+     "clausula": "Utilize a tabela de estilo para determinar o visual de cada estilo de tipografia utilizada."
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-C.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-a60989edf1af",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Escala Tipográfica › Ampliando a Escala Tipográfica",
+  "texto": "crescendo ou reduzindo na mesma proporção Minor Third (1,2)",
+  "contexto": "Caso haja necessidade, os valores da escala tipográfica podem ser ampliados, além dos valores demonstrados na tabela acima, crescendo ou reduzindo na mesma proporção Minor Third (1,2). Por exemplo:",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Ampliação da escala além da tabela ('caso haja necessidade'); a tela não usa valores fora da tabela.",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-03216e12bb96",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Line-height (entrelinha)",
+  "texto": "Tabela normativa — Tipografia Rawline › Line-height (entrelinha) (a partir da linha 139)",
+  "contexto": "l.141: --font-lineheight-low || l.142: --font-lineheight-medium || l.143: --font-lineheight-high",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Entrelinhas só nos tokens da tabela: 1.15 (low), 1.45 (medium), 1.85 (high). A unidade relativa já está em a2-b66ac3a5b212; aqui é o valor. Medida: line-height computado / font-size dos textos da instância ∈ {1,15; 1,45; 1,85}.",
+   "instancias": [
+    "crd-resumo",
+    "tbl-movimentacoes",
+    "acc-duvidas"
+   ],
+   "variantes": [
+    {
+     "id": "entrelinha-fora-do-token",
+     "descricao": "O texto do card (ou das células da tabela, ou do painel do accordion) usa line-height 1.3 (relativo) em vez de 1.45.",
+     "clausula": "1.45 · --font-lineheight-medium"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-0d50ac5f7083",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Tabelas de Estilos › Título (H1)",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Título (H1) (a partir da linha 160)",
+  "contexto": "l.162: --font-size-scale-up-06 || l.163: --font-weight-light || l.164: --font-line-height-low || l.165: --gray-80 || l.166: --pure-0 || l.167: --spacing-scale-4x",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Estilo H1 (grid de 12 colunas, vale em 1280): --font-size-scale-up-06, peso light, line-height low, cor --gray-80, margem inferior --spacing-scale-4x. Medida: estilos computados do h1 da página.",
+   "instancias": [
+    "pagina"
+   ],
+   "variantes": [
+    {
+     "id": "h1-peso-fora",
+     "descricao": "O h1 da página fica com font-weight 700 (bold) em vez de light (300), mesmo tamanho.",
+     "clausula": "Weight · --font-weight-light"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-d05e499acddf",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Tabelas de Estilos › Título (H3)",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Título (H3) (a partir da linha 204)",
+  "contexto": "l.206: --font-size-scale-up-04 || l.207: --font-weight-medium || l.208: --font-line-height-low || l.209: --gray-80 || l.210: --pure-0 || l.211: --spacing-scale-2xh || l.212: --spacing-scale-3xh",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Estilo H3; a tela fixa h1 e h2 na página e nenhum h3 nas instâncias.",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-7a9d5e4b3c79",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Tabelas de Estilos › Título (H4)",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Título (H4) (a partir da linha 226)",
+  "contexto": "l.228: --font-size-scale-up-03 || l.229: --font-weight-semi-bold || l.230: --font-line-height-low || l.231: --gray-80 || l.232: --pure-0 || l.233: --spacing-scale-2xh || l.234: --spacing-scale-3xh",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Estilo H4; não há h4 na tela.",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-c593f7ae4ec2",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Tabelas de Estilos › Título (H5)",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Título (H5) (a partir da linha 249)",
+  "contexto": "l.251: --font-size-scale-up-02 || l.252: --font-weight-bold || l.253: --font-line-height-low || l.254: --gray-80 || l.255: --pure-0 || l.256: --spacing-scale-2x || l.257: --spacing-scale-3xh || l.258: uppercase",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Estilo H5; não há h5 na tela.",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-94332bb586eb",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Tabelas de Estilos › Título (H6)",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Título (H6) (a partir da linha 273)",
+  "contexto": "l.275: --font-size-scale-up-01 || l.276: --font-weight-extra-bold || l.277: --font-line-height-low || l.278: --gray-80 || l.279: --pure-0 || l.280: --spacing-scale-2x || l.281: --spacing-scale-3xh || l.282: uppercase",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Estilo H6; não há h6 na tela.",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-f50e5a28b0c9",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Tabelas de Estilos › Parágrafo (P)",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Parágrafo (P) (a partir da linha 296)",
+  "contexto": "l.298: --font-size-scale-up-01 || l.299: --font-weight-regular || l.300: --font-line-height-medium || l.301: --gray-80 || l.302: --pure-0 || l.303: --spacing-scale-2x",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Estilo Parágrafo: peso regular, line-height medium (1.45), cor --gray-80. Medida: estilos computados dos parágrafos do painel do accordion. (A linha Size, scale-up-01, não é usada nas variantes: o core aplica scale-base ao p.)",
+   "instancias": [
+    "acc-duvidas"
+   ],
+   "variantes": [
+    {
+     "id": "paragrafo-entrelinha-fora",
+     "descricao": "Os parágrafos do painel do accordion ficam com line-height 1.15 (low) em vez de 1.45 (medium).",
+     "clausula": "Line-height · --font-line-height-medium"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-6f122899cebf",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Tabelas de Estilos › Campo de Entrada de Texto (Input)",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Campo de Entrada de Texto (Input) (a partir da linha 330)",
+  "contexto": "l.332: --font-size-scale-up-01 || l.333: --font-weight-medium || l.334: --font-line-height-low || l.335: --gray-80 || l.336: --pure-0 || l.337: --spacing-scale-half",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Estilo Input: --font-size-scale-up-01, peso medium, line-height low, cor --gray-80. Na tela: o campo do select. Medida: font-size/font-weight computados do input.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "input-peso-fora",
+     "descricao": "O texto do campo do select fica com font-weight 400 em vez de medium (500).",
+     "clausula": "Weight · --font-weight-medium"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-2db211927f15",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Tabelas de Estilos › Descrição em Campo de Texto (Placeholder)",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Descrição em Campo de Texto (Placeholder) (a partir da linha 344)",
+  "contexto": "l.346: --font-size-scale-base || l.347: --font-weight-regular || l.348: --font-line-height-medium || l.349: italic || l.350: --gray-80 || l.351: --pure-0 || l.352: --spacing-scale-half || l.353: --spacing-scale-half",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Estilo Placeholder: scale-base, peso regular, itálico. Na tela: o placeholder do campo do select. Medida: estilos computados de ::placeholder do input.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "placeholder-sem-italico",
+     "descricao": "O placeholder do campo do select fica com font-style normal em vez de italic.",
+     "clausula": "Font-style · italic"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-0b634b5de510",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Tabelas de Estilos › Legendas (Legend)",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Legendas (Legend) (a partir da linha 360)",
+  "contexto": "l.362: --font-size-scale-up-01 || l.363: --font-weight-semi-bold || l.364: --font-line-height-low || l.365: --gray-80 || l.366: --pure-0 || l.367: --spacing-scale-2x || l.368: --spacing-scale-2x",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Estilo Legend: --font-size-scale-up-01, peso semi-bold, line-height low, cor --gray-80. Na tela: a legend 'Avisos sobre o requerimento'. Medida: estilos computados da legend.",
+   "instancias": [
+    "swt-aviso-email",
+    "chk-avisos-todos"
+   ],
+   "variantes": [
+    {
+     "id": "legend-peso-fora",
+     "descricao": "A legend 'Avisos sobre o requerimento' fica com font-weight 400 em vez de semi-bold (600), mesmo tamanho.",
+     "clausula": "Weight · --font-weight-semi-bold"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-612c013e50d2",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Tabelas de Estilos › Marcação de Texto (Mark)",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Marcação de Texto (Mark) (a partir da linha 375)",
+  "contexto": "l.377: --gray-80 || l.378: --red-warm-vivid-10",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Marcação de texto (mark); não há mark na tela.",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-fdf859cf9f4b",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Tabelas de Estilos › Bloco de código (Code)",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Bloco de código (Code) (a partir da linha 385)",
+  "contexto": "l.387: monospace (Utilize uma fonte monoespaçada) || l.388: --font-size-scale-base || l.389: --font-weight-medium || l.390: --font-line-height-low || l.391: --gray-80 || l.392: --gray-5 || l.393: --spacing-scale-half || l.394: --spacing-scale-2x",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Bloco de código (code); não há code na tela.",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-1f3a53abca0d",
+  "componente": null,
+  "arquivo": "fundamentos-visuais/tipografia.md",
+  "secao": "Tipografia Rawline › Tabelas de Estilos › Listas (UL, OL, DL)",
+  "texto": "Tabela normativa — Tipografia Rawline › Tabelas de Estilos › Listas (UL, OL, DL) (a partir da linha 417)",
+  "contexto": "l.419: --font-size-scale-up-01 || l.420: --font-weight-regular || l.421: --font-line-height-medium || l.422: --gray-80 || l.423: --pure-0 || l.424: --spacing-scale-base || l.425: --spacing-scale-2x",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Listas UL/OL/DL de conteúdo; a tela não tem listas de texto nas instâncias (a lista do select é o componente List, com estilo próprio).",
+   "origem": "lote-r2-G3.json"
+  },
+  "porque": "nao-se-aplica"
+ }
+]

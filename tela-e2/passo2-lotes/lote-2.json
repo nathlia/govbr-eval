@@ -1,0 +1,1907 @@
+{
+ "a2-b4c1596eb8e2": {
+  "aceita": true,
+  "justificativa": "O item precisa de superfície e de uma área com ao menos um conteúdo. Medida: cada item da lista do select (aberta) e de lst-paises tem conteúdo não vazio.",
+  "instancias": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "item-vazio",
+    "descricao": "Um item a mais, sem nenhum conteúdo (linha vazia), aparece entre as opções da lista do select.",
+    "instancias": [
+     "sel-continente"
+    ],
+    "clausula": "uma área com no mínimo um conteúdo contido",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "acrescenta um item vazio à lista de opções"
+    }
+   },
+   {
+    "id": "pais-item-vazio",
+    "descricao": "O 3º item de lst-paises fica vazio: superfície sem nome nem situação.",
+    "instancias": [
+     "lst-paises"
+    ],
+    "clausula": "uma área com no mínimo um conteúdo contido",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "esvazia o conteúdo de um item da lista de países"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Parte da anatomia do item (área de conteúdo).",
+  "equivalenteEmag": null
+ },
+ "a2-40fe6a293a12": {
+  "aceita": true,
+  "justificativa": "A área de conteúdo do item não admite botão primário nem componente de navegação. Medida: presença de br-button primary dentro de um item.",
+  "instancias": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "primario-no-item",
+    "descricao": "Um item da lista do select ganha um botão primário \"Ver países\" ao lado do nome do continente.",
+    "instancias": [
+     "sel-continente"
+    ],
+    "clausula": "exceto botões primários",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "insere botão primário dentro de um item de opção"
+    }
+   },
+   {
+    "id": "primario-no-pais",
+    "descricao": "O 2º item de lst-paises ganha um botão primário \"Detalhar\" na área de conteúdo.",
+    "instancias": [
+     "lst-paises"
+    ],
+    "clausula": "exceto botões primários",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "insere botão primário dentro de um item da lista de países"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Restringe o que compõe a área de conteúdo do item (anatomia).",
+  "equivalenteEmag": null
+ },
+ "a2-e06d4991a48e": {
+  "aceita": true,
+  "justificativa": "O conteúdo do item respeita as margens internas (padding) da superfície. Medida: padding computado dos itens.",
+  "instancias": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "item-sem-padding",
+    "descricao": "Os itens (da lista do select e de lst-paises) ficam com padding 0; o texto encosta na borda da superfície.",
+    "clausula": "devem respeitar as margens internas (padding)",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "zera o padding dos itens"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Observável é espaçamento (token de espaçamento).",
+  "equivalenteEmag": null
+ },
+ "a2-648f8c6d407b": {
+  "aceita": true,
+  "justificativa": "Superfície do item em --pure-0. Medida: background-color computado dos itens em repouso.",
+  "instancias": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "item-fundo-cinza",
+    "descricao": "Os itens (da lista do select e de lst-paises) ficam com fundo --gray-5 em repouso.",
+    "clausula": "Superfície · color · --pure-0",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "troca a cor de fundo dos itens"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra",
+   "interacao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Cor de superfície por token.",
+  "equivalenteEmag": null
+ },
+ "a2-26d3db62e2ab": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Retirar o core.min.js desfaz o comportamento de todos os componentes da página, inclusive do andaime, e impede S2."
+ },
+ "a2-9655683035eb": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Os itens do select são geridos pelo script do próprio select e os de lst-paises são estáticos, sem interação; instanciação avulsa da classe não tem efeito na página."
+ },
+ "a2-15cd0b55e268": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Parâmetro da instanciação avulsa da classe do item, que não é usada nos hospedeiros."
+ },
+ "a2-126e73d998e3": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Parâmetro da instanciação avulsa da classe do item, que não é usada nos hospedeiros."
+ },
+ "a2-2f900cc3509d": {
+  "aceita": true,
+  "justificativa": "Itens interativos aplicam os estados para dar feedback. Só os itens da lista do select são interativos (lst-paises não tem ação). Medida: estilo computado do item com e sem hover/foco.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "item-sem-hover",
+    "descricao": "Os itens da lista aberta do select não mudam de aparência no hover nem no destaque por teclado.",
+    "clausula": "Aplique os estados corretamente para fornecer feedback.",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "anula os estilos de estado dos itens de opção"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Feedback de estado interativo (hover) do item.",
+  "equivalenteEmag": null
+ },
+ "a2-312e000d6784": {
+  "aceita": true,
+  "justificativa": "A list tem itens (componente Item) obrigatórios. Em lst-paises remover os itens não toca outro componente nem os estados. Medida: número de br-item na lista de países.",
+  "instancias": [
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "lista-sem-itens",
+    "descricao": "lst-paises mostra só o título; os 4 itens de país são retirados.",
+    "clausula": "2 · Item · Componente Item · Obrigatório",
+    "efeitos": {
+     "toca": [
+      "$:itens",
+      "$:divisores"
+     ],
+     "remove": [
+      "$:itens",
+      "$:divisores"
+     ],
+     "cascata": [],
+     "estado": null,
+     "nota": "retira todos os itens da lista de países"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Parte obrigatória da anatomia da list.",
+  "equivalenteEmag": null
+ },
+ "a2-aa386be53f7e": {
+  "aceita": true,
+  "justificativa": "A list tem superfície própria. Medida: background computado da lista aberta do select (não transparente sobre o conteúdo).",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "lista-sem-superficie",
+    "descricao": "A lista aberta do select fica com fundo transparente, deixando o formulário aparecer por baixo das opções.",
+    "clausula": "5 · Superfície · Fundamento Superfície · Obrigatório",
+    "efeitos": {
+     "toca": [
+      "$:lista",
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "fundo da lista e dos itens transparente"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra",
+   "interacao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Superfície (cor de fundo) por token.",
+  "equivalenteEmag": null
+ },
+ "a2-a14d31901423": {
+  "aceita": true,
+  "justificativa": "A altura do item varia com o conteúdo. Medida: scrollHeight contra clientHeight dos itens (sem corte).",
+  "instancias": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "item-altura-fixa",
+    "descricao": "Os itens de lst-paises ficam com altura fixa de 24px e overflow escondido, cortando a linha da situação.",
+    "instancias": [
+     "lst-paises"
+    ],
+    "clausula": "a altura deve variar de acordo com o conteúdo",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "altura fixa com corte nos itens da lista de países"
+    }
+   },
+   {
+    "id": "opcao-altura-fixa",
+    "descricao": "Os itens da lista do select ficam com altura fixa de 16px e overflow escondido, cortando o nome do continente.",
+    "instancias": [
+     "sel-continente"
+    ],
+    "clausula": "a altura deve variar de acordo com o conteúdo",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "altura fixa com corte nos itens de opção"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Dimensão do item (altura).",
+  "equivalenteEmag": null
+ },
+ "a2-e258b3754ba3": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum item das duas listas tem subtítulo."
+ },
+ "a2-56e1c02fed30": {
+  "aceita": true,
+  "justificativa": "O texto principal do item é obrigatório. Medida: cada item tem texto principal visível.",
+  "instancias": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "opcao-sem-texto",
+    "descricao": "Um item da lista do select mostra só o controle de seleção, sem o nome do continente.",
+    "instancias": [
+     "sel-continente"
+    ],
+    "clausula": "Texto Principal: texto obrigatório",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "esvazia o texto de uma opção"
+    }
+   },
+   {
+    "id": "pais-sem-nome",
+    "descricao": "O 2º item de lst-paises perde o nome do país; fica só a linha de situação.",
+    "instancias": [
+     "lst-paises"
+    ],
+    "clausula": "Texto Principal: texto obrigatório",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "retira o texto principal de um item da lista de países"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Parte obrigatória da anatomia do item da list.",
+  "equivalenteEmag": null
+ },
+ "a2-bebc6bb692e0": {
+  "aceita": true,
+  "justificativa": "Posição e tipo dos recursos interativos consistentes na lista. Só a lista do select tem recurso (controle de seleção). Medida: posição do controle em cada item.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "controle-fora-de-posicao",
+    "descricao": "Num dos itens da lista do select o controle de seleção fica à direita do texto; nos demais, à esquerda.",
+    "clausula": "mantenha a consistência de uma lista em relação ao posicionamento e tipos de recursos visuais/interativos utilizados",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "inverte a ordem controle/texto em um item"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra",
+   "interacao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Disposição visual dos recursos do item.",
+  "equivalenteEmag": null
+ },
+ "a2-76fb32bbeb56": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Os itens das duas listas não têm recursos visuais (ícones, avatares, mídia)."
+ },
+ "a2-73892b5d0b84": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Os itens não têm recursos complementares (metadados, ações extras); lst-paises é só texto."
+ },
+ "a2-39c30a5ea7ee": {
+  "aceita": true,
+  "justificativa": "Em list vertical, divisores ficam abaixo da borda inferior de cada item. lst-paises é vertical. Medida: posição/orientação computada dos divisores contra a borda inferior dos itens.",
+  "instancias": [
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "divisor-vertical",
+    "descricao": "Os divisores de lst-paises ficam como borda vertical à direita de cada item, não abaixo dele.",
+    "clausula": "devem, estar localizados sempre abaixo da borda inferior de cada item, quando se tratar de uma list vertical",
+    "efeitos": {
+     "toca": [
+      "$:divisores",
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "divisores reposicionados na lateral direita dos itens"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Posição de parte da anatomia da list (divisor).",
+  "equivalenteEmag": null
+ },
+ "a2-b145544e8477": {
+  "aceita": true,
+  "justificativa": "Espaçamento entre itens segue a escala de Fundamentos/Espaçamento. Medida: distância entre itens consecutivos contra a escala.",
+  "instancias": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "espaco-fora-da-escala",
+    "descricao": "Todos os itens (da lista do select e de lst-paises) ficam separados por 3px, valor fora da escala.",
+    "clausula": "os espaçamentos devem seguir as orientações especificadas no documento de Fundamentos/Espaçamentos",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "margem entre itens fora da escala"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Espaçamento por token.",
+  "equivalenteEmag": null
+ },
+ "a2-7339465391f7": {
+  "aceita": true,
+  "justificativa": "Proíbe variar o espaçamento entre itens da mesma list. Medida: distâncias entre itens consecutivos iguais.",
+  "instancias": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "espaco-irregular",
+    "descricao": "O 3º item (da lista do select e de lst-paises) ganha margem superior maior que os demais.",
+    "clausula": "Não é permitido variar o espaçamento dos itens dentro de uma mesma list.",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "margem diferente em um único item"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Espaçamento por token.",
+  "equivalenteEmag": null
+ },
+ "a2-ce9cc95278b0": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "As listas não têm rótulos de agrupamento."
+ },
+ "a2-356e144e4de8": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "As listas não têm itens expansíveis."
+ },
+ "a2-0fefcdc8528d": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Refere-se à superfície do conteúdo expandido; nenhuma lista tem expansão."
+ },
+ "a2-347d2e241fb3": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "As listas não oferecem reordenação."
+ },
+ "a2-2d40da60ce61": {
+  "aceita": true,
+  "justificativa": "Textos da list centrados na vertical e alinhados à esquerda. Medida: text-align/justify computados dos itens.",
+  "instancias": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "itens-centralizados",
+    "descricao": "Os textos dos itens (da lista do select e de lst-paises) ficam centralizados horizontalmente.",
+    "clausula": "Textos · --spacing-horizontal-left",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "alinhamento horizontal centralizado nos itens"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra",
+   "interacao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Alinhamento por token de espaçamento.",
+  "equivalenteEmag": null
+ },
+ "a2-b30ded4687e3": {
+  "aceita": true,
+  "justificativa": "Espaço do item conforme a densidade (padrão = média: --spacing-scale-2x). Medida: padding computado dos itens.",
+  "instancias": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "item-espaco-fora-da-densidade",
+    "descricao": "Os itens (da lista do select e de lst-paises) ficam com padding vertical de 2px.",
+    "clausula": "Item - densidade média · --spacing-scale-2x",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "padding vertical fora de qualquer densidade"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra",
+   "interacao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Espaçamento por token.",
+  "equivalenteEmag": null
+ },
+ "a2-1f12ca328b9e": {
+  "aceita": true,
+  "justificativa": "Cores da list: superfície --pure-0. Medida: background-color computado da lista.",
+  "instancias": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "lista-fundo-cinza",
+    "descricao": "lst-paises (superfície da lista) fica com fundo --gray-10.",
+    "instancias": [
+     "lst-paises"
+    ],
+    "clausula": "Superfície · background · --pure-0",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "cor de fundo da lista trocada"
+    }
+   },
+   {
+    "id": "lista-select-fundo-cinza",
+    "descricao": "A lista aberta do select fica com fundo --gray-10.",
+    "instancias": [
+     "sel-continente"
+    ],
+    "clausula": "Superfície · background · --pure-0",
+    "efeitos": {
+     "toca": [
+      "$:lista",
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "cor de fundo da lista de opções trocada"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra",
+   "interacao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Cor por token.",
+  "equivalenteEmag": null
+ },
+ "a2-8ed2a1b99cae": {
+  "aceita": true,
+  "justificativa": "Tipografia da list: texto principal --font-weight-regular. Medida: font-weight computado do texto dos itens.",
+  "instancias": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "itens-negrito",
+    "descricao": "O texto principal dos itens (da lista do select e de lst-paises) fica em --font-weight-bold.",
+    "clausula": "Texto principal · font-weight · --font-weight-regular",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "peso da fonte do texto principal trocado"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra",
+   "interacao"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "Peso de fonte do texto.",
+  "equivalenteEmag": null
+ },
+ "a2-d522f1f6d5a1": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ícones de expandir/retrair são de list expansível; nenhuma lista expande."
+ },
+ "a2-e186e4296fe6": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Lista horizontal com expansão não existe na tela."
+ },
+ "a2-689fa6cd30b0": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Lista horizontal com expansão não existe na tela."
+ },
+ "a2-ff2e6a346b2c": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A classe group é da lista horizontal com expansão, ausente na tela."
+ },
+ "a2-b9e8622b3002": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Retirar o core.min.js desfaz o comportamento de todos os componentes da página, inclusive do andaime, e impede S2."
+ },
+ "a2-299fe3989b35": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A lista do select é gerida pelo script do select e lst-paises é estática; a instanciação avulsa da classe da lista não tem efeito na página."
+ },
+ "a2-a3b624b67bf7": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Parâmetro da instanciação avulsa da classe da lista, que não é usada."
+ },
+ "a2-b0829f23c5f0": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Parâmetro da instanciação avulsa da classe da lista, que não é usada."
+ },
+ "a2-9ca0ad49a63a": {
+  "aceita": true,
+  "justificativa": "Elementos interativos da list acionáveis por Space ou Enter. Só a lista do select tem itens interativos. Medida: com destaque num item da lista aberta, Enter/Space escolhe o item.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "item-nao-aciona-por-tecla",
+    "descricao": "Na lista aberta do select, Enter e Space não escolhem o item destacado; só o clique escolhe.",
+    "clausula": "acessíveis por teclado, com o uso das teclas Space ou Enter",
+    "efeitos": {
+     "toca": [
+      "$:itens",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "script intercepta Enter/Space nos itens de opção"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Operação por teclado.",
+  "equivalenteEmag": null
+ },
+ "a2-2ee1137ba80b": {
+  "aceita": true,
+  "justificativa": "R-ED (b): informação clara e concisa nos itens; caso flagrante oposto é um item com frase longa no lugar do dado. Medida: nº de palavras do texto do item.",
+  "instancias": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "opcao-prolixa",
+    "descricao": "Uma opção da lista do select traz uma frase de mais de 30 palavras em vez do nome do continente.",
+    "instancias": [
+     "sel-continente"
+    ],
+    "clausula": "Forneça informações claras e concisas",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto de uma opção substituído por frase longa"
+    }
+   },
+   {
+    "id": "pais-prolixo",
+    "descricao": "O 1º item de lst-paises traz uma frase de mais de 30 palavras em vez do nome do país e da situação.",
+    "instancias": [
+     "lst-paises"
+    ],
+    "clausula": "Forneça informações claras e concisas",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto de um item substituído por frase longa"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "estrutura"
+  ],
+  "razaoCategorias": "Conteúdo textual do item.",
+  "equivalenteEmag": null
+ },
+ "a2-f5698f1068ce": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "As listas não têm imagens."
+ },
+ "a2-bbe7f780dcd7": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Sem o campo input não há select; a remoção apaga o controle e o rótulo associado."
+ },
+ "a2-5d641612382a": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "O botão gatilho é o disparador declarado de S2; retirá-lo impede alcançar S2 como declarado e apaga também o ícone de alternância."
+ },
+ "a2-b3562ce3e89b": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Sem a lista não há opções nem S2 (lista aberta)."
+ },
+ "a2-482ab9c4a4b1": {
+  "aceita": true,
+  "justificativa": "Modos de seleção (estados) obrigatórios. Medida: depois de escolher, o item escolhido tem o estado selecionado (classe e radio marcado).",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "escolhido-sem-estado",
+    "descricao": "Depois de escolher uma opção, o item escolhido não recebe o estado selecionado: sem destaque e com o radio desmarcado.",
+    "clausula": "4 · Modos de seleção · Estados · Obrigatório",
+    "efeitos": {
+     "toca": [
+      "$:itens",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "script remove o estado selecionado do item escolhido"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Estado selecionado (inclusive o checked acessível).",
+  "equivalenteEmag": null
+ },
+ "a2-30278caa77da": {
+  "aceita": true,
+  "justificativa": "O botão gatilho fica na extremidade direita do campo. Medida: posição do botão contra a do campo.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-a-esquerda",
+    "descricao": "O botão gatilho do select fica à esquerda do campo.",
+    "clausula": "Este botão deve estar posicionado na extremidade direita ao componente input.",
+    "efeitos": {
+     "toca": [
+      "$:gatilho",
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "gatilho reposicionado à esquerda do campo"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Posição de parte da anatomia do select.",
+  "equivalenteEmag": null
+ },
+ "a2-adae4a234fdd": {
+  "aceita": true,
+  "justificativa": "A lista do select apresenta itens que podem ser escolhidos. Medida: cada opção exibida pode ser escolhida e passa ao campo.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "opcao-nao-escolhivel",
+    "descricao": "O 3º item aparece na lista aberta, mas clicar nele (ou Enter) não o escolhe: o campo não muda.",
+    "clausula": "O componente list deve apresentar os itens a serem escolhidos pelo usuário.",
+    "efeitos": {
+     "toca": [
+      "$:itens",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "script impede a escolha de uma opção"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Comportamento de escolha.",
+  "equivalenteEmag": null
+ },
+ "a2-1f3279c0e6a1": {
+  "aceita": true,
+  "justificativa": "Lista flutuante com sombra. Medida: box-shadow computado da lista aberta.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "lista-sem-sombra",
+    "descricao": "A lista aberta do select fica com box-shadow none.",
+    "clausula": "uma sombra deve ser utilizada",
+    "efeitos": {
+     "toca": [
+      "$:lista"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "sombra da lista removida"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "interacao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Sombra (elevação) por token.",
+  "equivalenteEmag": null
+ },
+ "a2-038abdaed903": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "O campo de continente pede uma única escolha; não há múltipla seleção."
+ },
+ "a2-bc65f270eab7": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Comportamento do multiselect; o select da tela é simples."
+ },
+ "a2-8e00d1afbe65": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum estado declarado põe a lista contra o limite da janela; S2 abre a lista no fluxo da página rolável."
+ },
+ "a2-55ce9b3b3b6b": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Os nomes dos continentes são curtos; não há texto extenso no campo nem nos itens."
+ },
+ "a2-c0c09380b881": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "São 6 opções, abaixo do limite de dez; não há excedente para rolar."
+ },
+ "a2-dc529c1da67b": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "O campo é mais largo que qualquer nome de continente."
+ },
+ "a2-59eeebe5c40d": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Texto do item maior que o campo não ocorre com nomes de continente."
+ },
+ "a2-4f00f43853c9": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Mais de um item selecionado; o select é simples."
+ },
+ "a2-575b7d3ea8f9": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Texto extenso com vários itens selecionados; o select é simples."
+ },
+ "a2-7b690709168e": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Pesquisa sem resultado (empty state) não ocorre em nenhum estado declarado."
+ },
+ "a2-daf3655caedf": {
+  "aceita": true,
+  "justificativa": "Ícone do gatilho: seta para baixo com a lista fechada e para cima com a lista aberta. Medida: classe do ícone do gatilho em S0 e em S2.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "icone-nao-alterna",
+    "descricao": "Com a lista aberta, o ícone do gatilho continua apontando para baixo.",
+    "clausula": "Ícone - componente button · Aberto · <i class=\"fas fa-caret-up\"></i>",
+    "efeitos": {
+     "toca": [
+      "$:gatilho",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "ícone do gatilho não alterna ao abrir"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Ícone, parte da anatomia do gatilho.",
+  "equivalenteEmag": null
+ },
+ "a2-41f27d1b3d7d": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A única linha é do 'Selecionar Todos' do multiselect; o select é simples."
+ },
+ "a2-5250515a0c00": {
+  "aceita": true,
+  "justificativa": "Espaçamentos do select: lista com margin-top --spacing-scale-default em relação ao campo. Medida: distância computada entre o campo e a lista aberta.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "lista-afastada",
+    "descricao": "A lista aberta do select fica 40px abaixo do campo.",
+    "clausula": "Componente List · margin-top · --spacing-scale-default",
+    "efeitos": {
+     "toca": [
+      "$:lista"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "margem superior da lista trocada"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "interacao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Espaçamento por token.",
+  "equivalenteEmag": null
+ },
+ "a2-0d25882c88ba": {
+  "aceita": true,
+  "justificativa": "Select simples: campo com 40px de altura e largura entre 100 e 400px; itens da lista com 56px. Medida: width/height computados do campo e dos itens.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "campo-alto",
+    "descricao": "O campo do select fica com 56px de altura.",
+    "clausula": "Componente Input - Select · variável · 400px · 100px · 40px",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "altura do campo trocada"
+    }
+   },
+   {
+    "id": "itens-baixos",
+    "descricao": "Os itens da lista aberta ficam com 36px de altura.",
+    "clausula": "Item List - Select · variável · 400px · 100px · 56px",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "altura dos itens trocada"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra",
+   "interacao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Dimensões por especificação.",
+  "equivalenteEmag": null
+ },
+ "a2-8c3b5176e2a3": {
+  "aceita": true,
+  "justificativa": "Lista flutuante com sombra --surface-shadow-md (o nível, além da presença). Medida: box-shadow computado da lista aberta contra o token.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "sombra-nivel-errado",
+    "descricao": "A lista aberta do select fica com a sombra de nível xl em vez de md.",
+    "clausula": "Superfície · --surface-shadow-md",
+    "efeitos": {
+     "toca": [
+      "$:lista"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "token de sombra da lista trocado"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "interacao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Sombra por token.",
+  "equivalenteEmag": null
+ },
+ "a2-12888369bd0f": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Sem a classe br-select na raiz o script do select não é instanciado: a lista deixa de abrir e S2 fica inalcançável."
+ },
+ "a2-bd84ff2497d5": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Tirar br-input do campo muda também altura, borda e espaçamentos do campo, outras propriedades com obrigação própria."
+ },
+ "a2-879621000aa6": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Tirar br-button do gatilho muda também fundo, forma e dimensões do botão, outras propriedades com obrigação própria."
+ },
+ "a2-0a6b97c41045": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "O script do select localiza a lista pela classe br-list; sem ela a lista não abre e S2 fica inalcançável."
+ },
+ "a2-419c091564b6": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Tirar br-item das opções muda também padding, estados de hover/selecionado e a escolha pelo script, outras obrigações."
+ },
+ "a2-ee58999db029": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Checkbox só no select múltiplo; o select é simples."
+ },
+ "a2-45a090bca496": {
+  "aceita": true,
+  "justificativa": "Atributo obrigatório trigger no botão do select. Medida: atributo data-trigger no gatilho.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-sem-trigger",
+    "descricao": "O gatilho perde o atributo trigger; a abertura da lista é ligada por um script da página, e S2 continua alcançável pelo mesmo botão.",
+    "clausula": "atributo · string · trigger",
+    "efeitos": {
+     "toca": [
+      "$:gatilho",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "atributo retirado e abertura religada por script"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Atributo da anatomia do select.",
+  "equivalenteEmag": null
+ },
+ "a2-0e5d4429c4ef": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "'Selecionar todos' só existe no múltiplo."
+ },
+ "a2-4c2ef1bf747e": {
+  "aceita": true,
+  "justificativa": "name nos inputs radio das opções. Medida: atributo name dos radios dentro dos itens.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "radios-sem-name",
+    "descricao": "Os inputs radio das opções do select ficam sem o atributo name.",
+    "clausula": "name · Deve ser inseridos nos inputs radio e checkbox",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "atributo name retirado dos radios das opções"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Atributo exigido nas partes internas do select.",
+  "equivalenteEmag": null
+ },
+ "a2-6eb568d6dd94": {
+  "aceita": true,
+  "justificativa": "value nos inputs radio das opções. Medida: atributo value dos radios dentro dos itens.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "radios-sem-value",
+    "descricao": "Os inputs radio das opções do select ficam sem o atributo value.",
+    "clausula": "value · Deve ser inseridos nos inputs radio e checkbox",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "atributo value retirado dos radios das opções"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "componente"
+  ],
+  "razaoCategorias": "Atributo exigido nas partes internas do select.",
+  "equivalenteEmag": null
+ },
+ "a2-2fbc06691f92": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Retirar o core.min.js desfaz o comportamento de todos os componentes da página, inclusive do andaime, e impede S2."
+ },
+ "a2-a3eb3793d8de": {
+  "aceita": false,
+  "motivo": "acoplada",
+  "justificativa": "Sem instanciar a classe do select a lista não abre: S2 fica inalcançável e a navegação por teclado também cai."
+ },
+ "a2-edfe49f231f8": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "O item 'não encontrado' só aparece com filtro sem resultado; nenhum estado o mostra."
+ },
+ "a2-d1039a4016fe": {
+  "aceita": true,
+  "justificativa": "O select é alcançado pela tecla Tab. Medida: a sequência de Tab para no campo do select.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "campo-fora-do-tab",
+    "descricao": "O campo do select recebe tabindex=-1 e sai da sequência de Tab.",
+    "clausula": "O componente select deve ser acessado via navegação por teclado por meio da tecla Tab",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "campo fora da ordem de tabulação"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "axe"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade",
+   "navegacao"
+  ],
+  "razaoCategorias": "Operação por teclado e ordem de navegação.",
+  "equivalenteEmag": null
+ },
+ "a2-126c376799cd": {
+  "aceita": true,
+  "justificativa": "Com foco no select, ele é acionado e exibe a lista. Medida: com foco no campo, Enter/seta para baixo abre a lista.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "foco-nao-abre",
+    "descricao": "Com foco no campo, Enter e seta para baixo não abrem a lista; só o clique no gatilho abre.",
+    "clausula": "Quando o foco estiver sobre o select, o mesmo deve ser acionado e exibir a lista de itens",
+    "efeitos": {
+     "toca": [
+      "$:campo",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "script intercepta as teclas de abertura no campo"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Operação por teclado.",
+  "equivalenteEmag": null
+ },
+ "a2-41577e5f420c": {
+  "aceita": true,
+  "justificativa": "Na lista aberta, as setas Up/Down navegam pelos itens. Medida: seta para baixo move o destaque para o próximo item.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "setas-inertes",
+    "descricao": "Com a lista aberta, as setas não movem entre os itens.",
+    "clausula": "o usuário deve conseguir navegar através dela por meio das teclas de seta Up e Down",
+    "efeitos": {
+     "toca": [
+      "$:lista",
+      "$:itens",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "script intercepta as setas na lista"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Operação por teclado.",
+  "equivalenteEmag": null
+ },
+ "a2-7348bce34289": {
+  "aceita": true,
+  "justificativa": "Seguir cores e estados da diretriz do select com contraste adequado. Medida: cor do texto das opções contra o fundo e contraste.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "opcoes-texto-claro",
+    "descricao": "O texto das opções da lista aberta fica #AAAAAA sobre fundo branco.",
+    "clausula": "garantindo a qualidade de contraste e legibilidade para usuários com baixa visão",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "cor do texto das opções clareada"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "axe",
+   "medicao",
+   "interacao"
+  ],
+  "categorias": [
+   "token",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Cor por token e contraste.",
+  "equivalenteEmag": null
+ },
+ "a2-73b63c7b9f87": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Condição 'sem rótulo visual' falsa: o select tem rótulo visível."
+ },
+ "a2-684e49bfcc90": {
+  "aceita": true,
+  "justificativa": "Ao clicar no campo do select ele assume o foco e a digitação filtra a lista. Medida: clicar no campo, digitar o início de uma opção e conferir a lista filtrada.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "digitar-nao-filtra",
+    "descricao": "Digitar no campo do select não filtra a lista; todas as opções continuam visíveis.",
+    "clausula": "habilitando a funcionalidade de filtro de pesquisa por autocomplete",
+    "efeitos": {
+     "toca": [
+      "$:campo",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "script anula o filtro por digitação"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Comportamento de filtro do campo.",
+  "equivalenteEmag": null
+ },
+ "a2-8e13c46672f5": {
+  "aceita": true,
+  "justificativa": "O gatilho é botão terciário que abre/fecha a lista e alterna o ícone. Medida: ênfase do botão e ícone com a lista fechada e aberta.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-secundario",
+    "descricao": "O gatilho do select recebe ênfase secundária (contorno).",
+    "clausula": "É um botão terciário",
+    "efeitos": {
+     "toca": [
+      "$:gatilho"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "ênfase do gatilho trocada"
+    }
+   },
+   {
+    "id": "toggle-sem-alternancia",
+    "descricao": "Com a lista aberta, o ícone do gatilho continua o de abrir.",
+    "clausula": "feedback visual através da alternância em seu ícone interno",
+    "efeitos": {
+     "toca": [
+      "$:gatilho",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "ícone do gatilho não alterna"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "comportamento",
+   "componente"
+  ],
+  "razaoCategorias": "Ênfase (parte da anatomia) e comportamento de toggle.",
+  "equivalenteEmag": null
+ },
+ "a2-a0788e298517": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Multiselect; o select é simples."
+ },
+ "a2-d7daf3fab1df": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Seleção intermediária é do multiselect; o select é simples."
+ },
+ "a2-e85eefb9d6f2": {
+  "aceita": true,
+  "justificativa": "No select simples, o item escolhido aparece no campo. Medida: valor do campo depois de escolher uma opção.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "campo-nao-recebe",
+    "descricao": "Depois de escolher uma opção, a lista fecha e o campo continua vazio.",
+    "clausula": "O item selecionado será apresentado no \"Campo de Entrada de Texto\"",
+    "efeitos": {
+     "toca": [
+      "$:campo",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "script limpa o campo após a escolha"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Comportamento de escolha.",
+  "equivalenteEmag": null
+ },
+ "a2-cf20e5b86798": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Multiselect; o select é simples."
+ },
+ "a2-d310c5939aa9": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Multiselect; o select é simples."
+ },
+ "a2-e36f62b6cec2": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Selecionar todos é do multiselect; não há."
+ },
+ "a2-a4f030053769": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Selecionar todos é do multiselect; não há."
+ },
+ "a2-bf93d0b0e6f9": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Rótulo Selecionar/Desselecionar Todos é do multiselect; não há."
+ },
+ "a2-4d99afd1c618": {
+  "aceita": true,
+  "justificativa": "Clicar em qualquer ponto da extensão do campo abre o select. Medida: clicar no meio do campo e conferir a lista aberta.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "campo-nao-abre",
+    "descricao": "Clicar no campo do select não abre a lista; só o botão gatilho abre (S2 segue pelo gatilho).",
+    "clausula": "o usuário poderá clicar em toda a extensão no campo input",
+    "efeitos": {
+     "toca": [
+      "$:campo",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "script impede a abertura pelo clique no campo"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Comportamento de abertura.",
+  "equivalenteEmag": null
+ },
+ "a2-a451e00d7b63": {
+  "aceita": true,
+  "justificativa": "O campo assume o estado de foco ao clicar nele ou no gatilho. Medida: estilo de foco do campo depois de clicar no gatilho.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "gatilho-sem-foco-no-campo",
+    "descricao": "Clicar no gatilho abre a lista, mas o campo não mostra o estado de foco.",
+    "clausula": "O estado foco ocorre sobre o campo input quando o usuário clicar sobre ele ou sobre o botão terciário.",
+    "efeitos": {
+     "toca": [
+      "$:campo",
+      "$:gatilho"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "estilo de foco do campo anulado ao acionar o gatilho"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Foco visível.",
+  "equivalenteEmag": null
+ },
+ "a2-83611c221e13": {
+  "aceita": true,
+  "justificativa": "Altura máxima da lista do select = dez itens; com 6 opções, todas aparecem sem rolagem. Medida: max-height computado da lista contra a altura de 10 itens.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "lista-curta",
+    "descricao": "A lista aberta do select fica limitada à altura de 2 itens, com barra de rolagem para os demais.",
+    "clausula": "Select: dez itens;",
+    "efeitos": {
+     "toca": [
+      "$:lista"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "altura máxima da lista reduzida"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "interacao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Dimensão da lista.",
+  "equivalenteEmag": null
+ },
+ "a2-3f42b6af5f6c": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Altura máxima do multiselect; o select é simples."
+ },
+ "a2-c02b566bacc1": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Quebra de linha em item extenso; os nomes de continente são curtos."
+ },
+ "a2-654520f6ba0e": {
+  "aceita": true,
+  "justificativa": "Esc recolhe o select sem escolher item. Medida: abrir a lista, pressionar Esc, conferir lista fechada e valor inalterado.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "esc-inerte",
+    "descricao": "Com a lista do select aberta, Esc não a fecha.",
+    "clausula": "O select pode ser recolhido por meio da tecla Esc, sem selecionar qualquer item de opção.",
+    "efeitos": {
+     "toca": [
+      "$:lista",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "script intercepta Esc na lista"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Operação por teclado.",
+  "equivalenteEmag": null
+ },
+ "a2-66f76b92ffb0": {
+  "aceita": true,
+  "justificativa": "Formatação consistente entre os itens da mesma list. Medida: font-size/peso/cor computados do texto de cada item.",
+  "instancias": [
+   "sel-continente",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "item-destoante",
+    "descricao": "Um item (da lista do select e de lst-paises) aparece em negrito e fonte maior que os demais.",
+    "clausula": "esteja atento em manter a formatação e consistência dentro de uma mesma list",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "tipografia de um único item trocada"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "tipografia"
+  ],
+  "razaoCategorias": "Tamanho e peso de fonte do texto.",
+  "equivalenteEmag": null
+ },
+ "a2-a854cc8d302c": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Superfície de conteúdo expandido; nenhuma lista expande."
+ },
+ "a2-e5c486e19a78": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Lista com sub-itens não existe na tela."
+ },
+ "a2-145591b8b938": {
+  "aceita": true,
+  "justificativa": "Item interativo: toda a superfície é interativa e recebe hover. Só os itens do select são interativos. Medida: clicar na parte vazia do item (à direita do texto) e conferir a escolha.",
+  "instancias": [
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "so-texto-clicavel",
+    "descricao": "Na lista do select, clicar na parte vazia à direita do texto de um item não o escolhe; só o texto.",
+    "clausula": "toda a superfície do item é interativa e assume o estado hover",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "área clicável restrita ao texto do item"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Comportamento de interação do item.",
+  "equivalenteEmag": null
+ },
+ "a2-6700707b8210": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Item com elementos interativos internos separados não existe: os itens do select são interativos por inteiro e os de lst-paises não têm ação."
+ },
+ "a2-8be415ce0e60": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhum item é expansível."
+ }
+}

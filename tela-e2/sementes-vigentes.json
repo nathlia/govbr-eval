@@ -1,0 +1,85 @@
+{
+  "_meta": {
+    "sorteioSha256": "eda4ff57a59d247ee1545747abf76ee71c10f7716a7958ad6084119cad551bb8",
+    "descartesSha256": "b10f1f400c45ecfd93a01efaf20023f14f18709c0d72c20cea44ef90a007a82f"
+  },
+  "vigentes": [
+    {
+      "id": "btn-limpar::a2-2ac598dc24db",
+      "sitio": "btn-limpar",
+      "regra": "a2-2ac598dc24db",
+      "classe": "DS",
+      "posicao": 0,
+      "variante": "secundario-a-direita-do-primario"
+    },
+    {
+      "id": "msg-orientacao::a2-d6b3f0e36943",
+      "sitio": "msg-orientacao",
+      "regra": "a2-d6b3f0e36943",
+      "classe": "DS",
+      "posicao": 3,
+      "variante": "mensagem-jargao-tecnico"
+    },
+    {
+      "id": "btn-ajuda::a2-5b47246a41c1",
+      "sitio": "btn-ajuda",
+      "regra": "a2-5b47246a41c1",
+      "classe": "DS",
+      "posicao": 4,
+      "variante": "circular-sem-icone"
+    },
+    {
+      "id": "inp-codigo::a2-a39f3ad397d4",
+      "sitio": "inp-codigo",
+      "regra": "a2-a39f3ad397d4",
+      "classe": "DS",
+      "posicao": 6,
+      "variante": "fonte-do-sistema"
+    },
+    {
+      "id": "rad-situacao::a2-f838b54da560",
+      "sitio": "rad-situacao",
+      "regra": "a2-f838b54da560",
+      "classe": "DS",
+      "posicao": 9,
+      "variante": "legenda-centralizada"
+    },
+    {
+      "id": "msg-erro::a2-ef29db5bb4ac",
+      "sitio": "msg-erro",
+      "regra": "a2-ef29db5bb4ac",
+      "classe": "DS",
+      "posicao": 10,
+      "variante": "mensagem-com-visual-selecionado"
+    },
+    {
+      "id": "sel-continente::a2-7348bce34289",
+      "sitio": "sel-continente",
+      "regra": "a2-7348bce34289",
+      "classe": "G",
+      "posicao": 0,
+      "variante": "opcoes-texto-claro"
+    },
+    {
+      "id": "inp-nome-pais::a2-328f62cfe4ce",
+      "sitio": "inp-nome-pais",
+      "regra": "a2-328f62cfe4ce",
+      "classe": "G",
+      "posicao": 2,
+      "variante": "campo-readonly-ate-clique"
+    },
+    {
+      "id": "lst-paises::a2-5432c282d0d7",
+      "sitio": "lst-paises",
+      "regra": "a2-5432c282d0d7",
+      "classe": "G",
+      "posicao": 18,
+      "variante": "altura-fixa-corta"
+    }
+  ],
+  "substituicoes": [],
+  "deficit": {
+    "DS": 0,
+    "G": 0
+  }
+}

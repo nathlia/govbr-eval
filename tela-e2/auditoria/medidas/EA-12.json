@@ -1,0 +1,22 @@
+{
+ "id": "EA-12",
+ "classe": "achado",
+ "instancia": "msg-erro",
+ "chave": "cor-semantica-erro",
+ "porEstado": {
+  "S1": {
+   "valor": {
+    "fundo": "rgb(38, 112, 232)",
+    "icone": "rgb(255, 255, 255)",
+    "texto": "rgb(255, 255, 255)",
+    "fundoEsperadoDanger": "#fde0db",
+    "sobrescrita": {
+     "nivelAncestral": 0,
+     "seletor": ".formulario-pais .retorno-envio",
+     "valor": "var(--blue-warm-vivid-50)"
+    }
+   },
+   "viola": true
+  }
+ }
+}

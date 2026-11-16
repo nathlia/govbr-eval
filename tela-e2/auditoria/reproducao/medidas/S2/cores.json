@@ -1,0 +1,794 @@
+[
+ {
+  "el": "header#cabecalho.br-header.cabecalho-servico",
+  "caminho": "#cabecalho",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "div.header-sign",
+  "caminho": "#cabecalho > div > div:nth-of-type(1) > div:nth-of-type(1) > div",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "a#sgn-usuaria.br-sign-in.conta-usuaria",
+  "caminho": "#sgn-usuaria",
+  "prop": "background-color",
+  "valor": "rgb(248, 248, 248)",
+  "hex": "#f8f8f8",
+  "alfa": 1
+ },
+ {
+  "el": "span.content.bg-blue-warm-vivid-70.text-pure-0",
+  "caminho": "#ava-usuaria > span",
+  "prop": "color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "span.content.bg-blue-warm-vivid-70.text-pure-0",
+  "caminho": "#ava-usuaria > span",
+  "prop": "background-color",
+  "valor": "rgb(19, 81, 180)",
+  "hex": "#1351b4",
+  "alfa": 1
+ },
+ {
+  "el": "span.ml-2.text-gray-80.text-weight-regular",
+  "caminho": "#sgn-usuaria > span:nth-of-type(2)",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "span.text-weight-semi-bold",
+  "caminho": "#sgn-usuaria > span:nth-of-type(2) > span",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "div.header-title",
+  "caminho": "#cabecalho > div > div:nth-of-type(2) > div > div > div",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "div#msg-orientacao.br-message.info.mensagem-servico",
+  "caminho": "#msg-orientacao",
+  "prop": "background-color",
+  "valor": "rgb(212, 229, 255)",
+  "hex": "#d4e5ff",
+  "alfa": 1
+ },
+ {
+  "el": "i.fas.fa-info-circle.fa-lg",
+  "caminho": "#msg-orientacao > div:nth-of-type(1) > i",
+  "prop": "color",
+  "valor": "rgb(21, 91, 203)",
+  "hex": "#155bcb",
+  "alfa": 1
+ },
+ {
+  "el": "span.message-title",
+  "caminho": "#msg-orientacao > div:nth-of-type(2) > span:nth-of-type(1)",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "span.message-body",
+  "caminho": "#msg-orientacao > div:nth-of-type(2) > span:nth-of-type(2)",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "i.fas.fa-times",
+  "caminho": "#msg-orientacao > div:nth-of-type(3) > button > i",
+  "prop": "color",
+  "valor": "rgb(21, 91, 203)",
+  "hex": "#155bcb",
+  "alfa": 1
+ },
+ {
+  "el": "i.fas.fa-home",
+  "caminho": "#brd-trilha > ol > li:nth-of-type(1) > a > i",
+  "prop": "color",
+  "valor": "rgb(19, 81, 180)",
+  "hex": "#1351b4",
+  "alfa": 1
+ },
+ {
+  "el": "i.icon.fas.fa-chevron-right",
+  "caminho": "#brd-trilha > ol > li:nth-of-type(2) > i",
+  "prop": "color",
+  "valor": "rgb(204, 204, 204)",
+  "hex": "#cccccc",
+  "alfa": 1
+ },
+ {
+  "el": "a",
+  "caminho": "#brd-trilha > ol > li:nth-of-type(2) > a",
+  "prop": "color",
+  "valor": "rgb(19, 81, 180)",
+  "hex": "#1351b4",
+  "alfa": 1
+ },
+ {
+  "el": "i.icon.fas.fa-chevron-right",
+  "caminho": "#brd-trilha > ol > li:nth-of-type(3) > i",
+  "prop": "color",
+  "valor": "rgb(204, 204, 204)",
+  "hex": "#cccccc",
+  "alfa": 1
+ },
+ {
+  "el": "a",
+  "caminho": "#brd-trilha > ol > li:nth-of-type(3) > a",
+  "prop": "color",
+  "valor": "rgb(19, 81, 180)",
+  "hex": "#1351b4",
+  "alfa": 1
+ },
+ {
+  "el": "i.icon.fas.fa-chevron-right",
+  "caminho": "#brd-trilha > ol > li:nth-of-type(4) > i",
+  "prop": "color",
+  "valor": "rgb(204, 204, 204)",
+  "hex": "#cccccc",
+  "alfa": 1
+ },
+ {
+  "el": "span",
+  "caminho": "#brd-trilha > ol > li:nth-of-type(4) > span",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "h1.titulo-pagina",
+  "caminho": "#main-content > div:nth-of-type(2) > div > h1",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "h2.titulo-formulario",
+  "caminho": "#form-pais > h2",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "label",
+  "caminho": "#inp-nome-pais > label",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "input#nome-pais",
+  "caminho": "#nome-pais",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "input#nome-pais",
+  "caminho": "#nome-pais",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "input#nome-pais",
+  "caminho": "#nome-pais",
+  "prop": "border-top-color",
+  "valor": "rgb(136, 136, 136)",
+  "hex": "#888888",
+  "alfa": 1
+ },
+ {
+  "el": "input#nome-pais",
+  "caminho": "#nome-pais",
+  "prop": "border-bottom-color",
+  "valor": "rgb(136, 136, 136)",
+  "hex": "#888888",
+  "alfa": 1
+ },
+ {
+  "el": "label",
+  "caminho": "#inp-codigo > label",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "input#codigo-pais",
+  "caminho": "#codigo-pais",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "input#codigo-pais",
+  "caminho": "#codigo-pais",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "input#codigo-pais",
+  "caminho": "#codigo-pais",
+  "prop": "border-top-color",
+  "valor": "rgb(136, 136, 136)",
+  "hex": "#888888",
+  "alfa": 1
+ },
+ {
+  "el": "input#codigo-pais",
+  "caminho": "#codigo-pais",
+  "prop": "border-bottom-color",
+  "valor": "rgb(136, 136, 136)",
+  "hex": "#888888",
+  "alfa": 1
+ },
+ {
+  "el": "p#codigo-pais-apoio.apoio-campo",
+  "caminho": "#codigo-pais-apoio",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "label",
+  "caminho": "#sel-continente > div:nth-of-type(1) > label",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "i.fas.fa-search",
+  "caminho": "#sel-continente > div:nth-of-type(1) > div > div > i",
+  "prop": "color",
+  "valor": "rgb(136, 136, 136)",
+  "hex": "#888888",
+  "alfa": 1
+ },
+ {
+  "el": "input#continente",
+  "caminho": "#continente",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "input#continente",
+  "caminho": "#continente",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "input#continente",
+  "caminho": "#continente",
+  "prop": "border-top-color",
+  "valor": "rgb(194, 133, 12)",
+  "hex": "#c2850c",
+  "alfa": 1
+ },
+ {
+  "el": "input#continente",
+  "caminho": "#continente",
+  "prop": "border-bottom-color",
+  "valor": "rgb(194, 133, 12)",
+  "hex": "#c2850c",
+  "alfa": 1
+ },
+ {
+  "el": "i.fas.fa-angle-up",
+  "caminho": "#sel-continente > div:nth-of-type(1) > button > i",
+  "prop": "color",
+  "valor": "rgb(19, 81, 180)",
+  "hex": "#1351b4",
+  "alfa": 1
+ },
+ {
+  "el": "div#list-5739.br-list",
+  "caminho": "#list-5739",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "div.br-item",
+  "caminho": "#list-5739 > div:nth-of-type(1)",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "div.br-item",
+  "caminho": "#list-5739 > div:nth-of-type(1)",
+  "prop": "border-bottom-color",
+  "valor": "rgb(204, 204, 204)",
+  "hex": "#cccccc",
+  "alfa": 1
+ },
+ {
+  "el": "label",
+  "caminho": "#list-5739 > div:nth-of-type(1) > div > label",
+  "prop": "color",
+  "valor": "rgb(170, 170, 170)",
+  "hex": "#aaaaaa",
+  "alfa": 1
+ },
+ {
+  "el": "div.br-item",
+  "caminho": "#list-5739 > div:nth-of-type(2)",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "div.br-item",
+  "caminho": "#list-5739 > div:nth-of-type(2)",
+  "prop": "border-bottom-color",
+  "valor": "rgb(204, 204, 204)",
+  "hex": "#cccccc",
+  "alfa": 1
+ },
+ {
+  "el": "label",
+  "caminho": "#list-5739 > div:nth-of-type(2) > div > label",
+  "prop": "color",
+  "valor": "rgb(170, 170, 170)",
+  "hex": "#aaaaaa",
+  "alfa": 1
+ },
+ {
+  "el": "div.br-item",
+  "caminho": "#list-5739 > div:nth-of-type(3)",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "div.br-item",
+  "caminho": "#list-5739 > div:nth-of-type(3)",
+  "prop": "border-bottom-color",
+  "valor": "rgb(204, 204, 204)",
+  "hex": "#cccccc",
+  "alfa": 1
+ },
+ {
+  "el": "label",
+  "caminho": "#list-5739 > div:nth-of-type(3) > div > label",
+  "prop": "color",
+  "valor": "rgb(170, 170, 170)",
+  "hex": "#aaaaaa",
+  "alfa": 1
+ },
+ {
+  "el": "div.br-item",
+  "caminho": "#list-5739 > div:nth-of-type(4)",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "div.br-item",
+  "caminho": "#list-5739 > div:nth-of-type(4)",
+  "prop": "border-bottom-color",
+  "valor": "rgb(204, 204, 204)",
+  "hex": "#cccccc",
+  "alfa": 1
+ },
+ {
+  "el": "label",
+  "caminho": "#list-5739 > div:nth-of-type(4) > div > label",
+  "prop": "color",
+  "valor": "rgb(170, 170, 170)",
+  "hex": "#aaaaaa",
+  "alfa": 1
+ },
+ {
+  "el": "div.br-item",
+  "caminho": "#list-5739 > div:nth-of-type(5)",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "div.br-item",
+  "caminho": "#list-5739 > div:nth-of-type(5)",
+  "prop": "border-bottom-color",
+  "valor": "rgb(204, 204, 204)",
+  "hex": "#cccccc",
+  "alfa": 1
+ },
+ {
+  "el": "label",
+  "caminho": "#list-5739 > div:nth-of-type(5) > div > label",
+  "prop": "color",
+  "valor": "rgb(170, 170, 170)",
+  "hex": "#aaaaaa",
+  "alfa": 1
+ },
+ {
+  "el": "div.br-item",
+  "caminho": "#list-5739 > div:nth-of-type(6)",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "label",
+  "caminho": "#list-5739 > div:nth-of-type(6) > div > label",
+  "prop": "color",
+  "valor": "rgb(170, 170, 170)",
+  "hex": "#aaaaaa",
+  "alfa": 1
+ },
+ {
+  "el": "legend.rotulo-situacao",
+  "caminho": "#rad-situacao > legend",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "label",
+  "caminho": "#rad-situacao > div > div:nth-of-type(1) > label",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "label",
+  "caminho": "#rad-situacao > div > div:nth-of-type(2) > label",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "label",
+  "caminho": "#rad-situacao > div > div:nth-of-type(3) > label",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "button#btn-cancelar.br-button.secondary.acao-cancelar",
+  "caminho": "#btn-cancelar",
+  "prop": "color",
+  "valor": "rgb(19, 81, 180)",
+  "hex": "#1351b4",
+  "alfa": 1
+ },
+ {
+  "el": "button#btn-cancelar.br-button.secondary.acao-cancelar",
+  "caminho": "#btn-cancelar",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "button#btn-cancelar.br-button.secondary.acao-cancelar",
+  "caminho": "#btn-cancelar",
+  "prop": "border-top-color",
+  "valor": "rgb(19, 81, 180)",
+  "hex": "#1351b4",
+  "alfa": 1
+ },
+ {
+  "el": "button#btn-cancelar.br-button.secondary.acao-cancelar",
+  "caminho": "#btn-cancelar",
+  "prop": "border-bottom-color",
+  "valor": "rgb(19, 81, 180)",
+  "hex": "#1351b4",
+  "alfa": 1
+ },
+ {
+  "el": "button#btn-limpar.br-button.secondary.acao-limpar",
+  "caminho": "#btn-limpar",
+  "prop": "color",
+  "valor": "rgb(19, 81, 180)",
+  "hex": "#1351b4",
+  "alfa": 1
+ },
+ {
+  "el": "button#btn-limpar.br-button.secondary.acao-limpar",
+  "caminho": "#btn-limpar",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "button#btn-limpar.br-button.secondary.acao-limpar",
+  "caminho": "#btn-limpar",
+  "prop": "border-top-color",
+  "valor": "rgb(19, 81, 180)",
+  "hex": "#1351b4",
+  "alfa": 1
+ },
+ {
+  "el": "button#btn-limpar.br-button.secondary.acao-limpar",
+  "caminho": "#btn-limpar",
+  "prop": "border-bottom-color",
+  "valor": "rgb(19, 81, 180)",
+  "hex": "#1351b4",
+  "alfa": 1
+ },
+ {
+  "el": "button#btn-salvar.br-button.primary.acao-salvar",
+  "caminho": "#btn-salvar",
+  "prop": "color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "button#btn-salvar.br-button.primary.acao-salvar",
+  "caminho": "#btn-salvar",
+  "prop": "background-color",
+  "valor": "rgb(19, 81, 180)",
+  "hex": "#1351b4",
+  "alfa": 1
+ },
+ {
+  "el": "h2#titulo-configuracao.titulo-secao",
+  "caminho": "#titulo-configuracao",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "label",
+  "caminho": "#swt-certificado > label",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "span#div-secoes.br-divider.separador-secoes",
+  "caminho": "#div-secoes",
+  "prop": "border-top-color",
+  "valor": "rgb(204, 204, 204)",
+  "hex": "#cccccc",
+  "alfa": 1
+ },
+ {
+  "el": "div#lst-paises.br-list.lista-paises",
+  "caminho": "#lst-paises",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "h2#titulo-lista.title.titulo-lista",
+  "caminho": "#titulo-lista",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "span.br-divider",
+  "caminho": "#lst-paises > span",
+  "prop": "border-top-color",
+  "valor": "rgb(204, 204, 204)",
+  "hex": "#cccccc",
+  "alfa": 1
+ },
+ {
+  "el": "div.br-item.py-3.item-pais",
+  "caminho": "#lst-paises > div:nth-of-type(2) > div:nth-of-type(1)",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "div.texto-principal",
+  "caminho": "#lst-paises > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1)",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "div.texto-secundario",
+  "caminho": "#lst-paises > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2)",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "span.br-divider",
+  "caminho": "#lst-paises > div:nth-of-type(2) > span:nth-of-type(1)",
+  "prop": "border-top-color",
+  "valor": "rgb(204, 204, 204)",
+  "hex": "#cccccc",
+  "alfa": 1
+ },
+ {
+  "el": "div.br-item.py-3.item-pais",
+  "caminho": "#lst-paises > div:nth-of-type(2) > div:nth-of-type(2)",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "div.texto-principal",
+  "caminho": "#lst-paises > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "div.texto-secundario",
+  "caminho": "#lst-paises > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "span.br-divider",
+  "caminho": "#lst-paises > div:nth-of-type(2) > span:nth-of-type(2)",
+  "prop": "border-top-color",
+  "valor": "rgb(204, 204, 204)",
+  "hex": "#cccccc",
+  "alfa": 1
+ },
+ {
+  "el": "div.br-item.py-3.item-pais",
+  "caminho": "#lst-paises > div:nth-of-type(2) > div:nth-of-type(3)",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "div.texto-principal",
+  "caminho": "#lst-paises > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1)",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "div.texto-secundario",
+  "caminho": "#lst-paises > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2)",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "span.br-divider",
+  "caminho": "#lst-paises > div:nth-of-type(2) > span:nth-of-type(3)",
+  "prop": "border-top-color",
+  "valor": "rgb(204, 204, 204)",
+  "hex": "#cccccc",
+  "alfa": 1
+ },
+ {
+  "el": "div.br-item.py-3.item-pais",
+  "caminho": "#lst-paises > div:nth-of-type(2) > div:nth-of-type(4)",
+  "prop": "background-color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "div.texto-principal",
+  "caminho": "#lst-paises > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1)",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "div.texto-secundario",
+  "caminho": "#lst-paises > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(2)",
+  "prop": "color",
+  "valor": "rgb(51, 51, 51)",
+  "hex": "#333333",
+  "alfa": 1
+ },
+ {
+  "el": "span.br-divider",
+  "caminho": "#lst-paises > div:nth-of-type(2) > span:nth-of-type(4)",
+  "prop": "border-top-color",
+  "valor": "rgb(204, 204, 204)",
+  "hex": "#cccccc",
+  "alfa": 1
+ },
+ {
+  "el": "footer#rodape.br-footer.rodape-servico",
+  "caminho": "#rodape",
+  "prop": "background-color",
+  "valor": "rgb(7, 29, 65)",
+  "hex": "#071d41",
+  "alfa": 1
+ },
+ {
+  "el": "footer#rodape.br-footer.rodape-servico",
+  "caminho": "#rodape",
+  "prop": "border-top-color",
+  "valor": "rgb(204, 204, 204)",
+  "hex": "#cccccc",
+  "alfa": 1
+ },
+ {
+  "el": "span.br-divider.my-3",
+  "caminho": "#rodape > span",
+  "prop": "border-top-color",
+  "valor": "rgb(204, 204, 204)",
+  "hex": "#cccccc",
+  "alfa": 1
+ },
+ {
+  "el": "div.text-down-01.text-medium.pb-3",
+  "caminho": "#rodape > div:nth-of-type(2) > div > div",
+  "prop": "color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ },
+ {
+  "el": "strong",
+  "caminho": "#rodape > div:nth-of-type(2) > div > div > strong",
+  "prop": "color",
+  "valor": "rgb(255, 255, 255)",
+  "hex": "#ffffff",
+  "alfa": 1
+ }
+]

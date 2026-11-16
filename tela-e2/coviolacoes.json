@@ -1,0 +1,534 @@
+{
+ "_meta": {
+  "regra": "R-CV (tela-e2/coviolacoes.mjs, cabeçalho; reconciliacao.md § 5)",
+  "data": "2026-11-14",
+  "contagens": {
+   "coviolacoes": 27,
+   "declaradas": 11,
+   "soDaAuditoria": 16,
+   "entramEmRules": 17,
+   "foraSemClausula": 7,
+   "foraNaoObrigacao": 3,
+   "specsComIdExposto": 3,
+   "specsNovas": 0
+  }
+ },
+ "porCelula": {
+  "btn-limpar::a2-2ac598dc24db": {
+   "classeSelada": "DS",
+   "unidadeSorteada": "a2-2ac598dc24db",
+   "idsSorteada": [
+    "govbr-3.7.0-pattern-global-a0e5ee1b1a71"
+   ],
+   "rules": [
+    "govbr-3.7.0-pattern-global-a0e5ee1b1a71",
+    "govbr-3.7.0-component-button-3b591843f42b",
+    "emag:1.4",
+    "govbr-3.7.0-component-button-77dfc156b422",
+    "emag:6.3"
+   ],
+   "rulesExpostos": [
+    "emag:1.4",
+    "emag:6.3"
+   ],
+   "coviolacoes": [
+    {
+     "unidade": "a2-df449a7d5cd8",
+     "origem": [
+      "construcao.md"
+     ],
+     "idsBase": [
+      "govbr-3.7.0-component-button-3b591843f42b"
+     ],
+     "passo2": "aceita",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    },
+    {
+     "unidade": "a2-bde476da44c9",
+     "origem": [
+      "construcao.md",
+      "EA-02"
+     ],
+     "idsBase": [
+      "emag:1.4"
+     ],
+     "passo2": "aceita",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": [
+      "emag:1.4"
+     ]
+    },
+    {
+     "unidade": "a2-66f05213a674",
+     "origem": [
+      "EA-01"
+     ],
+     "idsBase": [
+      "govbr-3.7.0-component-button-77dfc156b422"
+     ],
+     "passo2": "duplicada:a2-df449a7d5cd8",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    },
+    {
+     "unidade": "a2-0f20577609d3",
+     "origem": [
+      "EA-02"
+     ],
+     "idsBase": [
+      "emag:6.3"
+     ],
+     "passo2": "aceita",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": [
+      "emag:6.3"
+     ]
+    }
+   ]
+  },
+  "msg-orientacao::a2-d6b3f0e36943": {
+   "classeSelada": "DS",
+   "unidadeSorteada": "a2-d6b3f0e36943",
+   "idsSorteada": [
+    "govbr-3.7.0-pattern-global-5dfbb109d8d4"
+   ],
+   "rules": [
+    "govbr-3.7.0-pattern-global-5dfbb109d8d4",
+    "govbr-3.7.0-component-message-3b6fb4ad1e0e",
+    "emag:3.11"
+   ],
+   "rulesExpostos": [],
+   "coviolacoes": [
+    {
+     "unidade": "a2-db30195b0e66",
+     "origem": [
+      "construcao.md",
+      "EA-10"
+     ],
+     "idsBase": [
+      "govbr-3.7.0-component-message-3b6fb4ad1e0e"
+     ],
+     "passo2": "aceita",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    },
+    {
+     "unidade": "a2-a06dc9ebbfe4",
+     "origem": [
+      "EA-11"
+     ],
+     "idsBase": [
+      "emag:3.11"
+     ],
+     "passo2": "sem-medicao",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    }
+   ]
+  },
+  "btn-ajuda::a2-5b47246a41c1": {
+   "classeSelada": "DS",
+   "unidadeSorteada": "a2-5b47246a41c1",
+   "idsSorteada": [
+    "govbr-3.7.0-component-button-627dd3089562"
+   ],
+   "rules": [
+    "govbr-3.7.0-component-button-627dd3089562",
+    "govbr-3.7.0-pattern-global-35721a49577b",
+    "govbr-3.7.0-pattern-global-e3346215185f",
+    "govbr-3.7.0-foundation-global-813be193bb27",
+    "govbr-3.7.0-pattern-global-e7baadab728a"
+   ],
+   "rulesExpostos": [],
+   "coviolacoes": [
+    {
+     "unidade": "a2-460f5696acde",
+     "origem": [
+      "construcao.md"
+     ],
+     "idsBase": [
+      "govbr-3.7.0-pattern-global-35721a49577b"
+     ],
+     "passo2": "aceita",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    },
+    {
+     "unidade": "a2-d47f4c470491",
+     "origem": [
+      "construcao.md"
+     ],
+     "idsBase": [
+      "govbr-3.7.0-pattern-global-e3346215185f"
+     ],
+     "passo2": "aceita",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    },
+    {
+     "unidade": "a2-952e88a5af0d",
+     "origem": [
+      "construcao.md"
+     ],
+     "idsBase": [],
+     "passo2": "aceita",
+     "entraEmRules": false,
+     "fora": "sem-clausula-na-base",
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    },
+    {
+     "unidade": "a2-db50df136f86",
+     "origem": [
+      "construcao.md"
+     ],
+     "idsBase": [
+      "govbr-3.7.0-foundation-global-813be193bb27"
+     ],
+     "passo2": "aceita",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    },
+    {
+     "unidade": "a2-72ddeddc1ac8",
+     "origem": [
+      "construcao.md"
+     ],
+     "idsBase": [],
+     "passo2": "aceita",
+     "entraEmRules": false,
+     "fora": "sem-clausula-na-base",
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    },
+    {
+     "unidade": "a2-d43497944f79",
+     "origem": [
+      "EA-03"
+     ],
+     "idsBase": [
+      "govbr-3.7.0-pattern-global-e7baadab728a"
+     ],
+     "passo2": "nao-se-aplica",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    }
+   ]
+  },
+  "inp-codigo::a2-a39f3ad397d4": {
+   "classeSelada": "DS",
+   "unidadeSorteada": "a2-a39f3ad397d4",
+   "idsSorteada": [
+    "govbr-3.7.0-page-global-881fe9380b81"
+   ],
+   "rules": [
+    "govbr-3.7.0-page-global-881fe9380b81"
+   ],
+   "rulesExpostos": [],
+   "coviolacoes": [
+    {
+     "unidade": "a2-05763ed77f2d",
+     "origem": [
+      "EA-06"
+     ],
+     "idsBase": [
+      "govbr-3.7.0-foundation-global-450420b746a8"
+     ],
+     "passo2": "nao-normativa",
+     "entraEmRules": false,
+     "fora": "nao-obrigacao",
+     "motivoNaoObrigacao": "nao-normativa (passo 2)",
+     "expostos": []
+    },
+    {
+     "unidade": "a2-f82d600db413",
+     "origem": [
+      "EA-06"
+     ],
+     "idsBase": [],
+     "passo2": "duplicada:a2-a39f3ad397d4",
+     "entraEmRules": false,
+     "fora": "sem-clausula-na-base",
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    }
+   ]
+  },
+  "rad-situacao::a2-f838b54da560": {
+   "classeSelada": "DS",
+   "unidadeSorteada": "a2-f838b54da560",
+   "idsSorteada": [
+    "govbr-3.7.0-component-radio-331797975ce6"
+   ],
+   "rules": [
+    "govbr-3.7.0-component-radio-331797975ce6"
+   ],
+   "rulesExpostos": [],
+   "coviolacoes": []
+  },
+  "msg-erro::a2-ef29db5bb4ac": {
+   "classeSelada": "DS",
+   "unidadeSorteada": "a2-ef29db5bb4ac",
+   "idsSorteada": [
+    "govbr-3.7.0-foundation-global-ced823e7339b"
+   ],
+   "rules": [
+    "govbr-3.7.0-foundation-global-ced823e7339b",
+    "govbr-3.7.0-foundation-global-db534e78f2b3"
+   ],
+   "rulesExpostos": [],
+   "coviolacoes": [
+    {
+     "unidade": "a2-90ea0bde7e04",
+     "origem": [
+      "construcao.md",
+      "EA-12"
+     ],
+     "idsBase": [],
+     "passo2": "aceita",
+     "entraEmRules": false,
+     "fora": "sem-clausula-na-base",
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    },
+    {
+     "unidade": "a2-19a22fa26e63",
+     "origem": [
+      "construcao.md"
+     ],
+     "idsBase": [],
+     "passo2": "aceita",
+     "entraEmRules": false,
+     "fora": "sem-clausula-na-base",
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    },
+    {
+     "unidade": "a2-0b6ac0a6bc42",
+     "origem": [
+      "EA-12"
+     ],
+     "idsBase": [
+      "govbr-3.7.0-foundation-global-db534e78f2b3"
+     ],
+     "passo2": "sem-medicao",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    },
+    {
+     "unidade": "a2-3c3ddc93a261",
+     "origem": [
+      "EA-13"
+     ],
+     "idsBase": [
+      "govbr-3.7.0-foundation-global-f51444b3820b"
+     ],
+     "passo2": "passo1:forca",
+     "entraEmRules": false,
+     "fora": "nao-obrigacao",
+     "motivoNaoObrigacao": "forca-recomendacao (passo 1)",
+     "expostos": []
+    },
+    {
+     "unidade": "a2-7ae4ad55ed25",
+     "origem": [
+      "EA-13"
+     ],
+     "idsBase": [],
+     "passo2": "duplicada:a2-b889b938c32d",
+     "entraEmRules": false,
+     "fora": "sem-clausula-na-base",
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    },
+    {
+     "unidade": "a2-b13bd6797498",
+     "origem": [
+      "EA-13"
+     ],
+     "idsBase": [],
+     "passo2": "aceita",
+     "entraEmRules": false,
+     "fora": "sem-clausula-na-base",
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    }
+   ]
+  },
+  "sel-continente::a2-7348bce34289": {
+   "classeSelada": "G",
+   "unidadeSorteada": "a2-7348bce34289",
+   "idsSorteada": [
+    "govbr-3.7.0-accessibility-select-fc1a1281fbbc"
+   ],
+   "rules": [
+    "govbr-3.7.0-accessibility-select-fc1a1281fbbc",
+    "govbr-3.7.0-foundation-global-606524c94570",
+    "emag:4.1",
+    "govbr-3.7.0-foundation-global-21b1a2733f7b"
+   ],
+   "rulesExpostos": [
+    "emag:4.1",
+    "govbr-3.7.0-foundation-global-21b1a2733f7b"
+   ],
+   "coviolacoes": [
+    {
+     "unidade": "a2-2f6900335a84",
+     "origem": [
+      "EA-08"
+     ],
+     "idsBase": [
+      "govbr-3.7.0-foundation-global-606524c94570"
+     ],
+     "passo2": "duplicada:a2-66fbdcf13772",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    },
+    {
+     "unidade": "a2-66fbdcf13772",
+     "origem": [
+      "EA-08"
+     ],
+     "idsBase": [
+      "emag:4.1"
+     ],
+     "passo2": "aceita",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": [
+      "emag:4.1"
+     ]
+    },
+    {
+     "unidade": "a2-3fb37eb25f3c",
+     "origem": [
+      "EA-09"
+     ],
+     "idsBase": [
+      "govbr-3.7.0-foundation-global-21b1a2733f7b"
+     ],
+     "passo2": "aceita",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": [
+      "govbr-3.7.0-foundation-global-21b1a2733f7b"
+     ]
+    }
+   ]
+  },
+  "inp-nome-pais::a2-328f62cfe4ce": {
+   "classeSelada": "G",
+   "unidadeSorteada": "a2-328f62cfe4ce",
+   "idsSorteada": [
+    "govbr-3.7.0-accessibility-input-cacdb7dbe765"
+   ],
+   "rules": [
+    "govbr-3.7.0-accessibility-input-cacdb7dbe765",
+    "govbr-3.7.0-component-input-acbd0e607b75",
+    "emag:2.1"
+   ],
+   "rulesExpostos": [
+    "emag:2.1"
+   ],
+   "coviolacoes": [
+    {
+     "unidade": "a2-d817fab151df",
+     "origem": [
+      "EA-04"
+     ],
+     "idsBase": [
+      "govbr-3.7.0-component-input-acbd0e607b75"
+     ],
+     "passo2": "acoplada",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    },
+    {
+     "unidade": "a2-121e2f176704",
+     "origem": [
+      "EA-04"
+     ],
+     "idsBase": [],
+     "passo2": "nao-normativa",
+     "entraEmRules": false,
+     "fora": "nao-obrigacao",
+     "motivoNaoObrigacao": "nao-normativa (passo 2)",
+     "expostos": []
+    },
+    {
+     "unidade": "a2-acc4801af71c",
+     "origem": [
+      "EA-05"
+     ],
+     "idsBase": [
+      "emag:2.1"
+     ],
+     "passo2": "aceita",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": [
+      "emag:2.1"
+     ]
+    }
+   ]
+  },
+  "lst-paises::a2-5432c282d0d7": {
+   "classeSelada": "G",
+   "unidadeSorteada": "a2-5432c282d0d7",
+   "idsSorteada": [
+    "emag:4.3"
+   ],
+   "rules": [
+    "emag:4.3",
+    "govbr-3.7.0-component-list-ffbd8612ae1b"
+   ],
+   "rulesExpostos": [],
+   "coviolacoes": [
+    {
+     "unidade": "a2-a14d31901423",
+     "origem": [
+      "construcao.md"
+     ],
+     "idsBase": [
+      "govbr-3.7.0-component-list-ffbd8612ae1b"
+     ],
+     "passo2": "aceita",
+     "entraEmRules": true,
+     "fora": null,
+     "motivoNaoObrigacao": null,
+     "expostos": []
+    }
+   ]
+  }
+ }
+}

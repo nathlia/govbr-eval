@@ -1,0 +1,1686 @@
+{
+ "_meta": {
+  "tela": "E2 — cadastro-pais.html (página construída)",
+  "data": "2026-11-14",
+  "regra": "tela-e2/reconciliacao.md; julgamentos escritos à mão em tela-e2/reconciliar.mjs. Precedente: tela-a2/reconciliacao.md (detectada = mesma norma, principal ou em tambem; com outra norma = mesmo elemento, estado e observável; não detectada).",
+  "entradas": {
+   "sementes-vigentes.json": "6d62f52379ac702b061385ddd40237df92272c3d9b815c4ce6d45126716009d1",
+   "sorteio.json": "eda4ff57a59d247ee1545747abf76ee71c10f7716a7958ad6084119cad551bb8",
+   "universo.json": "3cd2eb1effe0b120e727d6f215fced4de15b817ea1610120108be8602b855233",
+   "ponte-base.json": "75e56aca899adac645b367e6e3a0ea26d3008d5befd2ec9200ada85d4f0ae597",
+   "elegibilidade-passo2.json": "f7d2f47ae4d7eb56082e06abe84a1361b087afb2b6cc3697a6ddfc3c94b3d047",
+   "classe-reavaliada.json": "267c625e822f0850bc4a28c09db7736d64a8393ee16e21794cacb6178c8915da",
+   "construcao.md": "7225118477baa057c622f90683cff55e8a53bb2c51fec042d713fec57674621d",
+   "conferencia-construcao.json": "61d44c56d00f4ef121888f8de7cb7ea9c01608fb6754046c36b24a22c7288fbf",
+   "auditoria/achados.json": "acde2b592538aa63400d2b77d7b2e5343dffdb84642624f06caa65778d8e5500",
+   "auditoria/conformes.json": "c4875696016c5ae0cead9b51d2ee5356f5d68a87b9f2d5287852a3d76ec75270",
+   "auditoria/incertos.json": "ec1e891f7f89df288522fd3f8f9ff5c03ebf0ad26ce233d4deb0cd422dde2912",
+   "auditoria/medidas/conferencia.json": "1d8df142fe03e94a47438528fd60cf270b82d2716d57fd80875c18024b7a1c0e"
+  },
+  "proibidos": "não lidos: govbr-ds-validator, checker-aliases.json, kb-aliases*.json, results/, reports/, ferramentas MCP do validator, axe"
+ },
+ "contagens": {
+  "sorteadas": {
+   "total": 9,
+   "mesmaClausula": {
+    "DS": 4,
+    "G": 1
+   },
+   "outraClausula": {
+    "DS": 1,
+    "G": 1
+   },
+   "naoAchada": {
+    "DS": 1,
+    "G": 1
+   }
+  },
+  "achados": {
+   "total": 13,
+   "porCategoria": {
+    "sorteada": 7,
+    "coviolacao-declarada": 1,
+    "coviolacao-nao-declarada": 4,
+    "acidental": 1
+   }
+  },
+  "incertos": {
+   "total": 19,
+   "porDestino": {
+    "fundo": 14,
+    "autora": 5
+   },
+   "tocamObservavelSorteado": 1,
+   "tocamPontoConformeDaConstrucao": 7
+  }
+ },
+ "sorteadas": [
+  {
+   "celula": "btn-limpar::a2-2ac598dc24db",
+   "hospedeiro": "btn-limpar",
+   "unidade": "a2-2ac598dc24db",
+   "classe": "DS",
+   "variante": "secundario-a-direita-do-primario",
+   "posicaoNaOrdem": 0,
+   "idsBase": [
+    "govbr-3.7.0-pattern-global-a0e5ee1b1a71"
+   ],
+   "arquivo": "padroes/design/formulario.md",
+   "construcao": {
+    "violado": true,
+    "fato": {
+     "limparX": 525.1,
+     "salvarDireita": 509.1
+    }
+   },
+   "auditoria": {
+    "resultado": "mesma-clausula",
+    "via": "principal",
+    "achado": "EA-01",
+    "outrosAchadosDaMesmaTroca": [],
+    "estadosDoAchado": [
+     "S0",
+     "S1",
+     "S2"
+    ],
+    "conformeContrario": null,
+    "porque": "EA-01 cita a frase sorteada (formulário) como cláusula, no mesmo botão, S0–S2."
+   }
+  },
+  {
+   "celula": "msg-orientacao::a2-d6b3f0e36943",
+   "hospedeiro": "msg-orientacao",
+   "unidade": "a2-d6b3f0e36943",
+   "classe": "DS",
+   "variante": "mensagem-jargao-tecnico",
+   "posicaoNaOrdem": 3,
+   "idsBase": [
+    "govbr-3.7.0-pattern-global-5dfbb109d8d4"
+   ],
+   "arquivo": "padroes/writing/microcopy.md",
+   "construcao": {
+    "violado": true,
+    "fato": {
+     "termosTecnicos": 7
+    }
+   },
+   "auditoria": {
+    "resultado": "mesma-clausula",
+    "via": "tambem",
+    "achado": "EA-10",
+    "outrosAchadosDaMesmaTroca": [],
+    "estadosDoAchado": [
+     "S0",
+     "S1",
+     "S2"
+    ],
+    "conformeContrario": null,
+    "porque": "EA-10 mede o mesmo jargão no corpo da mensagem (S0–S2); a cláusula principal é a co-violação declarada (texto curto, claro e objetivo); a frase sorteada (microcopy) aparece em `tambem`, literal."
+   }
+  },
+  {
+   "celula": "btn-ajuda::a2-5b47246a41c1",
+   "hospedeiro": "btn-ajuda",
+   "unidade": "a2-5b47246a41c1",
+   "classe": "DS",
+   "variante": "circular-sem-icone",
+   "posicaoNaOrdem": 4,
+   "idsBase": [
+    "govbr-3.7.0-component-button-627dd3089562"
+   ],
+   "arquivo": "componentes/button__designer.md",
+   "construcao": {
+    "violado": true,
+    "fato": {
+     "iconesVisiveis": 0
+    }
+   },
+   "auditoria": {
+    "resultado": "mesma-clausula",
+    "via": "principal",
+    "achado": "EA-03",
+    "outrosAchadosDaMesmaTroca": [],
+    "estadosDoAchado": [
+     "S0",
+     "S1",
+     "S2"
+    ],
+    "conformeContrario": null,
+    "porque": "EA-03 cita a frase sorteada (ícone obrigatório no circular) como 1ª cláusula, 0 pixel de ícone, S0–S2."
+   }
+  },
+  {
+   "celula": "inp-codigo::a2-a39f3ad397d4",
+   "hospedeiro": "inp-codigo",
+   "unidade": "a2-a39f3ad397d4",
+   "classe": "DS",
+   "variante": "fonte-do-sistema",
+   "posicaoNaOrdem": 6,
+   "idsBase": [
+    "govbr-3.7.0-page-global-881fe9380b81"
+   ],
+   "arquivo": "introducao/padrao-minimo.md",
+   "construcao": {
+    "violado": true,
+    "fato": {
+     "usadas": [
+      [
+       "Arial"
+      ],
+      [
+       "Arial"
+      ],
+      [
+       "Arial"
+      ]
+     ],
+     "declaradas": [
+      "Arial, Helvetica, sans-serif",
+      "Arial, Helvetica, sans-serif",
+      "Arial, Helvetica, sans-serif"
+     ]
+    }
+   },
+   "auditoria": {
+    "resultado": "mesma-clausula",
+    "via": "duplicata-selada",
+    "achado": "EA-06",
+    "outrosAchadosDaMesmaTroca": [],
+    "estadosDoAchado": [
+     "S0",
+     "S1",
+     "S2"
+    ],
+    "conformeContrario": null,
+    "porque": "EA-06 mede Arial no rótulo, no campo e no apoio (S0–S2) e cita tipografia.md; uma das duas frases citadas (a2-f82d600db413) é `duplicada:a2-a39f3ad397d4` no passo 2 selado; a frase sorteada (padrão mínimo) não é citada literalmente."
+   }
+  },
+  {
+   "celula": "rad-situacao::a2-f838b54da560",
+   "hospedeiro": "rad-situacao",
+   "unidade": "a2-f838b54da560",
+   "classe": "DS",
+   "variante": "legenda-centralizada",
+   "posicaoNaOrdem": 9,
+   "idsBase": [
+    "govbr-3.7.0-component-radio-331797975ce6"
+   ],
+   "arquivo": "componentes/radio__designer.md",
+   "construcao": {
+    "violado": true,
+    "fato": {
+     "esquerdaTexto": 296.1,
+     "centroTexto": 380,
+     "centroGrupo": 380,
+     "esquerdaOpcao": 62
+    }
+   },
+   "auditoria": {
+    "resultado": "nao-achada",
+    "via": null,
+    "achado": null,
+    "outrosAchadosDaMesmaTroca": [],
+    "estadosDoAchado": [],
+    "conformeContrario": "EC-062",
+    "porque": "Nenhum achado no hospedeiro. O auditor deu a frase sorteada como CONFORME (EC-062, só S1) medindo o x da caixa da legend (62 = x das opções); a variante centraliza o TEXTO numa legend de largura 100 %, e a conferência de construção mede o início do texto (296,1 px contra 62 px da 1ª opção, centrado no grupo). Julgamento contrário por observável diferente."
+   }
+  },
+  {
+   "celula": "msg-erro::a2-ef29db5bb4ac",
+   "hospedeiro": "msg-erro",
+   "unidade": "a2-ef29db5bb4ac",
+   "classe": "DS",
+   "variante": "mensagem-com-visual-selecionado",
+   "posicaoNaOrdem": 10,
+   "idsBase": [
+    "govbr-3.7.0-foundation-global-ced823e7339b"
+   ],
+   "arquivo": "fundamentos-visuais/estados.md",
+   "construcao": {
+    "violado": true,
+    "fato": {
+     "fundo": "rgb(38, 112, 232)",
+     "marcas": 1
+    }
+   },
+   "auditoria": {
+    "resultado": "outra-clausula",
+    "via": null,
+    "achado": "EA-12",
+    "outrosAchadosDaMesmaTroca": [
+     "EA-13"
+    ],
+    "estadosDoAchado": [
+     "S1"
+    ],
+    "conformeContrario": null,
+    "porque": "EA-12 mede o fundo #2670e8 (= --blue-warm-vivid-50, o da variante) no lugar da superfície de Erro, e EA-13 mede o fa-check visível dentro da mensagem de erro, em S1: são os dois observáveis da variante. O auditor citou cores.md (a cor indica o estado), a tabela de cores do Erro (co-violação declarada, sem cláusula na base) e iconografia; a frase sorteada (estados.md › Selecionado › evitar em Message) não é citada."
+   }
+  },
+  {
+   "celula": "sel-continente::a2-7348bce34289",
+   "hospedeiro": "sel-continente",
+   "unidade": "a2-7348bce34289",
+   "classe": "G",
+   "variante": "opcoes-texto-claro",
+   "posicaoNaOrdem": 0,
+   "idsBase": [
+    "govbr-3.7.0-accessibility-select-fc1a1281fbbc"
+   ],
+   "arquivo": "componentes/select__acessibilidade.md",
+   "construcao": {
+    "violado": true,
+    "fato": {
+     "cores": [
+      "rgb(170, 170, 170)"
+     ],
+     "contrasteMin": 2.32
+    }
+   },
+   "auditoria": {
+    "resultado": "outra-clausula",
+    "via": null,
+    "achado": "EA-08",
+    "outrosAchadosDaMesmaTroca": [
+     "EA-09"
+    ],
+    "estadosDoAchado": [
+     "S2"
+    ],
+    "conformeContrario": null,
+    "porque": "EA-08 mede 2,32:1 nas 6 opções em S2 (o observável da variante) e cita cores.md 4,5:1 e e-MAG 4.1; a frase sorteada (acessibilidade do select) não é citada."
+   }
+  },
+  {
+   "celula": "inp-nome-pais::a2-328f62cfe4ce",
+   "hospedeiro": "inp-nome-pais",
+   "unidade": "a2-328f62cfe4ce",
+   "classe": "G",
+   "variante": "campo-readonly-ate-clique",
+   "posicaoNaOrdem": 2,
+   "idsBase": [
+    "govbr-3.7.0-accessibility-input-cacdb7dbe765"
+   ],
+   "arquivo": "componentes/input__acessibilidade.md",
+   "construcao": {
+    "violado": true,
+    "fato": {
+     "focado": "nome-pais",
+     "valor": ""
+    }
+   },
+   "auditoria": {
+    "resultado": "mesma-clausula",
+    "via": "principal",
+    "achado": "EA-04",
+    "outrosAchadosDaMesmaTroca": [
+     "EA-05"
+    ],
+    "estadosDoAchado": [
+     "S0",
+     "S1",
+     "S2"
+    ],
+    "conformeContrario": null,
+    "porque": "EA-04 cita a frase sorteada (input › acessibilidade, digitar logo após o foco) como 2ª cláusula; Tab → digitar → valor vazio, S0–S2. A classe da cláusula que o auditor deu (DS) difere da selada (G); vale a selada."
+   }
+  },
+  {
+   "celula": "lst-paises::a2-5432c282d0d7",
+   "hospedeiro": "lst-paises",
+   "unidade": "a2-5432c282d0d7",
+   "classe": "G",
+   "variante": "altura-fixa-corta",
+   "posicaoNaOrdem": 18,
+   "idsBase": [
+    "emag:4.3"
+   ],
+   "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+   "construcao": {
+    "violado": true,
+    "fato": {
+     "cortados": 4,
+     "faltaPx": [
+      19,
+      19,
+      19,
+      19
+     ]
+    }
+   },
+   "auditoria": {
+    "resultado": "nao-achada",
+    "via": null,
+    "achado": null,
+    "outrosAchadosDaMesmaTroca": [],
+    "estadosDoAchado": [],
+    "conformeContrario": "EC-111",
+    "porque": "Nenhum achado no hospedeiro. O auditor deu o e-MAG 4.3 como CONFORME no nível da página (EC-111), medindo só rolagem horizontal e elementos além da largura a 640×450; não mediu corte DENTRO dos itens (overflow hidden), que é o observável da variante (19 px perdidos em cada um dos 4 itens). Julgamento contrário por observável diferente."
+   }
+  }
+ ],
+ "achados": [
+  {
+   "id": "EA-01",
+   "instancia": "btn-limpar",
+   "chave": "posicao-enfase-primaria-a-direita",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "categoria": "sorteada",
+   "celula": "btn-limpar::a2-2ac598dc24db",
+   "destino": "spec-da-celula",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "Deve-se seguir o seguinte princípio: a **ênfase de maior relevância** deverá vir sempre à **direita**.",
+     "unidades": [
+      {
+       "unidade": "a2-66f05213a674",
+       "arquivo": "componentes/button__designer.md",
+       "idsBase": [
+        "govbr-3.7.0-component-button-77dfc156b422"
+       ],
+       "passo2": "duplicada:a2-df449a7d5cd8",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    },
+    {
+     "arquivo": "padroes/design/formulario.md",
+     "citacao": "Quando utilizar mais de um botão, o elemento com ênfase primária deve estar necessariamente posicionado à direita dos botões de ênfase secundária",
+     "unidades": [
+      {
+       "unidade": "a2-2ac598dc24db",
+       "arquivo": "padroes/design/formulario.md",
+       "idsBase": [
+        "govbr-3.7.0-pattern-global-a0e5ee1b1a71"
+       ],
+       "passo2": "aceita",
+       "celula": "DS#0"
+      }
+     ]
+    }
+   ],
+   "tambem": [],
+   "porque": "casa a unidade sorteada (ver sorteadas[])"
+  },
+  {
+   "id": "EA-02",
+   "instancia": "btn-limpar",
+   "chave": "ordem-tab-igual-ordem-visual",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "geral",
+   "categoria": "coviolacao-declarada",
+   "celula": "btn-limpar::a2-2ac598dc24db",
+   "destino": "spec-da-celula",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Assim, os formulários devem primeiro ser codificados considerando a ordem lógica de navegação para depois serem organizados visualmente via CSS.",
+     "unidades": [
+      {
+       "unidade": "a2-0f20577609d3",
+       "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+       "idsBase": [
+        "emag:6.3"
+       ],
+       "passo2": "aceita",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    },
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Deve-se criar o código HTML com uma sequência lógica de leitura para percorrer links, controles de formulários e objetos.",
+     "unidades": [
+      {
+       "unidade": "a2-bde476da44c9",
+       "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+       "idsBase": [
+        "emag:1.4"
+       ],
+       "passo2": "aceita",
+       "celula": "excluida:exposta"
+      }
+     ]
+    }
+   ],
+   "tambem": [],
+   "porque": "ordem visual ≠ ordem de Tab: construcao.md › Acoplamentos lista o e-MAG 1.4 (a2-bde476da44c9) para btn-limpar; a variante manda não mudar o DOM."
+  },
+  {
+   "id": "EA-03",
+   "instancia": "btn-ajuda",
+   "chave": "circular-icone-obrigatorio",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "categoria": "sorteada",
+   "celula": "btn-ajuda::a2-5b47246a41c1",
+   "destino": "spec-da-celula",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "Nos botões do tipo circular a utilização é obrigatória, visto que a mensagem da ação é transmitida apenas pelo ícone.",
+     "unidades": [
+      {
+       "unidade": "a2-5b47246a41c1",
+       "arquivo": "componentes/button__designer.md",
+       "idsBase": [
+        "govbr-3.7.0-component-button-627dd3089562"
+       ],
+       "passo2": "aceita",
+       "celula": "DS#4"
+      }
+     ]
+    },
+    {
+     "arquivo": "padroes/design/formulario.md",
+     "citacao": "Para acionar esse componente deve ser utilizado um botão de ênfase terciária com um ícone ou texto indicando sua finalidade",
+     "unidades": [
+      {
+       "unidade": "a2-d43497944f79",
+       "arquivo": "padroes/design/formulario.md",
+       "idsBase": [
+        "govbr-3.7.0-pattern-global-e7baadab728a"
+       ],
+       "passo2": "nao-se-aplica",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ],
+   "tambem": [
+    {
+     "arquivo": "acessibilidade.md",
+     "citacao": "As informações e os componentes da interface do usuário devem ser apresentados em formas que possam ser percebidas pelo usuário.",
+     "unidades": [
+      {
+       "unidade": "a2-7fe441d7e201",
+       "arquivo": "acessibilidade.md",
+       "idsBase": [
+        "govbr-3.7.0-accessibility-global-2e90b5314678"
+       ],
+       "passo2": "sem-medicao",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ],
+   "porque": "casa a unidade sorteada (ver sorteadas[])"
+  },
+  {
+   "id": "EA-04",
+   "instancia": "inp-nome-pais",
+   "chave": "usuario-insere-informacao-teclado",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "categoria": "sorteada",
+   "celula": "inp-nome-pais::a2-328f62cfe4ce",
+   "destino": "spec-da-celula",
+   "clausulas": [
+    {
+     "arquivo": "componentes/input__designer.md",
+     "citacao": "Este é o elemento essencial e obrigatório do componente. Por meio dele o usuário deve inserir a informação que foi requerida pelo sistema.",
+     "unidades": [
+      {
+       "unidade": "a2-d817fab151df",
+       "arquivo": "componentes/input__designer.md",
+       "idsBase": [
+        "govbr-3.7.0-component-input-acbd0e607b75"
+       ],
+       "passo2": "acoplada",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      },
+      {
+       "unidade": "a2-121e2f176704",
+       "arquivo": "componentes/input__designer.md",
+       "idsBase": [],
+       "passo2": "nao-normativa",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    },
+    {
+     "arquivo": "componentes/input__acessibilidade.md",
+     "citacao": "Após o *input* receber o foco, permita que o usuário possa digitar o texto na sequência, sem necessidade de qualquer outro passo anterior;",
+     "unidades": [
+      {
+       "unidade": "a2-328f62cfe4ce",
+       "arquivo": "componentes/input__acessibilidade.md",
+       "idsBase": [
+        "govbr-3.7.0-accessibility-input-cacdb7dbe765"
+       ],
+       "passo2": "aceita",
+       "celula": "G#2"
+      }
+     ]
+    }
+   ],
+   "tambem": [
+    {
+     "arquivo": "acessibilidade.md",
+     "citacao": "Dito isso, uma interface com usuário acessível não pode impor barreiras para interação e para o acesso à informação, nem no hardware e nem no software do sistema interativo.",
+     "unidades": [
+      {
+       "unidade": "a2-0efa500e071e",
+       "arquivo": "acessibilidade.md",
+       "idsBase": [
+        "govbr-3.7.0-accessibility-global-d45cbedbac01"
+       ],
+       "passo2": "sem-medicao",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ],
+   "porque": "casa a unidade sorteada (ver sorteadas[])"
+  },
+  {
+   "id": "EA-05",
+   "instancia": "inp-nome-pais",
+   "chave": "funcao-script-por-teclado",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "geral",
+   "categoria": "coviolacao-nao-declarada",
+   "celula": "inp-nome-pais::a2-328f62cfe4ce",
+   "destino": "spec-da-celula",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Todas as funções da página desenvolvidas utilizando-se linguagens de script (javascript) devem ser programadas, primeiramente, para o uso com teclado.",
+     "unidades": [
+      {
+       "unidade": "a2-acc4801af71c",
+       "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+       "idsBase": [
+        "emag:2.1"
+       ],
+       "passo2": "aceita",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ],
+   "tambem": [],
+   "porque": "o mesmo readonly que só sai no clique (a variante sorteada, ao pé da letra) contraria o e-MAG 2.1; não está em construcao.md. Corrigir = desfazer a variante."
+  },
+  {
+   "id": "EA-06",
+   "instancia": "inp-codigo",
+   "chave": "familia-tipografica",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "categoria": "sorteada",
+   "celula": "inp-codigo::a2-a39f3ad397d4",
+   "destino": "spec-da-celula",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/tipografia.md",
+     "citacao": "Interfaces digitais do governo devem utilizar a família de fonte definida sempre que possível.",
+     "unidades": [
+      {
+       "unidade": "a2-05763ed77f2d",
+       "arquivo": "fundamentos-visuais/tipografia.md",
+       "idsBase": [
+        "govbr-3.7.0-foundation-global-450420b746a8"
+       ],
+       "passo2": "nao-normativa",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    },
+    {
+     "arquivo": "fundamentos-visuais/tipografia.md",
+     "citacao": "Para a apresentação dos elementos textuais do *Design System* do Governo Federal, somente uma família de fonte é utilizada: a *Rawline*.",
+     "unidades": [
+      {
+       "unidade": "a2-f82d600db413",
+       "arquivo": "fundamentos-visuais/tipografia.md",
+       "idsBase": [],
+       "passo2": "duplicada:a2-a39f3ad397d4",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ],
+   "tambem": [],
+   "porque": "casa a unidade sorteada (ver sorteadas[])"
+  },
+  {
+   "id": "EA-07",
+   "instancia": "inp-codigo",
+   "chave": "texto-auxiliar-espec",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "categoria": "acidental",
+   "celula": null,
+   "destino": "corrigir-na-pagina",
+   "clausulas": [
+    {
+     "arquivo": "componentes/input__designer.md",
+     "citacao": "| Texto auxiliar                             | margin-top                 |   `--spacing-scale-base`    |",
+     "unidades": [
+      {
+       "unidade": "a2-8fcc793aaed1",
+       "arquivo": "componentes/input__designer.md",
+       "idsBase": [],
+       "passo2": "aceita",
+       "celula": "excluida:sem-clausula-na-base"
+      }
+     ]
+    },
+    {
+     "arquivo": "componentes/input__designer.md",
+     "citacao": "| Texto auxiliar | `--font-size-scale-base` | `--font-weight-regular` |        -         |",
+     "unidades": [
+      {
+       "unidade": "a2-bc172ac96406",
+       "arquivo": "componentes/input__designer.md",
+       "idsBase": [],
+       "passo2": "aceita",
+       "celula": "excluida:sem-clausula-na-base"
+      }
+     ]
+    }
+   ],
+   "tambem": [],
+   "porque": "margin-top do texto auxiliar de inp-codigo = --spacing-scale-half (4 px), posto por .apoio-campo na folha da página; a tabela de Espaçamentos do Input (a2-8fcc793aaed1, aceita no passo 2 para inp-codigo) pede --spacing-scale-base. Não é o observável da variante sorteada (fonte)."
+  },
+  {
+   "id": "EA-08",
+   "instancia": "sel-continente",
+   "chave": "contraste-rotulos-opcoes",
+   "estados": [
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "geral",
+   "categoria": "sorteada",
+   "celula": "sel-continente::a2-7348bce34289",
+   "destino": "spec-da-celula",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/cores.md",
+     "citacao": "O *nível AA* indica que é necessária uma taxa de contraste de pelo menos *4,5:1* para que o texto seja considerado normal e tenha boa legibilidade.",
+     "unidades": [
+      {
+       "unidade": "a2-2f6900335a84",
+       "arquivo": "fundamentos-visuais/cores.md",
+       "idsBase": [
+        "govbr-3.7.0-foundation-global-606524c94570"
+       ],
+       "passo2": "duplicada:a2-66fbdcf13772",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    },
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "As cores do plano de fundo e do primeiro plano deverão ser suficientemente contrastantes",
+     "unidades": [
+      {
+       "unidade": "a2-66fbdcf13772",
+       "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+       "idsBase": [
+        "emag:4.1"
+       ],
+       "passo2": "aceita",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ],
+   "tambem": [],
+   "porque": "casa a unidade sorteada (ver sorteadas[])"
+  },
+  {
+   "id": "EA-09",
+   "instancia": "sel-continente",
+   "chave": "cor-fora-da-paleta",
+   "estados": [
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "categoria": "coviolacao-nao-declarada",
+   "celula": "sel-continente::a2-7348bce34289",
+   "destino": "spec-da-celula",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/cores.md",
+     "citacao": "Interfaces digitais do governo devem utilizar sempre as cores pré-definidas.",
+     "unidades": [
+      {
+       "unidade": "a2-3fb37eb25f3c",
+       "arquivo": "fundamentos-visuais/cores.md",
+       "idsBase": [
+        "govbr-3.7.0-foundation-global-21b1a2733f7b"
+       ],
+       "passo2": "aceita",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ],
+   "tambem": [],
+   "porque": "#AAAAAA está escrito na própria variante selada (elegibilidade-passo2 › opcoes-texto-claro: 'O texto das opções da lista aberta fica #AAAAAA sobre fundo branco') e não está na paleta de cores.md; não está em construcao.md. Corrigir = mudar a variante sorteada."
+  },
+  {
+   "id": "EA-10",
+   "instancia": "msg-orientacao",
+   "chave": "texto-curto-claro-objetivo",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "categoria": "sorteada",
+   "celula": "msg-orientacao::a2-d6b3f0e36943",
+   "destino": "spec-da-celula",
+   "clausulas": [
+    {
+     "arquivo": "componentes/message__designer.md",
+     "citacao": "Deve-se optar por um texto curto, claro e objetivo, compreendendo toda informação necessária ao usuário.",
+     "unidades": [
+      {
+       "unidade": "a2-db30195b0e66",
+       "arquivo": "componentes/message__designer.md",
+       "idsBase": [
+        "govbr-3.7.0-component-message-3b6fb4ad1e0e"
+       ],
+       "passo2": "aceita",
+       "celula": "DS#96"
+      }
+     ]
+    }
+   ],
+   "tambem": [
+    {
+     "arquivo": "componentes/message__acessibilidade.md",
+     "citacao": "Use uma linguagem clara e compreensível para seu público. Evite jargões ou textos complexos;",
+     "unidades": [
+      {
+       "unidade": "a2-c6d37b34ba6b",
+       "arquivo": "componentes/message__acessibilidade.md",
+       "idsBase": [
+        "govbr-3.7.0-accessibility-message-b7a4999e85b3"
+       ],
+       "passo2": "duplicada:a2-db30195b0e66",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      },
+      {
+       "unidade": "a2-e194d3fe5a26",
+       "arquivo": "componentes/message__acessibilidade.md",
+       "idsBase": [
+        "govbr-3.7.0-accessibility-message-5340ffb0dc5c"
+       ],
+       "passo2": "forca",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    },
+    {
+     "arquivo": "padroes/writing/microcopy.md",
+     "citacao": "Os textos devem ser escritos em uma linguagem simples e fácil de serem compreendidas pelos usuários não técnicos.",
+     "unidades": [
+      {
+       "unidade": "a2-d6b3f0e36943",
+       "arquivo": "padroes/writing/microcopy.md",
+       "idsBase": [
+        "govbr-3.7.0-pattern-global-5dfbb109d8d4"
+       ],
+       "passo2": "aceita",
+       "celula": "DS#3"
+      }
+     ]
+    }
+   ],
+   "porque": "casa a unidade sorteada (ver sorteadas[])"
+  },
+  {
+   "id": "EA-11",
+   "instancia": "msg-orientacao",
+   "chave": "leitura-ensino-fundamental",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "geral",
+   "categoria": "coviolacao-nao-declarada",
+   "celula": "msg-orientacao::a2-d6b3f0e36943",
+   "destino": "spec-da-celula",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "O texto de um sítio deve ser de fácil leitura e compreensão, não exigindo do usuário um nível de instrução mais avançado do que o ensino fundamental completo.",
+     "unidades": [
+      {
+       "unidade": "a2-a06dc9ebbfe4",
+       "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+       "idsBase": [
+        "emag:3.11"
+       ],
+       "passo2": "sem-medicao",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ],
+   "tambem": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Ao menos na primeira ocorrência de siglas, abreviaturas ou palavras incomuns (ambíguas, desconhecidas ou utilizadas de forma muito específica), deve ser disponibilizada sua explicação ou forma completa.",
+     "unidades": [
+      {
+       "unidade": "a2-18acbf7b4c9c",
+       "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+       "idsBase": [
+        "emag:3.12"
+       ],
+       "passo2": "aceita",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ],
+   "porque": "o mesmo jargão (a variante) contraria o e-MAG 3.11 (nível de leitura) e 3.12 (em tambem); não está em construcao.md. Corrigir = desfazer a variante."
+  },
+  {
+   "id": "EA-12",
+   "instancia": "msg-erro",
+   "chave": "cor-semantica-erro",
+   "estados": [
+    "S1"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "categoria": "sorteada",
+   "celula": "msg-erro::a2-ef29db5bb4ac",
+   "destino": "spec-da-celula",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/cores.md",
+     "citacao": "A cor deve indicar o estado e hierarquia dos elementos dispostos em uma interface, facilitando o *feedback* e comunicação entre a interface e o usuário, enquanto se mantêm consistentes ao longo de toda a navegação.",
+     "unidades": [
+      {
+       "unidade": "a2-0b6ac0a6bc42",
+       "arquivo": "fundamentos-visuais/cores.md",
+       "idsBase": [
+        "govbr-3.7.0-foundation-global-db534e78f2b3"
+       ],
+       "passo2": "sem-medicao",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    },
+    {
+     "arquivo": "componentes/message__designer.md",
+     "citacao": "| Superfície do Message              | background | `--red-vivid-10` |",
+     "unidades": [
+      {
+       "unidade": "a2-90ea0bde7e04",
+       "arquivo": "componentes/message__designer.md",
+       "idsBase": [],
+       "passo2": "aceita",
+       "celula": "excluida:sem-clausula-na-base"
+      }
+     ]
+    }
+   ],
+   "tambem": [
+    {
+     "arquivo": "componentes/message__acessibilidade.md",
+     "citacao": "Use as cores semânticas recomendadas para cada tipo de mensagem: informação, sucesso, alerta e erro. Isto ajuda a garantir os padrões de acessibilidade;",
+     "unidades": [
+      {
+       "unidade": "a2-f9559583bdf2",
+       "arquivo": "componentes/message__acessibilidade.md",
+       "idsBase": [
+        "govbr-3.7.0-accessibility-message-93c05fd29fb4"
+       ],
+       "passo2": "nao-chegou-ao-passo-2",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ],
+   "porque": "casa a unidade sorteada (ver sorteadas[])"
+  },
+  {
+   "id": "EA-13",
+   "instancia": "msg-erro",
+   "chave": "icone-de-confirmacao-em-erro",
+   "estados": [
+    "S1"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "categoria": "coviolacao-nao-declarada",
+   "celula": "msg-erro::a2-ef29db5bb4ac",
+   "destino": "spec-da-celula",
+   "clausulas": [
+    {
+     "arquivo": "fundamentos-visuais/iconografia.md",
+     "citacao": "É fundamental atribuir os significados recomendados na tabela, evitando duplo sentido e facilitando o reconhecimento e memorização por parte do usuário.",
+     "unidades": [
+      {
+       "unidade": "a2-3c3ddc93a261",
+       "arquivo": "fundamentos-visuais/iconografia.md",
+       "idsBase": [
+        "govbr-3.7.0-foundation-global-f51444b3820b"
+       ],
+       "passo2": "nao-chegou-ao-passo-2",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    },
+    {
+     "arquivo": "fundamentos-visuais/iconografia.md",
+     "citacao": "| <i class=\"fas fa-check\"></i>                | Confirmar                               |        `fa-check`         |",
+     "unidades": [
+      {
+       "unidade": "a2-7ae4ad55ed25",
+       "arquivo": "fundamentos-visuais/iconografia.md",
+       "idsBase": [],
+       "passo2": "duplicada:a2-b889b938c32d",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    },
+    {
+     "arquivo": "componentes/message__designer.md",
+     "citacao": "| Ícone Erro - Tipo Padrão         | <i class=\"times-circle\"></i>         | `--icon-size-lg`   | `times-circle`         |",
+     "unidades": [
+      {
+       "unidade": "a2-b13bd6797498",
+       "arquivo": "componentes/message__designer.md",
+       "idsBase": [],
+       "passo2": "aceita",
+       "celula": "excluida:sem-clausula-na-base"
+      }
+     ]
+    }
+   ],
+   "tambem": [],
+   "porque": "o fa-check faz parte da variante sorteada (fundo Selecionado + fa-check antes do texto) e contraria a iconografia (significado do ícone); construcao.md declara só as cores do Erro. Corrigir = desfazer a variante."
+  }
+ ],
+ "incertos": [
+  {
+   "id": "EI-01",
+   "instancia": "btn-ajuda",
+   "chave": "acao-observavel-tooltip",
+   "estados": [
+    "S0"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "toca": [
+    "hospedeiro-sorteado"
+   ],
+   "celula": "btn-ajuda::a2-5b47246a41c1",
+   "destino": "fundo",
+   "porque": "tooltip (componente em `fora` no inventário) e efeito do clique; não é o observável da variante (ícone). Frases: uma `nao-se-aplica`, outra `sem-medicao` no passo 2.",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__acessibilidade.md",
+     "unidades": [
+      {
+       "unidade": "a2-be0b9ab18685",
+       "arquivo": "componentes/button__acessibilidade.md",
+       "idsBase": [
+        "govbr-3.7.0-accessibility-button-53c97749c58c"
+       ],
+       "passo2": "nao-se-aplica",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    },
+    {
+     "arquivo": "componentes/button__designer.md",
+     "unidades": [
+      {
+       "unidade": "a2-65fac7fa5182",
+       "arquivo": "componentes/button__designer.md",
+       "idsBase": [
+        "govbr-3.7.0-component-button-0e0714e2b09c"
+       ],
+       "passo2": "sem-medicao",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-02",
+   "instancia": "inp-nome-pais",
+   "chave": "obrigatorio-indicado",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "geral",
+   "toca": [
+    "hospedeiro-sorteado",
+    "ponto-conforme-da-construcao"
+   ],
+   "celula": "inp-nome-pais::a2-328f62cfe4ce",
+   "destino": "autora",
+   "porque": "obrigatórios sem marca e sem instrução geral; o e-MAG 6.5 é elegível (aceita no passo 2) e a construção mediu 'obrigatórios sem marca' como conforme pelo padrão de Formulário. Mesma situação em EI-03 e EI-04.",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "unidades": [
+      {
+       "unidade": "a2-cd5cbf0f18dc",
+       "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+       "idsBase": [
+        "emag:6.5"
+       ],
+       "passo2": "aceita",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-03",
+   "instancia": "sel-continente",
+   "chave": "obrigatorio-indicado",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "geral",
+   "toca": [
+    "hospedeiro-sorteado",
+    "ponto-conforme-da-construcao"
+   ],
+   "celula": "sel-continente::a2-7348bce34289",
+   "destino": "autora",
+   "porque": "ver EI-02.",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "unidades": [
+      {
+       "unidade": "a2-cd5cbf0f18dc",
+       "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+       "idsBase": [
+        "emag:6.5"
+       ],
+       "passo2": "aceita",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-04",
+   "instancia": "rad-situacao",
+   "chave": "obrigatorio-indicado",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "geral",
+   "toca": [
+    "hospedeiro-sorteado",
+    "ponto-conforme-da-construcao"
+   ],
+   "celula": "rad-situacao::a2-f838b54da560",
+   "destino": "autora",
+   "porque": "ver EI-02.",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "unidades": [
+      {
+       "unidade": "a2-cd5cbf0f18dc",
+       "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+       "idsBase": [
+        "emag:6.5"
+       ],
+       "passo2": "aceita",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-05",
+   "instancia": "inp-nome-pais",
+   "chave": "primeiro-obrigatorio-recebe-foco",
+   "estados": [
+    "S0"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "toca": [
+    "hospedeiro-sorteado"
+   ],
+   "celula": "inp-nome-pais::a2-328f62cfe4ce",
+   "destino": "fundo",
+   "porque": "foco no 1º campo obrigatório: frase `conflito` no passo 2 selado (conflita com o atalho como 1º foco).",
+   "clausulas": [
+    {
+     "arquivo": "padroes/design/formulario.md",
+     "unidades": [
+      {
+       "unidade": "a2-7cf9313c9fcc",
+       "arquivo": "padroes/design/formulario.md",
+       "idsBase": [
+        "govbr-3.7.0-pattern-global-55e03d854e1d"
+       ],
+       "passo2": "conflito",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-06",
+   "instancia": "sel-continente",
+   "chave": "foco-aciona-lista",
+   "estados": [
+    "S0"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "toca": [
+    "hospedeiro-sorteado"
+   ],
+   "celula": "sel-continente::a2-7348bce34289",
+   "destino": "fundo",
+   "porque": "abrir a lista ao receber foco: frase ambígua, e abrir sozinho contrariaria o e-MAG 6.4; o select do core 3.7.0 abre por seta.",
+   "clausulas": [
+    {
+     "arquivo": "componentes/select__acessibilidade.md",
+     "unidades": [
+      {
+       "unidade": "a2-126c376799cd",
+       "arquivo": "componentes/select__acessibilidade.md",
+       "idsBase": [
+        "govbr-3.7.0-accessibility-select-6f5756164710"
+       ],
+       "passo2": "aceita",
+       "celula": "G#100"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-07",
+   "instancia": "sel-continente",
+   "chave": "rotulo-combobox",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "geral",
+   "toca": [
+    "hospedeiro-sorteado"
+   ],
+   "celula": "sel-continente::a2-7348bce34289",
+   "destino": "fundo",
+   "porque": "role=combobox sem nome no contêiner: posto pelo BRSelect do core 3.7.0 em tempo de execução (precedente A2 E-08, A2-24).",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "unidades": [
+      {
+       "unidade": "a2-f4237d13520b",
+       "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+       "idsBase": [
+        "emag:6.2"
+       ],
+       "passo2": "aceita",
+       "celula": "excluida:exposta"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-08",
+   "instancia": "sel-continente",
+   "chave": "icone-botao-caret",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "toca": [
+    "hospedeiro-sorteado",
+    "ponto-conforme-da-construcao"
+   ],
+   "celula": "sel-continente::a2-7348bce34289",
+   "destino": "autora",
+   "porque": "ícone angle no gatilho onde a tabela de Iconografia do Select (a2-daf3655caedf, aceita no passo 2, sem cláusula na base) pede caret. O BRSelect do core 3.7.0 troca fa-angle-down/fa-angle-up por nome de classe ao abrir e fechar (core.min.js); com caret a troca do core não funcionaria sem código próprio.",
+   "clausulas": [
+    {
+     "arquivo": "componentes/select__designer.md",
+     "unidades": [
+      {
+       "unidade": "a2-daf3655caedf",
+       "arquivo": "componentes/select__designer.md",
+       "idsBase": [],
+       "passo2": "aceita",
+       "celula": "excluida:sem-clausula-na-base"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-09",
+   "instancia": "lst-paises",
+   "chave": "navegacao-teclado-list",
+   "estados": [
+    "S0"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "toca": [
+    "hospedeiro-sorteado"
+   ],
+   "celula": "lst-paises::a2-5432c282d0d7",
+   "destino": "fundo",
+   "porque": "lista estática sem paradas de Tab: a frase é `duplicada` no passo 2 e não distingue lista estática.",
+   "clausulas": [
+    {
+     "arquivo": "componentes/list__acessibilidade.md",
+     "unidades": [
+      {
+       "unidade": "a2-869f294f6e29",
+       "arquivo": "componentes/list__acessibilidade.md",
+       "idsBase": [
+        "govbr-3.7.0-accessibility-list-300a3d636087"
+       ],
+       "passo2": "duplicada:a2-41577e5f420c",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-10",
+   "instancia": "lst-paises",
+   "chave": "marcacao-de-lista",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "geral",
+   "toca": [
+    "hospedeiro-sorteado"
+   ],
+   "celula": "lst-paises::a2-5432c282d0d7",
+   "destino": "fundo",
+   "porque": "div + role=list em vez de ul: marcação do exemplo oficial do List 3.7.0; semântica exposta na árvore AX; e-MAG 1.2 exposto (célula excluída).",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "unidades": [
+      {
+       "unidade": "a2-d45711a55b6c",
+       "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+       "idsBase": [
+        "emag:1.2"
+       ],
+       "passo2": "aceita",
+       "celula": "excluida:exposta"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-11",
+   "instancia": "lst-paises",
+   "chave": "tipografia-titulo-textos",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "toca": [
+    "hospedeiro-sorteado"
+   ],
+   "celula": "lst-paises::a2-5432c282d0d7",
+   "destino": "fundo",
+   "porque": "tamanho e cor do título e dos textos vêm do CSS do DS (h2 e .br-item), sem sobrescrita da página (precedente A2 E-08).",
+   "clausulas": [
+    {
+     "arquivo": "componentes/list__designer.md",
+     "unidades": [
+      {
+       "unidade": "a2-8ed2a1b99cae",
+       "arquivo": "componentes/list__designer.md",
+       "idsBase": [],
+       "passo2": "aceita",
+       "celula": "excluida:sem-clausula-na-base"
+      }
+     ]
+    },
+    {
+     "arquivo": "componentes/list__designer.md",
+     "unidades": [
+      {
+       "unidade": "a2-8ed2a1b99cae",
+       "arquivo": "componentes/list__designer.md",
+       "idsBase": [],
+       "passo2": "aceita",
+       "celula": "excluida:sem-clausula-na-base"
+      }
+     ]
+    },
+    {
+     "arquivo": "componentes/list__designer.md",
+     "unidades": [
+      {
+       "unidade": "a2-1f12ca328b9e",
+       "arquivo": "componentes/list__designer.md",
+       "idsBase": [],
+       "passo2": "aceita",
+       "celula": "excluida:sem-clausula-na-base"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-12",
+   "instancia": "msg-orientacao",
+   "chave": "foco-no-fechar-ao-exibir",
+   "estados": [
+    "S0"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "toca": [
+    "hospedeiro-sorteado",
+    "ponto-conforme-da-construcao"
+   ],
+   "celula": "msg-orientacao::a2-d6b3f0e36943",
+   "destino": "fundo",
+   "porque": "foco no Fechar quando a mensagem aparece na carga: conflita com o atalho como 1º foco; a construção mediu conforme o caso da reexibição pela ajuda.",
+   "clausulas": [
+    {
+     "arquivo": "componentes/message__acessibilidade.md",
+     "unidades": [
+      {
+       "unidade": "a2-db25bc1d1653",
+       "arquivo": "componentes/message__acessibilidade.md",
+       "idsBase": [
+        "govbr-3.7.0-accessibility-message-ad83724b777f"
+       ],
+       "passo2": "aceita",
+       "celula": "G#72"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-13",
+   "instancia": "msg-orientacao",
+   "chave": "foco-volta-apos-fechar",
+   "estados": [
+    "S0"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "toca": [
+    "hospedeiro-sorteado",
+    "ponto-conforme-da-construcao"
+   ],
+   "celula": "msg-orientacao::a2-d6b3f0e36943",
+   "destino": "fundo",
+   "porque": "foco depois de fechar vai ao h1 (decisão da construção, medida conforme); o auditor lê a frase como recomendação.",
+   "clausulas": [
+    {
+     "arquivo": "componentes/message__acessibilidade.md",
+     "unidades": [
+      {
+       "unidade": "a2-14f2e6c3226f",
+       "arquivo": "componentes/message__acessibilidade.md",
+       "idsBase": [
+        "govbr-3.7.0-accessibility-message-18a75fe5583a"
+       ],
+       "passo2": "aceita",
+       "celula": "G#88"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-14",
+   "instancia": "msg-orientacao",
+   "chave": "idioma-termos-ingles",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "geral",
+   "toca": [
+    "observavel-sorteado"
+   ],
+   "celula": "msg-orientacao::a2-d6b3f0e36943",
+   "destino": "autora",
+   "porque": "estrangeirismos do jargão (a variante) sem lang; e-MAG 3.2 é `nao-se-aplica` no passo 2 selado.",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "unidades": [
+      {
+       "unidade": "a2-bf351d1b1f1e",
+       "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+       "idsBase": [
+        "emag:3.2"
+       ],
+       "passo2": "nao-se-aplica",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-15",
+   "instancia": "skp-conteudo",
+   "chave": "visivel-ao-ponteiro",
+   "estados": [
+    "S0"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "toca": [
+    "andaime"
+   ],
+   "celula": null,
+   "destino": "fundo",
+   "porque": "atalho invisível ao ponteiro: CSS do core 3.7.0 (precedente A2 E-08, A2-07).",
+   "clausulas": [
+    {
+     "arquivo": "componentes/skiplink__acessibilidade.md",
+     "unidades": [
+      {
+       "unidade": "a2-49eed426bd35",
+       "arquivo": "componentes/skiplink__acessibilidade.md",
+       "idsBase": [
+        "govbr-3.7.0-accessibility-skiplink-fc59fbdac2c2"
+       ],
+       "passo2": "nao-chegou-ao-passo-2",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-16",
+   "instancia": "pagina",
+   "chave": "ancoras-name-id",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "geral",
+   "toca": [
+    "pagina"
+   ],
+   "celula": null,
+   "destino": "fundo",
+   "porque": "name + id nas âncoras: name não é atributo válido em main/footer; e-MAG 1.5 `so-andaime` no passo 2.",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "unidades": [
+      {
+       "unidade": "a2-9fd770b979ce",
+       "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+       "idsBase": [
+        "emag:1.5"
+       ],
+       "passo2": "so-andaime",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-17",
+   "instancia": "brd-trilha",
+   "chave": "classes-e-semibold-atual",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "toca": [
+    "andaime"
+   ],
+   "celula": null,
+   "destino": "fundo",
+   "porque": "peso 500 no item atual da trilha: CSS do core 3.7.0 (precedente A2 E-08, A2-09).",
+   "clausulas": [
+    {
+     "arquivo": "componentes/breadcrumb__designer.md",
+     "unidades": [
+      {
+       "unidade": "a2-28c12175478f",
+       "arquivo": "componentes/breadcrumb__designer.md",
+       "idsBase": [
+        "govbr-3.7.0-component-breadcrumb-660169599b49",
+        "govbr-3.7.0-component-breadcrumb-8c4ff87d861a"
+       ],
+       "passo2": "nao-chegou-ao-passo-2",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-18",
+   "instancia": "brd-trilha",
+   "chave": "nao-substitui-menu",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "toca": [
+    "andaime"
+   ],
+   "celula": null,
+   "destino": "fundo",
+   "porque": "trilha como única navegação: não há menu na página (andaime da rota real).",
+   "clausulas": [
+    {
+     "arquivo": "componentes/breadcrumb__designer.md",
+     "unidades": [
+      {
+       "unidade": "a2-9d38abd0c9d5",
+       "arquivo": "componentes/breadcrumb__designer.md",
+       "idsBase": [
+        "govbr-3.7.0-component-breadcrumb-7690bbe5ccc7",
+        "govbr-3.7.0-component-breadcrumb-daf213d9a2cf"
+       ],
+       "passo2": "nao-chegou-ao-passo-2",
+       "celula": "nao-e-celula-neste-hospedeiro"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "EI-19",
+   "instancia": "sgn-usuaria",
+   "chave": "classes-obrigatorias-signin",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeDaClausulaDoAuditor": "DS",
+   "toca": [
+    "andaime",
+    "ponto-conforme-da-construcao"
+   ],
+   "celula": null,
+   "destino": "fundo",
+   "porque": "a.br-sign-in no cabeçalho (padrão de usuário logado do header) em vez de br-button sign-in: decisão de construção registrada; andaime.",
+   "clausulas": [
+    {
+     "arquivo": "componentes/signin__desenvolvedor.md",
+     "unidades": []
+    },
+    {
+     "arquivo": "componentes/signin__desenvolvedor.md",
+     "unidades": []
+    }
+   ]
+  }
+ ]
+}

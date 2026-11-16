@@ -1,0 +1,166 @@
+ok   [violado S0] btn-limpar::a2-2ac598dc24db — {"limparX":525.1,"salvarDireita":509.1}
+ok   [sem semente: conforme] btn-limpar::a2-2ac598dc24db — {"limparX":376.2,"salvarDireita":700}
+ok   [violado S0] msg-orientacao::a2-d6b3f0e36943 — {"termosTecnicos":7}
+ok   [sem semente: conforme] msg-orientacao::a2-d6b3f0e36943 — {"termosTecnicos":0}
+ok   [violado S0] btn-ajuda::a2-5b47246a41c1 — {"iconesVisiveis":0}
+ok   [sem semente: conforme] btn-ajuda::a2-5b47246a41c1 — {"iconesVisiveis":1}
+ok   [violado S0] inp-codigo::a2-a39f3ad397d4 — {"usadas":[["Arial"],["Arial"],["Arial"]],"declaradas":["Arial, Helvetica, sans-serif","Arial, Helvetica, sans-serif","Arial, Helvetica, sans-serif"]}
+ok   [sem semente: conforme] inp-codigo::a2-a39f3ad397d4 — {"usadas":[["Rawline SemiBold"],["Rawline Medium"],["Rawline"]],"declaradas":["Rawline, Raleway, sans-serif","Rawline, Raleway, sans-serif","Rawline, Raleway, sans-serif"]}
+ok   [violado S0] rad-situacao::a2-f838b54da560 — {"esquerdaTexto":296.1,"centroTexto":380,"centroGrupo":380,"esquerdaOpcao":62}
+ok   [sem semente: conforme] rad-situacao::a2-f838b54da560 — {"esquerdaTexto":62,"centroTexto":145.9,"centroGrupo":380,"esquerdaOpcao":62}
+ok   [violado S1] msg-erro::a2-ef29db5bb4ac — {"fundo":"rgb(38, 112, 232)","marcas":1}
+ok   [sem semente: conforme] msg-erro::a2-ef29db5bb4ac — {"fundo":"rgb(253, 224, 219)","marcas":0}
+ok   [violado S2] sel-continente::a2-7348bce34289 — {"cores":["rgb(170, 170, 170)"],"contrasteMin":2.32}
+ok   [sem semente: conforme] sel-continente::a2-7348bce34289 — {"cores":["rgb(51, 51, 51)"],"contrasteMin":12.63}
+ok   [violado S0] inp-nome-pais::a2-328f62cfe4ce — {"focado":"nome-pais","valor":""}
+ok   [sem semente: conforme] inp-nome-pais::a2-328f62cfe4ce — {"focado":"nome-pais","valor":"Chile"}
+ok   [violado S0 (janela 640×450 = 200 %)] lst-paises::a2-5432c282d0d7 — {"cortados":4,"faltaPx":[19,19,19,19]}
+ok   [sem semente: conforme] lst-paises::a2-5432c282d0d7 — {"cortados":0,"faltaPx":[0,0,0,0]}
+ok   [isolada] desfazer só btn-limpar::a2-2ac598dc24db: ela conforme, as outras 8 violadas
+ok   [isolada] desfazer só msg-orientacao::a2-d6b3f0e36943: ela conforme, as outras 8 violadas
+ok   [isolada] desfazer só btn-ajuda::a2-5b47246a41c1: ela conforme, as outras 8 violadas
+ok   [isolada] desfazer só inp-codigo::a2-a39f3ad397d4: ela conforme, as outras 8 violadas
+ok   [isolada] desfazer só rad-situacao::a2-f838b54da560: ela conforme, as outras 8 violadas
+ok   [isolada] desfazer só msg-erro::a2-ef29db5bb4ac: ela conforme, as outras 8 violadas
+ok   [isolada] desfazer só sel-continente::a2-7348bce34289: ela conforme, as outras 8 violadas
+ok   [isolada] desfazer só inp-nome-pais::a2-328f62cfe4ce: ela conforme, as outras 8 violadas
+ok   [isolada] desfazer só lst-paises::a2-5432c282d0d7: ela conforme, as outras 8 violadas
+ok   [estado] semeada S0: alcançado pelo gatilho declarado em 113 ms, sem recarga, sem erro
+ok   [estado] semeada S1: alcançado pelo gatilho declarado em 77 ms, sem recarga, sem erro
+ok   [estado] semeada S2: alcançado pelo gatilho declarado em 47 ms, sem recarga, sem erro
+ok   [conforme · semeada] página: sem bloco style nem script embutido no HTML servido
+ok   [conforme · semeada] página: sem atributos style e on* no HTML servido
+ok   [conforme · semeada] página: elementos vazios sem '/>' no HTML servido
+ok   [conforme · semeada] página: script sem type/language
+ok   [conforme · semeada] página: sem elementos font nem atributos align/color/bgcolor
+ok   [conforme · semeada] página: sem table
+ok   [conforme · semeada] página: DOCTYPE html, lang pt-BR, UTF-8, título descritivo
+ok   [conforme · semeada] página: um único main
+ok   [conforme · semeada] página: títulos h1 → h2 sem salto
+ok   [conforme · semeada] andaime hdr-govbr: cabeçalho visível no topo, antes do main
+ok   [conforme · semeada] andaime ftr-govbr: rodapé visível depois do main
+ok   [conforme · semeada] andaime skp-conteudo: atalho é o 1º filho do body, destinos existem, sem papéis de menu
+ok   [conforme · semeada] andaime brd-trilha: item atual sem tabindex, rótulo em português, depois da mensagem de uso geral
+ok   [conforme · semeada] página: links para o mesmo destino com a mesma descrição
+ok   [conforme · semeada] página: destinos dos links existem no dist
+ok   [conforme · semeada] msg-orientacao (a2-7ce46ea1d9b8): entre o cabeçalho e a trilha
+ok   [conforme · semeada] msg-orientacao (a2-b141828d5580, a2-7cf0838736be): superfície na largura da janela; ícone e Fechar dentro da área útil da grid
+ok   [conforme · semeada] msg-orientacao (a2-6c82acf760ae, a2-952e88a5af0d, a2-55dab9d0155c): tipo Informativo, superfície --blue-warm-vivid-10, ícone info-circle, tipo em texto oculto
+ok   [conforme · semeada] msg-orientacao (a2-5df30996e1c5): ícone à esquerda, Fechar no topo à direita
+ok   [conforme · semeada] msg-orientacao: contraste do texto ≥ 4,5
+ok   [conforme · semeada] Fechar de msg-orientacao (a2-507dbd6cdee4, a2-5b47246a41c1, a2-923a3ee74050, a2-5f85eeafe863): BUTTON br-button circle small 32×32, aria-label, ícone fa-times aria-hidden centrado
+ok   [conforme · semeada] gatilho do select (a2-5b47246a41c1, a2-30278caa77da, a2-5f85eeafe863): ícone angle-down aria-hidden centrado, aria-label, sem tabindex=-1, na extremidade direita do campo
+ok   [conforme · semeada] btn-ajuda (a2-b0f874b8b2cf, a2-dc561d157556, a2-4f6b7bd068c4, a2-c23f336807f4): circular 40×40, terciário, aria-label, junto do h1 com espaço
+ok   [conforme · semeada] btn-ajuda (a2-35afb7e6ee7c): nome acessível 'Ajuda sobre o cadastro'
+ok   [conforme · semeada] barra de ações (a2-b0f874b8b2cf, a2-59c1236e3ebd, a2-4f6b7bd068c4): Salvar primário, Limpar e Cancelar secundários, 40 px, rótulo em uma linha
+ok   [conforme · semeada] barra de ações (a2-2ac598dc24db, controle): Cancelar (secundário) à esquerda de Salvar (primário)
+ok   [conforme · semeada] barra de ações (a2-73e03945d5cc, a2-5a1fcf660ae1, a2-12afa1f3c1f0): rótulos com iniciais maiúsculas, sem artigo, com verbo
+ok   [conforme · semeada] campos (a2-7c43824db106, a2-1f45d0dc0c3a, a2-b174afd9a294, a2-624afa51bbaf): rótulos associados, sem dois-pontos, opcional entre parênteses, obrigatórios sem marca
+ok   [conforme · semeada] inp-nome-pais (a2-11b459a3885c): required sem valor, type text
+ok   [conforme · semeada] inp-codigo (a2-59c41d3b1085, a2-56357b049872, a2-cd5cbf0f18dc, a2-18acbf7b4c9c): type text, apoio ligado por aria-describedby, sem valor inicial, sigla do exemplo por extenso
+ok   [conforme · semeada] sel-continente (a2-4c2ef1bf747e, a2-6eb568d6dd94, a2-3312a3e57512): opções com name e value; placeholder mais completo que o rótulo
+ok   [conforme · semeada] rad-situacao (a2-12d0d71f5dd2, a2-11b459a3885c): required sem valor nas 3 opções
+ok   [conforme · semeada] rad-situacao (a2-b4f55de91129): na carga, borda das caixas na cor padrão (não a de erro)
+ok   [conforme · semeada] rad-situacao (a2-8ec9171bd752, a2-02ccd4221688, a2-916abe162da9): caixas 24×24 redondas, fieldset sem borda, legenda acima das opções
+ok   [conforme · semeada] rad-situacao (a2-29c719d70e4c, a2-df9d11a960cf, a2-6c531e6437e8): opções curtas, só a 1ª letra maiúscula, os mesmos termos da lista
+ok   [conforme · semeada] swt-certificado (a2-dc662beb73b3, a2-52394d43a884, a2-159612f619b5, a2-c1af8ea16c40): role switch, aria-checked=false, texto de estado 'Desligada' vindo de data-disabled, par de textos
+ok   [conforme · semeada] lst-paises (a2-312e000d6784, a2-d45711a55b6c, a2-39c30a5ea7ee): 4 itens em role=list, divisor abaixo de cada item
+ok   [conforme · semeada] lst-paises (a2-66fbdcf13772, a2-9250e991e04f, a2-598ca56880b1, a2-6a99b79819ae): texto com contraste ≥ 4,5, situação em texto, título 'Países Cadastrados', texto dentro da área útil
+ok   [conforme · semeada] andaime div-secoes: divisor entre o formulário e a lista, fora do foco
+ok   [conforme · semeada] lst-paises (a2-a14d31901423): a 1280×900 nenhum item cortado
+ok   [conforme · semeada] a2-a39f3ad397d4 (controle): Rawline é a fonte usada no h1, no rótulo do nome, na mensagem, na lista, na legenda e no switch
+ok   [conforme · semeada] andaime skp-conteudo: o 1º Tab cai no atalho para #main-content
+ok   [conforme · semeada] formulário: ordem de Tab segue o código (nome, código, continente, gatilho, situação, Cancelar, Limpar, Salvar)
+ok   [conforme · semeada] inp-codigo (a2-328f62cfe4ce, controle): com foco por Tab, o texto entra no campo
+ok   [conforme · semeada] rad-situacao (a2-186453b0926b): Espaço marca, seta move a escolha
+ok   [conforme · semeada] swt-certificado (a2-14fa162258a8, a2-8f7b9c91d55e, a2-e9ded28efe9c, a2-5b4b95d8e2e0, a2-33e661bc4435, a2-002bf9be74ec): clicar o rótulo liga na hora, aria-checked=true, texto 'Ligada', árvore AX marcada, contêiner parado
+ok   [conforme · semeada] swt-certificado (a2-f2a468af452d): Espaço alterna de volta
+ok   [conforme · semeada] msg-orientacao (a2-8536d91ce5b9, a2-14f2e6c3226f, a2-c7d20a2735ef, a2-db25bc1d1653): Fechar remove e o foco vai ao h1; a ajuda reexibe no mesmo lugar com foco no Fechar; ao fechar, o foco volta à ajuda
+ok   [conforme · semeada] estado S0: msg-erro oculta na carga
+ok   [conforme · semeada] estado S0 (pontos conformes): medido em até 120 s, sem recarga
+ok   [conforme · semeada] sel-continente (a2-1f3279c0e6a1, a2-daf3655caedf, a2-83611c221e13, a2-386b2c116eb3): lista aberta com sombra, ícone alterna, 6 opções sem rolagem, junto do campo
+ok   [conforme · semeada] sel-continente (a2-654520f6ba0e): Esc recolhe sem escolher
+ok   [conforme · semeada] sel-continente (a2-e85eefb9d6f2, a2-adae4a234fdd, a2-482ab9c4a4b1): escolher a opção a leva ao campo e marca o item como selecionado
+ok   [conforme · semeada] S1 msg-erro (a2-1adbb9c1a3ca, a2-f8e02fcd7de2, a2-952e88a5af0d, a2-55dab9d0155c, a2-e175765df557): tipo Erro, região viva, ícone times-circle, tipo em texto oculto, sem Fechar, até a borda direita do formulário
+ok   [conforme · semeada] S1 msg-erro (a2-61f7e680f11b, a2-0ea33ff35779, a2-d6b3f0e36943 controle): diz que houve erro, por quê e o que fazer, sem termos técnicos
+ok   [conforme · semeada] S1 campos (a2-d720ea8520cb, a2-56357b049872, a2-7bdc66f1d99d): nome e continente com texto de erro ligado por aria-describedby, aria-invalid e borda de erro
+ok   [conforme · semeada] S1 situação (a2-6ee3ac4d9077, a2-35b101662a6e): uma mensagem para o grupo, abaixo da última opção, alinhada à esquerda; caixas com a classe invalid do DS
+ok   [conforme · semeada] S1 (a2-1d6a18d52408, a2-fe133882c34a): ícones das mensagens dos campos times-circle com aria-hidden
+ok   [conforme · semeada] S1 inp-nome-pais: árvore AX com nome, obrigatório e inválido
+ok   [conforme · semeada] S1 (a2-46523775b9da): erro continua depois de interagir sem corrigir
+ok   [conforme · semeada] estado S1 (pontos conformes): medido em até 120 s, sem recarga
+ok   [conforme · semeada] página (e-MAG 4.3, a2-5432c282d0d7 controle em msg-orientacao): a 640×450 sem rolagem horizontal, nada além da janela, mensagem sem corte
+ok   [conforme · semeada] página: sem erros de console a 640×450
+ok   [conforme · semeada] página: core.min.js servido é o do pacote @govbr-ds/core 3.7.0, byte a byte
+ok   [conforme · semeada] página: pacote do DS é o 3.7.0
+ok   [conforme · semeada] página: nenhum pedido fora da origem servida
+ok   [conforme · semeada] página: sem erros de console/página nem respostas 4xx/5xx em S0
+ok   [conforme · sem-semente] página: sem bloco style nem script embutido no HTML servido
+ok   [conforme · sem-semente] página: sem atributos style e on* no HTML servido
+ok   [conforme · sem-semente] página: elementos vazios sem '/>' no HTML servido
+ok   [conforme · sem-semente] página: script sem type/language
+ok   [conforme · sem-semente] página: sem elementos font nem atributos align/color/bgcolor
+ok   [conforme · sem-semente] página: sem table
+ok   [conforme · sem-semente] página: DOCTYPE html, lang pt-BR, UTF-8, título descritivo
+ok   [conforme · sem-semente] página: um único main
+ok   [conforme · sem-semente] página: títulos h1 → h2 sem salto
+ok   [conforme · sem-semente] andaime hdr-govbr: cabeçalho visível no topo, antes do main
+ok   [conforme · sem-semente] andaime ftr-govbr: rodapé visível depois do main
+ok   [conforme · sem-semente] andaime skp-conteudo: atalho é o 1º filho do body, destinos existem, sem papéis de menu
+ok   [conforme · sem-semente] andaime brd-trilha: item atual sem tabindex, rótulo em português, depois da mensagem de uso geral
+ok   [conforme · sem-semente] página: links para o mesmo destino com a mesma descrição
+ok   [conforme · sem-semente] página: destinos dos links existem no dist
+ok   [conforme · sem-semente] msg-orientacao (a2-7ce46ea1d9b8): entre o cabeçalho e a trilha
+ok   [conforme · sem-semente] msg-orientacao (a2-b141828d5580, a2-7cf0838736be): superfície na largura da janela; ícone e Fechar dentro da área útil da grid
+ok   [conforme · sem-semente] msg-orientacao (a2-6c82acf760ae, a2-952e88a5af0d, a2-55dab9d0155c): tipo Informativo, superfície --blue-warm-vivid-10, ícone info-circle, tipo em texto oculto
+ok   [conforme · sem-semente] msg-orientacao (a2-5df30996e1c5): ícone à esquerda, Fechar no topo à direita
+ok   [conforme · sem-semente] msg-orientacao: contraste do texto ≥ 4,5
+ok   [conforme · sem-semente] Fechar de msg-orientacao (a2-507dbd6cdee4, a2-5b47246a41c1, a2-923a3ee74050, a2-5f85eeafe863): BUTTON br-button circle small 32×32, aria-label, ícone fa-times aria-hidden centrado
+ok   [conforme · sem-semente] gatilho do select (a2-5b47246a41c1, a2-30278caa77da, a2-5f85eeafe863): ícone angle-down aria-hidden centrado, aria-label, sem tabindex=-1, na extremidade direita do campo
+ok   [conforme · sem-semente] btn-ajuda (a2-b0f874b8b2cf, a2-dc561d157556, a2-4f6b7bd068c4, a2-c23f336807f4): circular 40×40, terciário, aria-label, junto do h1 com espaço
+ok   [conforme · sem-semente] btn-ajuda (a2-35afb7e6ee7c): nome acessível 'Ajuda sobre o cadastro'
+ok   [conforme · sem-semente] barra de ações (a2-b0f874b8b2cf, a2-59c1236e3ebd, a2-4f6b7bd068c4): Salvar primário, Limpar e Cancelar secundários, 40 px, rótulo em uma linha
+ok   [conforme · sem-semente] barra de ações (a2-2ac598dc24db, controle): Cancelar (secundário) à esquerda de Salvar (primário)
+ok   [conforme · sem-semente] barra de ações (a2-73e03945d5cc, a2-5a1fcf660ae1, a2-12afa1f3c1f0): rótulos com iniciais maiúsculas, sem artigo, com verbo
+ok   [conforme · sem-semente] campos (a2-7c43824db106, a2-1f45d0dc0c3a, a2-b174afd9a294, a2-624afa51bbaf): rótulos associados, sem dois-pontos, opcional entre parênteses, obrigatórios sem marca
+ok   [conforme · sem-semente] inp-nome-pais (a2-11b459a3885c): required sem valor, type text
+ok   [conforme · sem-semente] inp-codigo (a2-59c41d3b1085, a2-56357b049872, a2-cd5cbf0f18dc, a2-18acbf7b4c9c): type text, apoio ligado por aria-describedby, sem valor inicial, sigla do exemplo por extenso
+ok   [conforme · sem-semente] sel-continente (a2-4c2ef1bf747e, a2-6eb568d6dd94, a2-3312a3e57512): opções com name e value; placeholder mais completo que o rótulo
+ok   [conforme · sem-semente] rad-situacao (a2-12d0d71f5dd2, a2-11b459a3885c): required sem valor nas 3 opções
+ok   [conforme · sem-semente] rad-situacao (a2-b4f55de91129): na carga, borda das caixas na cor padrão (não a de erro)
+ok   [conforme · sem-semente] rad-situacao (a2-8ec9171bd752, a2-02ccd4221688, a2-916abe162da9): caixas 24×24 redondas, fieldset sem borda, legenda acima das opções
+ok   [conforme · sem-semente] rad-situacao (a2-29c719d70e4c, a2-df9d11a960cf, a2-6c531e6437e8): opções curtas, só a 1ª letra maiúscula, os mesmos termos da lista
+ok   [conforme · sem-semente] swt-certificado (a2-dc662beb73b3, a2-52394d43a884, a2-159612f619b5, a2-c1af8ea16c40): role switch, aria-checked=false, texto de estado 'Desligada' vindo de data-disabled, par de textos
+ok   [conforme · sem-semente] lst-paises (a2-312e000d6784, a2-d45711a55b6c, a2-39c30a5ea7ee): 4 itens em role=list, divisor abaixo de cada item
+ok   [conforme · sem-semente] lst-paises (a2-66fbdcf13772, a2-9250e991e04f, a2-598ca56880b1, a2-6a99b79819ae): texto com contraste ≥ 4,5, situação em texto, título 'Países Cadastrados', texto dentro da área útil
+ok   [conforme · sem-semente] andaime div-secoes: divisor entre o formulário e a lista, fora do foco
+ok   [conforme · sem-semente] lst-paises (a2-a14d31901423): a 1280×900 nenhum item cortado
+ok   [conforme · sem-semente] a2-a39f3ad397d4 (controle): Rawline é a fonte usada no h1, no rótulo do nome, na mensagem, na lista, na legenda e no switch
+ok   [conforme · sem-semente] andaime skp-conteudo: o 1º Tab cai no atalho para #main-content
+ok   [conforme · sem-semente] formulário: ordem de Tab segue o código (nome, código, continente, gatilho, situação, Cancelar, Limpar, Salvar)
+ok   [conforme · sem-semente] inp-codigo (a2-328f62cfe4ce, controle): com foco por Tab, o texto entra no campo
+ok   [conforme · sem-semente] rad-situacao (a2-186453b0926b): Espaço marca, seta move a escolha
+ok   [conforme · sem-semente] swt-certificado (a2-14fa162258a8, a2-8f7b9c91d55e, a2-e9ded28efe9c, a2-5b4b95d8e2e0, a2-33e661bc4435, a2-002bf9be74ec): clicar o rótulo liga na hora, aria-checked=true, texto 'Ligada', árvore AX marcada, contêiner parado
+ok   [conforme · sem-semente] swt-certificado (a2-f2a468af452d): Espaço alterna de volta
+ok   [conforme · sem-semente] msg-orientacao (a2-8536d91ce5b9, a2-14f2e6c3226f, a2-c7d20a2735ef, a2-db25bc1d1653): Fechar remove e o foco vai ao h1; a ajuda reexibe no mesmo lugar com foco no Fechar; ao fechar, o foco volta à ajuda
+ok   [conforme · sem-semente] estado S0: msg-erro oculta na carga
+ok   [conforme · sem-semente] estado S0 (pontos conformes): medido em até 120 s, sem recarga
+ok   [conforme · sem-semente] sel-continente (a2-1f3279c0e6a1, a2-daf3655caedf, a2-83611c221e13, a2-386b2c116eb3): lista aberta com sombra, ícone alterna, 6 opções sem rolagem, junto do campo
+ok   [conforme · sem-semente] sel-continente (a2-654520f6ba0e): Esc recolhe sem escolher
+ok   [conforme · sem-semente] sel-continente (a2-e85eefb9d6f2, a2-adae4a234fdd, a2-482ab9c4a4b1): escolher a opção a leva ao campo e marca o item como selecionado
+ok   [conforme · sem-semente] S1 msg-erro (a2-1adbb9c1a3ca, a2-f8e02fcd7de2, a2-952e88a5af0d, a2-55dab9d0155c, a2-e175765df557): tipo Erro, região viva, ícone times-circle, tipo em texto oculto, sem Fechar, até a borda direita do formulário
+ok   [conforme · sem-semente] S1 msg-erro (a2-61f7e680f11b, a2-0ea33ff35779, a2-d6b3f0e36943 controle): diz que houve erro, por quê e o que fazer, sem termos técnicos
+ok   [conforme · sem-semente] S1 campos (a2-d720ea8520cb, a2-56357b049872, a2-7bdc66f1d99d): nome e continente com texto de erro ligado por aria-describedby, aria-invalid e borda de erro
+ok   [conforme · sem-semente] S1 situação (a2-6ee3ac4d9077, a2-35b101662a6e): uma mensagem para o grupo, abaixo da última opção, alinhada à esquerda; caixas com a classe invalid do DS
+ok   [conforme · sem-semente] S1 (a2-1d6a18d52408, a2-fe133882c34a): ícones das mensagens dos campos times-circle com aria-hidden
+ok   [conforme · sem-semente] S1 inp-nome-pais: árvore AX com nome, obrigatório e inválido
+ok   [conforme · sem-semente] S1 (a2-46523775b9da): erro continua depois de interagir sem corrigir
+ok   [conforme · sem-semente] estado S1 (pontos conformes): medido em até 120 s, sem recarga
+ok   [conforme · sem-semente] página (e-MAG 4.3, a2-5432c282d0d7 controle em msg-orientacao): a 640×450 sem rolagem horizontal, nada além da janela, mensagem sem corte
+ok   [conforme · sem-semente] página: sem erros de console a 640×450
+ok   [conforme · sem-semente] página: core.min.js servido é o do pacote @govbr-ds/core 3.7.0, byte a byte
+ok   [conforme · sem-semente] página: pacote do DS é o 3.7.0
+ok   [conforme · sem-semente] página: nenhum pedido fora da origem servida
+ok   [conforme · sem-semente] página: sem erros de console/página nem respostas 4xx/5xx em S0
+
+{"observaveisVioladosNaSemeada":"9/9","observaveisConformesSemSemente":"9/9","celulasIsoladasSemInterferencia":"9/9","interferencias":0,"estadosAlcancados":"33/33","pontosConformes":"134/134"}

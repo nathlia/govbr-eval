@@ -1,0 +1,151 @@
+{
+  "_meta": {
+    "objetivo": "Vocabulário fechado de nós da página E2 para declarar, por variante, os efeitos da mutação (procedimento da A2, tela-a2/efeitos-lotes/VOCABULARIO.json). Fixado a partir de tela-e2/inventario.json e da anatomia dos componentes, antes de qualquer julgamento de passo 2 e de qualquer semente.",
+    "notacao": "Nó = '<instancia>:<parte>'. Nas declarações por variante, '$' é o hospedeiro em que a variante é colocada ('$:fechar' = parte 'fechar' do hospedeiro). Nós de outras instâncias são escritos por extenso.",
+    "partesPorComponente": "Cada componente tem as partes abaixo; toda instância do componente tem as mesmas partes.",
+    "iteracao2": "pagina:secao-config acrescentada e swt-certificado tirado de pagina:formulario (inventário, iteração 2)"
+  },
+  "partes": {
+    "button": [
+      "raiz",
+      "icone",
+      "texto"
+    ],
+    "input": [
+      "raiz",
+      "rotulo",
+      "campo",
+      "apoio",
+      "mensagem"
+    ],
+    "select": [
+      "raiz",
+      "rotulo",
+      "campo",
+      "gatilho",
+      "lista",
+      "itens",
+      "mensagem"
+    ],
+    "radio": [
+      "grupo",
+      "legenda",
+      "inputs",
+      "rotulos",
+      "mensagem"
+    ],
+    "switch": [
+      "raiz",
+      "input",
+      "rotulo",
+      "chave",
+      "texto-estado"
+    ],
+    "list": [
+      "raiz",
+      "titulo",
+      "itens",
+      "divisores"
+    ],
+    "message": [
+      "raiz",
+      "icone",
+      "titulo",
+      "texto",
+      "fechar"
+    ],
+    "pagina": [
+      "doctype",
+      "html",
+      "head",
+      "title",
+      "scripts",
+      "estilos",
+      "body",
+      "h1",
+      "cabecalho-pagina",
+      "formulario",
+      "titulo-form",
+      "acoes",
+      "secao-lista",
+      "titulo-lista",
+      "regioes",
+      "secao-config"
+    ]
+  },
+  "instancias": {
+    "btn-limpar": "button",
+    "btn-ajuda": "button",
+    "inp-nome-pais": "input",
+    "inp-codigo": "input",
+    "sel-continente": "select",
+    "rad-situacao": "radio",
+    "swt-certificado": "switch",
+    "lst-paises": "list",
+    "msg-orientacao": "message",
+    "msg-erro": "message",
+    "pagina": "pagina"
+  },
+  "notasDePartes": {
+    "button:raiz": "o elemento button (classe, ênfase, tamanho, forma circular, estado, nome acessível)",
+    "button:icone": "o ícone dentro do botão (btn-ajuda só tem ícone)",
+    "button:texto": "o texto visível do botão (btn-ajuda não tem texto visível)",
+    "input:campo": "o elemento input (tipo, atributos, estado de erro, borda, altura)",
+    "input:apoio": "texto de apoio sob o campo (inp-codigo tem; inp-nome-pais não)",
+    "input:mensagem": "mensagem de feedback/erro do campo (aparece em S1 nos obrigatórios)",
+    "select:gatilho": "botão circular que abre a lista",
+    "select:lista": "a lista de opções (aberta em S2)",
+    "select:itens": "os itens da lista de opções",
+    "radio:grupo": "o fieldset do grupo de opções",
+    "radio:legenda": "a legend do grupo",
+    "radio:inputs": "os 3 input type=radio",
+    "radio:rotulos": "os label das 3 opções",
+    "switch:texto-estado": "texto que diz ligado/desligado ao lado da chave, se houver",
+    "list:titulo": "o título da lista de países",
+    "list:itens": "os 4 itens (br-item) da lista",
+    "list:divisores": "separadores entre os itens",
+    "message:fechar": "botão circular Fechar (só msg-orientacao tem)",
+    "pagina:head": "meta, link e script do head (charset, viewport, refresh)",
+    "pagina:scripts": "elementos script da página (os do DS e o arquivo de inicialização)",
+    "pagina:estilos": "elementos link/style da página",
+    "pagina:body": "estilos globais herdados por todo o conteúdo (fonte, cor de texto do body)",
+    "pagina:h1": "título 'Cadastrar país importador'",
+    "pagina:cabecalho-pagina": "faixa do título da página (h1 e btn-ajuda)",
+    "pagina:formulario": "o elemento form (contém os campos, o radio, o switch e a barra de ações)",
+    "pagina:titulo-form": "título da seção do formulário",
+    "pagina:acoes": "barra de ações do formulário (btn-salvar e btn-cancelar são andaime; btn-limpar é sorteável)",
+    "pagina:secao-lista": "section que contém o título da lista e lst-paises",
+    "pagina:titulo-lista": "título da seção 'Países cadastrados'",
+    "pagina:regioes": "landmarks e seções fora das acima (main é moldura protegida e não pode ser tocado)",
+    "pagina:secao-config": "section \"Configuração do serviço\" entre o formulário e a lista; contém swt-certificado (iteração 2 do inventário)"
+  },
+  "contem": {
+    "_nota": "Nó → instâncias que ficam dentro dele. Uma mudança de estrutura, visibilidade ou estilo herdado nesse nó atinge essas instâncias (campo 'cascata').",
+    "pagina:cabecalho-pagina": [
+      "btn-ajuda"
+    ],
+    "pagina:formulario": [
+      "msg-erro",
+      "inp-nome-pais",
+      "inp-codigo",
+      "sel-continente",
+      "rad-situacao",
+      "btn-limpar"
+    ],
+    "pagina:acoes": [
+      "btn-limpar"
+    ],
+    "pagina:secao-lista": [
+      "lst-paises"
+    ],
+    "pagina:body": [
+      "*"
+    ],
+    "pagina:html": [
+      "*"
+    ],
+    "pagina:secao-config": [
+      "swt-certificado"
+    ]
+  }
+}

@@ -1,0 +1,899 @@
+{
+ "_meta": {
+  "tela": "cadastro-pais.html (E2)",
+  "auditoria": "cega, por medição (Playwright + CDP; sem oráculo, sem axe)",
+  "corpus": "F:/Dev Nath/TCC/ds-rules/govbr-ds-3.7.0-corpus",
+  "geradoPor": "avaliar.mjs",
+  "geradoEm": "2026-11-15T01:52:31.414Z",
+  "contagens": {
+   "verificacoes": 145,
+   "achados": 12,
+   "achadosDS": 8,
+   "achadosGeral": 4,
+   "conformes": 114,
+   "incertos": 19
+  }
+ },
+ "incertos": [
+  {
+   "id": "EI-01",
+   "instancia": "btn-ajuda",
+   "chave": "acao-observavel-tooltip",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/button__acessibilidade.md",
+     "citacao": "Quando utilizar botões com apenas ícones, certifique-se de exibir a informação do rótulo através do *tooltip* ao passar o mouse ou focar no botão;"
+    },
+    {
+     "arquivo": "componentes/button__designer.md",
+     "citacao": "**Importante:** Os botões devem ser usados conforme a necessidade de interação do usuário com a interface."
+    }
+   ],
+   "tambem": [],
+   "esperado": "tooltip com o rótulo ao passar o ponteiro/focar; alguma ação observável ao acionar",
+   "ancora": {
+    "texto": "botão circular de nome 'Ajuda sobre o cadastro' ao lado do h1",
+    "seletor": "#btn-ajuda"
+   },
+   "medida": {
+    "S0": {
+     "tooltipsHover": 0,
+     "tooltipsFoco": 0,
+     "domAntes": {
+      "n": 177,
+      "texto": 1239,
+      "visiveis": 119
+     },
+     "domAposClique": {
+      "n": 177,
+      "texto": 1239,
+      "visiveis": 119,
+      "url": "http://127.0.0.1:3219/cadastro-pais.html",
+      "expanded": null,
+      "dialogs": 0
+     },
+     "aposEnter": {
+      "visiveis": 119,
+      "texto": 1239
+     }
+    }
+   },
+   "porque": "cláusula do tooltip está em 'Recomendações para Estilo e Design' (imperativo 'certifique-se', não marcado como obrigação) e a ausência de efeito ao acionar não contraria literalmente nenhuma cláusula: medido 0 tooltip e nenhuma mudança de DOM/URL ao clicar ou pressionar Enter",
+   "medidaArquivo": "medidas/EI-01.json"
+  },
+  {
+   "id": "EI-02",
+   "instancia": "inp-nome-pais",
+   "chave": "obrigatorio-indicado",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Campos de preenchimento obrigatório devem ser claramente indicados."
+    }
+   ],
+   "tambem": [],
+   "esperado": "indicação clara de obrigatoriedade",
+   "ancora": {
+    "texto": "campo de rótulo 'Nome do país'",
+    "seletor": "#inp-nome-pais"
+   },
+   "medida": {
+    "S0": {
+     "rotuloVisivel": "Nome do país",
+     "requiredNoHTML": true,
+     "regraDoFormulario": "só o campo opcional é marcado '(opcional)'; formulário sem subtítulo"
+    },
+    "S1": {
+     "rotuloVisivel": "Nome do país",
+     "requiredNoHTML": true,
+     "regraDoFormulario": "só o campo opcional é marcado '(opcional)'; formulário sem subtítulo"
+    },
+    "S2": {
+     "rotuloVisivel": "Nome do país",
+     "requiredNoHTML": true,
+     "regraDoFormulario": "só o campo opcional é marcado '(opcional)'; formulário sem subtítulo"
+    }
+   },
+   "porque": "o padrão de Formulário do DS permite marcar só os opcionais (‘sinalize-os com um texto entre parênteses’) e pede que o subtítulo deixe a decisão clara (‘Utilize o subtítulo…’, recomendação); o formulário não tem subtítulo e os obrigatórios não têm marca visual, mas têm `required` (exposto à AX). Se isso é ‘claramente indicado’ depende de leitura",
+   "medidaArquivo": "medidas/EI-02.json"
+  },
+  {
+   "id": "EI-03",
+   "instancia": "sel-continente",
+   "chave": "obrigatorio-indicado",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Campos de preenchimento obrigatório devem ser claramente indicados."
+    }
+   ],
+   "tambem": [],
+   "esperado": "indicação clara de obrigatoriedade",
+   "ancora": {
+    "texto": "select de rótulo 'Continente'",
+    "seletor": "#sel-continente"
+   },
+   "medida": {
+    "S0": {
+     "rotuloVisivel": "Continente",
+     "requiredNoHTML": true,
+     "regraDoFormulario": "só o campo opcional é marcado '(opcional)'; formulário sem subtítulo"
+    },
+    "S1": {
+     "rotuloVisivel": "Continente",
+     "requiredNoHTML": true,
+     "regraDoFormulario": "só o campo opcional é marcado '(opcional)'; formulário sem subtítulo"
+    },
+    "S2": {
+     "rotuloVisivel": "Continente",
+     "requiredNoHTML": true,
+     "regraDoFormulario": "só o campo opcional é marcado '(opcional)'; formulário sem subtítulo"
+    }
+   },
+   "porque": "o padrão de Formulário do DS permite marcar só os opcionais (‘sinalize-os com um texto entre parênteses’) e pede que o subtítulo deixe a decisão clara (‘Utilize o subtítulo…’, recomendação); o formulário não tem subtítulo e os obrigatórios não têm marca visual, mas têm `required` (exposto à AX). Se isso é ‘claramente indicado’ depende de leitura",
+   "medidaArquivo": "medidas/EI-03.json"
+  },
+  {
+   "id": "EI-04",
+   "instancia": "rad-situacao",
+   "chave": "obrigatorio-indicado",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Campos de preenchimento obrigatório devem ser claramente indicados."
+    }
+   ],
+   "tambem": [],
+   "esperado": "indicação clara de obrigatoriedade",
+   "ancora": {
+    "texto": "grupo 'Situação do cadastro'",
+    "seletor": "#rad-situacao"
+   },
+   "medida": {
+    "S0": {
+     "rotuloVisivel": "Situação do cadastro",
+     "requiredNoHTML": true,
+     "regraDoFormulario": "só o campo opcional é marcado '(opcional)'; formulário sem subtítulo"
+    },
+    "S1": {
+     "rotuloVisivel": "Situação do cadastro",
+     "requiredNoHTML": true,
+     "regraDoFormulario": "só o campo opcional é marcado '(opcional)'; formulário sem subtítulo"
+    },
+    "S2": {
+     "rotuloVisivel": "Situação do cadastro",
+     "requiredNoHTML": true,
+     "regraDoFormulario": "só o campo opcional é marcado '(opcional)'; formulário sem subtítulo"
+    }
+   },
+   "porque": "o padrão de Formulário do DS permite marcar só os opcionais (‘sinalize-os com um texto entre parênteses’) e pede que o subtítulo deixe a decisão clara (‘Utilize o subtítulo…’, recomendação); o formulário não tem subtítulo e os obrigatórios não têm marca visual, mas têm `required` (exposto à AX). Se isso é ‘claramente indicado’ depende de leitura",
+   "medidaArquivo": "medidas/EI-04.json"
+  },
+  {
+   "id": "EI-05",
+   "instancia": "inp-nome-pais",
+   "chave": "primeiro-obrigatorio-recebe-foco",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "padroes/design/formulario.md",
+     "citacao": "O primeiro campo de entrada obrigatório do formulário deve receber o estado de foco."
+    }
+   ],
+   "tambem": [],
+   "esperado": "foco no 1º campo obrigatório ao carregar",
+   "ancora": {
+    "texto": "campo de rótulo 'Nome do país'",
+    "seletor": "#inp-nome-pais"
+   },
+   "medida": {
+    "S0": {
+     "focoNaChegada": "body"
+    }
+   },
+   "porque": "a cláusula conflita com a do skip link ('deve ser o primeiro elemento a receber o foco'); foco medido no body na carga",
+   "medidaArquivo": "medidas/EI-05.json"
+  },
+  {
+   "id": "EI-06",
+   "instancia": "sel-continente",
+   "chave": "foco-aciona-lista",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/select__acessibilidade.md",
+     "citacao": "Quando o foco estiver sobre o *select*, o mesmo deve ser acionado e exibir a lista de itens;"
+    }
+   ],
+   "tambem": [],
+   "esperado": "lista exibida quando o foco chega ao select (ou ao acioná-lo)",
+   "ancora": {
+    "texto": "select de rótulo 'Continente'",
+    "seletor": "#sel-continente"
+   },
+   "medida": {
+    "S0": {
+     "aoFocarPorTab": {
+      "listaVisivel": false,
+      "expanded": "false"
+     },
+     "aposArrowDown": {
+      "listaVisivel": true,
+      "foco": "div.br-item",
+      "focoTexto": "África"
+     }
+    }
+   },
+   "porque": "com o foco por Tab a lista não abre (aria-expanded=false); abre com ArrowDown. 'deve ser acionado e exibir' é ambíguo (abrir sozinho ao focar contraria e-MAG 6.4 'Quando um elemento de formulário receber o foco, não deve ser iniciada uma mudança automática')",
+   "medidaArquivo": "medidas/EI-06.json"
+  },
+  {
+   "id": "EI-07",
+   "instancia": "sel-continente",
+   "chave": "rotulo-combobox",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "As etiquetas de texto (elemento LABEL) devem estar associadas aos seus campos"
+    }
+   ],
+   "tambem": [],
+   "esperado": "campo do select com rótulo associado e nome acessível",
+   "ancora": {
+    "texto": "select de rótulo 'Continente'",
+    "seletor": "#sel-continente"
+   },
+   "medida": {
+    "S0": {
+     "campoNomeAX": "Continente",
+     "comboboxPapel": "combobox",
+     "comboboxNome": ""
+    },
+    "S1": {
+     "campoNomeAX": "Continente",
+     "comboboxPapel": "combobox",
+     "comboboxNome": ""
+    },
+    "S2": {
+     "campoNomeAX": "Continente",
+     "comboboxPapel": "combobox",
+     "comboboxNome": ""
+    }
+   },
+   "porque": "o <input> tem rótulo associado (nome 'Continente'); o contêiner que recebe role=combobox em tempo de execução fica com nome vazio na árvore AX. A cláusula e-MAG trata de LABEL↔INPUT (cumprida); o combobox sem nome é fato medido sem cláusula literal no corpus",
+   "medidaArquivo": "medidas/EI-07.json"
+  },
+  {
+   "id": "EI-08",
+   "instancia": "sel-continente",
+   "chave": "icone-botao-caret",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/select__designer.md",
+     "citacao": "| Ícone - componente *button* | Fechado | <i class=\"fas fa-caret-down\"></i> |   `fa-caret-down`    |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "fa-caret-down / fa-caret-up",
+   "ancora": {
+    "texto": "select de rótulo 'Continente'",
+    "seletor": "#sel-continente"
+   },
+   "medida": {
+    "S0": [
+     "fas",
+     "fa-angle-down"
+    ],
+    "S1": [
+     "fas",
+     "fa-angle-down"
+    ],
+    "S2": [
+     "fas",
+     "fa-angle-up"
+    ]
+   },
+   "porque": "a tabela de especificação pede caret; a página usa fa-angle-down/up na marcação do select. Não foi possível separar marcação do DS de marcação autoral sem ler fontes; o ícone alterna (toggle) como exige a cláusula do botão",
+   "medidaArquivo": "medidas/EI-08.json"
+  },
+  {
+   "id": "EI-09",
+   "instancia": "lst-paises",
+   "chave": "navegacao-teclado-list",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/list__acessibilidade.md",
+     "citacao": "Os usuários devem poder navegar pelo *list* através do teclado, usando as teclas `Tab` e `Shift + Tab` ou usar as teclas direcionais `arrowUp` e `arrowDown` como alternativa;"
+    }
+   ],
+   "tambem": [],
+   "esperado": "itens alcançáveis por teclado",
+   "ancora": {
+    "texto": "lista 'Países Cadastrados'",
+    "seletor": "#lst-paises"
+   },
+   "medida": {
+    "S0": {
+     "paradasDeTabNosItens": 0,
+     "elementosInterativosNaLista": 0
+    }
+   },
+   "porque": "a lista é estática (sem elementos interativos); itens não são paradas de Tab. A cláusula não distingue listas estáticas — tornar texto estático focável não é exigido em outra cláusula; leitura de tela navega por itens (role list/listitem)",
+   "medidaArquivo": "medidas/EI-09.json"
+  },
+  {
+   "id": "EI-10",
+   "instancia": "lst-paises",
+   "chave": "marcacao-de-lista",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Assim, marcação semântica adequada deve ser utilizada para designar os cabeçalhos (h1, h2, h3), as listas (ul, ol, dl)"
+    }
+   ],
+   "tambem": [],
+   "esperado": "lista marcada como lista",
+   "ancora": {
+    "texto": "lista 'Países Cadastrados'",
+    "seletor": "#lst-paises"
+   },
+   "medida": {
+    "S0": {
+     "papelItemAX": "listitem",
+     "marcacao": "div role=list > div role=listitem"
+    },
+    "S1": {
+     "papelItemAX": "listitem",
+     "marcacao": "div role=list > div role=listitem"
+    },
+    "S2": {
+     "papelItemAX": "listitem",
+     "marcacao": "div role=list > div role=listitem"
+    }
+   },
+   "porque": "semântica de lista exposta por ARIA (role=list/listitem, medido na AX), não por ul/ol; a marcação de exemplo do próprio DS (list dev) usa div. Literalmente a cláusula cita ul/ol/dl",
+   "medidaArquivo": "medidas/EI-10.json"
+  },
+  {
+   "id": "EI-11",
+   "instancia": "lst-paises",
+   "chave": "tipografia-titulo-textos",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/list__designer.md",
+     "citacao": "| Título           | size        |  `--font-size-scale-base`   |"
+    },
+    {
+     "arquivo": "componentes/list__designer.md",
+     "citacao": "| Texto secundário | size        | `--font-size-scale-down-01` |"
+    },
+    {
+     "arquivo": "componentes/list__designer.md",
+     "citacao": "| Texto secundário | text       | `--gray-70`  |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "título 14 px bold; texto secundário 11,67 px gray-70",
+   "ancora": {
+    "texto": "lista 'Países Cadastrados'",
+    "seletor": "#lst-paises"
+   },
+   "medida": {
+    "S0": {
+     "titulo": [
+      "34.832px",
+      "400"
+     ],
+     "secundario": [
+      "14px",
+      "rgb(51, 51, 51)"
+     ],
+     "principal": [
+      "14px",
+      "rgb(51, 51, 51)"
+     ],
+     "seletorTitulo": {
+      "font-size": {
+       "seletor": ".h2, h2",
+       "valor": "var(--font-size-scale-up-05)",
+       "imp": false,
+       "origem": "regular"
+      },
+      "font-weight": {
+       "seletor": ".h2, h2",
+       "valor": "var(--font-weight-regular)",
+       "imp": false,
+       "origem": "regular"
+      }
+     }
+    },
+    "S1": {
+     "titulo": [
+      "34.832px",
+      "400"
+     ],
+     "secundario": [
+      "14px",
+      "rgb(51, 51, 51)"
+     ],
+     "principal": [
+      "14px",
+      "rgb(51, 51, 51)"
+     ],
+     "seletorTitulo": {
+      "font-size": {
+       "seletor": ".h2, h2",
+       "valor": "var(--font-size-scale-up-05)",
+       "imp": false,
+       "origem": "regular"
+      },
+      "font-weight": {
+       "seletor": ".h2, h2",
+       "valor": "var(--font-weight-regular)",
+       "imp": false,
+       "origem": "regular"
+      }
+     }
+    },
+    "S2": {
+     "titulo": [
+      "34.832px",
+      "400"
+     ],
+     "secundario": [
+      "14px",
+      "rgb(51, 51, 51)"
+     ],
+     "principal": [
+      "14px",
+      "rgb(51, 51, 51)"
+     ],
+     "seletorTitulo": {
+      "font-size": {
+       "seletor": ".h2, h2",
+       "valor": "var(--font-size-scale-up-05)",
+       "imp": false,
+       "origem": "regular"
+      },
+      "font-weight": {
+       "seletor": ".h2, h2",
+       "valor": "var(--font-weight-regular)",
+       "imp": false,
+       "origem": "regular"
+      }
+     }
+    }
+   },
+   "porque": "valores diferem da tabela, mas vêm de estilos do DS: o título é um h2 com a tipografia H2 do DS (`.h2, h2`) e os textos herdam o estilo de `.br-item`; não há sobrescrita da página. A tabela do componente e o CSS do DS divergem",
+   "medidaArquivo": "medidas/EI-11.json"
+  },
+  {
+   "id": "EI-12",
+   "instancia": "msg-orientacao",
+   "chave": "foco-no-fechar-ao-exibir",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/message__acessibilidade.md",
+     "citacao": "No momento da exibição da mensagem, o foco do navegador deve estar sobre o botão fechar, quando houver."
+    }
+   ],
+   "tambem": [],
+   "esperado": "foco no Fechar quando a mensagem aparece",
+   "ancora": {
+    "texto": "mensagem informativa 'Como cadastrar.'",
+    "seletor": "#msg-orientacao"
+   },
+   "medida": {
+    "S0": {
+     "focoNaCarga": "body"
+    }
+   },
+   "porque": "a mensagem é exibida com a carga da página (não em resposta a ação); mover o foco para ela na carga contrariaria 'O skip link deve ser o primeiro elemento a receber o foco'. Medido: foco no body",
+   "medidaArquivo": "medidas/EI-12.json"
+  },
+  {
+   "id": "EI-13",
+   "instancia": "msg-orientacao",
+   "chave": "foco-volta-apos-fechar",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/message__acessibilidade.md",
+     "citacao": "É importante que após o fechamento da mensagem, o foco do navegador volte ao local original no fluxo de navegação."
+    }
+   ],
+   "tambem": [],
+   "esperado": "foco no ponto do fluxo onde estava",
+   "ancora": {
+    "texto": "mensagem informativa 'Como cadastrar.'",
+    "seletor": "#msg-orientacao"
+   },
+   "medida": {
+    "S0": {
+     "focoApos": "h1.titulo-pagina",
+     "proximoTab": "button#btn-ajuda.br-button.circle.acao-ajuda"
+    }
+   },
+   "porque": "cláusula de força 'É importante' (recomendação); medido: foco vai ao h1 (tabindex=-1) e o próximo Tab é o btn-ajuda, pulando os links da trilha que vinham depois do Fechar",
+   "medidaArquivo": "medidas/EI-13.json"
+  },
+  {
+   "id": "EI-14",
+   "instancia": "msg-orientacao",
+   "chave": "idioma-termos-ingles",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Se algum elemento de uma página possuir conteúdo em um idioma diferente do principal, este deverá estar identificado pelo atributo lang."
+    }
+   ],
+   "tambem": [],
+   "esperado": "lang nos trechos em outro idioma",
+   "ancora": {
+    "texto": "mensagem informativa 'Como cadastrar.'",
+    "seletor": "#msg-orientacao"
+   },
+   "medida": {
+    "S0": {
+     "termos": [
+      "commit",
+      "endpoint",
+      "cache"
+     ],
+     "langNoCorpo": []
+    },
+    "S1": {
+     "termos": [
+      "commit",
+      "endpoint",
+      "cache"
+     ],
+     "langNoCorpo": []
+    },
+    "S2": {
+     "termos": [
+      "commit",
+      "endpoint",
+      "cache"
+     ],
+     "langNoCorpo": []
+    }
+   },
+   "porque": "'commit', 'cache', 'endpoint' são estrangeirismos técnicos sem lang; se palavras soltas emprestadas contam como 'conteúdo em idioma diferente' é interpretativo",
+   "medidaArquivo": "medidas/EI-14.json"
+  },
+  {
+   "id": "EI-15",
+   "instancia": "skp-conteudo",
+   "chave": "visivel-ao-ponteiro",
+   "estados": [
+    "S0"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/skiplink__acessibilidade.md",
+     "citacao": "O *skip link* também precisa estar visível para usuários que navegam com *mouse*, pois pode ser útil para os atalhos de navegação."
+    }
+   ],
+   "tambem": [],
+   "esperado": "visível ao ponteiro",
+   "ancora": {
+    "texto": "nav.br-skiplink (texto 'Ir para o conteúdo')",
+    "seletor": ".br-skiplink"
+   },
+   "medida": {
+    "S0": {
+     "ponteiro": [
+      [
+       [
+        20,
+        5
+       ],
+       false
+      ],
+      [
+       [
+        60,
+        15
+       ],
+       false
+      ],
+      [
+       [
+        160,
+        20
+       ],
+       false
+      ],
+      [
+       [
+        300,
+        10
+       ],
+       false
+      ]
+     ],
+     "seletor": {
+      "seletor": ".br-skiplink a",
+      "valor": "-100vh",
+      "imp": false
+     }
+    }
+   },
+   "porque": "não fica visível ao ponteiro em nenhuma posição testada, mas o ocultamento vem do CSS do DS (`.br-skiplink a { top: -100vh }`), sem sobrescrita da página: DS e documentação divergem",
+   "medidaArquivo": "medidas/EI-15.json"
+  },
+  {
+   "id": "EI-16",
+   "instancia": "pagina",
+   "chave": "ancoras-name-id",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "geral",
+   "clausulas": [
+    {
+     "arquivo": "emag/emag-3.1-recomendacoes-1.1-a-6.8.md",
+     "citacao": "Devem ser utilizados ambos os atributos name e id para que as âncoras funcionem"
+    }
+   ],
+   "tambem": [],
+   "esperado": "name e id nos destinos",
+   "ancora": {
+    "texto": "documento (html)",
+    "seletor": "html"
+   },
+   "medida": {
+    "S0": [
+     {
+      "id": "main-content",
+      "existe": true,
+      "tag": "MAIN",
+      "name": null
+     },
+     {
+      "id": "rodape",
+      "existe": true,
+      "tag": "FOOTER",
+      "name": null
+     }
+    ],
+    "S1": [
+     {
+      "id": "main-content",
+      "existe": true,
+      "tag": "MAIN",
+      "name": null
+     },
+     {
+      "id": "rodape",
+      "existe": true,
+      "tag": "FOOTER",
+      "name": null
+     }
+    ],
+    "S2": [
+     {
+      "id": "main-content",
+      "existe": true,
+      "tag": "MAIN",
+      "name": null
+     },
+     {
+      "id": "rodape",
+      "existe": true,
+      "tag": "FOOTER",
+      "name": null
+     }
+    ]
+   },
+   "porque": "destinos são main e footer com id e sem name; name não é atributo válido nesses elementos (HTML5), a cláusula é de época",
+   "medidaArquivo": "medidas/EI-16.json"
+  },
+  {
+   "id": "EI-17",
+   "instancia": "brd-trilha",
+   "chave": "classes-e-semibold-atual",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/breadcrumb__designer.md",
+     "citacao": "O título do *breadcrumb* deve ser sempre a tela atual em que o usuário se encontra e deve estar em destaque (*semi bold*)."
+    }
+   ],
+   "tambem": [],
+   "esperado": "item atual peso 600",
+   "ancora": {
+    "texto": "nav[aria-label='Trilha de navegação']",
+    "seletor": "nav.br-breadcrumb"
+   },
+   "medida": {
+    "S0": {
+     "peso": "500",
+     "seletor": {
+      "font-weight": {
+       "seletor": ".br-breadcrumb .crumb:last-child span",
+       "valor": "var(--font-weight-medium)",
+       "imp": false,
+       "origem": "regular"
+      }
+     }
+    },
+    "S1": {
+     "peso": "500",
+     "seletor": {
+      "font-weight": {
+       "seletor": ".br-breadcrumb .crumb:last-child span",
+       "valor": "var(--font-weight-medium)",
+       "imp": false,
+       "origem": "regular"
+      }
+     }
+    },
+    "S2": {
+     "peso": "500",
+     "seletor": {
+      "font-weight": {
+       "seletor": ".br-breadcrumb .crumb:last-child span",
+       "valor": "var(--font-weight-medium)",
+       "imp": false,
+       "origem": "regular"
+      }
+     }
+    }
+   },
+   "porque": "peso medido 500 (medium), vindo do CSS do DS (`.br-breadcrumb .crumb:last-child span`), sem sobrescrita da página: DS e documentação divergem",
+   "medidaArquivo": "medidas/EI-17.json"
+  },
+  {
+   "id": "EI-18",
+   "instancia": "brd-trilha",
+   "chave": "nao-substitui-menu",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/breadcrumb__designer.md",
+     "citacao": "não deve substituir o menu principal do *website* ou aplicativo."
+    }
+   ],
+   "tambem": [],
+   "esperado": "menu principal presente além da trilha",
+   "ancora": {
+    "texto": "nav[aria-label='Trilha de navegação']",
+    "seletor": "nav.br-breadcrumb"
+   },
+   "medida": {
+    "S0": "cabeçalho sem menu (header-menu sem gatilho de menu); trilha é a única navegação",
+    "S1": "cabeçalho sem menu (header-menu sem gatilho de menu); trilha é a única navegação",
+    "S2": "cabeçalho sem menu (header-menu sem gatilho de menu); trilha é a única navegação"
+   },
+   "porque": "não há menu principal na página; não dá para saber se o sistema o oferece em outra parte",
+   "medidaArquivo": "medidas/EI-18.json"
+  },
+  {
+   "id": "EI-19",
+   "instancia": "sgn-usuaria",
+   "chave": "classes-obrigatorias-signin",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "classeClausula": "DS",
+   "clausulas": [
+    {
+     "arquivo": "componentes/signin__desenvolvedor.md",
+     "citacao": "| class    | br-button    | Container do componente  |"
+    },
+    {
+     "arquivo": "componentes/signin__desenvolvedor.md",
+     "citacao": "| class    | sign-in      | Estiliza o botão sign-in |"
+    }
+   ],
+   "tambem": [],
+   "esperado": "br-button sign-in",
+   "ancora": {
+    "texto": "link 'Conta de Helena' no cabeçalho",
+    "seletor": "header .br-sign-in"
+   },
+   "medida": {
+    "S0": [
+     "br-sign-in",
+     "conta-usuaria"
+    ],
+    "S1": [
+     "br-sign-in",
+     "conta-usuaria"
+    ],
+    "S2": [
+     "br-sign-in",
+     "conta-usuaria"
+    ]
+   },
+   "porque": "a raiz usa `br-sign-in` (padrão do usuário logado no cabeçalho) e não `br-button sign-in` da aba desenvolvedor do sign-in; as duas formas convivem no DS. Nome acessível 'Conta de Helena', rótulo em uma linha (40 px)",
+   "medidaArquivo": "medidas/EI-19.json"
+  }
+ ]
+}

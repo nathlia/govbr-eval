@@ -1,0 +1,175 @@
+{
+ "_meta": {
+  "entradas": {
+   "remedida/remedida.json": "35194ae1bbaf05426a9ce11858c696cab8ad3c27a38870710ede346fc5a5a98b",
+   "remedida-mapa.json": "c08fb2c465568f4f25e1cd3a8516909f35fe0291feb3d3123c04e344a367ac80"
+  },
+  "medidoEm": "2026-11-15T02:10:54.147Z",
+  "rodadas": 2,
+  "contagens": {
+   "itens": 14,
+   "satisfaz": 11,
+   "viola": 3,
+   "iscasSatisfaz": 10,
+   "iscas": 10,
+   "sorteadasViola": 3,
+   "sorteadas": 4
+  }
+ },
+ "juncao": [
+  {
+   "id": "R-01",
+   "tipo": "isca-controle",
+   "chave": "isca:btn-cancelar:posicao",
+   "instancia": "btn-cancelar",
+   "estado": "S0",
+   "janela": "1280x900",
+   "decisao": "satisfaz",
+   "motivo": "O botão está abaixo do último campo (+40px), na base do formulário (0px), dentro do grupo de ações alinhado à borda direita do formulário (justify-content flex-end; último botão a 0px da borda direita), atendendo \"posicionados preferencialmente abaixo e à direita do formulário\".",
+   "medidaNestaPreparacao": "botão abaixo dos campos, na barra alinhada à direita do formulário (borda direita da barra = borda direita do formulário, 700)"
+  },
+  {
+   "id": "R-02",
+   "tipo": "isca-outro-hospedeiro",
+   "chave": "isca:msg-orientacao:cor-informativo",
+   "instancia": "msg-orientacao",
+   "estado": "S0",
+   "janela": "1280x900",
+   "decisao": "satisfaz",
+   "motivo": "Fundo computado #d4e5ff igual ao token exigido: \"Superfície do Message | background | --blue-warm-vivid-10\".",
+   "medidaNestaPreparacao": "rgb(212, 229, 255)"
+  },
+  {
+   "id": "R-03",
+   "tipo": "sorteada-outra-clausula",
+   "chave": "sel-continente::a2-7348bce34289",
+   "instancia": "sel-continente",
+   "estado": "S2",
+   "janela": "1280x900",
+   "decisao": "viola",
+   "motivo": "Razão de 2.32:1 (texto #aaaaaa sobre #ffffff, 14px) abaixo do mínimo AA de 4,5:1 do DS, não \"garantindo a qualidade de contraste e legibilidade para usuários com baixa visão\".",
+   "medidaNestaPreparacao": null
+  },
+  {
+   "id": "R-04",
+   "tipo": "isca-outro-hospedeiro",
+   "chave": "isca:msg-orientacao:200",
+   "instancia": "msg-orientacao",
+   "estado": "S0",
+   "janela": "640x450",
+   "decisao": "satisfaz",
+   "motivo": "A 640×450 título e texto ficam inteiros (0px fora, sem corte, sobreposição nem rolagem horizontal), \"legível e funcional mesmo quando redimensionada para até 200%\".",
+   "medidaNestaPreparacao": "conteúdo 121/121 px de altura, 460/460 de largura; nada fora"
+  },
+  {
+   "id": "R-05",
+   "tipo": "sorteada-nao-achada",
+   "chave": "rad-situacao::a2-f838b54da560",
+   "instancia": "rad-situacao",
+   "estado": "S0",
+   "janela": "1280x900",
+   "decisao": "viola",
+   "motivo": "A legenda está no topo, mas o texto começa em x=296.09 contra x=62 das opções (text-align center), não \"alinhado à esquerda\".",
+   "medidaNestaPreparacao": null
+  },
+  {
+   "id": "R-06",
+   "tipo": "isca-outro-hospedeiro",
+   "chave": "isca:inp-nome-pais:contraste",
+   "instancia": "inp-nome-pais",
+   "estado": "S0",
+   "janela": "1280x900",
+   "decisao": "satisfaz",
+   "motivo": "Razão 12.63:1 (#333333 sobre #ffffff) ≥ 4,5:1, mínimo que o eMAG recomenda para cores \"suficientemente contrastantes\".",
+   "medidaNestaPreparacao": "rgb(51, 51, 51) sobre branco = 12,63:1"
+  },
+  {
+   "id": "R-07",
+   "tipo": "isca-controle",
+   "chave": "isca:swt-certificado:200",
+   "instancia": "swt-certificado",
+   "estado": "S0",
+   "janela": "640x450",
+   "decisao": "satisfaz",
+   "motivo": "A 640×450 rótulo e texto de estado ficam inteiros (0px fora, sem sobreposição nem rolagem horizontal): \"legível e funcional mesmo quando redimensionada para até 200%\".",
+   "medidaNestaPreparacao": "rótulo 41/41 px de altura, 488/488 de largura; nada fora"
+  },
+  {
+   "id": "R-08",
+   "tipo": "isca-outro-hospedeiro",
+   "chave": "isca:msg-orientacao:posicao",
+   "instancia": "msg-orientacao",
+   "estado": "S0",
+   "janela": "1280x900",
+   "decisao": "satisfaz",
+   "motivo": "Ícone à esquerda do conteúdo (x+76px) e Fechar no canto superior direito (topo +8px, direita −68px): \"ícones ... à esquerda ... Botão Fechar ... no topo e à direita\".",
+   "medidaNestaPreparacao": "ícone em x 76 (esquerda); Fechar em x 1180–1212, y 123 (topo, direita) numa superfície 0–1280"
+  },
+  {
+   "id": "R-09",
+   "tipo": "isca-outro-hospedeiro",
+   "chave": "isca:inp-codigo:200",
+   "instancia": "inp-codigo",
+   "estado": "S0",
+   "janela": "640x450",
+   "decisao": "satisfaz",
+   "motivo": "A 640×450 rótulo e texto de apoio ficam inteiros (0px fora, sem corte, sobreposição nem rolagem horizontal): \"legível e funcional mesmo quando redimensionada para até 200%\".",
+   "medidaNestaPreparacao": "rótulo 41/41 px, 200/200 de largura; apoio dentro da janela; nada fora"
+  },
+  {
+   "id": "R-10",
+   "tipo": "isca-controle",
+   "chave": "isca:swt-certificado:contraste",
+   "instancia": "swt-certificado",
+   "estado": "S0",
+   "janela": "1280x900",
+   "decisao": "satisfaz",
+   "motivo": "Razão 12.63:1 (#333333 sobre #ffffff, 14px/600) ≥ 4.5:1, \"taxa de contraste de pelo menos 4,5:1\" para texto normal.",
+   "medidaNestaPreparacao": "rgb(51, 51, 51) sobre branco = 12,63:1"
+  },
+  {
+   "id": "R-11",
+   "tipo": "sorteada-outra-clausula",
+   "chave": "msg-erro::a2-ef29db5bb4ac",
+   "instancia": "msg-erro",
+   "estado": "S1",
+   "janela": "1280x900",
+   "decisao": "viola",
+   "motivo": "A mensagem tem fundo #2670e8 (--blue-warm-vivid-50) e ícone fa-check, exatamente a \"Especificação para Estado Selecionado\", e \"O estado Selecionado não pode ser aplicado\" em \"Message\".",
+   "medidaNestaPreparacao": null
+  },
+  {
+   "id": "R-12",
+   "tipo": "isca-controle",
+   "chave": "isca:btn-cancelar:contraste",
+   "instancia": "btn-cancelar",
+   "estado": "S0",
+   "janela": "1280x900",
+   "decisao": "satisfaz",
+   "motivo": "Leitura #1351b4 (--blue-warm-vivid-70) sobre superfície #ffffff (--pure-0), razão 7.33:1: cores \"correspondem às recomendadas na diretriz de design, garantindo um contraste adequado\".",
+   "medidaNestaPreparacao": "rgb(19, 81, 180) sobre branco = 7,33:1"
+  },
+  {
+   "id": "R-13",
+   "tipo": "isca-outro-hospedeiro",
+   "chave": "isca:msg-orientacao:estados",
+   "instancia": "msg-orientacao",
+   "estado": "S0",
+   "janela": "1280x900",
+   "decisao": "satisfaz",
+   "motivo": "Fundo #d4e5ff (não --blue-warm-vivid-50) e nenhum ícone fa-check: a mensagem não apresenta o estado Selecionado que \"não pode ser aplicado\" em \"Message\".",
+   "medidaNestaPreparacao": "fundo rgb(212, 229, 255); ícones fa-info-circle e fa-times; nenhum visual de Selecionado"
+  },
+  {
+   "id": "R-14",
+   "tipo": "sorteada-nao-achada",
+   "chave": "lst-paises::a2-5432c282d0d7",
+   "instancia": "lst-paises",
+   "estado": "S0",
+   "janela": "640x450",
+   "decisao": "satisfaz",
+   "motivo": "A 640×450 a tinta do texto de cada item fica inteira (0px de glifo cortado, nenhum pixel de texto sobre o divisor, folga mínima 2px; só a caixa de linha passa 1.59375px da altura fixa do item) e não há rolagem horizontal: \"legível e funcional mesmo quando redimensionada para até 200%\".",
+   "medidaNestaPreparacao": null
+  }
+ ]
+}

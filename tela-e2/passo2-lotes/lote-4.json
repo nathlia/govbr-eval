@@ -1,0 +1,2594 @@
+{
+ "a2-7e932f26c8a3": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Mídias com base em tempo: a página não tem vídeo nem áudio."
+ },
+ "a2-ee7f397d0769": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há limite de tempo nem conteúdo que some sozinho; criar um (mensagem que se fecha em segundos) tiraria a msg-orientacao/msg-erro do estado declarado S0/S1."
+ },
+ "a2-671056d628cb": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 1.1: camadas separadas, apresentação em CSS e não em atributos/elementos de apresentação no HTML. Medida: elementos font e atributos align/color/bgcolor na marcação da instância.",
+  "instancias": [
+   "msg-orientacao",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "apresentacao-no-html",
+    "descricao": "O texto da instância passa a ser envolvido por <font color=\"#333333\"> e o parágrafo ganha align=\"left\" (mesmo visual, apresentação declarada na marcação).",
+    "clausula": "As camadas lógicas deverão ser separadas, de acordo com o objetivo para o qual elas foram desenvolvidas.",
+    "efeitos": {
+     "porHospedeiro": {
+      "msg-orientacao": {
+       "toca": [
+        "$:texto"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font/align no texto da mensagem; visual igual"
+      },
+      "lst-paises": {
+       "toca": [
+        "$:itens"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "font/align no texto dos itens; visual igual"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "estrutura"
+  ],
+  "razaoCategorias": "e-MAG; o observável é a marcação de apresentação no HTML."
+ },
+ "a2-d45711a55b6c": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 1.2: cada elemento HTML usado para o fim para que foi criado; listas marcadas como listas. Medida: tagName/role do controle e dos itens.",
+  "instancias": [
+   "btn-limpar",
+   "msg-orientacao",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "botao-como-div",
+    "instancias": [
+     "btn-limpar"
+    ],
+    "descricao": "O botão 'Limpar campos' vira div role=button tabindex=0 com tratamento de Enter/Espaço (teclado e nome intactos).",
+    "clausula": "Cada elemento HTML deve ser utilizado para o fim que ele foi criado.",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "button trocado por div com papel e teclado emulados"
+    }
+   },
+   {
+    "id": "fechar-como-div",
+    "instancias": [
+     "msg-orientacao"
+    ],
+    "descricao": "O botão Fechar da mensagem vira div role=button tabindex=0 com Enter/Espaço (teclado e nome intactos).",
+    "clausula": "Cada elemento HTML deve ser utilizado para o fim que ele foi criado.",
+    "efeitos": {
+     "toca": [
+      "$:fechar",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "button Fechar trocado por div com papel e teclado emulados"
+    }
+   },
+   {
+    "id": "itens-como-paragrafos",
+    "instancias": [
+     "lst-paises"
+    ],
+    "descricao": "Os 4 itens da lista viram parágrafos soltos, sem papel de lista nem de item (mesmo visual).",
+    "clausula": "marcação semântica adequada deve ser utilizada para designar os cabeçalhos (h1, h2, h3), as listas (ul, ol, dl)",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "lista perde a semântica de lista/item"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "estrutura"
+  ],
+  "razaoCategorias": "e-MAG; o observável é o elemento/papel semântico."
+ },
+ "a2-372068e40fd2": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 1.3: níveis de cabeçalho em hierarquia, sem saltos. Medida: sequência h1–h6 do documento depois da mutação.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro",
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "titulo-salta-nivel",
+    "descricao": "O título da instância é marcado como h5 (msg-orientacao logo depois do h1; msg-erro e o título da lista logo depois de um h2), pulando níveis.",
+    "clausula": "Os níveis de cabeçalho (elementos HTML H1 a H6) devem ser utilizados de forma hierárquica",
+    "efeitos": {
+     "toca": [
+      "$:titulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "título da instância vira h5 e quebra a sequência de níveis"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "axe",
+   "medicao"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "estrutura"
+  ],
+  "razaoCategorias": "e-MAG; o observável é o nível do cabeçalho."
+ },
+ "a2-bde476da44c9": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 1.4: sequência lógica de tabulação dada pela ordem do código; tabindex só com a semântica correta. Medida: ordem de Tab a partir do topo.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda"
+  ],
+  "variantes": [
+   {
+    "id": "tabindex-positivo",
+    "descricao": "O botão recebe tabindex=1: vira a primeira parada de Tab da página, antes do skiplink e do cabeçalho.",
+    "clausula": "Deve-se criar o código HTML com uma sequência lógica de leitura para percorrer links, controles de formulários e objetos.",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "tabindex positivo tira o botão da ordem lógica de foco"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "navegacao"
+  ],
+  "razaoCategorias": "e-MAG; o observável é a ordem de navegação por teclado."
+ },
+ "a2-9fd770b979ce": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "A âncora para o bloco de conteúdo é o skiplink, que é andaime."
+ },
+ "a2-9bc102ab300b": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 1.6: tabela só para dados tabulares, nunca para dispor elementos. Medida: table usada para diagramar a instância.",
+  "instancias": [
+   "msg-orientacao",
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "tabela-de-diagramacao",
+    "descricao": "A instância passa a ser disposta com uma table de uma linha (msg-orientacao: ícone numa célula, texto em outra; rad-situacao: cada opção numa célula), sem cabeçalhos.",
+    "clausula": "As tabelas devem ser utilizadas apenas para dados tabulares e não para efeitos de disposição dos elementos na página.",
+    "efeitos": {
+     "porHospedeiro": {
+      "msg-orientacao": {
+       "toca": [
+        "$:raiz",
+        "$:icone",
+        "$:texto"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "ícone e texto da mensagem dentro de células de tabela"
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:grupo",
+        "$:inputs",
+        "$:rotulos"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "opções do grupo dispostas em células de tabela"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "estrutura"
+  ],
+  "razaoCategorias": "e-MAG; o observável é a marcação de tabela."
+ },
+ "a2-a63512415ce6": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "Links adjacentes só existem no breadcrumb e no rodapé, que são andaime."
+ },
+ "a2-22573246d936": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "A divisão em áreas e seções (topo, conteúdo, rodapé, seção da lista) é do documento, que é andaime; nenhuma instância sorteável é uma área."
+ },
+ "a2-7927b81f6dba": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 1.9: não usar mudanças no controle do foco do teclado não solicitadas. Medida: digitar no campo e ver onde fica o foco.",
+  "instancias": [
+   "inp-codigo"
+  ],
+  "variantes": [
+   {
+    "id": "foco-salta-sozinho",
+    "descricao": "Ao digitar a 3ª letra em 'Código do país', o foco é levado sozinho para o select de continente, sem pedido da pessoa.",
+    "clausula": "Mudanças no controle do foco do teclado",
+    "efeitos": {
+     "toca": [
+      "$:campo",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "script move o foco ao completar 3 letras"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "comportamento"
+  ],
+  "razaoCategorias": "e-MAG; o observável é o foco movido sem pedido."
+ },
+ "a2-acc4801af71c": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 2.1: funções feitas em script programadas para o teclado. Medida: alcançar por Tab e acionar por Enter/Espaço.",
+  "instancias": [
+   "btn-limpar",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "acao-so-mouse",
+    "instancias": [
+     "btn-limpar",
+     "msg-orientacao"
+    ],
+    "descricao": "A ação do botão (limpar os campos; fechar a mensagem) fica ligada só a mousedown: com foco, Enter e Espaço não fazem nada.",
+    "clausula": "Todas as funções da página desenvolvidas utilizando-se linguagens de script (javascript) devem ser programadas, primeiramente, para o uso com teclado.",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz",
+        "pagina:scripts"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "ação só por mousedown"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar",
+        "pagina:scripts"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "Fechar só por mousedown"
+      }
+     }
+    }
+   },
+   {
+    "id": "lista-so-mouse",
+    "instancias": [
+     "sel-continente"
+    ],
+    "descricao": "A lista de opções abre e as opções são escolhidas só com o mouse: Enter/Espaço no gatilho e setas na lista não fazem nada.",
+    "clausula": "Todas as funções da página desenvolvidas utilizando-se linguagens de script (javascript) devem ser programadas, primeiramente, para o uso com teclado.",
+    "efeitos": {
+     "toca": [
+      "$:gatilho",
+      "$:itens",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "abrir e escolher só por mouse; S2 continua alcançável por clique"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "comportamento"
+  ],
+  "razaoCategorias": "e-MAG; o observável é a operação por teclado."
+ },
+ "a2-028b81485587": {
+  "aceita": false,
+  "motivo": "duplicada:a2-acc4801af71c",
+  "justificativa": "O que se pode violar aqui (execução de script via teclado) é o mesmo predicado e observável do e-MAG 2.1; não há objeto embutido nem link javascript:."
+ },
+ "a2-22240b8959ba": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "Atualização automática da página é do documento (meta refresh no head), que é andaime."
+ },
+ "a2-31b4a3f89649": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "Redirecionamento automático é do documento (meta refresh no head), que é andaime."
+ },
+ "a2-491250eb915c": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "A página não tem limite de tempo para a tarefa."
+ },
+ "a2-04a4c3ea1b70": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 2.6: proibido efeito visual piscante. Medida: animação CSS de opacidade/visibilidade com frequência acima de 1 Hz no ícone.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro",
+   "btn-ajuda"
+  ],
+  "variantes": [
+   {
+    "id": "icone-piscante",
+    "descricao": "O ícone da instância pisca 3 vezes por segundo (animação CSS infinita de opacidade 1→0).",
+    "clausula": "Não devem ser utilizados efeitos visuais piscantes, intermitentes ou cintilantes.",
+    "efeitos": {
+     "toca": [
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "animação de piscar no ícone"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "comportamento"
+  ],
+  "razaoCategorias": "e-MAG; o observável é a animação piscante."
+ },
+ "a2-0aafa5e96c13": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 2.7: animação não pode disparar sozinha sem controle; a pessoa tem de poder parar. Medida: animação CSS infinita iniciada na carga e ausência de controle de parada.",
+  "instancias": [
+   "msg-orientacao",
+   "btn-ajuda"
+  ],
+  "variantes": [
+   {
+    "id": "icone-girando",
+    "descricao": "O ícone da instância gira sem parar desde a carga (rotação CSS infinita, 1 volta a cada 2 s, sem piscar), sem nenhum controle para parar.",
+    "clausula": "animações não devem ser disparadas automaticamente sem o controle do usuário",
+    "efeitos": {
+     "toca": [
+      "$:icone"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "rotação contínua do ícone, sem controle"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "comportamento"
+  ],
+  "razaoCategorias": "e-MAG; o observável é animação automática sem controle."
+ },
+ "a2-1ea2f43d76db": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "O idioma principal é o lang do html, do documento (andaime)."
+ },
+ "a2-bf351d1b1f1e": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há trecho em outro idioma; os nomes de países são nomes próprios, exceção do próprio texto."
+ },
+ "a2-855a016067f1": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "O title é do documento (andaime)."
+ },
+ "a2-d45d5ac36194": {
+  "aceita": false,
+  "motivo": "so-andaime",
+  "justificativa": "A localização é dada pelo breadcrumb, que é andaime."
+ },
+ "a2-7ea9cf524b85": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhuma instância sorteável tem link."
+ },
+ "a2-679351f2635c": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há imagem nas instâncias sorteáveis (ícones são fonte dentro de botões/mensagens)."
+ },
+ "a2-609b6c6f57db": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há mapa de imagem."
+ },
+ "a2-3bee0f43eaa3": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há documento para baixar."
+ },
+ "a2-83ec838a289a": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há tabela na página."
+ },
+ "a2-959ca4537add": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há tabela na página."
+ },
+ "a2-18acbf7b4c9c": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 3.12: sigla com explicação ou forma completa ao menos na primeira ocorrência (R-ED b: sigla sem expansão em lugar nenhum). Medida: texto visível e abbr/title da página.",
+  "instancias": [
+   "inp-codigo",
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "sigla-sem-explicacao",
+    "instancias": [
+     "swt-certificado"
+    ],
+    "descricao": "O rótulo do switch vira 'Emitir CSI para este país', sem forma completa de CSI em lugar nenhum da página.",
+    "clausula": "Ao menos na primeira ocorrência de siglas, abreviaturas ou palavras incomuns (ambíguas, desconhecidas ou utilizadas de forma muito específica), deve ser disponibilizada sua explicação ou forma completa.",
+    "efeitos": {
+     "toca": [
+      "$:rotulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "rótulo troca a expressão por sigla não explicada"
+    }
+   },
+   {
+    "id": "sigla-no-apoio",
+    "instancias": [
+     "inp-codigo"
+    ],
+    "descricao": "O texto de apoio vira 'Use o código de 3 letras do SISCOMEX', sem forma completa de SISCOMEX em lugar nenhum da página.",
+    "clausula": "Ao menos na primeira ocorrência de siglas, abreviaturas ou palavras incomuns (ambíguas, desconhecidas ou utilizadas de forma muito específica), deve ser disponibilizada sua explicação ou forma completa.",
+    "efeitos": {
+     "toca": [
+      "$:apoio"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "texto de apoio cita sigla não explicada"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "formulario"
+  ],
+  "razaoCategorias": "e-MAG; o observável é rótulo/instrução de campo com sigla."
+ },
+ "a2-66fbdcf13772": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 4.1: contraste mínimo de 4,5:1 entre primeiro plano e fundo. Medida: razão de contraste do texto da instância.",
+  "instancias": [
+   "lst-paises",
+   "inp-codigo",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "texto-baixo-contraste",
+    "descricao": "O texto da instância (situação dos itens da lista; texto de apoio do código; texto da mensagem) fica #C8C8C8 sobre o fundo claro (≈1,7:1).",
+    "clausula": "é recomendada aqui uma maior relação de contraste, de, no mínimo, 4,5:1",
+    "efeitos": {
+     "porHospedeiro": {
+      "lst-paises": {
+       "toca": [
+        "$:itens"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do texto dos itens"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:apoio"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do texto de apoio"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:texto"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do texto da mensagem"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "axe",
+   "medicao"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "token"
+  ],
+  "razaoCategorias": "e-MAG; o observável é contraste de cor de texto."
+ },
+ "a2-e5b4728ca51e": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 4.2: cor não pode ser o único meio de transmitir informação. Medida: a situação de cada país existe em texto ou só como cor?",
+  "instancias": [
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "situacao-so-pela-cor",
+    "descricao": "Nos itens da lista, o texto da situação (Habilitado, Suspenso, Em análise) é trocado por um ponto colorido (verde, vermelho, amarelo), sem texto nem nome acessível.",
+    "clausula": "A cor ou outras características sensoriais, como forma, tamanho, localização visual, orientação ou som não devem ser utilizadas como o único meio para transmitir informações",
+    "efeitos": {
+     "toca": [
+      "$:itens"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "situação vira só cor"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "leitura-da-regra",
+   "medicao"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "estrutura"
+  ],
+  "razaoCategorias": "e-MAG; o observável é a informação dada só por cor."
+ },
+ "a2-5432c282d0d7": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 4.3: legível e funcional com texto a 200%, sem sobreposição. Medida: texto a 200% e overflow/corte da instância.",
+  "instancias": [
+   "lst-paises",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "altura-fixa-corta",
+    "descricao": "A instância (cada item da lista; a mensagem) ganha altura fixa em px e overflow hidden: com o texto a 200% parte do texto é cortada.",
+    "clausula": "A página deve continuar legível e funcional mesmo quando redimensionada para até 200%.",
+    "efeitos": {
+     "porHospedeiro": {
+      "lst-paises": {
+       "toca": [
+        "$:itens"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "altura fixa e overflow hidden nos itens"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "altura fixa e overflow hidden na mensagem"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "interacao"
+  ],
+  "categorias": [
+   "acessibilidade"
+  ],
+  "razaoCategorias": "e-MAG; o observável é perda de conteúdo ao ampliar."
+ },
+ "a2-a6e2601837a7": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 4.4: a área com foco de teclado claramente marcada; a borda pode mudar, não ser removida. Medida: estilo em :focus-visible ao chegar por Tab.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "foco-invisivel",
+    "descricao": "O indicador de foco do controle é suprimido (outline none, sem box-shadow nem borda de foco).",
+    "clausula": "Essa borda pode ser modificada via CSS para melhorar o destaque, mas não deverá ser removida.",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "indicador de foco removido"
+      },
+      "btn-ajuda": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "indicador de foco removido"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "indicador de foco removido"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "indicador de foco removido"
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:inputs"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "indicador de foco removido"
+      },
+      "swt-certificado": {
+       "toca": [
+        "$:input",
+        "$:chave"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "indicador de foco removido"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "indicador de foco removido"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "acessibilidade"
+  ],
+  "razaoCategorias": "e-MAG; o observável é foco visível."
+ },
+ "a2-64026bdcfe0c": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há vídeo na página."
+ },
+ "a2-df1cecbc168c": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há áudio na página."
+ },
+ "a2-cded2c18c877": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há vídeo pré-gravado na página."
+ },
+ "a2-2bf9894c4932": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há som na página."
+ },
+ "a2-5bf689d977cb": {
+  "aceita": false,
+  "motivo": "duplicada:a2-0aafa5e96c13",
+  "justificativa": "Mesmo predicado (animação automática tem de poder ser parada), condição e observável do e-MAG 2.7, que vem antes no texto."
+ },
+ "a2-ad2cec640577": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há botão de imagem (input type=image) nem botão substituído por imagem via CSS."
+ },
+ "a2-f4237d13520b": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 6.2: label associado ao campo por for/id. Medida: for do label = id do campo; nome acessível do campo.",
+  "instancias": [
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "rotulo-desassociado",
+    "descricao": "O rótulo visível continua lá, mas sem for/id (nem aria-labelledby): não está associado ao campo (no radio, os rótulos das 3 opções).",
+    "clausula": "As etiquetas de texto (elemento LABEL) devem estar associadas aos seus campos (elementos INPUT, SELECT e TEXTAREA, à exceção do elemento BUTTON) correspondentes no formulário",
+    "efeitos": {
+     "porHospedeiro": {
+      "inp-nome-pais": {
+       "toca": [
+        "$:rotulo",
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "label sem for"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:rotulo",
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "label sem for"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:rotulo",
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "label sem for"
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:rotulos",
+        "$:inputs"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "labels das opções sem for"
+      },
+      "swt-certificado": {
+       "toca": [
+        "$:rotulo",
+        "$:input"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "label sem for"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "axe",
+   "medicao"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "formulario"
+  ],
+  "razaoCategorias": "e-MAG; o observável é rótulo de campo."
+ },
+ "a2-0f20577609d3": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 6.3: ordem do código do formulário = ordem lógica de navegação; tabindex só com real necessidade. Medida: ordem de Tab no formulário.",
+  "instancias": [
+   "inp-codigo",
+   "rad-situacao",
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "ordem-codigo-trocada",
+    "instancias": [
+     "inp-codigo"
+    ],
+    "descricao": "O campo 'Código do país' vem antes de 'Nome do país' no código e é reposto depois por CSS (order): o Tab passa pelo código primeiro.",
+    "clausula": "os formulários devem primeiro ser codificados considerando a ordem lógica de navegação para depois serem organizados visualmente via CSS.",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "pagina:formulario"
+     ],
+     "remove": [],
+     "cascata": [
+      "inp-nome-pais"
+     ],
+     "estado": null,
+     "nota": "ordem no DOM trocada, visual reposto por CSS"
+    }
+   },
+   {
+    "id": "tabindex-no-formulario",
+    "instancias": [
+     "rad-situacao",
+     "swt-certificado"
+    ],
+    "descricao": "O controle recebe tabindex=1 e sai da ordem do formulário (é a primeira parada de Tab).",
+    "clausula": "Os elementos do formulário devem ser distribuídos corretamente através do código HTML, criando, assim, uma sequência lógica de navegação.",
+    "efeitos": {
+     "porHospedeiro": {
+      "rad-situacao": {
+       "toca": [
+        "$:inputs"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "tabindex positivo nos radios"
+      },
+      "swt-certificado": {
+       "toca": [
+        "$:input"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "tabindex positivo no switch"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "navegacao",
+   "formulario"
+  ],
+  "razaoCategorias": "e-MAG; o observável é a ordem de navegação do formulário."
+ },
+ "a2-2bc503ea01f1": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 6.4: mudança no contexto só por acionamento de botão, não pela interação com o campo. Medida: escolher uma opção e ver se o formulário é enviado.",
+  "instancias": [
+   "sel-continente",
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "escolha-envia",
+    "descricao": "Escolher uma opção (continente na lista; situação no radio) envia o formulário sozinho, como se 'Salvar país' fosse acionado.",
+    "clausula": "Assim, as mudanças devem ocorrer através do acionamento de um botão.",
+    "efeitos": {
+     "porHospedeiro": {
+      "sel-continente": {
+       "toca": [
+        "$:itens",
+        "pagina:scripts",
+        "pagina:formulario"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "seleção dispara o envio"
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:inputs",
+        "pagina:scripts",
+        "pagina:formulario"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "marcar opção dispara o envio"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "comportamento",
+   "formulario"
+  ],
+  "razaoCategorias": "e-MAG; o observável é envio do formulário sem botão."
+ },
+ "a2-cd5cbf0f18dc": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 6.5: instruções de preenchimento junto do rótulo quando necessárias; sem texto pré-definido no campo fora das exceções. Medida: texto de apoio/aria-describedby e value inicial do campo.",
+  "instancias": [
+   "inp-codigo"
+  ],
+  "variantes": [
+   {
+    "id": "sem-instrucao-formato",
+    "descricao": "O texto de apoio sobre o formato (3 letras) é removido; a restrição de 3 letras continua no campo.",
+    "clausula": "devem ser fornecidas quando necessário, instruções de preenchimento juntamente com as etiquetas (elemento LABEL)",
+    "efeitos": {
+     "toca": [
+      "$:apoio",
+      "$:campo"
+     ],
+     "remove": [
+      "$:apoio"
+     ],
+     "cascata": [],
+     "estado": null,
+     "nota": "apoio e aria-describedby saem"
+    }
+   },
+   {
+    "id": "valor-predefinido",
+    "descricao": "O campo já vem com value 'XXX' (texto pré-definido que a pessoa precisa apagar), sem nenhuma das exceções do texto.",
+    "clausula": "A utilização de caracteres pré-definidos em áreas de entrada de texto só deve ocorrer se:",
+    "efeitos": {
+     "toca": [
+      "$:campo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "value inicial pré-definido; campo opcional, S1 inalterado"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "formulario"
+  ],
+  "razaoCategorias": "e-MAG; o observável é instrução/conteúdo de campo."
+ },
+ "a2-d720ea8520cb": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 6.6: o item com erro identificado e descrito por texto. Medida: em S1, texto de erro associado a cada campo obrigatório.",
+  "instancias": [
+   "inp-nome-pais",
+   "sel-continente",
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "erro-so-borda",
+    "descricao": "Em S1 o campo obrigatório vazio fica só com a cor/borda de erro, sem a mensagem de texto do campo.",
+    "clausula": "o item que apresenta erro deve ser identificado e descrito ao usuário por texto",
+    "efeitos": {
+     "porHospedeiro": {
+      "inp-nome-pais": {
+       "toca": [
+        "$:mensagem",
+        "$:campo"
+       ],
+       "remove": [
+        "$:mensagem"
+       ],
+       "cascata": [],
+       "estado": null,
+       "nota": "mensagem de erro do campo não é exibida"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:mensagem",
+        "$:campo"
+       ],
+       "remove": [
+        "$:mensagem"
+       ],
+       "cascata": [],
+       "estado": null,
+       "nota": "mensagem de erro do campo não é exibida"
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:mensagem",
+        "$:grupo"
+       ],
+       "remove": [
+        "$:mensagem"
+       ],
+       "cascata": [],
+       "estado": null,
+       "nota": "mensagem de erro do grupo não é exibida"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "formulario"
+  ],
+  "razaoCategorias": "e-MAG; o observável é mensagem de erro de campo."
+ },
+ "a2-18bccce4132a": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "e-MAG 6.7: agrupamento com fieldset associado a uma LEGEND que explica o grupo. Medida: fieldset com legend / nome acessível do grupo.",
+  "instancias": [
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "grupo-sem-legend",
+    "descricao": "O fieldset das opções de situação fica sem legend; o texto 'Situação do cadastro' vira um p antes dele.",
+    "clausula": "O agrupamento deverá ser feito de maneira lógica, associando o elemento LEGEND explicando claramente o propósito ou natureza dos agrupamentos.",
+    "efeitos": {
+     "toca": [
+      "$:grupo",
+      "$:legenda"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "legend vira parágrafo; grupo sem nome"
+    }
+   }
+  ],
+  "tipo": "estrutura-classe",
+  "caminhoDeteccao": [
+   "axe",
+   "medicao"
+  ],
+  "categorias": [
+   "acessibilidade",
+   "formulario",
+   "estrutura"
+  ],
+  "razaoCategorias": "e-MAG; o observável é o rótulo do grupo de campos."
+ },
+ "a2-0ed6c88e06e2": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há CAPTCHA."
+ },
+ "a2-0383076211e0": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Texto grande com contraste de ao menos 3:1. Medida: tamanho/peso do título da lista (texto grande) e sua razão de contraste.",
+  "instancias": [
+   "lst-paises"
+  ],
+  "variantes": [
+   {
+    "id": "titulo-grande-baixo-contraste",
+    "descricao": "O título da lista (texto grande) fica #BDBDBD sobre branco (≈1,9:1), mantendo tamanho e peso.",
+    "clausula": "Para texto grande a taxa de contraste mínimo deve ser de pelo menos 3:1.",
+    "efeitos": {
+     "toca": [
+      "$:titulo"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "cor do título da lista"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "axe",
+   "medicao"
+  ],
+  "categorias": [
+   "token",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Cor (token) cujo observável é contraste."
+ },
+ "a2-3fb37eb25f3c": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Só cores pré-definidas da paleta. Medida: cor computada fora do conjunto de tokens de cor.",
+  "instancias": [
+   "lst-paises",
+   "msg-orientacao",
+   "inp-codigo"
+  ],
+  "variantes": [
+   {
+    "id": "cor-fora-da-paleta",
+    "descricao": "A cor do texto da instância (itens da lista; texto da mensagem; texto de apoio) vira #334333 (canal verde +16 sobre #333333), cor que não está na paleta.",
+    "clausula": "Interfaces digitais do governo devem utilizar sempre as cores pré-definidas.",
+    "efeitos": {
+     "porHospedeiro": {
+      "lst-paises": {
+       "toca": [
+        "$:itens"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor fora da paleta no texto dos itens"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:texto"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor fora da paleta no texto"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:apoio"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor fora da paleta no apoio"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Valor de cor fora dos tokens."
+ },
+ "a2-cc3d7bd5342f": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Superfície tem de contrastar com texto, elementos interativos e ícones (R-ED b: superfície escura sob texto escuro). Medida: contraste entre o fundo da instância e o texto/ícone sobre ela.",
+  "instancias": [
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "variantes": [
+   {
+    "id": "superficie-sem-contraste",
+    "descricao": "A superfície da mensagem fica #155BCB (orientação) ou #E52207 (erro), mantendo texto e ícone escuros: contraste abaixo de 3:1.",
+    "clausula": "Também devem proporcionar contraste com o texto e elementos interativos, assim como qualquer outro elemento de comunicação visual na interface, como imagens, ilustrações, ícones, etc.",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "cor de fundo da mensagem"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "axe",
+   "medicao"
+  ],
+  "categorias": [
+   "token",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Cor de superfície (token) cujo observável é contraste."
+ },
+ "a2-b015ac9d3146": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Superfície em fundo claro: #FFFFFF (principal) ou #F8F8F8 (alternativa). Medida: background-color computado da superfície.",
+  "instancias": [
+   "lst-paises",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "superficie-fora-do-container",
+    "descricao": "A superfície da instância (a lista de países; a lista de opções aberta em S2) fica #F0F0F0 (--gray-5, cor da paleta) em vez de #FFFFFF/#F8F8F8.",
+    "clausula": "P · Cor Principal · #ffffff · --pure-0 || A · Cor Alternativa · #f8f8f8 · --gray-2",
+    "efeitos": {
+     "porHospedeiro": {
+      "lst-paises": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "fundo da lista"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:lista"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "fundo da lista de opções"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Valor de token de cor de superfície."
+ },
+ "a2-5523de63f60f": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Superfícies de fundo escuro; a página só tem fundo claro."
+ },
+ "a2-67d855f2c6d2": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Leitura em fundo claro: #333333 (--gray-80). Medida: color computada do texto corrido.",
+  "instancias": [
+   "lst-paises",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "leitura-cinza-fora",
+    "descricao": "O texto corrido da instância fica #636363 (--gray-60, cor da paleta, contraste ainda acima de 4,5:1) em vez de #333333.",
+    "clausula": "P · Cor Principal · #333333 · --gray-80",
+    "efeitos": {
+     "porHospedeiro": {
+      "lst-paises": {
+       "toca": [
+        "$:itens"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do texto dos itens"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:texto"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do texto da mensagem"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Valor de token de cor de leitura."
+ },
+ "a2-ddbcae55f98a": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Leitura sobre fundo escuro; a página só tem fundo claro."
+ },
+ "a2-15a1e5d58ef7": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Cor de interação tem de se destacar do texto (R-ED b: interativo com a mesma cor do texto corrido). Medida: cor do texto/ícone do controle contra a cor do texto corrido.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda"
+  ],
+  "variantes": [
+   {
+    "id": "interativo-cor-de-texto",
+    "descricao": "O texto e a borda do 'Limpar campos' (ou o ícone do botão de ajuda) usam #333333, a mesma cor do texto corrido, sem a cor de interação.",
+    "clausula": "É necessário que estas cores se destaquem sobre os outros elementos ou informações textuais na interface.",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz",
+        "$:texto"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor de texto e borda do botão"
+      },
+      "btn-ajuda": {
+       "toca": [
+        "$:icone"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do ícone"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao",
+   "leitura-da-regra"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Cor de interação (token)."
+ },
+ "a2-318690c44e2b": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Cor de interação sobre fundo escuro; a página só tem fundo claro."
+ },
+ "a2-f0e069600ad6": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Feedback de informação: #155BCB (principal) e #D4E5FF (alternativa). Medida: cores computadas da mensagem informativa.",
+  "instancias": [
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "informacao-fundo-fora",
+    "descricao": "A superfície da mensagem informativa fica #C5D4EB (--blue-warm-20, outra família) em vez de #D4E5FF.",
+    "clausula": "A · Cor Alternativa · #D4E5FF · --blue-warm-vivid-10",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "fundo da mensagem informativa"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Valor de token de cor de feedback."
+ },
+ "a2-6a791128da6a": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há feedback de alerta na página (só mensagem informativa e de erro)."
+ },
+ "a2-19a22fa26e63": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Feedback de erro: #E52207 (principal) e #FDE0DB (alternativa). Medida: cores computadas da mensagem de erro e do erro de campo em S1.",
+  "instancias": [
+   "msg-erro",
+   "inp-nome-pais",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "erro-fundo-fora",
+    "instancias": [
+     "msg-erro"
+    ],
+    "descricao": "A superfície da mensagem de erro fica #F8E1DE (--red-10, família Red) em vez de #FDE0DB.",
+    "clausula": "A · Cor Alternativa · #FDE0DB · --red-vivid-10",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "fundo da mensagem de erro"
+    }
+   },
+   {
+    "id": "erro-campo-cor-fora",
+    "instancias": [
+     "inp-nome-pais",
+     "sel-continente"
+    ],
+    "descricao": "Em S1 a borda e o texto de erro do campo usam #B51D09 (--red-vivid-60) em vez de #E52207.",
+    "clausula": "P · Cor Principal · #E52207 · --red-vivid-50",
+    "efeitos": {
+     "toca": [
+      "$:campo",
+      "$:mensagem"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "cor de erro do campo e da mensagem"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token",
+   "formulario"
+  ],
+  "razaoCategorias": "Token de cor de feedback; uma variante muda a cor da mensagem de erro de campo."
+ },
+ "a2-2c134632f410": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Ícones e bordas de componentes seguem a regra de texto grande (3:1). Medida: contraste da borda/ícone contra o fundo adjacente.",
+  "instancias": [
+   "inp-codigo",
+   "sel-continente",
+   "btn-ajuda"
+  ],
+  "variantes": [
+   {
+    "id": "grafico-apagado",
+    "descricao": "A borda do campo (input; select) ou o ícone do botão de ajuda fica #DCDCDC sobre branco (≈1,4:1).",
+    "clausula": "Elementos gráficos e componentes da interface (como ícones e bordas) seguem as mesmas regras de texto grande.",
+    "efeitos": {
+     "porHospedeiro": {
+      "inp-codigo": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor da borda do campo"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor da borda do campo"
+      },
+      "btn-ajuda": {
+       "toca": [
+        "$:icone"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do ícone"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Cor (token) cujo observável é contraste não textual."
+ },
+ "a2-f3b56ffec8fc": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Pede revisar o estado conforme o fundo; todas as instâncias estão sobre fundo claro e a especificação padrão vale."
+ },
+ "a2-adbb58a0d3a7": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Ajuste da opacidade do overlay conforme a cor do elemento; só há superfícies claras (o valor por fundo é cobrado pelas tabelas de hover/pressionado)."
+ },
+ "a2-8a9659f79e70": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Não há ação interativa que leve para fora do domínio nas instâncias sorteáveis."
+ },
+ "a2-36dcfef2c39b": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Estado interativo em fundo claro: cor --blue-warm-vivid-70. Medida: color computada do texto/ícone interativo.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "interacao-tom-vizinho",
+    "descricao": "O texto do 'Limpar campos' (ou o ícone do botão de ajuda, ou o ícone do Fechar) usa #155BCB (--blue-warm-vivid-60) em vez de #1351B4; continua azul e com contraste.",
+    "clausula": "background/foreground (Sobre um fundo Claro) · color · --blue-warm-vivid-70",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz",
+        "$:texto"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor de interação do botão"
+      },
+      "btn-ajuda": {
+       "toca": [
+        "$:icone"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do ícone"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do ícone Fechar"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Valor de token de cor de interação."
+ },
+ "a2-73dfd62f0816": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhuma instância sorteável está desabilitada; criar o estado desabilitado mudaria a função do controle além da violação."
+ },
+ "a2-5da1dcbf7d0a": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhuma instância sorteável está desabilitada; criar o estado desabilitado mudaria a função do controle além da violação."
+ },
+ "a2-728b1f066902": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhuma instância sorteável está desabilitada; criar o estado desabilitado mudaria a função do controle além da violação."
+ },
+ "a2-2e6f1c681ecd": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Um só elemento com hover por vez. Medida: passar o ponteiro sobre o elemento, sair para outro e comparar os overlays.",
+  "instancias": [
+   "btn-limpar",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "hover-preso",
+    "descricao": "Depois que o ponteiro sai do 'Limpar campos' (ou de um item da lista do select em S2), o overlay de hover fica nele; com o ponteiro em outro elemento, dois mostram hover.",
+    "clausula": "Só pode existir um elemento com hover por vez na tela.",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz",
+        "pagina:scripts"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "classe de hover não é retirada"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:itens",
+        "pagina:scripts"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "classe de hover não é retirada dos itens"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Comportamento de estado."
+ },
+ "a2-d0179dc6bd81": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhuma instância sorteável está desabilitada; criar o estado desabilitado mudaria a função do controle além da violação."
+ },
+ "a2-ec1111e4b2a1": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Feedback visual de hover no próprio objeto. Medida: estilo computado com o ponteiro sobre o elemento.",
+  "instancias": [
+   "btn-limpar",
+   "sel-continente",
+   "msg-orientacao"
+  ],
+  "variantes": [
+   {
+    "id": "hover-sem-feedback",
+    "descricao": "O elemento não muda com hover (o 'Limpar campos'; os itens da lista do select em S2; o Fechar da mensagem).",
+    "clausula": "O feedback visual deve ser feito no objeto que está em hover.",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "sem overlay de hover"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:itens"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "sem overlay de hover nos itens"
+      },
+      "msg-orientacao": {
+       "toca": [
+        "$:fechar"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "sem overlay de hover no Fechar"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Comportamento de estado."
+ },
+ "a2-cdd2382da97b": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Hover herda os outros estados (overlay, não substituição). Medida: com o estado aplicado (foco por Tab; switch ligado), passar o ponteiro e ver se o estado continua visível.",
+  "instancias": [
+   "btn-limpar",
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "hover-apaga-foco",
+    "instancias": [
+     "btn-limpar"
+    ],
+    "descricao": "Com o 'Limpar campos' focado por Tab, o hover substitui o estilo: o contorno de foco some enquanto o ponteiro está sobre ele.",
+    "clausula": "É importante a possibilidade de herança com outros estados mesmo com hover.",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "hover anula o estilo de foco"
+    }
+   },
+   {
+    "id": "hover-apaga-ligado",
+    "instancias": [
+     "swt-certificado"
+    ],
+    "descricao": "Com o switch ligado, o hover mostra o visual de desligado enquanto o ponteiro está sobre ele.",
+    "clausula": "É importante a possibilidade de herança com outros estados mesmo com hover.",
+    "efeitos": {
+     "toca": [
+      "$:chave"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "hover anula o visual de ligado"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Comportamento de estado; uma variante apaga o foco visível."
+ },
+ "a2-033815886ead": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Elemento interativo com cursor 'mão com indicador'. Medida: cursor computado em hover.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "cursor-padrao",
+    "descricao": "O elemento interativo (o botão; o gatilho do select) mostra o cursor padrão (seta).",
+    "clausula": "nos elementos Interativos, o cursor do mouse deve ser alterado para a \"mão fechada com indicador esticado\".",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cursor default"
+      },
+      "btn-ajuda": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cursor default"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:gatilho"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cursor default no gatilho"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Valor de propriedade visual do estado."
+ },
+ "a2-dea6a58c22c4": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Hover em fundo claro: overlay na cor do primeiro plano com --surface-opacity-xs; cursor pointer. Medida: opacidade do overlay em hover.",
+  "instancias": [
+   "btn-limpar",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "hover-overlay-forte",
+    "descricao": "O overlay de hover do 'Limpar campos' (ou dos itens da lista do select em S2) usa opacidade 0,30 em vez de --surface-opacity-xs.",
+    "clausula": "background (Sobre um fundo Claro) · opacity · --surface-opacity-xs",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "opacidade do overlay de hover"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:itens"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "opacidade do overlay de hover dos itens"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Valor de token de opacidade."
+ },
+ "a2-45f0252cdcc1": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Um só elemento pressionado por vez. Medida: pressionar um botão, depois outro, e comparar os overlays.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda"
+  ],
+  "variantes": [
+   {
+    "id": "pressionado-preso",
+    "descricao": "O botão mantém o overlay de pressionado depois do clique; ao pressionar outro elemento, dois aparecem pressionados.",
+    "clausula": "Só pode existir um elemento com pressionado por vez na tela.",
+    "efeitos": {
+     "toca": [
+      "$:raiz",
+      "pagina:scripts"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "classe de pressionado não é retirada"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Comportamento de estado."
+ },
+ "a2-dd1a39bcd50b": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhuma instância sorteável está desabilitada; criar o estado desabilitado mudaria a função do controle além da violação."
+ },
+ "a2-eb4a9da83395": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Feedback visual de pressionado no próprio objeto. Medida: estilo computado em :active.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda"
+  ],
+  "variantes": [
+   {
+    "id": "pressionado-sem-feedback",
+    "descricao": "O botão não muda nada ao ser pressionado (:active igual ao repouso).",
+    "clausula": "O feedback visual deve ser feito no objeto que está em estado Pressionado.",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "sem overlay de pressionado"
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Comportamento de estado."
+ },
+ "a2-78f11cbcb280": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Pressionado herda os outros estados. Medida: com o controle ligado/marcado, pressionar e ver se o estado continua visível.",
+  "instancias": [
+   "swt-certificado",
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "pressionado-apaga-estado",
+    "descricao": "Durante o pressionar, o estilo de pressionado substitui o do estado: o switch ligado (ou o radio marcado) aparece desligado/desmarcado.",
+    "clausula": "É importante manter heranças de outros Estados mesmo com Pressionado.",
+    "efeitos": {
+     "porHospedeiro": {
+      "swt-certificado": {
+       "toca": [
+        "$:chave"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "pressionado anula o visual de ligado"
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:inputs"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "pressionado anula a marca de selecionado"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento"
+  ],
+  "razaoCategorias": "Comportamento de estado."
+ },
+ "a2-1c18ad657e0d": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "No pressionado, elevação (sombra) retirada ou amenizada (R-ED b: sombra que aumenta ao pressionar). Medida: box-shadow computado em :active contra o repouso.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda"
+  ],
+  "variantes": [
+   {
+    "id": "pressionado-com-sombra",
+    "descricao": "Ao ser pressionado, o botão ganha sombra de elevação (box-shadow de --surface-shadow-md) que não tem em repouso.",
+    "clausula": "Características visuais referentes à elevação do componente na tela, como sombra por exemplo, devem ser retiradas ou amenizadas.",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "sombra em :active"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Valor de token de sombra no estado."
+ },
+ "a2-13efc60bb6b6": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Pressionado em fundo claro: overlay com --surface-opacity-md, sombra none. Medida: opacidade do overlay em :active.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda"
+  ],
+  "variantes": [
+   {
+    "id": "pressionado-overlay-fora",
+    "descricao": "Durante o pressionar, o overlay do botão usa opacidade 0,70 em vez de --surface-opacity-md.",
+    "clausula": "background (Sobre um fundo Claro) · opacity · --surface-opacity-md",
+    "efeitos": {
+     "toca": [
+      "$:raiz"
+     ],
+     "remove": [],
+     "cascata": [],
+     "estado": null,
+     "nota": "opacidade do overlay de pressionado"
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "token"
+  ],
+  "razaoCategorias": "Valor de token de opacidade."
+ },
+ "a2-b8a08dfb8771": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Um só elemento com foco por vez. Medida: mover o foco por Tab e contar contornos de foco visíveis.",
+  "instancias": [
+   "btn-limpar",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "foco-preso",
+    "descricao": "O contorno de foco fica aplicado de forma permanente ao elemento e continua visível quando o foco vai para outro, que também mostra o seu.",
+    "clausula": "Só pode existir um elemento com foco por vez na tela.",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "contorno de foco permanente"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "contorno de foco permanente"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "contorno de foco permanente"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Comportamento de estado; observável é o foco visível."
+ },
+ "a2-3a4b0fa9ed9e": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Um só tipo de foco por elemento. Medida: estilo em :focus-visible (contorno tracejado e borda sólida de foco tênue ao mesmo tempo).",
+  "instancias": [
+   "inp-codigo",
+   "btn-limpar"
+  ],
+  "variantes": [
+   {
+    "id": "dois-focos",
+    "descricao": "Ao receber foco, o elemento mostra ao mesmo tempo o contorno tracejado de foco e uma borda sólida dourada de foco tênue.",
+    "clausula": "Só pode existir 1 tipo de Foco por elemento.",
+    "efeitos": {
+     "porHospedeiro": {
+      "inp-codigo": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "dois indicadores de foco"
+      },
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "dois indicadores de foco"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "token",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Token do estado de foco; observável é o foco visível."
+ },
+ "a2-25ddbebf4f1a": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Nenhuma instância sorteável está desabilitada; criar o estado desabilitado mudaria a função do controle além da violação."
+ },
+ "a2-1754a39d9a39": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Clique não gera foco visual; foco por teclado continua. Medida: estilo de foco depois de clique de mouse.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda"
+  ],
+  "variantes": [
+   {
+    "id": "foco-no-clique",
+    "descricao": "O indicador de foco aparece também depois de clique de mouse (:focus em vez de :focus-visible).",
+    "clausula": "Por padrão, a ação de \"clicar/tocar\" em um elemento não deve gerar foco visual.",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "foco visual também por clique"
+      },
+      "btn-ajuda": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "foco visual também por clique"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "comportamento",
+  "caminhoDeteccao": [
+   "interacao"
+  ],
+  "categorias": [
+   "comportamento",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Comportamento de estado; observável é o indicador de foco."
+ },
+ "a2-0cb58cc75f6f": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Borda de foco em volta do elemento com espaçamento de segurança. Medida: outline-offset/padding do indicador em :focus-visible.",
+  "instancias": [
+   "btn-limpar",
+   "inp-codigo",
+   "swt-certificado"
+  ],
+  "variantes": [
+   {
+    "id": "foco-colado",
+    "descricao": "O indicador de foco fica colado ao elemento (outline-offset 0, sem espaçamento).",
+    "clausula": "Essa borda deve ser criada em volta do elemento e deve ter um espaçamento de segurança",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "foco sem espaçamento"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "foco sem espaçamento"
+      },
+      "swt-certificado": {
+       "toca": [
+        "$:input",
+        "$:chave"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "foco sem espaçamento"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "token",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Token de espaçamento do foco; observável é o foco visível."
+ },
+ "a2-3087e28d2431": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Foco tênue; nenhuma instância sorteável usa o foco tênue."
+ },
+ "a2-2b5c2bc4358b": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Borda de foco em fundo claro na cor --gold-vivid-40. Medida: outline-color em :focus-visible.",
+  "instancias": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-codigo",
+   "sel-continente",
+   "swt-certificado",
+   "rad-situacao"
+  ],
+  "variantes": [
+   {
+    "id": "foco-cor-fora",
+    "descricao": "O contorno de foco do controle fica #1351B4 (azul de interação) em vez de --gold-vivid-40; continua visível e tracejado.",
+    "clausula": "border (Sobre um fundo Claro) · color · --gold-vivid-40",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do contorno de foco"
+      },
+      "btn-ajuda": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do contorno de foco"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do contorno de foco"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do contorno de foco"
+      },
+      "swt-certificado": {
+       "toca": [
+        "$:input",
+        "$:chave"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do contorno de foco"
+      },
+      "rad-situacao": {
+       "toca": [
+        "$:inputs"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "cor do contorno de foco"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "token",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Token de cor do foco; observável é o foco visível."
+ },
+ "a2-63e7d8f1a47d": {
+  "aceita": true,
+  "equivalenteEmag": null,
+  "justificativa": "Foco: borda --surface-width-lg, dashed, espaçamento --spacing-scale-half. Medida: outline-style/width em :focus-visible.",
+  "instancias": [
+   "btn-limpar",
+   "inp-codigo",
+   "sel-continente"
+  ],
+  "variantes": [
+   {
+    "id": "foco-pontilhado",
+    "descricao": "O contorno de foco fica dotted em vez de dashed, com a mesma cor e espessura.",
+    "clausula": "border · style · dashed",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "estilo do contorno de foco"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "estilo do contorno de foco"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "estilo do contorno de foco"
+      }
+     }
+    }
+   },
+   {
+    "id": "foco-fino",
+    "descricao": "O contorno de foco fica com 1px em vez de --surface-width-lg, mantendo dashed e a cor.",
+    "clausula": "border · width · --surface-width-lg",
+    "efeitos": {
+     "porHospedeiro": {
+      "btn-limpar": {
+       "toca": [
+        "$:raiz"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "espessura do contorno de foco"
+      },
+      "inp-codigo": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "espessura do contorno de foco"
+      },
+      "sel-continente": {
+       "toca": [
+        "$:campo"
+       ],
+       "remove": [],
+       "cascata": [],
+       "estado": null,
+       "nota": "espessura do contorno de foco"
+      }
+     }
+    }
+   }
+  ],
+  "tipo": "visual-token",
+  "caminhoDeteccao": [
+   "interacao",
+   "medicao"
+  ],
+  "categorias": [
+   "token",
+   "acessibilidade"
+  ],
+  "razaoCategorias": "Token do contorno de foco; observável é o foco visível."
+ },
+ "a2-6b4aa6ecd808": {
+  "aceita": false,
+  "motivo": "nao-se-aplica",
+  "justificativa": "Foco tênue; nenhuma instância sorteável usa o foco tênue (como a2-3087e28d2431)."
+ }
+}

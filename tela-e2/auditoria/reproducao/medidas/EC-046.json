@@ -1,0 +1,29 @@
+{
+ "id": "EC-046",
+ "classe": "conforme",
+ "instancia": "inp-codigo",
+ "chave": "descricao-associada",
+ "porEstado": {
+  "S0": {
+   "valor": {
+    "describedby": "codigo-pais-apoio",
+    "apoio": "Três letras, como ARG para Argentina."
+   },
+   "viola": false
+  },
+  "S1": {
+   "valor": {
+    "describedby": "codigo-pais-apoio",
+    "apoio": "Três letras, como ARG para Argentina."
+   },
+   "viola": false
+  },
+  "S2": {
+   "valor": {
+    "describedby": "codigo-pais-apoio",
+    "apoio": "Três letras, como ARG para Argentina."
+   },
+   "viola": false
+  }
+ }
+}

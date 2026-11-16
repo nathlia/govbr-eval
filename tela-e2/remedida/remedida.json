@@ -1,0 +1,1729 @@
+{
+ "pagina": "http://127.0.0.1:3221/cadastro-pais.html",
+ "medidoEm": "2026-11-15T02:10:54.147Z",
+ "rodadas": 2,
+ "itens": {
+  "R-01": {
+   "instancia": "btn-cancelar",
+   "estado": "S0",
+   "janela": "1280x900",
+   "medido": {
+    "formulario": {
+     "x": 60,
+     "y": 379.81,
+     "w": 640,
+     "h": 604.84,
+     "right": 700,
+     "bottom": 984.66
+    },
+    "botao": {
+     "x": 239.16,
+     "y": 944.66,
+     "w": 121.05,
+     "h": 40,
+     "right": 360.2,
+     "bottom": 984.66
+    },
+    "barraDeAcoes": {
+     "caixa": {
+      "x": 60,
+      "y": 944.66,
+      "w": 640,
+      "h": 40,
+      "right": 700,
+      "bottom": 984.66
+     },
+     "display": "flex",
+     "justifyContent": "flex-end",
+     "flexDirection": "row"
+    },
+    "botoesNaOrdemDoDOM": [
+     {
+      "id": "btn-cancelar",
+      "texto": "Cancelar",
+      "classe": "br-button secondary acao-cancelar",
+      "caixa": {
+       "x": 239.16,
+       "y": 944.66,
+       "w": 121.05,
+       "h": 40,
+       "right": 360.2,
+       "bottom": 984.66
+      }
+     },
+     {
+      "id": "btn-limpar",
+      "texto": "Limpar Campos",
+      "classe": "br-button secondary acao-limpar",
+      "caixa": {
+       "x": 525.13,
+       "y": 944.66,
+       "w": 174.88,
+       "h": 40,
+       "right": 700,
+       "bottom": 984.66
+      }
+     },
+     {
+      "id": "btn-salvar",
+      "texto": "Salvar País",
+      "classe": "br-button primary acao-salvar",
+      "caixa": {
+       "x": 376.2,
+       "y": 944.66,
+       "w": 132.92,
+       "h": 40,
+       "right": 509.13,
+       "bottom": 984.66
+      }
+     }
+    ],
+    "distBordaEsqFormPx": 179.16,
+    "distBordaDirFormPx": 339.8,
+    "centroBotaoFracaoDaLargura": 0.375,
+    "baseDoUltimoCampo": 904.65625,
+    "topoBotaoAbaixoDoUltimoCampoPx": 40,
+    "distBaseFormPx": 0
+   },
+   "decisao": "satisfaz",
+   "motivo": "O botão está abaixo do último campo (+40px), na base do formulário (0px), dentro do grupo de ações alinhado à borda direita do formulário (justify-content flex-end; último botão a 0px da borda direita), atendendo \"posicionados preferencialmente abaixo e à direita do formulário\".",
+   "reproduz": true
+  },
+  "R-02": {
+   "instancia": "msg-orientacao",
+   "estado": "S0",
+   "janela": "1280x900",
+   "medido": {
+    "classe": "br-message info mensagem-servico",
+    "backgroundColor": "rgb(212, 229, 255)",
+    "hex": "#d4e5ff",
+    "backgroundImage": "none",
+    "tokens": {
+     "--blue-warm-vivid-10": "#d4e5ff",
+     "--blue-warm-vivid-60": "#155bcb",
+     "--blue-warm-vivid-5": "#edf5ff",
+     "--blue-warm-vivid-20": "#adcdff"
+    },
+    "tokensIguais": [
+     "--blue-warm-vivid-10"
+    ]
+   },
+   "decisao": "satisfaz",
+   "motivo": "Fundo computado #d4e5ff igual ao token exigido: \"Superfície do Message | background | --blue-warm-vivid-10\".",
+   "reproduz": true
+  },
+  "R-03": {
+   "instancia": "sel-continente",
+   "estado": "S2",
+   "janela": "1280x900",
+   "medido": {
+    "listaDisplay": "block",
+    "listaCaixa": {
+     "x": 60,
+     "y": 751.34,
+     "w": 400,
+     "h": 318.78,
+     "right": 460,
+     "bottom": 1070.13
+    },
+    "gatilhoAriaExpanded": "true",
+    "opcoes": [
+     {
+      "texto": "África",
+      "corTexto": "rgb(170, 170, 170)",
+      "corTextoEfetiva": "#aaaaaa",
+      "opacidadeAcumulada": 1,
+      "fundoEfetivo": "#ffffff",
+      "camadasDeFundo": [
+       {
+        "el": "div.br-item",
+        "cor": "rgb(255, 255, 255)"
+       }
+      ],
+      "imagensDeFundo": [],
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "textoGrande": false,
+      "razao": 2.32,
+      "itemCaixa": {
+       "x": 60,
+       "y": 751.34,
+       "w": 400,
+       "h": 53.3,
+       "right": 460,
+       "bottom": 804.64
+      }
+     },
+     {
+      "texto": "América do Norte",
+      "corTexto": "rgb(170, 170, 170)",
+      "corTextoEfetiva": "#aaaaaa",
+      "opacidadeAcumulada": 1,
+      "fundoEfetivo": "#ffffff",
+      "camadasDeFundo": [
+       {
+        "el": "div.br-item",
+        "cor": "rgb(255, 255, 255)"
+       }
+      ],
+      "imagensDeFundo": [],
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "textoGrande": false,
+      "razao": 2.32,
+      "itemCaixa": {
+       "x": 60,
+       "y": 804.64,
+       "w": 400,
+       "h": 53.3,
+       "right": 460,
+       "bottom": 857.94
+      }
+     },
+     {
+      "texto": "América do Sul",
+      "corTexto": "rgb(170, 170, 170)",
+      "corTextoEfetiva": "#aaaaaa",
+      "opacidadeAcumulada": 1,
+      "fundoEfetivo": "#ffffff",
+      "camadasDeFundo": [
+       {
+        "el": "div.br-item",
+        "cor": "rgb(255, 255, 255)"
+       }
+      ],
+      "imagensDeFundo": [],
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "textoGrande": false,
+      "razao": 2.32,
+      "itemCaixa": {
+       "x": 60,
+       "y": 857.94,
+       "w": 400,
+       "h": 53.3,
+       "right": 460,
+       "bottom": 911.23
+      }
+     },
+     {
+      "texto": "Ásia",
+      "corTexto": "rgb(170, 170, 170)",
+      "corTextoEfetiva": "#aaaaaa",
+      "opacidadeAcumulada": 1,
+      "fundoEfetivo": "#ffffff",
+      "camadasDeFundo": [
+       {
+        "el": "div.br-item",
+        "cor": "rgb(255, 255, 255)"
+       }
+      ],
+      "imagensDeFundo": [],
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "textoGrande": false,
+      "razao": 2.32,
+      "itemCaixa": {
+       "x": 60,
+       "y": 911.23,
+       "w": 400,
+       "h": 53.3,
+       "right": 460,
+       "bottom": 964.53
+      }
+     },
+     {
+      "texto": "Europa",
+      "corTexto": "rgb(170, 170, 170)",
+      "corTextoEfetiva": "#aaaaaa",
+      "opacidadeAcumulada": 1,
+      "fundoEfetivo": "#ffffff",
+      "camadasDeFundo": [
+       {
+        "el": "div.br-item",
+        "cor": "rgb(255, 255, 255)"
+       }
+      ],
+      "imagensDeFundo": [],
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "textoGrande": false,
+      "razao": 2.32,
+      "itemCaixa": {
+       "x": 60,
+       "y": 964.53,
+       "w": 400,
+       "h": 53.3,
+       "right": 460,
+       "bottom": 1017.83
+      }
+     },
+     {
+      "texto": "Oceania",
+      "corTexto": "rgb(170, 170, 170)",
+      "corTextoEfetiva": "#aaaaaa",
+      "opacidadeAcumulada": 1,
+      "fundoEfetivo": "#ffffff",
+      "camadasDeFundo": [
+       {
+        "el": "div.br-item",
+        "cor": "rgb(255, 255, 255)"
+       }
+      ],
+      "imagensDeFundo": [],
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "textoGrande": false,
+      "razao": 2.32,
+      "itemCaixa": {
+       "x": 60,
+       "y": 1017.83,
+       "w": 400,
+       "h": 52.3,
+       "right": 460,
+       "bottom": 1070.13
+      }
+     }
+    ],
+    "nItens": 6,
+    "nVisiveis": 6
+   },
+   "decisao": "viola",
+   "motivo": "Razão de 2.32:1 (texto #aaaaaa sobre #ffffff, 14px) abaixo do mínimo AA de 4,5:1 do DS, não \"garantindo a qualidade de contraste e legibilidade para usuários com baixa visão\".",
+   "reproduz": true
+  },
+  "R-04": {
+   "instancia": "msg-orientacao",
+   "estado": "S0",
+   "janela": "640x450",
+   "medido": {
+    "pagina": {
+     "clientW": 640,
+     "scrollW": 640,
+     "rolagemHorizontalPx": 0,
+     "innerWidth": 640
+    },
+    "titulo": {
+     "texto": "Como cadastrar.",
+     "caixa": {
+      "x": 100,
+      "y": 137.22,
+      "w": 128.59,
+      "h": 23,
+      "right": 228.59,
+      "bottom": 160.22
+     },
+     "textoUniao": {
+      "x": 100,
+      "y": 137.22,
+      "w": 128.59,
+      "h": 23,
+      "right": 228.59,
+      "bottom": 160.22
+     },
+     "nLinhas": 1,
+     "scrollW": 0,
+     "clientW": 0,
+     "scrollH": 0,
+     "clientH": 0,
+     "overflow": "visible/visible",
+     "textOverflow": "clip",
+     "whiteSpace": "normal",
+     "height": "auto",
+     "lineHeight": "24.36px",
+     "textoForaDaCaixaPx": {
+      "esq": 0,
+      "dir": 0,
+      "topo": 0,
+      "base": 0
+     },
+     "foraDaJanelaHorizPx": {
+      "esq": 0,
+      "dir": 0
+     },
+     "cortesPorAncestral": [],
+     "sobreposicoes": [],
+     "topoNoCentroDasLinhas": [
+      "proprio"
+     ]
+    },
+    "texto": {
+     "texto": "Os dados do país são persistidos no banco após o commit da transação, e a listagem abaixo é renderizada a partir do cache do endpoint de consulta.",
+     "caixa": {
+      "x": 100,
+      "y": 137.22,
+      "w": 443.06,
+      "h": 71.69,
+      "right": 543.06,
+      "bottom": 208.91
+     },
+     "textoUniao": {
+      "x": 100,
+      "y": 137.22,
+      "w": 443.06,
+      "h": 71.69,
+      "right": 543.06,
+      "bottom": 208.91
+     },
+     "nLinhas": 3,
+     "scrollW": 0,
+     "clientW": 0,
+     "scrollH": 0,
+     "clientH": 0,
+     "overflow": "visible/visible",
+     "textOverflow": "clip",
+     "whiteSpace": "normal",
+     "height": "auto",
+     "lineHeight": "24.36px",
+     "textoForaDaCaixaPx": {
+      "esq": 0,
+      "dir": 0,
+      "topo": 0,
+      "base": 0
+     },
+     "foraDaJanelaHorizPx": {
+      "esq": 0,
+      "dir": 0
+     },
+     "cortesPorAncestral": [],
+     "sobreposicoes": [],
+     "topoNoCentroDasLinhas": [
+      "proprio",
+      "proprio",
+      "proprio"
+     ]
+    },
+    "conteudo": {
+     "texto": "Como cadastrar. Os dados do país são persistidos no banco após o commit da transação, e a listagem abaixo é renderizada a partir do cache do endpoint de consulta.",
+     "caixa": {
+      "x": 100,
+      "y": 113.22,
+      "w": 460,
+      "h": 121.03,
+      "right": 560,
+      "bottom": 234.25
+     },
+     "textoUniao": {
+      "x": 100,
+      "y": 137.22,
+      "w": 443.06,
+      "h": 71.69,
+      "right": 543.06,
+      "bottom": 208.91
+     },
+     "nLinhas": 8,
+     "scrollW": 460,
+     "clientW": 460,
+     "scrollH": 121,
+     "clientH": 121,
+     "overflow": "visible/visible",
+     "textOverflow": "clip",
+     "whiteSpace": "normal",
+     "height": "121.031px",
+     "lineHeight": "24.36px",
+     "textoForaDaCaixaPx": {
+      "esq": 0,
+      "dir": 0,
+      "topo": 0,
+      "base": 0
+     },
+     "foraDaJanelaHorizPx": {
+      "esq": 0,
+      "dir": 0
+     },
+     "cortesPorAncestral": [],
+     "sobreposicoes": [],
+     "topoNoCentroDasLinhas": [
+      "proprio",
+      "proprio",
+      "proprio",
+      "proprio",
+      "proprio",
+      "proprio",
+      "proprio",
+      "proprio"
+     ]
+    },
+    "superficie": {
+     "caixa": {
+      "x": 0,
+      "y": 113.22,
+      "w": 640,
+      "h": 121.03,
+      "right": 640,
+      "bottom": 234.25
+     },
+     "scrollW": 640,
+     "clientW": 640,
+     "scrollH": 121,
+     "clientH": 121,
+     "overflow": "visible/visible"
+    }
+   },
+   "decisao": "satisfaz",
+   "motivo": "A 640×450 título e texto ficam inteiros (0px fora, sem corte, sobreposição nem rolagem horizontal), \"legível e funcional mesmo quando redimensionada para até 200%\".",
+   "reproduz": true
+  },
+  "R-05": {
+   "instancia": "rad-situacao",
+   "estado": "S0",
+   "janela": "1280x900",
+   "medido": {
+    "grupo": {
+     "x": 62,
+     "y": 773.34,
+     "w": 636,
+     "h": 131.31,
+     "right": 698,
+     "bottom": 904.66
+    },
+    "legenda": {
+     "texto": "Situação do cadastro",
+     "caixa": {
+      "x": 62,
+      "y": 773.34,
+      "w": 636,
+      "h": 19.31,
+      "right": 698,
+      "bottom": 792.66
+     },
+     "textAlign": "center",
+     "xTexto": 296.09,
+     "wTexto": 167.8,
+     "yTexto": 771.34
+    },
+    "opcoes": [
+     {
+      "rotulo": "Habilitado",
+      "caixaOpcao": {
+       "x": 62,
+       "y": 808.66,
+       "w": 102.97,
+       "h": 24,
+       "right": 164.97,
+       "bottom": 832.66
+      },
+      "xTextoRotulo": 94
+     },
+     {
+      "rotulo": "Suspenso",
+      "caixaOpcao": {
+       "x": 62,
+       "y": 840.66,
+       "w": 102.97,
+       "h": 24,
+       "right": 164.97,
+       "bottom": 864.66
+      },
+      "xTextoRotulo": 94
+     },
+     {
+      "rotulo": "Em análise",
+      "caixaOpcao": {
+       "x": 62,
+       "y": 872.66,
+       "w": 102.97,
+       "h": 24,
+       "right": 164.97,
+       "bottom": 896.66
+      },
+      "xTextoRotulo": 94
+     }
+    ],
+    "xInicioOpcoes": 62,
+    "deslocTextoLegendaVsOpcoesPx": 234.09,
+    "folgaEsqNoGrupoPx": 234.09,
+    "folgaDirNoGrupoPx": 234.11,
+    "legendaAcimaDasOpcoes": true
+   },
+   "decisao": "viola",
+   "motivo": "A legenda está no topo, mas o texto começa em x=296.09 contra x=62 das opções (text-align center), não \"alinhado à esquerda\".",
+   "reproduz": true
+  },
+  "R-06": {
+   "instancia": "inp-nome-pais",
+   "estado": "S0",
+   "janela": "1280x900",
+   "medido": {
+    "texto": "Nome do país",
+    "corTexto": "rgb(51, 51, 51)",
+    "corTextoEfetiva": "#333333",
+    "opacidadeAcumulada": 1,
+    "fundoEfetivo": "#ffffff",
+    "camadasDeFundo": [
+     {
+      "el": "body",
+      "cor": "rgb(255, 255, 255)"
+     }
+    ],
+    "imagensDeFundo": [],
+    "fontSize": "14px",
+    "fontWeight": "600",
+    "textoGrande": false,
+    "razao": 12.63
+   },
+   "decisao": "satisfaz",
+   "motivo": "Razão 12.63:1 (#333333 sobre #ffffff) ≥ 4,5:1, mínimo que o eMAG recomenda para cores \"suficientemente contrastantes\".",
+   "reproduz": true
+  },
+  "R-07": {
+   "instancia": "swt-certificado",
+   "estado": "S0",
+   "janela": "640x450",
+   "medido": {
+    "pagina": {
+     "clientW": 640,
+     "scrollW": 640,
+     "rolagemHorizontalPx": 0,
+     "innerWidth": 640
+    },
+    "rotulo": {
+     "texto": "Emitir certificado sanitário automaticamente para países habilitados",
+     "caixa": {
+      "x": 40,
+      "y": 1127.2,
+      "w": 487.55,
+      "h": 40.59,
+      "right": 527.55,
+      "bottom": 1167.8
+     },
+     "textoUniao": {
+      "x": 40,
+      "y": 1127.2,
+      "w": 372.34,
+      "h": 39.3,
+      "right": 412.34,
+      "bottom": 1166.5
+     },
+     "nLinhas": 2,
+     "scrollW": 488,
+     "clientW": 488,
+     "scrollH": 41,
+     "clientH": 41,
+     "overflow": "visible/visible",
+     "textOverflow": "clip",
+     "whiteSpace": "normal",
+     "height": "40.5938px",
+     "lineHeight": "20.3px",
+     "textoForaDaCaixaPx": {
+      "esq": 0,
+      "dir": 0,
+      "topo": 0,
+      "base": 0
+     },
+     "foraDaJanelaHorizPx": {
+      "esq": 0,
+      "dir": 0
+     },
+     "cortesPorAncestral": [],
+     "sobreposicoes": [],
+     "topoNoCentroDasLinhas": [
+      "proprio",
+      "proprio"
+     ]
+    },
+    "textoDeEstado": {
+     "conteudoBefore": "\"Desligada\"",
+     "conteudoAfter": "none",
+     "display": "block",
+     "caixa": {
+      "x": 535.55,
+      "y": 1137.34,
+      "w": 64.45,
+      "h": 20.3,
+      "right": 600,
+      "bottom": 1157.64
+     },
+     "scrollW": 64,
+     "clientW": 64,
+     "scrollH": 20,
+     "clientH": 20,
+     "overflow": "visible/visible",
+     "foraDaJanelaHorizPx": {
+      "esq": 0,
+      "dir": 0
+     },
+     "cortesPorAncestral": [],
+     "sobrepoeTextoDoRotulo": false,
+     "topoNoCentro": "proprio",
+     "situacaoTexto": ""
+    },
+    "trilho": {
+     "position": "absolute",
+     "caixaDoc": {
+      "x": 475.55,
+      "y": 1132.5,
+      "w": 52,
+      "h": 30
+     },
+     "cruzaTextoDoRotulo": false,
+     "cruzaTextoDeEstado": false
+    }
+   },
+   "decisao": "satisfaz",
+   "motivo": "A 640×450 rótulo e texto de estado ficam inteiros (0px fora, sem sobreposição nem rolagem horizontal): \"legível e funcional mesmo quando redimensionada para até 200%\".",
+   "reproduz": true
+  },
+  "R-08": {
+   "instancia": "msg-orientacao",
+   "estado": "S0",
+   "janela": "1280x900",
+   "medido": {
+    "superficie": {
+     "x": 0,
+     "y": 115.06,
+     "w": 1280,
+     "h": 96.69,
+     "right": 1280,
+     "bottom": 211.75
+    },
+    "icone": {
+     "classe": "fas fa-info-circle fa-lg",
+     "caixa": {
+      "x": 76,
+      "y": 162.91,
+      "w": 28,
+      "h": 1,
+      "right": 104,
+      "bottom": 163.91
+     },
+     "glifo": {
+      "content": "\"\"",
+      "codepoints": [
+       "U+F05A"
+      ]
+     }
+    },
+    "botaoFechar": {
+     "rotulo": "Fechar",
+     "caixa": {
+      "x": 1180,
+      "y": 123.06,
+      "w": 32,
+      "h": 32,
+      "right": 1212,
+      "bottom": 155.06
+     }
+    },
+    "conteudo": {
+     "x": 120,
+     "y": 115.06,
+     "w": 1060,
+     "h": 96.69,
+     "right": 1180,
+     "bottom": 211.75
+    },
+    "icone_relativo": {
+     "esq": 76,
+     "centroXFracao": 0.07,
+     "topo": 47.85,
+     "aEsquerdaDoConteudo": true
+    },
+    "fechar_relativo": {
+     "dir": 68,
+     "topo": 8,
+     "base": 56.69,
+     "centroXFracao": 0.934,
+     "aDireitaDoConteudo": true,
+     "centroYFracao": 0.248
+    }
+   },
+   "decisao": "satisfaz",
+   "motivo": "Ícone à esquerda do conteúdo (x+76px) e Fechar no canto superior direito (topo +8px, direita −68px): \"ícones ... à esquerda ... Botão Fechar ... no topo e à direita\".",
+   "reproduz": true
+  },
+  "R-09": {
+   "instancia": "inp-codigo",
+   "estado": "S0",
+   "janela": "640x450",
+   "medido": {
+    "pagina": {
+     "clientW": 640,
+     "scrollW": 640,
+     "rolagemHorizontalPx": 0,
+     "innerWidth": 640
+    },
+    "rotulo": {
+     "texto": "Código do país (opcional)",
+     "caixa": {
+      "x": 40,
+      "y": 572.66,
+      "w": 171.89,
+      "h": 16,
+      "right": 211.89,
+      "bottom": 588.66
+     },
+     "textoUniao": {
+      "x": 40,
+      "y": 572.66,
+      "w": 171.89,
+      "h": 16,
+      "right": 211.89,
+      "bottom": 588.66
+     },
+     "nLinhas": 1,
+     "scrollW": 0,
+     "clientW": 0,
+     "scrollH": 0,
+     "clientH": 0,
+     "overflow": "visible/visible",
+     "textOverflow": "clip",
+     "whiteSpace": "normal",
+     "height": "auto",
+     "lineHeight": "20.3px",
+     "textoForaDaCaixaPx": {
+      "esq": 0,
+      "dir": 0,
+      "topo": 0,
+      "base": 0
+     },
+     "foraDaJanelaHorizPx": {
+      "esq": 0,
+      "dir": 0
+     },
+     "cortesPorAncestral": [],
+     "sobreposicoes": [],
+     "topoNoCentroDasLinhas": [
+      "proprio"
+     ]
+    },
+    "textoDeApoio": {
+     "texto": "Três letras, como ARG para Argentina.",
+     "caixa": {
+      "x": 40,
+      "y": 642.95,
+      "w": 200,
+      "h": 40.59,
+      "right": 240,
+      "bottom": 683.55
+     },
+     "textoUniao": {
+      "x": 40,
+      "y": 644.95,
+      "w": 172.98,
+      "h": 36.3,
+      "right": 212.98,
+      "bottom": 681.25
+     },
+     "nLinhas": 2,
+     "scrollW": 200,
+     "clientW": 200,
+     "scrollH": 41,
+     "clientH": 41,
+     "overflow": "visible/visible",
+     "textOverflow": "clip",
+     "whiteSpace": "normal",
+     "height": "40.5938px",
+     "lineHeight": "20.3px",
+     "textoForaDaCaixaPx": {
+      "esq": 0,
+      "dir": 0,
+      "topo": 0,
+      "base": 0
+     },
+     "foraDaJanelaHorizPx": {
+      "esq": 0,
+      "dir": 0
+     },
+     "cortesPorAncestral": [],
+     "sobreposicoes": [],
+     "topoNoCentroDasLinhas": [
+      "proprio",
+      "proprio"
+     ]
+    }
+   },
+   "decisao": "satisfaz",
+   "motivo": "A 640×450 rótulo e texto de apoio ficam inteiros (0px fora, sem corte, sobreposição nem rolagem horizontal): \"legível e funcional mesmo quando redimensionada para até 200%\".",
+   "reproduz": true
+  },
+  "R-10": {
+   "instancia": "swt-certificado",
+   "estado": "S0",
+   "janela": "1280x900",
+   "medido": {
+    "texto": "Emitir certificado sanitário automaticamente para países habilitados",
+    "corTexto": "rgb(51, 51, 51)",
+    "corTextoEfetiva": "#333333",
+    "opacidadeAcumulada": 1,
+    "fundoEfetivo": "#ffffff",
+    "camadasDeFundo": [
+     {
+      "el": "body",
+      "cor": "rgb(255, 255, 255)"
+     }
+    ],
+    "imagensDeFundo": [],
+    "fontSize": "14px",
+    "fontWeight": "600",
+    "textoGrande": false,
+    "razao": 12.63
+   },
+   "decisao": "satisfaz",
+   "motivo": "Razão 12.63:1 (#333333 sobre #ffffff, 14px/600) ≥ 4.5:1, \"taxa de contraste de pelo menos 4,5:1\" para texto normal.",
+   "reproduz": true
+  },
+  "R-11": {
+   "instancia": "msg-erro",
+   "estado": "S1",
+   "janela": "1280x900",
+   "medido": {
+    "classe": "br-message danger retorno-envio",
+    "hidden": false,
+    "display": "flex",
+    "backgroundColor": "rgb(38, 112, 232)",
+    "hex": "#2670e8",
+    "tokens": {
+     "--blue-warm-vivid-50": "#2670e8",
+     "--blue-warm-vivid-10": "#d4e5ff",
+     "--red-vivid-10": "#fde0db"
+    },
+    "iconesVisiveis": [
+     {
+      "classe": "fas fa-times-circle fa-lg",
+      "glifo": {
+       "content": "\"\"",
+       "codepoints": [
+        "U+F057"
+       ]
+      },
+      "cor": "rgb(255, 255, 255)",
+      "caixa": {
+       "x": 76,
+       "y": 519.88,
+       "w": 28,
+       "h": 1,
+       "right": 104,
+       "bottom": 520.88
+      },
+      "pai": "icon"
+     },
+     {
+      "classe": "fas fa-check marca-retorno",
+      "glifo": {
+       "content": "\"\"",
+       "codepoints": [
+        "U+F00C"
+       ]
+      },
+      "cor": "rgb(255, 255, 255)",
+      "caixa": {
+       "x": 120,
+       "y": 488.86,
+       "w": 24,
+       "h": 16,
+       "right": 144,
+       "bottom": 504.86
+      },
+      "pai": "content"
+     }
+    ],
+    "temFaCheck": true
+   },
+   "decisao": "viola",
+   "motivo": "A mensagem tem fundo #2670e8 (--blue-warm-vivid-50) e ícone fa-check, exatamente a \"Especificação para Estado Selecionado\", e \"O estado Selecionado não pode ser aplicado\" em \"Message\".",
+   "reproduz": true
+  },
+  "R-12": {
+   "instancia": "btn-cancelar",
+   "estado": "S0",
+   "janela": "1280x900",
+   "medido": {
+    "texto": "Cancelar",
+    "corTexto": "rgb(19, 81, 180)",
+    "corTextoEfetiva": "#1351b4",
+    "opacidadeAcumulada": 1,
+    "fundoEfetivo": "#ffffff",
+    "camadasDeFundo": [
+     {
+      "el": "button#btn-cancelar.br-button.secondary.acao-cancelar",
+      "cor": "rgb(255, 255, 255)"
+     }
+    ],
+    "imagensDeFundo": [],
+    "fontSize": "16.8px",
+    "fontWeight": "600",
+    "textoGrande": false,
+    "razao": 7.33,
+    "classe": "br-button secondary acao-cancelar",
+    "backgroundColorProprio": "rgb(255, 255, 255)",
+    "borderColor": "rgb(19, 81, 180)",
+    "tokensDaDiretriz": {
+     "--blue-warm-vivid-70": "#1351b4",
+     "--pure-0": "#fff"
+    }
+   },
+   "decisao": "satisfaz",
+   "motivo": "Leitura #1351b4 (--blue-warm-vivid-70) sobre superfície #ffffff (--pure-0), razão 7.33:1: cores \"correspondem às recomendadas na diretriz de design, garantindo um contraste adequado\".",
+   "reproduz": true
+  },
+  "R-13": {
+   "instancia": "msg-orientacao",
+   "estado": "S0",
+   "janela": "1280x900",
+   "medido": {
+    "classe": "br-message info mensagem-servico",
+    "hidden": false,
+    "display": "flex",
+    "backgroundColor": "rgb(212, 229, 255)",
+    "hex": "#d4e5ff",
+    "tokens": {
+     "--blue-warm-vivid-50": "#2670e8",
+     "--blue-warm-vivid-10": "#d4e5ff",
+     "--red-vivid-10": "#fde0db"
+    },
+    "iconesVisiveis": [
+     {
+      "classe": "fas fa-info-circle fa-lg",
+      "glifo": {
+       "content": "\"\"",
+       "codepoints": [
+        "U+F05A"
+       ]
+      },
+      "cor": "rgb(21, 91, 203)",
+      "caixa": {
+       "x": 76,
+       "y": 162.91,
+       "w": 28,
+       "h": 1,
+       "right": 104,
+       "bottom": 163.91
+      },
+      "pai": "icon"
+     },
+     {
+      "classe": "fas fa-times",
+      "glifo": {
+       "content": "\"\"",
+       "codepoints": [
+        "U+F00D"
+       ]
+      },
+      "cor": "rgb(21, 91, 203)",
+      "caixa": {
+       "x": 1184,
+       "y": 131.06,
+       "w": 24,
+       "h": 16,
+       "right": 1208,
+       "bottom": 147.06
+      },
+      "pai": "br-button circle small fechar-mensagem"
+     }
+    ],
+    "temFaCheck": false
+   },
+   "decisao": "satisfaz",
+   "motivo": "Fundo #d4e5ff (não --blue-warm-vivid-50) e nenhum ícone fa-check: a mensagem não apresenta o estado Selecionado que \"não pode ser aplicado\" em \"Message\".",
+   "reproduz": true
+  },
+  "R-14": {
+   "instancia": "lst-paises",
+   "estado": "S0",
+   "janela": "640x450",
+   "medido": {
+    "pagina": {
+     "clientW": 640,
+     "scrollW": 640,
+     "rolagemHorizontalPx": 0,
+     "innerWidth": 640
+    },
+    "itens": [
+     {
+      "item": {
+       "caixa": {
+        "x": 40,
+        "y": 1373.84,
+        "w": 560,
+        "h": 74,
+        "right": 600,
+        "bottom": 1447.84
+       },
+       "height": "74px",
+       "overflow": "hidden/hidden",
+       "scrollH": 93,
+       "clientH": 74,
+       "scrollW": 560,
+       "clientW": 560,
+       "paddingBottom": "16px"
+      },
+      "divisorSeguinte": {
+       "classe": "br-divider",
+       "caixa": {
+        "x": 40,
+        "y": 1447.84,
+        "w": 560,
+        "h": 1,
+        "right": 600,
+        "bottom": 1448.84
+       },
+       "textoPassaDoTopoDoDivisorPx": 2.89
+      },
+      "principal": {
+       "texto": "Argentina",
+       "caixa": {
+        "x": 56,
+        "y": 1389.84,
+        "w": 528,
+        "h": 20.3,
+        "right": 584,
+        "bottom": 1410.14
+       },
+       "textoUniao": {
+        "x": 56,
+        "y": 1389.84,
+        "w": 62.66,
+        "h": 19,
+        "right": 118.66,
+        "bottom": 1408.84
+       },
+       "nLinhas": 1,
+       "scrollW": 528,
+       "clientW": 528,
+       "scrollH": 20,
+       "clientH": 20,
+       "overflow": "visible/visible",
+       "textOverflow": "clip",
+       "whiteSpace": "normal",
+       "height": "20.2969px",
+       "lineHeight": "20.3px",
+       "textoForaDaCaixaPx": {
+        "esq": 0,
+        "dir": 0,
+        "topo": 0,
+        "base": 0
+       },
+       "foraDaJanelaHorizPx": {
+        "esq": 0,
+        "dir": 0
+       },
+       "cortesPorAncestral": [
+        {
+         "ancestral": "div.br-item",
+         "overflow": "hidden/hidden",
+         "foraPx": {
+          "esq": 0,
+          "dir": 0,
+          "topo": 0,
+          "base": 0
+         }
+        }
+       ],
+       "sobreposicoes": [],
+       "topoNoCentroDasLinhas": [
+        "proprio"
+       ]
+      },
+      "secundario": {
+       "texto": "Habilitado · Produtos: carne bovina, lácteos, mel e ovos · Certificado válido até 31/12/2026",
+       "caixa": {
+        "x": 56,
+        "y": 1410.14,
+        "w": 528,
+        "h": 40.59,
+        "right": 584,
+        "bottom": 1450.73
+       },
+       "textoUniao": {
+        "x": 56,
+        "y": 1410.14,
+        "w": 499.45,
+        "h": 39.3,
+        "right": 555.45,
+        "bottom": 1449.44
+       },
+       "nLinhas": 2,
+       "scrollW": 528,
+       "clientW": 528,
+       "scrollH": 41,
+       "clientH": 41,
+       "overflow": "visible/visible",
+       "textOverflow": "clip",
+       "whiteSpace": "normal",
+       "height": "40.5938px",
+       "lineHeight": "20.3px",
+       "textoForaDaCaixaPx": {
+        "esq": 0,
+        "dir": 0,
+        "topo": 0,
+        "base": 0
+       },
+       "foraDaJanelaHorizPx": {
+        "esq": 0,
+        "dir": 0
+       },
+       "cortesPorAncestral": [
+        {
+         "ancestral": "div.br-item",
+         "overflow": "hidden/hidden",
+         "foraPx": {
+          "esq": 0,
+          "dir": 0,
+          "topo": 0,
+          "base": 1.59375
+         }
+        }
+       ],
+       "sobreposicoes": [
+        {
+         "el": "span.br-divider",
+         "interseccaoCaixaDeLinhaPx": {
+          "w": 78.48,
+          "h": 1
+         }
+        },
+        {
+         "el": "div.br-item.py-3.item-pais",
+         "interseccaoCaixaDeLinhaPx": {
+          "w": 78.48,
+          "h": 0.59
+         }
+        }
+       ],
+       "topoNoCentroDasLinhas": [
+        "proprio",
+        "proprio"
+       ]
+      },
+      "tintaUltimaLinhaSecundario": {
+       "texto": "31/12/2026",
+       "topoAreaConteudo": 1430.44,
+       "baseline": 1446.44,
+       "baseTinta": 1446.44,
+       "topoTinta": 1435.44
+      },
+      "pixels": {
+       "coordenadas": "janela (item rolado ao centro)",
+       "ultimaLinhaDePixelComTinta": 259,
+       "linhaDePixelDoDivisor": 262,
+       "yGeometricoDoDivisor": 261.84,
+       "baseGeometricaDoItem": 261.84,
+       "pixelsEscurosNaLinhaDoDivisor": 0,
+       "luminanciaMinNaLinhaDoDivisor": 204,
+       "folgaTintaAteDivisorPx": 2
+      }
+     },
+     {
+      "item": {
+       "caixa": {
+        "x": 40,
+        "y": 1448.84,
+        "w": 560,
+        "h": 74,
+        "right": 600,
+        "bottom": 1522.84
+       },
+       "height": "74px",
+       "overflow": "hidden/hidden",
+       "scrollH": 93,
+       "clientH": 74,
+       "scrollW": 560,
+       "clientW": 560,
+       "paddingBottom": "16px"
+      },
+      "divisorSeguinte": {
+       "classe": "br-divider",
+       "caixa": {
+        "x": 40,
+        "y": 1522.84,
+        "w": 560,
+        "h": 1,
+        "right": 600,
+        "bottom": 1523.84
+       },
+       "textoPassaDoTopoDoDivisorPx": 2.89
+      },
+      "principal": {
+       "texto": "Chile",
+       "caixa": {
+        "x": 56,
+        "y": 1464.84,
+        "w": 528,
+        "h": 20.3,
+        "right": 584,
+        "bottom": 1485.14
+       },
+       "textoUniao": {
+        "x": 56,
+        "y": 1464.84,
+        "w": 32.83,
+        "h": 19,
+        "right": 88.83,
+        "bottom": 1483.84
+       },
+       "nLinhas": 1,
+       "scrollW": 528,
+       "clientW": 528,
+       "scrollH": 20,
+       "clientH": 20,
+       "overflow": "visible/visible",
+       "textOverflow": "clip",
+       "whiteSpace": "normal",
+       "height": "20.2969px",
+       "lineHeight": "20.3px",
+       "textoForaDaCaixaPx": {
+        "esq": 0,
+        "dir": 0,
+        "topo": 0,
+        "base": 0
+       },
+       "foraDaJanelaHorizPx": {
+        "esq": 0,
+        "dir": 0
+       },
+       "cortesPorAncestral": [
+        {
+         "ancestral": "div.br-item",
+         "overflow": "hidden/hidden",
+         "foraPx": {
+          "esq": 0,
+          "dir": 0,
+          "topo": 0,
+          "base": 0
+         }
+        }
+       ],
+       "sobreposicoes": [],
+       "topoNoCentroDasLinhas": [
+        "proprio"
+       ]
+      },
+      "secundario": {
+       "texto": "Habilitado · Produtos: carne suína, frango, lácteos e sementes · Certificado válido até 30/06/2027",
+       "caixa": {
+        "x": 56,
+        "y": 1485.14,
+        "w": 528,
+        "h": 40.59,
+        "right": 584,
+        "bottom": 1525.73
+       },
+       "textoUniao": {
+        "x": 56,
+        "y": 1485.14,
+        "w": 517.27,
+        "h": 39.3,
+        "right": 573.27,
+        "bottom": 1524.44
+       },
+       "nLinhas": 2,
+       "scrollW": 528,
+       "clientW": 528,
+       "scrollH": 41,
+       "clientH": 41,
+       "overflow": "visible/visible",
+       "textOverflow": "clip",
+       "whiteSpace": "normal",
+       "height": "40.5938px",
+       "lineHeight": "20.3px",
+       "textoForaDaCaixaPx": {
+        "esq": 0,
+        "dir": 0,
+        "topo": 0,
+        "base": 0
+       },
+       "foraDaJanelaHorizPx": {
+        "esq": 0,
+        "dir": 0
+       },
+       "cortesPorAncestral": [
+        {
+         "ancestral": "div.br-item",
+         "overflow": "hidden/hidden",
+         "foraPx": {
+          "esq": 0,
+          "dir": 0,
+          "topo": 0,
+          "base": 1.59375
+         }
+        }
+       ],
+       "sobreposicoes": [
+        {
+         "el": "span.br-divider",
+         "interseccaoCaixaDeLinhaPx": {
+          "w": 108.69,
+          "h": 1
+         }
+        },
+        {
+         "el": "div.br-item.py-3.item-pais",
+         "interseccaoCaixaDeLinhaPx": {
+          "w": 108.69,
+          "h": 0.59
+         }
+        }
+       ],
+       "topoNoCentroDasLinhas": [
+        "proprio",
+        "proprio"
+       ]
+      },
+      "tintaUltimaLinhaSecundario": {
+       "texto": "até 30/06/2027",
+       "topoAreaConteudo": 1505.44,
+       "baseline": 1521.44,
+       "baseTinta": 1521.44,
+       "topoTinta": 1510.44
+      },
+      "pixels": {
+       "coordenadas": "janela (item rolado ao centro)",
+       "ultimaLinhaDePixelComTinta": 259,
+       "linhaDePixelDoDivisor": 262,
+       "yGeometricoDoDivisor": 261.84,
+       "baseGeometricaDoItem": 261.84,
+       "pixelsEscurosNaLinhaDoDivisor": 0,
+       "luminanciaMinNaLinhaDoDivisor": 204,
+       "folgaTintaAteDivisorPx": 2
+      }
+     },
+     {
+      "item": {
+       "caixa": {
+        "x": 40,
+        "y": 1523.84,
+        "w": 560,
+        "h": 74,
+        "right": 600,
+        "bottom": 1597.84
+       },
+       "height": "74px",
+       "overflow": "hidden/hidden",
+       "scrollH": 93,
+       "clientH": 74,
+       "scrollW": 560,
+       "clientW": 560,
+       "paddingBottom": "16px"
+      },
+      "divisorSeguinte": {
+       "classe": "br-divider",
+       "caixa": {
+        "x": 40,
+        "y": 1597.84,
+        "w": 560,
+        "h": 1,
+        "right": 600,
+        "bottom": 1598.84
+       },
+       "textoPassaDoTopoDoDivisorPx": 2.89
+      },
+      "principal": {
+       "texto": "Japão",
+       "caixa": {
+        "x": 56,
+        "y": 1539.84,
+        "w": 528,
+        "h": 20.3,
+        "right": 584,
+        "bottom": 1560.14
+       },
+       "textoUniao": {
+        "x": 56,
+        "y": 1539.84,
+        "w": 38.84,
+        "h": 19,
+        "right": 94.84,
+        "bottom": 1558.84
+       },
+       "nLinhas": 1,
+       "scrollW": 528,
+       "clientW": 528,
+       "scrollH": 20,
+       "clientH": 20,
+       "overflow": "visible/visible",
+       "textOverflow": "clip",
+       "whiteSpace": "normal",
+       "height": "20.2969px",
+       "lineHeight": "20.3px",
+       "textoForaDaCaixaPx": {
+        "esq": 0,
+        "dir": 0,
+        "topo": 0,
+        "base": 0
+       },
+       "foraDaJanelaHorizPx": {
+        "esq": 0,
+        "dir": 0
+       },
+       "cortesPorAncestral": [
+        {
+         "ancestral": "div.br-item",
+         "overflow": "hidden/hidden",
+         "foraPx": {
+          "esq": 0,
+          "dir": 0,
+          "topo": 0,
+          "base": 0
+         }
+        }
+       ],
+       "sobreposicoes": [],
+       "topoNoCentroDasLinhas": [
+        "proprio"
+       ]
+      },
+      "secundario": {
+       "texto": "Suspenso · Produtos: frango, ovos férteis e material genético · Certificado válido até 15/03/2026",
+       "caixa": {
+        "x": 56,
+        "y": 1560.14,
+        "w": 528,
+        "h": 40.59,
+        "right": 584,
+        "bottom": 1600.73
+       },
+       "textoUniao": {
+        "x": 56,
+        "y": 1560.14,
+        "w": 510.34,
+        "h": 39.3,
+        "right": 566.34,
+        "bottom": 1599.44
+       },
+       "nLinhas": 2,
+       "scrollW": 528,
+       "clientW": 528,
+       "scrollH": 41,
+       "clientH": 41,
+       "overflow": "visible/visible",
+       "textOverflow": "clip",
+       "whiteSpace": "normal",
+       "height": "40.5938px",
+       "lineHeight": "20.3px",
+       "textoForaDaCaixaPx": {
+        "esq": 0,
+        "dir": 0,
+        "topo": 0,
+        "base": 0
+       },
+       "foraDaJanelaHorizPx": {
+        "esq": 0,
+        "dir": 0
+       },
+       "cortesPorAncestral": [
+        {
+         "ancestral": "div.br-item",
+         "overflow": "hidden/hidden",
+         "foraPx": {
+          "esq": 0,
+          "dir": 0,
+          "topo": 0,
+          "base": 1.59375
+         }
+        }
+       ],
+       "sobreposicoes": [
+        {
+         "el": "span.br-divider",
+         "interseccaoCaixaDeLinhaPx": {
+          "w": 105.52,
+          "h": 1
+         }
+        },
+        {
+         "el": "div.br-item.py-3.item-pais",
+         "interseccaoCaixaDeLinhaPx": {
+          "w": 105.52,
+          "h": 0.59
+         }
+        }
+       ],
+       "topoNoCentroDasLinhas": [
+        "proprio",
+        "proprio"
+       ]
+      },
+      "tintaUltimaLinhaSecundario": {
+       "texto": "até 15/03/2026",
+       "topoAreaConteudo": 1580.44,
+       "baseline": 1596.44,
+       "baseTinta": 1596.44,
+       "topoTinta": 1585.44
+      },
+      "pixels": {
+       "coordenadas": "janela (item rolado ao centro)",
+       "ultimaLinhaDePixelComTinta": 259,
+       "linhaDePixelDoDivisor": 262,
+       "yGeometricoDoDivisor": 261.84,
+       "baseGeometricaDoItem": 261.84,
+       "pixelsEscurosNaLinhaDoDivisor": 0,
+       "luminanciaMinNaLinhaDoDivisor": 204,
+       "folgaTintaAteDivisorPx": 2
+      }
+     },
+     {
+      "item": {
+       "caixa": {
+        "x": 40,
+        "y": 1598.84,
+        "w": 560,
+        "h": 74,
+        "right": 600,
+        "bottom": 1672.84
+       },
+       "height": "74px",
+       "overflow": "hidden/hidden",
+       "scrollH": 93,
+       "clientH": 74,
+       "scrollW": 560,
+       "clientW": 560,
+       "paddingBottom": "16px"
+      },
+      "divisorSeguinte": {
+       "classe": "br-divider",
+       "caixa": {
+        "x": 40,
+        "y": 1672.84,
+        "w": 560,
+        "h": 1,
+        "right": 600,
+        "bottom": 1673.84
+       },
+       "textoPassaDoTopoDoDivisorPx": 2.89
+      },
+      "principal": {
+       "texto": "Egito",
+       "caixa": {
+        "x": 56,
+        "y": 1614.84,
+        "w": 528,
+        "h": 20.3,
+        "right": 584,
+        "bottom": 1635.14
+       },
+       "textoUniao": {
+        "x": 56,
+        "y": 1614.84,
+        "w": 32.91,
+        "h": 19,
+        "right": 88.91,
+        "bottom": 1633.84
+       },
+       "nLinhas": 1,
+       "scrollW": 528,
+       "clientW": 528,
+       "scrollH": 20,
+       "clientH": 20,
+       "overflow": "visible/visible",
+       "textOverflow": "clip",
+       "whiteSpace": "normal",
+       "height": "20.2969px",
+       "lineHeight": "20.3px",
+       "textoForaDaCaixaPx": {
+        "esq": 0,
+        "dir": 0,
+        "topo": 0,
+        "base": 0
+       },
+       "foraDaJanelaHorizPx": {
+        "esq": 0,
+        "dir": 0
+       },
+       "cortesPorAncestral": [
+        {
+         "ancestral": "div.br-item",
+         "overflow": "hidden/hidden",
+         "foraPx": {
+          "esq": 0,
+          "dir": 0,
+          "topo": 0,
+          "base": 0
+         }
+        }
+       ],
+       "sobreposicoes": [],
+       "topoNoCentroDasLinhas": [
+        "proprio"
+       ]
+      },
+      "secundario": {
+       "texto": "Em análise · Produtos: carne bovina, açúcar, soja e milho · Certificado ainda não emitido",
+       "caixa": {
+        "x": 56,
+        "y": 1635.14,
+        "w": 528,
+        "h": 40.59,
+        "right": 584,
+        "bottom": 1675.73
+       },
+       "textoUniao": {
+        "x": 56,
+        "y": 1635.14,
+        "w": 507.05,
+        "h": 39.3,
+        "right": 563.05,
+        "bottom": 1674.44
+       },
+       "nLinhas": 2,
+       "scrollW": 528,
+       "clientW": 528,
+       "scrollH": 41,
+       "clientH": 41,
+       "overflow": "visible/visible",
+       "textOverflow": "clip",
+       "whiteSpace": "normal",
+       "height": "40.5938px",
+       "lineHeight": "20.3px",
+       "textoForaDaCaixaPx": {
+        "esq": 0,
+        "dir": 0,
+        "topo": 0,
+        "base": 0
+       },
+       "foraDaJanelaHorizPx": {
+        "esq": 0,
+        "dir": 0
+       },
+       "cortesPorAncestral": [
+        {
+         "ancestral": "div.br-item",
+         "overflow": "hidden/hidden",
+         "foraPx": {
+          "esq": 0,
+          "dir": 0,
+          "topo": 0,
+          "base": 1.59375
+         }
+        }
+       ],
+       "sobreposicoes": [
+        {
+         "el": "span.br-divider",
+         "interseccaoCaixaDeLinhaPx": {
+          "w": 48.91,
+          "h": 1
+         }
+        }
+       ],
+       "topoNoCentroDasLinhas": [
+        "proprio",
+        "proprio"
+       ]
+      },
+      "tintaUltimaLinhaSecundario": {
+       "texto": "emitido",
+       "topoAreaConteudo": 1655.44,
+       "baseline": 1671.44,
+       "baseTinta": 1671.44,
+       "topoTinta": 1660.44
+      },
+      "pixels": {
+       "coordenadas": "janela (item rolado ao centro)",
+       "ultimaLinhaDePixelComTinta": 259,
+       "linhaDePixelDoDivisor": 262,
+       "yGeometricoDoDivisor": 261.84,
+       "baseGeometricaDoItem": 261.84,
+       "pixelsEscurosNaLinhaDoDivisor": 0,
+       "luminanciaMinNaLinhaDoDivisor": 204,
+       "folgaTintaAteDivisorPx": 2
+      }
+     }
+    ]
+   },
+   "decisao": "satisfaz",
+   "motivo": "A 640×450 a tinta do texto de cada item fica inteira (0px de glifo cortado, nenhum pixel de texto sobre o divisor, folga mínima 2px; só a caixa de linha passa 1.59375px da altura fixa do item) e não há rolagem horizontal: \"legível e funcional mesmo quando redimensionada para até 200%\".",
+   "reproduz": true
+  }
+ }
+}

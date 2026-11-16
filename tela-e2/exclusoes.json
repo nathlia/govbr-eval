@@ -1,0 +1,6201 @@
+{
+ "_meta": {
+  "regra": "tela-e2/metodo.md § 5; resolução de ids fora da base literal descrita no cabeçalho de tela-e2/montar-exclusoes.mjs",
+  "insumos": {
+   "ponte": "tela-e2/ponte-base.json",
+   "expostas": "tela-e2/expostas.json",
+   "baseSha256": "408402bd14f62571759a437e56cacc8bb7b811ade0dc2d09fea83ef6593b430a",
+   "mapaIdsSha256": "d545f34fbe28b60dd32e7475f8c381e9fdcf3b033a297774b05e29a41ed76a39",
+   "camposDoMapaLidos": [
+    "antigo",
+    "novos",
+    "originalTextAntigo"
+   ]
+  },
+  "resolucaoDosIds": {
+   "naBase": 45,
+   "mapaNovos": 3,
+   "mapaTexto": 8,
+   "cobertoPorEmag": 17,
+   "templateForaDoCorpus": 2,
+   "naoResolvidos": 0
+  }
+ },
+ "naoResolvidos": [],
+ "porUnidade": {
+  "a2-cfc50765d5f6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e820d6f64393": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5c92b7258f94": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9fbe68a6a115": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c368c2be0d02": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-60a05a591543": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9b2ab22fcab2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2908706845c0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c64933da7b7c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-967dae4e600f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-234a60227ce0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-661eaa74de28": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1d7dfa51e384": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-dd3fa05625b9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7bc070ff8e66": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5d658d005c21": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-38f5251ab91e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4af9570d8852": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a567bd37ac6e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bb56afef60cd": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5f24b17cd069": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9088f7e86716": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d495bfd02867": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-component-button-4d7b5f978df1",
+    "govbr-3.7.0-component-button-7ef75d42ac65"
+   ],
+   "tentativaE": []
+  },
+  "a2-6d5f38f9bab8": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-component-button-81f5e26ec0ef"
+   ],
+   "tentativaE": []
+  },
+  "a2-9c7a5411e171": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-27b5f22e0f91": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2eb232425452": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-72439446cf32": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7c15fd8222c5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1cb390050b76": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5f85eeafe863": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-71cb115d4c16": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-72ddeddc1ac8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9fc840ceb22d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b0f874b8b2cf": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5920d766fc49": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-40e233d8affd": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e0c1e68e3378": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8d0a43ba3116": {
+   "semClausula": false,
+   "exposta": [
+    "emag:4.4"
+   ],
+   "tentativaE": []
+  },
+  "a2-42f05317f7e8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d248bbf015ed": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5ea13d31e38d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c76045df5142": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7a556a4c6423": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c5b3a0f5f819": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c0a11f6415ae": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3404d04d4b7b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-cca8f73b31c5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-64b7ca74b7e4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a7ba810f6eb7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4b37d906ef01": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a02ec66db8fc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7298fe57d87a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a6f21b09c11a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-58a3dfdb12e1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0dd37ae5e7fe": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-25bc105c32d4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3bd01d0cf07d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0c6b36bc6737": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-672db77c2249": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bfb44469a04d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-946fabec78b3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-69cc4c21c452": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-aa311b1ec4c2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3d9712004d97": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e55d78fcc76a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b52ef12af607": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5e7e74a755f7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-18a6f8cd9a86": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fb3390e7f5d2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3598932718e9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e258f246fc8f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c77fe74304b6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c77fe74304b6-2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1e5bb656150a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c309914a9c1a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-afcf1e6a2889": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-146296de2050": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-de961b8987dd": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1555934df05f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-92f33bbf2ff8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ba627dc98a3c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-92bc1470bfc8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-37ebd28c5d83": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a4ba8a5b5c42": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ded21dfa659a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-da136c68226e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d0c4d842ed4f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3bb1a18f977e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-aea4108ccedb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7dcaca01f9bc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-740b8c4414d0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-972d485c5bfd": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4f409358d568": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9dce640ec7e2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-012f89b81537": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f0f5949c1481": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-30cd35f7af31": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f7b9586654a0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ca452c0dca0b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-07fc7decd319": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-605e8999322c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-16d85b33449a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-56ae11bf3f43": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-83c4a10f8a1a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6f17d7bdb24c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4b26fb2585b0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b11d63caee08": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-cf4f687ff425": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d2e94a8f95f2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b524c6ae9d9d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b009996dbe2a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ab5b315c71e0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-175a6cd27e25": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9f4e3510e6b8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-00b322ef4d6b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3096bf5dcb22": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-08c2cebc4304": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-dd25d70fc1dc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9c1bae2661d9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1f2bd2f78e2e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-41cd27de9c89": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e85565a09df7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-24551e01ea61": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-efd14d19b390": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4c3a73f9a01f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c7934780b945": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0de8814d56ed": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-542e10f14198": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-617df16d30b3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2a341ed2ed0e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c684b0331271": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-98591ebb509f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-dad79dd6fc81": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4f85b6646787": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-76e3e29bd5c3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e9449249d374": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0114fc5bf003": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b6313882cca6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0d75a1686d7b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6bece51618e1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2f6f2b80bd4a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-64d7e0259989": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-eb4c97da9b9b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d902b6d0d258": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e578b6e6c11e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-99306eec2985": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4ac674a3d321": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4ac674a3d321-2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-660097fc3e5d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8dd9a99826f2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-aed18a55aa5f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-cbb622ad5801": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3af173c228e8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7b05fd1757b9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-171b5dd858da": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-73c105214a2a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e06e33122030": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2e625701f224": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ae8db33b4503": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-309fd2a0777a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-121e2f176704": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-54dca6a2c217": {
+   "semClausula": false,
+   "exposta": [],
+   "tentativaE": [
+    "govbr-3.7.0-component-input-3788829b08fe"
+   ]
+  },
+  "a2-06f818bc75a5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fc1517207533": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a64db0c373c8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-703143614a12": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8424f75a80a8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bc172ac96406": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3169f339a8e1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8fcc793aaed1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-614b66b81ee0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5574128c6a03": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-501efb342336": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4aeca513aeeb": {
+   "semClausula": false,
+   "exposta": [],
+   "tentativaE": [
+    "govbr-3.7.0-accessibility-input-6fe41e804955"
+   ]
+  },
+  "a2-01e8f41e5ef6": {
+   "semClausula": false,
+   "exposta": [
+    "emag:6.5"
+   ],
+   "tentativaE": []
+  },
+  "a2-b4c1596eb8e2": {
+   "semClausula": false,
+   "exposta": [],
+   "tentativaE": [
+    "govbr-3.7.0-component-item-cb34ed616246"
+   ]
+  },
+  "a2-e4ef78351d8e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-40fe6a293a12": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0f969abfa232": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ece46f7d3792": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-872ebc14bda0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-648f8c6d407b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9655683035eb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-15cd0b55e268": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-126e73d998e3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f307529302ba": {
+   "semClausula": false,
+   "exposta": [
+    "emag:2.1"
+   ],
+   "tentativaE": []
+  },
+  "a2-49897bf554d9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-abd2a32fb3ac": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-22df7e6c59e8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6d56e6645e01": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9184c2c1959b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7339465391f7": {
+   "semClausula": false,
+   "exposta": [],
+   "tentativaE": [
+    "govbr-3.7.0-component-list-8f67e7cc7677"
+   ]
+  },
+  "a2-7453f15aa4b0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2d40da60ce61": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b30ded4687e3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1f12ca328b9e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8ed2a1b99cae": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d522f1f6d5a1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-56623ea03d68": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-299fe3989b35": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a3b624b67bf7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b0829f23c5f0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-869f294f6e29": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-accessibility-list-300a3d636087"
+   ],
+   "tentativaE": []
+  },
+  "a2-a720326087f7": {
+   "semClausula": false,
+   "exposta": [
+    "emag:4.1"
+   ],
+   "tentativaE": []
+  },
+  "a2-2186b6b05350": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-dbb861f603ad": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-67c3d6bf52a2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-19b6d3d3fb6f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-16d77b155a10": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a56f5cb2274c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7f66e3f43139": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9569afb68090": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d4f21a39fdbb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-56f0ebd341f3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-44ff48d461ec": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-aa055beeed7b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-465e47f20038": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0fea2735b012": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7d92213767fd": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-287b89c578bf": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-97817b45163a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a795391bb8b8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b18a24afdf3c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9249a83332e1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3fd2bf146778": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-cc45803fc46d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-64862fccbe0b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ee85ccad231d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fe46e697dfed": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-74ff4dc17b68": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-97beac2d6826": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6b61257b4ee0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3e67a3136894": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3913f756f13e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c9428860dc41": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f95a4fdbdb9a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e18b1f7b60a8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b523d4ac5534": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4f9cd352b515": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8e78be3d7908": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-cbf81c6d063e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-48ab3c4b0507": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5ae5e3e7f90b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6f4b17e995e8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a4cd494ef68a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2aaece2862b3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-492fd981a2ec": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3f235cd5c381": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f928c2cd973c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6f326d37947e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-37541ce478ea": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4057532e21bb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5348506c1e68": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-699475af5247": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3e45859a9692": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-abb8271fde93": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b37cd347eb8e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5df30996e1c5": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-component-message-4bfd5a220fb8",
+    "govbr-3.7.0-component-message-add10093ae9f"
+   ],
+   "tentativaE": []
+  },
+  "a2-1efbf2a4b525": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d227c295ae61": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c859afd9b54e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d51e9d8cc73f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6c82acf760ae": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fd04ea926801": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5606a51d1ba1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-90ea0bde7e04": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fb8e73f4ce50": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b13bd6797498": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-364ba8bf174e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4124b4181a77": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8536d91ce5b9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1e85b4bb57f1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-af81bfeb88e3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b53248d10b8e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-af548d6e8e2f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-18279488c9d7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-58895ed823c2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-434c62897bab": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ecd5116fff5f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-60f2da97ef78": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-492649f7f5a4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f7dea73ccea1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f7dea73ccea1-2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2d57183519ad": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-632533a40cd0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3816e18b3363": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3cc1425afb78": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-accessibility-modal-9be44ed1a8e0"
+   ],
+   "tentativaE": []
+  },
+  "a2-8ddebbbb4b6a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e86b38026446": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1666c6262173": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9f806df42dcc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0cc15fcf7a6e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4124b6091db8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-00e643ae6504": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4692331a747e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5e90cea6a1e8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6449a18cdee5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fe2c24c3421b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-cd08176436f9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5b70c93cfcc2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-13b6df828aa3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b654f7d5ec3b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-50ea31d30029": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e26d6d049557": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ff4dd5aeddd3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-59e07167c62a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1a802c15b9c7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-db7be8d41ee7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0c7f9f85c246": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-33f679fb6f33": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8298be817e08": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-20ae02788d1d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1a991ea4fb0b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-679793ac858e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c0faa25e7f20": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c3e876f18939": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9d120d481470": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-cb9bfff64f8f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8ec9171bd752": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-12f325dc3426": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1f5a6fa02843": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b4f55de91129": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fc79ce778b75": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a84a041f3704": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-12e21a9b29f9": {
+   "semClausula": false,
+   "exposta": [
+    "emag:6.2"
+   ],
+   "tentativaE": []
+  },
+  "a2-1a6d4f018e1c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e92fb9bda8f0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4ff79ed9eae6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6a10fb32cf47": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-92090792663a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1130605d67f7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-144be1907ee2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d43b3c8deac2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-feb64c950d74": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2c5528762713": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bc65f270eab7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-43189260cf8b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6802b0c228a8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-575b7d3ea8f9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ce8e32480479": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-daf3655caedf": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-41f27d1b3d7d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5250515a0c00": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a7bf43e3e4d8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0d25882c88ba": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8c3b5176e2a3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a3eb3793d8de": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a54a3257f7cb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-26de6e75e4bc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9dac2e9de844": {
+   "semClausula": false,
+   "exposta": [
+    "emag:6.2"
+   ],
+   "tentativaE": []
+  },
+  "a2-2e82b5a024a2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d28cff696da1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0b8483574517": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e4cc45b8fcaa": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8f35dd417642": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e7a6cc81423f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2fd1b477ffd4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b0288ba152bc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c6e5abfca6a0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4125ef86b264": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9e6c6fba4519": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-02f4fa5b33b7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f73c4a21559c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ed84948302c5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-76a7073da90a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a7317def302c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0442a29a11e7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fb929a1e5734": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2fedf9699801": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2ceae2c6fc46": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-830ec1f67192": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4d01dda04878": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fd5b72619d9f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b5448a750a03": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1545618238be": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-52ea5c58a080": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-component-step-518405a28697"
+   ],
+   "tentativaE": []
+  },
+  "a2-f87ca2c93f72": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9346c56c77db": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fce854a6d55d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9f8c5ad9173b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5e515351ccc9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-991a32fab8e8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-17158a39d76d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-31557c3770b3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2ad6396edcd1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1da96248e217": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c47edccf787c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-118542cd2b4a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-88881d1758d3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b6faa2c962f6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-afb226dcb3e4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2737953e2513": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c4affd889cea": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fd54ad1670be": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-22f61dc44546": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b082b77569f0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bc1d8f3c3c03": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-788272898cb0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f9e352b8a63d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-05d00b006222": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bd01686c9a9b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-959a8fd276d9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c0e948f338ec": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c1af8ea16c40": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1854c7b2badd": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2a5f1cb5a078": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-89b4537e8260": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-86176aff4a89": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-463dea60790d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d74dace9d0de": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-52394d43a884": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3a0cb4fc6e72": {
+   "semClausula": false,
+   "exposta": [
+    "emag:6.2"
+   ],
+   "tentativaE": []
+  },
+  "a2-e9ded28efe9c": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-accessibility-switch-364149c5aea4"
+   ],
+   "tentativaE": []
+  },
+  "a2-d69ff4c2d1f5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-baf995facf18": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a555e1def063": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4bf497c10f2d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-09dff82e11ed": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9b0884458d35": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-10aee59f9c1b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c376f69acac5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1fedaa9b08e5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7cb0f2c9c451": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-769d994c1b61": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9606afee2fc5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-822f49cf444c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-455ec804be90": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-df33691b7d30": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-799664340861": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-be108a9a7e82": {
+   "semClausula": false,
+   "exposta": [],
+   "tentativaE": [
+    "govbr-3.7.0-component-table-7c605ca2f85e"
+   ]
+  },
+  "a2-4ee36eb17570": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-32832e3432b5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-dd27a453a1d0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d6629d53e00f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d24b958d1d2e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f1d8dc1cb4f4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5494f8781b7a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f9cd4fb2f4dc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f9cd4fb2f4dc-2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f9cd4fb2f4dc-3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0ea17af59c31": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ffb991e0c695": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3883993f5e7c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-39facc03a025": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-dee0398dee6f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9b4bfb9d7c93": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ba9a65432baa": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2577fa0a202f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4a02e7b21785": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-12b03150e426": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ef322e43e7c5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0288cf4209b9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a33bec804e30": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f2c48361423c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-90f5049294e7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7e5cbc48ee9a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1f088653ff0a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d95c5823f272": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c98b9e26385b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0231cdc1d1bc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7e63220aef3a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bc353cefba8b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e106ddc07170": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-396037bd7d96": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e30e6fb780f0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-cee53d7f09fa": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0c44f5dd2a2f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-74585f5c74a0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-86551a3f4898": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-23194b4dd378": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0d6b24457a2b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ae8b8bf99efa": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3e4b18b0d25f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8a5e5baa74dc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c443d14116ab": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2862ce89b2e5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9b8c5d496570": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-dfd1b1162e5e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3e6ce3165138": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-57855d266834": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d508a8d6d8b6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5019d89a9049": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e5a53dfdc729": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0fb993a35be6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-01ce5267b919": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1699b285a43f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-db5c8aaa8e84": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e2cf582db9e5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e09dc86d34ce": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d8762acaa592": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8fe6c87056ce": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5dc3ad71b194": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0da85b2e1ae4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5f77f99c3aa6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-412a1314963a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-dc27d11b8ff7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8cdd5f3fc0b3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4a095eaf3d00": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4b34832d7b71": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4163dd0c091e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-918de33955df": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-04f08959f854": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e505a4cf48ee": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9a6dfe73f871": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-43895f300d37": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e2246d129cee": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-11b1e43201e0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a04292870f0d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bf446a3f5b0e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b11285b665ca": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8ed5cfe3256e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d304f5818f11": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d267e774432c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-75aeef10eb05": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2e8e53cf16ef": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-component-upload-a54eed419af5"
+   ],
+   "tentativaE": []
+  },
+  "a2-cbdb96e1d273": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3d3beb699f29": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8a3ceb94046c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-48b225deace0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-043deee1ee88": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a2591de5315f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-17970a9e717d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a09116df2aa7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6e17ac8690e0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3bfff7332768": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b0c0d10a8f6e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7cd5eac9a123": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a454f36bdfa3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e0a5200d4fb9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7bee64a60e33": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-031bbca41445": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e4e664ed4c5e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d90a30b48ec6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a3ff49330922": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-12111989b829": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-55f2b415e48d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5cdf7194c41a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f78926521bcf": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d4cb933a2079": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f630ef165857": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e4bcafaab7f1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-98e34bf12491": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-eadc35148ab4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-60d60030b848": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f3855fcfd881": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3d66c8b0d555": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-75629bbcfb59": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-07be83498c76": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2f39c7e134ce": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-36dcfef2c39b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6eedea6c0990": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6fff690036a6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7f5ce46f762f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-728b1f066902": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-dea6a58c22c4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-13efc60bb6b6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e80f58b4b913": {
+   "semClausula": false,
+   "exposta": [
+    "emag:4.4"
+   ],
+   "tentativaE": []
+  },
+  "a2-760f23547fab": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-370b35b87f02": {
+   "semClausula": false,
+   "exposta": [
+    "emag:4.4"
+   ],
+   "tentativaE": []
+  },
+  "a2-2b5c2bc4358b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-63e7d8f1a47d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6b4aa6ecd808": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7ecb601ffa09": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bd6e34bcfb23": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0895138d72a0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6bbf1a76d8a1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-065bc0d01f43": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b1de44d95577": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-33f8d78aa04b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-479f5042a47c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-235056fad007": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fe133882c34a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a8421dd4efff": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-622c6c318ee6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0e36d85d2a99": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bd25d0e98b52": {
+   "semClausula": false,
+   "exposta": [
+    "emag:6.2"
+   ],
+   "tentativaE": []
+  },
+  "a2-f9bd4feb338d": {
+   "semClausula": false,
+   "exposta": [
+    "emag:6.2"
+   ],
+   "tentativaE": []
+  },
+  "a2-84b4e3a0e70a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-72c04236c683": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0ddecae2533b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4459124a7579": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3c41add42ce4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a621c42d0a5d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-aa787d1e87f2": {
+   "semClausula": false,
+   "exposta": [
+    "emag:6.5"
+   ],
+   "tentativaE": []
+  },
+  "a2-2c7b11fee957": {
+   "semClausula": false,
+   "exposta": [
+    "emag:6.5"
+   ],
+   "tentativaE": []
+  },
+  "a2-751ad24830dc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-03670465d44e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a4a64ba63d57": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6f543db37b45": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-02ccd4221688": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-85f29ecf4300": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-pattern-global-c648efdf7201",
+    "emag:6.7"
+   ],
+   "tentativaE": []
+  },
+  "a2-11a3cde92bae": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-477416522ade": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2b6df245486f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-12c4e265177e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c93fa23b79d3": {
+   "semClausula": false,
+   "exposta": [
+    "emag:2.1"
+   ],
+   "tentativaE": []
+  },
+  "a2-a6ff9bd3dde7": {
+   "semClausula": false,
+   "exposta": [
+    "emag:2.1"
+   ],
+   "tentativaE": []
+  },
+  "a2-5851b87c61f4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-45cda5b2c343": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-84a1433ae0b0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ff3b1b6e1af2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b03f7bf28d93": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9ac504ff5c47": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f39e54bf5024": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-83e84e85fb1d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a86610d101ff": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-41f3f0fbdd12": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7c9d3f5a4450": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-aeeeadc02276": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e739b15725c1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9c2348419e2b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d379c008af8e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8a61ee14d227": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bd7118bba7fa": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-51ad17bfa5ac": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8a15c1d0f5fd": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0e00f9f85cc9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e9f625bcc0df": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4d78458f10d3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7f3744c37686": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3087eb20a1dd": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-65885689b982": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fd3bb54a964e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2a528c0433d3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-48806ab9df8c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f6b7396d0e75": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b198189b9bc6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1f4674970cfc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7a028eab4c98": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6eb031bb0c08": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-68cfd8a47111": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-cd05e4f6e606": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bd3e30f68ef0": {
+   "semClausula": false,
+   "exposta": [
+    "emag:1.3"
+   ],
+   "tentativaE": []
+  },
+  "a2-766414fd4ce4": {
+   "semClausula": false,
+   "exposta": [
+    "emag:1.3"
+   ],
+   "tentativaE": []
+  },
+  "a2-9439c1238fb9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2e899b5aa440": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4e5a457e6d01": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-61f7e680f11b": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-pattern-global-dc80c4e7406b"
+   ],
+   "tentativaE": []
+  },
+  "a2-ed9403e3aeaf": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-41d4a9277a7a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4a38a36a9f8a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9449746cf4bd": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ca8f78f360d2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-73e981ec5a45": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7156746ee5e6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-30a94bc14837": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8f86684de1e2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-73a644f4e27d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-96632c4fef99": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6df766fca75b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bd36a3a634a3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-520bb2e1d048": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-164afb980ecc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-64df1c8263b8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6b8328b0e0a8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ee51fdee5bf2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4abd5f3b6947": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6fb62c1596bb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a33ab64c0b03": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a6bf05b911d3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-74d3cd9eca47": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5bb7508d5720": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-67cb88b1e983": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8d054675703a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3ab15b98e299": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bc6f3b6fe19d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e68613d7ba36": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-680fc6ae64f1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bc60da954336": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d051f4509212": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-902a234f887c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9c703de75f43": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7d657a9927c8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-68af96222c81": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-add9d84e3c32": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-667cdc6ab17f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-729f9df0c7cc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5c6ba1e2f597": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-cb1051a840bd": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c7db245ff181": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4662293da7be": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ed0ef0a331f3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-211e1da4c380": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e080d7708ab9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6d86c8eec964": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9807c3fc70db": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-072841fbb5e1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9ecda24500f0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f6c34c2a2a1a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d5d3fc49b7e0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c7535f324895": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-033431154c9f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7adda8a989ed": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-68a082ea714d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5992cfd640ea": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f530510f7af7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d5774660fa43": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5d49ff57b28a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-73d050735a17": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-34f615330c69": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-42757e3c479f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f77a5668432d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ec93314aea96": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-630e2c67260d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e3c4f490e133": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-751899cfbf41": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fc8bda1a370c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c4f69bcb80ec": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-24135286f5c9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5b623d8a8789": {
+   "semClausula": false,
+   "exposta": [
+    "emag:3.6"
+   ],
+   "tentativaE": []
+  },
+  "a2-5c314e764482": {
+   "semClausula": false,
+   "exposta": [
+    "emag:3.6"
+   ],
+   "tentativaE": []
+  },
+  "a2-e4fa85fba453": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7bf68b8112fc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8571bc44c93e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-eb2482445be4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-17e49db98872": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9d8cb28fc872": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c09eb3a0b4b9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a27cd0216d65": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7a62d0fc1101": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-174b478b996b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-da632225f1e3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f1438ae24d8a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a4711c88f5d2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-66e16b7646e4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-80c3d500de37": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-efc2f11082fc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2f6900335a84": {
+   "semClausula": false,
+   "exposta": [
+    "emag:4.1"
+   ],
+   "tentativaE": []
+  },
+  "a2-7c18d8a16446": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3fb37eb25f3c": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-foundation-global-21b1a2733f7b"
+   ],
+   "tentativaE": []
+  },
+  "a2-28de8942dba9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5dbc2e5d5d2f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9016ca05048b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-da36a6ba8ae5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e64c41be5867": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b015ac9d3146": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5523de63f60f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b4139f08e1c7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-67d855f2c6d2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ddbcae55f98a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8d96c3f347df": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-318690c44e2b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f0e069600ad6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-94d2f57b9801": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6a791128da6a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-19a22fa26e63": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-04ecf8748d69": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-eccf548c4c50": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5b2246fbb11b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-73305bb4155c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-53c61a976a6a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-11bebfe2e4f1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7b181cada204": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-522cccf12a0c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1eb2be826730": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-529eb650f033": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d34f9ca2adfb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-952e88a5af0d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bd456a928d4d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-214a81874142": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e99c92f13ac0": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-foundation-global-afb62719493b"
+   ],
+   "tentativaE": []
+  },
+  "a2-f0e1d7f16f8b": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-foundation-global-1c0146e93d2e"
+   ],
+   "tentativaE": []
+  },
+  "a2-2f4eadc23b2c": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-foundation-global-21fb08664799"
+   ],
+   "tentativaE": []
+  },
+  "a2-84e597ff795b": {
+   "semClausula": false,
+   "exposta": [
+    "emag:1.2"
+   ],
+   "tentativaE": []
+  },
+  "a2-d32be051c797": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5eba8d01b99d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-329f74d7646c": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-foundation-global-7b7256828c9c"
+   ],
+   "tentativaE": []
+  },
+  "a2-512484b770f6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c68271bde5ca": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b955ffe42e59": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-aeadc184b857": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-deed2926e716": {
+   "semClausula": true,
+   "exposta": [
+    "emag:1.1"
+   ],
+   "tentativaE": []
+  },
+  "a2-0440bd200dc5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-41296b869801": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-accessibility-global-49089865cd5d",
+    "emag:1.1"
+   ],
+   "tentativaE": []
+  },
+  "a2-5784e4916409": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ed21800a3c0b": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-accessibility-global-19cbc02f51c6",
+    "emag:1.1"
+   ],
+   "tentativaE": []
+  },
+  "a2-eecfb4af1d1e": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-accessibility-global-2f22b7245ef9",
+    "emag:1.2"
+   ],
+   "tentativaE": []
+  },
+  "a2-eecfe2a7ebaa": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f1f5e072a8dd": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5085c6c4f5fc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c4695ea47e7a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-aa877d73b001": {
+   "semClausula": false,
+   "exposta": [
+    "emag:1.2"
+   ],
+   "tentativaE": []
+  },
+  "a2-efaa1a56290c": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-accessibility-global-67a136404372",
+    "emag:1.2"
+   ],
+   "tentativaE": []
+  },
+  "a2-bff5d6df8622": {
+   "semClausula": true,
+   "exposta": [
+    "emag:1.3"
+   ],
+   "tentativaE": []
+  },
+  "a2-47b777d7f803": {
+   "semClausula": false,
+   "exposta": [
+    "emag:1.3"
+   ],
+   "tentativaE": []
+  },
+  "a2-e0b41499dd79": {
+   "semClausula": false,
+   "exposta": [
+    "emag:1.3"
+   ],
+   "tentativaE": []
+  },
+  "a2-23e41146ee6c": {
+   "semClausula": false,
+   "exposta": [
+    "emag:1.2"
+   ],
+   "tentativaE": []
+  },
+  "a2-c575c2f10955": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6dc87e28972f": {
+   "semClausula": false,
+   "exposta": [
+    "emag:3.6"
+   ],
+   "tentativaE": []
+  },
+  "a2-127f92e2ad55": {
+   "semClausula": false,
+   "exposta": [
+    "emag:6.2"
+   ],
+   "tentativaE": []
+  },
+  "a2-95b70acae962": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d65063427355": {
+   "semClausula": false,
+   "exposta": [
+    "emag:3.3"
+   ],
+   "tentativaE": []
+  },
+  "a2-c01c95af6273": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-971db6a57c75": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-accessibility-global-5817ddd685a6",
+    "govbr-3.7.0-accessibility-global-e038367bd7d6"
+   ],
+   "tentativaE": []
+  },
+  "a2-0e14b7416c83": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6eb94a328835": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-219fad7a1579": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-07b1edc24273": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7957c40b2205": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-938e8e5cf6c8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f454513b3b84": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2cfa67606d3b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1550c237c5ed": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8725c8350341": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fe970e7d07cb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8dc9577fd386": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-eb9aa5fc5d54": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d4f6b73ce550": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5455d6118703": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d47fd77371cb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6c02ed59db41": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2781578517b1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-671056d628cb": {
+   "semClausula": false,
+   "exposta": [
+    "emag:1.1"
+   ],
+   "tentativaE": []
+  },
+  "a2-d45711a55b6c": {
+   "semClausula": false,
+   "exposta": [
+    "emag:1.2"
+   ],
+   "tentativaE": []
+  },
+  "a2-372068e40fd2": {
+   "semClausula": false,
+   "exposta": [
+    "emag:1.3"
+   ],
+   "tentativaE": []
+  },
+  "a2-bde476da44c9": {
+   "semClausula": false,
+   "exposta": [
+    "emag:1.4"
+   ],
+   "tentativaE": []
+  },
+  "a2-9fd770b979ce": {
+   "semClausula": false,
+   "exposta": [
+    "emag:1.5"
+   ],
+   "tentativaE": []
+  },
+  "a2-a63512415ce6": {
+   "semClausula": false,
+   "exposta": [
+    "emag:1.7"
+   ],
+   "tentativaE": []
+  },
+  "a2-7927b81f6dba": {
+   "semClausula": false,
+   "exposta": [
+    "emag:1.9"
+   ],
+   "tentativaE": []
+  },
+  "a2-acc4801af71c": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-accessibility-global-e6fd5e1247de",
+    "emag:2.1"
+   ],
+   "tentativaE": []
+  },
+  "a2-028b81485587": {
+   "semClausula": false,
+   "exposta": [
+    "emag:2.2"
+   ],
+   "tentativaE": []
+  },
+  "a2-22240b8959ba": {
+   "semClausula": false,
+   "exposta": [
+    "emag:2.3"
+   ],
+   "tentativaE": []
+  },
+  "a2-31b4a3f89649": {
+   "semClausula": false,
+   "exposta": [
+    "emag:2.4"
+   ],
+   "tentativaE": []
+  },
+  "a2-855a016067f1": {
+   "semClausula": false,
+   "exposta": [
+    "emag:3.3"
+   ],
+   "tentativaE": []
+  },
+  "a2-679351f2635c": {
+   "semClausula": false,
+   "exposta": [
+    "emag:3.6"
+   ],
+   "tentativaE": []
+  },
+  "a2-83ec838a289a": {
+   "semClausula": false,
+   "exposta": [
+    "emag:3.9"
+   ],
+   "tentativaE": []
+  },
+  "a2-959ca4537add": {
+   "semClausula": false,
+   "exposta": [
+    "emag:3.10"
+   ],
+   "tentativaE": []
+  },
+  "a2-66fbdcf13772": {
+   "semClausula": false,
+   "exposta": [
+    "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+    "emag:4.1"
+   ],
+   "tentativaE": []
+  },
+  "a2-a6e2601837a7": {
+   "semClausula": false,
+   "exposta": [
+    "emag:4.4"
+   ],
+   "tentativaE": []
+  },
+  "a2-f4237d13520b": {
+   "semClausula": false,
+   "exposta": [
+    "emag:6.2"
+   ],
+   "tentativaE": []
+  },
+  "a2-0f20577609d3": {
+   "semClausula": false,
+   "exposta": [
+    "emag:6.3"
+   ],
+   "tentativaE": []
+  },
+  "a2-cd5cbf0f18dc": {
+   "semClausula": false,
+   "exposta": [
+    "emag:6.5"
+   ],
+   "tentativaE": []
+  },
+  "a2-d720ea8520cb": {
+   "semClausula": false,
+   "exposta": [
+    "emag:6.6"
+   ],
+   "tentativaE": []
+  },
+  "a2-18bccce4132a": {
+   "semClausula": false,
+   "exposta": [
+    "emag:6.7"
+   ],
+   "tentativaE": []
+  },
+  "a2-0b05d89c4a81": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-addcc77d9a3e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7d680beb8c97": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3d0e191fdf80": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-102453b77ab4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f17960e56ad4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5c25ef83262b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-64c8c443af4e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ee9df7100532": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1531c686a85b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2dd74ca2fbb7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ea14a4e9fed7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5f6069ffdd40": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f5fbe58c6c73": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-22d1b7628da2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-507dbd6cdee4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1f54e64301d8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2b328e5fbcef": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e175765df557": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d18fcbe1e7fa": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9e3f0f34fd0a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-85507a862fda": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-870716fa7ea6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-205076ab76f5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-103cc2203d54": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-184c3673325d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8c29b767dcd8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-87c66cfdfa74": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5b92ca0b281f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-dc2f639cc89f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9b027ce0dd80": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-09a822e29fbb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d9dc282c1147": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1a7bffe3be23": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1a6eed4ad6a7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4e7b4fffe21a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-cf6773605348": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-585e846610a9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f3663aeede31": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-050e8df370f9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-26eb8a6b8ca0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ef1f366727a7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c77db0e1bc49": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-89fc3426b641": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-353a71613203": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9b898ee3bb0d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2c8d17f02ef8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c418d9a964e8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-674775744f1a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d3a67f7d62eb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-cf9a351e815d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e5f868e9a5ba": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-122dd29e72f2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9f601c10830f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-92cfd1b51e3f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7339b67f5de6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0f63275ed1aa": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8ab3451e8ab7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c84169cf9fcb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-39af05fa3a06": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-11b7efdf95ab": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e4fa90acffac": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-cecc3111d79b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-684e49bfcc90": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8e13c46672f5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a0788e298517": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d7daf3fab1df": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e85eefb9d6f2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-cf20e5b86798": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-deede0ef5e68": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d310c5939aa9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e36f62b6cec2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a4f030053769": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bf93d0b0e6f9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4d99afd1c618": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fae64a06e367": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0465c30b3825": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a451e00d7b63": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4b4c1d7466fb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0d8141710aae": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e4ed78938b04": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-83611c221e13": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3f42b6af5f6c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c02b566bacc1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-95f9a6eaa8ba": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8523bfe1280c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-caf6bc80cb4b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-52910e5e78ee": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-55b81a82e2e0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2611fe28ba37": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ddcc28d45038": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2d3ff6e2d648": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4be76460d856": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b9f704f44a24": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-14fa162258a8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fd97029026d4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-dc662beb73b3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-69e3d9cf4cb3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4af892600079": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8e562bc65a75": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8465edac53a3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f307a3b354d5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-567f553ecdb9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e36dfd582950": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7110a3f0752c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1c7b93decc77": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4b7121d39b1f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-153be5c9531a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-311162831549": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3bacb9f074e2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b9a6c8cb8d85": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f04b770f9f46": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-dc5e78af23f0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-345bac654a64": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d159e0f4acdf": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1295720cf5c6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-14f77ef52c10": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fdd90f010f47": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-46e26a19b8ee": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fd6aa918efcc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fd151cae3c9e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8056dd4c745b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6b857febb914": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-697847ab4ef3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e50a6b5d6102": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ab377e910464": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2956c4c250cb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8857d7885090": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2c2c12316171": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e262242d2ee1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-56613b3be80b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-41c27bf1953d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c93ceefb1fdb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9e4cc8e3687a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a4429f532c6c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4095c6865789": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1b733fd9b08b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9da54b795b13": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1cd392c81428": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-eb940c804923": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b60eebdd6306": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-99da0d5abad3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0bbeccc63fca": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-75f137ee2a1d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-35c752299c82": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a7a47709434b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0010742096a9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-dc18106452ce": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c595957b223a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-728a2fafbf41": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8f7ac4185fde": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c1a7be65a847": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8da85415cc63": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b36164f696c2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c8e883f814e3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-623bbce449cc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e5c486e19a78": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6700707b8210": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f6dce058d729": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8be415ce0e60": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3aed1395deb5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9f8a9e65de7b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-63b925cf21d0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-91a65423f236": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b13bdcf70838": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-63038cf267e1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5f5d70c647f1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b6edb870548c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7c3e949ce374": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-224752fa3021": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-143c1ac990d7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-777552081394": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7e932f26c8a3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-aaea18cff3ad": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c01c7931f337": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f30373c01719": {
+   "semClausula": true,
+   "exposta": [
+    "emag:2.1"
+   ],
+   "tentativaE": []
+  },
+  "a2-ee7f397d0769": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f0f936d2b593": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5d71dd301de6": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d0f999e273f9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3c60c31e040b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-02d46e798e66": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ef5b541133c7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6423b7b57f6f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-66933615dfa1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-70e6c9cf922d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-93e48ebe4229": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c187d7b0ee2e": {
+   "semClausula": false,
+   "exposta": [
+    "emag:1.1"
+   ],
+   "tentativaE": []
+  },
+  "a2-13dc5e3d1e5b": {
+   "semClausula": false,
+   "exposta": [
+    "emag:1.3"
+   ],
+   "tentativaE": []
+  },
+  "a2-561af3bd0c85": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-dbcc920d85cb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-40a6f248b2f4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fbf563b6c0cb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-021bc9b80ecf": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6fdad59940e1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-048df7876e49": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2a26ec4b2ebe": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bc741b4ba1ac": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-041825a2e1fb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3201afddaa7d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0c1808260f4e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-70cb445f08e9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ac0ec572ac7f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-232ab7dd18c9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-47e95d69211b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2f51f3df505e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-e587c7e9238f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-65366b4baf7f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ba60a399cfc7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2df7bf5e2fa2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-69c06d5fd1ad": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b407feef8940": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ba97fe048b1b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0d33581a3847": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-598ca56880b1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fde9c0cced53": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fc99c0db73c4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-87a6ef93eb2f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ffac7751c5b1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-747515b43724": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-caeaef36e509": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-799800fab95b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-73a6b6a52a5c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-cc437f217b56": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d5f9ed80c0fd": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-55d85630aecf": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d89e6bfe79d5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4690f51372ed": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5c0958e895c9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2c134632f410": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-48f21d412344": {
+   "semClausula": true,
+   "exposta": [
+    "emag:4.1"
+   ],
+   "tentativaE": []
+  },
+  "a2-42f5fd524676": {
+   "semClausula": true,
+   "exposta": [
+    "emag:4.1"
+   ],
+   "tentativaE": []
+  },
+  "a2-3dd5d6fc4964": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c4e5ddfcd9e8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-de0dda08d77c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-42ecf7c97137": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c5869066593c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-574f91c49083": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f29743ca30f0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-372debe4d431": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c3b2b94bf96a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d091cb898d5a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4472c628f36d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2b37533092c8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6363727ad1e1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bd8b74dacc0a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c7d539b43837": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-da10fc920879": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d170bcd25d39": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a03d41f1674c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0c2c03c29fd1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8a57657707e5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-102ab68858c1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3004e1a5a1a1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4cb90c862726": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c5ae5070f6ba": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d52285d4837a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3c9038617f1b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-10a8deacdfc8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-39362dfabbbe": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0506e736be5e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-35558ab2945b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9be28aa3d6c4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a2552432319e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ec8f274e7e80": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8dd010510dfa": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-dc2b2106af65": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a99b5256c9ba": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9c3b3db5be94": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c8ea655ae1d4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a5a34cf1176b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-72fcfcc224a7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9012a71f7186": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-8c0a91587869": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7a0e75d247cf": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b2d1aa05b6c1": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-778cb1886b46": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b71d02fea165": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-41c5484495af": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a0286a3afda3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7f289efc5ca0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-986bce8e5866": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6a71be40aa41": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ab5eec9678ac": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1fefd66159a3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-322a4802c571": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6468b76706d2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-920faf6b0136": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-edce1bd60be3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a5bf94392cd3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ab469c2727b7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6b21a16d1975": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a08500e3b759": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-98243a6d8f3a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bdda40c02e17": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ccc6d902a4a5": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fb9e539d4528": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6afafbfc7a78": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6b42100a4bd2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9a0c3d0bb27c": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bb2310e5cf41": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-47f249dd7284": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-386b071ca598": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6ca1b6381610": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2f3047dbb164": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-637f07df4a80": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f334843373f2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1378827bf80f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-341e32a322b9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7a8444ab3c10": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-ec69df55e8bf": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2f6b87d1c5b7": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-629a5a1701cc": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9b98387660c2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fad6997ed468": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f82d600db413": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a8114c14df41": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-271305d931f3": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9bb580f3f5cb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-606272902695": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b0a08f1cb960": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4bf1b50d3636": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-4b41793df6b8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-864e64dc686f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a82f144268d4": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b85ef2761050": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c8902b7754f0": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d89456b2b61e": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-641c4d20ab8f": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d443707a1edf": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1f343a3e7bf2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fc881a57891b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-9a7a924f8063": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d2d7a7aa6ba8": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-eceb2ec18ff9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fe5b8665db99": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-bb8ab1145b98": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c72a64d5d504": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f1efa8124874": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7ae4ad55ed25": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d5695a0a50f2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6d96474b0f3b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6a762aac9cba": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-03216e12bb96": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0d50ac5f7083": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2eb539f0767d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fc6334fab65a": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-68cdebd764de": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-d05e499acddf": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-5279fd95844d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-7a9d5e4b3c79": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6d56ad3499ab": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-c593f7ae4ec2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-b099a48a064b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-94332bb586eb": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-351910d59f9b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-f50e5a28b0c9": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-a3e433fe2666": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-3b4e8e23351d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-6f122899cebf": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-2db211927f15": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-0b634b5de510": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-612c013e50d2": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-fdf859cf9f4b": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  },
+  "a2-1f3a53abca0d": {
+   "semClausula": true,
+   "exposta": [],
+   "tentativaE": []
+  }
+ }
+}

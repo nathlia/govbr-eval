@@ -1,0 +1,2937 @@
+[
+ {
+  "id": "a2-390c1fc05363",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Layout e Estrutura › 3. Indentação e Subagrupamentos",
+  "texto": "Para tornar mais clara e hierarquizada a informação utilize indentação evidente para os subagrupamentos.",
+  "contexto": "Subagrupamentos são agrupamentos dentro de agrupamentos. Para tornar mais clara e hierarquizada a informação utilize indentação evidente para os subagrupamentos.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Subagrupamentos; o formulário tem um só fieldset, sem subgrupo (como a2-83bfe4ed2cf5).",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-ba97fe048b1b",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Lei Geral de Proteção de Dados",
+  "texto": "Nos campos de entrada opcionais deixe claro qual o benefício que será oferecido para quem preenchê-los.",
+  "contexto": "- Nos campos de entrada opcionais deixe claro qual o benefício que será oferecido para quem preenchê-los.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Campos opcionais; a tela não oferece campo opcional (como a2-b174afd9a294).",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-c19c64886df5",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Melhores Práticas",
+  "texto": "Esteja atento aos gerenciadores de senhas e aos recursos do browser que preenchem dados para os usuários.",
+  "contexto": "- Esteja atento aos gerenciadores de senhas e aos recursos do browser que preenchem dados para os usuários.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Gerenciadores de senha e preenchimento automático; não há campo de senha nem de texto livre.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-d89456b2b61e",
+  "componente": null,
+  "arquivo": "padroes/design/formulario.md",
+  "secao": "Formulário › Layout e Estrutura › 2. Fieldset e Legend › Estilização do Fieldset",
+  "texto": "Tabela normativa — Formulário › Layout e Estrutura › 2. Fieldset e Legend › Estilização do Fieldset (a partir da linha 304)",
+  "contexto": "l.306: --surface-width-none || l.307: --spacing-scale-5x",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-tabela",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Estilização do fieldset dos avisos pela tabela. A linha border (--surface-width-none) já está em a2-02ccd4221688; a variante usa a linha margin-bottom. Medida: margin-bottom computado do fieldset = valor de --spacing-scale-5x.",
+   "instancias": [
+    "swt-aviso-email"
+   ],
+   "variantes": [
+    {
+     "id": "fieldset-margem-reduzida",
+     "descricao": "O fieldset 'Avisos sobre o requerimento' fica com margin-bottom igual a --spacing-scale-2x em vez de --spacing-scale-5x.",
+     "clausula": "l.307: margin-bottom | --spacing-scale-5x"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-013c62c522df",
+  "componente": null,
+  "arquivo": "padroes/design/navegacao.md",
+  "secao": "Navegação › Estruturando o Processo de Navegação › 5. Hierarquia",
+  "texto": "Organize seu conteúdo estruturando-o dentro de uma hierarquia.",
+  "contexto": "Organize seu conteúdo estruturando-o dentro de uma hierarquia. No topo desta hierarquia devem estar os conteúdos de maior relevância e que dão acesso aos conteúdos das camadas mais baixas desta hierarquia.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Hierarquia de conteúdo de um site/sistema inteiro; a tela é uma página interna.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-a452374c9960",
+  "componente": null,
+  "arquivo": "padroes/design/navegacao.md",
+  "secao": "Navegação › Estruturando o Processo de Navegação › 5. Hierarquia",
+  "texto": "No topo desta hierarquia devem estar os conteúdos de maior relevância e que dão acesso aos conteúdos das camadas mais baixas desta hierarquia.",
+  "contexto": "Organize seu conteúdo estruturando-o dentro de uma hierarquia. No topo desta hierarquia devem estar os conteúdos de maior relevância e que dão acesso aos conteúdos das camadas mais baixas desta hierarquia.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Hierarquia de um site inteiro.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-6be62adc3519",
+  "componente": null,
+  "arquivo": "padroes/design/navegacao.md",
+  "secao": "Navegação › Estruturando o Processo de Navegação › 5. Hierarquia › Elementos de Hierarquia na Navegação › A. Home",
+  "texto": "É a entrada principal de seu site, sistema ou aplicativo e deve exibir o conteúdo de apresentação deste, assim como um componente principal de navegação que dará acesso às outras camadas hierárquicas.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Página inicial; esta é interna.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-0685bc48e056",
+  "componente": null,
+  "arquivo": "padroes/design/navegacao.md",
+  "secao": "Navegação › Estruturando o Processo de Navegação › 5. Hierarquia › Elementos de Hierarquia na Navegação › B. Pais e Filhos",
+  "texto": "É importante manter sempre presente acesso de navegação entre nível pai e filhos.",
+  "contexto": "O nível superior na hierarquia de navegação é chamado de \"pai\" enquanto que o(s) nível(is) inferiores são chamadas de \"filhos\". É importante manter sempre presente acesso de navegação entre nível pai e filhos.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "Acesso entre pai e filho é dado pelo breadcrumb e pelo botão Voltar (moldura protegida).",
+   "origem": "lote-A.json"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-40b8af421136",
+  "componente": null,
+  "arquivo": "padroes/design/navegacao.md",
+  "secao": "Navegação › Tipos de Navegação › 1. Navegação Lateral › Boas Práticas na Navegação Lateral",
+  "texto": "Componentes de navegação lateral que contém os principais níveis de hierarquia devem permanecer sempre visíveis em qualquer tela da aplicação.",
+  "contexto": "Componentes de navegação lateral que contém os principais níveis de hierarquia devem permanecer sempre visíveis em qualquer tela da aplicação. Desta forma o usuário terá acesso imediato às principais telas do sistema ou aplicativo;",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Navegação lateral; não há.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-6f189e017640",
+  "componente": null,
+  "arquivo": "padroes/design/navegacao.md",
+  "secao": "Navegação › Tipos de Navegação › 2. Navegação Progressiva › Boas Práticas na Navegação Progressiva",
+  "texto": "Em navegações descendentes, utilize recursos visuais como ícones que podem auxiliar o usuário a perceber um acesso a um nível inferior na hierarquia;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Navegação descendente; a tela não tem links/níveis inferiores no conteúdo sorteável.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-983f688f7874",
+  "componente": null,
+  "arquivo": "padroes/design/navegacao.md",
+  "secao": "Navegação › Tipos de Navegação › 2. Navegação Progressiva › Boas Práticas na Navegação Progressiva",
+  "texto": "Em navegações diretas, mantenha sempre presente nas interfaces outros componentes que auxiliem o usuário retornar ao ponto de partida ou que deixem claro o caminho percorrido;",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "Retorno ao ponto de partida é o breadcrumb e o botão Voltar (andaime).",
+   "origem": "rodada-0"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-5b3287f0865b",
+  "componente": null,
+  "arquivo": "padroes/design/navegacao.md",
+  "secao": "Navegação › Tipos de Navegação › 3. Navegação Reversa › Boas Práticas na Navegação Reversa",
+  "texto": "Forneça ao usuário mensagens claras, caso a tela anterior não esteja mais disponível.",
+  "contexto": "Forneça ao usuário mensagens claras, caso a tela anterior não esteja mais disponível. Pode-se usar nestes casos os padrões de Empty State, Telas de Erro ou Componente Message;",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Tela anterior indisponível; não há esse estado.",
+   "origem": "lote-A.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-23142cba82ab",
+  "componente": null,
+  "arquivo": "padroes/design/navegacao.md",
+  "secao": "Navegação › Tipos de Navegação › 3. Navegação Reversa › Boas Práticas na Navegação Reversa",
+  "texto": "Indique claramente ao usuário o relacionamento entre as telas \"pais\" e telas \"filhas\".",
+  "contexto": "Indique claramente ao usuário o relacionamento entre as telas \"pais\" e telas \"filhas\". É importante que o usuário consiga identificar o acesso à tela \"pai\" facilmente e retroceder na navegação.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "Relação pai/filha é mostrada pelo breadcrumb (moldura protegida).",
+   "origem": "lote-A.json"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-00049d03d19f",
+  "componente": null,
+  "arquivo": "padroes/design/navegacao.md",
+  "secao": "Navegação › Tipos de Navegação › 3. Navegação Reversa › Boas Práticas na Navegação Reversa",
+  "texto": "É importante que o usuário consiga identificar o acesso à tela \"pai\" facilmente e retroceder na navegação.",
+  "contexto": "Indique claramente ao usuário o relacionamento entre as telas \"pais\" e telas \"filhas\". É importante que o usuário consiga identificar o acesso à tela \"pai\" facilmente e retroceder na navegação.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "importante",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "Acesso à tela pai e retrocesso são breadcrumb e botão Voltar (moldura protegida).",
+   "origem": "lote-A.json"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-9e58968bba21",
+  "componente": null,
+  "arquivo": "padroes/design/navegacao.md",
+  "secao": "Navegação › Estruturando o Processo de Navegação › Boas Práticas",
+  "texto": "Guie o Usuário: Quando a necessidade for a conclusão de um fluxo, tarefa ou jornada, induza o usuário pelo caminho correto",
+  "contexto": "- Guie o Usuário: Quando a necessidade for a conclusão de um fluxo, tarefa ou jornada, induza o usuário pelo caminho correto, não deixando dúvidas a respeito de qual botão ou link a ser clicado ou caminho a ser percorrido;",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "O caminho para concluir a tarefa é dado pelo btn-enviar (primário) e btn-voltar, moldura protegida.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-46c7beba4a43",
+  "componente": null,
+  "arquivo": "padroes/design/navegacao.md",
+  "secao": "Navegação › Tipos de Navegação › 2. Navegação Progressiva › Boas Práticas na Navegação Progressiva",
+  "texto": "Para navegações sequenciais, fortaleça a ênfase visual em botões que são responsáveis por guiar o usuário em etapas futuras de uma jornada;",
+  "contexto": "- Para navegações sequenciais, fortaleça a ênfase visual em botões que são responsáveis por guiar o usuário em etapas futuras de uma jornada;",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Navegação sequencial (wizard) com botões de avançar etapa; não existe na tela.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-46c418f28680",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação",
+  "texto": "Portanto, esse tipo de microcopy precisa ser bem assertivo, conciso e com as palavras certas para impactar quem lê.",
+  "contexto": "Os textos para interação têm a função de chamar a atenção do usuário, guiar e incentivá-lo a interagir com os elementos. Portanto, esse tipo de microcopy precisa ser bem assertivo, conciso e com as palavras certas para impactar quem lê.",
+  "antecedente": "Elementos de ação permitem ao usuário realizar uma ação específica dentro da interface, por meio de uma interação com o intuito de obter informações.",
+  "forca": "obrigatoria",
+  "marcador": "precisa",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b). Microcopy de elementos de ação assertivo e conciso. Medida: número de palavras do rótulo da aba.",
+   "instancias": [
+    "tab-requerimento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-de-aba-longo",
+     "descricao": "O rótulo da 2ª aba fica 'Consultar e enviar documentos pendentes deste requerimento agora mesmo' (9 palavras, sem artigo).",
+     "clausula": "Portanto, esse tipo de microcopy precisa ser bem assertivo, conciso e com as palavras certas para impactar quem lê."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-2"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-274ebf4959e8",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Boas práticas",
+  "texto": "Escreva rótulos curtos, objetivos e claros.",
+  "contexto": "Escreva rótulos curtos, objetivos e claros. O ideal é que sejam utilizadas no máximo duas palavras (três quando for inevitável).",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b): rótulo de componente de ação curto (ideal até 2 palavras, 3 se inevitável). Na tela: botão de escolher arquivo do upload. Medida: nº de palavras do rótulo do botão.",
+   "instancias": [
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-acao-prolixo",
+     "descricao": "O botão de escolher arquivo passa a dizer 'Clique aqui para selecionar no seu computador o arquivo do documento que você deseja enviar' (15 palavras).",
+     "clausula": "Escreva rótulos curtos, objetivos e claros."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-770d03a2586e",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Boas práticas",
+  "texto": "Não use verbos nos labels das tags.",
+  "contexto": "Não use verbos nos labels das tags. Opte por substantivos ou adjetivos.",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos de tag; a tela não tem tag.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-36013fffe17a",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Boas práticas",
+  "texto": "Utilize termos familiares para os usuários.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b): termos familiares no rótulo de ação. Caso flagrante: jargão técnico de informática no botão do cidadão. Medida: leitura do rótulo do botão de escolher arquivo.",
+   "instancias": [
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-jargao-tecnico",
+     "descricao": "O botão de escolher arquivo passa a dizer 'Carregar binário'.",
+     "clausula": "Utilize termos familiares para os usuários."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-c678d7f46286",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Boas práticas",
+  "texto": "Apenas a primeira letra do rótulo deve ser maiúscula.",
+  "contexto": "Apenas a primeira letra do rótulo deve ser maiúscula. Buttons são as exceções.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Rótulo de ação só com a primeira letra maiúscula (button é exceção). Medida: texto dos rótulos das abas.",
+   "instancias": [
+    "tab-requerimento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-title-case",
+     "descricao": "O rótulo da 2ª aba fica 'Enviar Documentos'."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-73e03945d5cc",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Orientações específicas",
+  "texto": "Nos buttons, as letras iniciais de todas as palavras devem ser maiúsculas, exceto artigos e preposições.",
+  "contexto": null,
+  "antecedente": "<b>Não recomendável:</b> Remover usuários",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "so-andaime",
+   "justificativa": "Rótulos de button; os botões são andaime.",
+   "origem": "rodada-0"
+  },
+  "porque": "so-andaime"
+ },
+ {
+  "id": "a2-12afa1f3c1f0",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Orientações específicas",
+  "texto": "Use verbos que especifiquem claramente a ação pretendida.",
+  "contexto": "Use verbos que especifiquem claramente a ação pretendida. O ideal é que o usuário saiba o que a ação vai causar, sem necessariamente ler todo o conteúdo. Uma boa dica é utilizar o mesmo verbo da pergunta, isso ajuda a completar o sentido da ação. Evite rótulos com apenas \"Sim\" e \"Não\".",
+  "antecedente": "<b>Não recomendável:</b> Gerar relatório",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (a): rótulo de ação com verbo que especifica a ação (presença de verbo é contável). Medida: o rótulo do botão de escolher arquivo contém verbo de ação.",
+   "instancias": [
+    "upl-documento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-sem-verbo",
+     "descricao": "O botão de escolher arquivo passa a dizer só 'Arquivo'.",
+     "clausula": "Use verbos que especifiquem claramente a ação pretendida."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-5a1fcf660ae1",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Orientações específicas",
+  "texto": "Não use artigos.",
+  "contexto": "Não use artigos. Eles podem confundir algo que é mais simples, aumentando o comprimento de uma linha, além de gerar outros efeitos indesejados.",
+  "antecedente": "<b>Não recomendável:</b> Acessar / Cancelar / Enviar",
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Sem artigos no rótulo de ação. Medida: texto dos rótulos das abas.",
+   "instancias": [
+    "tab-requerimento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-com-artigo",
+     "descricao": "O rótulo da 2ª aba fica 'Os documentos'."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-d47f4c470491",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Orientações específicas",
+  "texto": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada.",
+  "contexto": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada. Se for necessário, utilize tooltip para reforçar.",
+  "antecedente": "<b>Não recomendável:</b> Adicionar uma marcação",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b): componente de ação sem texto deve ter ícone que expresse a ação. Na tela: gatilhos só de ícone das tooltips e botão Fechar (só ícone) das mensagens. Caso flagrante: ícone de significado alheio à ação. Medida: classe/glifo do ícone do controle.",
+   "instancias": [
+    "tip-prazo",
+    "tip-protocolo",
+    "msg-pendencia",
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "ajuda-com-icone-lixeira",
+     "descricao": "O gatilho de ajuda (botão só com ícone) passa a mostrar o ícone de lixeira no lugar do ícone de informação/ajuda.",
+     "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+     ],
+     "clausula": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada."
+    },
+    {
+     "id": "fechar-com-icone-de-adicionar",
+     "descricao": "O botão Fechar da mensagem passa a mostrar o ícone '+' (adicionar) no lugar do 'x'.",
+     "instancias": [
+      "msg-pendencia",
+      "msg-retorno"
+     ],
+     "clausula": "Caso não haja texto no componente, tenha certeza de que o ícone expressa bem a ação desejada."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-9e7fe5702498",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Orientações específicas",
+  "texto": "Não use verbos de ação nos rótulos das tags.",
+  "contexto": "Não use verbos de ação nos rótulos das tags. Opte por substantivos ou adjetivos.",
+  "antecedente": "<b>Não recomendável:</b> Adicionar uma marcação",
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos de tag; a tela não tem tag.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-86c0aa8329ae",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Orientações específicas",
+  "texto": "Os hyperlinks devem fornecer informações sobre a ação ou destino associado.",
+  "contexto": "Os hyperlinks devem fornecer informações sobre a ação ou destino associado. Tente evitar “clique aqui” ou “saiba mais”.",
+  "antecedente": "<b>Não recomendável:</b> Criar conteúdo",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Links; nenhuma instância sorteável tem link.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-dd8a921bfeeb",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Orientações específicas",
+  "texto": "O microcopy de hiperlink deve ser objetivo, indicando o seu destino de forma clara.",
+  "contexto": "O microcopy de hiperlink deve ser objetivo, indicando o seu destino de forma clara. Evite criar hyperlinks em frases ou expressões longas. Opte pelo uso de palavras-chave.",
+  "antecedente": "<b>Não recomendável:</b> Clique aqui para se cadastrar.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Links; nenhuma instância sorteável tem link.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-5b6ffd6ad400",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Orientações específicas",
+  "texto": "Utilize estratégicas de “call-to-action“ para elaborar os rótulos dos magic buttons.",
+  "contexto": "Utilize estratégicas de “call-to-action“ para elaborar os rótulos dos magic buttons. Informe aos usuários qual ação eles realizarão ao interagir com o componente. O texto deve ser curto, informativo e impactante de modo a chamar a atenção dos usuários, induzindo-os à ação.",
+  "antecedente": "<b>Não recomendável:</b> <a>Clique aqui para se cadastrar.</a>",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Rótulos de magic button; não há magic button na tela.",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-06a47f68f4fd",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Orientações específicas",
+  "texto": "Informe aos usuários qual ação eles realizarão ao interagir com o componente.",
+  "contexto": "Utilize estratégicas de “call-to-action“ para elaborar os rótulos dos magic buttons. Informe aos usuários qual ação eles realizarão ao interagir com o componente. O texto deve ser curto, informativo e impactante de modo a chamar a atenção dos usuários, induzindo-os à ação.",
+  "antecedente": "<b>Não recomendável:</b> <a>Clique aqui para se cadastrar.</a>",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Contexto é o magic button (call-to-action); não há magic button na tela.",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-9a86ce8f82e4",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Orientações específicas",
+  "texto": "O texto deve ser curto, informativo e impactante de modo a chamar a atenção dos usuários, induzindo-os à ação.",
+  "contexto": "Utilize estratégicas de “call-to-action“ para elaborar os rótulos dos magic buttons. Informe aos usuários qual ação eles realizarão ao interagir com o componente. O texto deve ser curto, informativo e impactante de modo a chamar a atenção dos usuários, induzindo-os à ação.",
+  "antecedente": "<b>Não recomendável:</b> <a>Clique aqui para se cadastrar.</a>",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Contexto: rótulos de magic buttons (componente fora da tela).",
+   "origem": "revisao-1"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-dfd5ce237dbb",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 1. Ação › Orientações específicas",
+  "texto": "Forneça hiperlinks sempre que estiver se referindo a algo relevante ou conteúdo externo.",
+  "contexto": null,
+  "antecedente": "<b>Não recomendável:</b> <a>Clique aqui para se cadastrar.</a>",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há links no conteúdo sorteável nem referência a conteúdo externo nele.",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-015f84774222",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Boas práticas",
+  "texto": "Não deixe o texto todo em caixa alta.",
+  "contexto": "Considere apenas a letra inicial da sentença maiúscula. Não deixe o texto todo em caixa alta.",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (a): rótulo de elemento de entrada de dados não pode estar todo em caixa alta (contável). Medida: texto renderizado do rótulo (incl. text-transform) não é todo maiúsculo.",
+   "instancias": [
+    "sel-tipo-documento",
+    "upl-documento",
+    "swt-aviso-email",
+    "swt-aviso-sms",
+    "chk-avisos-todos"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-campo-caixa-alta",
+     "descricao": "O rótulo do campo é escrito inteiro em maiúsculas (ex.: 'TIPO DE DOCUMENTO', 'RECEBER AVISOS POR SMS').",
+     "clausula": "Não deixe o texto todo em caixa alta."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-1f45d0dc0c3a",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Boas práticas",
+  "texto": "Mantenha a consistência: se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (a): uso de ':' no fim do rótulo consistente em todos os campos do formulário (contável). Medida: rótulos do formulário terminam todos com ':' ou nenhum termina.",
+   "instancias": [
+    "sel-tipo-documento",
+    "upl-documento",
+    "swt-aviso-email",
+    "swt-aviso-sms",
+    "chk-avisos-todos"
+   ],
+   "variantes": [
+    {
+     "id": "dois-pontos-em-um-rotulo",
+     "descricao": "Só o rótulo deste campo passa a terminar com ':'; os demais rótulos do formulário ficam sem.",
+     "clausula": "se optar pelos dois pontos “:” no final do rótulo mantenha esse padrão em todos os elementos do formulário"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-7562e56b2290",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Boas práticas",
+  "texto": "Os títulos dos formulários devem explicar clara e rapidamente o objetivo do formulário.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b). Título do formulário explica o objetivo. Medida: texto do título do formulário da aba Documentos.",
+   "instancias": [
+    "pagina"
+   ],
+   "variantes": [
+    {
+     "id": "titulo-form-vago",
+     "descricao": "O título do formulário fica 'Formulário'.",
+     "clausula": "Os títulos dos formulários devem explicar clara e rapidamente o objetivo do formulário."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-7278a9812cac",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Orientações específicas",
+  "texto": "Os textos dos rótulos devem ser positivos, breves, claros e diretos.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (a/b). Rótulos positivos, breves, claros. Medida: o rótulo do select é afirmativo e curto.",
+   "instancias": [
+    "sel-tipo-documento"
+   ],
+   "variantes": [
+    {
+     "id": "rotulo-negativo",
+     "descricao": "O rótulo do select fica 'Não deixe de informar o tipo do documento que não foi enviado'.",
+     "clausula": "Os textos dos rótulos devem ser positivos, breves, claros e diretos."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-d07b05c07838",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 2. Entrada de Dados › Orientações específicas",
+  "texto": "As opções em componentes de seleção múltipla devem estar ordenadas com base em diferentes critérios como: ordem alfabética ou numérica, preço (mais caro para o mais barato ou vice-versa), por escala (tamanho ou magnitude), popularidade entre os usuários, lucratividade (produto mais lucrativo para o menos lucrativo), etc.",
+  "contexto": null,
+  "antecedente": "<b>Não recomendável:</b> Não me envie mais e-mails.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Seleção múltipla; o select é simples.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-d6b3f0e36943",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 3. Estrutura de Layout › Boas práticas",
+  "texto": "Os textos devem ser escritos em uma linguagem simples e fácil de serem compreendidas pelos usuários não técnicos.",
+  "contexto": "Os textos devem ser escritos em uma linguagem simples e fácil de serem compreendidas pelos usuários não técnicos. Instruções devem ser simples de modo que os usuários não tenham que memorizá-las para corrigir o erro.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b). Linguagem simples para usuário não técnico. Medida: termos técnicos no texto da mensagem.",
+   "instancias": [
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "jargao-tecnico",
+     "descricao": "A frase que diz por que o envio falhou vira jargão técnico ('Requisição sem a parte file do multipart.'); a frase do que fazer para enviar de novo fica igual à conforme.",
+     "clausula": "Os textos devem ser escritos em uma linguagem simples e fácil de serem compreendidas pelos usuários não técnicos."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-2"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-689468fd37ad",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 3. Estrutura de Layout › Boas práticas",
+  "texto": "Legendas ou transcrições devem estar disponíveis para todos os vídeos.",
+  "contexto": "Legendas ou transcrições devem estar disponíveis para todos os vídeos. As informações apresentadas nos vídeos também devem estar disponíveis em outros formatos.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Vídeo; não há.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-0483c9e36f92",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 3. Estrutura de Layout › Boas práticas",
+  "texto": "As informações apresentadas nos vídeos também devem estar disponíveis em outros formatos.",
+  "contexto": "Legendas ou transcrições devem estar disponíveis para todos os vídeos. As informações apresentadas nos vídeos também devem estar disponíveis em outros formatos.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Vídeo; não há.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-3f23afca6972",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 3. Estrutura de Layout › Orientações específicas",
+  "texto": "Os títulos e subtítulos precisam ser objetivos e concisos.",
+  "contexto": "Os títulos e subtítulos precisam ser objetivos e concisos. Eles organizam o conteúdo para os leitores. Devem incluir as palavras-chave mais relevantes e destacar os principais pontos da página.",
+  "antecedente": "<b>Não recomendável:</b> Lei de acesso à informação.",
+  "forca": "obrigatoria",
+  "marcador": "precisa",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b). Títulos objetivos e concisos. Medida: palavras do h1.",
+   "instancias": [
+    "pagina"
+   ],
+   "variantes": [
+    {
+     "id": "h1-prolixo",
+     "descricao": "O h1 vira uma frase de 28 palavras sobre o acompanhamento do requerimento.",
+     "clausula": "Os títulos e subtítulos precisam ser objetivos e concisos."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-cfb74fcd34b4",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 3. Estrutura de Layout › Orientações específicas",
+  "texto": "O texto alternativo deve descrever a imagem em uma ou duas frases curtas.",
+  "contexto": "O texto alternativo é uma forma de rotular imagens e é especialmente importante para pessoas que não conseguem ver as imagens nos sites. O texto alternativo deve descrever a imagem em uma ou duas frases curtas.",
+  "antecedente": "<b>Não recomendável:</b> Página com as Últimas Notícias do Site",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Imagem com texto alternativo; não há imagem de conteúdo.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-61f7e680f11b",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 4. Feedback › Boas Práticas",
+  "texto": "As mensagens de erro devem permitir que os usuários entendam que ocorreu um erro, por que ocorreu e o que fazer para contornar a situação.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Mensagem de erro diz que houve erro, por quê e o que fazer (mais que o e-MAG 6.6). Medida: texto da mensagem de retorno em S2.",
+   "instancias": [
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "erro-sem-o-que-fazer",
+     "descricao": "A mensagem de retorno diz 'Não foi possível enviar.' sem dizer por quê nem o que fazer.",
+     "clausula": "As mensagens de erro devem permitir que os usuários entendam que ocorreu um erro, por que ocorreu e o que fazer para contornar a situação."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-f2daf2bc982b",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 4. Feedback › Boas Práticas",
+  "texto": "Forneça explicações fáceis de entender sobre o erro nas páginas (erro 404 e outras tipos de erro) e orientações do que o usuário pode fazer no momento.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Trata de páginas de erro (404 etc.); a tela não tem página de erro.",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-909e5f61d661",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 4. Feedback › Boas Práticas",
+  "texto": "Não zombe de seus usuários.",
+  "contexto": "Não zombe de seus usuários. É permitido utilizar uma linguagem mais leve e amigável, mas evite fazer humor em mensagens de erro.",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b): proibição de zombar do usuário em mensagens (contexto: humor em mensagem de erro). Caso flagrante: mensagem que ridiculariza o usuário. Medida: texto da mensagem.",
+   "instancias": [
+    "msg-retorno",
+    "msg-pendencia"
+   ],
+   "variantes": [
+    {
+     "id": "retorno-zombeteiro",
+     "descricao": "A primeira frase da mensagem de erro do envio vira zombeteira ('Esqueceu o arquivo de novo?'), com o mesmo tamanho; por que ocorreu e o que fazer continuam no texto.",
+     "instancias": [
+      "msg-retorno"
+     ],
+     "clausula": "Não zombe de seus usuários."
+    },
+    {
+     "id": "alerta-zombeteiro",
+     "descricao": "A frase de abertura do alerta de pendência vira zombeteira ('Ainda não mandou?'), com o mesmo tamanho; qual documento falta e o prazo continuam no texto.",
+     "instancias": [
+      "msg-pendencia"
+     ],
+     "clausula": "Não zombe de seus usuários."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-2"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-88a7e911426f",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 4. Feedback › Boas Práticas",
+  "texto": "Exiba uma mensagem de sucesso confirmando a validação bem-sucedida de um formulário.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Nenhum estado da tela mostra formulário validado com sucesso (S2 é o formulário vazio com erro).",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-0ea33ff35779",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 4. Feedback › Orientações Específicas",
+  "texto": "Não culpe o usuário.",
+  "contexto": "Não culpe o usuário. Os usuários já ficarão frustrados quando receberem uma mensagem de erro. Evite usar frases como “você fez” ou “você não fez” ao explicar o que deu errado. Em vez disso, mantenha as diretivas específicas sobre o que o usuário precisa fazer para remediar a ação problemática.",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b): não culpar o usuário na mensagem de erro (o próprio contexto dá o caso: 'você fez'/'você não fez'). Medida: texto da mensagem de erro de S2.",
+   "instancias": [
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "erro-culpa-usuario",
+     "descricao": "A primeira frase da mensagem de erro passa a culpar a pessoa ('Você esqueceu de anexar o arquivo.'); o resto do texto conforme fica igual (por que ocorreu e o que fazer para enviar de novo), com o mesmo número de frases.",
+     "clausula": "Não culpe o usuário."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-2"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-a6d3b956c667",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 4. Feedback › Orientações Específicas",
+  "texto": "Em vez disso, mantenha as diretivas específicas sobre o que o usuário precisa fazer para remediar a ação problemática.",
+  "contexto": "Não culpe o usuário. Os usuários já ficarão frustrados quando receberem uma mensagem de erro. Evite usar frases como “você fez” ou “você não fez” ao explicar o que deu errado. Em vez disso, mantenha as diretivas específicas sobre o que o usuário precisa fazer para remediar a ação problemática.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "precisa",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b): a mensagem de erro diz o que o usuário precisa fazer para remediar. Diz mais que e-MAG 6.6 (descrever o erro): erro descrito sem instrução viola só esta. Medida: texto da mensagem de erro de S2 contém a ação corretiva.",
+   "instancias": [
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "erro-sem-instrucao",
+     "descricao": "A mensagem de erro passa a dizer só 'O envio falhou porque nenhum arquivo foi anexado.', sem dizer o que fazer.",
+     "clausula": "mantenha as diretivas específicas sobre o que o usuário precisa fazer para remediar a ação problemática"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-8e2c52a8c21b",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 4. Feedback › Orientações Específicas",
+  "texto": "Crie Empty States que sejam consistentes e que transmita a finalidade da tela.",
+  "contexto": "Crie Empty States que sejam consistentes e que transmita a finalidade da tela. Se possível, dê orientações úteis ao usuário.",
+  "antecedente": "<b>Não recomendável:</b> Arquivo enviado.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há empty state na tela.",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-5eddaf90c132",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 5. Navegação › Orientações específicas",
+  "texto": "Usuários de leitores de tela devem conseguir navegar apenas \"pulando\" de link em link.",
+  "contexto": "Usuários de leitores de tela devem conseguir navegar apenas \"pulando\" de link em link. Para tanto, é necessário elaborar textos claros e objetivos que permitam a cada usuário decida qual hiperlink acessar, sem precisar ler todo o contexto em que o hiperlink está inserido.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Links; nenhuma instância sorteável tem link.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-61ab1f9dab6c",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 5. Navegação › Orientações específicas",
+  "texto": "Para tanto, é necessário elaborar textos claros e objetivos que permitam a cada usuário decida qual hiperlink acessar, sem precisar ler todo o contexto em que o hiperlink está inserido.",
+  "contexto": "Usuários de leitores de tela devem conseguir navegar apenas \"pulando\" de link em link. Para tanto, é necessário elaborar textos claros e objetivos que permitam a cada usuário decida qual hiperlink acessar, sem precisar ler todo o contexto em que o hiperlink está inserido.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "necessario",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Texto de hiperlinks; não há links no conteúdo sorteável.",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-dac20e0ed128",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 6. Visualização de Dados › Orientações específicas",
+  "texto": "Use separador de milhar (ponto \".\") e decimal (vírgula \",\") para facilitar a leitura de números grandes.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há números grandes/quantias na tela (número do requerimento é identificador; datas e prazos não levam separador de milhar).",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-8f86684de1e2",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 6. Visualização de Dados › Orientações específicas",
+  "texto": "Mantenha o alinhamento dos elementos de uma tabela consistentes conforme a orientação a seguir:",
+  "contexto": null,
+  "antecedente": "<b>Não recomendável:</b> 1398672,00",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (a): alinhamento na tabela conforme a orientação (texto à esquerda; números que não se somam, como datas/IDs, à esquerda). Na tela todas as colunas (Data, Movimentação, Responsável) ficam à esquerda. Medida: text-align computado de th/td por coluna.",
+   "instancias": [
+    "tbl-movimentacoes"
+   ],
+   "variantes": [
+    {
+     "id": "texto-alinhado-a-direita",
+     "descricao": "As células da coluna Movimentação (texto) ficam com text-align right.",
+     "clausula": "Mantenha o alinhamento dos elementos de uma tabela consistentes conforme a orientação a seguir:"
+    }
+   ],
+   "tipo": "visual-token",
+   "caminhoDeteccao": [
+    "medicao",
+    "leitura-da-regra"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-0beebbed1495",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 6. Visualização de Dados › Orientações específicas",
+  "texto": "Número · Direita · No entanto, ID's e, em geral, outros números que não precisam ser adicionados devem ser alinhados à esquerda",
+  "contexto": null,
+  "antecedente": "Texto · Esquerda ·",
+  "forca": "proibida",
+  "marcador": "nao-modal",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Números/IDs em tabela; a tabela não tem coluna numérica.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-0f0fbb274ed5",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 7. SEO",
+  "texto": "Não use técnicas agressivas de SEO, como preenchimento de palavras-chave para aumentar os resultados da pesquisa.",
+  "contexto": "Não use técnicas agressivas de SEO, como preenchimento de palavras-chave para aumentar os resultados da pesquisa. Facilite para que as pessoas e os mecanismos de pesquisa encontrem e compartilhem o conteúdo.",
+  "antecedente": "Aqui estão algumas maneiras simples de conseguir isso:",
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "SEO; não se aplica a uma tela de serviço autenticada.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-598ca56880b1",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 3. Estrutura de Layout › Orientações específicas",
+  "texto": "Títulos e subtítulos são escritos com iniciais das palavras em maiúsculas (exceto artigos, preposições, etc).",
+  "contexto": "- Títulos e subtítulos são escritos com iniciais das palavras em maiúsculas (exceto artigos, preposições, etc). Evite usar pontuação final, exceto para pontos de interrogação ou quando um título tiver duas ou mais frases.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Títulos e subtítulos da página com a inicial de cada palavra em maiúscula, menos artigos e preposições. R-ED (a): maiúsculas contáveis. Medida: caixa da inicial de cada palavra de conteúdo nos h1/h2 da página. Obs.: a referência precisa escrever seus títulos assim (ex.: 'Acompanhar Requerimento', 'Dúvidas Frequentes').",
+   "instancias": [
+    "pagina"
+   ],
+   "variantes": [
+    {
+     "id": "subtitulo-caixa-de-sentenca",
+     "descricao": "O título da seção de dúvidas passa a 'Dúvidas frequentes' (só a primeira palavra com maiúscula).",
+     "clausula": "Títulos e subtítulos são escritos com iniciais das palavras em maiúsculas (exceto artigos, preposições, etc)."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-0c628b618382",
+  "componente": null,
+  "arquivo": "padroes/writing/microcopy.md",
+  "secao": "Microcopy › Entendendo o conteúdo › 7. SEO",
+  "texto": "Facilite para que as pessoas e os mecanismos de pesquisa encontrem e compartilhem o conteúdo.",
+  "contexto": "- Não use técnicas agressivas de SEO, como preenchimento de palavras-chave para aumentar os resultados da pesquisa. Facilite para que as pessoas e os mecanismos de pesquisa encontrem e compartilhem o conteúdo.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "SEO; não se aplica a uma tela de serviço autenticada (como a2-0f0fbb274ed5).",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-6c531e6437e8",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Princípios do writing › 1. Experiência única",
+  "texto": "O conteúdo precisa manter consistência quanto ao estilo, tom, voz e terminologias.",
+  "contexto": "O conteúdo precisa manter consistência quanto ao estilo, tom, voz e terminologias. Para isso é importante utilizar um guia de estilo e um método que oriente o processo. O usuário deve perceber que a forma que os diversos produtos de Governo se comunicam com ele é constante e uniforme.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "precisa",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b): terminologia consistente. Caso flagrante: o mesmo dado chamado por dois nomes diferentes na mesma tela. Medida: nome usado para o número no card e no texto da tooltip do protocolo.",
+   "instancias": [
+    "tip-protocolo"
+   ],
+   "variantes": [
+    {
+     "id": "tooltip-outro-nome-do-numero",
+     "descricao": "O texto da tooltip do protocolo chama o número de 'código do processo', enquanto o card o rotula como número do requerimento/protocolo.",
+     "clausula": "O conteúdo precisa manter consistência quanto ao estilo, tom, voz e terminologias."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-e0663017fccc",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Princípios do writing › 2. Eficiência",
+  "texto": "A mensagem deve apresentar imediatamente o que é mais importante para o público-alvo.",
+  "contexto": "Para os usuários, o tempo está cada vez mais escasso. Poucos têm disposição para perder mais de um minuto analisando um texto. Esse contexto faz com que a concisão, isto é, a capacidade de escrever uma mensagem com poucas palavras, seja muito valorizada. A mensagem deve apresentar imediatamente o que é mais importante para o público-alvo. Dessa maneira, as possibilidades de chamar a atenção e de atingir a meta serão bem maiores. Pense que a escrita precisa ser sucinta e eficiente ao mesmo tempo.",
+  "antecedente": "#### B) Concisão",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b). O mais importante primeiro. Medida: posição da informação do documento pendente no texto da mensagem.",
+   "instancias": [
+    "msg-pendencia"
+   ],
+   "variantes": [
+    {
+     "id": "importante-no-fim",
+     "descricao": "A mensagem de pendência troca a ordem das frases conformes: começa pela frase de contexto e só no fim diz qual documento falta e o prazo; nenhuma palavra é acrescentada nem retirada.",
+     "clausula": "A mensagem deve apresentar imediatamente o que é mais importante para o público-alvo."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-2"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-5610d5df55f0",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Boas práticas para escrever bons textos em produtos digitais › Seja Conciso",
+  "texto": "Escreva o que for necessário para que o leitor seja capaz de compreender completamente a mensagem com o mínimo de palavras possível.",
+  "contexto": "Ser conciso não significa omitir informações relevantes. Escreva o que for necessário para que o leitor seja capaz de compreender completamente a mensagem com o mínimo de palavras possível.",
+  "antecedente": "<b>Não recomendado:</b> Basta preencher seu e-mail favorito abaixo e você terá acesso instantâneo à primeira aula.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b): escrever o necessário com o mínimo de palavras. Caso flagrante (o da rubrica): tooltip/mensagem curtas inchadas para dezenas de palavras redundantes. Medida: nº de palavras do texto.",
+   "instancias": [
+    "tip-prazo",
+    "tip-protocolo",
+    "msg-pendencia"
+   ],
+   "variantes": [
+    {
+     "id": "tooltip-prolixa",
+     "descricao": "O texto da tooltip passa a ter ~80 palavras, repetindo a mesma informação em frases redundantes.",
+     "instancias": [
+      "tip-prazo",
+      "tip-protocolo"
+     ],
+     "clausula": "Escreva o que for necessário para que o leitor seja capaz de compreender completamente a mensagem com o mínimo de palavras possível."
+    },
+    {
+     "id": "alerta-prolixo",
+     "descricao": "O alerta de pendência passa a ter ~70 palavras, repetindo três vezes que há documento pendente.",
+     "instancias": [
+      "msg-pendencia"
+     ],
+     "clausula": "Escreva o que for necessário para que o leitor seja capaz de compreender completamente a mensagem com o mínimo de palavras possível."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-d9b38b2e638c",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Boas práticas para escrever bons textos em produtos digitais › Alinhamento do texto",
+  "texto": "Quando o texto é organizado em elementos tabulares regras diferentes podem ser aplicadas: os números devem ser alinhados à direita mantendo um número fixo de dígitos (ou caracteres) para fornecer uma experiência consistente.",
+  "contexto": "Quando o texto é organizado em elementos tabulares regras diferentes podem ser aplicadas: os números devem ser alinhados à direita mantendo um número fixo de dígitos (ou caracteres) para fornecer uma experiência consistente. As datas devem ser formatadas com a mesma quantidade de dígitos (por exemplo: 01/01/89 ao invés de 1/1/89) para garantir que todas as datas tenham o mesmo peso visual.",
+  "antecedente": "Casos de uso diferentes requerem alinhamento de texto diferente. O alinhamento central funciona bem para seções curtas ou como um separador virtual. O alinhamento à esquerda torna o texto mais fácil de ser lido e, portanto, melhor para frases mais longas.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Números em tabela; a tabela não tem coluna numérica.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-12ee2ce5c650",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Boas práticas para escrever bons textos em produtos digitais › Alinhamento do texto",
+  "texto": "As datas devem ser formatadas com a mesma quantidade de dígitos (por exemplo: 01/01/89 ao invés de 1/1/89) para garantir que todas as datas tenham o mesmo peso visual.",
+  "contexto": "Quando o texto é organizado em elementos tabulares regras diferentes podem ser aplicadas: os números devem ser alinhados à direita mantendo um número fixo de dígitos (ou caracteres) para fornecer uma experiência consistente. As datas devem ser formatadas com a mesma quantidade de dígitos (por exemplo: 01/01/89 ao invés de 1/1/89) para garantir que todas as datas tenham o mesmo peso visual.",
+  "antecedente": "Casos de uso diferentes requerem alinhamento de texto diferente. O alinhamento central funciona bem para seções curtas ou como um separador virtual. O alinhamento à esquerda torna o texto mais fácil de ser lido e, portanto, melhor para frases mais longas.",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Datas com a mesma quantidade de dígitos. Medida: texto das células de data.",
+   "instancias": [
+    "tbl-movimentacoes"
+   ],
+   "variantes": [
+    {
+     "id": "data-sem-zero",
+     "descricao": "Uma das datas aparece como 5/9/2026, as demais como dd/mm/aaaa."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "rodada-0"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-b1113ccfbc0a",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Boas práticas para escrever bons textos em produtos digitais › Siglas",
+  "texto": "Por isso, na primeira vez, escreva o nome completo e mencione a sigla entre parênteses.",
+  "contexto": "Sempre há chance dos leitores não reconhecerem uma sigla. Por isso, na primeira vez, escreva o nome completo e mencione a sigla entre parênteses. Na sequência, é possível usar a versão curta quantas vezes for necessário. Escreva siglas, com até três letras, com todas as letras maiúsculas. Já em siglas com quatro letras ou mais, somente a primeira é maiúscula e as demais minúsculas.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (a): na primeira ocorrência, nome completo seguido da sigla entre parênteses (formato contável). Diz mais que e-MAG 3.12 (que aceita abbr title): sigla só com abbr title viola só esta. Medida: texto da primeira ocorrência da sigla no card.",
+   "instancias": [
+    "crd-resumo"
+   ],
+   "variantes": [
+    {
+     "id": "sigla-so-com-title",
+     "descricao": "A primeira ocorrência no card mostra só a sigla (ex.: 'NUP') com a expansão apenas no title de um abbr, sem o nome completo no texto.",
+     "clausula": "na primeira vez, escreva o nome completo e mencione a sigla entre parênteses"
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-276e1210af43",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Boas práticas para escrever bons textos em produtos digitais › Siglas",
+  "texto": "Escreva siglas, com até três letras, com todas as letras maiúsculas.",
+  "contexto": "Sempre há chance dos leitores não reconhecerem uma sigla. Por isso, na primeira vez, escreva o nome completo e mencione a sigla entre parênteses. Na sequência, é possível usar a versão curta quantas vezes for necessário. Escreva siglas, com até três letras, com todas as letras maiúsculas. Já em siglas com quatro letras ou mais, somente a primeira é maiúscula e as demais minúsculas.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (a): sigla de até 3 letras toda em maiúsculas (contável). Medida: grafia de SMS e da sigla do protocolo no texto renderizado.",
+   "instancias": [
+    "swt-aviso-sms",
+    "crd-resumo"
+   ],
+   "variantes": [
+    {
+     "id": "sigla-curta-em-minusculas",
+     "descricao": "A sigla de 3 letras aparece como 'Sms' no rótulo do switch.",
+     "instancias": [
+      "swt-aviso-sms"
+     ],
+     "clausula": "Escreva siglas, com até três letras, com todas as letras maiúsculas."
+    },
+    {
+     "id": "sigla-protocolo-em-minusculas",
+     "descricao": "A sigla de 3 letras do protocolo aparece como 'Nup' no card.",
+     "instancias": [
+      "crd-resumo"
+     ],
+     "clausula": "Escreva siglas, com até três letras, com todas as letras maiúsculas."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra",
+    "medicao"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-c0b99a02cf6b",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Boas práticas para escrever bons textos em produtos digitais › Evite gíria, regionalismo e abreviação",
+  "texto": "Escreva em Língua Portuguesa neutra.",
+  "contexto": "Escreva em Língua Portuguesa neutra. Não utilize palavras, expressões e gírias típicas de regiões do país. Evite abreviar palavras de forma popular.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "R-ED (b): português neutro, sem regionalismo (o contexto proíbe palavras e gírias regionais). Caso flagrante: título de item com expressão regional marcada. Medida: texto do cabeçalho do item do accordion.",
+   "instancias": [
+    "acc-duvidas"
+   ],
+   "variantes": [
+    {
+     "id": "pergunta-com-regionalismo",
+     "descricao": "O cabeçalho do 2º item passa a dizer 'Oxe, e se o prazo vencer, visse?'.",
+     "clausula": "Escreva em Língua Portuguesa neutra."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "lote-B.json"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-7e05c5c8e09c",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Boas práticas para escrever bons textos em produtos digitais › Evite gíria, regionalismo e abreviação",
+  "texto": "Não utilize palavras, expressões e gírias típicas de regiões do país.",
+  "contexto": "Escreva em Língua Portuguesa neutra. Não utilize palavras, expressões e gírias típicas de regiões do país. Evite abreviar palavras de forma popular.",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Sem expressões regionais. Medida: texto da instância.",
+   "instancias": [
+    "msg-pendencia",
+    "msg-retorno"
+   ],
+   "variantes": [
+    {
+     "id": "expressao-regional",
+     "descricao": "A mensagem ganha uma expressão regional no lugar de uma palavra neutra da abertura ('Bah, falta …' no lugar de 'Falta …'); todo o conteúdo conforme fica (o que falta, o que fazer e o prazo), sem frase nova.",
+     "clausula": "Não utilize palavras, expressões e gírias típicas de regiões do país."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-2"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-dc9581fdd59d",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Escrevendo para acessibilidade e linguagem inclusiva › Utilize hiperlinks descritivos",
+  "texto": "Forneça informações sobre a ação ou o destino associado ao hiperlink.",
+  "contexto": "Forneça informações sobre a ação ou o destino associado ao hiperlink. O texto deve fazer sentido mesmo quando isolado do contexto da página. Evite, quando possível, termos descontextualizados, como \"clique aqui\", “leia mais”, \"saiba mais\", “veja outros”, etc. Isso é importante porque:",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Texto de hiperlinks; não há links no conteúdo sorteável.",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-47c7c28cd674",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Escrevendo para acessibilidade e linguagem inclusiva › Utilize hiperlinks descritivos",
+  "texto": "O texto deve fazer sentido mesmo quando isolado do contexto da página.",
+  "contexto": "Forneça informações sobre a ação ou o destino associado ao hiperlink. O texto deve fazer sentido mesmo quando isolado do contexto da página. Evite, quando possível, termos descontextualizados, como \"clique aqui\", “leia mais”, \"saiba mais\", “veja outros”, etc. Isso é importante porque:",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Contexto: texto de hiperlink ('Utilize hiperlinks descritivos'); nenhuma instância sorteável tem link.",
+   "origem": "revisao-1"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-e941effe15bf",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Escrevendo para acessibilidade e linguagem inclusiva › Utilize hiperlinks descritivos › Descrevendo com atributo \"Title\"",
+  "texto": "Quando não for possível criar descrições adequadas, utilize o atributo \"title\" para adicionar detalhes ou mais informações em hiperlinks.",
+  "contexto": "Quando não for possível criar descrições adequadas, utilize o atributo \"title\" para adicionar detalhes ou mais informações em hiperlinks. Porém, jamais repita o conteúdo do hiperlink no título.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Atributo title em hiperlinks; não há links no conteúdo sorteável.",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-65886f54f938",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Escrevendo para acessibilidade e linguagem inclusiva › Utilize hiperlinks descritivos › Descrevendo com atributo \"Title\"",
+  "texto": "Porém, jamais repita o conteúdo do hiperlink no título.",
+  "contexto": "Quando não for possível criar descrições adequadas, utilize o atributo \"title\" para adicionar detalhes ou mais informações em hiperlinks. Porém, jamais repita o conteúdo do hiperlink no título.",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Title de hiperlink; não há links no conteúdo sorteável.",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-9250e991e04f",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Escrevendo para acessibilidade e linguagem inclusiva › Utilize elementos textuais em conjunto com elementos sensoriais › A) Cor",
+  "texto": "Qualquer classificação importante feita por meio de cores deve possuir também uma identificação textual.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": true,
+   "justificativa": "Classificação importante por cor exige identificação TEXTUAL (mais estrito que o e-MAG 4.2, que aceita forma). Medida: a situação/tipo marcada por cor tem texto.",
+   "instancias": [
+    "stp-andamento"
+   ],
+   "variantes": [
+    {
+     "id": "concluida-so-cor-e-icone",
+     "descricao": "A etapa concluída é marcada só pela cor e pelo ícone da Tag, sem texto 'concluída' (nem visível nem acessível).",
+     "clausula": "Qualquer classificação importante feita por meio de cores deve possuir também uma identificação textual."
+    }
+   ],
+   "tipo": "estrutura-classe",
+   "caminhoDeteccao": [
+    "leitura-da-regra"
+   ],
+   "origem": "revisao-1"
+  },
+  "porque": "aceita"
+ },
+ {
+  "id": "a2-583567fdff39",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Escrevendo para acessibilidade e linguagem inclusiva › Utilize elementos textuais em conjunto com elementos sensoriais › B) Multimídia",
+  "texto": "Caso haja informações essenciais incorporadas à imagem, inclua no texto alternativo.",
+  "contexto": "Utilize texto alternativo para imagens. O texto alternativo é mostrado quando a imagem não é carregada pelo dispositivo ou quando a imagem é lida por um leitor de telas. Como o texto descreve apenas imagens, não há necessidade de adicionar “imagem de” ou “imagem sobre” ao texto alternativo. Caso haja informações essenciais incorporadas à imagem, inclua no texto alternativo.",
+  "antecedente": "Forneça descrição para as imagens, vídeos e áudios. As descrições devem ser escritas em poucas palavras ou em uma frase curta (recomenda-se no máximo 125 caracteres). Porém, dependendo do tipo de conteúdo abordado e da complexidade das informações essa recomendação pode ser flexibilizada. Confira algumas boas práticas:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há imagem de conteúdo com informação incorporada.",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-0a006339769b",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Escrevendo para acessibilidade e linguagem inclusiva › Utilize elementos textuais em conjunto com elementos sensoriais › B) Multimídia",
+  "texto": "Use legendas ao invés de texto alternativo para descrições longas ou conteúdo audiovisual, pois elas ficam disponíveis para todos os usuários.",
+  "contexto": "Use legendas ao invés de texto alternativo para descrições longas ou conteúdo audiovisual, pois elas ficam disponíveis para todos os usuários. Legendas são textos que aparecem logo abaixo das imagens complementando com informações contextuais.",
+  "antecedente": "Forneça descrição para as imagens, vídeos e áudios. As descrições devem ser escritas em poucas palavras ou em uma frase curta (recomenda-se no máximo 125 caracteres). Porém, dependendo do tipo de conteúdo abordado e da complexidade das informações essa recomendação pode ser flexibilizada. Confira algumas boas práticas:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há imagem com legenda nem conteúdo audiovisual.",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-34f077a575d0",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Escrevendo para acessibilidade e linguagem inclusiva › Utilize elementos textuais em conjunto com elementos sensoriais › B) Multimídia",
+  "texto": "Forneça descrições no próprio contexto ou um hiperlink para conteúdos complexos ou que exijam descrições mais detalhada, como infográficos ou vídeos.",
+  "contexto": "Forneça descrições no próprio contexto ou um hiperlink para conteúdos complexos ou que exijam descrições mais detalhada, como infográficos ou vídeos. A descrição do contexto ou audiodescrição (para conteúdo audiovisual) é o texto que pode explicar o conteúdo dentro de uma narrativa.",
+  "antecedente": "Forneça descrição para as imagens, vídeos e áudios. As descrições devem ser escritas em poucas palavras ou em uma frase curta (recomenda-se no máximo 125 caracteres). Porém, dependendo do tipo de conteúdo abordado e da complexidade das informações essa recomendação pode ser flexibilizada. Confira algumas boas práticas:",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há infográfico nem vídeo.",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-8384621310b5",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Escrevendo para acessibilidade e linguagem inclusiva › Utilize elementos textuais em conjunto com elementos sensoriais › B) Multimídia",
+  "texto": "Uso de transcrições e legendas dentro de conteúdos audiovisuais são funções básicas que devem ser disponibilizadas independentemente do dispositivo utilizado e sem interferir na experiência de usuários.",
+  "contexto": null,
+  "antecedente": "Forneça descrição para as imagens, vídeos e áudios. As descrições devem ser escritas em poucas palavras ou em uma frase curta (recomenda-se no máximo 125 caracteres). Porém, dependendo do tipo de conteúdo abordado e da complexidade das informações essa recomendação pode ser flexibilizada. Confira algumas boas práticas:",
+  "forca": "obrigatoria",
+  "marcador": "deve",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Vídeo; não há.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-3319c0939c3e",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Escrevendo para acessibilidade e linguagem inclusiva › Utilize elementos textuais em conjunto com elementos sensoriais › C) Gráficos e elementos interativos",
+  "texto": "Forneça estes dados dentro de uma planilha e/ou crie uma página apresentando os dados dentro de uma tabela.",
+  "contexto": "Por exemplo, os gráficos de dados funcionam bem em navegadores desktop, mas em outras plataformas (como celulares) podem ser difíceis de serem visualizados. Forneça estes dados dentro de uma planilha e/ou crie uma página apresentando os dados dentro de uma tabela.",
+  "antecedente": "Dados simples podem ser representados tanto graficamente quanto em forma de tabelas. Portanto, dependendo do cenário, pode ser interessante criar formas alternativas ou variar a forma de apresentar um determinado conteúdo.",
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Não há gráfico de dados na tela.",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-77c11eaf9a44",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Escrevendo para acessibilidade e linguagem inclusiva › Deficiências físicas, mentais ou intelectuais",
+  "texto": "Não enfatize as deficiências físicas, mentais ou intelectuais.",
+  "contexto": "Não enfatize as deficiências físicas, mentais ou intelectuais. Evite se referir à deficiência de uma pessoa, a menos que seja relevante. Se for importante mencionar, utilize uma linguagem que enfatize a deficiência e não a incapacidade de realização.",
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Nenhum texto da tela fala de pessoas ou deficiências.",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-fd486bdf1404",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Escrevendo para acessibilidade e linguagem inclusiva › Deficiências físicas, mentais ou intelectuais",
+  "texto": "Se for importante mencionar, utilize uma linguagem que enfatize a deficiência e não a incapacidade de realização.",
+  "contexto": "Não enfatize as deficiências físicas, mentais ou intelectuais. Evite se referir à deficiência de uma pessoa, a menos que seja relevante. Se for importante mencionar, utilize uma linguagem que enfatize a deficiência e não a incapacidade de realização.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Nenhum texto da tela menciona deficiência.",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-2a76238410db",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Escrevendo para acessibilidade e linguagem inclusiva › Deficiências físicas, mentais ou intelectuais",
+  "texto": "Ao escrevermos sobre uma pessoa com qualquer deficiência, não use palavras “sofrer”, “vítima” ou “deficiente”.",
+  "contexto": "Ao escrevermos sobre uma pessoa com qualquer deficiência, não use palavras “sofrer”, “vítima” ou “deficiente”. Além desses termos gerarem dúvidas sobre o tipo de deficiência da pessoa, podem soar pejorativas.",
+  "antecedente": "Não enfatize as deficiências físicas, mentais ou intelectuais. Evite se referir à deficiência de uma pessoa, a menos que seja relevante. Se for importante mencionar, utilize uma linguagem que enfatize a deficiência e não a incapacidade de realização.",
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Condição 'ao escrever sobre pessoa com deficiência' não ocorre na tela.",
+   "origem": "lote-B.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-6a045b31f05d",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Dicionário de vocabulário controlado › Palavras para evitar › Palavras de baixo calão",
+  "texto": "Não use palavrões ou palavras de baixo calão em textos, documentos e apresentação para clientes.",
+  "contexto": null,
+  "antecedente": null,
+  "forca": "proibida",
+  "marcador": "nao-imperativo",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Trata de textos, documentos e apresentações para clientes, não da interface.",
+   "origem": "rodada-0"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-d5f9ed80c0fd",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Boas práticas para escrever bons textos em produtos digitais › Siglas",
+  "texto": "Já em siglas com quatro letras ou mais, somente a primeira é maiúscula e as demais minúsculas.",
+  "contexto": "Sempre há chance dos leitores não reconhecerem uma sigla. Por isso, na primeira vez, escreva o nome completo e mencione a sigla entre parênteses. Na sequência, é possível usar a versão curta quantas vezes for necessário. Escreva siglas, com até três letras, com todas as letras maiúsculas. Já em siglas com quatro letras ou mais, somente a primeira é maiúscula e as demais minúsculas.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Siglas de quatro letras ou mais; as siglas da tela têm até três letras (SMS e a do protocolo).",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-e4aa913467f1",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Boas práticas para escrever bons textos em produtos digitais › Evite jargões técnicos",
+  "texto": "Se for utilizar muitos termos complexos, prepare um material auxiliar para explicar os seus significados.",
+  "contexto": "Para a grande maioria dos sites não é recomendável escrever textos com jargões e termos que são comuns apenas para quem está familiarizado com a área. Como regra geral, o emprego de termos técnicos deve ser evitado ao máximo. Caso seja inevitável utilizá-los, procure explicar de forma simples logo em seguida. Se for utilizar muitos termos complexos, prepare um material auxiliar para explicar os seus significados. Saber o que precisa ou não ser explicado é um esforço que depende diretamente do seu entendimento sobre os usuários para quem está escrevendo.",
+  "antecedente": null,
+  "forca": "obrigatoria",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Condição 'muitos termos complexos' falsa na tela; não há material auxiliar de glossário.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ },
+ {
+  "id": "a2-d89e6bfe79d5",
+  "componente": null,
+  "arquivo": "padroes/writing/principios-writing.md",
+  "secao": "Princípios de UX Writing › Escrevendo para acessibilidade e linguagem inclusiva › Utilize elementos textuais em conjunto com elementos sensoriais › B) Multimídia",
+  "texto": "Como o texto descreve apenas imagens, não há necessidade de adicionar “imagem de” ou “imagem sobre” ao texto alternativo.",
+  "contexto": "- Utilize texto alternativo para imagens. O texto alternativo é mostrado quando a imagem não é carregada pelo dispositivo ou quando a imagem é lida por um leitor de telas. Como o texto descreve apenas imagens, não há necessidade de adicionar “imagem de” ou “imagem sobre” ao texto alternativo. Caso haja informações essenciais incorporadas à imagem, inclua no texto alternativo.",
+  "antecedente": null,
+  "forca": "a-julgar",
+  "marcador": "auditoria-leitura",
+  "hospedeirosPossiveis": [
+   "btn-limpar",
+   "btn-ajuda",
+   "inp-nome-pais",
+   "inp-codigo",
+   "sel-continente",
+   "rad-situacao",
+   "swt-certificado",
+   "lst-paises",
+   "msg-orientacao",
+   "msg-erro"
+  ],
+  "a2": {
+   "aceita": false,
+   "motivo": "nao-se-aplica",
+   "justificativa": "Texto alternativo de imagem; a tela não tem imagem de conteúdo.",
+   "origem": "lote-r2-G4.json"
+  },
+  "porque": "nao-se-aplica"
+ }
+]

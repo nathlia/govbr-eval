@@ -1,0 +1,136 @@
+{
+ "sonda": "icones-glifos",
+ "estado": "S1",
+ "ajuda": [
+  {
+   "el": "button#btn-ajuda.br-button.circle.acao-ajuda",
+   "classes": "br-button circle acao-ajuda",
+   "codigo": null,
+   "visivel": true,
+   "cor": "rgb(19, 81, 180)"
+  }
+ ],
+ "msgOrientacao": [
+  {
+   "el": "i.fas.fa-info-circle.fa-lg",
+   "classes": "fas fa-info-circle fa-lg",
+   "codigo": "f05a",
+   "visivel": true,
+   "cor": "rgb(21, 91, 203)"
+  },
+  {
+   "el": "i.fas.fa-times",
+   "classes": "fas fa-times",
+   "codigo": "f00d",
+   "visivel": true,
+   "cor": "rgb(21, 91, 203)"
+  }
+ ],
+ "msgErro": [
+  {
+   "el": "i.fas.fa-times-circle.fa-lg",
+   "classes": "fas fa-times-circle fa-lg",
+   "codigo": "f057",
+   "visivel": true,
+   "cor": "rgb(255, 255, 255)"
+  },
+  {
+   "el": "i.fas.fa-check.marca-retorno",
+   "classes": "fas fa-check marca-retorno",
+   "codigo": "f00c",
+   "visivel": true,
+   "cor": "rgb(255, 255, 255)"
+  }
+ ],
+ "select": [
+  {
+   "el": "i.fas.fa-search",
+   "classes": "fas fa-search",
+   "codigo": "f002",
+   "visivel": true,
+   "cor": "rgb(136, 136, 136)"
+  },
+  {
+   "el": "i.fas.fa-angle-down",
+   "classes": "fas fa-angle-down",
+   "codigo": "f107",
+   "visivel": true,
+   "cor": "rgb(19, 81, 180)"
+  },
+  {
+   "el": "i.fas.fa-times-circle",
+   "classes": "fas fa-times-circle",
+   "codigo": "f057",
+   "visivel": true,
+   "cor": "rgb(255, 255, 255)"
+  }
+ ],
+ "breadcrumb": [
+  {
+   "el": "i.fas.fa-home",
+   "classes": "fas fa-home",
+   "codigo": "f015",
+   "visivel": true,
+   "cor": "rgb(19, 81, 180)"
+  },
+  {
+   "el": "i.icon.fas.fa-chevron-right",
+   "classes": "icon fas fa-chevron-right",
+   "codigo": "f054",
+   "visivel": true,
+   "cor": "rgb(204, 204, 204)"
+  },
+  {
+   "el": "i.icon.fas.fa-chevron-right",
+   "classes": "icon fas fa-chevron-right",
+   "codigo": "f054",
+   "visivel": true,
+   "cor": "rgb(204, 204, 204)"
+  },
+  {
+   "el": "i.icon.fas.fa-chevron-right",
+   "classes": "icon fas fa-chevron-right",
+   "codigo": "f054",
+   "visivel": true,
+   "cor": "rgb(204, 204, 204)"
+  }
+ ],
+ "feedbacks": [
+  {
+   "el": "i.fas.fa-times-circle",
+   "classes": "fas fa-times-circle",
+   "codigo": "f057",
+   "visivel": true,
+   "cor": "rgb(255, 255, 255)"
+  },
+  {
+   "el": "i.fas.fa-times-circle",
+   "classes": "fas fa-times-circle",
+   "codigo": "f057",
+   "visivel": true,
+   "cor": "rgb(255, 255, 255)"
+  },
+  {
+   "el": "i.fas.fa-times-circle",
+   "classes": "fas fa-times-circle",
+   "codigo": "f057",
+   "visivel": true,
+   "cor": "rgb(255, 255, 255)"
+  }
+ ],
+ "pixelsMsgErroIconeConteudo": {
+  "largura": 24,
+  "altura": 16,
+  "pixelsDiferentesDoCanto": 53,
+  "coresDistintas": 15,
+  "corDoCanto": "38,112,232"
+ },
+ "pixelsBotaoFechar": {
+  "largura": 32,
+  "altura": 32,
+  "pixelsDiferentesDoCanto": 52,
+  "coresDistintas": 16,
+  "corDoCanto": "212,229,255"
+ },
+ "errosPagina": []
+}

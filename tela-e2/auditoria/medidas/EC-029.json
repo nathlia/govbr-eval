@@ -1,0 +1,26 @@
+{
+ "id": "EC-029",
+ "classe": "conforme",
+ "instancia": "btn-limpar",
+ "chave": "teclado-aciona",
+ "porEstado": {
+  "S1": {
+   "valor": {
+    "sonda": "limpar-acao",
+    "estado": "S1",
+    "antes": {
+     "erros": 3,
+     "msg": true
+    },
+    "depois": {
+     "codigo": "",
+     "erros": 0,
+     "msg": false,
+     "foco": "button#btn-limpar.br-button.secondary.acao-limpar"
+    },
+    "errosPagina": []
+   },
+   "viola": false
+  }
+ }
+}

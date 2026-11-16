@@ -1,0 +1,69 @@
+{
+  "_meta": {
+    "tela": "pais-importador-construida (tela E2, plano B da tela E, D-200)",
+    "metodo": "tela-e2/metodo.md (commit 214ded2) — regras escritas antes do inventário",
+    "script": "tela-e2/sortear-sementes.mjs",
+    "status": "SELADO",
+    "nota": "O sorteio só roda com status SELADO e só com a semente fixada em 'semente'. Enquanto RASCUNHO, só --validar roda.",
+    "seladoEm": "2026-11-14"
+  },
+  "semente": "f82c2f7c16baed0ce04fea9f27909c1a1fbe2fa8",
+  "semente_origem": "commit do thesis-workspace que registra a D-200 (fixado em metodo.md antes de qualquer contagem)",
+  "ordemClasses": [
+    "DS",
+    "G"
+  ],
+  "cotas": {
+    "DS": 6,
+    "G": 3
+  },
+  "portaoDS": 5,
+  "reposicaoMinimaDS": 2,
+  "metaFolga": {
+    "celulasDS": 12,
+    "hospedeirosDS": 8
+  },
+  "maxPorHospedeiro": 1,
+  "maxPorRegra": 1,
+  "compartilhadas": 0,
+  "limiteNos": 10000000,
+  "classeDaCategoria": {
+    "_origem": "scripts/reanalise-nat74/e14-deteccao.ts › CLASSE_DA_CATEGORIA (D-156 3.i; convenção de 04/11)",
+    "token": "ds",
+    "estrutura": "ds",
+    "tipografia": "ds",
+    "componente": "ds",
+    "comportamento": "ds",
+    "acessibilidade": "geral",
+    "navegacao": "geral",
+    "formulario": "geral"
+  },
+  "motivosDeExclusao": [
+    "sem-clausula-na-base",
+    "exposta",
+    "tentativa-e",
+    "classe-em-desacordo"
+  ],
+  "motivosDeDescarte": [
+    "nao-observavel",
+    "estado-inalcancavel",
+    "quebra-fluxo",
+    "interfere",
+    "nao-construivel"
+  ],
+  "insumos": [
+    "tela-e2/parametros.json",
+    "tela-e2/sortear-sementes.mjs",
+    "tela-e2/inventario.json",
+    "tela-e2/universo.json",
+    "tela-e2/elegibilidade.json",
+    "tela-e2/VOCABULARIO.json",
+    "tela-e2/ponte-base.json",
+    "tela-e2/expostas.json",
+    "tela-e2/exclusoes.json",
+    "tela-e2/classe-reavaliada.json"
+  ],
+  "revisoes": [
+    "2026-11-14: classe-em-desacordo (item A do coordenador): segunda classificação DS/G por agentes novos; célula em desacordo sai, sem reatribuição"
+  ]
+}

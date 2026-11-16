@@ -1,0 +1,33 @@
+{
+ "id": "EC-054",
+ "classe": "conforme",
+ "instancia": "sel-continente",
+ "chave": "enter-space-esc",
+ "porEstado": {
+  "S0": {
+   "valor": {
+    "enter": {
+     "valor": "América do Norte",
+     "listaVisivel": false,
+     "foco": "body"
+    },
+    "space": {
+     "alvo": "América do Sul",
+     "valor": "América do Sul",
+     "listaVisivel": false
+    },
+    "esc": {
+     "abertaAntesEsc": true,
+     "listaVisivelDepois": false,
+     "valor": "América do Sul"
+    },
+    "cliqueS2": {
+     "valor": "Ásia",
+     "aberta": false,
+     "foco": "body"
+    }
+   },
+   "viola": false
+  }
+ }
+}

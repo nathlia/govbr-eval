@@ -1,0 +1,813 @@
+{
+ "_meta": {
+  "regra": "tela-e2/metodo.md § 5: 'exposta' = id em violations[].rules de A, A2, B ou D; 'tentativa-e' = regra sorteada ou vigente na tentativa real. Só ids foram lidos.",
+  "origem": {
+   "checkout": "govbr-eval (principal), só leitura",
+   "head": "315d1561fdf9bd8f3e4e989dfebb5bf0414ab2c0",
+   "referencias": [
+    {
+     "tela": "A",
+     "arquivo": "ground-truth-solicitacao.json",
+     "sha256": "0832f339d18037f85cfced4549e9eb3c1e85e0903b2ad95e89bcfc6030f76f2f",
+     "versao": "2.1.0",
+     "idsDeRegra": 32
+    },
+    {
+     "tela": "A2",
+     "arquivo": "ground-truth-acompanhamento.json",
+     "sha256": "1ed853e980c104bcc42a6dffe6dd61af69427ddf820bd52450998da73a2f03bc",
+     "versao": "1.0.0",
+     "idsDeRegra": 37
+    },
+    {
+     "tela": "B",
+     "arquivo": "ground-truth-vistorias.json",
+     "sha256": "bbde01f90d58d008d60b913e6178b69d9a27d0194291431d692073d59ea10648",
+     "versao": "1.1.0",
+     "idsDeRegra": 37
+    },
+    {
+     "tela": "D",
+     "arquivo": "ground-truth-processos.json",
+     "sha256": "f719db686c86a6ee333cfd29bdfe9c16d85486306661d2ed85eb27660ec183ac",
+     "versao": "1.0.0",
+     "idsDeRegra": 34
+    }
+   ],
+   "tentativaE": {
+    "sorteio": {
+     "arquivo": "tela-e/sorteio.json",
+     "sha256": "5d58ab33023160503dbc9d2e4488504b72934c888aeb315ef9186cfb6a4112e1"
+    },
+    "vigentes": {
+     "arquivo": "tela-e/sementes-vigentes.json",
+     "sha256": "ba5f21888a7f420c622ab6135e91234da1f5e5920d8b60c168a683c5d805334d"
+    }
+   }
+  },
+  "wcagNaoUsados": 15
+ },
+ "expostas": [
+  {
+   "regra": "emag:1.1",
+   "fontes": [
+    "A2",
+    "B",
+    "D"
+   ]
+  },
+  {
+   "regra": "emag:1.2",
+   "fontes": [
+    "A",
+    "A2"
+   ]
+  },
+  {
+   "regra": "emag:1.3",
+   "fontes": [
+    "B",
+    "D"
+   ]
+  },
+  {
+   "regra": "emag:1.4",
+   "fontes": [
+    "A"
+   ]
+  },
+  {
+   "regra": "emag:1.5",
+   "fontes": [
+    "B",
+    "D"
+   ]
+  },
+  {
+   "regra": "emag:1.7",
+   "fontes": [
+    "A"
+   ]
+  },
+  {
+   "regra": "emag:1.9",
+   "fontes": [
+    "A"
+   ]
+  },
+  {
+   "regra": "emag:2.1",
+   "fontes": [
+    "B",
+    "D"
+   ]
+  },
+  {
+   "regra": "emag:2.2",
+   "fontes": [
+    "A2",
+    "B",
+    "D"
+   ]
+  },
+  {
+   "regra": "emag:2.3",
+   "fontes": [
+    "A2"
+   ]
+  },
+  {
+   "regra": "emag:2.4",
+   "fontes": [
+    "A2"
+   ]
+  },
+  {
+   "regra": "emag:3.10",
+   "fontes": [
+    "B",
+    "D"
+   ]
+  },
+  {
+   "regra": "emag:3.3",
+   "fontes": [
+    "B",
+    "D"
+   ]
+  },
+  {
+   "regra": "emag:3.6",
+   "fontes": [
+    "B"
+   ]
+  },
+  {
+   "regra": "emag:3.9",
+   "fontes": [
+    "A",
+    "B",
+    "D"
+   ]
+  },
+  {
+   "regra": "emag:4.1",
+   "fontes": [
+    "B",
+    "D"
+   ]
+  },
+  {
+   "regra": "emag:4.4",
+   "fontes": [
+    "A",
+    "D"
+   ]
+  },
+  {
+   "regra": "emag:6.2",
+   "fontes": [
+    "A",
+    "B",
+    "D"
+   ]
+  },
+  {
+   "regra": "emag:6.3",
+   "fontes": [
+    "A"
+   ]
+  },
+  {
+   "regra": "emag:6.5",
+   "fontes": [
+    "A2"
+   ]
+  },
+  {
+   "regra": "emag:6.6",
+   "fontes": [
+    "A",
+    "A2"
+   ]
+  },
+  {
+   "regra": "emag:6.7",
+   "fontes": [
+    "A2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-0fb088a47830",
+   "fontes": [
+    "A"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-19004a5f90fd",
+   "fontes": [
+    "A"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.4",
+    "emag:6.3"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-19cbc02f51c6",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.1"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-1c77d9289315",
+   "fontes": [
+    "A",
+    "B"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:6.2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-1ccbc61dddbc",
+   "fontes": [
+    "D"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:3.10"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-1f1370424402",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.1"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+   "fontes": [
+    "D"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.1",
+    "emag:4.4"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-271582e4fbe8",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:6.6"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-2afc99353c13",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-2f22b7245ef9",
+   "fontes": [
+    "D"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:2.1",
+    "emag:2.2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-36c47203b523",
+   "fontes": [
+    "A"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.7"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-3a0935b60260",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:2.3",
+    "emag:2.4"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-3ac0aaa53900",
+   "fontes": [
+    "D"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.3"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-41850b4791b8",
+   "fontes": [
+    "B",
+    "D"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:2.1",
+    "emag:2.2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-44cc347427a4",
+   "fontes": [
+    "A"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.4",
+    "emag:6.3"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-49089865cd5d",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.1"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-4d5b05a1c29c",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:6.7"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-53236e27ac9c",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:2.3",
+    "emag:2.4"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-543ad367fffa",
+   "fontes": [
+    "B"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:3.6"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-5817ddd685a6",
+   "fontes": [
+    "A",
+    "A2",
+    "B"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:2.2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-5d5a5f21d94b",
+   "fontes": [
+    "D"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:3.3"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-5e5dd3d9b3cb",
+   "fontes": [
+    "B"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:2.1",
+    "emag:2.2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-6021746e010c",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:2.3",
+    "emag:2.4"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-67a136404372",
+   "fontes": [
+    "A"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.4",
+    "emag:6.3"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-6a2b33a873d8",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:2.2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-6b0032e5c8b1",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:2.3",
+    "emag:2.4"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-735a059968e3",
+   "fontes": [
+    "B"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.5"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-7c91abad32ce",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-7d2b85f81c52",
+   "fontes": [
+    "D"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.5"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-7e6420514860",
+   "fontes": [
+    "D"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.1",
+    "emag:4.4"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-87553578ca71",
+   "fontes": [
+    "A"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:6.6"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-8ca3df343265",
+   "fontes": [
+    "A",
+    "B"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:3.9"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-9282ff8b00ff",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.1"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-9b31bc6b5b43",
+   "fontes": [
+    "B"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:3.10"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-a399e39c0110",
+   "fontes": [
+    "A"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:4.4"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-b5fad7ce076d",
+   "fontes": [
+    "D"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:6.2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+   "fontes": [
+    "D"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:6.2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+   "fontes": [
+    "D"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:4.1"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-cba01678f54a",
+   "fontes": [
+    "B"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:2.1",
+    "emag:2.2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-cd705eb5da2a",
+   "fontes": [
+    "D"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:3.9"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-d301511184d7",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:6.5"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-d3badaa7e5ca",
+   "fontes": [
+    "B"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:4.1"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-e038367bd7d6",
+   "fontes": [
+    "D"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:2.1",
+    "emag:2.2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-e6fd5e1247de",
+   "fontes": [
+    "D"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:2.1",
+    "emag:2.2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-e77859710a44",
+   "fontes": [
+    "B"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:3.3"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-eae0553d6387",
+   "fontes": [
+    "B"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.3"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-f12b1bae5784",
+   "fontes": [
+    "B"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.1"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-f217a4680edd",
+   "fontes": [
+    "A"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:1.9"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-global-f639993e9416",
+   "fontes": [
+    "D"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:2.1",
+    "emag:2.2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-list-300a3d636087",
+   "fontes": [
+    "B"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:2.1",
+    "emag:2.2"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-modal-9be44ed1a8e0",
+   "fontes": [
+    "B"
+   ],
+   "emagNaMesmaSpec": []
+  },
+  {
+   "regra": "govbr-3.7.0-accessibility-switch-364149c5aea4",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": []
+  },
+  {
+   "regra": "govbr-3.7.0-component-button-4d7b5f978df1",
+   "fontes": [
+    "D"
+   ],
+   "emagNaMesmaSpec": []
+  },
+  {
+   "regra": "govbr-3.7.0-component-button-7ef75d42ac65",
+   "fontes": [
+    "B"
+   ],
+   "emagNaMesmaSpec": []
+  },
+  {
+   "regra": "govbr-3.7.0-component-button-81f5e26ec0ef",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": []
+  },
+  {
+   "regra": "govbr-3.7.0-component-message-4bfd5a220fb8",
+   "fontes": [
+    "A"
+   ],
+   "emagNaMesmaSpec": []
+  },
+  {
+   "regra": "govbr-3.7.0-component-message-add10093ae9f",
+   "fontes": [
+    "A"
+   ],
+   "emagNaMesmaSpec": []
+  },
+  {
+   "regra": "govbr-3.7.0-component-step-518405a28697",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": []
+  },
+  {
+   "regra": "govbr-3.7.0-component-upload-a54eed419af5",
+   "fontes": [
+    "A"
+   ],
+   "emagNaMesmaSpec": []
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-1c0146e93d2e",
+   "fontes": [
+    "B"
+   ],
+   "emagNaMesmaSpec": []
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-21b1a2733f7b",
+   "fontes": [
+    "A",
+    "B"
+   ],
+   "emagNaMesmaSpec": []
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-21fb08664799",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": []
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-7b7256828c9c",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": []
+  },
+  {
+   "regra": "govbr-3.7.0-foundation-global-afb62719493b",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": []
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-c648efdf7201",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:6.7"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-pattern-global-dc80c4e7406b",
+   "fontes": [
+    "A2"
+   ],
+   "emagNaMesmaSpec": [
+    "emag:6.6"
+   ]
+  },
+  {
+   "regra": "govbr-3.7.0-template-global-79cf9ea963ee",
+   "fontes": [
+    "A"
+   ],
+   "emagNaMesmaSpec": []
+  },
+  {
+   "regra": "govbr-3.7.0-template-global-c21ff1c7eefc",
+   "fontes": [
+    "A"
+   ],
+   "emagNaMesmaSpec": []
+  }
+ ],
+ "tentativaE": [
+  "govbr-3.7.0-accessibility-global-c2f94bdc17ce",
+  "govbr-3.7.0-accessibility-global-de1efebaf255",
+  "govbr-3.7.0-accessibility-input-6fe41e804955",
+  "govbr-3.7.0-component-input-3788829b08fe",
+  "govbr-3.7.0-component-item-cb34ed616246",
+  "govbr-3.7.0-component-list-8f67e7cc7677",
+  "govbr-3.7.0-component-table-7c605ca2f85e"
+ ]
+}

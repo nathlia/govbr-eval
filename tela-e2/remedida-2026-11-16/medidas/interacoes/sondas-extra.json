@@ -1,0 +1,244 @@
+{
+ "ajudaRepouso": {
+  "botao": {
+   "w": 40,
+   "h": 40,
+   "pixelsNaoBrancos": 0
+  },
+  "referenciaFechar": {
+   "w": 32,
+   "h": 32,
+   "pixelsNaoBrancos": 1024
+  },
+  "fundoBotao": {
+   "bg": "rgba(0, 0, 0, 0)",
+   "bgImg": "none",
+   "borda": "0px",
+   "mask": "none"
+  }
+ },
+ "proveniencia": {
+  "skiplinkTop": {
+   "top": [
+    {
+     "seletor": ".br-skiplink a",
+     "valor": "-100vh",
+     "imp": false
+    },
+    {
+     "seletor": ".br-skiplink a",
+     "valor": "-100vh",
+     "imp": false
+    }
+   ],
+   "position": [
+    {
+     "seletor": ".br-skiplink a",
+     "valor": "absolute",
+     "imp": false
+    },
+    {
+     "seletor": ".br-skiplink a",
+     "valor": "absolute",
+     "imp": false
+    }
+   ]
+  },
+  "codigoFonte": {
+   "font-family": [
+    {
+     "seletor": ".campo-codigo .br-input",
+     "valor": "Arial,Helvetica,sans-serif",
+     "imp": false
+    },
+    {
+     "seletor": ".campo-codigo .br-input",
+     "valor": "Arial, Helvetica, sans-serif",
+     "imp": false
+    }
+   ]
+  },
+  "codigoLabelFonte": {
+   "font-family": []
+  },
+  "limparOrder": {
+   "order": [
+    {
+     "seletor": ".acoes-formulario .acao-limpar",
+     "valor": "1",
+     "imp": false
+    },
+    {
+     "seletor": ".acoes-formulario .acao-limpar",
+     "valor": "1",
+     "imp": false
+    }
+   ]
+  },
+  "rotuloOpcaoCor": {
+   "color": [
+    {
+     "seletor": ".label, label",
+     "valor": "var(--color)",
+     "imp": false
+    },
+    {
+     "seletor": ".br-select .br-item .br-radio input + label",
+     "valor": "var(--text-color)",
+     "imp": false
+    },
+    {
+     "seletor": ".br-select .br-item .br-radio input + label",
+     "valor": "var(--text-color)",
+     "imp": false
+    }
+   ]
+  },
+  "msgErroFundo": {
+   "background-color": [
+    {
+     "seletor": ".br-message",
+     "valor": "",
+     "imp": false
+    }
+   ],
+   "--background": [],
+   "background": [
+    {
+     "seletor": ".br-message",
+     "valor": "var(--message-background)",
+     "imp": false
+    }
+   ]
+  },
+  "msgErroCor": {
+   "color": [
+    {
+     "seletor": ".br-message .content",
+     "valor": "var(--message-text)",
+     "imp": false
+    },
+    {
+     "seletor": ".br-message .content",
+     "valor": "var(--message-text)",
+     "imp": false
+    }
+   ]
+  },
+  "marcaRetorno": {
+   "display": [
+    {
+     "seletor": ".fa, .fa-brands, .fa-classic, .fa-regular, .fa-sharp-solid, .fa-solid, .fab, .far, .fas",
+     "valor": "var(--fa-display,inline-block)",
+     "imp": false
+    },
+    {
+     "seletor": ".fa, .fab, .fad, .fal, .far, .fas, .svg-inline--fa",
+     "valor": "inline-block",
+     "imp": false
+    },
+    {
+     "seletor": ".fa, .fab, .fad, .fal, .far, .fas, .svg-inline--fa",
+     "valor": "inline-block",
+     "imp": false
+    }
+   ],
+   "color": [],
+   "visibility": []
+  },
+  "breadcrumbAtual": {
+   "font-weight": [
+    {
+     "seletor": ".br-breadcrumb .crumb:last-child span",
+     "valor": "var(--font-weight-medium)",
+     "imp": false
+    },
+    {
+     "seletor": ".br-breadcrumb .crumb:last-child span",
+     "valor": "var(--font-weight-medium)",
+     "imp": false
+    }
+   ]
+  },
+  "tituloLista": {
+   "font-size": [
+    {
+     "seletor": ".h2, h2",
+     "valor": "var(--font-size-scale-up-03)",
+     "imp": false
+    },
+    {
+     "seletor": ".h2, h2",
+     "valor": "var(--font-size-scale-up-05)",
+     "imp": false
+    },
+    {
+     "seletor": ".h2, h2",
+     "valor": "var(--font-size-scale-up-05)",
+     "imp": false
+    }
+   ],
+   "font-weight": [
+    {
+     "seletor": ".h2, h2",
+     "valor": "var(--font-weight-semi-bold)",
+     "imp": false
+    },
+    {
+     "seletor": ".h2, h2",
+     "valor": "var(--font-weight-regular)",
+     "imp": false
+    },
+    {
+     "seletor": ".h2, h2",
+     "valor": "var(--font-weight-regular)",
+     "imp": false
+    }
+   ]
+  },
+  "feedbackFundo": {
+   "color": [
+    {
+     "seletor": ".br-input",
+     "valor": "var(--color)",
+     "imp": false
+    },
+    {
+     "seletor": ".br-input",
+     "valor": "var(--color)",
+     "imp": false
+    }
+   ]
+  }
+ },
+ "nomeReadonly": {
+  "antesDoFoco": true,
+  "aposFocoPorTab": true,
+  "valorDigitado": "",
+  "S1": true
+ },
+ "hoverItem": {
+  "pixelsMudaram": true,
+  "bytes": [
+   940,
+   1100
+  ]
+ },
+ "cliqueOpcaoS2": {
+  "valor": "Ásia",
+  "aberta": false,
+  "foco": "body"
+ },
+ "cliqueCoordS2": {
+  "valor": "Ásia"
+ },
+ "tabAposEscolha": {
+  "focoAposEnter": "body",
+  "proximoTab": "input#situacao-habilitado situacao-habilitado",
+  "valor": "África"
+ },
+ "ajudaFocoTeclado": {
+  "tooltips": 0,
+  "describedby": null
+ }
+}

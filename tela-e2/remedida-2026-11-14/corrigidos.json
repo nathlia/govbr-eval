@@ -1,0 +1,89 @@
+{
+ "_meta": {
+  "data": "2026-11-14",
+  "pagina": "govbr-corpus (corpus-e, ramo tela-e) depois do commit de correção; cadastro-pais.html servido por tela-e2/servir.mjs 3219",
+  "como": "node tela-e2/auditoria/rodar.mjs --saida tela-e2/remedida-2026-11-14 (os scripts do próprio auditor, sem edição; cargas limpas, headless)",
+  "nota": "Os ids EA-* da re-medida são renumerados pelo avaliar.mjs; a correspondência é por instância|chave."
+ },
+ "corrigidos": [
+  {
+   "idOriginal": "EA-07",
+   "chave": "inp-codigo|texto-auxiliar-espec",
+   "estados": [
+    "S0",
+    "S1",
+    "S2"
+   ],
+   "agora": "conforme (EC-046)"
+  }
+ ],
+ "persistem": [
+  {
+   "idOriginal": "EA-01",
+   "idNaRemedida": "EA-01",
+   "chave": "btn-limpar|posicao-enfase-primaria-a-direita"
+  },
+  {
+   "idOriginal": "EA-02",
+   "idNaRemedida": "EA-02",
+   "chave": "btn-limpar|ordem-tab-igual-ordem-visual"
+  },
+  {
+   "idOriginal": "EA-03",
+   "idNaRemedida": "EA-03",
+   "chave": "btn-ajuda|circular-icone-obrigatorio"
+  },
+  {
+   "idOriginal": "EA-04",
+   "idNaRemedida": "EA-04",
+   "chave": "inp-nome-pais|usuario-insere-informacao-teclado"
+  },
+  {
+   "idOriginal": "EA-05",
+   "idNaRemedida": "EA-05",
+   "chave": "inp-nome-pais|funcao-script-por-teclado"
+  },
+  {
+   "idOriginal": "EA-06",
+   "idNaRemedida": "EA-06",
+   "chave": "inp-codigo|familia-tipografica"
+  },
+  {
+   "idOriginal": "EA-08",
+   "idNaRemedida": "EA-07",
+   "chave": "sel-continente|contraste-rotulos-opcoes"
+  },
+  {
+   "idOriginal": "EA-09",
+   "idNaRemedida": "EA-08",
+   "chave": "sel-continente|cor-fora-da-paleta"
+  },
+  {
+   "idOriginal": "EA-10",
+   "idNaRemedida": "EA-09",
+   "chave": "msg-orientacao|texto-curto-claro-objetivo"
+  },
+  {
+   "idOriginal": "EA-11",
+   "idNaRemedida": "EA-10",
+   "chave": "msg-orientacao|leitura-ensino-fundamental"
+  },
+  {
+   "idOriginal": "EA-12",
+   "idNaRemedida": "EA-11",
+   "chave": "msg-erro|cor-semantica-erro"
+  },
+  {
+   "idOriginal": "EA-13",
+   "idNaRemedida": "EA-12",
+   "chave": "msg-erro|icone-de-confirmacao-em-erro"
+  }
+ ],
+ "novos": [],
+ "conferencia": {
+  "achadosEstados": 28,
+  "reproduzidos": 28,
+  "citacoesTotal": 199,
+  "citacoesFaltando": 0
+ }
+}
