@@ -97,6 +97,16 @@ na rota de entrada (protocolo NAT-78 §4.3). Texto da tarefa com limite de 30 mi
 B foram remedidos nesse site com conteúdo idêntico campo a campo e o declaram em `sites` (junto dos anteriores):
 sem isso o detector não perdoaria nome de elemento da página nelas com o lock novo.
 
+**Tela E (`tela = cadastro-pais`, NAT-78 §3.8; ramo `bancada-e`).** Mesmo caminho. A E é página construída comum (sem
+SPA), como a A2, no site congelado desde `export-telas-1.5.0` (site `968abbd974d5`, govbr-telas `d8eb604` no ramo
+`bancada-e`; os 420 arquivos das outras telas ficam byte a byte). Escopo genérico em `runner/telas-runner.json`, janela
+1280×900. Texto da tarefa com limite de 30 min e relógio: sha256 `344f2e70…` igual nos três braços (o da D continua
+`f7d82e70…` no pacote novo). Não declara fonte: o ESLint não roda. Inventário do DOM
+`scripts/vazamento/inventario-dom/cadastro-pais.json`, preso ao site `968abbd974d5`. **O lock commitado ainda fixa a
+imagem `screens` do site `9f4b936f2859`** (o da D): uma execução da E exige o lock refeito só na imagem `screens`
+(agente, oráculo, coletor e egress iguais, conferido num lock fora do checkout). Os inventários da A, A2, B e D não
+foram revinculados ao site novo.
+
 **Trio (NAT-61, `braco = ferramentas`).** O terceiro braço usa o mesmo contêiner do oráculo do `com`, no
 perfil `knowledge-free` (validator ≥ 2.14.0); o checkout e a compilação do validator rodam em `com` e em
 `ferramentas`. Ensaio de trio sem campanha commitada: use um id de campanha com o segmento `trio`
