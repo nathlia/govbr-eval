@@ -1,0 +1,17 @@
+
+> govbr-eval@1.0.0 conferir:referencia
+> tsx scripts/check-reference.ts --tela cadastro-pais
+
+cadastro-pais · ground-truth-cadastro-pais.json 1.0.0 · http://127.0.0.1:3219/cadastro-pais.html
+estados: S0 → S1 → S2 · 8 specs · 8 unidades
+
+  U-01  1 unidade(s) · sempre · sustenta — alguma propriedade de [order] em {1} (mesmo desfecho (sustenta) em S0, S1, S2: 1 participante(s) medidos em "S0": order=1)
+  U-02  1 unidade(s) · sempre · sem predicado
+  U-03  1 unidade(s) · sempre · sem predicado
+  U-04  1 unidade(s) · sempre · sustenta — alguma propriedade de [font-family] fora de {Rawline, Raleway, sans-serif} (mesmo desfecho (sustenta) em S0, S1, S2: 1 participante(s) medidos em "S0": font-family=Arial, Helvetica, sans-serif)
+  U-05  1 unidade(s) · sempre · sustenta — alguma propriedade de [text-align] em {center} (mesmo desfecho (sustenta) em S0, S1, S2: 1 participante(s) medidos em "S0": text-align=center)
+  U-06  1 unidade(s) · S1 · sustenta — alguma propriedade de [background-color] em {rgb(38, 112, 232)} (mesmo desfecho (sustenta) em S0, S1, S2: 1 participante(s) medidos em "S0": background-color=rgb(38, 112, 232))
+  U-07  1 unidade(s) · S2 · sustenta — alguma propriedade de [color] em {rgb(170, 170, 170)} (mesmo desfecho (sustenta) em S0, S1, S2: 6 participante(s) medidos em "S0": color=rgb(170, 170, 170) | color=rgb(170, 170, 170) | color=rgb(170, 170, 170) | color=rgb(170, 170, 170) | color=rgb(170, 170, 170) | color=rgb(170, 170, 170))
+  U-08  1 unidade(s) · sempre · sem predicado
+
+Referência conferida: estados, contagens e predicados sustentam na página.
