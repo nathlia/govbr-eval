@@ -107,6 +107,11 @@ function listFiles(root: string, prefix = ""): string[] {
  * Fechamento da entrada: todo arquivo do build cujo nome aparece no texto de um arquivo já incluído,
  * transitivamente. É conservador por construção — um nome citado entra —, e o teste de isolamento
  * confere o outro lado: rota irmã (a suíte TC-*, a ala real) fica de fora e responde 404.
+ *
+ * Nome repetido em pastas diferentes (as telas A2 e E têm `comportamento.js`, `core.min.js` e as marcas, cada uma na
+ * sua pasta): se o texto cita o caminho inteiro de um ou mais dos arquivos com esse nome, entram só esses; se não cita
+ * nenhum caminho inteiro e há um com esse nome na pasta do arquivo que cita (inclusive ele mesmo, como no comentário do
+ * source map), entra só o da pasta; senão entram todos, como antes. Nome único: como antes.
  */
 export function assetClosure(distDir: string, entry: string): string[] {
   const all = listFiles(distDir);
@@ -119,8 +124,11 @@ export function assetClosure(distDir: string, entry: string): string[] {
     const rel = queue.shift()!;
     if (!TEXT_EXTENSIONS.has(extname(rel))) continue;
     const text = readFileSync(join(distDir, rel), "utf8");
-    for (const [name, rels] of byName) {
+    for (const [name, todos] of byName) {
       if (!text.includes(name)) continue;
+      const porCaminho = todos.length > 1 ? todos.filter((candidate) => text.includes(candidate)) : [];
+      const naPasta = todos.length > 1 && !porCaminho.length ? todos.filter((candidate) => dirname(candidate) === dirname(rel)) : [];
+      const rels = porCaminho.length ? porCaminho : naPasta.length ? naPasta : todos;
       for (const candidate of rels) {
         if (included.has(candidate)) continue;
         included.add(candidate);
