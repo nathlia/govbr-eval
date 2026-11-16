@@ -1,0 +1,116 @@
+{
+  "formato": "d156-classes-1.0.0",
+  "item": "CONG-14 (protocolo NAT-78 §5.2 item 5, §10 item 5); classe de spec da D-156 3.i",
+  "referencia": {
+    "arquivo": "ground-truth-cadastro-pais.json",
+    "version": "1.0.0",
+    "sha256": "661cc54b7b291bc6e455065ecb23c08e5279bf7a0e9c7d6494afd78ae112c528"
+  },
+  "regra": {
+    "fonte": "scripts/reanalise-nat74/e14-deteccao.ts (CLASSE_DA_CATEGORIA, classeDaSpec; tabulação nat78-deteccao-1.1.0)",
+    "texto": "ds só quando TODA categoria da spec é do DS; uma categoria geral (acessibilidade, navegacao, formulario) puxa a spec para geral; categoria fora do vocabulário para a derivação",
+    "vocabulario": {
+      "token": "ds",
+      "estrutura": "ds",
+      "acessibilidade": "geral",
+      "navegacao": "geral",
+      "formulario": "geral",
+      "tipografia": "ds",
+      "componente": "ds",
+      "comportamento": "ds"
+    },
+    "decisoes": [
+      "D-156 3.i",
+      "decisoes-do-assistente 2026-11-04 (tipografia/componente/comportamento = DS)"
+    ]
+  },
+  "gerador": {
+    "script": "tela-d/classes-d156.ts",
+    "sha256": "8dc6e34a269409e7e8bb562dec99ba8d511cd21a53a5a0f6b2cfffd248f179bf"
+  },
+  "contagens": {
+    "naoExpostas": {
+      "total": 8,
+      "ds": 6,
+      "geral": 2
+    },
+    "expostas": {
+      "total": 0,
+      "ds": 0,
+      "geral": 0
+    },
+    "todas": {
+      "total": 8,
+      "ds": 6,
+      "geral": 2
+    }
+  },
+  "specs": [
+    {
+      "id": "U-01",
+      "categories": [
+        "estrutura"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "U-02",
+      "categories": [
+        "estrutura"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "U-03",
+      "categories": [
+        "componente"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "U-04",
+      "categories": [
+        "tipografia"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "U-05",
+      "categories": [
+        "token"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "U-06",
+      "categories": [
+        "token"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "U-07",
+      "categories": [
+        "token",
+        "acessibilidade"
+      ],
+      "classe": "geral",
+      "exposta": false
+    },
+    {
+      "id": "U-08",
+      "categories": [
+        "comportamento",
+        "acessibilidade"
+      ],
+      "classe": "geral",
+      "exposta": false
+    }
+  ]
+}
