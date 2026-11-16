@@ -1,0 +1,75 @@
+{
+ "arquivo": "classificador-2",
+ "referencia": "F:\\Dev Nath\\TCC\\.tmp-eval\\eval-e\\ground-truth-cadastro-pais.json (versão 1.0.0)",
+ "referenciaSha256": "661cc54b7b291bc6e455065ecb23c08e5279bf7a0e9c7d6494afd78ae112c528",
+ "definicoes": "thesis-workspace/planejamento/atual/plano-nat71-objetivos-evidencia-2026-10-13.md §3.1 (classes: sintático, layout/visual, contextual/relacional, semântico) e §3.2 (níveis: a — implementado e testado; b — escrevível; c — exige interpretação); thesis-workspace/planejamento/atual/protocolo-nat78-estudo-complementar-CONGELADO-2026-11-16.md §5.3",
+ "nota": "Classificação cega (classificador nº 2). Lidos só a referência principal (incluindo _meta.sensibilidades.comU09) e tela-e2/criterios-de-julgamento-sem-predicado.json. Classe atribuída pela parte que a referência efetivamente cobra (regra do §3.1). Nível a só com ferramenta e regra nomeadas; versão e testes positivos/negativos ficam 'a verificar' (nenhum pacote foi consultado).",
+ "specs": [
+  {
+   "id": "U-01",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "O que se cobra é a posição relativa de dois elementos da barra de ações (secundário Limpar à direita do primário Salvar) e, pelas co-violações, a divergência entre ordem visual e ordem de Tab/DOM: decisão que exige relacionar dois ou mais elementos. É limítrofe com layout/visual porque o observável é geométrico (x do Limpar > borda direita do Salvar). O predicado é determinístico e escrevível (ênfase pela classe do botão + geometria), mas nenhuma regra pública conhecida o implementa (o axe não compara ordem visual com ordem de DOM)."
+  },
+  {
+   "id": "U-02",
+   "classe": "semântico",
+   "automatizabilidade": "c",
+   "limitrofe": false,
+   "motivo": "A referência cobra que o texto do corpo da mensagem usa jargão técnico sem explicação, linguagem não simples para o público: decidir exige ler e interpretar o conteúdo, não a estrutura. Uma lista de termos (como a da conferência de construção) é heurística que aproxima com incerteza, e o critério de julgamento não fixa limiar de termos. Não há predicado fechado sem julgamento de significado."
+  },
+  {
+   "id": "U-03",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "O defeito é de anatomia do componente: botão circular sem o ícone filho obrigatório (relação contêiner↔item), na mesma linha em que o §3.3 tratou A-05 (caption removido) como contextual/anatomia. É limítrofe com sintático (um só elemento e a presença de um filho) e com layout/visual (o observável registrado inclui 0 pixel de ícone visível). O predicado é escrevível de forma determinística (.br-button circular sem i/svg/img visível com caixa), mas não há regra pública conhecida que o implemente; a presença do nome acessível faz regras como button-name passarem."
+  },
+  {
+   "id": "U-04",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": true,
+   "motivo": "Decidível sobre o estilo computado (ou a declaração-fonte) de um elemento num estado: font-family Arial em vez da família única do DS (Rawline), caso de valor fora dos tokens. Nível a porque uma regra Stylelint pública, configurada com a família do DS, implementa exatamente o predicado 'font-family fora da lista permitida', e a regra do DS é global (somente uma família), então o escopo global da regra corresponde ao que se cobra. Limítrofe no nível: a regra é genérica e exige configuração com o valor do DS; os testes positivos/negativos existentes são da regra genérica, não desta configuração (a verificar).",
+   "ferramentaRegra": "Stylelint, regra core `declaration-property-value-allowed-list` configurada como { \"font-family\": [\"/^Rawline/\"] }: acusa a declaração `.campo-codigo .br-input { font-family: Arial, Helvetica, sans-serif }` da folha da página, que é a troca semeada. Versão e testes: a verificar."
+  },
+  {
+   "id": "U-05",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "O que se cobra é o alinhamento do texto da legenda do grupo de rádio (centralizado, text-align: center, texto a 296,1 px contra 62 px das opções): estilo computado/geometria de um elemento. É limítrofe com contextual/relacional, porque o critério também aceita 'desalinhado das opções', o que relaciona a legenda a outros elementos. O predicado é escrevível (text-align da legend do grupo ≠ center, ou início do texto alinhado ao das opções), mas uma regra genérica de lista proibida (Stylelint) agiria em toda a folha e não no escopo da legenda de rádio, então não corresponde; sem regra pública conhecida."
+  },
+  {
+   "id": "U-06",
+   "classe": "semântico",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "A mensagem de erro recebe o visual do estado Selecionado (fundo --blue-warm-vivid-50 e ícone de check): o valor está na paleta, mas não é o indicado para o papel, o caso que o §3.1 manda classificar como semântico ('token certo para o contexto'). É limítrofe com layout/visual, porque o fundo é medido no estilo computado. Como o papel já está declarado na marcação (mensagem de classe danger), o predicado é determinístico e escrevível (danger → fundo/ícone do estado de erro), sem precisar interpretar texto; não há regra pública conhecida que o implemente, logo b e não c."
+  },
+  {
+   "id": "U-07",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "motivo": "Contraste insuficiente dos rótulos das opções da lista aberta (#AAAAAA sobre branco, 2,32:1, texto de 14 px peso 500): exemplo literal da classe layout/visual (WCAG 1.4.3) no §3.1. Nível a porque a regra color-contrast do axe-core calcula a razão entre texto e fundo e compara com 4,5:1 para texto normal, que é o que se cobra, desde que o axe rode no estado S2 (lista aberta). A co-violação de cor fora da paleta também é layout/visual.",
+   "ferramentaRegra": "axe-core, regra `color-contrast` (WCAG 1.4.3, AA): mede a razão de contraste do texto visível contra o fundo efetivo e falha abaixo de 4,5:1 para texto que não é grande; os rótulos a 2,32:1 caem no predicado. Exige a execução no estado S2; fundo indeterminado pode virar 'incomplete'. Versão e testes: a verificar."
+  },
+  {
+   "id": "U-08",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "O defeito é de comportamento por teclado: depois de receber foco por Tab, o texto digitado não entra no valor e o campo só é liberado por clique de ponteiro; decidir exige observar uma transição de estado (foco → digitação → valor). A referência diz expressamente que o atributo readonly sozinho não é o defeito, o que afasta a leitura sintática. O predicado é determinístico e escrevível (focar por Tab, digitar, ler o valor), mas não há regra pública conhecida que o implemente."
+  },
+  {
+   "id": "U-09",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "somenteVariante": "comU09 (fora da referência principal, DV-01)",
+   "motivo": "Só na variante de sensibilidade comU09: itens da lista com altura fixa e overflow hidden que, a 640×450 (200 %), não acompanham o conteúdo; decisão sobre geometria/estilo computado de elementos numa janela. O predicado é escrevível (scrollHeight > clientHeight com overflow hidden na janela reduzida), mas o próprio critério de julgamento registra que o observável, o estado e o critério não são fixáveis sem decisão (perda de conteúdo vs altura fixa, que a adjudicação chama de substituto), daí limítrofe. O axe não testa redimensionamento nem corte interno; sem regra pública conhecida."
+  }
+ ]
+}

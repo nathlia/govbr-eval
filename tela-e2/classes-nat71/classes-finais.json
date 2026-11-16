@@ -1,0 +1,153 @@
+{
+ "arquivo": "classes-finais",
+ "protocolo": "NAT-78 §5.3 (NAT-71 §3.1–3.2)",
+ "protocoloArquivo": "thesis-workspace/planejamento/atual/protocolo-nat78-estudo-complementar-CONGELADO-2026-11-16.md",
+ "protocoloCommit": "a46ab3fb950edf55df2d00b5da33a2552e695485",
+ "referencia": "ground-truth-cadastro-pais.json",
+ "referenciaVersao": "1.0.0",
+ "referenciaSha256": "661cc54b7b291bc6e455065ecb23c08e5279bf7a0e9c7d6494afd78ae112c528",
+ "fontes": {
+  "classificador-1.json": "9a12c094191cc0f4971fb6cee21bae4f43e64371ef5b91d78bc12bce11b7e0fb",
+  "classificador-2.json": "f506a406c38359cebe3162861227927f089f92fa2f0344f211ea897785843dcc",
+  "comparacao.md": "83c22edbc133955cbbecbf77ec60a1619f4e1196133501dc6acf324289ecc030",
+  "documentacao-nivel-a.md": "c16ef51a956bab388c54f3346accbdf95d1e85317ab21f6d40d47a2a964bda0b",
+  "commit": null
+ },
+ "decisao": {
+  "necessaria": true,
+  "motivo": "Acordo de classe 9/9 e de nível 9/9 entre os classificadores. A documentação do nível a fechou para a U-07 e não fechou para a U-04; pela regra da D-202 item 2 o nível não é trocado pelo agente e a decisão foi à autora, que respondeu b em 16/11 (NAT-135, D-206).",
+  "documentacaoNivelA": "documentacao-nivel-a.md"
+ },
+ "specs": [
+  {
+   "id": "U-01",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "U-02",
+   "classe": "semântico",
+   "automatizabilidade": "c",
+   "limitrofe": false,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "U-03",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "U-04",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "decisao-da-autora-2026-11-16",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível, e nomearam a mesma ferramenta e regra; motivos em classificador-1.json e classificador-2.json. Condição da NAT-71 §3.2 (implementação e testes positivos e negativos) documentada em documentacao-nivel-a.md. Nível a não afirma detecção desta spec nesta página.",
+   "ferramentaRegra": "Stylelint 17.16.0, regra core `declaration-property-value-allowed-list` configurada com { \"font-family\": [\"/^Rawline/\"] } (mesma ferramenta, regra e configuração nos dois classificadores)",
+   "documentacaoNivelA": {
+    "arquivo": "documentacao-nivel-a.md",
+    "secao": "U-04",
+    "situacao": "completa",
+    "testesExecutadosLocalmente": false,
+    "ressalva": "A configuração com font-family não está no comparador L congelado (comparadores/lint/config.mjs) e não tem teste próprio; os testes upstream são da regra genérica. Não muda o nível; a linha de base do comparador L, como congelada, não aplica este predicado."
+   },
+   "decisaoDaAutora": "16/11/2026 (NAT-135, D-206): nível b. Os dois classificadores deram a; a regra de ferramenta nomeada só aplica o predicado se configurada, e essa configuração não existe no comparador congelado nem tem teste próprio; a NAT-71 § 3.2 pede implementação e testes. O campo ferramentaRegra fica como registro do que os classificadores nomearam."
+  },
+  {
+   "id": "U-05",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "U-06",
+   "classe": "semântico",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "U-07",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível, e nomearam a mesma ferramenta e regra; motivos em classificador-1.json e classificador-2.json. Condição da NAT-71 §3.2 (implementação e testes positivos e negativos) documentada em documentacao-nivel-a.md. Nível a não afirma detecção desta spec nesta página.",
+   "ferramentaRegra": "axe-core 4.11.4 (linha de base) e 4.12.1 (oráculo), regra `color-contrast` (mesma ferramenta e regra nos dois classificadores)",
+   "documentacaoNivelA": {
+    "arquivo": "documentacao-nivel-a.md",
+    "secao": "U-07",
+    "situacao": "completa",
+    "testesExecutadosLocalmente": false
+   }
+  },
+  {
+   "id": "U-08",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "U-09",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "acordo",
+   "somenteVariante": "comU09 (fora da referência principal, DV-01)",
+   "contaNaPrincipal": false,
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  }
+ ],
+ "contagens": {
+  "principal": {
+   "nota": "Referência principal: U-01…U-08.",
+   "classe": {
+    "sintático": 0,
+    "layout/visual": 3,
+    "contextual/relacional": 3,
+    "semântico": 2
+   },
+   "automatizabilidade": {
+    "a": 1,
+    "b": 6,
+    "c": 1
+   },
+   "origem": {
+    "acordo": 7,
+    "decisao-da-autora-2026-11-16": 1
+   },
+   "total": 8
+  },
+  "comU09": {
+   "nota": "Variante de sensibilidade comU09: as 8 da principal mais U-09.",
+   "classe": {
+    "sintático": 0,
+    "layout/visual": 4,
+    "contextual/relacional": 3,
+    "semântico": 2
+   },
+   "automatizabilidade": {
+    "a": 1,
+    "b": 7,
+    "c": 1
+   },
+   "origem": {
+    "acordo": 8,
+    "decisao-da-autora-2026-11-16": 1
+   },
+   "total": 9
+  }
+ }
+}
