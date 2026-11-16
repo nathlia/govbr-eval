@@ -32,7 +32,9 @@
  * referência 1.0.0 ou 1.1.0) por SPEC, primário = as specs não expostas (`_meta.exposto`), sensibilidade = todas e as unidades
  * das não expostas (por unidade); tela A
  * (`solicitacao`, 2.0.0) por SPEC, primário = as specs sorteadas A-*, sensibilidade = as unidades A-* (por instância),
- * camada de página P-* à parte (nunca somada). δ = 2 specs. Outra tela: recusa.
+ * camada de página P-* à parte (nunca somada); tela E (`cadastro-pais`, 1.0.0; NAT-78 §5.1 coprimário) por SPEC, primário =
+ * as specs do DS semeadas não expostas, sensibilidade = todas as specs, as unidades do primário e "com U-09" (a spec retirada
+ * no denominador, crédito zero nos três braços). δ = 2 specs. Outra tela: recusa.
  *
  * `--por-protocolo` (NAT-78 §4.5): sensibilidade por protocolo AO LADO do primário. O estado do oráculo de cada slot vem da
  * `summary.json` da análise (`mcpIsolamento.usoOraculo` = `run.status.oracleUsage`); o slot conta quando o estado é o que o
@@ -61,7 +63,7 @@ import type { OracleUsage } from "../../contracts";
 import { bracoDoRun, referenciasDoAchado } from "./e14-campanha";
 import type { Derivado, Resposta } from "./e14-comum";
 import {
-  AVISO_POR_PROTOCOLO, FORMATO_POR_PROTOCOLO, LEITURA_POR_PROTOCOLO, TIPO_POR_PROTOCOLO, definicaoPorProtocolo, estadosDoOraculo, exclusoesMd,
+  AVISO_POR_PROTOCOLO, FORMATO_POR_PROTOCOLO, LEITURA_POR_PROTOCOLO, TIPO_POR_PROTOCOLO, classeDaSpec, definicaoPorProtocolo, estadosDoOraculo, exclusoesMd,
   exclusoesPorBraco, situacaoPorProtocolo, type ExclusaoDoBraco, type ExecucaoDoResumo, type PorProtocolo, type SituacaoProtocolo,
 } from "./e14-deteccao";
 import { relacaoMedida, relacaoNoDominioMedido } from "./montar";
@@ -84,12 +86,22 @@ const r4 = (x: number | null) => (x === null ? null : Math.round(x * 10000) / 10
 
 // ───────────────────────────────────────────────────────────────── desfecho por tela (§5.1)
 
-/** Conjunto de desfecho: o `primario` (sempre por spec, D-102) e os de sensibilidade / à parte. */
-export interface Conjunto { id: string; rotulo: string; specs: string[]; modo: "spec" | "unidade"; tipo: "primario" | "sensibilidade" | "a-parte" }
+/**
+ * Conjunto de desfecho: o `primario` (sempre por spec, D-102) e os de sensibilidade / à parte. `semCredito` (só a tela E,
+ * variante "com U-09"): specs que entram no denominador (`specs`) mas nunca são contadas como confirmadas, em braço nenhum.
+ */
+export interface Conjunto { id: string; rotulo: string; specs: string[]; modo: "spec" | "unidade"; tipo: "primario" | "sensibilidade" | "a-parte"; semCredito?: string[] }
 export interface RegraDesfecho { tela: string; referencia: string; unidadeDelta: "specs"; conjuntos: Conjunto[] }
 export const conjuntoDe = (r: RegraDesfecho, id: string): Conjunto => { const c = r.conjuntos.find(x => x.id === id); if (!c) throw new Error(`conjunto ${id} fora da regra da tela ${r.tela}`); return c; };
 
-export interface Referencia { _meta: { version: string; suite?: string; exposto?: { specs: string[] } }; violations: { id: string; expectedCount?: number }[] }
+export interface Referencia {
+  _meta: { version: string; suite?: string; exposto?: { specs: string[] };
+    /** Tela E (cadastro-pais): estratos da página construída (semeadas por classe selada; expostas). */
+    estratos?: { semeada?: { DS?: string[]; G?: string[] }; exposto?: { specs: string[] } };
+    /** Tela E: variantes de sensibilidade declaradas antes da coleta; a "com U-09" traz a spec retirada pelo desvio. */
+    sensibilidades?: { comU09?: { spec?: { id: string } } } };
+  violations: { id: string; expectedCount?: number; categories?: string[] }[];
+}
 
 /** Regra fixa do protocolo §5.1 para as duas telas da coleta; qualquer outra tela (ou versão de referência) é recusada. */
 export function regraDaTela(tela: string, ref: Referencia): RegraDesfecho {
@@ -114,12 +126,40 @@ export function regraDaTela(tela: string, ref: Referencia): RegraDesfecho {
       { id: "unidades", rotulo: `unidades sorteadas A-* (${nu(a)}; por instância, sensibilidade)`, specs: a.map(v => v.id), modo: "unidade", tipo: "sensibilidade" },
       { id: "pagina", rotulo: `camada de página P-* (${pp.length} specs; à parte, nunca somada)`, specs: pp.map(v => v.id), modo: "spec", tipo: "a-parte" }] };
   }
-  throw new Error(`tela ${tela} (referência ${ref._meta.version}) sem regra de desfecho pré-registrada (só processos 1.0.0/1.1.0 e solicitacao 2.0.0)`);
+  // cadastro-pais 1.0.0 (tela E, NAT-78 §5.1 coprimário, §3.8): primário = specs do DS semeadas que pegaram e entraram na
+  // referência congelada, não expostas, por spec. Classe DS pela regra da D-156 3.i (`classeDaSpec`, a mesma do arquivo de
+  // classes da E), conferida contra o estrato semeado DS que a própria referência declara: divergência recusa. Sensibilidades
+  // (§5.1): todas as specs da E; a mesma comparação por unidade. Variante "com U-09" (§3.8, limitação 3; decisão do assistente
+  // de 16/11): a spec retirada da principal entra no denominador com crédito zero nos três braços (`semCredito`), então o D é
+  // o de "todas" e só a proporção muda. A variante "sem ids expostos" não está aqui: o protocolo não diz como ela entra no
+  // recálculo (ela muda as normas dadas ao juiz, e14-campanha.ts), e fica como pergunta.
+  if (tela === "cadastro-pais" && ref._meta.version === "1.0.0") {
+    const est = ref._meta.estratos;
+    const exp = est?.exposto?.specs, semeadasDs = est?.semeada?.DS;
+    if (!exp) throw new Error("referência cadastro-pais 1.0.0 sem _meta.estratos.exposto.specs");
+    if (!semeadasDs?.length) throw new Error("referência cadastro-pais 1.0.0 sem _meta.estratos.semeada.DS");
+    const ds = ref.violations.filter(v => classeDaSpec(v.categories ?? []) === "ds").map(v => v.id);
+    const iguais = (a: string[], b: string[]) => JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
+    if (!iguais(ds, semeadasDs)) throw new Error(`cadastro-pais 1.0.0: classe ds pela categories (${[...ds].sort().join(", ")}) ≠ estrato semeado DS da referência (${[...semeadasDs].sort().join(", ")})`);
+    for (const s of exp) if (!ids.includes(s)) throw new Error(`cadastro-pais 1.0.0: spec exposta ${s} fora da referência`);
+    const prim = ref.violations.filter(v => ds.includes(v.id) && !exp.includes(v.id));
+    if (!prim.length) throw new Error("cadastro-pais 1.0.0: primário vazio");
+    const u09 = ref._meta.sensibilidades?.comU09?.spec?.id;
+    if (!u09) throw new Error("referência cadastro-pais 1.0.0 sem _meta.sensibilidades.comU09.spec.id");
+    if (ids.includes(u09)) throw new Error(`cadastro-pais 1.0.0: a spec da variante com U-09 (${u09}) já está na referência principal`);
+    const nu = prim.reduce((n, v) => n + (v.expectedCount ?? 1), 0);
+    return { tela, referencia: ref._meta.version, unidadeDelta: "specs", conjuntos: [
+      { id: "primario", rotulo: `specs do DS semeadas, não expostas (${prim.length})`, specs: prim.map(v => v.id), modo: "spec", tipo: "primario" },
+      { id: "todas", rotulo: `todas as specs da E (${ids.length}; sensibilidade)`, specs: ids, modo: "spec", tipo: "sensibilidade" },
+      { id: "unidades", rotulo: `unidades das specs do primário (${nu}; por unidade, sensibilidade)`, specs: prim.map(v => v.id), modo: "unidade", tipo: "sensibilidade" },
+      { id: "com-u09", rotulo: `com a ${u09} (${ids.length + 1} specs; a ${u09} no denominador com crédito zero nos três braços; sensibilidade)`, specs: [...ids, u09], modo: "spec", tipo: "sensibilidade", semCredito: [u09] }] };
+  }
+  throw new Error(`tela ${tela} (referência ${ref._meta.version}) sem regra de desfecho pré-registrada (só processos 1.0.0/1.1.0, solicitacao 2.0.0 e cadastro-pais 1.0.0)`);
 }
 
 /** Conta o conjunto de unidades confirmadas no modo da tela, restrito às specs do conjunto. */
 export function contar(regra: RegraDesfecho, conjunto: string, specDe: (u: string) => string | undefined): (us: Iterable<string>) => number {
-  const c = conjuntoDe(regra, conjunto), specs = new Set(c.specs);
+  const c = conjuntoDe(regra, conjunto), specs = new Set(c.specs.filter(s => !c.semCredito?.includes(s)));
   return us => {
     const xs = [...new Set(us)].filter(u => { const s = specDe(u); return !!s && specs.has(s); });
     return c.modo === "spec" ? new Set(xs.map(specDe)).size : xs.length;

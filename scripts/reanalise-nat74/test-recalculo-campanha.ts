@@ -73,6 +73,77 @@ try {
     assert.deepEqual(d11.conjuntos, d10.conjuntos);
   });
 
+  // Tela E (cadastro-pais 1.0.0; NAT-78 §5.1 coprimário, §3.8 limitação 3): referência SINTÉTICA, só a forma dos campos que a
+  // regra lê (ids, categories, contagem, estratos, variante com U-09); nenhuma spec, âncora ou descrição real.
+  type RefE = Parameters<typeof regraDaTela>[1];
+  const refESint = (o: { exp?: string[]; dsSemeada?: string[]; u09?: string | null; version?: string } = {}): RefE => ({
+    _meta: { version: o.version ?? "1.0.0", suite: "cadastro-pais",
+      estratos: { semeada: { DS: o.dsSemeada ?? ["X-01", "X-02", "X-03"], G: ["X-04", "X-05"] }, exposto: { specs: o.exp ?? [] } },
+      ...(o.u09 === null ? {} : { sensibilidades: { comU09: { spec: { id: o.u09 ?? "X-09" } } } }) },
+    violations: [
+      { id: "X-01", expectedCount: 1, categories: ["estrutura"] }, { id: "X-02", expectedCount: 2, categories: ["token"] },
+      { id: "X-03", expectedCount: 1, categories: ["componente", "tipografia"] },
+      { id: "X-04", expectedCount: 1, categories: ["token", "acessibilidade"] }, { id: "X-05", expectedCount: 1, categories: ["comportamento", "acessibilidade"] }] });
+  t("[tela E] desfecho cadastro-pais 1.0.0 (sintético): primário = DS semeadas não expostas por spec; todas; unidades do primário; com U-09 no denominador sem crédito", () => {
+    const e = regraDaTela("cadastro-pais", refESint());
+    assert.equal(e.tela, "cadastro-pais"); assert.equal(e.referencia, "1.0.0"); assert.equal(e.unidadeDelta, "specs");
+    assert.deepEqual(e.conjuntos.map(c => [c.id, c.modo, c.tipo]), [["primario", "spec", "primario"], ["todas", "spec", "sensibilidade"], ["unidades", "unidade", "sensibilidade"], ["com-u09", "spec", "sensibilidade"]]);
+    assert.deepEqual(conjuntoDe(e, "primario").specs, ["X-01", "X-02", "X-03"]);
+    assert.deepEqual(conjuntoDe(e, "todas").specs, ["X-01", "X-02", "X-03", "X-04", "X-05"]);
+    assert.deepEqual(conjuntoDe(e, "unidades").specs, ["X-01", "X-02", "X-03"]); assert.match(conjuntoDe(e, "unidades").rotulo, /\(4;/);
+    assert.deepEqual(conjuntoDe(e, "com-u09").specs, ["X-01", "X-02", "X-03", "X-04", "X-05", "X-09"]); assert.deepEqual(conjuntoDe(e, "com-u09").semCredito, ["X-09"]);
+    assert.ok(e.conjuntos.filter(c => c.id !== "com-u09").every(c => c.semCredito === undefined), "só a variante com U-09 tem semCredito");
+    // exposta (sintética) sai do primário e fica em todas
+    const ex = regraDaTela("cadastro-pais", refESint({ exp: ["X-02"] }));
+    assert.deepEqual(conjuntoDe(ex, "primario").specs, ["X-01", "X-03"]); assert.equal(conjuntoDe(ex, "todas").specs.length, 5);
+  });
+  t("[tela E] contagem: a spec da variante com U-09 nunca é contada, mesmo com unidade que a aponte; o resto conta como em todas", () => {
+    const e = regraDaTela("cadastro-pais", refESint());
+    const sp: Record<string, string> = { a: "X-01", b: "X-02", c: "X-02", d: "X-04", z: "X-09" };
+    const sd = (u: string) => sp[u];
+    assert.equal(contar(e, "primario", sd)(["a", "b", "c", "d", "z"]), 2);
+    assert.equal(contar(e, "unidades", sd)(["a", "b", "c", "d", "z"]), 3);
+    assert.equal(contar(e, "todas", sd)(["a", "b", "c", "d", "z"]), 3);
+    assert.equal(contar(e, "com-u09", sd)(["a", "b", "c", "d", "z"]), 3);
+    assert.equal(contar(e, "com-u09", sd)(["z"]), 0);
+  });
+  t("[tela E] recusas: versão sem regra, classe ds ≠ estrato DS, sem estratos, sem a variante com U-09, U-09 já na principal, exposta fora da referência", () => {
+    assert.throws(() => regraDaTela("cadastro-pais", refESint({ version: "0.9.0" })), /sem regra de desfecho pré-registrada/);
+    assert.throws(() => regraDaTela("cadastro-pais", refESint({ dsSemeada: ["X-01", "X-02"] })), /classe ds pela categories/);
+    assert.throws(() => regraDaTela("cadastro-pais", { ...refESint(), _meta: { version: "1.0.0", suite: "cadastro-pais" } }), /estratos\.exposto/);
+    assert.throws(() => regraDaTela("cadastro-pais", refESint({ u09: null })), /comU09/);
+    assert.throws(() => regraDaTela("cadastro-pais", refESint({ u09: "X-04" })), /já está na referência principal/);
+    assert.throws(() => regraDaTela("cadastro-pais", refESint({ exp: ["X-99"] })), /fora da referência/);
+    assert.throws(() => regraDaTela("processos", refESint()), /sem _meta\.exposto/);
+  });
+  t("[tela E] campanha sintética: D_fc^E no primário; com U-09 dá o MESMO D que todas, com denominador +1", () => {
+    const e = regraDaTela("cadastro-pais", refESint());
+    const sp: Record<string, string> = { a: "X-01", b: "X-02", c: "X-03", d: "X-04", z: "X-09" };
+    const br = (confirmadas: string[]) => ({ confirmadas, admissiveis: [], pendentes: 0 });
+    const k = chaveVariante("principal", "1.2.0");
+    const triosE: TrioEntrada[] = [
+      { trio: "p01", ordem: ["sem", "ferramentas", "com"], linhaDeBase: null, creditos: { [k]: { sem: br([]), ferramentas: br(["a"]), com: br(["a", "b", "c", "d", "z"]) } } },
+      { trio: "p02", ordem: ["com", "sem", "ferramentas"], linhaDeBase: null, creditos: { [k]: { sem: br(["d"]), ferramentas: br(["a", "b", "d"]), com: br(["b", "z"]) } } }];
+    const c: Comparacao = { id: "ferramentas-x-com", arms: ["ferramentas", "com"], role: "primary" };
+    const tab = (conjunto: string) => tabelaDaComparacao(triosE, c, { variante: "principal", politica: "1.2.0", conjunto, regra: e, specDe: u => sp[u], nPlanejado: 9, sementeBase: "sintetico" });
+    assert.deepEqual(tab("primario").porTrio.map(x => x.d), [2, -1]);
+    assert.deepEqual(tab("todas").porTrio.map(x => x.d), [3, -2]);
+    assert.deepEqual(tab("com-u09").porTrio.map(x => x.d), tab("todas").porTrio.map(x => x.d));
+    assert.deepEqual(tab("com-u09").porTrio.map(x => [x.a, x.b]), tab("todas").porTrio.map(x => [x.a, x.b]));
+    assert.equal(conjuntoDe(e, "com-u09").specs.length, conjuntoDe(e, "todas").specs.length + 1);
+    assert.match(tab("com-u09").conjunto, /crédito zero nos três braços/);
+  });
+  {
+    const refEAbs = join(EVAL, "ground-truth-cadastro-pais.json");
+    if (!existsSync(refEAbs)) { pulados++; console.log("  PULADO referência da E ausente"); }
+    else t("[tela E] referência congelada 1.0.0 (sha256 661cc54b…): aceita; 6 no primário, 8 em todas, 6 unidades, 9 com U-09 (só contagens)", () => {
+      assert.equal(sha(readFileSync(refEAbs)), "661cc54b7b291bc6e455065ecb23c08e5279bf7a0e9c7d6494afd78ae112c528");
+      const e = regraDaTela("cadastro-pais", lerJson<RefE>(refEAbs));
+      assert.deepEqual(e.conjuntos.map(c => [c.id, c.specs.length, c.semCredito?.length ?? 0]), [["primario", 6, 0], ["todas", 8, 0], ["unidades", 6, 0], ["com-u09", 9, 1]]);
+      assert.match(conjuntoDe(e, "unidades").rotulo, /\(6;/);
+    });
+  }
+
   t("contagem: modo spec conta specs distintas; modo unidade conta unidades; só o conjunto pedido", () => {
     const d = regraDaTela("processos", refD), a = regraDaTela("solicitacao", refA);
     const spec: Record<string, string> = { u1: "D-01", u2: "D-01", u3: "D-11", u4: "A-04", u5: "A-04", u6: "P-01", u7: "A-01" };
