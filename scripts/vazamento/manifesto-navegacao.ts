@@ -40,13 +40,19 @@ export const CAMPOS_OPERACIONAIS = ["url", "waitFor", "viewport", "setup", "stat
  * Campos de `_meta` conhecidos e DEIXADOS DE FORA (versão, histórico, notas, auditoria, sorteio, escopo, contagens…):
  * os das referências das telas de desenvolvimento A, A2 e B, mais `classes`, `evidencia` e `metodo` da tela D
  * (13/11/2026: classe por spec, arquivo e sha256 da evidência por spec, proveniência da auditoria; classificados pela
- * forma dos campos, sem ler o conteúdo). Nenhum deles muda como se chega às paradas.
+ * forma dos campos, sem ler o conteúdo), e os da tela E, página construída (16/11/2026: `estratos`, `coviolacoes`,
+ * `portao`, `decisoesDaAutora`, `regraMesmaClausula`, `fundamentacao`, `correcoesDaPagina`, `desvios`, `sensibilidades`,
+ * `pagina`: estratos do sorteio, regras de co-violação, portão de adequação, decisões, desvios, variantes de
+ * sensibilidade e hashes da página; classificados pelo nome e pela forma, sem ler o conteúdo). Nenhum deles muda como
+ * se chega às paradas: a entrada, a janela, o setup e as paradas da E estão nos campos operacionais.
  */
 export const CAMPOS_DOCUMENTAIS = [
   "version", "version_note", "historico", "status", "page", "suite", "ds", "unit_of_evaluation", "setup_rationale",
   "nunca_agregar_com", "baselines", "camada_pagina", "chamarizes", "fundo", "conformes", "fora_de_escopo", "escaladas",
   "auditoria", "protocoloTempo", "sorteio", "rules_nota", "coincideComCore", "exposto", "piso", "porSpec", "construcao",
   "reconciliacao", "remedida", "candidata", "classes", "evidencia", "metodo",
+  "estratos", "coviolacoes", "portao", "decisoesDaAutora", "regraMesmaClausula", "fundamentacao", "correcoesDaPagina",
+  "desvios", "sensibilidades", "pagina",
 ] as const;
 /** Campos de um passo do `setup` (FlowSetupStep): todos operacionais. */
 export const CAMPOS_DO_PASSO = ["action", "selector", "value", "ms", "path", "waitFor"] as const;
