@@ -1,0 +1,37 @@
+{
+  "contract": "linha-de-base-campanha.v1",
+  "fixture": false,
+  "campaignId": "nat78-tela-d-01",
+  "screen": {
+    "id": "processos",
+    "version": "govbr-telas-site-9f4b936f2859"
+  },
+  "baselineId": "lb-20261116-184336-processos-938e69",
+  "registro": {
+    "caminho": "linhas-de-base/nat78-tela-d-01/processos/lb-20261116-184336-processos-938e69/baseline.json",
+    "sha256": "7a60e3c071c21019e16407590d3227e0eca3666b4c6f51d22f7942790ac13cf3"
+  },
+  "medidaEm": "2026-11-16T18:43:36Z",
+  "manifestoColeta": {
+    "caminho": "coletas/nat78-tela-d-01/dc797823354cd9b66e35e3e5ed7ecace061de3ccff05d8f218480b681d29843e/manifesto-coleta.json",
+    "sha256": "dc797823354cd9b66e35e3e5ed7ecace061de3ccff05d8f218480b681d29843e"
+  },
+  "snapshotSetId": "snapshots-f6c6803c327fd7bc",
+  "site": {
+    "siteSha256": "9f4b936f2859c87ac46f0013a3b58c3eae356db6aa7b23cf50cb497ec24a1cfd",
+    "manifestSha256": "427051e631aa63826ed2cab17dea510d7b340822074718287aaeacdc76bee889"
+  },
+  "oracle": {
+    "version": "3.7.12",
+    "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+    "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637"
+  },
+  "repos": {
+    "govbr-eval": "f7f81c388491929fc69c83e72274a39848e72f5d",
+    "govbr-telas": "620f5517e6f467599125532b6c37bd5fc21e7419",
+    "govbr-ds-validator": "816f4bae41f4486b7055f0ac265167e87ce0d5e5"
+  },
+  "imagesLockSha256": "dabeada27e76be15e78363c472725fa0a9bf0fb0cbcd4dee900de78c8f534358",
+  "regra": "emenda (a) às regras de falha (§ 7.2): a linha de base da campanha é medida e congelada uma vez, antes do primeiro slot, por um disparo so-linha-de-base, registrada em campanhas/<id>/linha-de-base.json e commitada antes do slot 1; todo trio usa este registro, conferido contra o manifesto de coleta de cada slot (identidade executável, site, oráculo, commits do govbr-ds-validator e do govbr-telas, lock de imagens) e pelo git (o commit do govbr-eval de cada slot contém o registro e só difere do da linha de base por ele)",
+  "geradoEm": "2026-11-16T18:45:30Z"
+}
