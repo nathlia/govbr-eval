@@ -1,28 +1,12 @@
 {
   "formato": "nat78-analise-preregistrada-1.0.0",
   "campanha": "nat78-tela-e-01",
-  "item": "Protocolo NAT-78 (revisão 6, aceita em 16/11, D-202) §3.8, §5.1 (coprimário da tela E), §6.3 e §10 E5: análise da tela E configurada ANTES da coleta, na forma da da tela D (nat78-tela-d-01). Só dados: nomes de conjunto, políticas, colunas, comandos e regras de leitura; nenhuma descrição, âncora, regra nem id de spec da referência. RASCUNHO da bancada (ramo bancada-e): commitado sozinho, antes do campaign.json da E, que cita o sha256 deste arquivo em analysisPlan.",
+  "item": "Protocolo NAT-78 (revisão 6 congelada; aceita pela autora em 16/11/2026, D-202; errata do CONG-09 ratificada, D-204) §3.8, §5.1 (coprimário da tela E), §6.3, §10 item 11 e §10 E5: análise da tela E configurada ANTES da coleta, na forma da da tela D (campanhas/nat78-tela-d-01/analise-preregistrada.json, eval f179cbb). Só dados: nomes de conjunto, políticas, colunas, comandos e regras de leitura; nenhuma descrição, âncora, regra nem id de spec da referência. Commitado sozinho, antes do campaign.json da E, que cita o sha256 deste arquivo em analysisPlan.",
   "protocolo": {
-    "documento": "thesis-workspace/planejamento/atual/protocolo-nat78-estudo-complementar-REVISAO-2026-11-12.md (revisão 6)",
-    "secoes": [
-      "§2.1 (QP-E)",
-      "§2.2",
-      "§3.7",
-      "§3.8",
-      "§4.5",
-      "§5.1",
-      "§5.2",
-      "§6.1",
-      "§6.2",
-      "§6.3",
-      "§7.1",
-      "§7.2",
-      "§7.3",
-      "§8 (tela E)",
-      "§10 E1–E5"
-    ],
-    "commitCongelado": null,
-    "notaCommit": "CONG-15: o commit do protocolo congelado ainda não existe; vem antes das campanhas, sozinho (§10, ordem depois do aceite)."
+    "documento": "thesis-workspace/planejamento/atual/protocolo-nat78-estudo-complementar-CONGELADO-2026-11-16.md (revisão 6 congelada)",
+    "secoes": ["§2.1 (QP-E)", "§2.2", "§3.7", "§3.8", "§4.5", "§5.1", "§5.2", "§5.3", "§6.1", "§6.2", "§6.3", "§7.1", "§7.2", "§7.3", "§8", "§10 item 11", "§10 E1–E6"],
+    "commitCongelado": "a46ab3fb950edf55df2d00b5da33a2552e695485",
+    "notaCommit": "CONG-15: commit do thesis-workspace que carrega sozinho o protocolo congelado; sha256 do blob commitado be473ddf09a612c11497796dee956cd2f46506da81b31638c77e43c81d195727 (o mesmo da D). Revisão 6 aceita pela autora em 16/11/2026 (D-202), com as erratas de 16/11 (§13); a errata do CONG-09 ratificada pela autora em 16/11 (D-204)."
   },
   "tela": {
     "id": "cadastro-pais",
@@ -30,26 +14,36 @@
       "arquivo": "ground-truth-cadastro-pais.json",
       "versao": "1.0.0",
       "sha256": "661cc54b7b291bc6e455065ecb23c08e5279bf7a0e9c7d6494afd78ae112c528",
-      "commitCongelamento": "4f200f263f6567212a4887636c081bad529e8dc5 (eval-e, ramo tela-e; trazida byte a byte ao ramo bancada-e)",
-      "nota": "CONG-16. 8 specs, 8 unidades, 3 estados (S0 → S1 → S2). Variantes de sensibilidade declaradas na própria referência (_meta.sensibilidades): semIdsExpostos e comU09 (9 specs, 9 unidades: a principal mais a spec geral retirada pelo desvio DV-01, D-202 item 4)."
+      "commitCongelamento": "4f200f263f6567212a4887636c081bad529e8dc5 (eval-e, ramo tela-e; o commit que a §3.8 e o CONG-16 citam); na main do eval desde f1502cf, byte a byte (mesmo sha256); telas.json aponta para ela desde 395540c",
+      "nota": "CONG-16 (§3.8; D-203 item 2). 8 specs (6 ds + 2 geral), 8 unidades, 3 estados, 5 controles conformes. Variantes de sensibilidade declaradas na própria referência (_meta.sensibilidades): semIdsExpostos e comU09 (9 specs, 9 unidades: a principal mais a spec geral retirada pelo desvio DV-01, D-202 item 4). Nenhuma spec exposta (_meta.estratos.exposto.specs vazio)."
+    },
+    "criteriosDeJulgamento": {
+      "arquivo": "tela-e2/criterios-de-julgamento-sem-predicado.json",
+      "sha256": "ceb60518905b04366652f5680e90506f00fad25541f2de767a92c619a3deb992",
+      "commit": "4ff6e5d (main do eval; o mesmo arquivo do eval-e 470f4ca, citado na §3.8)",
+      "declaracao": "telas.json › cadastro-pais.criteriosDeJulgamento { arquivo, sha256 } (eval 055e8d2)",
+      "decisao": "decisão do assistente de 16/11, vetável pela autora (thesis-workspace decisoes-do-assistente.md, 'As duas perguntas da análise da tela E, que o protocolo não responde'); implementada em eval 055e8d2",
+      "como": "entra no lote dos juízes cegos da E: com a declaração da tela, e14-campanha.ts monta a passada nat78-primeira-passada-1.4.8 (política 1.3.0) com o LEIAME nat78-leiame-juiz-1.4.8-criterios (LEIAME_CRITERIOS no fim da seção vinculo: um texto só, igual para todo defeito); o lote publica em referencias.cadastro-pais os critérios comuns e, em TODO defeito da tela, criterio na mesma forma (observavel, estado, decisao); a montagem para se o sha256 do arquivo não for o declarado ou se a referência que o arquivo cita não for a da análise; o manifesto da passada grava leiame (versão + sha256) e criterios (tela, arquivo, sha256, referência, contagens). Nada do arquivo que diga como cada spec é medida vai ao juiz. Telas sem a declaração (a D inclusive) saem byte a byte como na 1.4.7 (docs/analise-execucao.md, 'Critérios de julgamento declarados pela tela'; testes em npm run test:revisao-criterios)",
+      "limitacao": "§3.8, limitação declarada 2 (aceitação: 5 specs com predicado implementado, 3 julgadas pela descrição com observável, estado e critério escritos antes da coleta). Limitação declarada desta decisão: os critérios das specs sem predicado têm redação mais estruturada que os das outras, e um juiz pode inferir quais specs são julgadas pela descrição; isso não revela o braço."
     },
     "classes": {
       "arquivo": "tela-e2/classes-d156-1.0.0.json",
       "sha256": "afd8e6e38897f00ebfbe09579f5df9be7a0810608614c675701898e293b7bfc9",
-      "todas": {
-        "total": 8,
-        "ds": 6,
-        "geral": 2
-      },
-      "expostas": {
-        "total": 0
-      },
-      "nota": "classe ds × geral da D-156 3.i, derivada da categories pela classeDaSpec de e14-deteccao.ts, pelo mesmo gerador da D (tela-d/classes-d156.ts). As contagens são as do congelamento (6 DS + 2 G); a E não tem specs expostas."
+      "commit": "aa6eb3e",
+      "todas": { "total": 8, "ds": 6, "geral": 2 },
+      "expostas": { "total": 0 },
+      "nota": "classe ds × geral da D-156 3.i, derivada da categories pela classeDaSpec de e14-deteccao.ts, pelo mesmo gerador da D (tela-d/classes-d156.ts). A regra de desfecho do recálculo deriva o primário pela mesma classeDaSpec e recusa a referência se ela divergir do estrato semeado DS que a própria referência declara."
     },
     "controlesConformes": {
       "arquivo": "ground-truth-cadastro-pais.json › _meta.conformes",
       "itens": 5,
-      "nota": "dentro da própria referência (não há arquivo à parte como o tela-d/conformes.json); seleção escrita depois da auditoria (desvio DV-03): falso alarme sobre eles é descritivo e condicionado a essa seleção."
+      "nota": "dentro da própria referência (não há arquivo à parte como o tela-d/conformes.json); seleção escrita depois da auditoria (§3.8, limitação declarada 5): falso alarme sobre eles é descritivo."
+    },
+    "inventarioDom": {
+      "arquivo": "scripts/vazamento/inventario-dom/cadastro-pais.json",
+      "sha256": "e2ff5c63c7415f0e84ae652c01f09dc232326da4a7ba70942970d4302804c8e2",
+      "commit": "d9738d3",
+      "nota": "CONG-18; preso ao site 968abbd974d5 do pacote govbr-telas da E (manifesto 204b68f2c8437ab453d9d2f9096a8273703a0c22d7f2e16e56d9839640fe5651)"
     }
   },
   "desfechoPrimario": {
@@ -58,150 +52,89 @@
     "nome": "D_fc^E",
     "formula": "D_fc^E = specs do DS semeadas confirmadas por com − as confirmadas por ferramentas, por trio",
     "conjunto": "primario",
-    "conjuntoDescricao": "as 6 specs da classe ds da referência congelada (tela-e2/classes-d156-1.0.0.json), todas semeadas e não expostas; por spec (D-102): spec confirmada = pelo menos uma unidade confirmada pela revisão fechada",
+    "conjuntoDescricao": "as 6 specs do DS semeadas que pegaram e entraram na referência congelada, não expostas (§5.1 coprimário; nenhuma exposta na E); por spec (D-102): spec confirmada = pelo menos uma unidade confirmada pela revisão fechada",
     "decisao": "§5.1 (coprimário da tela E, decisão da autora de 12/11)",
     "politica": "1.3.0 (crédito da 1.2.0 + R16; D-156 item 2)",
     "coluna": "deteccao",
-    "fonte": "revisao:recalculo › recalculo.json › tabelas['principal|1.2.0|primario'], comparação ferramentas-x-com — EXIGE a regra de desfecho da tela cadastro-pais em recalculo-campanha.ts › regraDaTela (ver pendentes)"
+    "fonte": "revisao:recalculo › recalculo.json › tabelas['principal|1.2.0|primario'] (na passada 1.3.0 essas chaves leem o derivado 1.3.0: notaPolitica), comparação ferramentas-x-com; regra de desfecho cadastro-pais 1.0.0 em recalculo-campanha.ts › regraDaTela (eval 0351893; coluna fundamentada da E em 055e8d2; testes em test-recalculo-campanha.ts)"
   },
   "comparacoesSecundarias": [
-    {
-      "pergunta": "QS1",
-      "comparacao": "sem-x-com",
-      "nome": "D_sc^E",
-      "formula": "D_sc^E = com − sem"
-    },
-    {
-      "pergunta": "QS2",
-      "comparacao": "sem-x-ferramentas",
-      "nome": "D_sf^E",
-      "formula": "D_sf^E = ferramentas − sem"
-    }
+    { "pergunta": "QS1", "comparacao": "sem-x-com", "nome": "D_sc^E", "formula": "D_sc^E = com − sem" },
+    { "pergunta": "QS2", "comparacao": "sem-x-ferramentas", "nome": "D_sf^E", "formula": "D_sf^E = ferramentas − sem" }
   ],
   "politicas": {
     "principal": "1.3.0",
-    "aoLado": [
-      "1.1.0"
-    ],
+    "aoLado": ["1.1.0"],
     "pura120": {
-      "decisao": "N7 (aceite de 16/11: sim)",
-      "como": "o mesmo caminho da D: reingestão da passada final da E em pasta nova (e14-ingerir --politica 1.2.0 --gravar-em)"
+      "decisao": "N7 (decidido pelo aceite de 16/11, D-202: sim)",
+      "como": "o mesmo caminho da D: reingestão da passada final da E em pasta nova (npx tsx scripts/reanalise-nat74/e14-ingerir.ts --fila <passada final> --politica 1.2.0 --gravar-em <pasta nova>); a tabela de duas colunas lê esse julgamentos.json por e14-deteccao.ts --julgamentos <pasta nova>/julgamentos.json",
+      "limite": "o mesmo da D: revisao:recalculo lê só o julgamentos.json de dentro da passada (lerPassada); o D_fc^E na 1.2.0 pura exige uma cópia da passada reingerida na 1.2.0; o caminho não foi exercitado em ensaio"
     }
   },
   "colunas": {
     "principal": "deteccao",
     "aoLado": "fundamentada",
-    "decisao": "D-157 item 4; §5.1",
+    "decisao": "D-157 item 4 (coluna principal = detecção); §5.1",
     "testeNaFundamentada": false,
-    "decisaoTeste": "N8 (aceite de 16/11: não; descritiva, ao lado)",
-    "nota": "Risco declarado no congelamento: em 7 dos 26 ids a base servida dá força recommended/permitted; a coluna fundamentada pode ficar baixa nessas specs no braço com. A detecção não depende de id."
+    "decisaoTeste": "N8 (decidido pelo aceite de 16/11, D-202: não; descritiva, ao lado, por braço e trio, com mediana)",
+    "nota": "protocolo §4.2, linha \"Coluna principal\" (errata 5 de 16/11): a coluna principal deteccao é fixada aqui e pela opção --coluna-principal deteccao do e14-deteccao.ts; o contrato campaign.v2 não tem campo para ela. §3.8, limitação declarada 1 (força normativa): sete ids de regra da referência são servidos pelo oráculo congelado com uma força que não obriga, um deles o id sorteado de uma das seis specs do DS; a diferença entra na interpretação do desempenho do oráculo, e o instrumento não muda. Na E a coluna fundamentada tem a sensibilidade sem-ids-expostos (ver sensibilidades)."
   },
   "sensibilidades": [
-    {
-      "id": "todas",
-      "o-que": "as 8 specs da E (6 ds + 2 geral), por spec (§5.1: 'todas as specs da E')"
-    },
-    {
-      "id": "unidades",
-      "o-que": "a mesma comparação contada por unidade"
-    },
-    {
-      "id": "comU09",
-      "o-que": "a variante declarada na referência com a spec geral retirada pelo DV-01 (9 specs, 9 unidades), D-202 item 4"
-    },
-    {
-      "id": "semIdsExpostos",
-      "o-que": "a variante declarada na referência para os ids expostos (3 specs com rules sem eles); só muda a coluna fundamentada"
-    },
-    {
-      "id": "politica-1.1.0",
-      "o-que": "sem R15 e sem Q1 a"
-    },
-    {
-      "id": "S4'",
-      "o-que": "sem crédito contestado não ratificado, no braço que o recebeu"
-    },
-    {
-      "id": "por-protocolo",
-      "o-que": "§4.5, as mesmas três comparações só com as execuções aderentes; ANÁLISE DE SENSIBILIDADE, nunca o primário; a mesma definição da D (nat78-aderencia-por-protocolo-1.0.0, trio com slot fora sai inteiro)",
-      "opcao": "--por-protocolo (revisao:recalculo)"
-    }
+    { "id": "todas", "o-que": "as 8 specs da E (6 ds + 2 geral), por spec (§5.1: 'todas as specs da E')", "fonte": "recalculo.json › tabelas['…|todas']" },
+    { "id": "unidades", "o-que": "a mesma comparação contada por unidade, nas unidades das 6 specs do primário (6)", "fonte": "recalculo.json › tabelas['…|unidades']" },
+    { "id": "com-u09", "o-que": "variante comU09 da referência (9 specs: as 8 mais a spec geral retirada pelo DV-01): a spec retirada entra no denominador como positivo que nenhum braço pode acertar, crédito zero nos três braços; o D por trio é o de 'todas' e só a proporção muda", "decisao": "§3.8, limitação declarada 3; decisão do assistente de 16/11 (decisoes-do-assistente.md, 'Critérios de julgamento da tela E escritos antes da coleta; a U-09 não tem critério fixável'), vetável pela autora; opção a da D-202 item 4 (manter a sensibilidade)", "fonte": "recalculo.json › tabelas['…|com-u09'] (conjunto com semCredito; denominador = specs.length = 9)" },
+    { "id": "sem-ids-expostos", "variante": "semIdsExpostos da referência (§3.8: 'sem ids expostos'; 3 das 8 specs mudam)", "o-que": "só a coluna fundamentada, por braço e trio, na leitura principal e na variante, com as contagens por conjunto (modo spec): o cartão fundamentado cuja norma citada é id exposto da spec creditada sai da coluna na variante ('fundamentada por norma exposta', listado); a spec continua fundamentada se outro cartão a fundamenta por norma não exposta; cartão sem regra citada nunca sai. A detecção, as tabelas e o D não mudam", "tipo": "sensibilidade, descritiva, sem teste (sem D)", "decisao": "decisão do assistente de 16/11, vetável pela autora (thesis-workspace decisoes-do-assistente.md, 'As duas perguntas da análise da tela E, que o protocolo não responde'); implementada em eval 055e8d2", "como": "rederivada da MESMA passada julgada, sem segunda passada de juiz: a norma citada é lida do próprio achado do agente (a rule, ou a referência secundária do achado em citacaoPor), na forma canônica da passada (idCanonico); os ids retirados por spec são os de rules da principal menos os da variante, conferidos contra _meta.fundamentacao.porSpec (recalculo-campanha.ts › sensibilidadeSemIdsExpostos, regraDaTela › fundamentada, fundamentadaDoTrio)", "limitacao": "citação por id de verificação (ds:<verificação>, um id que vale por várias regras) numa spec com ids expostos: a passada o resolve pelo checker-aliases.json e pela base do validador da campanha, entradas que o recálculo não lê; o cartão fica contado como na principal e é listado em porAlias (cartão, spec, id citado), para ser lido à vista; nenhum segundo mapeamento", "fonte": "recalculo.json › fundamentada (sensibilidades[id = sem-ids-expostos], porTrio[].porBraco[braço].{principal, variantes, porNormaExposta, porAlias}, contagens[conjunto][leitura][braço]) e a seção da coluna fundamentada no tabela.md (docs/analise-execucao.md, 'Tela E, \"sem ids expostos\"')" },
+    { "id": "politica-1.1.0", "o-que": "sem R15 e sem Q1 a", "fonte": "recalculo.json › tabelas['…|1.1.0|…']" },
+    { "id": "S4'", "o-que": "sem crédito contestado não ratificado, no braço que o recebeu", "fonte": "recalculo.json › tabelas[\"S4'|…\"] (exige passada adjudicada com contestados.json; ratificações por --ratificacoes <respostas-autora.json>)" },
+    { "id": "por-protocolo", "o-que": "§4.5: as mesmas três comparações (D_fc^E, D_sc^E, D_sf^E) só com as execuções aderentes ao uso declarado do oráculo, ao lado da intenção de tratar. ANÁLISE DE SENSIBILIDADE, nunca o primário: não entra no Holm, não substitui nem se soma à leitura primária", "tipo": "sensibilidade", "decisao": "D-198 item 5 (autora, 14/11: aprovada como análise de sensibilidade; a análise primária fica intacta)", "opcao": "--por-protocolo (revisao:recalculo)", "definicao": { "versao": "nat78-aderencia-por-protocolo-1.0.0", "constante": "e14-deteccao.ts › DEFINICAO_POR_PROTOCOLO", "estadoExigido": { "sem": "absent-verified", "ferramentas": "used-adherent", "com": "used-adherent" }, "usedWithErrors": "fora do conjunto, mostrado à parte com a contagem do slot no primário", "outroEstado": "fora do conjunto, listado", "estadoDe": "summary.json da análise › execucoes[].mcpIsolamento.usoOraculo (= run.status.oracleUsage), casado pelo runId, braço conferido" }, "trioComSlotFora": { "regra": "trio-inteiro (recalculo-campanha.ts › TRIO_COM_SLOT_FORA): trio com um slot excluído sai das três comparações desta leitura e é listado em cada uma", "naoAdotada": "so-comparacoes-do-slot" }, "slotPerdido": "não tem estado do oráculo: segue a regra do trio incompleto do primário (§6.3)", "exclusoes": "publicadas sempre POR BRAÇO (slots com estado, no conjunto, excluídos e o estado que excluiu)", "fonte": "recalculo.json › sensibilidadePorProtocolo (tipo \"sensibilidade\", leitura \"sensibilidade-por-protocolo\") › tabelas['sensibilidade-por-protocolo|principal|1.2.0|primario'] (nunca em tabelas), semente própria <base>|sensibilidade-por-protocolo|recalculo|…; seção própria no fim do tabela.md" }
   ],
   "incerteza": {
-    "teste": "permutação exata por troca de sinais sobre a média de D_fc^E, bicaudal (estatistica-pareada.ts › testePermutacaoSinal)",
-    "robustez": [
-      "Wilcoxon-Pratt exato",
-      "teste do sinal exato"
-    ],
-    "ic": "IC 95% bootstrap percentil, 10.000 reamostragens, mulberry32, semente = campanha.design.seed da E",
+    "teste": "permutação exata por troca de sinais sobre a média de D_fc^E, bicaudal, por tela (estatistica-pareada.ts › testePermutacaoSinal)",
+    "robustez": ["Wilcoxon-Pratt exato", "teste do sinal exato"],
+    "ic": "IC 95% bootstrap percentil, 10.000 reamostragens, mulberry32, semente = campanha.design.seed da E (recalculo: base|recalculo|<comparação>|<variante>|<política>|<conjunto>)",
     "alfaSecundarias": 0.05,
     "correcaoSecundarias": "nenhuma (§6.3)",
     "trioIncompleto": "entra só nas comparações que têm os dois braços",
-    "publicar": [
-      "D por trio",
-      "média",
-      "mediana",
-      "DP",
-      "n planejado (9)",
-      "n efetivo"
-    ],
+    "publicar": ["D por trio", "média", "mediana", "DP", "n planejado (9)", "n efetivo"],
     "nota": "§6.2: com 9 trios e as 9 diferenças não nulas o menor p exato é 2/2^9 ≈ 0,004 (pode passar em 0,025)"
   },
   "leitura": {
     "congelada": "vantagem do com exige p abaixo do limiar que o Holm der à tela E e média > 0; o simétrico é vantagem do ferramentas; o resto é nenhuma diferença detectável (§6.3)",
-    "delta": {
-      "valor": 2,
-      "unidade": "specs por trio",
-      "decisao": "A8 (§6.1: o mesmo δ = 2 vale na E; com 6 specs do DS, 2 specs é um efeito grande, declarado)"
-    }
+    "delta": { "valor": 2, "unidade": "specs por trio", "decisao": "A8 (decidido pelo aceite de 16/11, D-202: adotar; §6.1: o mesmo δ = 2 vale na E; com 6 specs do DS, 2 specs é um efeito grande, declarado)", "regra": "IC inteiro em [−2, +2] → o IC estimado caiu dentro da faixa pré-especificada de ±δ; cruzou ±2 → inconclusivo para o efeito relevante (recalculo-campanha.ts › leituraComDelta)" }
   },
   "holm": {
-    "regra": "§6.3: QP (D) e QP-E (E) formam uma família com α = 0,05; menor p comparado a 0,025, o outro a 0,05 só se o primeiro passar; estrito (p < limiar).",
-    "implementacao": "scripts/estatistica-pareada.ts › holmTelas(pD, pE) e leituraSobHolm(analise, \"E\", [\"ferramentas\", \"com\"])",
-    "entradas": "p da E = recalculo.json da E › tabelas['principal|1.2.0|primario'] › ferramentas-x-com › estatistica.principal.p (passada própria, §8 tela E)"
+    "regra": "§6.3: QP (D) e QP-E (E) formam uma família com α = 0,05. O menor dos dois p (permutação exata) é comparado a 0,025; só se passar, o outro é comparado a 0,05; se o menor não passar, nenhuma das duas é declarada. Estrito (p < limiar).",
+    "implementacao": "scripts/estatistica-pareada.ts › holmTelas(pD, pE) e leituraSobHolm(analise, tela, [\"ferramentas\", \"com\"]) (holm-leitura-por-braco-1.0.0, f376598: o braço é nomeado, D = 2º − 1º; devolve vantagem-do-com, vantagem-do-ferramentas, sem-diferenca-detectavel ou indisponivel); testes em npm run test:estatistica",
+    "entradas": "p da D = recalculo.json da D › tabelas['principal|1.2.0|primario'] › ferramentas-x-com › estatistica.principal.p; p da E = o mesmo campo do recalculo.json da E (passada própria, §8); aplicado depois das duas tabelas",
+    "nota": "o recálculo de cada tela continua lendo com α = 0,05; a leitura primária publicada é a do Holm"
   },
   "tipoDeSpec": {
     "pergunta": "QS4 (descritiva pré-registrada, sem teste)",
+    "regra": "ds × geral pela categories da referência (D-156 3.i; e14-deteccao.ts › classeDaSpec)",
     "naE": "o primário já é a classe ds (6 specs); a classe geral (2 specs) sai ao lado, descritiva, por braço e trio",
-    "fonte": "e14-deteccao.ts › porClasse"
+    "fonte": "e14-deteccao.ts › porClasse, rodado uma vez, sem --sem-expostas (a E não declara _meta.exposto.specs, e o e14-deteccao recusa a opção nesse caso)"
   },
   "classesNat71": {
-    "pergunta": "§5.2 item 5 / §5.3 (classes NAT-71)",
-    "estado": "o §5.3 descreve a classificação para a tela D; para a E não há arquivo nem regra escrita (ver pendentes)"
+    "pergunta": "§5.2 item 5 (recall por classe pré-registrada, §5.3: sintático, layout/visual, contextual/relacional, semântico; nível a/b/c)",
+    "arquivo": "tela-e2/classes-nat71/classes-finais.json",
+    "sha256": "83575c5073ed1019ea406dffbe96700e3d2a516e5947613cc9e5b02d10dce879",
+    "commit": "3431229",
+    "estado": "feito (D-206; §5.3, §10 item 11): arquivo final com as 9 specs (as 8 da referência principal e a da variante comU09); duas classificações cegas com acordo de classe 9/9 e de nível 9/9; uma spec passou ao nível b por decisão da autora de 16/11 (8 por acordo, 1 pela decisão). Contagens de nível: principal (8) a 1, b 6, c 1; com U-09 (9) a 1, b 7, c 1",
+    "fontes": "tela-e2/classes-nat71/ (eval 3431229): classificador-1.json sha256 9a12c094191cc0f4971fb6cee21bae4f43e64371ef5b91d78bc12bce11b7e0fb, classificador-2.json sha256 f506a406c38359cebe3162861227927f089f92fa2f0344f211ea897785843dcc, comparacao.md sha256 83c22edbc133955cbbecbf77ec60a1619f4e1196133501dc6acf324289ecc030, documentacao-nivel-a.md sha256 c16ef51a956bab388c54f3346accbdf95d1e85317ab21f6d40d47a2a964bda0b"
   },
   "comandos": [
-    {
-      "passo": "0",
-      "o-que": "servir o site congelado (govbr-telas, CONG-17, commit da main a fixar)",
-      "comando": "npx tsx scripts/reanalise-nat74/e14-campanha.ts --servir ../govbr-telas --porta <porta>"
-    },
-    {
-      "passo": "1-7",
-      "o-que": "os mesmos comandos da D (nat78-tela-d-01/analise-preregistrada.json › comandos), com as análises p01…p09 da E, numa passada própria; os cartões da D e da E nunca vão para o mesmo lote (§8)",
-      "comando": "idem, trocando a campanha"
-    },
-    {
-      "passo": "Holm",
-      "o-que": "depois das tabelas da D e da E",
-      "comando": "holmTelas(p da D, p da E) de scripts/estatistica-pareada.ts"
-    }
+    { "passo": "0", "o-que": "servir o site congelado da E (govbr-telas d8eb604ab8953c29c624c376407c2599fd850fa3, export-telas 1.5.0, site 968abbd974d5; CONG-17)", "comando": "npx tsx scripts/reanalise-nat74/e14-campanha.ts --servir ../govbr-telas --porta <porta>" },
+    { "passo": "1", "o-que": "primeira passada cega da E, em passada própria (os cartões da D e da E nunca vão para o mesmo lote, §8); política 1.3.0; com a declaração de critérios da tela, a passada é nat78-primeira-passada-1.4.8 e o LEIAME nat78-leiame-juiz-1.4.8-criterios (a montagem para se o sha256 dos critérios divergir)", "comando": "npx tsx scripts/reanalise-nat74/e14-campanha.ts --analise <análise p01> … --analise <análise p09> --saida <passada> --base-url http://127.0.0.1:<porta> --validador <checkout do validator 816f4bae41f4486b7055f0ac265167e87ce0d5e5>; juiz por lote; npx tsx scripts/reanalise-nat74/e14-ingerir.ts --fila <passada>" },
+    { "passo": "3", "o-que": "confiabilidade (antes da adjudicação)", "comando": "npm run revisao:confiabilidade -- amostra --passada <passada> --saida <revisao>; npm run revisao:confiabilidade -- medir --passada <passada> --amostra <revisao>/confiabilidade" },
+    { "passo": "2", "o-que": "consistência e adjudicação (gatilho d --regra-publicada NÃO usado na E, como na D)", "comando": "npm run revisao:consistencia -- --passada <passada> --saida <revisao>; npm run revisao:adjudicacao -- preparar --passada <passada> --confiabilidade <revisao>/confiabilidade --saida <revisao>; … revelar …; npm run revisao:adjudicacao -- aplicar --passada <passada> --adjudicacao <revisao>/adjudicacao --saida <pasta nova>" },
+    { "passo": "6", "o-que": "origem medida", "comando": "npm run revisao:origem -- medir --passada <passada adjudicada> --site <site congelado> --ds <pacote DS> [--ds …] --saida <pasta nova>" },
+    { "passo": "4", "o-que": "material da autora (teto 10, 3/2/2/2/1; A14)", "comando": "npm run revisao:material-autora -- preparar --passada <passada adjudicada> --origem <origem> --site <site congelado> --saida <pasta nova> --teto 10 --validador <checkout congelado>; npm run revisao:material-autora -- responder --material <pasta> --texto <linhas> --saida <pasta nova>" },
+    { "passo": "5", "o-que": "recálculo: D_fc^E (primária), D_sc^E, D_sf^E; 1.3.0 + 1.1.0; S4'; todas; unidades; com-u09; coluna fundamentada com a sensibilidade sem-ids-expostos; leitura com δ", "comando": "npm run revisao:recalculo -- --passada <passada adjudicada> --saida <pasta nova> --origem <origem> --ratificacoes <respostas-autora.json>" },
+    { "passo": "5-pp", "o-que": "sensibilidade por protocolo (§4.5, D-198 item 5; nunca o primário): a mesma passada e as mesmas entradas do passo 5, com --por-protocolo, em pasta própria; o primário do passo 5 é o que vale", "comando": "npm run revisao:recalculo -- --passada <passada adjudicada> --saida <outra pasta nova> --origem <origem> --ratificacoes <respostas-autora.json> --por-protocolo" },
+    { "passo": "7", "o-que": "duas colunas por tipo de spec (as 8 specs; ds = o primário, geral ao lado)", "comando": "npx tsx scripts/reanalise-nat74/e14-deteccao.ts --passada <passada final> --saida <pasta nova> --coluna-principal deteccao" },
+    { "passo": "Holm", "o-que": "depois das tabelas da D e da E", "comando": "holmTelas(p da D, p da E) de scripts/estatistica-pareada.ts; leituraSobHolm(análise da tela, holmTelas(…).D ou .E, [\"ferramentas\", \"com\"]) por tela" }
   ],
   "pendentes": [
-    {
-      "item": "regra de desfecho da E no recálculo",
-      "proposta": "recalculo-campanha.ts › regraDaTela só conhece processos 1.0.0/1.1.0 e solicitacao 2.0.0: acrescentar cadastro-pais 1.0.0 (primário = specs ds pelo arquivo de classes; sensibilidades todas, unidades, comU09) com teste, antes do primeiro disparo da E"
-    },
-    {
-      "item": "lock com a imagem screens do site da E",
-      "proposta": "runner/images.lock.json refeito só na imagem screens (site 968abbd974d5 ou o do export na main), depois de a coleta da D estar presa no seu ramo/tag congelado"
-    },
-    {
-      "item": "classes NAT-71 da E",
-      "proposta": "decidir se o §5.3 vale para a E (dois classificadores cegos + autora) ou se a E fica só com ds × geral; registrar antes do disparo"
-    },
-    {
-      "item": "semente (design.seed) e budget.approved",
-      "proposta": "a semente é declarada no commit que congela a campanha; o orçamento (US$ 230, N10) é aprovado no mesmo passo"
-    }
+    { "item": "D_fc^E na política 1.2.0 pura (N7)", "proposta": "o mesmo da D: conferir o caminho cópia da passada → e14-ingerir --politica 1.2.0 → revisao:recalculo", "estado": "o mesmo limite da D (ensaio sem modelo de 14/11, passos 2.1 e 2.7): a reingestão 1.2.0 em pasta nova e a detecção sob ela passaram; o revisao:recalculo sobre uma cópia da passada reingerida na 1.2.0 não foi exercitado. Não bloqueia a coleta" }
   ]
 }
