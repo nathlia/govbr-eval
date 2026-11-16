@@ -1,0 +1,299 @@
+{
+ "_meta": {
+  "titulo": "Tela E2 — critérios de julgamento fixados antes da coleta para as specs sem predicado (observável, estado, critério)",
+  "data": "2026-11-16",
+  "status": "Fixado antes da coleta (nenhuma execução de agente sobre a tela). Só deriva do que já foi medido e registrado; não muda o que a referência cobra (specs, unidades, rules, estados, classes, portão).",
+  "referencia": {
+   "arquivo": "ground-truth-cadastro-pais.json",
+   "versao": "1.0.0",
+   "commit": "4f200f263f6567212a4887636c081bad529e8dc5",
+   "sha256": "661cc54b7b291bc6e455065ecb23c08e5279bf7a0e9c7d6494afd78ae112c528"
+  },
+  "mandato": "Para cada spec sem predicado implementado, o observável, o estado em que é observado e o critério de decisão do juiz cego ficam escritos antes da coleta. Item que não sai dos registros sem decisão nova fica `nao-fixavel-sem-decisao`, com o que falta.",
+  "naoFeito": "Nenhuma medição nova, nenhum navegador, nenhuma ferramenta do validator, nenhum axe, nenhum modelo. Nenhum arquivo existente alterado.",
+  "fontes": {
+   "ground-truth-cadastro-pais.json": "661cc54b7b291bc6e455065ecb23c08e5279bf7a0e9c7d6494afd78ae112c528",
+   "tela-e2/conferir-construcao.mjs": "observáveis da construção (linhas 161–253)",
+   "tela-e2/conferencia-construcao-2026-11-16.json": "762c289214678abd0350c97dc509c6889470d8de93a62407effc22ad04fddbc8",
+   "tela-e2/conferir-aditiva.mjs": "observáveis no caminho aditivo S0 → S1 → S2",
+   "tela-e2/conferencia-aditiva-2026-11-16.json": "6c0d6e87b4622736073e9d5ec9c1093ae4830539d555d5814b1d5a083945e312",
+   "tela-e2/auditoria/achados.json": "acde2b592538aa63400d2b77d7b2e5343dffdb84642624f06caa65778d8e5500",
+   "tela-e2/remedida-mapa.json": "c08fb2c465568f4f25e1cd3a8516909f35fe0291feb3d3123c04e344a367ac80",
+   "tela-e2/elegibilidade-passo2.json": "f7d2f47ae4d7eb56082e06abe84a1361b087afb2b6cc3697a6ddfc3c94b3d047",
+   "tela-e2/ancoras-referencia.json": "b1a43b279129b4f416a5de43a2e88ec7b3e5f9b335e1f35aedb9f9e6aeb581a7",
+   "tela-e2/adjudicacao-u09/veredito.json": "648daf9528c12f9d42aa951701350778c4704453a8fa73817c2f31d47c1f271d",
+   "docs/semantic-scoring.md": "0cd3ec9fe3a4c5d1d0c82201a161aae214c482712e10a8eead5c01d26546daf9",
+   "tela-e2/reconciliacao.md": "§ 1, § 5 (R-CV), § 7",
+   "tela-e2/construcao.md": "tabela das sementes (linhas 51–58) e Acoplamentos"
+  },
+  "criteriosComuns": [
+   {
+    "id": "C-1",
+    "texto": "A unidade é (elemento × defeito) no estado aplicável; acerto = a alegação afirma o defeito daquela unidade, naquele elemento (ou composição declarada), num estado em que a unidade foi medida.",
+    "fonte": "ground-truth-cadastro-pais.json › _meta.unit_of_evaluation; docs/semantic-scoring.md (unidade = elemento × predicado de defeito atômico, no estado aplicável)"
+   },
+   {
+    "id": "C-2",
+    "texto": "Citar uma norma de `rules` sem mostrar o defeito daquela unidade (o observável, no hospedeiro e no estado) não dá crédito: a norma só fundamenta uma alegação que já detectou o defeito.",
+    "fonte": "ground-truth-cadastro-pais.json › _meta.coviolacoes.condicoes[2]"
+   },
+   {
+    "id": "C-3",
+    "texto": "Pela R-CV, as regras adicionais de `rules` são o mesmo defeito no mesmo hospedeiro; cada uma traz o seu observável registrado. Alegação que mostra o observável registrado de qualquer regra de `rules` da spec (o da sorteada ou o de `porSpec.<U>.coviolacoes.emRules[].observavel`), no hospedeiro e num estado da unidade, é acerto da mesma spec; a unidade é creditada no máximo uma vez.",
+    "fonte": "tela-e2/reconciliacao.md § 5; ground-truth-cadastro-pais.json › _meta.coviolacoes.regra e condicoes[0–1]; docs/semantic-scoring.md (a unidade é creditada no máximo uma vez)"
+   },
+   {
+    "id": "C-4",
+    "texto": "Detecção não depende de id. Onde `rules` tem id exposto, a alegação que afirma o defeito e só cita id exposto conta como 'fundamentada por norma exposta', nunca como 'detectou o defeito do DS' com norma não exposta.",
+    "fonte": "ground-truth-cadastro-pais.json › _meta.fundamentacao.regra e distincao"
+   },
+   {
+    "id": "C-5",
+    "texto": "Alegação sobre uma condição listada em `_meta.fundo` ou em `_meta.fora_de_escopo` não é acerto de spec: alegação correta ali vira descoberta.",
+    "fonte": "ground-truth-cadastro-pais.json › _meta.fundo; _meta.fora_de_escopo"
+   },
+   {
+    "id": "C-6",
+    "texto": "Sem predicado (`nao-implementado`) não é aceitação nem recusa e nunca recai em 'casou por elemento, logo está certo': a revisora lê a afirmação. Não se dá crédito só porque a reconstrução mostra o defeito; com evidência faltando, `evidencia-insuficiente`.",
+    "fonte": "docs/semantic-scoring.md § Predicados de aceitação › Desfechos; § Proveniência e estados"
+   },
+   {
+    "id": "C-7",
+    "texto": "Obrigações medidas conformes no mesmo hospedeiro pelos auditores cegos (iscas do 2º auditor, 10/10 `satisfaz`) ou pela conferência de construção não são o defeito da spec: alegação de violação delas não é acerto desta spec.",
+    "fonte": "tela-e2/remedida-mapa.json › mapa (tipo isca-*); tela-e2/reconciliacao.md § 7 (iscas 10/10 satisfaz); tela-e2/conferir-construcao.mjs (pontos conformes 134/134)"
+   }
+  ]
+ },
+ "semPredicado": {
+  "U-02": {
+   "classe": "DS",
+   "aceitacaoNaReferencia": "sem predicado: o observável é o texto (jargão técnico no corpo da mensagem); nenhuma espécie implementada mede texto.",
+   "observavel": {
+    "situacao": "fixado",
+    "elemento": "corpo da mensagem informativa de orientação ('Como cadastrar.')",
+    "localizador": "#msg-orientacao .message-body (scope unico, expectedCount 1); a 1ª auditoria ancorou o mesmo achado em #msg-orientacao e foi reconciliada no mesmo hospedeiro",
+    "oQueSeOlha": "o texto do corpo: jargão de sistema sem explicação, no assunto do cadastro. Medido: 7 termos técnicos (persistidos, banco, commit, transação, renderizada, cache, endpoint).",
+    "fontes": [
+     "ground-truth-cadastro-pais.json › violations[U-02].anchor e description",
+     "tela-e2/conferir-construcao.mjs linhas 173–174 e 188 (≥ 3 termos da lista no texto da mensagem)",
+     "tela-e2/conferir-aditiva.mjs linha 36 (termos em #msg-orientacao .message-body)",
+     "tela-e2/auditoria/achados.json › EA-10.medida (corpo e termosTecnicos), EA-11.medida (termosSemExplicacao)",
+     "tela-e2/elegibilidade-passo2.json › a2-d6b3f0e36943 (medida: termos técnicos no texto da mensagem)",
+     "tela-e2/reconciliacao.md § 1 (EA-10, mesmo hospedeiro)"
+    ]
+   },
+   "estado": {
+    "situacao": "fixado",
+    "declarado": "sempre (S0, S1 e S2)",
+    "comoSeAlcanca": "S0 = carga; S1 = clicar #btn-salvar e esperar #msg-erro visível; S2 = em seguida clicar #sel-continente [data-trigger] e esperar a lista aberta (setup aditivo da referência). O texto não muda entre os estados.",
+    "medidoEm": "S0, S1, S2 (conferencia-aditiva-2026-11-16.json: 7 termos nos três; auditoria EA-10/EA-11: S0–S2)",
+    "fontes": [
+     "ground-truth-cadastro-pais.json › violations[U-02].state; _meta.setup; _meta.states",
+     "tela-e2/conferencia-aditiva-2026-11-16.json › estados.S0/S1/S2.U-02",
+     "tela-e2/auditoria/achados.json › EA-10.estados, EA-11.estados"
+    ]
+   },
+   "criterio": {
+    "situacao": "fixado",
+    "acerto": "A alegação afirma que o texto do corpo da mensagem de orientação usa jargão técnico/de sistema (linguagem não simples para usuário não técnico; termos técnicos sem explicação), apontando essa mensagem, num dos estados S0–S2. Nomear termos ajuda, mas nenhum registro fixa um mínimo de termos para a alegação (o limiar ≥ 3 é da conferência de construção sobre a página, não do juiz).",
+    "naoConta": [
+     "citar a frase sorteada, a do Message (texto curto, claro e objetivo) ou o e-MAG 3.11 sem afirmar o jargão no corpo desta mensagem (C-2);",
+     "dizer só que o texto é longo ou pouco objetivo sem mostrar o jargão: o observável registrado das três regras de `rules` é o jargão (porSpec.U-02.coviolacoes.emRules[].observavel);",
+     "estrangeirismos sem `lang` no mesmo texto (EI-14, fundo; item 11a: fora de `rules`) — descoberta, não acerto (C-5);",
+     "foco ao exibir ou ao fechar a mensagem (EI-12, EI-13, fundo) (C-5);",
+     "cor do Informativo, posição de ícone e Fechar, corte a 200 % e visual de estado da mensagem: iscas R-02, R-08, R-04, R-13 medidas conformes (C-7);",
+     "apontar outra mensagem (#msg-erro): outro elemento (C-1)."
+    ],
+    "fontes": [
+     "tela-e2/elegibilidade-passo2.json › a2-d6b3f0e36943 (cláusula e variante mensagem-jargao-tecnico)",
+     "ground-truth-cadastro-pais.json › porSpec.U-02.coviolacoes.emRules; _meta.fundo (EI-12, EI-13, EI-14); _meta.coviolacoes.condicoes",
+     "tela-e2/decisoes-da-autora.md item 11",
+     "tela-e2/remedida-mapa.json › R-02, R-04, R-08, R-13"
+    ]
+   }
+  },
+  "U-03": {
+   "classe": "DS",
+   "aceitacaoNaReferencia": "sem predicado: o observável é a ausência de ícone visível no botão circular; nenhuma espécie implementada mede ausência de filho ou pixels.",
+   "observavel": {
+    "situacao": "fixado",
+    "elemento": "botão circular 'Ajuda sobre o cadastro' ao lado do título",
+    "localizador": "#btn-ajuda (scope unico, expectedCount 1)",
+    "oQueSeOlha": "ícone visível dentro do botão circular: 0 elemento de ícone visível (i/svg/img com caixa e conteúdo), 0 pixel não branco em repouso; o nome acessível continua 'Ajuda sobre o cadastro' e o botão continua 40×40.",
+    "fontes": [
+     "ground-truth-cadastro-pais.json › violations[U-03].anchor e description",
+     "tela-e2/conferir-construcao.mjs linhas 118, 181, 189 (iconesVisiveis) e 343–345 (tamanho, classe, nome AX conformes)",
+     "tela-e2/conferir-aditiva.mjs linha 37 (iconesFilhos)",
+     "tela-e2/auditoria/achados.json › EA-03.medida (filhos só span.sr-only; pixelsNaoBrancosEmRepouso 0)",
+     "tela-e2/elegibilidade-passo2.json › a2-5b47246a41c1 (medida: elemento de ícone visível dentro do botão)"
+    ]
+   },
+   "estado": {
+    "situacao": "fixado",
+    "declarado": "sempre (S0, S1 e S2), em repouso",
+    "comoSeAlcanca": "pelo setup aditivo (S0 carga → S1 Salvar → S2 lista do select aberta); nenhuma interação no próprio botão é necessária.",
+    "medidoEm": "S0, S1, S2 (conferencia-aditiva: 0 ícone nos três; auditoria EA-03: S0–S2)",
+    "fontes": [
+     "ground-truth-cadastro-pais.json › violations[U-03].state; _meta.setup",
+     "tela-e2/conferencia-aditiva-2026-11-16.json › estados.*.U-03",
+     "tela-e2/auditoria/achados.json › EA-03.estados"
+    ]
+   },
+   "criterio": {
+    "situacao": "fixado",
+    "acerto": "A alegação afirma que o botão circular de ajuda não tem ícone (círculo vazio; nenhum ícone que exprima a ação ou a ajuda), apontando esse botão, num dos estados S0–S2. A falta de ícone pode vir junto da falta de texto visível.",
+    "naoConta": [
+     "citar a cláusula do ícone obrigatório no circular (ou as do ícone de ajuda/ação) sem afirmar que este botão está sem ícone (C-2);",
+     "dizer só que o botão não tem texto visível, sem afirmar a falta de ícone: todos os observáveis registrados em `rules` são '0 ícone visível' (porSpec.U-03.coviolacoes.emRules[].observavel);",
+     "alegar falta de nome acessível: o nome 'Ajuda sobre o cadastro' existe e foi medido (conferir-construcao.mjs linha 345) (C-7);",
+     "tamanho, ênfase, distância do título: medidos conformes (linha 343) (C-7);",
+     "tooltip ou efeito do clique da ajuda (EI-01, fundo: 'não é o observável da variante') (C-5);",
+     "apontar o Fechar da mensagem ou o gatilho do select: outros elementos, com ícone (conferir-construcao.mjs linha 339; EI-08 fundo) (C-1, C-5)."
+    ],
+    "fontes": [
+     "tela-e2/elegibilidade-passo2.json › a2-5b47246a41c1 (cláusula e variante circular-sem-icone)",
+     "ground-truth-cadastro-pais.json › porSpec.U-03.coviolacoes.emRules; _meta.fundo (EI-01, EI-08)",
+     "tela-e2/conferir-construcao.mjs linhas 339, 343–345"
+    ]
+   }
+  },
+  "U-08": {
+   "classe": "G",
+   "aceitacaoNaReferencia": "sem predicado: o observável é comportamento (digitar após foco por Tab não entra no valor); a espécie de atributos mede só ausência, e o readonly presente não é o defeito por si.",
+   "observavel": {
+    "situacao": "fixado",
+    "elemento": "campo 'Nome do país'",
+    "localizador": "#nome-pais (scope unico, expectedCount 1); a 1ª auditoria ancorou em #inp-nome-pais (o contêiner) e foi reconciliada no mesmo hospedeiro",
+    "oQueSeOlha": "comportamento por teclado: com foco no campo por Tab, o texto digitado não entra no valor (valor vazio); o campo só é liberado (readonly retirado) por clique de ponteiro.",
+    "fontes": [
+     "ground-truth-cadastro-pais.json › violations[U-08].anchor e description; porSpec.U-08.aceitacao",
+     "tela-e2/conferir-construcao.mjs linhas 200–206 (foco por Tab vindo de #btn-ajuda, digitar 'Chile', valor '')",
+     "tela-e2/auditoria/achados.json › EA-04.medida (aposFocoPorTab valor vazio; aposCliqueDePonteiro aceita), EA-05.medida (liberadoPorTab false)",
+     "tela-e2/elegibilidade-passo2.json › a2-328f62cfe4ce (medida: focar por Tab e digitar; o texto entra no campo)"
+    ]
+   },
+   "estado": {
+    "situacao": "fixado",
+    "declarado": "sempre (S0, S1 e S2)",
+    "comoSeAlcanca": "pelo setup aditivo; dentro do estado, a observação é focar o campo por Tab e digitar (é o método de observação, não uma parada do setup).",
+    "medidoEm": "comportamento: S0 na construção, S0–S2 na 1ª auditoria (EA-04, EA-05); o caminho aditivo conferiu o readonly presente em S0, S1 e S2",
+    "fontes": [
+     "ground-truth-cadastro-pais.json › violations[U-08].state; _meta.setup",
+     "tela-e2/auditoria/achados.json › EA-04.estados, EA-05.estados",
+     "tela-e2/conferencia-aditiva-2026-11-16.json › estados.*.U-08"
+    ]
+   },
+   "criterio": {
+    "situacao": "fixado",
+    "acerto": "A alegação afirma que o campo Nome do país não aceita digitação logo depois de receber foco pelo teclado (Tab), ou que só é liberado por clique de ponteiro e não por teclado, apontando esse campo, num dos estados S0–S2.",
+    "naoConta": [
+     "apontar só a presença do atributo readonly, sem afirmar a consequência (não digitar após foco por teclado, ou liberação só por ponteiro): 'o readonly presente não é o defeito por si' (porSpec.U-08.aceitacao);",
+     "citar a frase do Input (digitar na sequência do foco) ou o e-MAG 2.1 sem mostrar o comportamento neste campo (C-2); citar só o e-MAG 2.1 conta como 'fundamentada por norma exposta' (C-4);",
+     "foco inicial no 1º campo obrigatório (EI-05, fundo) (C-5);",
+     "contraste do campo: isca R-06 medida conforme (C-7);",
+     "estado de erro do campo em S1 (aria-invalid, descrição, nome AX): medido conforme (conferir-construcao.mjs linhas 443–455) (C-7);",
+     "apontar o campo do código (#codigo-pais): outro elemento (C-1)."
+    ],
+    "fontes": [
+     "tela-e2/elegibilidade-passo2.json › a2-328f62cfe4ce (cláusula e variante campo-readonly-ate-clique)",
+     "ground-truth-cadastro-pais.json › porSpec.U-08.coviolacoes.emRules; porSpec.U-08.aceitacao; _meta.fundamentacao.porSpec.U-08; _meta.fundo (EI-05)",
+     "tela-e2/remedida-mapa.json › R-06"
+    ]
+   }
+  }
+ },
+ "variantes": {
+  "comU09": {
+   "U-09": {
+    "classe": "G",
+    "naReferenciaPrincipal": false,
+    "aceitacaoNaReferencia": "sem predicado (variante comU09): a altura fixa é medível, mas a adjudicação concluiu que a perda de conteúdo não foi demonstrada; um predicado sobre a troca não provaria o defeito.",
+    "observavel": {
+     "situacao": "nao-fixavel-sem-decisao",
+     "fixadoAte": "elemento e localizador: os 4 itens da lista 'Países Cadastrados', #lst-paises .item-pais (composicao, 4 participantes).",
+     "falta": "decidir qual observável decide o acerto: (i) perda de conteúdo a 200 % (tinta cortada, sobreposição, barra horizontal) — o observável da cláusula sorteada segundo a adjudicação, medido conforme por todas as medições de tinta e rolagem; ou (ii) altura fixa com overflow hidden que não acompanha o conteúdo (scrollHeight 93 > 74) — o observável da co-violação DS em `rules` e da descrição da spec, que a adjudicação diz ser substituto. Os registros dão os dois e se contradizem.",
+     "fontes": [
+      "ground-truth-cadastro-pais.json › _meta.sensibilidades.comU09.spec (anchor, description); porSpec.U-09.coviolacoes.emRules[0].observavel",
+      "tela-e2/adjudicacao-u09/veredito.md (a) e (c)",
+      "tela-e2/conferir-construcao.mjs linhas 210–217"
+     ]
+    },
+    "estado": {
+     "situacao": "nao-fixavel-sem-decisao",
+     "fixadoAte": "a spec declara state 'sempre'; o defeito descrito só existe a 640×450, alcançado nos registros por troca de janela (conferir-aditiva.mjs linhas 52–55, depois de S2).",
+     "falta": "a janela 640×450 não é parada do `setup` nem está em `_meta.states`, e a `viewport` da referência é 1280×900: falta declarar se e como a variante comU09 julga alegações feitas a 640×450 (no pacote, largura fora do plano não ancora unidade) e se uma alegação a 1280×900 sobre a altura fixa conta. Depende também do observável.",
+     "fontes": [
+      "ground-truth-cadastro-pais.json › _meta.viewport; _meta.states; _meta.fora_de_escopo; _meta.sensibilidades.comU09.spec.state",
+      "docs/semantic-scoring.md § Proveniência e estados (largura fora do plano → cena fora-do-plano, não ancora unidade)"
+     ]
+    },
+    "criterio": {
+     "situacao": "nao-fixavel-sem-decisao",
+     "fixadoAte": "C-1 a C-7 valem; apontar a mensagem de orientação a 200 % não conta (isca R-04 conforme; controle de 200 % na construção).",
+     "falta": "depende das duas decisões acima: o que a alegação precisa afirmar (texto cortado vs altura fixa que não acompanha o conteúdo) e em que janela.",
+     "fontes": [
+      "tela-e2/adjudicacao-u09/veredito.md (d)",
+      "tela-e2/remedida-mapa.json › R-04"
+     ]
+    }
+   }
+  }
+ },
+ "comPredicado": {
+  "nota": "Os 5 predicados (estilo computado) medem a troca semeada no estado da spec e sustentam a spec; não creditam alegação (docs/semantic-scoring.md § O que um predicado não faz; congelamento-1.0.0.md › Riscos). Por isso nenhum deles fixa o critério de decisão, e em 4 deles a propriedade medida não é o observável inteiro. As 5 precisaram da linha.",
+  "precisaram": 5,
+  "U-01": {
+   "porQueOPredicadoNaoFixa": "mede `order` (a troca), não a posição; não credita",
+   "observavel": "#btn-limpar na barra de ações: o secundário Limpar Campos à direita do primário Salvar País (x 525,1 > borda direita 509,1); por R-CV também a ordem visual diferente da de Tab/DOM e a primária fora da posição mais à direita (porSpec.U-01.coviolacoes.emRules[].observavel).",
+   "estado": "sempre: S0, S1, S2 (setup aditivo; conferencia-aditiva 3/3).",
+   "criterio": "Acerto = afirmar, sobre Limpar/Salvar desta barra, um desses observáveis; não conta: citar a norma sem mostrar a posição (C-2), posição do Cancelar (controle K-05 conforme, C-7); só e-MAG 1.4/6.3 citados = 'fundamentada por norma exposta' (C-4)."
+  },
+  "U-04": {
+   "porQueOPredicadoNaoFixa": "fixa a propriedade (font-family fora de Rawline) só na raiz do campo; não credita",
+   "observavel": "#inp-codigo: rótulo, campo e texto de apoio do código com Arial declarada e usada, não Rawline.",
+   "estado": "sempre: S0, S1, S2.",
+   "criterio": "Acerto = afirmar que o campo do código (rótulo, campo ou apoio) usa outra família que não a do DS; não conta: fonte do campo do nome (Rawline, medida), espaçamento do apoio (F-01 corrigido, conforme na re-medida), citar a tipografia sem mostrar a família neste campo (C-2)."
+  },
+  "U-05": {
+   "porQueOPredicadoNaoFixa": "mede `text-align: center`, não a posição do texto contra as opções; não credita",
+   "observavel": "#rad-situacao legend: o texto da legenda começa centrado no grupo (296,1 px) enquanto as opções começam em 62 px; a caixa da legend continua em 62 px.",
+   "estado": "sempre: S0, S1, S2.",
+   "criterio": "Acerto = afirmar que o texto da legenda do grupo Situação está centralizado / desalinhado das opções; não conta: a posição da caixa da legend (medida conforme, EC-062), citar a norma sem mostrar o alinhamento do texto (C-2)."
+  },
+  "U-06": {
+   "porQueOPredicadoNaoFixa": "mede só o fundo; o fa-check, segundo observável da variante, não tem espécie; não credita",
+   "observavel": "#msg-erro: mensagem de erro com o visual do estado Selecionado — fundo #2670e8 (--blue-warm-vivid-50) e ícone fa-check visível antes do título.",
+   "estado": "S1 (clicar #btn-salvar com o formulário vazio; a mensagem está oculta em S0); continua em S2 pelo caminho aditivo.",
+   "criterio": "Acerto = afirmar, na mensagem de erro em S1 (ou S2), o fundo do Selecionado / cor que não indica erro, ou a marca de check na mensagem de erro; não conta: alegação em S0 (mensagem oculta), a mensagem de orientação (isca R-13 conforme, C-7), citar a norma sem mostrar o visual (C-2)."
+  },
+  "U-07": {
+   "porQueOPredicadoNaoFixa": "mede a cor (#aaa), não o contraste 2,32:1; não credita",
+   "observavel": "#sel-continente .br-list .br-item label (composicao, 6 participantes): rótulos das opções em #AAAAAA sobre branco, 2,32:1; o item selecionado mantém a cor do core.",
+   "estado": "S2 (lista do select aberta, depois de S1).",
+   "criterio": "Acerto = afirmar contraste insuficiente ou cor fora da paleta nos rótulos das opções da lista aberta; não conta: alegação com a lista fechada, ícone do gatilho (EI-08, fundo), role/abertura do select (EI-06, EI-07, fundo); só e-MAG 4.1 ou a regra da paleta citados = 'fundamentada por norma exposta' (C-4)."
+  }
+ },
+ "contagens": {
+  "semPredicadoNaPrincipal": [
+   "U-02",
+   "U-03",
+   "U-08"
+  ],
+  "semPredicadoSoNaVariante": [
+   "U-09"
+  ],
+  "tresItensFixadosDosRegistros": [
+   "U-02",
+   "U-03",
+   "U-08"
+  ],
+  "naoFixavelSemDecisao": {
+   "U-09": [
+    "observavel",
+    "estado",
+    "criterio"
+   ]
+  },
+  "comPredicadoQuePrecisaramDaLinha": 5
+ }
+}
