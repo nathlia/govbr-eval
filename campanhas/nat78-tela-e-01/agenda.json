@@ -1,0 +1,384 @@
+{
+  "contract": "agenda.v2",
+  "generator": "agenda-campanha-quadrado-1.0.0",
+  "campaignId": "nat78-tela-e-01",
+  "campaign": {
+    "path": "campanhas/nat78-tela-e-01/campaign.json",
+    "sha256": "bd96d83b22e84113a478799e0e0704a8c36926c36c26c997b4c0c36ec92ed1de"
+  },
+  "seed": {
+    "commit": "7637edb8b05c7484f53944b26ce7eaf036f19e52",
+    "rule": "linha r do quadrado = design.arms girado r posições; chave(grupo) = sha256(commit + \"|\" + design.seed + \"|quadrado|\" + grupo); grupos em ordem ascendente da chave; o i-ésimo usa a linha (i mod k); grupos rodam na ordem numérica",
+    "declared": 20261139
+  },
+  "pairs": 9,
+  "square": [
+    [
+      "sem",
+      "ferramentas",
+      "com"
+    ],
+    [
+      "ferramentas",
+      "com",
+      "sem"
+    ],
+    [
+      "com",
+      "sem",
+      "ferramentas"
+    ]
+  ],
+  "draw": [
+    {
+      "pairId": "p01",
+      "key": "036445c8bdb52b406676a539beee69a2a9a38b8f594991a78c5fd769ec0321bd",
+      "row": 0,
+      "order": [
+        "sem",
+        "ferramentas",
+        "com"
+      ],
+      "firstArm": "sem"
+    },
+    {
+      "pairId": "p03",
+      "key": "0ac165a3665737ed03201c3eed9680252d9c8795c23cb146a3eeb944fdb26388",
+      "row": 1,
+      "order": [
+        "ferramentas",
+        "com",
+        "sem"
+      ],
+      "firstArm": "ferramentas"
+    },
+    {
+      "pairId": "p05",
+      "key": "0f72a041f38d297324917882ac39417e56427de0574b3886d15f3a4e42397f44",
+      "row": 2,
+      "order": [
+        "com",
+        "sem",
+        "ferramentas"
+      ],
+      "firstArm": "com"
+    },
+    {
+      "pairId": "p09",
+      "key": "417790ccc4ba02e2938c6688a4b8acc3fa743be0509035df7ac90f38cf3312a9",
+      "row": 0,
+      "order": [
+        "sem",
+        "ferramentas",
+        "com"
+      ],
+      "firstArm": "sem"
+    },
+    {
+      "pairId": "p04",
+      "key": "6c7ae010375b9cfecedfe63af05bf546a194b61044a0f13906d514356136a0f9",
+      "row": 1,
+      "order": [
+        "ferramentas",
+        "com",
+        "sem"
+      ],
+      "firstArm": "ferramentas"
+    },
+    {
+      "pairId": "p07",
+      "key": "7db1b5019e75a8c6b8c15650369e5b773d613b83b6012b58a404ac6c0faf7529",
+      "row": 2,
+      "order": [
+        "com",
+        "sem",
+        "ferramentas"
+      ],
+      "firstArm": "com"
+    },
+    {
+      "pairId": "p06",
+      "key": "a1526caf64b6481ba6d96e81bba647e2604f45e4412577e1e489dffcc1cd0ec8",
+      "row": 0,
+      "order": [
+        "sem",
+        "ferramentas",
+        "com"
+      ],
+      "firstArm": "sem"
+    },
+    {
+      "pairId": "p08",
+      "key": "e2cd18a38437216ee684273e7e16e00378474cfc3378c8b5e71ea0ff9284c38d",
+      "row": 1,
+      "order": [
+        "ferramentas",
+        "com",
+        "sem"
+      ],
+      "firstArm": "ferramentas"
+    },
+    {
+      "pairId": "p02",
+      "key": "fd15c49ad05562707b48a724cbe932be03c6660465ac9aeedebeb509d07b4032",
+      "row": 2,
+      "order": [
+        "com",
+        "sem",
+        "ferramentas"
+      ],
+      "firstArm": "com"
+    }
+  ],
+  "windows": null,
+  "slots": [
+    {
+      "slotId": "p01-sem",
+      "pairId": "p01",
+      "arm": "sem",
+      "positionInPair": 1,
+      "repetition": 1,
+      "order": 1,
+      "window": null
+    },
+    {
+      "slotId": "p01-ferramentas",
+      "pairId": "p01",
+      "arm": "ferramentas",
+      "positionInPair": 2,
+      "repetition": 1,
+      "order": 2,
+      "window": null
+    },
+    {
+      "slotId": "p01-com",
+      "pairId": "p01",
+      "arm": "com",
+      "positionInPair": 3,
+      "repetition": 1,
+      "order": 3,
+      "window": null
+    },
+    {
+      "slotId": "p02-com",
+      "pairId": "p02",
+      "arm": "com",
+      "positionInPair": 1,
+      "repetition": 2,
+      "order": 4,
+      "window": null
+    },
+    {
+      "slotId": "p02-sem",
+      "pairId": "p02",
+      "arm": "sem",
+      "positionInPair": 2,
+      "repetition": 2,
+      "order": 5,
+      "window": null
+    },
+    {
+      "slotId": "p02-ferramentas",
+      "pairId": "p02",
+      "arm": "ferramentas",
+      "positionInPair": 3,
+      "repetition": 2,
+      "order": 6,
+      "window": null
+    },
+    {
+      "slotId": "p03-ferramentas",
+      "pairId": "p03",
+      "arm": "ferramentas",
+      "positionInPair": 1,
+      "repetition": 3,
+      "order": 7,
+      "window": null
+    },
+    {
+      "slotId": "p03-com",
+      "pairId": "p03",
+      "arm": "com",
+      "positionInPair": 2,
+      "repetition": 3,
+      "order": 8,
+      "window": null
+    },
+    {
+      "slotId": "p03-sem",
+      "pairId": "p03",
+      "arm": "sem",
+      "positionInPair": 3,
+      "repetition": 3,
+      "order": 9,
+      "window": null
+    },
+    {
+      "slotId": "p04-ferramentas",
+      "pairId": "p04",
+      "arm": "ferramentas",
+      "positionInPair": 1,
+      "repetition": 4,
+      "order": 10,
+      "window": null
+    },
+    {
+      "slotId": "p04-com",
+      "pairId": "p04",
+      "arm": "com",
+      "positionInPair": 2,
+      "repetition": 4,
+      "order": 11,
+      "window": null
+    },
+    {
+      "slotId": "p04-sem",
+      "pairId": "p04",
+      "arm": "sem",
+      "positionInPair": 3,
+      "repetition": 4,
+      "order": 12,
+      "window": null
+    },
+    {
+      "slotId": "p05-com",
+      "pairId": "p05",
+      "arm": "com",
+      "positionInPair": 1,
+      "repetition": 5,
+      "order": 13,
+      "window": null
+    },
+    {
+      "slotId": "p05-sem",
+      "pairId": "p05",
+      "arm": "sem",
+      "positionInPair": 2,
+      "repetition": 5,
+      "order": 14,
+      "window": null
+    },
+    {
+      "slotId": "p05-ferramentas",
+      "pairId": "p05",
+      "arm": "ferramentas",
+      "positionInPair": 3,
+      "repetition": 5,
+      "order": 15,
+      "window": null
+    },
+    {
+      "slotId": "p06-sem",
+      "pairId": "p06",
+      "arm": "sem",
+      "positionInPair": 1,
+      "repetition": 6,
+      "order": 16,
+      "window": null
+    },
+    {
+      "slotId": "p06-ferramentas",
+      "pairId": "p06",
+      "arm": "ferramentas",
+      "positionInPair": 2,
+      "repetition": 6,
+      "order": 17,
+      "window": null
+    },
+    {
+      "slotId": "p06-com",
+      "pairId": "p06",
+      "arm": "com",
+      "positionInPair": 3,
+      "repetition": 6,
+      "order": 18,
+      "window": null
+    },
+    {
+      "slotId": "p07-com",
+      "pairId": "p07",
+      "arm": "com",
+      "positionInPair": 1,
+      "repetition": 7,
+      "order": 19,
+      "window": null
+    },
+    {
+      "slotId": "p07-sem",
+      "pairId": "p07",
+      "arm": "sem",
+      "positionInPair": 2,
+      "repetition": 7,
+      "order": 20,
+      "window": null
+    },
+    {
+      "slotId": "p07-ferramentas",
+      "pairId": "p07",
+      "arm": "ferramentas",
+      "positionInPair": 3,
+      "repetition": 7,
+      "order": 21,
+      "window": null
+    },
+    {
+      "slotId": "p08-ferramentas",
+      "pairId": "p08",
+      "arm": "ferramentas",
+      "positionInPair": 1,
+      "repetition": 8,
+      "order": 22,
+      "window": null
+    },
+    {
+      "slotId": "p08-com",
+      "pairId": "p08",
+      "arm": "com",
+      "positionInPair": 2,
+      "repetition": 8,
+      "order": 23,
+      "window": null
+    },
+    {
+      "slotId": "p08-sem",
+      "pairId": "p08",
+      "arm": "sem",
+      "positionInPair": 3,
+      "repetition": 8,
+      "order": 24,
+      "window": null
+    },
+    {
+      "slotId": "p09-sem",
+      "pairId": "p09",
+      "arm": "sem",
+      "positionInPair": 1,
+      "repetition": 9,
+      "order": 25,
+      "window": null
+    },
+    {
+      "slotId": "p09-ferramentas",
+      "pairId": "p09",
+      "arm": "ferramentas",
+      "positionInPair": 2,
+      "repetition": 9,
+      "order": 26,
+      "window": null
+    },
+    {
+      "slotId": "p09-com",
+      "pairId": "p09",
+      "arm": "com",
+      "positionInPair": 3,
+      "repetition": 9,
+      "order": 27,
+      "window": null
+    }
+  ],
+  "retry": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 31,
+    "extraAttempts": 4
+  }
+}
