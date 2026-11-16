@@ -1,0 +1,174 @@
+{
+ "arquivo": "classes-finais",
+ "protocolo": "NAT-78 §5.3 (NAT-71 §3.1–3.2); CONG-14 (ii)",
+ "referencia": "ground-truth-processos-1.1.0.json",
+ "referenciaSha256": "2eacba80efb373c4923f7f85593c684647e6b5ec58ad5a341329d96a44632569",
+ "fontes": {
+  "classificador-1.json": "32d27889ff2693ba08edd4ce22a2f89a24240af51681496b2445c05f296f6b1c",
+  "classificador-2.json": "2cde59339fd23ef13e0ccd639bf3e23930afa0ef2544282153074308e70308ef",
+  "comparacao.md": "b1a3183b2ae5b336b3eea302d91cf2805c45962a6d34666fc022c3fd4f316a56",
+  "commit": "18bf831"
+ },
+ "decisao": {
+  "data": "2026-11-16",
+  "por": "autora",
+  "registro": "decisao-2026-11-16.md",
+  "documentacaoNivelA": "documentacao-nivel-a.md"
+ },
+ "specs": [
+  {
+   "id": "D-01",
+   "classe": "sintático",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "D-02",
+   "classe": "sintático",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "D-03",
+   "classe": "sintático",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "D-04",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "a",
+   "limitrofe": true,
+   "origem": "decisao-da-autora-2026-11-16",
+   "motivo": "Classe em acordo. Nível: desacordo a × b decidido pela autora como a, conforme proposto: a ausência de citação de regra na spec não torna inexistente um predicado já implementado. Condição da NAT-71 §3.2 (implementação e testes positivos e negativos) documentada em documentacao-nivel-a.md. Nível a não afirma detecção desta spec nesta página.",
+   "documentacaoNivelA": {
+    "arquivo": "documentacao-nivel-a.md",
+    "secao": "D-04",
+    "situacao": "completa",
+    "testesExecutadosLocalmente": false
+   }
+  },
+  {
+   "id": "D-05",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "D-06",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "origem": "decisao-da-autora-2026-11-16",
+   "motivo": "Classe em acordo. Nível: desacordo a × b decidido pela autora como a, conforme proposto: a ausência de citação de regra na spec não torna inexistente um predicado já implementado. Condição da NAT-71 §3.2 (implementação e testes positivos e negativos) documentada em documentacao-nivel-a.md. Nível a não afirma detecção desta spec nesta página.",
+   "documentacaoNivelA": {
+    "arquivo": "documentacao-nivel-a.md",
+    "secao": "D-06",
+    "situacao": "completa",
+    "testesExecutadosLocalmente": false
+   }
+  },
+  {
+   "id": "D-07",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "D-08",
+   "classe": "sintático",
+   "automatizabilidade": "a",
+   "limitrofe": true,
+   "origem": "decisao-da-autora-2026-11-16",
+   "motivo": "Classe em acordo. Nível: desacordo a × b decidido pela autora como a, conforme proposto: a ausência de citação de regra na spec não torna inexistente um predicado já implementado. Condição da NAT-71 §3.2 (implementação e testes positivos e negativos) documentada em documentacao-nivel-a.md. Nível a não afirma detecção desta spec nesta página.",
+   "documentacaoNivelA": {
+    "arquivo": "documentacao-nivel-a.md",
+    "secao": "D-08",
+    "situacao": "completa",
+    "testesExecutadosLocalmente": false
+   }
+  },
+  {
+   "id": "D-10",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "decisao-da-autora-2026-11-16",
+   "motivo": "Nível em acordo (b). Classe: desacordo contextual/relacional × layout/visual decidido pela autora como contextual/relacional.",
+   "criterioDesempate": "O objeto cobrado é a transição/ciclo de foco, como os dois classificadores o descrevem (a spec cobra mais de um elemento e o que acontece entre estados de foco); por isso a classe é a da transição de estado (NAT-71 §3.1), e não a do estilo no estado focado.",
+   "unidadeComposta": "Mantida como uma unidade composta, sem atomizar; o denominador não muda."
+  },
+  {
+   "id": "D-11",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "D-12",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "origem": "decisao-da-autora-2026-11-16",
+   "motivo": "Classe em acordo. Nível: desacordo a × b decidido pela autora como a, conforme proposto: a ausência de citação de regra na spec não torna inexistente um predicado já implementado. Condição da NAT-71 §3.2 (implementação e testes positivos e negativos) documentada em documentacao-nivel-a.md. Nível a não afirma detecção desta spec nesta página.",
+   "documentacaoNivelA": {
+    "arquivo": "documentacao-nivel-a.md",
+    "secao": "D-12",
+    "situacao": "completa",
+    "testesExecutadosLocalmente": false
+   }
+  },
+  {
+   "id": "D-13",
+   "classe": "semântico",
+   "automatizabilidade": "c",
+   "limitrofe": false,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "D-14",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "origem": "decisao-da-autora-2026-11-16",
+   "motivo": "Classe em acordo. Nível: desacordo a × b decidido pela autora como a, conforme proposto: a ausência de citação de regra na spec não torna inexistente um predicado já implementado. Condição da NAT-71 §3.2 (implementação e testes positivos e negativos) documentada em documentacao-nivel-a.md. Nível a não afirma detecção desta spec nesta página.",
+   "documentacaoNivelA": {
+    "arquivo": "documentacao-nivel-a.md",
+    "secao": "D-14",
+    "situacao": "completa",
+    "testesExecutadosLocalmente": false
+   }
+  }
+ ],
+ "contagens": {
+  "classe": {
+   "sintático": 4,
+   "contextual/relacional": 6,
+   "layout/visual": 2,
+   "semântico": 1
+  },
+  "automatizabilidade": {
+   "b": 7,
+   "a": 5,
+   "c": 1
+  },
+  "origem": {
+   "acordo": 7,
+   "decisao-da-autora-2026-11-16": 6
+  },
+  "total": 13
+ }
+}
