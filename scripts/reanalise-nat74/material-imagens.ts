@@ -167,7 +167,7 @@ export async function capturarCaso(page: Page, url: string, waitFor: string | nu
     return L;
   })(${JSON.stringify({ chaves, atributos: tr.atributos, css: tr.css, pseudo: tr.pseudo })})`) as string[];
   const primeiro = chaves.length ? page.locator(chaves[0]).first() : null;
-  if (primeiro && await primeiro.count()) await primeiro.evaluate(el => el.scrollIntoView({ block: "center", inline: "nearest" })).catch(() => undefined);
+  if (primeiro && await primeiro.count().catch(() => 0)) await primeiro.evaluate(el => el.scrollIntoView({ block: "center", inline: "nearest" })).catch(() => undefined);
   await page.waitForTimeout(150);
   const telaSemMarca = await page.screenshot();
   const caixas = await page.evaluate(`((ks) => { const out = []; ks.forEach((k, i) => { let el = null; try { el = document.querySelector(k); } catch {} if (!el) return;
