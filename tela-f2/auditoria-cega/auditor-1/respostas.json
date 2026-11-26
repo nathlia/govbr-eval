@@ -1,0 +1,199 @@
+{
+ "auditor": "1",
+ "pedidoSha256": "f2b13c9ab03df3a6cb2567534ec64cded1174938119afa6a3e6e4b98af7e5232",
+ "respostas": [
+  {
+   "id": "A-01",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Após escolher \"Últimos 60 dias\", a tag aparece na linha div.row.pl-2 acima dos filtros; o botão × é <button type=button class=\"inverted circle\"> sem br-button: background-color rgb(240,240,240), border-top 2px outset, border-radius 0px, appearance button, caixa 40×30,3 px."
+  },
+  {
+   "id": "A-02",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Hover em Voltar (host style=\"--hover: 0\"): background-image do botão interno = linear-gradient(rgba(19,81,180,0), rgba(19,81,180,0)); hover em Exportar: linear-gradient(rgba(19,81,180,0.16), ...) (--hover 0.16). --surface-opacity-xs na raiz = 0.16."
+  },
+  {
+   "id": "A-03",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "br-button[label=\"Limpar filtros\"] disabled: opacity 0.45 no host e 0.45 no button interno; cursor not-allowed."
+  },
+  {
+   "id": "A-04",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "td:nth-of-type(4) (9 células, coluna Tipo de Processo): font-size 14px em todas."
+  },
+  {
+   "id": "A-05",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Lista aberta (div.br-list com style=\"box-shadow: var(--surface-shadow-lg)\"): box-shadow computado rgba(0,0,0,0.16) 0px 6px 6px 0px. --surface-shadow-md na raiz = 0 3px 6px rgba(0,0,0,0.16)."
+  },
+  {
+   "id": "A-06",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "thead presente com 9 th; textos: \"Aberto há\", (checkbox), \"Nº Processo\", \"Tipo de Processo\", \"Solicitante\", \"Analista\", \"Téc. Adm.\", \"Status\", (vazio)."
+  },
+  {
+   "id": "A-07",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Botão interno de Exportar: color rgb(19,81,180), border 1px solid rgb(19,81,180) (#1351b4)."
+  },
+  {
+   "id": "A-08",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Spans de rótulo das tags \"Aberto há\", \"Tipo de processo\", \"Status\" (e demais): font-size 16.8px em todas; nenhuma em 15px."
+  },
+  {
+   "id": "A-09",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": ".br-divider no shadow: border-top 2px solid rgb(214,214,214); host com style=\"--border-color: #d6d6d6\". --gray-20 na raiz = #ccc."
+  },
+  {
+   "id": "A-10",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "ul da paginação contém <a class=\"page active\"> 1 </a> (44×36 px, fundo rgb(12,50,111)) antes da seta."
+  },
+  {
+   "id": "A-11",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "8 br-button[disabled] \"Desassociar...\" (linhas 2–9): opacity 1 no host e no button interno (disabled=true); o habilitado da linha 1: opacity 1; Limpar filtros desabilitado: opacity 0.45. --surface-opacity-md = 0.45."
+  },
+  {
+   "id": "A-12",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Botões das 3 abas e span.name: font-size 16.8px, font-weight 500. Host br-tab tem style=\"--font-size-scale-up-02: var(--font-size-scale-up-01)\"; up-02 na raiz = 20.16px."
+  },
+  {
+   "id": "A-13",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Botão interno de Exportar: font-size 16.8px, font-weight 600."
+  },
+  {
+   "id": "A-14",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Lista aberta: o item \"10\" tem class \"br-item selected\", background-color rgb(38,112,232) (#2670e8), color branco; demais itens fundo rgb(255,255,255)."
+  },
+  {
+   "id": "A-15",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "h2 \"Processos\" (style=\"font-size: 2rem\"): font-size 32px. --font-size-scale-up-05 na raiz = 34.832px."
+  },
+  {
+   "id": "A-16",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": ".br-avatar > span: classes \"bg-orange-vivid-30 text-pure-0\" (sem content), caixa 18,2×40 px, border-radius 0px, background rgb(255,140,0), letra \"U\" 24.192px."
+  },
+  {
+   "id": "A-17",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Hover em Exportar: background-image do botão interno = linear-gradient(rgba(19,81,180,0.16), rgba(19,81,180,0.16)); --hover 0.16 (overlay presente)."
+  },
+  {
+   "id": "A-18",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "ul: 1º li vazio (só comentário), li com a.page.active \"1\", li com button.br-button.circle aria-label=\"Página seguinte\" (disabled) à direita (x 576 vs 528). Nenhum elemento com aria-label \"anterior\"."
+  },
+  {
+   "id": "A-19",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "span.text-truncate \"Meus processos\" (style=\"font-size: 15px\"): font-size 15px; rótulos das tags de filtro: 16.8px."
+  },
+  {
+   "id": "A-20",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Estado inicial: li.tab-item.active = \"Aguardando análise\"; conteúdo com tag \"Meus processos\" e colunas Analista/Téc. Adm. Ao clicar \"Tramitando\" o conteúdo é idêntico (mesmas 9 linhas); ao clicar \"Aguardando análise\" o conteúdo muda (sem \"Meus processos\", colunas Aberto há|Nº Processo|Tipo|Solicitante|Status, outros processos).",
+   "nota": "Decidir exige clicar nas abas para conhecer o conteúdo de cada uma; feito isso, sem ambiguidade."
+  },
+  {
+   "id": "A-21",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "td:nth-of-type(4): color rgb(51,51,51) (#333) em todas as 9 células."
+  },
+  {
+   "id": "A-22",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Lista do filtro \"Aberto há\" aberta (div.br-select > div.br-list): box-shadow rgba(0,0,0,0.16) 0px 3px 6px 0px."
+  },
+  {
+   "id": "A-23",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "i.fa-home no shadow do breadcrumb: color rgb(0,94,162); host br-breadcrumb com style=\"--interactive: var(--blue-vivid-60)\". Exportar usa rgb(19,81,180) = #1351b4 = --blue-warm-vivid-70."
+  },
+  {
+   "id": "A-24",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "3 br-button[title=Assinar]: botão interno com class \"br-button middle\", background transparente, border 0, border-radius 1680px; aparência de botão terciário do DS, não nativo."
+  }
+ ]
+}

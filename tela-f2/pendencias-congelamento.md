@@ -1,5 +1,9 @@
 # Tela F2 — o que falta para congelar a referência 1.0.0 (26/11/2026)
 
+> **Fechado em 26/11:** itens 1–6 feitos; referência congelada no commit `9e77e7a` (sha256 `0725eb73…`). Registro em
+> `congelamento-1.0.0.md`. O passo seguinte (commit em `telas.json` e na lista de telas com critérios) é da bancada,
+> com o manifesto de `.tmp-eval/tela-f2-para-bancada/`.
+
 Estado: rascunho medido. `ground-truth-processos-f2.json` 1.0.0 montado por `tela-f2/montar-referencia.mjs`, conferido
 nos dois builds, sem oráculo, sem axe e sem detector. Nada aqui foi para `main` nem foi enviado.
 

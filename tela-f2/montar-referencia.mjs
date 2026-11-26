@@ -47,7 +47,7 @@ const setup = [
   { action: "wait", ms: 1000 },
 ];
 const states = [
-  { ...D._meta.states[0], path: ALA },
+  { ...D._meta.states[0], path: ALA, note: "carga da rota, sem clicar em nenhuma aba: a lista paginada de processos em tramitação, com \"Meus processos\" ligado — primeiro paint (nota da D reescrita sem nomear a aba marcada: tela-f2/congelamento-1.0.0.md)" },
   { ...D._meta.states[1], path: ALA, note: "lista do seletor \"Exibir\" (itens por página) da paginação aberta — última parada do segmento 0" },
   { id: "filtro-escolhido", afterStep: 9, path: ALA, note: "segmento 2 (depois de ida e volta por navegação, a rota recomeça): filtro \"Aberto há\" aberto e a opção \"Últimos 60 dias\" escolhida — a tag do filtro escolhido aparece; a lista continua com as mesmas 9 linhas; última parada do segmento 2" },
 ];

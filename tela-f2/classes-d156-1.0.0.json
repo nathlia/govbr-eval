@@ -1,0 +1,271 @@
+{
+  "formato": "d156-classes-1.0.0",
+  "item": "CONG-14 (protocolo NAT-78 §5.2 item 5, §10 item 5); classe de spec da D-156 3.i",
+  "referencia": {
+    "arquivo": "ground-truth-processos-f2.json",
+    "version": "1.0.0",
+    "sha256": "0725eb73be600002e7e26c173cd54ec3389416c30e6b089173439fd103f910c9"
+  },
+  "regra": {
+    "fonte": "scripts/reanalise-nat74/e14-deteccao.ts (CLASSE_DA_CATEGORIA, classeDaSpec; tabulação nat78-deteccao-1.1.0)",
+    "texto": "ds só quando TODA categoria da spec é do DS; uma categoria geral (acessibilidade, navegacao, formulario) puxa a spec para geral; categoria fora do vocabulário para a derivação",
+    "vocabulario": {
+      "token": "ds",
+      "estrutura": "ds",
+      "acessibilidade": "geral",
+      "navegacao": "geral",
+      "formulario": "geral",
+      "tipografia": "ds",
+      "componente": "ds",
+      "comportamento": "ds"
+    },
+    "decisoes": [
+      "D-156 3.i",
+      "decisoes-do-assistente 2026-11-04 (tipografia/componente/comportamento = DS)"
+    ]
+  },
+  "gerador": {
+    "script": "tela-d/classes-d156.ts",
+    "sha256": "8dc6e34a269409e7e8bb562dec99ba8d511cd21a53a5a0f6b2cfffd248f179bf"
+  },
+  "contagens": {
+    "naoExpostas": {
+      "total": 21,
+      "ds": 13,
+      "geral": 8
+    },
+    "expostas": {
+      "total": 4,
+      "ds": 0,
+      "geral": 4
+    },
+    "todas": {
+      "total": 25,
+      "ds": 13,
+      "geral": 12
+    }
+  },
+  "specs": [
+    {
+      "id": "F2-01",
+      "categories": [
+        "componente",
+        "estrutura"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "F2-02",
+      "categories": [
+        "componente",
+        "estrutura"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "F2-03",
+      "categories": [
+        "componente",
+        "estrutura"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "F2-04",
+      "categories": [
+        "tipografia",
+        "token"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "F2-05",
+      "categories": [
+        "tipografia",
+        "token"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "F2-06",
+      "categories": [
+        "token"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "F2-07",
+      "categories": [
+        "token"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "F2-08",
+      "categories": [
+        "tipografia",
+        "token"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "F2-09",
+      "categories": [
+        "token"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "F2-10",
+      "categories": [
+        "comportamento",
+        "token"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "F2-11",
+      "categories": [
+        "comportamento"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "F2-12",
+      "categories": [
+        "comportamento",
+        "token"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "D-01",
+      "categories": [
+        "componente",
+        "estrutura"
+      ],
+      "classe": "ds",
+      "exposta": false
+    },
+    {
+      "id": "D-02",
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "classe": "geral",
+      "exposta": false
+    },
+    {
+      "id": "D-03",
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "classe": "geral",
+      "exposta": false
+    },
+    {
+      "id": "D-04",
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
+      "classe": "geral",
+      "exposta": false
+    },
+    {
+      "id": "D-05",
+      "categories": [
+        "formulario",
+        "acessibilidade"
+      ],
+      "classe": "geral",
+      "exposta": false
+    },
+    {
+      "id": "D-06",
+      "categories": [
+        "token",
+        "acessibilidade"
+      ],
+      "classe": "geral",
+      "exposta": false
+    },
+    {
+      "id": "D-07",
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
+      "classe": "geral",
+      "exposta": false
+    },
+    {
+      "id": "D-08",
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
+      "classe": "geral",
+      "exposta": false
+    },
+    {
+      "id": "D-10",
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "classe": "geral",
+      "exposta": false
+    },
+    {
+      "id": "D-11",
+      "categories": [
+        "navegacao",
+        "acessibilidade"
+      ],
+      "classe": "geral",
+      "exposta": true
+    },
+    {
+      "id": "D-12",
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
+      "classe": "geral",
+      "exposta": true
+    },
+    {
+      "id": "D-13",
+      "categories": [
+        "estrutura",
+        "acessibilidade"
+      ],
+      "classe": "geral",
+      "exposta": true
+    },
+    {
+      "id": "D-14",
+      "categories": [
+        "token",
+        "acessibilidade"
+      ],
+      "classe": "geral",
+      "exposta": true
+    }
+  ]
+}

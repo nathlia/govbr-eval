@@ -2,11 +2,11 @@
  "_meta": {
   "titulo": "Tela F2 — critérios de julgamento fixados antes da coleta para todas as specs (observável, estado, critério)",
   "data": "2026-11-26",
-  "status": "Rascunho até o congelamento da referência 1.0.0; um critério para cada uma das 25 specs.",
+  "status": "Fixado antes de qualquer execução de agente na tela F2, com a referência congelada 1.0.0; um critério para cada uma das 25 specs.",
   "referencia": {
    "arquivo": "ground-truth-processos-f2.json",
    "versao": "1.0.0",
-   "sha256": "d7ddb7179862ffb7ce9e59432fa72c64af6dd806daecdc9db3a11d8cce00adee"
+   "sha256": "0725eb73be600002e7e26c173cd54ec3389416c30e6b089173439fd103f910c9"
   },
   "mandato": "Para cada spec sem predicado implementado, o observável, o estado em que é observado e o critério de decisão do juiz cego ficam escritos antes da coleta (adendo da F § 4 'Referência da F', mantido pelo adendo 2; mesmo formato da tela F). Para as specs com predicado, uma linha de observável/estado/critério, porque o predicado sustenta a spec mas não credita alegação.",
   "naoFeito": "Nenhum modelo, nenhuma ferramenta do validator, nenhum axe. As specs naturais (D-01…D-14) mantêm os critérios e a política de julgamento da tela D (os mesmos textos da tela F).",
@@ -80,7 +80,7 @@
    "estado": {
     "situacao": "fixado",
     "declarado": "inicial",
-    "comoSeAlcanca": "na carga da rota (aba \"Tramitando\", lista paginada); presente também na parada seguinte do mesmo segmento"
+    "comoSeAlcanca": "na carga da rota, sem clicar em nenhuma aba (lista paginada de processos em tramitação); presente também na parada seguinte do mesmo segmento"
    },
    "criterio": {
     "situacao": "fixado",
@@ -103,7 +103,7 @@
    "estado": {
     "situacao": "fixado",
     "declarado": "inicial",
-    "comoSeAlcanca": "na carga da rota (aba \"Tramitando\", lista paginada); presente também na parada seguinte do mesmo segmento"
+    "comoSeAlcanca": "na carga da rota, sem clicar em nenhuma aba (lista paginada de processos em tramitação); presente também na parada seguinte do mesmo segmento"
    },
    "criterio": {
     "situacao": "fixado",
@@ -126,7 +126,7 @@
    "estado": {
     "situacao": "fixado",
     "declarado": "inicial",
-    "comoSeAlcanca": "na carga da rota (aba \"Tramitando\", lista paginada); presente também na parada seguinte do mesmo segmento"
+    "comoSeAlcanca": "na carga da rota, sem clicar em nenhuma aba (lista paginada de processos em tramitação); presente também na parada seguinte do mesmo segmento"
    },
    "criterio": {
     "situacao": "fixado",
@@ -149,7 +149,7 @@
    "estado": {
     "situacao": "fixado",
     "declarado": "inicial",
-    "comoSeAlcanca": "na carga da rota (aba \"Tramitando\", lista paginada); presente também na parada seguinte do mesmo segmento"
+    "comoSeAlcanca": "na carga da rota, sem clicar em nenhuma aba (lista paginada de processos em tramitação); presente também na parada seguinte do mesmo segmento"
    },
    "criterio": {
     "situacao": "fixado",
@@ -172,7 +172,7 @@
    "estado": {
     "situacao": "fixado",
     "declarado": "inicial",
-    "comoSeAlcanca": "na carga da rota (aba \"Tramitando\", lista paginada); presente também na parada seguinte do mesmo segmento"
+    "comoSeAlcanca": "na carga da rota, sem clicar em nenhuma aba (lista paginada de processos em tramitação); presente também na parada seguinte do mesmo segmento"
    },
    "criterio": {
     "situacao": "fixado",
@@ -195,7 +195,7 @@
    "estado": {
     "situacao": "fixado",
     "declarado": "inicial",
-    "comoSeAlcanca": "na carga da rota (aba \"Tramitando\", lista paginada); presente também na parada seguinte do mesmo segmento"
+    "comoSeAlcanca": "na carga da rota, sem clicar em nenhuma aba (lista paginada de processos em tramitação); presente também na parada seguinte do mesmo segmento"
    },
    "criterio": {
     "situacao": "fixado",
@@ -218,7 +218,7 @@
    "estado": {
     "situacao": "fixado",
     "declarado": "inicial",
-    "comoSeAlcanca": "na carga da rota (aba \"Tramitando\", lista paginada); presente também na parada seguinte do mesmo segmento"
+    "comoSeAlcanca": "na carga da rota, sem clicar em nenhuma aba (lista paginada de processos em tramitação); presente também na parada seguinte do mesmo segmento"
    },
    "criterio": {
     "situacao": "fixado",
@@ -241,7 +241,7 @@
    "estado": {
     "situacao": "fixado",
     "declarado": "inicial",
-    "comoSeAlcanca": "na carga da rota (aba \"Tramitando\", lista paginada); presente também na parada seguinte do mesmo segmento"
+    "comoSeAlcanca": "na carga da rota, sem clicar em nenhuma aba (lista paginada de processos em tramitação); presente também na parada seguinte do mesmo segmento"
    },
    "criterio": {
     "situacao": "fixado",
@@ -264,7 +264,7 @@
    "estado": {
     "situacao": "fixado",
     "declarado": "inicial",
-    "comoSeAlcanca": "na carga da rota (aba \"Tramitando\", lista paginada); presente também na parada seguinte do mesmo segmento"
+    "comoSeAlcanca": "na carga da rota, sem clicar em nenhuma aba (lista paginada de processos em tramitação); presente também na parada seguinte do mesmo segmento"
    },
    "criterio": {
     "situacao": "fixado",

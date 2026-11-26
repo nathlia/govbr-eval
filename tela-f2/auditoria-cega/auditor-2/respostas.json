@@ -1,0 +1,222 @@
+{
+ "auditor": "2",
+ "pedidoSha256": "f2b13c9ab03df3a6cb2567534ec64cded1174938119afa6a3e6e4b98af7e5232",
+ "respostas": [
+  {
+   "id": "A-01",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Após escolher 'Últimos 60 dias', 1 elemento casa: <button class=\"inverted circle\"> (sem br-button), 40×30,3 px, background rgb(240,240,240), border 2px outset rgb(0,0,0), border-radius 0px, em (255,376), acima da barra de filtros (y=412).",
+   "nota": "Visual confirmado em aberto-ha-60.png."
+  },
+  {
+   "id": "A-02",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Voltar (host style=\"--hover: 0;\"): em :hover, background-image do button interno = linear-gradient(rgba(19,81,180,0), rgba(19,81,180,0)), --hover 0. Exportar em :hover = linear-gradient(rgba(19,81,180,0.16) ...), --hover 0.16. Ambos br-button secondary.",
+   "nota": ""
+  },
+  {
+   "id": "A-03",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Host br-button 'Limpar filtros' disabled: opacity 0.45; button interno (disabled) opacity 0.45, cursor not-allowed.",
+   "nota": "Aparência esmaecida, não igual a habilitado."
+  },
+  {
+   "id": "A-04",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "9 células td:nth-of-type(4) (Tipo de Processo): font-size 14px, color rgb(51,51,51); texto direto no td, sem filhos.",
+   "nota": ""
+  },
+  {
+   "id": "A-05",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Após clicar no input 'Exibir' (valor 10), div.br-list display block, box-shadow 'rgba(0, 0, 0, 0.16) 0px 6px 6px 0px' (inline style box-shadow: var(--surface-shadow-lg)).",
+   "nota": ""
+  },
+  {
+   "id": "A-06",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "thead.thead-light presente com 9 th; 7 com texto: Aberto há, Nº Processo, Tipo de Processo, Solicitante, Analista, Téc. Adm., Status (fundo rgb(240,240,240)).",
+   "nota": ""
+  },
+  {
+   "id": "A-07",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "button.br-button.secondary 'Exportar': color rgb(19,81,180), border 1px solid rgb(19,81,180) (#1351b4).",
+   "nota": ""
+  },
+  {
+   "id": "A-08",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "6 span.br-tag na barra (Aberto há, Tipo de processo, Status, Espécie alvo, Método de pesca, Petrecho): todos font-size 16.8px, inclusive o span de rótulo interno (16.8px).",
+   "nota": ""
+  },
+  {
+   "id": "A-09",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "span.br-divider.md (style --border-color:#d6d6d6): border-top 2px solid rgb(214,214,214); único br-divider da página, logo abaixo do breadcrumb (y=175).",
+   "nota": "--gray-20 = #CCCCCC em cores.md."
+  },
+  {
+   "id": "A-10",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "ul contém li > a.page.active com texto '1' (44×36, fundo rgb(12,50,111)) e li com button 'Página seguinte'.",
+   "nota": ""
+  },
+  {
+   "id": "A-11",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "8 hosts br-button[disabled] (title 'Desassociar processo do analista responsável'): opacity 1; button interno disabled, opacity 1, cursor not-allowed. Desassociar da 1ª linha (habilitado): opacity 1. Limpar filtros (disabled): opacity 0.45.",
+   "nota": ""
+  },
+  {
+   "id": "A-12",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "3 buttons das abas: font-size 16.8px (Aguardando análise, Tramitando, Concluídos).",
+   "nota": "Host br-tab tem style '--font-size-scale-up-02: var(--font-size-scale-up-01)'."
+  },
+  {
+   "id": "A-13",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "button 'Exportar': font-size 16.8px.",
+   "nota": ""
+  },
+  {
+   "id": "A-14",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Lista aberta: div.br-item.selected '10' com background rgb(38,112,232) e color branca; demais itens rgb(255,255,255).",
+   "nota": ""
+  },
+  {
+   "id": "A-15",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "h2 'Processos': font-size 32px (inline style font-size: 2rem).",
+   "nota": "Escala lista up-05 = 34.84 px."
+  },
+  {
+   "id": "A-16",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "span interno do .br-avatar: class 'bg-orange-vivid-30 text-pure-0' (sem 'content'), 18,2×40 px, background rgb(255,140,0), border-radius 0px, letra 'U' a 24,192px ocupando a largura.",
+   "nota": ""
+  },
+  {
+   "id": "A-17",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Exportar em :hover: background-image linear-gradient(rgba(19,81,180,0.16), rgba(19,81,180,0.16)); --hover 0.16.",
+   "nota": "Overlay presente; o botão escurece."
+  },
+  {
+   "id": "A-18",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "nav.br-pagination > ul: li com a.page.active '1' e li com button.br-button.circle aria-label 'Página seguinte' (à direita, x=576, disabled); nenhum botão 'Página anterior'.",
+   "nota": ""
+  },
+  {
+   "id": "A-19",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "span.text-truncate 'Meus processos': font-size 15px; host span.br-tag 16.8px; rótulos das tags de filtro 16.8px.",
+   "nota": ""
+  },
+  {
+   "id": "A-20",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "li.tab-item.active = 'Aguardando análise' no carregamento; conteúdo = tag 'Meus processos', colunas com Analista/Téc. Adm., 9 linhas iguais às exibidas após clicar 'Tramitando'. Ao clicar 'Aguardando análise' o conteúdo muda (sem Meus processos, colunas Aberto há|Nº Processo|Tipo|Solicitante|Status).",
+   "nota": "Capturas tab-*.png."
+  },
+  {
+   "id": "A-21",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "td:nth-of-type(4): color rgb(51,51,51) (#333333), não rgb(85,85,85).",
+   "nota": "Além disso #555555 consta na paleta (Gray 70, cores.md)."
+  },
+  {
+   "id": "A-22",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Lista do filtro 'Aberto há' aberta: div.br-list box-shadow 'rgba(0, 0, 0, 0.16) 0px 3px 6px 0px'.",
+   "nota": ""
+  },
+  {
+   "id": "A-23",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "i.fa-home no breadcrumb: color rgb(0,94,162) (#005ea2); Exportar usa rgb(19,81,180).",
+   "nota": "#005EA2 = --blue-vivid-60, --blue-warm-vivid-70 = #1351B4."
+  },
+  {
+   "id": "A-24",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "3 buttons internos de br-button[title=Assinar]: class 'br-button middle', fundo transparente, border 0, border-radius 1680px, color rgb(19,81,180).",
+   "nota": ""
+  }
+ ]
+}

@@ -20,7 +20,7 @@ const critF = JSON.parse(readFileSync(join(RAIZ, "tela-f/criterios-de-julgamento
 const v = id => ref.violations.find(x => x.id === id);
 
 const COMO = {
-  inicial: "na carga da rota (aba \"Tramitando\", lista paginada); presente também na parada seguinte do mesmo segmento",
+  inicial: "na carga da rota, sem clicar em nenhuma aba (lista paginada de processos em tramitação); presente também na parada seguinte do mesmo segmento",
   sempre: "em todas as paradas (desde a carga da rota)",
 };
 // naturais: os textos da F (tela-f/criterios-naturais.mjs), que são os da D
@@ -100,7 +100,7 @@ const doc = {
   _meta: {
     titulo: "Tela F2 — critérios de julgamento fixados antes da coleta para todas as specs (observável, estado, critério)",
     data: "2026-11-26",
-    status: `Rascunho até o congelamento da referência 1.0.0; um critério para cada uma das ${ids.length} specs.`,
+    status: /RASCUNHO/.test(String(ref._meta.status)) ? `Rascunho até o congelamento da referência 1.0.0; um critério para cada uma das ${ids.length} specs.` : `Fixado antes de qualquer execução de agente na tela F2, com a referência congelada 1.0.0; um critério para cada uma das ${ids.length} specs.`,
     referencia: { arquivo: "ground-truth-processos-f2.json", versao: ref._meta.version, sha256: sha(refBuf) },
     mandato: "Para cada spec sem predicado implementado, o observável, o estado em que é observado e o critério de decisão do juiz cego ficam escritos antes da coleta (adendo da F § 4 'Referência da F', mantido pelo adendo 2; mesmo formato da tela F). Para as specs com predicado, uma linha de observável/estado/critério, porque o predicado sustenta a spec mas não credita alegação.",
     naoFeito: "Nenhum modelo, nenhuma ferramenta do validator, nenhum axe. As specs naturais (D-01…D-14) mantêm os critérios e a política de julgamento da tela D (os mesmos textos da tela F).",
