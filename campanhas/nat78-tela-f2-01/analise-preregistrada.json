@@ -1,6 +1,6 @@
 {
   "formato": "nat78-analise-preregistrada-1.0.0",
-  "estado": "RASCUNHO da bancada F2 (26/11/2026, ramo bancada-f2): forma pronta; todo hash que depende da referência, do arquivo de estratos, dos critérios, das classes, do inventário, do pacote, do lock ou do texto da tarefa está marcado PENDENTE; os três controles de viabilidade são fatos pendentes. Não congelado: o commit sozinho que o congela vem depois dos três controles e antes do campaign.json da F2.",
+  "estado": "RASCUNHO da bancada F2 (26/11/2026, ramo bancada-f2, rodada 2): todos os hashes conhecidos preenchidos (referência congelada, estratos, critérios, classes D-156 e NAT-71, conformes, página congelada, inventário do DOM, pacote, lock, texto da tarefa, adendo 2 congelado). Ainda não congelado: os três controles de viabilidade (controlesDeViabilidade) são fatos pendentes; o commit sozinho que o congela vem depois deles e antes do campaign.json da F2.",
   "campanha": "nat78-tela-f2-01",
   "item": "Adendo 2 ao protocolo NAT-78 de 26/11/2026 (tela F2, cotas por tipo de defeito; congelado em thesis 447e47f, errata 1 em 66f1195) §2, §5, §6, §7, sobre o adendo da F (que vale onde o adendo 2 não diz nada) e o protocolo congelado de 16/11 (CONG-15, thesis a46ab3f): análise da tela F2 configurada ANTES da coleta, na forma da da tela F (campanhas/nat78-tela-f-01/analise-preregistrada.json). Só dados: nomes de conjunto, políticas, colunas, comandos e regras de leitura; nenhuma descrição, âncora, regra, tipo, nível nem id de spec da referência. Commitado sozinho, antes do campaign.json da F2, que cita o sha256 deste arquivo em analysisPlan.",
   "seguimento": {
@@ -37,74 +37,84 @@
     "referencia": {
       "arquivo": "ground-truth-processos-f2.json",
       "versao": "1.0.0",
-      "sha256": "PENDENTE",
-      "commitCongelamento": "PENDENTE",
+      "sha256": "0725eb73be600002e7e26c173cd54ec3389416c30e6b089173439fd103f910c9",
+      "commitCongelamento": "9e77e7a5b8f278e0ed37db4e0942f7fae48f7a58 (eval ramo tela-f2, commit só com a referência; o seguinte, 419bbcc, sela tela-f2/); no ramo bancada-f2 por avanço rápido sobre 419bbcc, 183/183 arquivos iguais ao MANIFESTO.json da entrega",
       "contagens": {
-        "specs": "PENDENTE",
-        "unidades": "PENDENTE",
-        "semeado": "PENDENTE",
-        "natural": "PENDENTE",
-        "exposto": "PENDENTE",
-        "paradas": "PENDENTE",
-        "segmentos": "PENDENTE"
+        "specs": 25,
+        "unidades": 69,
+        "semeado": 12,
+        "natural": 13,
+        "exposto": 4,
+        "paradas": 3,
+        "segmentos": 3,
+        "segmentosComParada": 2
       },
       "estratos": "declarados em _meta.estratos da própria referência: semeado (as specs do DS injetadas, todas da classe ds pela classeDaSpec; o primário), natural (as specs da referência 1.1.0 da D reconferidas na cópia) e exposto (as do casco, dentro do natural; também em _meta.exposto.specs, a forma da D). A regra de desfecho recusa estrato semeado vazio, semeada fora da classe ds, semeada exposta e estratos semeado/natural que não repartem a referência.",
-      "conferencia": "npm run conferir:referencia -- --tela processos-f2 contra o site exportado (PENDENTE)",
-      "regraDeDesfecho": "regraDaTela processos-f2 1.0.0 = a regra da F (eval bancada-f2 56cc35c; testes em test-recalculo-campanha.ts): primário = as n semeadas (n de 10 a 12, nada fixa 12); todas; unidades; com-expostas se houver exposta"
+      "conferencia": "npm run conferir:referencia -- --tela processos-f2 contra o site exportado (govbr-telas 821e564): estados inicial → lista-exibir → filtro-escolhido, 25 specs, 69 unidades (tela-f2/conferir-referencia-site-exportado-2026-11-26.log, eval d4e6586)",
+      "regraDeDesfecho": "regraDaTela processos-f2 1.0.0 = a regra da F (eval bancada-f2 56cc35c) aceita a referência: primário 12, todas 21, unidades das 12, com-expostas 25"
     },
     "estratos": {
       "arquivo": "tela-f2/estratos-1.0.0.json",
       "formato": "tela-f2-estratos-1.0.0",
-      "sha256": "PENDENTE",
+      "sha256": "f67902715f9422d3c9ebfd10b59f04087045dafb3ba73e0e783120d3152c89de",
       "declaracao": "telas.json › processos-f2.estratos { arquivo, sha256 }",
       "regra": "por spec semeada: tipo (um dos tipos que o próprio arquivo declara: T1–T4 do adendo 2 §3), subtipo (só nos tipos que declaram subtipos: T1 anatomia | marcacao), nivel (facil | medio | dificil | muito-dificil, só rótulo: sem cota por nível, adendo 2 §4.6) e exigeInteracao (true | false, adendo 2 §3); todo tipo declarado com spec; ids = exatamente o estrato semeado; congelado com a referência. O recálculo para se o sha256 divergir da declaração, se a referência citada (arquivo, versão, sha256) não for a das análises, se faltar ou sobrar campo, ou se a processos-f2 não declarar o arquivo (recalculo-campanha.ts › lerEstratos, conferirEstratos).",
       "contagens": {
-        "porTipo": "PENDENTE",
-        "porNivel": "PENDENTE",
-        "exigeInteracao": "PENDENTE"
-      }
+        "porTipo": {
+          "T1": 3,
+          "T2": 3,
+          "T3": 3,
+          "T4": 3
+        },
+        "porNivel": "registrado no arquivo (descritivo, sem cota)",
+        "exigeInteracao": "registrado no arquivo (descritivo)"
+      },
+      "commit": "fecb62b (declaração em telas.json)"
     },
     "criteriosDeJulgamento": {
-      "arquivo": "tela-f2/criterios-de-julgamento-sem-predicado.json (nome esperado; o do agente da referência vale)",
-      "sha256": "PENDENTE",
-      "declaracao": "telas.json › processos-f2.criteriosDeJulgamento { arquivo, sha256 }",
-      "nota": "como na F: critério para TODA spec da referência (semeadas e naturais), passada dos juízes nat78-primeira-passada-1.4.8; a montagem para se faltar critério ou o sha256 divergir"
+      "arquivo": "tela-f2/criterios-de-julgamento.json",
+      "sha256": "f8484475ad6997259fbc00b109bb018d7865940a7a66e6be1f2033db5a726efd",
+      "declaracao": "telas.json › processos-f2.criteriosDeJulgamento { arquivo, sha256 } (eval fecb62b)",
+      "nota": "critério para as 25 specs (semeadas e naturais); passada dos juízes nat78-primeira-passada-1.4.8; a montagem para se o sha256 divergir"
     },
     "classes": {
       "arquivo": "tela-f2/classes-d156-1.0.0.json",
-      "sha256": "PENDENTE",
-      "nota": "tela-d/classes-d156.ts sobre a referência congelada; toda semeada sai ds (a regra de desfecho também confere)"
+      "sha256": "83859de8edd97c80155e64d5baff11f0a56e26f7889fbc9106e33a3663d846f9",
+      "contagens": "não expostas 21 = ds 13 · geral 8; expostas 4 = geral 4",
+      "nota": "regerado pela bancada com tela-d/classes-d156.ts sobre a referência congelada: mesmo sha256 do arquivo entregue"
     },
     "controlesConformes": {
-      "arquivo": "tela-f2/conformes.json (se houver)",
-      "sha256": "PENDENTE"
+      "arquivo": "tela-f2/conformes.json",
+      "sha256": "1edb72b6dd158888e9b6c983a48c05d326a65e5c127a41906fa3fb6655f3fa97",
+      "itens": 9
     },
     "inventarioDom": {
       "arquivo": "scripts/vazamento/inventario-dom/processos-f2.json",
-      "sha256": "PENDENTE",
-      "manifestoNavegacao": "PENDENTE",
-      "nota": "manifesto-navegacao.ts --tela processos-f2 → inventario-dom.ts → conferir-inventario.ts, depois do congelamento da referência"
+      "sha256": "1636f912418774754d5eec566fa4ae8a0877d5b33e7f698c5c4b42e9d4efc459",
+      "commit": "91a5ce9",
+      "manifestoNavegacao": "3d2e7751d5ddead8c73d645bb144c5708b14d77b27e005a98177844414e210b9",
+      "nota": "3 paradas, 53 tags, 152 classes, 13 dinâmicas; preso ao site 1f645f0440df"
     },
     "paginaCongelada": {
       "arquivo": "tela-f2/pagina-congelada.json",
-      "sha256": "PENDENTE",
+      "sha256": "191a552d364508aedd58a078960da1bbca8e1975aeca6b139e72e44a90443ff7",
       "arquivos": 190,
-      "corpus": "govbr-corpus tela-f2 (PENDENTE: commit da ala public/pnip-f2/ semeada)"
+      "corpus": "govbr-corpus tela-f2 a7d6ccd2c2bbb90036ab69a353a7cd5d1e256a7c, public/pnip-f2/ (190/190 iguais ao manifesto da ala e ao pacote; lista b113879f…; pnip-mock 9d16700)"
     },
     "pacote": {
-      "govbrTelas": "PENDENTE",
+      "govbrTelas": "821e564d8727700712a5490911add6f34a5bd260",
       "exportador": "export-telas-1.7.0",
-      "site": "PENDENTE",
-      "manifesto": "PENDENTE"
+      "site": "1f645f0440df517954b97cd7f55dc5a4ce53ea8d25e6c3ff9fe2e7e1e1693b76",
+      "manifesto": "1d799652f9db62c22deeb95d1e1d6961b649e4423a017a08aecae4023e67d00f"
     },
     "lock": {
       "arquivo": "runner/images.lock.json",
-      "sha256": "PENDENTE",
-      "commit": "PENDENTE (commit sozinho; só a imagem screens muda em relação ao lock da F)"
+      "sha256": "62dd2ccc920e25f314bcddd7c2ca529174df9b324ab2c9913bff878edbc08899",
+      "commit": "84b0600 (commit sozinho; só a imagem screens muda em relação ao lock da F)"
     },
     "textoDaTarefa": {
-      "sha256": "PENDENTE",
-      "nota": "30 min com relógio, igual nos três braços; esperado diferir do da F só na linha da URL (/pnip-f2/)"
+      "sha256": "959f4e34dccef397c8d3d1f3b89e0300a9b4ae2ecd6cee0a9543a7422dfd790b",
+      "nota": "30 min com relógio, igual nos três braços; difere do da F (84faf4eb…) só na linha da URL (/pnip-f2/)"
     }
   },
   "desfechoPrimario": {
@@ -229,9 +239,10 @@
     "naF2": "o primário já é a classe ds (as semeadas); as naturais ficam ao lado, descritivas, por braço e trio"
   },
   "classesNat71": {
-    "arquivo": "tela-f2/classes-nat71/classes-finais.json (se o agente da referência repetir o procedimento da F)",
-    "sha256": "PENDENTE",
-    "estado": "PENDENTE"
+    "arquivo": "tela-f2/classes-nat71/classes-finais.json",
+    "sha256": "7205775719a78130dc2f5c6559d2ab5a0d475934c462312aa6ba64357b6ba90c",
+    "commit": "e35f345 (ramo tela-f2; no bancada-f2 por avanço rápido)",
+    "estado": "feito pelo agente da referência"
   },
   "comandos": [
     {
@@ -282,16 +293,12 @@
   ],
   "pendentes": [
     {
-      "item": "referência ground-truth-processos-f2.json 1.0.0, tela-f2/ (estratos, critérios, classes, página congelada) e todos os hashes de tela.*",
-      "estado": "do agente da referência; a bancada preenche só sha256 e contagens"
-    },
-    {
-      "item": "pacote govbr-telas da F2 (export-telas-1.7.0), lock só da imagem screens, texto da tarefa, inventário do DOM",
-      "estado": "depois da ala pnip-f2/ semeada no corpus"
-    },
-    {
       "item": "controles de viabilidade (controlesDeViabilidade): portão do sem, controle 1, controle 2",
       "estado": "fatos pendentes; nesta ordem; qualquer falha encerra a F2 antes da coleta"
+    },
+    {
+      "item": "depois do portão do sem: test:isolation --tela processos-f2, dublê dos três braços (ensaio-trio-f2-01), portão de vazamento por reexecução",
+      "estado": "proibidos antes do portão (errata 1 do adendo da F, que vale para a F2)"
     },
     {
       "item": "D_fc^F2 na 1.2.0 pura",
