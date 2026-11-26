@@ -1,0 +1,110 @@
+{
+ "regra": "spec natural idêntica byte a byte à da referência 1.1.0 da D herda a classe final da D (ver pedido/LEIA.md › Herança)",
+ "referenciaF": {
+  "arquivo": "ground-truth-processos-f.json",
+  "sha256": "2d808971790132e7c59d1a19f64d50a9f55d44975042eee99783fabe36b20ade",
+  "status": "rascunho"
+ },
+ "referenciaD": {
+  "arquivo": "ground-truth-processos-1.1.0.json",
+  "sha256": "2eacba80efb373c4923f7f85593c684647e6b5ec58ad5a341329d96a44632569"
+ },
+ "classesFinaisD": {
+  "arquivo": "tela-d/classes-nat71/classes-finais.json",
+  "sha256": "3b8eff65f9d473797d570bc0b566b907fc370a7e5c4be908dcf711b198febd54"
+ },
+ "identicas": 13,
+ "specs": [
+  {
+   "id": "D-01",
+   "classe": "sintático",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "herdada de tela-d/classes-nat71/classes-finais.json (acordo)"
+  },
+  {
+   "id": "D-02",
+   "classe": "sintático",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "herdada de tela-d/classes-nat71/classes-finais.json (acordo)"
+  },
+  {
+   "id": "D-03",
+   "classe": "sintático",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "herdada de tela-d/classes-nat71/classes-finais.json (acordo)"
+  },
+  {
+   "id": "D-04",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "a",
+   "limitrofe": true,
+   "origem": "herdada de tela-d/classes-nat71/classes-finais.json (decisao-da-autora-2026-11-16)"
+  },
+  {
+   "id": "D-05",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "origem": "herdada de tela-d/classes-nat71/classes-finais.json (acordo)"
+  },
+  {
+   "id": "D-06",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "origem": "herdada de tela-d/classes-nat71/classes-finais.json (decisao-da-autora-2026-11-16)"
+  },
+  {
+   "id": "D-07",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "herdada de tela-d/classes-nat71/classes-finais.json (acordo)"
+  },
+  {
+   "id": "D-08",
+   "classe": "sintático",
+   "automatizabilidade": "a",
+   "limitrofe": true,
+   "origem": "herdada de tela-d/classes-nat71/classes-finais.json (decisao-da-autora-2026-11-16)"
+  },
+  {
+   "id": "D-10",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "herdada de tela-d/classes-nat71/classes-finais.json (decisao-da-autora-2026-11-16)"
+  },
+  {
+   "id": "D-11",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "origem": "herdada de tela-d/classes-nat71/classes-finais.json (acordo)"
+  },
+  {
+   "id": "D-12",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "origem": "herdada de tela-d/classes-nat71/classes-finais.json (decisao-da-autora-2026-11-16)"
+  },
+  {
+   "id": "D-13",
+   "classe": "semântico",
+   "automatizabilidade": "c",
+   "limitrofe": false,
+   "origem": "herdada de tela-d/classes-nat71/classes-finais.json (acordo)"
+  },
+  {
+   "id": "D-14",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "origem": "herdada de tela-d/classes-nat71/classes-finais.json (decisao-da-autora-2026-11-16)"
+  }
+ ]
+}

@@ -16,7 +16,7 @@
    { "id": "C-3", "texto": "Detecção não depende de id. Uma spec sem id mapeado (`_meta.semIdMapeado`) é detectada pela alegação que afirma o defeito; a coluna fundamentada só credita por id as specs com id.", "fonte": "adendo da F § 2 e § 4 item 3" },
    { "id": "C-4", "texto": "Alegação sobre condição listada em `_meta.fundo` ou `_meta.fora_de_escopo` não é acerto de spec: alegação correta ali vira descoberta.", "fonte": "ground-truth-processos-f.json › _meta.fundo; _meta.fora_de_escopo" },
    { "id": "C-5", "texto": "Sem predicado (`nao-implementado`) não é aceitação nem recusa e nunca recai em 'casou por elemento, logo está certo': o juiz lê a afirmação; com evidência faltando, `evidencia-insuficiente`.", "fonte": "docs/semantic-scoring.md § Predicados de aceitação" },
-   { "id": "C-6", "texto": "Um elemento pode ter mais de uma spec (ex.: a mesma tag ou o mesmo avatar numa spec natural e numa semeada). A alegação credita a spec cujo defeito ela afirma; afirmar o defeito de uma não credita a outra.", "fonte": "docs/semantic-scoring.md (unidade = elemento × predicado de defeito atômico)" }
+   { "id": "C-6", "texto": "Um elemento pode ter mais de uma spec, com defeitos diferentes (ex.: a mesma tag ou o mesmo avatar em duas specs). A alegação credita a spec cujo defeito ela afirma; afirmar o defeito de uma não credita a outra.", "fonte": "docs/semantic-scoring.md (unidade = elemento × predicado de defeito atômico)" }
   ]
  },
  "semPredicado": {
@@ -33,7 +33,7 @@
     "situacao": "fixado",
     "declarado": "filtro-escolhido (e presente também em lista-filtro, a parada seguinte do mesmo segmento)",
     "comoSeAlcanca": "na rota de processos, clicar a tag do filtro \"Aberto há\", esperar a lista de opções e escolher \"Últimos 60 dias\"; a tag do filtro escolhido aparece acima da barra. Qualquer filtro e opção produz a mesma tag; a referência usa este.",
-    "medidoEm": "a medir na página semeada servida (pendência do congelamento)"
+    "medidoEm": "a medir na página servida (pendência do congelamento)"
    },
    "criterio": {
     "situacao": "fixado",

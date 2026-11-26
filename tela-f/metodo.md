@@ -178,3 +178,19 @@ Feito sem modelo, sem oráculo e sem axe na página F.
 - **Lacunas do construtor** medidas onde tocam spec (`lacunas-construcao.json`).
 - **Ids × base servida:** 12/12, e a F-12 segue sem id.
 - **Auditoria cega:** pacote com 24 afirmações (`auditoria-cega/`). O que falta está em `pendencias-congelamento.md`.
+
+**Controles: 10, não 12. Só há 10 elegíveis na página semeada.** O procedimento da D não sorteia quando há 12 ou
+menos elegíveis, então entram os 10. O coordenador aceitou em 26/11, e `_meta.conformes` da referência declara o
+mesmo.
+
+**Segmentos da referência:** o `setup` tem 2 passos `navigate`, então são 3 segmentos (0, 1, 2). Só o 0 e o 2 têm
+paradas: inicial e lista-exibir no 0; filtro-escolhido e lista-filtro no 2. O segmento 1 é a passagem pela rota
+de vistorias, sem parada.
+
+**Classes NAT-71:**
+- O pedido está em `classes-nat71/pedido/`, com cópia em `.tmp-eval/tela-f-nat71/pedido/`, e é montado por
+  `classes-nat71/montar-pedido.mjs`. Segue as condições e o formato da D e da E, reconstruídos dos arquivos
+  `classificador-N.json` e de `comparacao.md`, porque o texto literal do pedido não foi arquivado lá.
+- Vão aos classificadores as 12 semeadas.
+- As 13 naturais, idênticas byte a byte às da D 1.1.0, herdam a classe final da D (`classes-nat71/heranca-naturais.json`).
+- A frase C-6 dos critérios ficou neutra, sem dizer que há semeadura. O mesmo vale para o `medidoEm` da F-11.

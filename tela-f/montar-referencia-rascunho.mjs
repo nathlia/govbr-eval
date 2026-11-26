@@ -129,9 +129,11 @@ const ref = {
       specs: semId,
     },
     conformes: {
-      nota: "Controles conformes (protocolo NAT-78 § 5.2: denominador da taxa de falso alarme). Procedimento da D (tela-d/sortear-conformes.mjs) com as âncoras das semeadas somadas à exclusão de elemento-âncora: saem K-06, K-11 e K-12 da D (elemento participante de semeada), entra breadcrumb-orientacao; 10 elegíveis ≤ 12, sem sorteio. Re-medidos na página semeada pelo código da D (tela-f/remedida-d/semeada.log). Arquivo irmão com sha256.",
+      nota: "Controles conformes (protocolo NAT-78 § 5.2: denominador da taxa de falso alarme). Procedimento da D (tela-d/sortear-conformes.mjs) com as âncoras das semeadas somadas à exclusão de elemento-âncora: saem K-06, K-11 e K-12 da D (elemento participante de semeada), entra breadcrumb-orientacao; 10 elegíveis ≤ 12, sem sorteio: 10, não 12 — só 10 elegíveis na página semeada (aceito pelo coordenador em 26/11). Re-medidos na página semeada pelo código da D (tela-f/remedida-d/semeada.log). Arquivo irmão com sha256.",
       arquivo: "tela-f/conformes.json",
       sha256: sha(confBuf),
+      total: conformes.itens.length,
+      porQue10: "10, não 12: só 10 elegíveis na página semeada (procedimento da D, sem sorteio)",
       itens: conformes.itens.map(({ id, deD, state, selector, count, rules, medida }) => ({ id, deD, state, selector, count, rules, medida })),
     },
     fundo: D._meta.fundo,

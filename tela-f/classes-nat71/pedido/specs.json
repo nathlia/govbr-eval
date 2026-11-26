@@ -1,0 +1,310 @@
+{
+ "origem": "ground-truth-processos-f.json, tela F (processos), referência 1.0.0 — só as specs a classificar",
+ "referenciaSha256": "2d808971790132e7c59d1a19f64d50a9f55d44975042eee99783fabe36b20ade",
+ "estados": [
+  {
+   "id": "inicial",
+   "note": "aba padrão \"Tramitando\" com \"Meus processos\" ligado — primeiro paint da lista paginada"
+  },
+  {
+   "id": "lista-exibir",
+   "note": "lista do seletor \"Exibir\" (itens por página) da paginação aberta — última parada do segmento 1"
+  },
+  {
+   "id": "filtro-escolhido",
+   "note": "segmento 3 (depois de ida e volta por navegação, a rota recomeça): filtro \"Aberto há\" aberto e a opção \"Últimos 60 dias\" escolhida — a tag do filtro escolhido aparece; a lista continua com as mesmas 9 linhas"
+  },
+  {
+   "id": "lista-filtro",
+   "note": "em seguida, a lista de opções do filtro \"Aberto há\" aberta de novo — última parada do segmento 3"
+  }
+ ],
+ "specs": [
+  {
+   "id": "F-01",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos table tbody td:nth-of-type(5)",
+   "scope": "todos",
+   "expectedCount": 9,
+   "rules": [
+    "govbr-3.7.0-component-table-bc0d039ca6cc",
+    "govbr-3.7.0-component-table-4aac83c034bd"
+   ],
+   "categories": [
+    "componente"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "white-space",
+     "overflow-x",
+     "text-overflow"
+    ],
+    "forbidden": [
+     "nowrap",
+     "hidden",
+     "clip"
+    ],
+    "quantifier": "todas",
+    "note": "Valores medidos nas células do solicitante: texto em uma linha, cortado pelo overflow, sem reticências. Sustenta só quando as três propriedades estão nesses valores (texto truncado sem reticências)."
+   },
+   "description": "Coluna \"Solicitante\" da tabela (9 células): o texto fica numa linha só e é cortado na largura da coluna (white-space: nowrap; overflow: hidden; text-overflow: clip). Nomes longos aparecem cortados no meio da palavra, sem reticências, e a célula não tem title nem tooltip que mostre o texto completo (scrollWidth > clientWidth). O truncamento da Table pede reticências no fim do texto e o texto completo em tooltip."
+  },
+  {
+   "id": "F-02",
+   "state": "inicial",
+   "anchor": "pnip-search-table-utils div.br-input > button.br-button",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-input-2b3b4e282965"
+   ],
+   "categories": [
+    "estrutura"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "margin-top"
+    ],
+    "forbidden": [
+     "-12px"
+    ],
+    "note": "Margem medida no botão da ação interna; com ela o centro do botão fica ~26–28 px abaixo do centro do campo."
+   },
+   "description": "Ação interna \"Buscar\" do campo de pesquisa da lista: o botão da lupa (32×32) fica deslocado para baixo do campo — o centro vertical dele está cerca de 26–28 px abaixo do centro vertical do campo, e a lupa aparece fora da borda inferior do campo. A ação interna do Input fica centralizada verticalmente no campo (--spacing-vertical-center)."
+  },
+  {
+   "id": "F-03",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos > div.p-5 > div.d-flex.justify-content-end",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-button-0cfc7ea7ab46"
+   ],
+   "categories": [
+    "estrutura"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "margin-top"
+    ],
+    "forbidden": [
+     "-20px"
+    ],
+    "note": "Margem medida no contêiner do botão Voltar; com ela a caixa do botão intersecta a do seletor \"Página\" da paginação."
+   },
+   "description": "Botão \"Voltar\" no fim da página: o contêiner dele sobe 20 px sobre a barra de paginação (margin-top: -20px), e a caixa do botão se sobrepõe à do seletor \"Página\" da paginação — as duas áreas de interação ficam encavaladas, sem espaço entre elas. A área de proteção do Button pede um espaçamento mínimo em relação aos componentes vizinhos."
+  },
+  {
+   "id": "F-04",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos > div.p-5 > div.d-flex.justify-content-end > button.br-button.secondary",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-button-4e73723a0df8"
+   ],
+   "categories": [
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "border-top-left-radius"
+    ],
+    "forbidden": [
+     "4px"
+    ],
+    "note": "Raio medido no botão Voltar (var(--surface-rounder-sm)); o Exportar, secundário da mesma página, mede raio de pílula."
+   },
+   "description": "Botão secundário \"Voltar\": a superfície tem cantos de 4 px (border-radius: var(--surface-rounder-sm)), enquanto o outro botão secundário da página, \"Exportar\", tem forma de pílula. A superfície do Button padrão tem arredondamento --surface-rounder-pill."
+  },
+  {
+   "id": "F-05",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos div.tab-panel > div.col > div.row:first-of-type span.br-tag.interaction",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-tag-6e456d98e420"
+   ],
+   "categories": [
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "border-top-left-radius"
+    ],
+    "allowed": [
+     "4px"
+    ],
+    "note": "--surface-rounder-sm (4 px no core), o arredondamento da superfície da Tag de interação; medido nas tags de filtro da mesma barra."
+   },
+   "description": "Tag de interação \"Meus processos\": a superfície tem forma de pílula (border-radius ≥ 16 px, var(--surface-rounder-pill)), enquanto as tags de filtro da mesma barra têm cantos de 4 px. O arredondamento da superfície da Tag de interação é --surface-rounder-sm."
+  },
+  {
+   "id": "F-06",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos table thead th:nth-of-type(7)",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-table-559426cdec19"
+   ],
+   "categories": [
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "background-color"
+    ],
+    "allowed": [
+     "rgb(240, 240, 240)"
+    ],
+    "note": "--gray-5 (#f0f0f0), o fundo do header da Table; medido nos demais th do mesmo cabeçalho."
+   },
+   "description": "Cabeçalho da tabela, coluna \"Téc. Adm.\": a célula tem fundo branco (rgb(255, 255, 255)), enquanto as demais células do cabeçalho têm fundo rgb(240, 240, 240) — um vão branco na faixa cinza do header. O fundo do header da Table é --gray-5."
+  },
+  {
+   "id": "F-07",
+   "state": "inicial",
+   "anchor": "pnip-header .br-avatar .content",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-avatar-723660559374"
+   ],
+   "categories": [
+    "componente"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "border-top-left-radius"
+    ],
+    "allowed": [
+     "50%"
+    ],
+    "note": "Superfície circular do Avatar (border-radius 50%, o que o core computa)."
+   },
+   "description": "Avatar de letra no cabeçalho (\"U\"): a superfície de 40×40 tem cantos de 4 px (border-radius: var(--surface-rounder-sm)) — um quadrado de cantos arredondados, não um círculo. A representação do usuário no Avatar fica contida numa superfície circular."
+  },
+  {
+   "id": "F-08",
+   "state": "inicial",
+   "anchor": "pnip-multiple-search-table-utils br-button[label=\"Limpar filtros\"] >>> button",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-button-71d4266a8572"
+   ],
+   "categories": [
+    "tipografia"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "text-transform"
+    ],
+    "allowed": [
+     "none"
+    ],
+    "note": "Rótulo do Button: text-transform none."
+   },
+   "description": "Botão \"Limpar filtros\" (desabilitado na carga, visível): o rótulo é renderizado em caixa alta, \"LIMPAR FILTROS\" (text-transform: uppercase no botão interno, herdado da classe text-uppercase do hospedeiro). O rótulo do Button padrão não tem transformação de caixa (text-transform: none)."
+  },
+  {
+   "id": "F-09",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos table tbody td",
+   "scope": "composicao",
+   "expectedCount": 1,
+   "participantCount": 81,
+   "rules": [
+    "govbr-3.7.0-component-table-d08c9e4951e5"
+   ],
+   "categories": [
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "padding-top",
+     "padding-bottom"
+    ],
+    "allowed": [
+     "8px",
+     "16px",
+     "24px"
+    ],
+    "note": "Espaçamento vertical das linhas da Table nas três densidades: alta --spacing-scale-base (8 px), padrão --spacing-scale-2x (16 px), baixa --spacing-scale-3x (24 px)."
+   },
+   "description": "Linhas do corpo da tabela (81 células, 9 linhas × 9 colunas): padding-top e padding-bottom de 12 px, valor que não corresponde a nenhuma densidade da Table (alta 8 px, padrão 16 px, baixa 24 px); o cabeçalho continua com 16 px. A densidade é uma só para o corpo da tabela, e uma única regra a define: uma unidade para o conjunto."
+  },
+  {
+   "id": "F-10",
+   "state": "lista-filtro",
+   "anchor": "pnip-multiple-search-table-utils div.br-select > div.br-list",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-select-ba2187bb7906"
+   ],
+   "categories": [
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "box-shadow"
+    ],
+    "forbidden": [
+     "none"
+    ],
+    "note": "Medido na lista de opções aberta do filtro: sem sombra."
+   },
+   "description": "Lista de opções de um filtro da barra (aberta ao clicar a tag do filtro, aqui \"Aberto há\"): a lista flutua sobre a tabela sem sombra (box-shadow: none). Uma sombra deve dar contraste entre a lista flutuante do Select e o conteúdo da tela ao fundo."
+  },
+  {
+   "id": "F-11",
+   "state": "filtro-escolhido",
+   "anchor": "pnip-multiple-search-table-utils div.row.pl-2:not(.align-items-center) span.br-tag.interaction",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-tag-07d13ad49df0"
+   ],
+   "categories": [
+    "componente"
+   ],
+   "description": "Tag do filtro escolhido (aparece depois de abrir um filtro e escolher uma opção, aqui \"Aberto há\" → \"Últimos 60 dias\"): o botão de fechar (×) fica à esquerda, antes do ícone e do rótulo, em vez de na extremidade direita da tag. Na Tag de interação, o ícone se alinha à esquerda e o botão terciário (fechar) à direita."
+  },
+  {
+   "id": "F-12",
+   "state": "lista-exibir",
+   "anchor": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip .br-list .br-item.selected",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [],
+   "categories": [
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "background-color"
+    ],
+    "allowed": [
+     "rgb(38, 112, 232)"
+    ],
+    "note": "--blue-warm-vivid-50 (#2670e8), o fundo do estado Selecionado; é o que o item selecionado da lista do \"Página\" (mesmo componente) mede."
+   },
+   "description": "Lista do seletor \"Exibir\" da paginação aberta: o item selecionado (\"10\") tem fundo rgb(19, 81, 180) (#1351b4) com texto branco, em vez do fundo do estado Selecionado (#2670e8, --blue-warm-vivid-50). Continua azul; só o tom muda."
+  }
+ ]
+}
