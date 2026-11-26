@@ -31,6 +31,7 @@ diretório temporário apagado no fim.
 | `site/pnip/**` | `govbr-corpus/public/pnip/` (build Angular congelado) | Exatamente a lista do manifesto do congelamento (`manifesto.json`), cada arquivo conferido por sha256; árvore com arquivo a mais ou a menos faz a exportação parar. O manifesto do congelamento fica de fora (telas.json `isolamento.site.excluir`). |
 | `site/pnip-d/**` (tela D `processos`, desde `export-telas-1.4.0`) | `govbr-corpus/public/pnip-d/` (build Angular congelado, `base href /pnip-d/`) | A mesma regra da `pnip/`: a lista do manifesto do congelamento da ala, conferida por sha256; o manifesto da ala fica de fora. |
 | `site/pnip-f/**` (tela F `processos-f`, desde `export-telas-1.6.0`) | `govbr-corpus/public/pnip-f/` (build Angular congelado, `base href /pnip-f/`) | A mesma regra da `pnip-d/`. |
+| `site/pnip-f2/**` (tela F2 `processos-f2`, desde `export-telas-1.7.0`) | `govbr-corpus/public/pnip-f2/` (build Angular congelado, `base href /pnip-f2/`) | A mesma regra da `pnip-d/`. |
 | `server.mjs`, `README.md` | modelos em `scripts/export-telas/` | copiados como estão |
 | `package.json`, `.node-version`, `.gitattributes`, `site-manifest.json` | gerados pelo exportador | — |
 | `skills/avaliar-tela/SKILL.md` | `govbr-eval/skills/avaliar-tela/SKILL.md` (T2) | `PACKAGE_SKILLS`, lista fechada de uma entrada; fins de linha normalizados para LF; hash em `skills[]` do manifesto. Nada mais de `skills/` entra (o protocolo antigo `evaluate-screen` + `_shared/` e `evaluate-all` ficam fora). O servidor não o serve (404). Ver [`skill-avaliar-tela.md`](skill-avaliar-tela.md). |
@@ -96,6 +97,11 @@ pela regra da `pnip-d/`: a lista do manifesto do congelamento da ala, conferida 
 fora; `routing.spas` ganha `/pnip-f/`; o alias do ícone do "Sair" só entra com os mesmos bytes do da B. Na raiz mudam
 `README.md` (seis telas) e `package.json` (descrição); `site/` de A, B, A2, D e E fica byte a byte igual. O teste
 aceita tela sem referência (`reference: null`): visita só a entrada e a prova de vida de `telas.json`.
+
+**1.7.0 (tela F2).** Quarta SPA, `processos-f2` em `site/pnip-f2/` (ala `govbr-corpus/public/pnip-f2/`, `base href /pnip-f2/`),
+pela mesma regra. Na raiz mudam `README.md` (sete telas) e `package.json` (descrição); `site/` de A, B, A2, D, E e F fica
+byte a byte igual (ensaio de 26/11 com a ala SEM semente num corpus descartável: 620 de 620 arquivos iguais aos de `b663a26`,
+190 novos, todos sob `pnip-f2/`).
 
 ## O manifesto (`site-manifest.json`)
 

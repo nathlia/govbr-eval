@@ -25,6 +25,8 @@
  *                       se os dois destinos tiverem o mesmo sha256 (fica o da B), senão a exportação para.
  *   tela `processos-f`  (F, desde 1.6.0) a mesma regra da `processos` sobre `govbr-corpus/public/pnip-f/`: terceira
  *                       SPA em `routing.spas`, alias do ícone do "Sair" pela mesma regra (mesmos bytes ou para).
+ *   tela `processos-f2` (F2, desde 1.7.0) a mesma regra sobre `govbr-corpus/public/pnip-f2/`: quarta SPA em
+ *                       `routing.spas`, alias do ícone do "Sair" pela mesma regra.
  *   raiz                `server.mjs`, `README.md` (modelos em scripts/export-telas/), `package.json`,
  *                       `.node-version`, `.gitattributes` e `site-manifest.json` (gerados aqui).
  *   skill               `skills/avaliar-tela/SKILL.md` (T2) — e nada mais de `skills/`: a skill
@@ -59,7 +61,8 @@ import { telaOf, type TelaSite } from "./telas";
 // 1.4.0: quarta tela, D `processos` (ala pnip-d/, NAT-78 CONG-10); `routing.spas`; os arquivos de A, B e A2 não mudam.
 // 1.5.0: quinta tela, E `cadastro-pais` (página construída, NAT-78 §3.8, D-201; CONG-17); os arquivos de A, B, A2 e D não mudam.
 // 1.6.0: sexta tela, F `processos-f` (ala pnip-f/, adendo de 26/11 ao NAT-78); terceira SPA; os arquivos de A, B, A2, D e E não mudam.
-export const EXPORTER_VERSION = "export-telas-1.6.0";
+// 1.7.0: sétima tela, F2 `processos-f2` (ala pnip-f2/, adendo 2 de 26/11 ao NAT-78); quarta SPA; os arquivos de A, B, A2, D, E e F não mudam.
+export const EXPORTER_VERSION = "export-telas-1.7.0";
 /** Nome provisório do projeto exportado (pendente NAT-45). */
 export const PACKAGE_NAME = "govbr-telas";
 export const PACKAGE_VERSION = "1.0.0";
@@ -84,10 +87,12 @@ export const SCREEN_D = "processos";
 export const SCREEN_E = "cadastro-pais";
 /** Tela F (adendo de 26/11 ao NAT-78, seguimento): SPA congelada em `public/pnip-f/`, mesmas regras da tela D. */
 export const SCREEN_F = "processos-f";
+/** Tela F2 (adendo 2 de 26/11 ao NAT-78, segundo seguimento): SPA congelada em `public/pnip-f2/`, mesmas regras da tela D. */
+export const SCREEN_F2 = "processos-f2";
 /** As telas do pacote, na ordem de `screens[]` do manifesto. */
-export const SCREENS = [SCREEN_A, SCREEN_B, SCREEN_A2, SCREEN_D, SCREEN_E, SCREEN_F] as const;
+export const SCREENS = [SCREEN_A, SCREEN_B, SCREEN_A2, SCREEN_D, SCREEN_E, SCREEN_F, SCREEN_F2] as const;
 /** As telas servidas como SPA congelada (árvore do corpus + manifesto do congelamento), na ordem de `routing.spas`. */
-export const SPA_SCREENS = [SCREEN_B, SCREEN_D, SCREEN_F] as const;
+export const SPA_SCREENS = [SCREEN_B, SCREEN_D, SCREEN_F, SCREEN_F2] as const;
 /**
  * O que a A2 carrega de `public/` (o Vite copia `public/` sem processar, e o exportador tira essas cópias do
  * build antes do fechamento): os scripts clássicos e as marcas da página e as duas páginas de destino da
@@ -204,6 +209,7 @@ export interface SiteManifestDoc {
     /** Mesmo build da tela A, pela regra da A2. */
     [SCREEN_E]: { build: { command: string; tool: string; node: string }; public: string[]; selection: string };
     [SCREEN_F]: SpaOrigin;
+    [SCREEN_F2]: SpaOrigin;
   };
   /** Arquivos servidos, relativos a `site/` — ordenados. */
   files: ManifestFile[];
@@ -320,7 +326,7 @@ function packageJson(): string {
     name: PACKAGE_NAME,
     version: PACKAGE_VERSION,
     private: true,
-    description: "Seis telas web estáticas e um servidor mínimo (somente módulos nativos do Node.js).",
+    description: "Sete telas web estáticas e um servidor mínimo (somente módulos nativos do Node.js).",
     type: "module",
     scripts: { start: "node server.mjs" },
     engines: { node: ">=20.19.0" },
@@ -358,13 +364,16 @@ export function exportTelas(options: ExportOptions): ExportResult {
   const telaD = telaOf(SCREEN_D);
   const telaE = telaOf(SCREEN_E);
   const telaF = telaOf(SCREEN_F);
+  const telaF2 = telaOf(SCREEN_F2);
   const siteB = telaB.isolamento.site;
   if (!siteB) throw new Error(`A tela ${SCREEN_B} não declara isolamento.site em telas.json`);
   const siteD = telaD.isolamento.site;
   if (!siteD) throw new Error(`A tela ${SCREEN_D} não declara isolamento.site em telas.json`);
   const siteF = telaF.isolamento.site;
   if (!siteF) throw new Error(`A tela ${SCREEN_F} não declara isolamento.site em telas.json`);
-  const spaSites: [string, TelaSite][] = [[SCREEN_B, siteB], [SCREEN_D, siteD], [SCREEN_F, siteF]];
+  const siteF2 = telaF2.isolamento.site;
+  if (!siteF2) throw new Error(`A tela ${SCREEN_F2} não declara isolamento.site em telas.json`);
+  const spaSites: [string, TelaSite][] = [[SCREEN_B, siteB], [SCREEN_D, siteD], [SCREEN_F, siteF], [SCREEN_F2, siteF2]];
 
   const plan = new Map<string, string>(); // caminho em site/ → arquivo de origem
   log(`build de produção do corpus (${corpus}) em diretório temporário…`);
@@ -422,6 +431,7 @@ export function exportTelas(options: ExportOptions): ExportResult {
     const b = spaFiles.get(SCREEN_B)!;
     const d = spaFiles.get(SCREEN_D)!;
     const spaF = spaFiles.get(SCREEN_F)!;
+    const spaF2 = spaFiles.get(SCREEN_F2)!;
     // Aliases das SPAs num só mapa (o servidor responde a um caminho com um arquivo). Mesma chave em duas telas
     // (o ícone do "Sair", que sob <base href> sai do prefixo nas duas): só se os destinos tiverem os mesmos bytes;
     // fica o destino da tela que veio antes em SPA_SCREENS. Bytes diferentes: para.
@@ -488,7 +498,7 @@ export function exportTelas(options: ExportOptions): ExportResult {
       item: {
         id: `${PACKAGE_NAME}-site-${listingSha256(files).slice(0, 12)}`,
         kind: "site",
-        description: `Arquivos servidos das telas ${SCREEN_A}, ${SCREEN_B}, ${SCREEN_A2}, ${SCREEN_D}, ${SCREEN_E} e ${SCREEN_F}; sha256 = hash da listagem 'sha256  caminho' ordenada de files[].`,
+        description: `Arquivos servidos das telas ${SCREEN_A}, ${SCREEN_B}, ${SCREEN_A2}, ${SCREEN_D}, ${SCREEN_E}, ${SCREEN_F} e ${SCREEN_F2}; sha256 = hash da listagem 'sha256  caminho' ordenada de files[].`,
         sha256: listingSha256(files),
         bytes,
         location: { kind: "package-path", path: SITE_DIR, note: "pasta site/ deste pacote; destino de arquivo durável pendente" },
@@ -503,6 +513,7 @@ export function exportTelas(options: ExportOptions): ExportResult {
         { id: SCREEN_D, title: "Processos", entry: `/${telaD.entry}` },
         { id: SCREEN_E, title: "Cadastrar país importador", entry: `/${telaE.entry}` },
         { id: SCREEN_F, title: "Processos", entry: `/${telaF.entry}` },
+        { id: SCREEN_F2, title: "Processos", entry: `/${telaF2.entry}` },
       ],
       routing: { spa: spas[0], spas, aliases },
       origin: {
@@ -524,6 +535,7 @@ export function exportTelas(options: ExportOptions): ExportResult {
           selection: `fechamento de arquivos citados a partir de ${telaE.entry} no build, com ${SCREEN_E_PUBLIC.map((e) => `public/${e}`).join(", ")} devolvidos ao build`,
         },
         [SCREEN_F]: spaOrigin(spaF, siteF),
+        [SCREEN_F2]: spaOrigin(spaF2, siteF2),
       },
       files,
       runtime,

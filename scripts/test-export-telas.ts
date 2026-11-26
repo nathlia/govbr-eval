@@ -6,7 +6,7 @@
  *      e nome da usuária, hashes do manifesto; a auditoria pega cada violação plantada numa cópia;
  *   2. manifesto: forma de site-manifest.v1, e o `item` encaixa num snapshot-manifest.v1 válido
  *      (validateContract);
- *   3. paridade byte a byte: telas B, D e F = manifesto do congelamento do corpus (pnip/, pnip-d/, pnip-f/); cada tela =
+ *   3. paridade byte a byte: telas B, D, F e F2 = manifesto do congelamento do corpus (pnip/, pnip-d/, pnip-f/, pnip-f2/); cada tela =
  *      o site que a superfície de medida congelou na última coleta dela, se houver (pipeline/logs/*-superficie);
  *   4. vazamento do gabarito: ids, regras e frases de 6+ palavras de todo ground-truth-*.json,
  *      organic-ground-truth.json e adjudications.json não podem aparecer em nenhum arquivo de texto
@@ -29,7 +29,7 @@ import { chromium, type Browser, type Page, type Request } from "playwright";
 import { validateContract } from "../contracts/index";
 import { ROOT } from "./adjudication";
 import {
-  DEFAULT_CORPUS, KNOWN_SOURCE_MAP_DIRECTIVES, PACKAGE_NODE_VERSION, PACKAGE_SKILLS, ROOT_FILES, machineText, SCREEN_A, SCREEN_A2, SCREEN_A2_PUBLIC, SCREEN_B, SCREEN_E_PUBLIC, SCREEN_D, SCREEN_E, SCREEN_F, SCREENS, SPA_SCREENS, SITE_DIR, TEXT_EXTENSIONS, auditPackage, exportTelas, listTree,
+  DEFAULT_CORPUS, KNOWN_SOURCE_MAP_DIRECTIVES, PACKAGE_NODE_VERSION, PACKAGE_SKILLS, ROOT_FILES, machineText, SCREEN_A, SCREEN_A2, SCREEN_A2_PUBLIC, SCREEN_B, SCREEN_E_PUBLIC, SCREEN_D, SCREEN_E, SCREEN_F, SCREEN_F2, SCREENS, SPA_SCREENS, SITE_DIR, TEXT_EXTENSIONS, auditPackage, exportTelas, listTree,
   type SiteManifestDoc,
 } from "./export-telas";
 import { assetClosure, createSiteServer, loadSite } from "./measurement-surface";
@@ -346,6 +346,7 @@ async function main(): Promise<void> {
     assert.ok(manifest.files.some((f) => f.path === "acompanhamento.html"));
     assert.ok(manifest.files.some((f) => f.path === "pnip-d/index.html"));
     assert.ok(manifest.files.some((f) => f.path === "pnip-f/index.html"));
+    assert.ok(manifest.files.some((f) => f.path === "pnip-f2/index.html"));
     console.log(`   ${result.files} arquivos servidos, ${result.bytes} bytes; corpus ${manifest.origin.corpus.commit}${manifest.origin.corpus.dirty ? " (sujo)" : ""}`);
   });
 
@@ -416,17 +417,17 @@ async function main(): Promise<void> {
     assert.equal(manifest.contract, "site-manifest.v1");
     assert.equal(manifest.subsetOf, "snapshot-manifest.v1");
     assert.equal(manifest.fixture, false);
-    assert.deepEqual(manifest.screens.map((s) => s.id), [SCREEN_A, SCREEN_B, SCREEN_A2, SCREEN_D, SCREEN_E, SCREEN_F]);
-    assert.deepEqual([...SCREENS], [SCREEN_A, SCREEN_B, SCREEN_A2, SCREEN_D, SCREEN_E, SCREEN_F]);
+    assert.deepEqual(manifest.screens.map((s) => s.id), [SCREEN_A, SCREEN_B, SCREEN_A2, SCREEN_D, SCREEN_E, SCREEN_F, SCREEN_F2]);
+    assert.deepEqual([...SCREENS], [SCREEN_A, SCREEN_B, SCREEN_A2, SCREEN_D, SCREEN_E, SCREEN_F, SCREEN_F2]);
     for (const [i, nome] of SCREENS.entries()) assert.equal(manifest.screens[i].entry, `/${telaOf(nome).entry}`);
-    // 1.4.0: `spas` = as SPAs (B, D e, desde 1.6.0, F); `spa` continua a da B, com a forma de até 1.3.0.
+    // 1.4.0: `spas` = as SPAs (B, D e, desde 1.6.0, F; desde 1.7.0, F2); `spa` continua a da B, com a forma de até 1.3.0.
     const spaDe = (nome: string) => { const s = telaOf(nome).isolamento.site!; return { prefix: `/${s.arvore.replace(/\/+$/, "")}/`, index: s.indice }; };
     assert.deepEqual(manifest.routing.spas, SPA_SCREENS.map(spaDe));
     assert.deepEqual(manifest.routing.spa, spaDe(SCREEN_B));
     // Aliases: os da B; um alias da D com a mesma chave só entra por ter os mesmos bytes do destino da B.
     assert.deepEqual(manifest.routing.aliases, telaOf(SCREEN_B).isolamento.site!.aliases);
     const shaDe = (p: string) => manifest.files.find((f) => f.path === p)?.sha256;
-    for (const nome of [SCREEN_D, SCREEN_F]) for (const [from, to] of Object.entries(telaOf(nome).isolamento.site!.aliases ?? {})) {
+    for (const nome of [SCREEN_D, SCREEN_F, SCREEN_F2]) for (const [from, to] of Object.entries(telaOf(nome).isolamento.site!.aliases ?? {})) {
       assert.ok(manifest.routing.aliases[from], `alias ${from} da ${nome} ausente`);
       assert.equal(shaDe(manifest.routing.aliases[from]), shaDe(to), `alias ${from}: destino servido difere do da ${nome}`);
     }
@@ -586,11 +587,13 @@ async function main(): Promise<void> {
     const index = manifest.files.find((f) => f.path === "pnip/index.html")!;
     const indexD = manifest.files.find((f) => f.path === "pnip-d/index.html")!;
     const indexF = manifest.files.find((f) => f.path === "pnip-f/index.html")!;
-    assert.equal(new Set([index.sha256, indexD.sha256, indexF.sha256]).size, 3);
+    const indexF2 = manifest.files.find((f) => f.path === "pnip-f2/index.html")!;
+    assert.equal(new Set([index.sha256, indexD.sha256, indexF.sha256, indexF2.sha256]).size, 4);
     for (const [routes, idx] of [
       [["/pnip/portal-mpa/vistorias", "/pnip/portal-mpa/vistorias/agendar-vistoria/x", "/pnip/"], index],
       [["/pnip-d/portal-mpa/processos", "/pnip-d/portal-mpa/processos/x", "/pnip-d/"], indexD],
       [["/pnip-f/portal-mpa/processos", "/pnip-f/portal-mpa/processos/x", "/pnip-f/"], indexF],
+      [["/pnip-f2/portal-mpa/processos", "/pnip-f2/portal-mpa/processos/x", "/pnip-f2/"], indexF2],
     ] as const) {
       for (const route of routes) {
         const res = await fetch(server.origin + route);
@@ -616,6 +619,7 @@ async function main(): Promise<void> {
       ["/cadastro-pais/", [404]], ["/cadastro-pais/core.min.js.map", [404]], ["/src/cadastro-pais/cadastro-pais.css", [404]], ["/cadastro-pais.html", [405], "POST"],
       ["/pnip-d/manifesto.json", [404]], ["/pnip-d/../server.mjs", [400]], ["/pnip-dx/portal-mpa/processos", [404]], ["/pnip-d", [404]],
       ["/pnip-f/manifesto.json", [404]], ["/pnip-f/../server.mjs", [400]], ["/pnip-fx/portal-mpa/processos", [404]], ["/pnip-f", [404]],
+      ["/pnip-f2/manifesto.json", [404]], ["/pnip-f2/../server.mjs", [400]], ["/pnip-f2x/portal-mpa/processos", [404]], ["/pnip-f2", [404]],
     ];
     for (const [path, expected, method] of cases) {
       const status = await rawStatus(server.origin, path, method);
