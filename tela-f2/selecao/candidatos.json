@@ -1,0 +1,753 @@
+[
+  {
+    "id": "T1-1",
+    "tipo": "T1",
+    "subtipo": "anatomia",
+    "ordem": 1,
+    "nivel": "médio",
+    "exigeInteracao": false,
+    "componente": "Pagination",
+    "elemento": "nav.br-pagination.small > ul > li:first-child > button.br-button.circle[aria-label=\"Página anterior\"] — seta de navegação esquerda da paginação (light DOM)",
+    "estado": "inicial (rolar até a paginação, abaixo da tabela)",
+    "conformeHoje": "As duas Setas de Navegação estão presentes: botões circulares \"Página anterior\" e \"Página seguinte\" (40×40 px) ladeando o identificador de página \"1\".",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\utils\\components\\govbr-custom-pagination\\govbr-custom-pagination.component.html",
+      "linha": "8-12",
+      "de": "<li>\n  <button class=\"br-button circle\" type=\"button\" [disabled]=\"currentPage === 1\" (click)=\"previousPage()\" aria-label=\"Página anterior\">\n    <i class=\"fas fa-angle-left\" aria-hidden=\"true\"></i>\n  </button>\n</li>",
+      "para": "(bloco removido — a paginação passa a ter só a seta \"Página seguinte\")",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": null,
+    "observavel": "Na paginação aparece apenas a seta para a direita; no DOM, nav.br-pagination.small tem 1 botão circular de seta em vez de 2 (verificado: [\"Página seguinte\"]).",
+    "clausula": {
+      "arquivo": "componentes/pagination__designer.md",
+      "trecho": "Constituem um *Botão* para esquerda e outro para direita. A cada clique, o usuário poderá navegar página por página de forma crescente ou decrescente (direita / esquerda).",
+      "secao": "Anatomia > #### 1. Setas de Navegação (Obrigatório)",
+      "linhasNoArquivo": [
+        49
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo. Remoção de marcação estática; previousPage() fica sem uso (sem erro de compilação). Como há só 1 página, a seta esquerda hoje já aparece desabilitada — o auditor precisa notar a ausência, não um mau funcionamento.",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T1-2",
+    "tipo": "T1",
+    "subtipo": "marcacao",
+    "ordem": 2,
+    "nivel": "fácil",
+    "exigeInteracao": false,
+    "componente": "Avatar",
+    "elemento": "button.br-sign-in > span.br-avatar > span.content — conteúdo interno (letra \"U\") do avatar no cabeçalho (light DOM)",
+    "estado": "inicial",
+    "conformeHoje": "span.content presente: superfície circular 40×40 px, border-radius 50%, display flex, letra centralizada 24.192px bold.",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\layout\\header\\header.component.html",
+      "linha": "7",
+      "de": "<span class=\"content bg-orange-vivid-30 text-pure-0\">",
+      "para": "<span class=\"bg-orange-vivid-30 text-pure-0\">",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": null,
+    "observavel": "O avatar deixa de ser um círculo: vira um retângulo laranja estreito (≈18×40 px, border-radius 0) com a letra encostada; no DOM falta a classe content dentro de .br-avatar.",
+    "clausula": {
+      "arquivo": "componentes/avatar__desenvolvedor.md",
+      "trecho": "| class    | string | **content**   | Aplicado no conteúdo interno. Pode conter imagem, ícone ou letra. |",
+      "secao": "Como usar > Propriedades obrigatórias",
+      "linhasNoArquivo": [
+        22
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo. Só muda classe. Se T2-2 também for escolhido, as duas mudanças tocam a mesma linha (atributos distintos: classe estrutural vs cor de fundo).",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T1-3",
+    "tipo": "T1",
+    "subtipo": "anatomia",
+    "ordem": 3,
+    "nivel": "difícil",
+    "exigeInteracao": false,
+    "componente": "Header",
+    "elemento": "br-header (web component) → shadow DOM .header-info .header-title — título do cabeçalho \"Plataforma Nacional da Indústria do Pescado\"",
+    "estado": "inicial",
+    "conformeHoje": "O header exibe o título (div.header-title, 24.192px regular) ao lado do botão de menu.",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\layout\\header\\header.component.html",
+      "linha": "1",
+      "de": "<br-header [image]=\"logo\" [signature]=\"signature\" [title]=\"getNomePlataforma()\" [hasMenu]=\"true\" [hasTitleLink]=\"false\"></br-header>",
+      "para": "<br-header [image]=\"logo\" [signature]=\"signature\" [hasMenu]=\"true\" [hasTitleLink]=\"false\"></br-header>",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": null,
+    "observavel": "Cabeçalho só com logo, assinatura e botão de menu; o shadow DOM de br-header não contém .header-title (verificado: null). Visualmente parece um header \"limpo\".",
+    "clausula": {
+      "arquivo": "componentes/header__designer.md",
+      "trecho": "No *Header* deve sempre existir um título que identifique o site, sistema ou aplicativo. Em alguns dispositivos (como celulares), o título pode identificar a página atual.",
+      "secao": "Detalhamento dos Itens > ### 3. Título (Obrigatório)",
+      "linhasNoArquivo": [
+        113
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo. Testado removendo o atributo title do host após a renderização; com o input ausente desde a inicialização espera-se o mesmo (o componente só renderiza .header-title quando há título). getNomePlataforma() fica sem uso no template.",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T1-4",
+    "tipo": "T1",
+    "subtipo": "anatomia",
+    "ordem": 4,
+    "nivel": "difícil",
+    "exigeInteracao": false,
+    "componente": "Button",
+    "elemento": "br-button \"Exportar\" (ênfase secundária, tipo padrão) ao lado do título da página → shadow DOM button.br-button.secondary",
+    "estado": "inicial",
+    "conformeHoje": "Botão padrão secundário com rótulo \"Exportar\" (16.8px semi-bold), 118×40 px, borda 1px #1351b4, raio pill.",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\pages\\portal-mpa\\processos\\processos.component.html",
+      "linha": "9",
+      "de": "<br-button type=\"secondary\" label=\"Exportar\" (click)=\"irParaExportarHs()\"></br-button>",
+      "para": "<br-button type=\"secondary\" icon=\"file-export\" title=\"Exportar\" (click)=\"irParaExportarHs()\"></br-button>",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": null,
+    "observavel": "O botão vira uma pílula secundária (78×40 px, padding 24px, raio pill) só com o ícone fa-file-export, sem texto; o botão continua do tipo padrão (não circular).",
+    "clausula": {
+      "arquivo": "componentes/button__designer.md",
+      "trecho": "O rótulo é um elemento obrigatório. A exceção ocorre na versão tipo circular uma vez que não existe rótulo.",
+      "secao": "Detalhamento dos Itens > #### 2. Rótulo (Obrigatório)",
+      "linhasNoArquivo": [
+        62
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Médio. O ícone é renderizado pelo atributo icon (verificado: <i class=\"fas fa-file-export mr-1\">). O botão interno fica com aria-label vazio e sem texto: um auditor pode registrar como falha de nome acessível (fora do escopo DS); o title no host mitiga. Os botões de ícone da tabela já são padrão sem rótulo — o auditor pode considerar o padrão \"da casa\".",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T1-5",
+    "tipo": "T1",
+    "subtipo": "marcacao",
+    "ordem": 5,
+    "nivel": "muito difícil",
+    "exigeInteracao": true,
+    "componente": "Tag (de interação dispensável) / Button",
+    "elemento": "pnip-multiple-search-table-utils .row.pl-2 span.br-tag.interaction.small > button.br-button.inverted.circle — botão terciário de remoção da tag de filtro selecionado (light DOM)",
+    "estado": "Clicar na tag de filtro \"Status\" → escolher a primeira opção da lista (\"Aguardando análise\") → aparece a tag azul do filtro selecionado com o botão ×.",
+    "conformeHoje": "O botão × é um br-button circular invertido: 28×28 px (densidade extra-alta = --spacing-scale-3xh), raio 50%, fundo #1351b4, ícone branco.",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\utils\\components\\multiple-search-table.utils.ts",
+      "linha": "28",
+      "de": "<button class=\"br-button inverted circle\" type=\"button\" (click)=\"removeSelected(i)\">",
+      "para": "<button class=\"inverted circle\" type=\"button\" (click)=\"removeSelected(i)\">",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": null,
+    "observavel": "Dentro da tag azul aparece um botão nativo do navegador (fundo #f0f0f0, borda outset 2px, cantos retos, 40×30 px, ícone preto) em vez do botão circular do DS; no DOM falta a classe br-button.",
+    "clausula": {
+      "arquivo": "componentes/button__desenvolvedor.md",
+      "trecho": "| class    | string | **br-button** | Container do componente. |",
+      "secao": "Como usar > Propriedades obrigatórias",
+      "linhasNoArquivo": [
+        21
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo para construir; o clique continua removendo o filtro. O filtro fica salvo em sessionStorage (chave filters-process-mpa-TRAMITANDO): o auditor pode chegar à página já com a tag visível, ou precisar limpar o estado. Âncora complementar: tag__designer.md, \"A *tag* interativa é o único tipo em que é possível incluir um botão terciário para a sua remoção ou exclusão.\"",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T1-6",
+    "tipo": "T1",
+    "subtipo": "marcacao",
+    "ordem": 6,
+    "nivel": "difícil",
+    "exigeInteracao": false,
+    "componente": "Table",
+    "elemento": "div.br-table que envolve table.table da listagem de processos (light DOM)",
+    "estado": "inicial",
+    "conformeHoje": "A tabela está dentro de <div class=\"br-table\">.",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\pages\\portal-mpa\\processos\\processos.component.html",
+      "linha": "56",
+      "de": "<div class=\"br-table\">",
+      "para": "<div>",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": null,
+    "observavel": "Apenas no DOM: o contêiner da tabela não tem a classe br-table. Medido: nenhuma mudança visual (cabeçalho #f0f0f0, células 16px/24px continuam iguais), porque os estilos vêm de outras regras da página.",
+    "clausula": {
+      "arquivo": "componentes/table__desenvolvedor.md",
+      "trecho": "| class    | string | **br-table** | Container do componente |",
+      "secao": "Como usar > Propriedades obrigatórias",
+      "linhasNoArquivo": [
+        21
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Defeito invisível em captura de tela; só é detectável inspecionando a marcação. Se o critério de seleção exigir efeito visual, rebaixar ou descartar. Se T2-1/T3-1 também forem construídos com seletor .br-table, eles deixariam de pegar (ajustar o seletor para table.table).",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T2-1",
+    "tipo": "T2",
+    "ordem": 1,
+    "nivel": "médio",
+    "exigeInteracao": false,
+    "componente": "Table",
+    "elemento": ".br-table tbody td — células das linhas da tabela de processos (light DOM)",
+    "estado": "inicial",
+    "conformeHoje": "padding das células: 16px (top/bottom) e 24px (left/right) = densidade padrão (--spacing-scale-2x / --spacing-scale-3x).",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\pages\\portal-mpa\\processos\\processos.component.scss",
+      "linha": "após 3 (acrescentar)",
+      "de": "(nada)",
+      "para": ".br-table td {\n   padding-top: 10px;\n   padding-bottom: 10px;\n}",
+      "deConferidoNoFonte": "n/a (acréscimo)"
+    },
+    "valorDepois": "padding-top/bottom = 10px. Fora do sistema: a escala de espaçamento servida (:root) é 0, 4, 8, 12, 16, 20, 24, 28… px (--spacing-scale-half … --spacing-scale-10xh); 10px não é token, e não corresponde a nenhuma densidade da tabela (alta 8px, padrão 16px, baixa 24px).",
+    "observavel": "Linhas mais baixas (1ª linha 154→142 px) enquanto o cabeçalho mantém 16px; medir padding-top computado de qualquer td de tbody.",
+    "clausula": {
+      "arquivo": "componentes/table__designer.md",
+      "trecho": "| Linhas (Densidade Padrão)             | padding-top    |  `--spacing-scale-2x`  |",
+      "secao": "Especificações > Espaçamentos",
+      "linhasNoArquivo": [
+        423
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo. Encapsulamento emulado do Angular: o seletor vira .br-table[_ngcontent] td[_ngcontent] e vence a regra do DS (verificado com regra equivalente).",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T2-2",
+    "tipo": "T2",
+    "ordem": 2,
+    "nivel": "difícil",
+    "exigeInteracao": false,
+    "componente": "Avatar",
+    "elemento": "span.br-avatar > span.content — superfície do avatar letra \"U\" no cabeçalho (light DOM)",
+    "estado": "inicial",
+    "conformeHoje": "background-color rgb(255, 140, 0) = #ff8c00 (classe bg-orange-vivid-30; hex presente na paleta servida).",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\layout\\header\\header.component.html",
+      "linha": "7",
+      "de": "<span class=\"content bg-orange-vivid-30 text-pure-0\">",
+      "para": "<span class=\"content text-pure-0\" style=\"background-color: #f5871f\">",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": "rgb(245, 135, 31) = #f5871f. Fora do sistema: conferido contra os 491 tokens hexadecimais do :root servido (paleta-hex.json) — não corresponde a nenhum.",
+    "observavel": "Avatar com laranja levemente diferente; medir background-color de .br-avatar .content.",
+    "clausula": {
+      "arquivo": "componentes/avatar__designer.md",
+      "trecho": "A superfície, nos casos dos avatares icônico e letra, podem assumir quaisquer cores da paleta cromática do Design System sendo sugerida a utilização das cores de apoio.",
+      "secao": "Detalhamento dos Itens > ### 1. Superfície circular (Obrigatório)",
+      "linhasNoArquivo": [
+        46
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo. A classe utilitária é retirada porque utilitários de cor do DS podem usar !important. Reforço: fundamentos-visuais/cores.md, \"Interfaces digitais do governo devem utilizar sempre as cores pré-definidas.\"",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T2-3",
+    "tipo": "T2",
+    "ordem": 3,
+    "nivel": "difícil",
+    "exigeInteracao": false,
+    "componente": "Tipografia (H2 — título da página)",
+    "elemento": "pnip-mpa-processos h2 \"Processos\" (light DOM)",
+    "estado": "inicial",
+    "conformeHoje": "font-size 34.832px = --font-size-scale-up-05 (o tamanho previsto para H2).",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\pages\\portal-mpa\\processos\\processos.component.html",
+      "linha": "6",
+      "de": "<h2 class=\"text-bold text-blue-vivid-60 mt-0 mb-4 pb-0\">Processos</h2>",
+      "para": "<h2 class=\"text-bold text-blue-vivid-60 mt-0 mb-4 pb-0\" style=\"font-size: 2rem\">Processos</h2>",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": "font-size computado 32px. Fora do sistema: a escala tipográfica servida tem … 29.036, 34.832 … px; 32px não é degrau da escala.",
+    "observavel": "Título um pouco menor (altura 40→37 px); medir font-size do h2.",
+    "clausula": {
+      "arquivo": "fundamentos-visuais/tipografia.md",
+      "trecho": "| Size          | `--font-size-scale-up-05` |",
+      "secao": "Tabelas de Estilos > ### Título (H2)",
+      "linhasNoArquivo": [
+        184
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo. 2rem depende da fonte raiz 16px (medido: 32px). Atenção: peso (700) e cor (blue-vivid-60) do h2 já estão fora do H2 do DS hoje; o alvo é só o tamanho.",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T2-4",
+    "tipo": "T2",
+    "ordem": 4,
+    "nivel": "médio",
+    "exigeInteracao": false,
+    "componente": "Tag (de interação)",
+    "elemento": "span.br-tag.interaction.small \"Meus processos\" > span.text-truncate — label da tag (light DOM)",
+    "estado": "inicial (aba Tramitando, perfil não-Consulta)",
+    "conformeHoje": "label 16.8px (= --font-size-scale-up-01), peso 500 (medium); as tags de filtro logo abaixo também 16.8px.",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\pages\\portal-mpa\\processos\\processos.component.html",
+      "linha": "29",
+      "de": "<span class=\"text-truncate\">Meus processos</span>",
+      "para": "<span class=\"text-truncate\" style=\"font-size: 15px\">Meus processos</span>",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": "font-size 15px. Fora do sistema: não é degrau da escala tipográfica servida (14 / 16.8 / 20.16…).",
+    "observavel": "Texto de \"Meus processos\" menor que o das tags vizinhas; medir font-size do span.",
+    "clausula": {
+      "arquivo": "componentes/tag__designer.md",
+      "trecho": "| Label | size        | `--font-size-scale-up-01` |",
+      "secao": "Especificações > ### Tipografia [*Tag* de Interação]",
+      "linhasNoArquivo": [
+        357
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo.",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T2-5",
+    "tipo": "T2",
+    "ordem": 5,
+    "nivel": "difícil",
+    "exigeInteracao": false,
+    "componente": "Divider",
+    "elemento": "br-divider (size=\"medium\") logo abaixo do breadcrumb → shadow DOM span.br-divider.md",
+    "estado": "inicial",
+    "conformeHoje": "border-top 2px solid rgb(204, 204, 204) = #ccc = --gray-20.",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\pages\\portal-mpa\\processos\\processos.component.html",
+      "linha": "2",
+      "de": "<br-divider size=\"medium\" class=\"mt-0 mb-0\"></br-divider>",
+      "para": "<br-divider size=\"medium\" class=\"mt-0 mb-0\" style=\"--border-color: #d6d6d6\"></br-divider>",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": "border-top-color rgb(214, 214, 214) = #d6d6d6. Fora do sistema: não corresponde a nenhum token hexadecimal do :root servido (gray-10 = #e6e6e6, gray-20 = #ccc).",
+    "observavel": "Linha divisória levemente mais clara; medir border-top-color do .br-divider no shadow DOM de br-divider.",
+    "clausula": {
+      "arquivo": "componentes/divider__designer.md",
+      "trecho": "| *Divider* (fundo claro)  | background | `--gray-20` |",
+      "secao": "Especificações > ### Cor",
+      "linhasNoArquivo": [
+        128
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo; a custom property herda para o shadow DOM (verificado). Diferença visual muito sutil.",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T2-6",
+    "tipo": "T2",
+    "ordem": 6,
+    "nivel": "difícil",
+    "exigeInteracao": false,
+    "componente": "Header",
+    "elemento": "br-header → shadow DOM header.br-header — superfície do cabeçalho",
+    "estado": "inicial",
+    "conformeHoje": "box-shadow rgba(0,0,0,0.16) 0 1px 6px 0 = --surface-shadow-sm.",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\layout\\header\\header.component.scss",
+      "linha": "após 94 (acrescentar)",
+      "de": "(nada)",
+      "para": "br-header {\n   --surface-shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.3);\n}",
+      "deConferidoNoFonte": "n/a (acréscimo)"
+    },
+    "valorDepois": "box-shadow rgba(0,0,0,0.3) 0 2px 12px 0. Fora do sistema: offset 2px (tokens de offset: 0/1/3/6/9px), blur 12px (tokens: 0/1/3/6/9px) e opacidade 0.3 com preto não compõem nenhum token --surface-shadow-*.",
+    "observavel": "Sombra do cabeçalho mais escura e espalhada; medir box-shadow de header.br-header no shadow DOM.",
+    "clausula": {
+      "arquivo": "componentes/header__designer.md",
+      "trecho": "|     Superfície      | `--surface-shadow-sm` |",
+      "secao": "Especificações > ### Sombra",
+      "linhasNoArquivo": [
+        575
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Médio-baixo: redefinir um token dentro do escopo do componente é um padrão já usado neste código (styles.css redefine --disabled/--background-light em br-input[disabled]). Afeta só o que usa --surface-shadow-sm dentro de br-header.",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T3-1",
+    "tipo": "T3",
+    "ordem": 1,
+    "nivel": "difícil",
+    "exigeInteracao": false,
+    "componente": "Table",
+    "elemento": ".br-table thead th — células do cabeçalho da tabela (light DOM)",
+    "estado": "inicial",
+    "conformeHoje": "background-color rgb(240, 240, 240) = #f0f0f0 = --gray-5. (A cor do texto e o peso do cabeçalho já não seguem o DS hoje; o alvo é só o fundo.)",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\pages\\portal-mpa\\processos\\processos.component.scss",
+      "linha": "após 3 (acrescentar)",
+      "de": "(nada)",
+      "para": ".br-table thead th {\n   background-color: var(--gray-2);\n}",
+      "deConferidoNoFonte": "n/a (acréscimo)"
+    },
+    "valorDepois": "rgb(248, 248, 248) = #f8f8f8 = --gray-2: token do DS (cor de superfície alternativa), mas não o previsto para o Header da Tabela.",
+    "observavel": "Faixa do cabeçalho quase branca; medir background-color de qualquer th.",
+    "clausula": {
+      "arquivo": "componentes/table__designer.md",
+      "trecho": "| Header da Tabela                  | background | `--gray-5`             |",
+      "secao": "Especificações > ### Cores",
+      "linhasNoArquivo": [
+        382
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo. Contraste visual pequeno.",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T3-2",
+    "tipo": "T3",
+    "ordem": 2,
+    "nivel": "médio",
+    "exigeInteracao": false,
+    "componente": "Tag (de interação)",
+    "elemento": "span.br-tag.interaction.small \"Meus processos\" — superfície da tag (light DOM)",
+    "estado": "inicial",
+    "conformeHoje": "border-radius 4px = --surface-rounder-sm; as tags de filtro vizinhas também 4px.",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\pages\\portal-mpa\\processos\\processos.component.html",
+      "linha": "25",
+      "de": "<span class=\"br-tag interaction small\" (click)=\"toggleMeusProcessos()\"",
+      "para": "<span class=\"br-tag interaction small rounder-lg\" (click)=\"toggleMeusProcessos()\"",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": "border-radius 16px = --surface-rounder-lg (utilitário rounder-lg do próprio DS): valor do sistema, mas não o previsto para tag de interação.",
+    "observavel": "\"Meus processos\" com cantos bem arredondados (quase pílula, altura 32px) enquanto as tags vizinhas têm cantos de 4px.",
+    "clausula": {
+      "arquivo": "componentes/tag__designer.md",
+      "trecho": "| Superfície | top-left-bottom-right | `--surface-rounder-sm` |",
+      "secao": "Especificações > ### Arredondamento [*Tag* de Interação] (1ª ocorrência, linha 430)",
+      "linhasNoArquivo": [
+        430,
+        436
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo. O mesmo trecho literal aparece também em Arredondamento [Tag de Texto] (linha 436); citar a seção.",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T3-3",
+    "tipo": "T3",
+    "ordem": 3,
+    "nivel": "médio",
+    "exigeInteracao": false,
+    "componente": "Breadcrumb",
+    "elemento": "br-breadcrumb → shadow DOM li.crumb.home button.br-button i.fa-home — ícone do botão terciário Home",
+    "estado": "inicial",
+    "conformeHoje": "cor do ícone Home rgb(19, 81, 180) = #1351b4 = --blue-warm-vivid-70.",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\pages\\portal-mpa\\processos\\processos.component.html",
+      "linha": "1",
+      "de": "<br-breadcrumb [links]=\"breadcrumb\"></br-breadcrumb>",
+      "para": "<br-breadcrumb [links]=\"breadcrumb\" style=\"--interactive: var(--blue-vivid-60)\"></br-breadcrumb>",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": "rgb(0, 94, 162) = #005ea2 = --blue-vivid-60: token da paleta (o mesmo azul do título da página), mas não o previsto para o ícone Home.",
+    "observavel": "Ícone da casinha num azul diferente do dos demais elementos interativos (ex.: botão Exportar); medir color do i.fa-home no shadow DOM.",
+    "clausula": {
+      "arquivo": "componentes/breadcrumb__designer.md",
+      "trecho": "| Botão Terciário Home     | icon       | `--blue-warm-vivid-70` |",
+      "secao": "Especificações > ### Cor",
+      "linhasNoArquivo": [
+        157
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo. A custom property herda para o shadow DOM (verificado). O overlay de hover usa --interactive-rgb, que não muda.",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T3-4",
+    "tipo": "T3",
+    "ordem": 4,
+    "nivel": "difícil",
+    "exigeInteracao": false,
+    "componente": "Tab",
+    "elemento": "br-tab → shadow DOM .tab-item button / span.name — rótulos das abas \"Aguardando análise\", \"Tramitando\", \"Concluídos\"",
+    "estado": "inicial",
+    "conformeHoje": "font-size 20.16px (= --font-size-scale-up-02), peso 500 nos três rótulos.",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\pages\\portal-mpa\\processos\\processos.component.html",
+      "linha": "13",
+      "de": "<br-tab (onTabItemClick)=\"onTabItemClick($event)\">",
+      "para": "<br-tab style=\"--font-size-scale-up-02: var(--font-size-scale-up-01)\" (onTabItemClick)=\"onTabItemClick($event)\">",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": "font-size 16.8px = --font-size-scale-up-01: degrau da escala do DS, mas não o previsto para o rótulo da Tab.",
+    "observavel": "Abas com texto menor (do tamanho do texto dos botões); medir font-size dos botões .tab-item no shadow DOM.",
+    "clausula": {
+      "arquivo": "componentes/tab__designer.md",
+      "trecho": "| Rótulo da *Tab*       | `--font-size-scale-up-02` | `--font-weight-medium`    |",
+      "secao": "Especificações > ### Tipografia",
+      "linhasNoArquivo": [
+        223
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo; verificado. Redefine o token só dentro de br-tab.",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T3-5",
+    "tipo": "T3",
+    "ordem": 5,
+    "nivel": "muito difícil",
+    "exigeInteracao": true,
+    "componente": "Select (lista suspensa)",
+    "elemento": "govbr-custom-pagination br-select-pnip .br-select > div.br-list — lista suspensa dos selects \"Exibir\" e \"Página\" da paginação (light DOM)",
+    "estado": "Rolar até a paginação → clicar no campo \"Exibir\" (ou \"Página\") para abrir a lista.",
+    "conformeHoje": "box-shadow da lista aberta rgba(0,0,0,0.16) 0 3px 6px 0 = --surface-shadow-md.",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\shared\\br-select\\br-select.component.html",
+      "linha": "10",
+      "de": "<div class=\"br-list\" tabindex=\"0\" (keydown.enter)=\"onEnterKeyPress($event)\">",
+      "para": "<div class=\"br-list\" tabindex=\"0\" style=\"box-shadow: var(--surface-shadow-lg)\" (keydown.enter)=\"onEnterKeyPress($event)\">",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": "rgba(0,0,0,0.16) 0 6px 6px 0 = --surface-shadow-lg: sombra do sistema, mas não a prevista para a superfície do select.",
+    "observavel": "Com a lista aberta, sombra mais deslocada para baixo; medir box-shadow de .br-select .br-list.",
+    "clausula": {
+      "arquivo": "componentes/select__designer.md",
+      "trecho": "| Superfície | `--surface-shadow-md` |",
+      "secao": "Especificações > ### Sombra",
+      "linhasNoArquivo": [
+        363
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Médio-baixo. A classe utilitária shadow-lg NÃO funciona aqui (a regra .br-select .br-list vence) — por isso estilo inline. Se o JS do BRSelect reescrever o atributo style da lista ao abrir/fechar, a sombra se perde (não observado no teste: a lista abre por classe). Afeta os dois selects da paginação (mesmo componente).",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T3-6",
+    "tipo": "T3",
+    "ordem": 6,
+    "nivel": "difícil",
+    "exigeInteracao": false,
+    "componente": "Input (ação interna)",
+    "elemento": "pnip-search-table-utils .br-input > button.br-button[aria-label=\"Buscar\"] — botão circular de lupa dentro do campo \"Pesquise aqui ...\" (light DOM)",
+    "estado": "inicial (campo de busca vazio; com texto o botão vira \"Limpar\")",
+    "conformeHoje": "botão 32×32 px (= --button-small, densidade alta), campo 32px.",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\utils\\components\\search-table.utils.ts",
+      "linha": "17-18",
+      "de": "<button \n   class=\"br-button\" ",
+      "para": "<button \n   class=\"br-button\" \n   style=\"--button-size: var(--button-medium)\" ",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": "botão 40×40 px = --button-medium (densidade padrão do Button): tamanho do sistema, mas a ação interna do input deve ser de densidade alta.",
+    "observavel": "Lupa num círculo maior que a altura do campo (40 px num campo de 32 px); medir width/height do botão.",
+    "clausula": {
+      "arquivo": "componentes/input__designer.md",
+      "trecho": "Por padrão é utilizado um *Button* de enfase terciária do tipo circular sempre com densidade alta, e o ícone deve representar a ação a ser realizada na interação.",
+      "secao": "Detalhamento dos itens > ### 4. Ação interna (Opcional)",
+      "linhasNoArquivo": [
+        86
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Médio-baixo. A classe large do DS NÃO funciona aqui (a regra .br-input .br-button fixa --button-size), por isso a custom property inline. Diferença visual discreta (o círculo do terciário é transparente). O botão \"Limpar\" (linhas 26-33) fica como está.",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T4-1",
+    "tipo": "T4",
+    "ordem": 1,
+    "nivel": "difícil",
+    "exigeInteracao": false,
+    "componente": "Button (estado desabilitado)",
+    "elemento": "br-button[disabled][title^=\"Desassociar\"] na coluna de ações da tabela (ícone vermelho user-times) → host + shadow DOM button.br-button",
+    "estado": "inicial (aba Tramitando, perfil Coordenador: 8 botões \"Desassociar\" desabilitados nas linhas cujo status não é \"Em análise analista\")",
+    "conformeHoje": "opacity 0.45 (= --surface-opacity-md) e cursor not-allowed; o \"Desassociar\" habilitado da 1ª linha tem opacity 1.",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\pages\\portal-mpa\\processos\\processos.component.scss",
+      "linha": "após 3 (acrescentar)",
+      "de": "(nada)",
+      "para": "br-button[disabled] {\n   --disabled: 1;\n}",
+      "deConferidoNoFonte": "n/a (acréscimo)"
+    },
+    "valorDepois": "opacity 1 nos botões desabilitados (o cursor continua not-allowed): o estado desabilitado deixa de ter tratamento visual.",
+    "observavel": "Os ícones \"Desassociar\" desabilitados ficam iguais ao habilitado (vermelho cheio); medir opacity do host/botão interno de br-button[disabled].",
+    "clausula": {
+      "arquivo": "fundamentos-visuais/estados.md",
+      "trecho": "| background/foreground | opacity  | `--surface-opacity-md`  |",
+      "secao": "## Desabilitado > ### Especificação para Estado Desabilitado",
+      "linhasNoArquivo": [
+        234
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo. Escopo do componente: atinge todos os br-button desabilitados do template de processos (inclui \"Assumir\" desabilitado na aba Aguardando análise), não o \"Limpar filtros\" (outro componente). Padrão realista: styles.css já faz o mesmo com br-input[disabled] { --disabled: 0.9 }. O mesmo trecho literal aparece só uma vez (linha 234).",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T4-2",
+    "tipo": "T4",
+    "ordem": 2,
+    "nivel": "médio",
+    "exigeInteracao": false,
+    "componente": "Tab (estado ativo)",
+    "elemento": "br-tab > br-tab-item#TRAMITANDO (e o shadow DOM li.tab-item.active de br-tab)",
+    "estado": "inicial",
+    "conformeHoje": "O item ativo é \"Tramitando\" (cor #0c326f + borda inferior 4px), que corresponde ao conteúdo exibido (colunas Analista/Téc. Adm., tag \"Meus processos\").",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\pages\\portal-mpa\\processos\\processos.component.html",
+      "linha": "15",
+      "de": "<br-tab-item id=\"TRAMITANDO\" title=\"Tramitando\" is-active=\"true\"/>",
+      "para": "<br-tab-item id=\"TRAMITANDO\" title=\"Tramitando\"/>",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": null,
+    "observavel": "Sem item marcado, o componente ativa o 1º: \"Aguardando análise\" aparece ativo, mas a lista continua sendo a de Tramitando (status inicial do componente = TRAMITANDO). Medir qual li.tab-item tem .active e comparar com o conteúdo.",
+    "clausula": {
+      "arquivo": "componentes/tab__designer.md",
+      "trecho": "A - O Item da *Tab* Ativo tem a finalidade de mostrar ao usuário em qual aba ele se encontra.",
+      "secao": "Detalhamento dos Itens > #### 1. Item da *Tab* (Obrigatório)",
+      "linhasNoArquivo": [
+        56
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Médio-baixo. Verificado com um <br-tab> sintético: sem is-active o 1º item fica ativo e nenhum onTabItemClick é emitido na carga; clicar no item já ativo emite o evento (a navegação entre abas continua funcionando). Âncora complementar na mesma seção: \"É importante ressaltar que este elemento possui dois estados obrigatórios, o ativo e o interativo.\"",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T4-3",
+    "tipo": "T4",
+    "ordem": 3,
+    "nivel": "muito difícil",
+    "exigeInteracao": true,
+    "componente": "Button (estado hover)",
+    "elemento": "br-button \"Voltar\" (secundário, rodapé da página) → shadow DOM button.br-button.secondary",
+    "estado": "Rolar até o fim da página → passar o mouse sobre \"Voltar\".",
+    "conformeHoje": "Em hover: background-image linear-gradient(rgba(19,81,180,0.16)…) — overlay da cor do primeiro plano com --surface-opacity-xs; cursor pointer.",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\pages\\portal-mpa\\processos\\processos.component.html",
+      "linha": "165",
+      "de": "<br-button label=\"Voltar\" type=\"secondary\" (click)=\"voltar()\"/>",
+      "para": "<br-button label=\"Voltar\" type=\"secondary\" style=\"--hover: 0\" (click)=\"voltar()\"/>",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": "Overlay com opacidade 0 (rgba(19,81,180,0)): o hover deixa de ter feedback visual (o cursor continua pointer).",
+    "observavel": "Ao passar o mouse, \"Voltar\" não muda, enquanto \"Exportar\" (mesmo tipo) escurece levemente; medir background-image do botão interno em hover.",
+    "clausula": {
+      "arquivo": "fundamentos-visuais/estados.md",
+      "trecho": "| background (Sobre um fundo Claro)  | opacity  | `--surface-opacity-xs` |",
+      "secao": "## *Hover* > ### Especificação para Estado *Hover*",
+      "linhasNoArquivo": [
+        263
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo; verificado.",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T4-4",
+    "tipo": "T4",
+    "ordem": 4,
+    "nivel": "muito difícil",
+    "exigeInteracao": true,
+    "componente": "Input (estado foco)",
+    "elemento": "pnip-search-table-utils br-input#search → shadow DOM input — campo \"Pesquise aqui ...\"",
+    "estado": "Clicar no campo de busca (ou chegar a ele por Tab).",
+    "conformeHoje": "Em foco: borda rgb(194,133,12) e box-shadow 0 0 0 2px rgb(194,133,12) = --gold-vivid-40 (foco tênue: --surface-width-md, solid).",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\utils\\components\\search-table.utils.ts",
+      "linha": "9",
+      "de": "<br-input ",
+      "para": "<br-input \n   style=\"--focus: var(--blue-warm-vivid-70)\"",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": "Em foco: borda e anel rgb(19,81,180) = --blue-warm-vivid-70 (a cor interativa), não a cor de foco.",
+    "observavel": "Ao focar, o contorno do campo fica azul em vez de dourado, diferente do foco dos outros elementos (ex.: botões e abas por teclado); medir border-color/box-shadow do input focado.",
+    "clausula": {
+      "arquivo": "fundamentos-visuais/estados.md",
+      "trecho": "| border (Sobre um fundo Claro)  | color    | `--gold-vivid-40` |",
+      "secao": "## Foco > ### Especificação para Foco",
+      "linhasNoArquivo": [
+        338
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo; verificado. Âncora complementar: input__designer.md, \"Nesse estado a borda do campo assume cor e espessura diferenciadas\". Pode ser lido por um auditor como questão de acessibilidade de foco; a regra violada é a cor de foco do DS.",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T4-5",
+    "tipo": "T4",
+    "ordem": 5,
+    "nivel": "muito difícil",
+    "exigeInteracao": true,
+    "componente": "Select / List (estado hover do item)",
+    "elemento": "govbr-custom-pagination br-select-pnip .br-select .br-list > div.br-item — itens das listas \"Exibir\"/\"Página\" (light DOM)",
+    "estado": "Rolar até a paginação → abrir \"Exibir\" → passar o mouse sobre um item não selecionado (ex.: \"25\").",
+    "conformeHoje": "Item em hover: background-image linear-gradient(rgba(51,51,51,0.16)…) (overlay gray-80 com --surface-opacity-xs).",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\app\\shared\\br-select\\br-select.component.html",
+      "linha": "18-20",
+      "de": "<div class=\"br-item\" [class.selected]=\"optionSelected &&",
+      "para": "<div class=\"br-item\" style=\"--hover: 0\" [class.selected]=\"optionSelected &&",
+      "deConferidoNoFonte": true
+    },
+    "valorDepois": "Overlay com opacidade 0: o item sob o mouse não muda.",
+    "observavel": "Com a lista aberta, mover o mouse pelos itens não produz realce (nas listas de filtro, que usam a mesma estrutura, o realce continua); medir background-image do .br-item em hover.",
+    "clausula": {
+      "arquivo": "componentes/select__designer.md",
+      "trecho": "O estado *hover* ocorre sobre o item da *list* quando o usuário direcionar o *mouse* sobre ele.",
+      "secao": "Comportamentos > ### 4. Estados > #### Estado *Hover*",
+      "linhasNoArquivo": [
+        221
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo; verificado com --hover:0 no item (a regra .br-select .br-item redefine --hover, por isso a propriedade precisa ficar no próprio item). Afeta os dois selects da paginação.",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  },
+  {
+    "id": "T4-6",
+    "tipo": "T4",
+    "ordem": 6,
+    "nivel": "muito difícil",
+    "exigeInteracao": true,
+    "componente": "Select / Item (estado selecionado)",
+    "elemento": ".br-select .br-list .br-item.selected — item já escolhido (\"10\") na lista \"Exibir\" da paginação (light DOM)",
+    "estado": "Rolar até a paginação → abrir \"Exibir\".",
+    "conformeHoje": "Item \"10\" com .selected: background rgb(38,112,232) = #2670e8 = --blue-warm-vivid-50, texto branco.",
+    "mudanca": {
+      "arquivo": "F:\\Dev Nath\\TCC\\pnip-mock\\src\\styles.css",
+      "linha": "após 193 (acrescentar)",
+      "de": "(nada)",
+      "para": ".br-select .br-list .br-item.selected {\n   background-color: transparent;\n   color: inherit;\n}",
+      "deConferidoNoFonte": "n/a (acréscimo)"
+    },
+    "valorDepois": "Item selecionado com fundo transparente e texto rgb(51,51,51): indistinguível dos demais.",
+    "observavel": "Ao abrir a lista, nenhum item aparece destacado embora o campo mostre 10; medir background-color do .br-item.selected.",
+    "clausula": {
+      "arquivo": "fundamentos-visuais/estados.md",
+      "trecho": "| background/foreground | color    | `--blue-warm-vivid-50` |",
+      "secao": "## Selecionado > ### Especificação para Estado Selecionado",
+      "linhasNoArquivo": [
+        430
+      ],
+      "conferidoLiteral": true
+    },
+    "risco": "Baixo (só CSS; a classe .selected e o valor continuam). Por ser global, alcança qualquer .br-select da aplicação — nesta rota, só os da paginação têm .selected. Âncora complementar: select__designer.md, \"O estado selecionado ocorre quando algum(ns) item(ns) da *list* estiver(em) selecionado(s).\" Alternativa descartada: remover o binding [class.selected] (risco de o BRSelect não preencher o campo).",
+    "evidencia": "verificacao/verificacao.json (antes/depois medidos com Playwright headless 1280×900; recortes verificacao/<id>-antes.png e -depois.png)"
+  }
+]

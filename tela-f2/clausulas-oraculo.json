@@ -1,0 +1,535 @@
+{
+ "_meta": {
+  "regra": "adendo 2 § 4 item 4 (id na base: registro, não filtro); procedimento no cabeçalho de tela-f2/mapear-clausulas-oraculo.mjs",
+  "validador": {
+   "dir": "F:/Dev Nath/TCC/.tmp-eval/validator-3712r",
+   "commit": "816f4bae41f4486b7055f0ac265167e87ce0d5e5",
+   "baseAtiva": "3.7.0-literal-2026-10-15",
+   "ruleFiles": {
+    "normalized/rules.jsonl": "ca8f428a52063ac8c208cca96432a40c84af8e75b4742744367a47717f9f28b8",
+    "normalized/carried-over.jsonl": "16e0a764e4a0f05b3f116df83f1400598a95173f5dec34f775c0a9b843cade19"
+   },
+   "registros": 5490,
+   "camposLidos": [
+    "id",
+    "originalText",
+    "source.corpusFile",
+    "source.charRange"
+   ],
+   "somenteLeitura": "leitura de arquivos; nenhum build ou execução"
+  },
+  "arquivosDoCorpus": {
+   "componentes/pagination__designer.md": "73c81987c388272bf34dea74891eca99515bace33357b182be9cb05125f97b19",
+   "componentes/avatar__desenvolvedor.md": "2e168f8a692facc91451272b87905a26ac236ad02db80eee9431ac9acad98550",
+   "componentes/button__designer.md": "97ffa84ac951fa1409ee30c897e14040cc3301342cd92ea5763bfa6feb66b673",
+   "componentes/button__desenvolvedor.md": "77ab64f20614ad2c5dbefdbc610c2eaa1742e065c79d9d05b13e16a55e27a72b",
+   "componentes/table__designer.md": "7c7deb5e54314d5c0a045d7a67aeb8b0a6becd0932a559bd620bd4ba6452c82e",
+   "componentes/avatar__designer.md": "e934668acff74f8d756aefc418f8526864e7a70c896d3b967dfeb1e8f7b87c9e",
+   "fundamentos-visuais/tipografia.md": "a70534fbcf5f37a9839a467bb9cd0d1a4a9b8b536689e31b908be8a27c941205",
+   "componentes/tag__designer.md": "217ff4ad33cdec95444daa29fd88ebb1b3cb9083e67b263056c3213e8e726c8f",
+   "componentes/divider__designer.md": "82caae48ffd999681d81220b9c4f6215583e9fc63b767a0a064edc21a939ad89",
+   "componentes/header__designer.md": "e082dd73232f3b984dd2b0d1109587dd4460f8bfc7cdb50e8959fad1bb996ad6",
+   "componentes/breadcrumb__designer.md": "15261207eda6ad3b09cc039d7c125ebcd2b184edd0b10c78f006fd549399cace",
+   "componentes/tab__designer.md": "5082c03fa21e00b4c4f73c6f55db3e066eb78c9489bc14a8e9c01c6ccc3c8832",
+   "componentes/select__designer.md": "015496bfba8116ccabbcd07cc102996eb647824e126b7199256959592f12f8bf",
+   "componentes/input__designer.md": "53a723f27af14da6f8a27bdda81d44fe6f95fee309a9661773c215391a1b4f7e",
+   "fundamentos-visuais/estados.md": "4a60fd28e435b743db2380436eb7246cedbe3071ae85e7cae4752aceba39ecc2"
+  }
+ },
+ "porCandidato": {
+  "T1-1": {
+   "arquivo": "componentes/pagination__designer.md",
+   "trechoLiteral": "Constituem um *Botão* para esquerda e outro para direita. A cada clique, o usuário poderá navegar página por página de forma crescente ou decrescente (direita / esquerda).",
+   "partes": [
+    {
+     "parte": "Constituem um Botão para esquerda e outro para direita. A cada clique, o usuário poderá navegar página por página de forma crescente ou decrescente (direita / esquerda).",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 49,
+     "faixaNoArquivo": [
+      1960,
+      2131
+     ],
+     "ids": [
+      "govbr-3.7.0-component-pagination-4323d08f3e2d",
+      "govbr-3.7.0-component-pagination-0a0e2ad9474e"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-pagination-4323d08f3e2d",
+    "govbr-3.7.0-component-pagination-0a0e2ad9474e"
+   ],
+   "semIdMapeado": false
+  },
+  "T1-2": {
+   "arquivo": "componentes/avatar__desenvolvedor.md",
+   "trechoLiteral": "| class    | string | **content**   | Aplicado no conteúdo interno. Pode conter imagem, ícone ou letra. |",
+   "partes": [
+    {
+     "parte": "| class | string | content | Aplicado no conteúdo interno. Pode conter imagem, ícone ou letra. |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 22,
+     "faixaNoArquivo": [
+      860,
+      965
+     ],
+     "ids": [
+      "govbr-3.7.0-development-avatar-23d40d3d6ea4"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-development-avatar-23d40d3d6ea4"
+   ],
+   "semIdMapeado": false
+  },
+  "T1-4": {
+   "arquivo": "componentes/button__designer.md",
+   "trechoLiteral": "O rótulo é um elemento obrigatório. A exceção ocorre na versão tipo circular uma vez que não existe rótulo.",
+   "partes": [
+    {
+     "parte": "O rótulo é um elemento obrigatório. A exceção ocorre na versão tipo circular uma vez que não existe rótulo.",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 62,
+     "faixaNoArquivo": [
+      2517,
+      2624
+     ],
+     "ids": [
+      "govbr-3.7.0-component-button-7ef75d42ac65",
+      "govbr-3.7.0-component-button-4f33506c98ed"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-button-7ef75d42ac65",
+    "govbr-3.7.0-component-button-4f33506c98ed"
+   ],
+   "semIdMapeado": false
+  },
+  "T1-5": {
+   "arquivo": "componentes/button__desenvolvedor.md",
+   "trechoLiteral": "| class    | string | **br-button** | Container do componente. |",
+   "partes": [
+    {
+     "parte": "| class | string | br-button | Container do componente. |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 21,
+     "faixaNoArquivo": [
+      614,
+      678
+     ],
+     "ids": [
+      "govbr-3.7.0-development-button-b77ff20ad216"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-development-button-b77ff20ad216"
+   ],
+   "semIdMapeado": false
+  },
+  "T2-1": {
+   "arquivo": "componentes/table__designer.md",
+   "trechoLiteral": "| Linhas (Densidade Padrão)             | padding-top    |  `--spacing-scale-2x`  |",
+   "partes": [
+    {
+     "parte": "| Linhas (Densidade Padrão) | padding-top | --spacing-scale-2x |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 423,
+     "faixaNoArquivo": [
+      22707,
+      22790
+     ],
+     "ids": [
+      "govbr-3.7.0-component-table-d08c9e4951e5"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-table-d08c9e4951e5"
+   ],
+   "semIdMapeado": false
+  },
+  "T2-2": {
+   "arquivo": "componentes/avatar__designer.md",
+   "trechoLiteral": "A superfície, nos casos dos avatares icônico e letra, podem assumir quaisquer cores da paleta cromática do Design System sendo sugerida a utilização das cores de apoio.",
+   "partes": [
+    {
+     "parte": "A superfície, nos casos dos avatares icônico e letra, podem assumir quaisquer cores da paleta cromática do Design System sendo sugerida a utilização das cores de apoio.",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 46,
+     "faixaNoArquivo": [
+      1719,
+      1887
+     ],
+     "ids": [
+      "govbr-3.7.0-component-avatar-cca6047762e0",
+      "govbr-3.7.0-component-avatar-5df7511f025d"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-avatar-cca6047762e0",
+    "govbr-3.7.0-component-avatar-5df7511f025d"
+   ],
+   "semIdMapeado": false
+  },
+  "T2-3": {
+   "arquivo": "fundamentos-visuais/tipografia.md",
+   "trechoLiteral": "| Size          | `--font-size-scale-up-05` |",
+   "partes": [
+    {
+     "parte": "| Size | --font-size-scale-up-05 |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 184,
+     "faixaNoArquivo": [
+      10270,
+      10315
+     ],
+     "ids": [],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [],
+   "semIdMapeado": true
+  },
+  "T2-4": {
+   "arquivo": "componentes/tag__designer.md",
+   "trechoLiteral": "| Label | size        | `--font-size-scale-up-01` |",
+   "partes": [
+    {
+     "parte": "| Label | size | --font-size-scale-up-01 |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 357,
+     "faixaNoArquivo": [
+      17742,
+      17793
+     ],
+     "ids": [
+      "govbr-3.7.0-component-tag-4daf30055f40"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-tag-4daf30055f40"
+   ],
+   "semIdMapeado": false
+  },
+  "T2-5": {
+   "arquivo": "componentes/divider__designer.md",
+   "trechoLiteral": "| *Divider* (fundo claro)  | background | `--gray-20` |",
+   "partes": [
+    {
+     "parte": "| Divider (fundo claro) | background | --gray-20 |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 128,
+     "faixaNoArquivo": [
+      5017,
+      5072
+     ],
+     "ids": [
+      "govbr-3.7.0-component-divider-a199ae1e328c"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-divider-a199ae1e328c"
+   ],
+   "semIdMapeado": false
+  },
+  "T2-6": {
+   "arquivo": "componentes/header__designer.md",
+   "trechoLiteral": "|     Superfície      | `--surface-shadow-sm` |",
+   "partes": [
+    {
+     "parte": "| Superfície | --surface-shadow-sm |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 575,
+     "faixaNoArquivo": [
+      30530,
+      30577
+     ],
+     "ids": [
+      "govbr-3.7.0-component-header-549ba16b09f4"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-header-549ba16b09f4"
+   ],
+   "semIdMapeado": false
+  },
+  "T3-1": {
+   "arquivo": "componentes/table__designer.md",
+   "trechoLiteral": "| Header da Tabela                  | background | `--gray-5`             |",
+   "partes": [
+    {
+     "parte": "| Header da Tabela | background | --gray-5 |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 382,
+     "faixaNoArquivo": [
+      19992,
+      20067
+     ],
+     "ids": [
+      "govbr-3.7.0-component-table-559426cdec19"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-table-559426cdec19"
+   ],
+   "semIdMapeado": false
+  },
+  "T3-2": {
+   "arquivo": "componentes/tag__designer.md",
+   "trechoLiteral": "| Superfície | top-left-bottom-right | `--surface-rounder-sm` |",
+   "partes": [
+    {
+     "parte": "| Superfície | top-left-bottom-right | --surface-rounder-sm |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 2,
+     "linhaNoArquivo": 430,
+     "faixaNoArquivo": [
+      20695,
+      20758
+     ],
+     "ids": [
+      "govbr-3.7.0-component-tag-6e456d98e420"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-tag-6e456d98e420"
+   ],
+   "semIdMapeado": false
+  },
+  "T3-3": {
+   "arquivo": "componentes/breadcrumb__designer.md",
+   "trechoLiteral": "| Botão Terciário Home     | icon       | `--blue-warm-vivid-70` |",
+   "partes": [
+    {
+     "parte": "| Botão Terciário Home | icon | --blue-warm-vivid-70 |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 157,
+     "faixaNoArquivo": [
+      9822,
+      9888
+     ],
+     "ids": [
+      "govbr-3.7.0-component-breadcrumb-7c8bed7156ec"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-breadcrumb-7c8bed7156ec"
+   ],
+   "semIdMapeado": false
+  },
+  "T3-4": {
+   "arquivo": "componentes/tab__designer.md",
+   "trechoLiteral": "| Rótulo da *Tab*       | `--font-size-scale-up-02` | `--font-weight-medium`    |",
+   "partes": [
+    {
+     "parte": "| Rótulo da Tab | --font-size-scale-up-02 | --font-weight-medium |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 223,
+     "faixaNoArquivo": [
+      10638,
+      10719
+     ],
+     "ids": [
+      "govbr-3.7.0-component-tab-b717690fd662"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-tab-b717690fd662"
+   ],
+   "semIdMapeado": false
+  },
+  "T3-5": {
+   "arquivo": "componentes/select__designer.md",
+   "trechoLiteral": "| Superfície | `--surface-shadow-md` |",
+   "partes": [
+    {
+     "parte": "| Superfície | --surface-shadow-md |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 363,
+     "faixaNoArquivo": [
+      18150,
+      18188
+     ],
+     "ids": [
+      "govbr-3.7.0-component-select-bc89a8785c08"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-select-bc89a8785c08"
+   ],
+   "semIdMapeado": false
+  },
+  "T3-6": {
+   "arquivo": "componentes/input__designer.md",
+   "trechoLiteral": "Por padrão é utilizado um *Button* de enfase terciária do tipo circular sempre com densidade alta, e o ícone deve representar a ação a ser realizada na interação.",
+   "partes": [
+    {
+     "parte": "Por padrão é utilizado um Button de enfase terciária do tipo circular sempre com densidade alta, e o ícone deve representar a ação a ser realizada na interação.",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 86,
+     "faixaNoArquivo": [
+      4354,
+      4516
+     ],
+     "ids": [
+      "govbr-3.7.0-component-input-1aec5265dab8"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-input-1aec5265dab8"
+   ],
+   "semIdMapeado": false
+  },
+  "T4-1": {
+   "arquivo": "fundamentos-visuais/estados.md",
+   "trechoLiteral": "| background/foreground | opacity  | `--surface-opacity-md`  |",
+   "partes": [
+    {
+     "parte": "| background/foreground | opacity | --surface-opacity-md |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 234,
+     "faixaNoArquivo": [
+      14733,
+      14795
+     ],
+     "ids": [],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [],
+   "semIdMapeado": true
+  },
+  "T4-2": {
+   "arquivo": "componentes/tab__designer.md",
+   "trechoLiteral": "A - O Item da *Tab* Ativo tem a finalidade de mostrar ao usuário em qual aba ele se encontra.",
+   "partes": [
+    {
+     "parte": "A - O Item da Tab Ativo tem a finalidade de mostrar ao usuário em qual aba ele se encontra.",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 56,
+     "faixaNoArquivo": [
+      2136,
+      2229
+     ],
+     "ids": [
+      "govbr-3.7.0-component-tab-50ac44341161"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-tab-50ac44341161"
+   ],
+   "semIdMapeado": false
+  },
+  "T4-3": {
+   "arquivo": "fundamentos-visuais/estados.md",
+   "trechoLiteral": "| background (Sobre um fundo Claro)  | opacity  | `--surface-opacity-xs` |",
+   "partes": [
+    {
+     "parte": "| background (Sobre um fundo Claro) | opacity | --surface-opacity-xs |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 263,
+     "faixaNoArquivo": [
+      16449,
+      16523
+     ],
+     "ids": [],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [],
+   "semIdMapeado": true
+  },
+  "T4-4": {
+   "arquivo": "fundamentos-visuais/estados.md",
+   "trechoLiteral": "| border (Sobre um fundo Claro)  | color    | `--gold-vivid-40` |",
+   "partes": [
+    {
+     "parte": "| border (Sobre um fundo Claro) | color | --gold-vivid-40 |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 338,
+     "faixaNoArquivo": [
+      21135,
+      21200
+     ],
+     "ids": [],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [],
+   "semIdMapeado": true
+  },
+  "T4-5": {
+   "arquivo": "componentes/select__designer.md",
+   "trechoLiteral": "O estado *hover* ocorre sobre o item da *list* quando o usuário direcionar o *mouse* sobre ele.",
+   "partes": [
+    {
+     "parte": "O estado hover ocorre sobre o item da list quando o usuário direcionar o mouse sobre ele.",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "linhaNoArquivo": 221,
+     "faixaNoArquivo": [
+      10102,
+      10197
+     ],
+     "ids": [
+      "govbr-3.7.0-component-select-4a1c354b2277"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-select-4a1c354b2277"
+   ],
+   "semIdMapeado": false
+  }
+ }
+}

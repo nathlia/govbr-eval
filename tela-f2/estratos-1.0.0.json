@@ -1,0 +1,95 @@
+{
+  "formato": "tela-f2-estratos-1.0.0",
+  "referencia": {
+    "arquivo": "ground-truth-processos-f2.json",
+    "versao": "1.0.0",
+    "sha256": "PENDENTE-fase-2"
+  },
+  "tipos": [
+    {
+      "id": "T1",
+      "rotulo": "Estrutura",
+      "subtipos": [
+        "anatomia",
+        "marcacao"
+      ]
+    },
+    {
+      "id": "T2",
+      "rotulo": "Valor fora do sistema"
+    },
+    {
+      "id": "T3",
+      "rotulo": "Valor do sistema no lugar errado"
+    },
+    {
+      "id": "T4",
+      "rotulo": "Estado e comportamento"
+    }
+  ],
+  "specs": {
+    "F2-01": {
+      "tipo": "T1",
+      "subtipo": "anatomia",
+      "nivel": "medio",
+      "exigeInteracao": false
+    },
+    "F2-02": {
+      "tipo": "T1",
+      "subtipo": "marcacao",
+      "nivel": "facil",
+      "exigeInteracao": false
+    },
+    "F2-03": {
+      "tipo": "T1",
+      "subtipo": "marcacao",
+      "nivel": "facil",
+      "exigeInteracao": true
+    },
+    "F2-04": {
+      "tipo": "T2",
+      "nivel": "dificil",
+      "exigeInteracao": false
+    },
+    "F2-05": {
+      "tipo": "T2",
+      "nivel": "medio",
+      "exigeInteracao": false
+    },
+    "F2-06": {
+      "tipo": "T2",
+      "nivel": "dificil",
+      "exigeInteracao": false
+    },
+    "F2-07": {
+      "tipo": "T3",
+      "nivel": "medio",
+      "exigeInteracao": false
+    },
+    "F2-08": {
+      "tipo": "T3",
+      "nivel": "dificil",
+      "exigeInteracao": false
+    },
+    "F2-09": {
+      "tipo": "T3",
+      "nivel": "muito-dificil",
+      "exigeInteracao": true
+    },
+    "F2-10": {
+      "tipo": "T4",
+      "nivel": "dificil",
+      "exigeInteracao": false
+    },
+    "F2-11": {
+      "tipo": "T4",
+      "nivel": "medio",
+      "exigeInteracao": false
+    },
+    "F2-12": {
+      "tipo": "T4",
+      "nivel": "muito-dificil",
+      "exigeInteracao": true
+    }
+  }
+}

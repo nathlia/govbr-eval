@@ -1,0 +1,1350 @@
+{
+ "_meta": {
+  "regra": "adendo-2-tela-f2-protocolo-2026-11-26.md § 4 itens 3–4 (com o adendo da F § 4 item 3); nível oficial = o menor entre seletor e conferente (orquestrador); juízos e cálculo em tela-f2/filtros.mjs",
+  "insumos": {
+   "candidatos": {
+    "arquivo": "tela-f2/selecao/candidatos.json",
+    "sha256": "b0b0265c11e0579b55ab63a290f1a14ce5bdfdae03b2987d5e11419f1bd59620",
+    "origem": ".tmp-eval/tela-f2-selada/selecao/candidatos.json (cópia byte a byte)"
+   },
+   "veredictos": {
+    "arquivo": "tela-f2/conferencia/veredictos.json",
+    "sha256": "ece2f3f988993614152f35e1e7e2274888b7073cad105919cd9833d88e592986",
+    "origem": ".tmp-eval/tela-f2-selada/conferencia/veredictos.json (cópia byte a byte)"
+   },
+   "conferirFonte": {
+    "arquivo": "tela-f2/conferir-fonte.json",
+    "sha256": "b2504095830c2a7d7620f5969100b1499afd930ec58a81a2606af26467d8a063"
+   },
+   "clausulasOraculo": {
+    "arquivo": "tela-f2/clausulas-oraculo.json",
+    "sha256": "429265a1364fe485c888c792c5fe0117c5e9eade62e06e3bcbf076b386489532",
+    "uso": "registro (d) e (c)"
+   },
+   "baseServida": {
+    "dir": "F:/Dev Nath/TCC/.tmp-eval/validator-3712r",
+    "commit": "816f4bae41f4486b7055f0ac265167e87ce0d5e5",
+    "ruleFiles": {
+     "normalized/rules.jsonl": "ca8f428a52063ac8c208cca96432a40c84af8e75b4742744367a47717f9f28b8",
+     "normalized/carried-over.jsonl": "16e0a764e4a0f05b3f116df83f1400598a95173f5dec34f775c0a9b843cade19"
+    },
+    "camposLidos": [
+     "id",
+     "source.corpusFile",
+     "source.charRange"
+    ]
+   },
+   "base": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/normalizacao/rules.jsonl",
+    "sha256": "408402bd14f62571759a437e56cacc8bb7b811ade0dc2d09fea83ef6593b430a",
+    "camposLidos": [
+     "id"
+    ]
+   },
+   "mapaIds": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/normalizacao/mapa-ids.json",
+    "sha256": "d545f34fbe28b60dd32e7475f8c381e9fdcf3b033a297774b05e29a41ed76a39",
+    "camposLidos": [
+     "antigo",
+     "novos",
+     "originalTextAntigo"
+    ]
+   },
+   "referencias": [
+    {
+     "tela": "A",
+     "arquivo": "ground-truth-solicitacao.json",
+     "sha256": "0832f339d18037f85cfced4549e9eb3c1e85e0903b2ad95e89bcfc6030f76f2f",
+     "versao": "2.1.0"
+    },
+    {
+     "tela": "A2",
+     "arquivo": "ground-truth-acompanhamento.json",
+     "sha256": "1ed853e980c104bcc42a6dffe6dd61af69427ddf820bd52450998da73a2f03bc",
+     "versao": "1.0.0"
+    },
+    {
+     "tela": "A2",
+     "arquivo": "tela-a2/candidata/ground-truth-acompanhamento.json",
+     "sha256": "0cd3dbf575afe086db34fefce5bb59197433b3a2b783d66c88884923d6e154be",
+     "versao": "1.0.0-candidata"
+    },
+    {
+     "tela": "B",
+     "arquivo": "ground-truth-vistorias.json",
+     "sha256": "bbde01f90d58d008d60b913e6178b69d9a27d0194291431d692073d59ea10648",
+     "versao": "1.1.0"
+    },
+    {
+     "tela": "D",
+     "arquivo": "ground-truth-processos.json",
+     "sha256": "f719db686c86a6ee333cfd29bdfe9c16d85486306661d2ed85eb27660ec183ac",
+     "versao": "1.0.0"
+    },
+    {
+     "tela": "D",
+     "arquivo": "ground-truth-processos-1.1.0.json",
+     "sha256": "2eacba80efb373c4923f7f85593c684647e6b5ec58ad5a341329d96a44632569",
+     "versao": "1.1.0"
+    },
+    {
+     "tela": "E",
+     "arquivo": "ground-truth-cadastro-pais.json",
+     "sha256": "661cc54b7b291bc6e455065ecb23c08e5279bf7a0e9c7d6494afd78ae112c528",
+     "versao": "1.0.0"
+    },
+    {
+     "tela": "F",
+     "arquivo": "ground-truth-processos-f.json",
+     "sha256": "d32088bfd7ecb44c2bf75de58f95f425047aa0b2180e80dad9fefbec24d5b3e0",
+     "versao": "1.0.0"
+    }
+   ],
+   "pnipMock": "F:/Dev Nath/TCC/.tmp-eval/pnip-mock-f2, ramo tela-f2 @ 3d02f68 (só leitura)"
+  },
+  "resolucaoDosIdsDasReferencias": {
+   "naBase": 220,
+   "mapaNovos": 8,
+   "mapaTexto": 45,
+   "foraDeFormatoIgnorados": 296,
+   "naoResolvidos": 0,
+   "idsDaBaseUsados": 99,
+   "clausulasSemIdDasReferencias": [
+    {
+     "onde": "F:F-12",
+     "arquivo": "fundamentos-visuais/estados.md",
+     "faixas": [
+      [
+       25667,
+       25728
+      ]
+     ]
+    }
+   ]
+  },
+  "sobreviventesPorTipoDepoisDeCadaFiltro": {
+   "T1": {
+    "candidatos": 6,
+    "conferente": 4,
+    "a": 4,
+    "b": 4,
+    "c": 3,
+    "dRegistro": {
+     "comId": 3,
+     "semIdMapeado": 0
+    }
+   },
+   "T2": {
+    "candidatos": 6,
+    "conferente": 6,
+    "a": 6,
+    "b": 5,
+    "c": 4,
+    "dRegistro": {
+     "comId": 3,
+     "semIdMapeado": 1
+    }
+   },
+   "T3": {
+    "candidatos": 6,
+    "conferente": 6,
+    "a": 6,
+    "b": 6,
+    "c": 4,
+    "dRegistro": {
+     "comId": 4,
+     "semIdMapeado": 0
+    }
+   },
+   "T4": {
+    "candidatos": 6,
+    "conferente": 5,
+    "a": 5,
+    "b": 5,
+    "c": 5,
+    "dRegistro": {
+     "comId": 2,
+     "semIdMapeado": 3
+    }
+   }
+  },
+  "colisoesConsideradas": [
+   {
+    "par": [
+     "T1-2",
+     "T2-2"
+    ],
+    "motivo": "Mesmo elemento (span.content do avatar), mesmo atributo class na mesma linha. T1-2 desfaz a superfície circular cuja cor T2-2 altera.",
+    "fonte": "conferente"
+   },
+   {
+    "par": [
+     "T1-6",
+     "T2-1"
+    ],
+    "motivo": "T1-6 remove .br-table, que o seletor de T2-1 usa: construído junto, T2-1 deixa de pegar.",
+    "fonte": "conferente"
+   },
+   {
+    "par": [
+     "T1-6",
+     "T3-1"
+    ],
+    "motivo": "Idem: o seletor de T3-1 depende de .br-table.",
+    "fonte": "conferente"
+   }
+  ]
+ },
+ "candidatos": [
+  {
+   "id": "T1-1",
+   "tipo": "T1",
+   "subtipo": "anatomia",
+   "ordem": 1,
+   "exigeInteracao": false,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "médio",
+   "nivelDoConferente": "médio",
+   "nivel": "médio",
+   "nivelSlug": "medio",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "bloco <li> da seta anterior em govbr-custom-pagination.component.html l. 8–12 (trecho do seletor sem a indentação); estado inicial, rolagem até a paginação. Fonte: trecho \"de\" em l. 8 (linhas sem espaços nas pontas (indentação)), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "nenhum defeito natural na paginação."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "nenhum defeito natural na paginação."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 2 id(s) ligado(s) nem faixa sobreposta aparece nas referências de A, A2, B, D, E, F"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-pagination-4323d08f3e2d",
+      "govbr-3.7.0-component-pagination-0a0e2ad9474e"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-pagination-4323d08f3e2d, govbr-3.7.0-component-pagination-0a0e2ad9474e"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "componente",
+      "estrutura"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"componente\",\"estrutura\"] → classe ds; parte obrigatória ausente (seta de navegação); nome, papel e teclado da seta restante intactos."
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "T1-2",
+   "tipo": "T1",
+   "subtipo": "marcacao",
+   "ordem": 2,
+   "exigeInteracao": false,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "fácil",
+   "nivelDoConferente": "fácil",
+   "nivel": "fácil",
+   "nivelSlug": "facil",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "span.content do avatar em header.component.html l. 7 (light DOM); só a classe; estado inicial. Fonte: trecho \"de\" em l. 7 (literal), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "D-14 está no mesmo elemento mas em outra propriedade (contraste da inicial): o conferente mediu fundo rgb(255,140,0) e fonte 24,192px iguais antes e depois, a inicial continua visível, logo D-14 continua observável; NOTA para a fase 2: a âncora de D-14 (`.br-avatar .content`) deixa de casar e tem de ser reancorada no mesmo elemento, sem mudar a descrição."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [
+      {
+       "outro": "T2-2",
+       "motivo": "Mesmo elemento (span.content do avatar), mesmo atributo class na mesma linha. T1-2 desfaz a superfície circular cuja cor T2-2 altera.",
+       "fonte": "conferente"
+      }
+     ],
+     "razao": "D-14 está no mesmo elemento mas em outra propriedade (contraste da inicial): o conferente mediu fundo rgb(255,140,0) e fonte 24,192px iguais antes e depois, a inicial continua visível, logo D-14 continua observável; NOTA para a fase 2: a âncora de D-14 (`.br-avatar .content`) deixa de casar e tem de ser reancorada no mesmo elemento, sem mudar a descrição."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 1 id(s) ligado(s) nem faixa sobreposta aparece nas referências de A, A2, B, D, E, F"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-development-avatar-23d40d3d6ea4"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-development-avatar-23d40d3d6ea4"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "componente",
+      "estrutura"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"componente\",\"estrutura\"] → classe ds; classe obrigatória do conteúdo do avatar ausente; contraste da inicial não muda (já é D-14)."
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "T1-3",
+   "tipo": "T1",
+   "subtipo": "anatomia",
+   "ordem": 3,
+   "exigeInteracao": false,
+   "conferente": "reprovado",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "motivoConferente": "cláusula: A cláusula é contradita na mesma seção (header__designer.md, linhas 115 e 117): \"é possível utilizar texto ou outro elemento para substituí-lo\" e \"Caso não deseje utilizar o título textual, opte pelo elemento Logo\". Depois da mudança o header mantém o logo (medido: logo presente), o que a documentação admite como substituto do título.",
+   "sobrevive": false,
+   "saiEm": "conferente"
+  },
+  {
+   "id": "T1-4",
+   "tipo": "T1",
+   "subtipo": "anatomia",
+   "ordem": 4,
+   "exigeInteracao": false,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "nivel": "difícil",
+   "nivelSlug": "dificil",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "br-button Exportar em processos.component.html l. 9; atributos de entrada do web component (icon, title); o conferente viu o ícone renderizado; estado inicial. Fonte: trecho \"de\" em l. 9 (literal), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "nenhum defeito natural no Exportar."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "nenhum defeito natural no Exportar."
+    },
+    "c": {
+     "passa": false,
+     "razao": "regra usada em referência: govbr-3.7.0-component-button-7ef75d42ac65 [B:B-08, B:B-09, B:B-10, D:D-01, F:D-01]"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-button-7ef75d42ac65",
+      "govbr-3.7.0-component-button-4f33506c98ed"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-button-7ef75d42ac65, govbr-3.7.0-component-button-4f33506c98ed"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "componente",
+      "estrutura"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"componente\",\"estrutura\"] → classe ds; rótulo obrigatório ausente no tipo padrão; nome acessível preservado pelo title (árvore AX do conferente)."
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "c"
+  },
+  {
+   "id": "T1-5",
+   "tipo": "T1",
+   "subtipo": "marcacao",
+   "ordem": 5,
+   "exigeInteracao": true,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": "fácil",
+   "nivel": "fácil",
+   "nivelSlug": "facil",
+   "nivelRegra": "seletor ≠ conferente: oficial = o menor (decisão do orquestrador)",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "botão da tag selecionada em multiple-search-table.utils.ts l. 28 (light DOM); estado = filtro aberto + 1ª opção escolhida, alcançável com os dados atuais (o conferente testou a remoção). Fonte: trecho \"de\" em l. 28 (literal), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "D-03 (papel/teclado das tags, estado inicial) não alcança o botão interno da tag selecionada, que só existe com filtro escolhido; outra propriedade."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "D-03 (papel/teclado das tags, estado inicial) não alcança o botão interno da tag selecionada, que só existe com filtro escolhido; outra propriedade."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 1 id(s) ligado(s) nem faixa sobreposta aparece nas referências de A, A2, B, D, E, F"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-development-button-b77ff20ad216"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-development-button-b77ff20ad216"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "componente",
+      "estrutura"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"componente\",\"estrutura\"] → classe ds; classe obrigatória do botão ausente; botão nativo continua operável e removendo o filtro."
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "T1-6",
+   "tipo": "T1",
+   "subtipo": "marcacao",
+   "ordem": 6,
+   "exigeInteracao": false,
+   "conferente": "reprovado",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": null,
+   "motivoConferente": "não observável: Sem efeito observável: estilos computados do contêiner, th, td e tabela idênticos antes/depois e captura de página inteira idêntica byte a byte. Os estilos da tabela vêm de regras \"td, th\" sem o seletor .br-table.",
+   "sobrevive": false,
+   "saiEm": "conferente"
+  },
+  {
+   "id": "T2-1",
+   "tipo": "T2",
+   "subtipo": null,
+   "ordem": 1,
+   "exigeInteracao": false,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "médio",
+   "nivelDoConferente": "difícil",
+   "nivel": "médio",
+   "nivelSlug": "medio",
+   "nivelRegra": "seletor ≠ conferente: oficial = o menor (decisão do orquestrador)",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "acréscimo no processos.component.scss (td do template da rota; encapsulamento emulado alcança); bem abaixo do orçamento de CSS; estado inicial. Fonte: acréscimo, arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "nenhum defeito natural no padding das células do corpo."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [
+      {
+       "outro": "T1-6",
+       "motivo": "T1-6 remove .br-table, que o seletor de T2-1 usa: construído junto, T2-1 deixa de pegar.",
+       "fonte": "conferente"
+      }
+     ],
+     "razao": "nenhum defeito natural no padding das células do corpo."
+    },
+    "c": {
+     "passa": false,
+     "razao": "regra usada em referência: govbr-3.7.0-component-table-d08c9e4951e5 [F:F-09]"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-table-d08c9e4951e5"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-table-d08c9e4951e5"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "token"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"token\"] → classe ds; padding fora da escala; nada de acessibilidade muda."
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "c"
+  },
+  {
+   "id": "T2-2",
+   "tipo": "T2",
+   "subtipo": null,
+   "ordem": 2,
+   "exigeInteracao": false,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "nivel": "difícil",
+   "nivelSlug": "dificil",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "span.content do avatar em header.component.html l. 7; estilo inline; estado inicial. Fonte: trecho \"de\" em l. 7 (literal), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": false,
+     "natural": {
+      "passa": false,
+      "razao": "D-14 está no mesmo elemento E na mesma propriedade: a cor de fundo do avatar é um dos dois termos do contraste de D-14 (descrição de D-14 cita #ff8c00); mudar o fundo muda a medida de D-14."
+     },
+     "semeadosAFrente": [
+      {
+       "outro": "T1-2",
+       "motivo": "Mesmo elemento (span.content do avatar), mesmo atributo class na mesma linha. T1-2 desfaz a superfície circular cuja cor T2-2 altera.",
+       "fonte": "conferente"
+      }
+     ],
+     "colisoesRegistradas": [
+      {
+       "outro": "T1-2",
+       "motivo": "Mesmo elemento (span.content do avatar), mesmo atributo class na mesma linha. T1-2 desfaz a superfície circular cuja cor T2-2 altera.",
+       "fonte": "conferente"
+      }
+     ],
+     "razao": "colide com T1-2, semeado à frente: Mesmo elemento (span.content do avatar), mesmo atributo class na mesma linha. T1-2 desfaz a superfície circular cuja cor T2-2 altera."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 2 id(s) ligado(s) nem faixa sobreposta aparece nas referências de A, A2, B, D, E, F"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-avatar-cca6047762e0",
+      "govbr-3.7.0-component-avatar-5df7511f025d"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-avatar-cca6047762e0, govbr-3.7.0-component-avatar-5df7511f025d"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "token"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"token\"] → classe ds; cor fora da paleta na superfície do avatar."
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "b"
+  },
+  {
+   "id": "T2-3",
+   "tipo": "T2",
+   "subtipo": null,
+   "ordem": 3,
+   "exigeInteracao": false,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "nivel": "difícil",
+   "nivelSlug": "dificil",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "h2 em processos.component.html l. 6; estilo inline; estado inicial. Fonte: trecho \"de\" em l. 6 (literal), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "D-07/D-12 tocam o h2 só como estrutura (associação à tabela, nível de título); outra propriedade."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "D-07/D-12 tocam o h2 só como estrutura (associação à tabela, nível de título); outra propriedade."
+    },
+    "c": {
+     "passa": true,
+     "razao": "sem id: nenhuma faixa de id usado nem cláusula sem id das referências se sobrepõe ao trecho em fundamentos-visuais/tipografia.md, nenhuma spec traz o trecho"
+    },
+    "d": {
+     "registro": true,
+     "ids": [],
+     "semIdMapeado": true,
+     "clausula": {
+      "arquivo": "fundamentos-visuais/tipografia.md",
+      "trecho": "| Size          | `--font-size-scale-up-05` |"
+     },
+     "razao": "semIdMapeado: trecho literal localizado em fundamentos-visuais/tipografia.md, sem registro da base servida ligado a ele"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "tipografia",
+      "token"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"tipografia\",\"token\"] → classe ds; tamanho fora da escala tipográfica; hierarquia de títulos intacta."
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "T2-4",
+   "tipo": "T2",
+   "subtipo": null,
+   "ordem": 4,
+   "exigeInteracao": false,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "médio",
+   "nivelDoConferente": "médio",
+   "nivel": "médio",
+   "nivelSlug": "medio",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "span.text-truncate da tag Meus processos em processos.component.html l. 29; estilo inline; estado inicial. Fonte: trecho \"de\" em l. 29 (literal), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "D-03 está na mesma tag mas em outra propriedade (papel/teclado), não no tamanho da fonte do rótulo."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "D-03 está na mesma tag mas em outra propriedade (papel/teclado), não no tamanho da fonte do rótulo."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 1 id(s) ligado(s) nem faixa sobreposta aparece nas referências de A, A2, B, D, E, F"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-tag-4daf30055f40"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-tag-4daf30055f40"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "tipografia",
+      "token"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"tipografia\",\"token\"] → classe ds; tamanho fora da escala no rótulo da tag; legível."
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "T2-5",
+   "tipo": "T2",
+   "subtipo": null,
+   "ordem": 5,
+   "exigeInteracao": false,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "nivel": "difícil",
+   "nivelSlug": "dificil",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "br-divider em processos.component.html l. 2; custom property no hospedeiro atravessa o shadow DOM (fase 0 § 5); estado inicial. Fonte: trecho \"de\" em l. 2 (literal), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "nenhum defeito natural no divider."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "nenhum defeito natural no divider."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 1 id(s) ligado(s) nem faixa sobreposta aparece nas referências de A, A2, B, D, E, F"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-divider-a199ae1e328c"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-divider-a199ae1e328c"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "token"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"token\"] → classe ds; cor fora da paleta no divider."
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "T2-6",
+   "tipo": "T2",
+   "subtipo": null,
+   "ordem": 6,
+   "exigeInteracao": false,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "nivel": "difícil",
+   "nivelSlug": "dificil",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "acréscimo no header.component.scss (br-header está no template do header, recebe o atributo de escopo); custom property atravessa o shadow DOM; estado inicial. Fonte: acréscimo, arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "nenhum defeito natural na superfície do cabeçalho (D-11/D-12 ancoram na raiz, outra propriedade)."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "nenhum defeito natural na superfície do cabeçalho (D-11/D-12 ancoram na raiz, outra propriedade)."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 1 id(s) ligado(s) nem faixa sobreposta aparece nas referências de A, A2, B, D, E, F"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-header-549ba16b09f4"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-header-549ba16b09f4"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "token"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"token\"] → classe ds; sombra fora dos tokens no cabeçalho."
+    }
+   },
+   "sobrevive": true,
+   "reservaColideComSemeado": []
+  },
+  {
+   "id": "T3-1",
+   "tipo": "T3",
+   "subtipo": null,
+   "ordem": 1,
+   "exigeInteracao": false,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "nivel": "difícil",
+   "nivelSlug": "dificil",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "acréscimo no processos.component.scss (th do template da rota); estado inicial. Fonte: acréscimo, arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "D-08 é o th vazio da coluna de ações (estrutura), não o fundo do cabeçalho; outra propriedade."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [
+      {
+       "outro": "T1-6",
+       "motivo": "Idem: o seletor de T3-1 depende de .br-table.",
+       "fonte": "conferente"
+      }
+     ],
+     "razao": "D-08 é o th vazio da coluna de ações (estrutura), não o fundo do cabeçalho; outra propriedade."
+    },
+    "c": {
+     "passa": false,
+     "razao": "regra usada em referência: govbr-3.7.0-component-table-559426cdec19 [F:F-06]"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-table-559426cdec19"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-table-559426cdec19"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "token"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"token\"] → classe ds; token de cor no lugar errado; contraste do texto do th continua alto."
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "c"
+  },
+  {
+   "id": "T3-2",
+   "tipo": "T3",
+   "subtipo": null,
+   "ordem": 2,
+   "exigeInteracao": false,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "médio",
+   "nivelDoConferente": "médio",
+   "nivel": "médio",
+   "nivelSlug": "medio",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "span.br-tag Meus processos em processos.component.html l. 25; classe utilitária do core; estado inicial. Fonte: trecho \"de\" em l. 25 (literal), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "D-03 está na mesma tag mas em outra propriedade (papel/teclado), não no raio."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "D-03 está na mesma tag mas em outra propriedade (papel/teclado), não no raio."
+    },
+    "c": {
+     "passa": false,
+     "razao": "regra usada em referência: govbr-3.7.0-component-tag-6e456d98e420 [F:F-05]"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-tag-6e456d98e420"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-tag-6e456d98e420"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "token"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"token\"] → classe ds; token de raio no lugar errado."
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "c"
+  },
+  {
+   "id": "T3-3",
+   "tipo": "T3",
+   "subtipo": null,
+   "ordem": 3,
+   "exigeInteracao": false,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "médio",
+   "nivelDoConferente": "difícil",
+   "nivel": "médio",
+   "nivelSlug": "medio",
+   "nivelRegra": "seletor ≠ conferente: oficial = o menor (decisão do orquestrador)",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "br-breadcrumb em processos.component.html l. 1; custom property no hospedeiro; estado inicial. Fonte: trecho \"de\" em l. 1 (literal), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "nenhum defeito natural no breadcrumb."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "nenhum defeito natural no breadcrumb."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 1 id(s) ligado(s) nem faixa sobreposta aparece nas referências de A, A2, B, D, E, F"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-breadcrumb-7c8bed7156ec"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-breadcrumb-7c8bed7156ec"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "token"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"token\"] → classe ds; azul da paleta no lugar do previsto; contraste continua ≥ 4,5:1."
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "T3-4",
+   "tipo": "T3",
+   "subtipo": null,
+   "ordem": 4,
+   "exigeInteracao": false,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "nivel": "difícil",
+   "nivelSlug": "dificil",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "br-tab em processos.component.html l. 13; custom property no hospedeiro; estado inicial. Fonte: trecho \"de\" em l. 13 (literal), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "nenhum defeito natural nas abas."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "nenhum defeito natural nas abas."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 1 id(s) ligado(s) nem faixa sobreposta aparece nas referências de A, A2, B, D, E, F"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-tab-b717690fd662"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-tab-b717690fd662"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "tipografia",
+      "token"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"tipografia\",\"token\"] → classe ds; degrau da escala no lugar errado no rótulo da aba."
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "T3-5",
+   "tipo": "T3",
+   "subtipo": null,
+   "ordem": 5,
+   "exigeInteracao": true,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": "muito difícil",
+   "nivel": "muito difícil",
+   "nivelSlug": "muito-dificil",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "div.br-list em src/app/shared/br-select/br-select.component.html l. 10; estado = lista do Exibir aberta (parada já existente na D). Fonte: trecho \"de\" em l. 10 (literal), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "listas abertas da paginação sem defeito natural na D."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "listas abertas da paginação sem defeito natural na D."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 1 id(s) ligado(s) nem faixa sobreposta aparece nas referências de A, A2, B, D, E, F"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-select-bc89a8785c08"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-select-bc89a8785c08"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "token"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"token\"] → classe ds; sombra do sistema no lugar errado."
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "T3-6",
+   "tipo": "T3",
+   "subtipo": null,
+   "ordem": 6,
+   "exigeInteracao": false,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "nivel": "difícil",
+   "nivelSlug": "dificil",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "1º button.br-button (Buscar) em search-table.utils.ts l. 17–18 (o trecho também ocorre no l. 26, o do Limpar: o construtor muda só o do l. 17); estado inicial. Fonte: trecho \"de\" em l. 17, 26 (linhas sem espaços nas pontas (indentação)), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "D-05 é o nome acessível do input interno (outro elemento); nenhum defeito natural no botão de ação interna."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "D-05 é o nome acessível do input interno (outro elemento); nenhum defeito natural no botão de ação interna."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 1 id(s) ligado(s) nem faixa sobreposta aparece nas referências de A, A2, B, D, E, F"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-input-1aec5265dab8"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-input-1aec5265dab8"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "componente",
+      "token"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"componente\",\"token\"] → classe ds; densidade do botão de ação interna; nome e operação intactos."
+    }
+   },
+   "sobrevive": true,
+   "reservaColideComSemeado": []
+  },
+  {
+   "id": "T4-1",
+   "tipo": "T4",
+   "subtipo": null,
+   "ordem": 1,
+   "exigeInteracao": false,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "nivel": "difícil",
+   "nivelSlug": "dificil",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "acréscimo no processos.component.scss (br-button[disabled] do template da rota; custom property atravessa o shadow DOM); estado inicial. Fonte: acréscimo, arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "D-01 está nos mesmos botões mas em outra propriedade (rótulo e tipo circular), não na opacidade do estado desabilitado."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "D-01 está nos mesmos botões mas em outra propriedade (rótulo e tipo circular), não na opacidade do estado desabilitado."
+    },
+    "c": {
+     "passa": true,
+     "razao": "sem id: nenhuma faixa de id usado nem cláusula sem id das referências se sobrepõe ao trecho em fundamentos-visuais/estados.md, nenhuma spec traz o trecho"
+    },
+    "d": {
+     "registro": true,
+     "ids": [],
+     "semIdMapeado": true,
+     "clausula": {
+      "arquivo": "fundamentos-visuais/estados.md",
+      "trecho": "| background/foreground | opacity  | `--surface-opacity-md`  |"
+     },
+     "razao": "semIdMapeado: trecho literal localizado em fundamentos-visuais/estados.md, sem registro da base servida ligado a ele"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "comportamento",
+      "token"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"comportamento\",\"token\"] → classe ds; estado desabilitado sem o tratamento visual; o botão continua desabilitado (cursor, atributo)."
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "T4-2",
+   "tipo": "T4",
+   "subtipo": null,
+   "ordem": 2,
+   "exigeInteracao": false,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "médio",
+   "nivelDoConferente": "médio",
+   "nivel": "médio",
+   "nivelSlug": "medio",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "br-tab-item TRAMITANDO em processos.component.html l. 15; o conferente reproduziu na carga (página continua navegável); estado inicial. Fonte: trecho \"de\" em l. 15 (literal), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "nenhum defeito natural nas abas."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "nenhum defeito natural nas abas."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 1 id(s) ligado(s) nem faixa sobreposta aparece nas referências de A, A2, B, D, E, F"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-tab-50ac44341161"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-tab-50ac44341161"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "comportamento"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"comportamento\"] → classe ds; item ativo da aba não corresponde ao conteúdo; navegação entre abas intacta."
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "T4-3",
+   "tipo": "T4",
+   "subtipo": null,
+   "ordem": 3,
+   "exigeInteracao": true,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": "muito difícil",
+   "nivel": "muito difícil",
+   "nivelSlug": "muito-dificil",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "br-button Voltar em processos.component.html l. 165; custom property no hospedeiro; estado = hover no Voltar. Fonte: trecho \"de\" em l. 165 (literal), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "nenhum defeito natural no Voltar."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "nenhum defeito natural no Voltar."
+    },
+    "c": {
+     "passa": true,
+     "razao": "sem id: nenhuma faixa de id usado nem cláusula sem id das referências se sobrepõe ao trecho em fundamentos-visuais/estados.md, nenhuma spec traz o trecho"
+    },
+    "d": {
+     "registro": true,
+     "ids": [],
+     "semIdMapeado": true,
+     "clausula": {
+      "arquivo": "fundamentos-visuais/estados.md",
+      "trecho": "| background (Sobre um fundo Claro)  | opacity  | `--surface-opacity-xs` |"
+     },
+     "razao": "semIdMapeado: trecho literal localizado em fundamentos-visuais/estados.md, sem registro da base servida ligado a ele"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "comportamento",
+      "token"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"comportamento\",\"token\"] → classe ds; hover sem o overlay prescrito; nada de acessibilidade muda."
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "T4-4",
+   "tipo": "T4",
+   "subtipo": null,
+   "ordem": 4,
+   "exigeInteracao": true,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": "muito difícil",
+   "nivel": "muito difícil",
+   "nivelSlug": "muito-dificil",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "br-input em search-table.utils.ts l. 9; custom property no hospedeiro; estado = foco no campo de busca. Fonte: trecho \"de\" em l. 9 (literal), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "D-05 está no mesmo input mas em outra propriedade (nome acessível), não na cor do foco; o foco continua visível (conferente)."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "D-05 está no mesmo input mas em outra propriedade (nome acessível), não na cor do foco; o foco continua visível (conferente)."
+    },
+    "c": {
+     "passa": true,
+     "razao": "sem id: nenhuma faixa de id usado nem cláusula sem id das referências se sobrepõe ao trecho em fundamentos-visuais/estados.md, nenhuma spec traz o trecho"
+    },
+    "d": {
+     "registro": true,
+     "ids": [],
+     "semIdMapeado": true,
+     "clausula": {
+      "arquivo": "fundamentos-visuais/estados.md",
+      "trecho": "| border (Sobre um fundo Claro)  | color    | `--gold-vivid-40` |"
+     },
+     "razao": "semIdMapeado: trecho literal localizado em fundamentos-visuais/estados.md, sem registro da base servida ligado a ele"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "comportamento",
+      "token"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"comportamento\",\"token\"] → classe ds; cor de foco do DS trocada; o foco continua visível (2 px)."
+    }
+   },
+   "sobrevive": true,
+   "reservaColideComSemeado": []
+  },
+  {
+   "id": "T4-5",
+   "tipo": "T4",
+   "subtipo": null,
+   "ordem": 5,
+   "exigeInteracao": true,
+   "conferente": "aprovado",
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": "muito difícil",
+   "nivel": "muito difícil",
+   "nivelSlug": "muito-dificil",
+   "nivelRegra": "seletor = conferente",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "div.br-item em src/app/shared/br-select/br-select.component.html l. 18; estado = lista do Exibir aberta + hover num item não selecionado. Fonte: trecho \"de\" em l. 18 (literal), arquivo igual ao do seletor: true."
+    },
+    "b": {
+     "passa": true,
+     "natural": {
+      "passa": true,
+      "razao": "listas abertas da paginação sem defeito natural na D."
+     },
+     "semeadosAFrente": [],
+     "colisoesRegistradas": [],
+     "razao": "listas abertas da paginação sem defeito natural na D."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 1 id(s) ligado(s) nem faixa sobreposta aparece nas referências de A, A2, B, D, E, F"
+    },
+    "d": {
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-select-4a1c354b2277"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-select-4a1c354b2277"
+    },
+    "e": {
+     "registro": true,
+     "categories": [
+      "comportamento"
+     ],
+     "classe": "ds",
+     "razao": "categories [\"comportamento\"] → classe ds; hover do item da lista sem realce; seleção por clique/teclado intacta."
+    }
+   },
+   "sobrevive": true,
+   "reservaColideComSemeado": []
+  },
+  {
+   "id": "T4-6",
+   "tipo": "T4",
+   "subtipo": null,
+   "ordem": 6,
+   "exigeInteracao": true,
+   "conferente": "reprovado",
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": null,
+   "motivoConferente": "não observável: O \"depois\" descrito não acontece: o fundo do item selecionado fica transparente, mas o rótulo continua branco (label rgb(255,255,255) sobre lista branca), e o \"10\" desaparece da lista. Não fica \"indistinguível dos demais\", como o candidato diz. O efeito real é texto invisível, que também cai em contraste, fora do escopo DS.",
+   "sobrevive": false,
+   "saiEm": "conferente"
+  }
+ ]
+}

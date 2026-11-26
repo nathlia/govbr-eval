@@ -1,0 +1,488 @@
+{
+ "_meta": {
+  "regra": "adendo 2 § 4 item 5 (3 primeiros sobreviventes por tipo, na ordem do seletor; o resto é reserva do tipo, na mesma ordem); ids F2-01… na ordem T1, T2, T3, T4; nível oficial = o menor entre seletor e conferente (orquestrador)",
+  "filtros": {
+   "arquivo": "tela-f2/filtros.json",
+   "sha256": "68f02fc0c7be9d8c7459e0c19e5009a1f072b80065cb83946f7f7e4cdc2ed8bc"
+  },
+  "contagens": {
+   "T1": {
+    "semeadas": 3,
+    "porNivel": {
+     "facil": 2,
+     "medio": 1,
+     "dificil": 0,
+     "muito-dificil": 0
+    },
+    "exigeInteracao": 1,
+    "comId": 3,
+    "semIdMapeado": 0,
+    "reserva": 0,
+    "reservaPorNivel": {
+     "facil": 0,
+     "medio": 0,
+     "dificil": 0,
+     "muito-dificil": 0
+    }
+   },
+   "T2": {
+    "semeadas": 3,
+    "porNivel": {
+     "facil": 0,
+     "medio": 1,
+     "dificil": 2,
+     "muito-dificil": 0
+    },
+    "exigeInteracao": 0,
+    "comId": 2,
+    "semIdMapeado": 1,
+    "reserva": 1,
+    "reservaPorNivel": {
+     "facil": 0,
+     "medio": 0,
+     "dificil": 1,
+     "muito-dificil": 0
+    }
+   },
+   "T3": {
+    "semeadas": 3,
+    "porNivel": {
+     "facil": 0,
+     "medio": 1,
+     "dificil": 1,
+     "muito-dificil": 1
+    },
+    "exigeInteracao": 1,
+    "comId": 3,
+    "semIdMapeado": 0,
+    "reserva": 1,
+    "reservaPorNivel": {
+     "facil": 0,
+     "medio": 0,
+     "dificil": 1,
+     "muito-dificil": 0
+    }
+   },
+   "T4": {
+    "semeadas": 3,
+    "porNivel": {
+     "facil": 0,
+     "medio": 1,
+     "dificil": 1,
+     "muito-dificil": 1
+    },
+    "exigeInteracao": 1,
+    "comId": 1,
+    "semIdMapeado": 2,
+    "reserva": 2,
+    "reservaPorNivel": {
+     "facil": 0,
+     "medio": 0,
+     "dificil": 0,
+     "muito-dificil": 2
+    }
+   }
+  },
+  "total": {
+   "semeadas": 12,
+   "exigeInteracao": 3,
+   "comId": 9,
+   "reserva": 4
+  },
+  "recomposicaoDoPortao": {
+   "regra": "adendo 2 § 5: em cada tipo sai o semeado de menor nível para o qual exista, na reserva do tipo, um sobrevivente de nível superior (empate: o último na ordem do seletor); entra a primeira reserva do tipo, na ordem do seletor, de nível superior ao do que sai; tipo sem troca fica; nenhuma troca em tipo nenhum → a F2 encerra depois da primeira falha",
+   "porTipo": {
+    "T1": {
+     "possivel": false
+    },
+    "T2": {
+     "sai": "F2-05",
+     "nivelSai": "medio",
+     "entra": "R-01",
+     "nivelEntra": "dificil",
+     "possivel": true
+    },
+    "T3": {
+     "sai": "F2-07",
+     "nivelSai": "medio",
+     "entra": "R-02",
+     "nivelEntra": "dificil",
+     "possivel": true
+    },
+    "T4": {
+     "sai": "F2-11",
+     "nivelSai": "medio",
+     "entra": "R-03",
+     "nivelEntra": "muito-dificil",
+     "possivel": true
+    }
+   },
+   "algumaTrocaPossivel": true,
+   "tiposComTroca": 3
+  },
+  "reposicao": "semeada que não pega na construção: o construtor reporta o M-…; a substituição (próxima reserva do mesmo tipo, adendo da F § 4 item 5 lido por tipo) é decidida aqui, não pelo construtor"
+ },
+ "semeadas": [
+  {
+   "id": "F2-01",
+   "tipo": "T1",
+   "subtipo": "anatomia",
+   "nivel": "medio",
+   "nivelDoSeletor": "médio",
+   "nivelDoConferente": "médio",
+   "nivelRegra": "seletor = conferente",
+   "exigeInteracao": false,
+   "candidato": "T1-1",
+   "ordemDoSeletor": 1,
+   "rules": [
+    "govbr-3.7.0-component-pagination-4323d08f3e2d",
+    "govbr-3.7.0-component-pagination-0a0e2ad9474e"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "componente",
+    "estrutura"
+   ],
+   "classe": "ds",
+   "estado": "inicial (rolar até a paginação, abaixo da tabela)"
+  },
+  {
+   "id": "F2-02",
+   "tipo": "T1",
+   "subtipo": "marcacao",
+   "nivel": "facil",
+   "nivelDoSeletor": "fácil",
+   "nivelDoConferente": "fácil",
+   "nivelRegra": "seletor = conferente",
+   "exigeInteracao": false,
+   "candidato": "T1-2",
+   "ordemDoSeletor": 2,
+   "rules": [
+    "govbr-3.7.0-development-avatar-23d40d3d6ea4"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "componente",
+    "estrutura"
+   ],
+   "classe": "ds",
+   "estado": "inicial"
+  },
+  {
+   "id": "F2-03",
+   "tipo": "T1",
+   "subtipo": "marcacao",
+   "nivel": "facil",
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": "fácil",
+   "nivelRegra": "seletor ≠ conferente: oficial = o menor (decisão do orquestrador)",
+   "exigeInteracao": true,
+   "candidato": "T1-5",
+   "ordemDoSeletor": 5,
+   "rules": [
+    "govbr-3.7.0-development-button-b77ff20ad216"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "componente",
+    "estrutura"
+   ],
+   "classe": "ds",
+   "estado": "Clicar na tag de filtro \"Status\" → escolher a primeira opção da lista (\"Aguardando análise\") → aparece a tag azul do filtro selecionado com o botão ×."
+  },
+  {
+   "id": "F2-04",
+   "tipo": "T2",
+   "subtipo": null,
+   "nivel": "dificil",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "nivelRegra": "seletor = conferente",
+   "exigeInteracao": false,
+   "candidato": "T2-3",
+   "ordemDoSeletor": 3,
+   "rules": [],
+   "semIdMapeado": true,
+   "clausula": {
+    "arquivo": "fundamentos-visuais/tipografia.md",
+    "trecho": "| Size          | `--font-size-scale-up-05` |"
+   },
+   "categories": [
+    "tipografia",
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "inicial"
+  },
+  {
+   "id": "F2-05",
+   "tipo": "T2",
+   "subtipo": null,
+   "nivel": "medio",
+   "nivelDoSeletor": "médio",
+   "nivelDoConferente": "médio",
+   "nivelRegra": "seletor = conferente",
+   "exigeInteracao": false,
+   "candidato": "T2-4",
+   "ordemDoSeletor": 4,
+   "rules": [
+    "govbr-3.7.0-component-tag-4daf30055f40"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "tipografia",
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "inicial (aba Tramitando, perfil não-Consulta)"
+  },
+  {
+   "id": "F2-06",
+   "tipo": "T2",
+   "subtipo": null,
+   "nivel": "dificil",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "nivelRegra": "seletor = conferente",
+   "exigeInteracao": false,
+   "candidato": "T2-5",
+   "ordemDoSeletor": 5,
+   "rules": [
+    "govbr-3.7.0-component-divider-a199ae1e328c"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "inicial"
+  },
+  {
+   "id": "F2-07",
+   "tipo": "T3",
+   "subtipo": null,
+   "nivel": "medio",
+   "nivelDoSeletor": "médio",
+   "nivelDoConferente": "difícil",
+   "nivelRegra": "seletor ≠ conferente: oficial = o menor (decisão do orquestrador)",
+   "exigeInteracao": false,
+   "candidato": "T3-3",
+   "ordemDoSeletor": 3,
+   "rules": [
+    "govbr-3.7.0-component-breadcrumb-7c8bed7156ec"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "inicial"
+  },
+  {
+   "id": "F2-08",
+   "tipo": "T3",
+   "subtipo": null,
+   "nivel": "dificil",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "nivelRegra": "seletor = conferente",
+   "exigeInteracao": false,
+   "candidato": "T3-4",
+   "ordemDoSeletor": 4,
+   "rules": [
+    "govbr-3.7.0-component-tab-b717690fd662"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "tipografia",
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "inicial"
+  },
+  {
+   "id": "F2-09",
+   "tipo": "T3",
+   "subtipo": null,
+   "nivel": "muito-dificil",
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": "muito difícil",
+   "nivelRegra": "seletor = conferente",
+   "exigeInteracao": true,
+   "candidato": "T3-5",
+   "ordemDoSeletor": 5,
+   "rules": [
+    "govbr-3.7.0-component-select-bc89a8785c08"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "Rolar até a paginação → clicar no campo \"Exibir\" (ou \"Página\") para abrir a lista."
+  },
+  {
+   "id": "F2-10",
+   "tipo": "T4",
+   "subtipo": null,
+   "nivel": "dificil",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "nivelRegra": "seletor = conferente",
+   "exigeInteracao": false,
+   "candidato": "T4-1",
+   "ordemDoSeletor": 1,
+   "rules": [],
+   "semIdMapeado": true,
+   "clausula": {
+    "arquivo": "fundamentos-visuais/estados.md",
+    "trecho": "| background/foreground | opacity  | `--surface-opacity-md`  |"
+   },
+   "categories": [
+    "comportamento",
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "inicial (aba Tramitando, perfil Coordenador: 8 botões \"Desassociar\" desabilitados nas linhas cujo status não é \"Em análise analista\")"
+  },
+  {
+   "id": "F2-11",
+   "tipo": "T4",
+   "subtipo": null,
+   "nivel": "medio",
+   "nivelDoSeletor": "médio",
+   "nivelDoConferente": "médio",
+   "nivelRegra": "seletor = conferente",
+   "exigeInteracao": false,
+   "candidato": "T4-2",
+   "ordemDoSeletor": 2,
+   "rules": [
+    "govbr-3.7.0-component-tab-50ac44341161"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "comportamento"
+   ],
+   "classe": "ds",
+   "estado": "inicial"
+  },
+  {
+   "id": "F2-12",
+   "tipo": "T4",
+   "subtipo": null,
+   "nivel": "muito-dificil",
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": "muito difícil",
+   "nivelRegra": "seletor = conferente",
+   "exigeInteracao": true,
+   "candidato": "T4-3",
+   "ordemDoSeletor": 3,
+   "rules": [],
+   "semIdMapeado": true,
+   "clausula": {
+    "arquivo": "fundamentos-visuais/estados.md",
+    "trecho": "| background (Sobre um fundo Claro)  | opacity  | `--surface-opacity-xs` |"
+   },
+   "categories": [
+    "comportamento",
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "Rolar até o fim da página → passar o mouse sobre \"Voltar\"."
+  }
+ ],
+ "reserva": [
+  {
+   "id": "R-01",
+   "posicaoNaReservaDoTipo": 1,
+   "tipo": "T2",
+   "subtipo": null,
+   "nivel": "dificil",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "nivelRegra": "seletor = conferente",
+   "exigeInteracao": false,
+   "candidato": "T2-6",
+   "ordemDoSeletor": 6,
+   "rules": [
+    "govbr-3.7.0-component-header-549ba16b09f4"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "inicial"
+  },
+  {
+   "id": "R-02",
+   "posicaoNaReservaDoTipo": 1,
+   "tipo": "T3",
+   "subtipo": null,
+   "nivel": "dificil",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "nivelRegra": "seletor = conferente",
+   "exigeInteracao": false,
+   "candidato": "T3-6",
+   "ordemDoSeletor": 6,
+   "rules": [
+    "govbr-3.7.0-component-input-1aec5265dab8"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "componente",
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "inicial (campo de busca vazio; com texto o botão vira \"Limpar\")"
+  },
+  {
+   "id": "R-03",
+   "posicaoNaReservaDoTipo": 1,
+   "tipo": "T4",
+   "subtipo": null,
+   "nivel": "muito-dificil",
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": "muito difícil",
+   "nivelRegra": "seletor = conferente",
+   "exigeInteracao": true,
+   "candidato": "T4-4",
+   "ordemDoSeletor": 4,
+   "rules": [],
+   "semIdMapeado": true,
+   "clausula": {
+    "arquivo": "fundamentos-visuais/estados.md",
+    "trecho": "| border (Sobre um fundo Claro)  | color    | `--gold-vivid-40` |"
+   },
+   "categories": [
+    "comportamento",
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "Clicar no campo de busca (ou chegar a ele por Tab)."
+  },
+  {
+   "id": "R-04",
+   "posicaoNaReservaDoTipo": 2,
+   "tipo": "T4",
+   "subtipo": null,
+   "nivel": "muito-dificil",
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": "muito difícil",
+   "nivelRegra": "seletor = conferente",
+   "exigeInteracao": true,
+   "candidato": "T4-5",
+   "ordemDoSeletor": 5,
+   "rules": [
+    "govbr-3.7.0-component-select-4a1c354b2277"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "comportamento"
+   ],
+   "classe": "ds",
+   "estado": "Rolar até a paginação → abrir \"Exibir\" → passar o mouse sobre um item não selecionado (ex.: \"25\")."
+  }
+ ]
+}

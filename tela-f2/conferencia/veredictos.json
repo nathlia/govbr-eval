@@ -1,0 +1,1268 @@
+{
+ "candidatos": [
+  {
+   "id": "T1-1",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Cláusula literal (Setas de Navegação, Obrigatório; reforçada em Tipos: \"apenas as Setas de Navegação são obrigatórias\"). Hoje: 2 setas. Depois: só \"Página seguinte\". Remoção estática, sem quebra funcional (1 página).",
+   "tipoDoSeletor": "T1",
+   "subtipoDoSeletor": "anatomia",
+   "tipoDoConferente": "T1",
+   "subtipoDoConferente": "anatomia",
+   "nivelDoSeletor": "médio",
+   "nivelDoConferente": "médio",
+   "discordaNivel": false,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": [
+     {
+      "label": "Página anterior",
+      "disabled": true,
+      "w": 40,
+      "h": 40,
+      "border-radius": "50%"
+     },
+     {
+      "label": "Página seguinte",
+      "disabled": true,
+      "w": 40,
+      "h": 40,
+      "border-radius": "50%"
+     }
+    ],
+    "depois": [
+     {
+      "label": "Página seguinte",
+      "disabled": true,
+      "w": 40,
+      "h": 40,
+      "border-radius": "50%"
+     }
+    ]
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T1-2",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Propriedade obrigatória \"content\" do Avatar. Hoje: 40×40, raio 50%, flex. Depois: 18,2×40, raio 0, display block — avatar deformado, visível a qualquer pessoa.",
+   "tipoDoSeletor": "T1",
+   "subtipoDoSeletor": "marcacao",
+   "tipoDoConferente": "T1",
+   "subtipoDoConferente": "marcacao",
+   "nivelDoSeletor": "fácil",
+   "nivelDoConferente": "fácil",
+   "discordaNivel": false,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": {
+     "classe": "content bg-orange-vivid-30 text-pure-0",
+     "w": 40,
+     "h": 40,
+     "display": "flex",
+     "border-radius": "50%",
+     "background-color": "rgb(255, 140, 0)",
+     "font-size": "24.192px"
+    },
+    "depois": {
+     "classe": "bg-orange-vivid-30 text-pure-0",
+     "w": 18.2,
+     "h": 40,
+     "display": "block",
+     "border-radius": "0px",
+     "background-color": "rgb(255, 140, 0)",
+     "font-size": "24.192px"
+    }
+   },
+   "colisoes": [
+    [
+     "T1-2",
+     "T2-2"
+    ]
+   ]
+  },
+  {
+   "id": "T1-3",
+   "veredito": "REPROVADO",
+   "categoriaReprovacao": "cláusula",
+   "motivo": "A cláusula é contradita na mesma seção (header__designer.md, linhas 115 e 117): \"é possível utilizar texto ou outro elemento para substituí-lo\" e \"Caso não deseje utilizar o título textual, opte pelo elemento Logo\". Depois da mudança o header mantém o logo (medido: logo presente), o que a documentação admite como substituto do título.",
+   "tipoDoSeletor": "T1",
+   "subtipoDoSeletor": "anatomia",
+   "tipoDoConferente": "T1",
+   "subtipoDoConferente": "anatomia",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "discordaNivel": false,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": {
+     "titulo": "Plataforma Nacional da Indústria do Pescado",
+     "tituloCss": {
+      "w": 500.8,
+      "h": 35.1,
+      "font-size": "24.192px",
+      "font-weight": "400",
+      "color": "rgb(51, 51, 51)",
+      "text-transform": "none"
+     },
+     "logo": true,
+     "logoImg": true,
+     "assinatura": "Ministério da Pesca e Aquicultura"
+    },
+    "depois": {
+     "titulo": null,
+     "tituloCss": null,
+     "logo": true,
+     "logoImg": true,
+     "assinatura": "Ministério da Pesca e Aquicultura"
+    }
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T1-4",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Rótulo obrigatório no tipo padrão (exceção só no circular). Hoje: texto \"Exportar\", 117,7 px. Depois: só ícone fa-file-export, 78 px, ainda pílula (padrão). Nome acessível \"Exportar\" preservado (árvore AX via CDP, 0 botões sem nome antes e depois) — não introduz falha de acessibilidade geral.",
+   "tipoDoSeletor": "T1",
+   "subtipoDoSeletor": "anatomia",
+   "tipoDoConferente": "T1",
+   "subtipoDoConferente": "anatomia",
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "discordaNivel": false,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": {
+     "texto": "Exportar",
+     "ariaLabel": "",
+     "classe": "br-button secondary middle",
+     "icone": null,
+     "hostTitle": null,
+     "w": 117.7,
+     "h": 40,
+     "border-radius": "1680px",
+     "padding-left": "24px",
+     "font-size": "16.8px"
+    },
+    "depois": {
+     "texto": "",
+     "ariaLabel": "",
+     "classe": "br-button secondary middle",
+     "icone": "fas fa-file-export mr-1",
+     "hostTitle": "Exportar",
+     "w": 78,
+     "h": 40,
+     "border-radius": "1680px",
+     "padding-left": "24px",
+     "font-size": "16.8px"
+    },
+    "acessibilidade": {
+     "snapshotNo": null,
+     "botoesComNomeExportar": 1
+    },
+    "arvoreAcessibilidade": {
+     "antes": {
+      "exportar": [
+       "Exportar"
+      ],
+      "botoesSemNome": 0
+     },
+     "depois": {
+      "exportar": [
+       "Exportar"
+      ],
+      "botoesSemNome": 0
+     }
+    }
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T1-5",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Classe obrigatória br-button. No estado (filtro escolhido): hoje 28×28, raio 50%, fundo #1351b4. Depois: botão nativo 40×30,3, raio 0, fundo #f0f0f0, borda outset. A remoção do filtro continua funcionando (testado). Nível: a quebra é evidente a qualquer pessoa depois de chegar ao estado; não precisa da regra do DS.",
+   "tipoDoSeletor": "T1",
+   "subtipoDoSeletor": "marcacao",
+   "tipoDoConferente": "T1",
+   "subtipoDoConferente": "marcacao",
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": "fácil",
+   "discordaNivel": true,
+   "exigeInteracao": true,
+   "medidas": {
+    "opcoesVistas": [
+     "DIV.br-item|Aguardando análise",
+     "DIV.br-radio py-2 px-3|Aguardando análise",
+     "LABEL.|Aguardando análise",
+     "DIV.br-item|Aguardando SFPA",
+     "DIV.br-radio py-2 px-3|Aguardando SFPA",
+     "LABEL.|Aguardando SFPA",
+     "DIV.br-item|Assinatura Tec. Responsável",
+     "DIV.br-radio py-2 px-3|Assinatura Tec. Responsável"
+    ],
+    "antes": {
+     "classe": "br-button inverted circle",
+     "tag": "Aguardando análise",
+     "w": 28,
+     "h": 28,
+     "border-radius": "50%",
+     "background-color": "rgb(19, 81, 180)",
+     "border-top-style": "none",
+     "border-top-width": "0px",
+     "color": "rgb(255, 255, 255)"
+    },
+    "depois": {
+     "classe": "inverted circle",
+     "tag": "Aguardando análise",
+     "w": 40,
+     "h": 30.3,
+     "border-radius": "0px",
+     "background-color": "rgb(240, 240, 240)",
+     "border-top-style": "outset",
+     "border-top-width": "2px",
+     "color": "rgb(0, 0, 0)"
+    },
+    "funcaoRemoverAindaOk": false
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T1-6",
+   "veredito": "REPROVADO",
+   "categoriaReprovacao": "não observável",
+   "motivo": "Sem efeito observável: estilos computados do contêiner, th, td e tabela idênticos antes/depois e captura de página inteira idêntica byte a byte. Os estilos da tabela vêm de regras \"td, th\" sem o seletor .br-table.",
+   "tipoDoSeletor": "T1",
+   "subtipoDoSeletor": "marcacao",
+   "tipoDoConferente": null,
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": null,
+   "discordaNivel": false,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": {
+     "classeWrapper": "br-table",
+     "wrapper": {
+      "w": 1096,
+      "h": 1318.8,
+      "overflow-x": "visible",
+      "display": "block",
+      "position": "static",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px"
+     },
+     "th": {
+      "w": 93.8,
+      "h": 72.6,
+      "background-color": "rgb(240, 240, 240)",
+      "padding-top": "16px",
+      "padding-left": "24px",
+      "color": "rgb(0, 94, 162)",
+      "font-size": "14px"
+     },
+     "td": {
+      "w": 93.8,
+      "h": 154.3,
+      "padding-top": "16px",
+      "padding-left": "24px",
+      "color": "rgb(51, 51, 51)",
+      "font-size": "14px",
+      "border-bottom-color": "rgb(204, 204, 204)"
+     },
+     "table": {
+      "w": 1150.3,
+      "h": 1318.8,
+      "width": "1150.3px",
+      "border-collapse": "collapse"
+     }
+    },
+    "depois": {
+     "classeWrapper": "",
+     "wrapper": {
+      "w": 1096,
+      "h": 1318.8,
+      "overflow-x": "visible",
+      "display": "block",
+      "position": "static",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px"
+     },
+     "th": {
+      "w": 93.8,
+      "h": 72.6,
+      "background-color": "rgb(240, 240, 240)",
+      "padding-top": "16px",
+      "padding-left": "24px",
+      "color": "rgb(0, 94, 162)",
+      "font-size": "14px"
+     },
+     "td": {
+      "w": 93.8,
+      "h": 154.3,
+      "padding-top": "16px",
+      "padding-left": "24px",
+      "color": "rgb(51, 51, 51)",
+      "font-size": "14px",
+      "border-bottom-color": "rgb(204, 204, 204)"
+     },
+     "table": {
+      "w": 1150.3,
+      "h": 1318.8,
+      "width": "1150.3px",
+      "border-collapse": "collapse"
+     }
+    },
+    "capturaIdenticaBytes": true
+   },
+   "colisoes": [
+    [
+     "T1-6",
+     "T2-1"
+    ],
+    [
+     "T1-6",
+     "T3-1"
+    ]
+   ]
+  },
+  {
+   "id": "T2-1",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Linhas (densidade padrão) padding-top --spacing-scale-2x. Hoje 16px. Depois 10px (fora da escala servida 0/4/8/12/16/20/24…). Linha 1: 154,3→142,3 px. Nível: diferença de 6 px por lado em linhas de ~150 px não se percebe comparando com o cabeçalho; só contra a regra.",
+   "tipoDoSeletor": "T2",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T2",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "médio",
+   "nivelDoConferente": "difícil",
+   "discordaNivel": true,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": {
+     "td": {
+      "w": 93.8,
+      "h": 154.3,
+      "padding-top": "16px",
+      "padding-bottom": "16px",
+      "padding-left": "24px"
+     },
+     "linha1": 154.3,
+     "th": {
+      "w": 93.8,
+      "h": 72.6,
+      "padding-top": "16px"
+     }
+    },
+    "depois": {
+     "td": {
+      "w": 93.8,
+      "h": 142.3,
+      "padding-top": "10px",
+      "padding-bottom": "10px",
+      "padding-left": "24px"
+     },
+     "linha1": 142.3,
+     "th": {
+      "w": 93.8,
+      "h": 72.6,
+      "padding-top": "16px"
+     }
+    }
+   },
+   "colisoes": [
+    [
+     "T1-6",
+     "T2-1"
+    ]
+   ]
+  },
+  {
+   "id": "T2-2",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Superfície do avatar restrita à paleta do DS. Hoje #ff8c00 (orange-vivid-30). Depois #f5871f, ausente dos 491 tokens hexadecimais do :root servido (conferido de novo).",
+   "tipoDoSeletor": "T2",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T2",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "discordaNivel": false,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": {
+     "w": 40,
+     "h": 40,
+     "background-color": "rgb(255, 140, 0)",
+     "border-radius": "50%"
+    },
+    "depois": {
+     "w": 40,
+     "h": 40,
+     "background-color": "rgb(245, 135, 31)",
+     "border-radius": "50%"
+    }
+   },
+   "colisoes": [
+    [
+     "T1-2",
+     "T2-2"
+    ]
+   ]
+  },
+  {
+   "id": "T2-3",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "H2 Size --font-size-scale-up-05. Hoje 34,832 px (≥576 px). Depois 32 px, fora da escala (29,036 / 34,832).",
+   "tipoDoSeletor": "T2",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T2",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "discordaNivel": false,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": {
+     "w": 954.3,
+     "h": 40,
+     "font-size": "34.832px",
+     "font-weight": "700",
+     "color": "rgb(0, 94, 162)",
+     "line-height": "40.0568px"
+    },
+    "depois": {
+     "w": 954.3,
+     "h": 36.8,
+     "font-size": "32px",
+     "font-weight": "700",
+     "color": "rgb(0, 94, 162)",
+     "line-height": "36.8px"
+    }
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T2-4",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Label da Tag de Interação --font-size-scale-up-01. Hoje 16,8 px (igual às tags vizinhas). Depois 15 px, fora da escala (14 / 16,8).",
+   "tipoDoSeletor": "T2",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T2",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "médio",
+   "nivelDoConferente": "médio",
+   "discordaNivel": false,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": {
+     "meus": {
+      "w": 127.1,
+      "h": 24.3,
+      "font-size": "16.8px",
+      "font-weight": "500"
+     },
+     "vizinha": {
+      "w": 49.4,
+      "h": 24.3,
+      "font-size": "16.8px",
+      "font-weight": "500"
+     }
+    },
+    "depois": {
+     "meus": {
+      "w": 113.6,
+      "h": 21.8,
+      "font-size": "15px",
+      "font-weight": "500"
+     },
+     "vizinha": {
+      "w": 49.4,
+      "h": 24.3,
+      "font-size": "16.8px",
+      "font-weight": "500"
+     }
+    }
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T2-5",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Divider fundo claro --gray-20. Hoje #ccc. Depois #d6d6d6, ausente da paleta servida. Diferença sutil, mas mensurável.",
+   "tipoDoSeletor": "T2",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T2",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "discordaNivel": false,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": {
+     "classe": "br-divider md mt-0 mb-0",
+     "w": 1160,
+     "h": 2,
+     "border-top-color": "rgb(204, 204, 204)",
+     "border-top-width": "2px",
+     "border-top-style": "solid",
+     "background-color": "rgba(0, 0, 0, 0)"
+    },
+    "depois": {
+     "classe": "br-divider md mt-0 mb-0",
+     "w": 1160,
+     "h": 2,
+     "border-top-color": "rgb(214, 214, 214)",
+     "border-top-width": "2px",
+     "border-top-style": "solid",
+     "background-color": "rgba(0, 0, 0, 0)"
+    }
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T2-6",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Sombra da superfície do Header --surface-shadow-sm. Hoje 0 1px 6px rgba(0,0,0,.16). Depois 0 2px 12px rgba(0,0,0,.3): offset 2 px e blur 12 px fora dos tokens (0/1/3/6/9); não compõe nenhum --surface-shadow-*. Regra reproduzida com o atributo de encapsulamento real.",
+   "tipoDoSeletor": "T2",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T2",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "discordaNivel": false,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": {
+     "w": 1280,
+     "h": 115.1,
+     "box-shadow": "rgba(0, 0, 0, 0.16) 0px 1px 6px 0px",
+     "position": "relative"
+    },
+    "depois": {
+     "w": 1280,
+     "h": 115.1,
+     "box-shadow": "rgba(0, 0, 0, 0.3) 0px 2px 12px 0px",
+     "position": "relative"
+    },
+    "aposRolar": {
+     "w": 1280,
+     "h": 115.1,
+     "box-shadow": "rgba(0, 0, 0, 0.3) 0px 2px 12px 0px",
+     "position": "relative"
+    }
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T3-1",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Header da Tabela background --gray-5. Hoje #f0f0f0. Depois #f8f8f8 = --gray-2 (token do DS).",
+   "tipoDoSeletor": "T3",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T3",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "discordaNivel": false,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": {
+     "w": 93.8,
+     "h": 72.6,
+     "background-color": "rgb(240, 240, 240)",
+     "color": "rgb(0, 94, 162)"
+    },
+    "depois": {
+     "w": 93.8,
+     "h": 72.6,
+     "background-color": "rgb(248, 248, 248)",
+     "color": "rgb(0, 94, 162)"
+    }
+   },
+   "colisoes": [
+    [
+     "T1-6",
+     "T3-1"
+    ]
+   ]
+  },
+  {
+   "id": "T3-2",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Arredondamento da Tag de Interação --surface-rounder-sm. Hoje 4 px (vizinhas 4 px). Depois 16 px = --surface-rounder-lg.",
+   "tipoDoSeletor": "T3",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T3",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "médio",
+   "nivelDoConferente": "médio",
+   "discordaNivel": false,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": {
+     "meus": {
+      "w": 179.1,
+      "h": 32,
+      "border-radius": "4px"
+     },
+     "vizinha": {
+      "w": 127.4,
+      "h": 32,
+      "border-radius": "4px"
+     }
+    },
+    "depois": {
+     "meus": {
+      "w": 179.1,
+      "h": 32,
+      "border-radius": "16px"
+     },
+     "vizinha": {
+      "w": 127.4,
+      "h": 32,
+      "border-radius": "4px"
+     }
+    }
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T3-3",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Ícone do Botão Terciário Home --blue-warm-vivid-70. Hoje #1351b4. Depois #005ea2 = --blue-vivid-60 (token). O texto do link Home acompanha; o crumb \"Processos\" não muda. Nível: dois azuis próximos; não se nota por comparação, só contra a regra.",
+   "tipoDoSeletor": "T3",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T3",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "médio",
+   "nivelDoConferente": "difícil",
+   "discordaNivel": true,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": {
+     "home": {
+      "w": 24,
+      "h": 16,
+      "color": "rgb(19, 81, 180)"
+     },
+     "links": [
+      {
+       "t": "Home",
+       "c": "rgb(19, 81, 180)"
+      }
+     ],
+     "crumbs": [
+      {
+       "cls": "crumb home",
+       "t": "Home",
+       "c": "rgb(51, 51, 51)"
+      },
+      {
+       "cls": "crumb",
+       "t": "Processos",
+       "c": "rgb(51, 51, 51)"
+      }
+     ]
+    },
+    "depois": {
+     "home": {
+      "w": 24,
+      "h": 16,
+      "color": "rgb(0, 94, 162)"
+     },
+     "links": [
+      {
+       "t": "Home",
+       "c": "rgb(0, 94, 162)"
+      }
+     ],
+     "crumbs": [
+      {
+       "cls": "crumb home",
+       "t": "Home",
+       "c": "rgb(51, 51, 51)"
+      },
+      {
+       "cls": "crumb",
+       "t": "Processos",
+       "c": "rgb(51, 51, 51)"
+      }
+     ]
+    }
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T3-4",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Rótulo da Tab --font-size-scale-up-02. Hoje 20,16 px nos 3 rótulos. Depois 16,8 px = --font-size-scale-up-01.",
+   "tipoDoSeletor": "T3",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T3",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "discordaNivel": false,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": [
+     {
+      "t": "Aguardando análise",
+      "w": 236.3,
+      "h": 40.2,
+      "font-size": "20.16px",
+      "font-weight": "500"
+     },
+     {
+      "t": "Tramitando",
+      "w": 155.4,
+      "h": 40.2,
+      "font-size": "20.16px",
+      "font-weight": "500"
+     },
+     {
+      "t": "Concluídos",
+      "w": 154,
+      "h": 40.2,
+      "font-size": "20.16px",
+      "font-weight": "500"
+     }
+    ],
+    "depois": [
+     {
+      "t": "Aguardando análise",
+      "w": 204.8,
+      "h": 36.8,
+      "font-size": "16.8px",
+      "font-weight": "500"
+     },
+     {
+      "t": "Tramitando",
+      "w": 137.4,
+      "h": 36.8,
+      "font-size": "16.8px",
+      "font-weight": "500"
+     },
+     {
+      "t": "Concluídos",
+      "w": 136.3,
+      "h": 36.8,
+      "font-size": "16.8px",
+      "font-weight": "500"
+     }
+    ]
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T3-5",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Sombra da superfície do Select --surface-shadow-md. Com a lista aberta: hoje 0 3px 6px rgba(0,0,0,.16). Depois 0 6px 6px = --surface-shadow-lg. O estilo inline persistiu ao abrir a lista.",
+   "tipoDoSeletor": "T3",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T3",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": "muito difícil",
+   "discordaNivel": false,
+   "exigeInteracao": true,
+   "medidas": {
+    "antes": {
+     "w": 70,
+     "h": 212.2,
+     "box-shadow": "rgba(0, 0, 0, 0.16) 0px 3px 6px 0px",
+     "display": "block",
+     "aberta": true
+    },
+    "depois": {
+     "w": 70,
+     "h": 212.2,
+     "box-shadow": "rgba(0, 0, 0, 0.16) 0px 6px 6px 0px",
+     "display": "block",
+     "aberta": true
+    },
+    "estiloPersistiu": ";box-shadow: var(--surface-shadow-lg)"
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T3-6",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Ação interna do Input: Button circular \"sempre com densidade alta\". Hoje 32×32 (--button-small). Depois 40×40 = --button-medium, ultrapassando o campo de 32 px (416–456 vs 418–450); o círculo aparece no hover.",
+   "tipoDoSeletor": "T3",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T3",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "discordaNivel": false,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": {
+     "botao": {
+      "w": 32,
+      "h": 32,
+      "--button-size": "32px",
+      "border-radius": "50%",
+      "background-color": "rgba(0, 0, 0, 0)"
+     },
+     "campo": {
+      "h": 32,
+      "top": 418.265625,
+      "bottom": 450.265625
+     },
+     "botaoTopBottom": {
+      "top": 420.265625,
+      "bottom": 452.265625
+     }
+    },
+    "depois": {
+     "botao": {
+      "w": 40,
+      "h": 40,
+      "--button-size": "40px",
+      "border-radius": "50%",
+      "background-color": "rgba(0, 0, 0, 0)"
+     },
+     "campo": {
+      "h": 32,
+      "top": 418.265625,
+      "bottom": 450.265625
+     },
+     "botaoTopBottom": {
+      "top": 416.265625,
+      "bottom": 456.265625
+     }
+    }
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T4-1",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Estado desabilitado opacity --surface-opacity-md. Hoje 0,45 nos 8 \"Desassociar\" desabilitados (habilitado = 1). Depois 1 (cursor continua not-allowed). \"Limpar filtros\" (outro componente) continua 0,45.",
+   "tipoDoSeletor": "T4",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T4",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "difícil",
+   "nivelDoConferente": "difícil",
+   "discordaNivel": false,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": {
+     "nDesab": 8,
+     "titulos": [
+      "Desassociar processo do analista responsável"
+     ],
+     "desab": {
+      "host": "0.45",
+      "interno": {
+       "w": 72,
+       "h": 40,
+       "opacity": "0.45",
+       "cursor": "not-allowed"
+      }
+     },
+     "habil": {
+      "host": "1",
+      "interno": {
+       "w": 72,
+       "h": 40,
+       "opacity": "1",
+       "cursor": "pointer"
+      }
+     }
+    },
+    "depois": {
+     "nDesab": 8,
+     "titulos": [
+      "Desassociar processo do analista responsável"
+     ],
+     "desab": {
+      "host": "1",
+      "interno": {
+       "w": 72,
+       "h": 40,
+       "opacity": "1",
+       "cursor": "not-allowed"
+      }
+     },
+     "habil": {
+      "host": "1",
+      "interno": {
+       "w": 72,
+       "h": 40,
+       "opacity": "1",
+       "cursor": "pointer"
+      }
+     }
+    },
+    "limparFiltrosOpacity": "0.45"
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T4-2",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Item da Tab Ativo mostra em qual aba o usuário está. Reproduzido desde a inicialização reescrevendo no navegador o template compilado servido: \"Aguardando análise\" fica ativo enquanto o conteúdo continua o de Tramitando (tag \"Meus processos\", status em tramitação). A navegação entre abas continua funcionando.",
+   "tipoDoSeletor": "T4",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T4",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "médio",
+   "nivelDoConferente": "médio",
+   "discordaNivel": false,
+   "exigeInteracao": false,
+   "medidas": {
+    "antes": {
+     "lis": [
+      {
+       "t": "Aguardando análise",
+       "ativo": false,
+       "cor": "rgb(51, 51, 51)"
+      },
+      {
+       "t": "Tramitando",
+       "ativo": true,
+       "cor": "rgb(12, 50, 111)"
+      },
+      {
+       "t": "Concluídos",
+       "ativo": false,
+       "cor": "rgb(51, 51, 51)"
+      }
+     ],
+     "ths": [
+      "Aberto há",
+      "",
+      "Nº Processo",
+      "Tipo de Processo",
+      "Solicitante",
+      "Analista",
+      "Téc. Adm.",
+      "Status",
+      ""
+     ],
+     "meus": true,
+     "status": [
+      "Em análise analista",
+      "Em análise supervisor",
+      "Aguarda complementos",
+      "Em revisão analista"
+     ],
+     "itens": [
+      {
+       "id": "AGUARDANDO_ANALISE",
+       "isActive": null
+      },
+      {
+       "id": "TRAMITANDO",
+       "isActive": "true"
+      },
+      {
+       "id": "HISTORICO",
+       "isActive": null
+      }
+     ],
+     "trocouNoBundle": false,
+     "aposClicarConcluidos": [
+      "Concluídos",
+      "Data/Hora/Nº Processo/Tipo de Processo/Solicitante/Analista/Téc. Adm./Status/"
+     ]
+    },
+    "depois": {
+     "lis": [
+      {
+       "t": "Aguardando análise",
+       "ativo": true,
+       "cor": "rgb(12, 50, 111)"
+      },
+      {
+       "t": "Tramitando",
+       "ativo": false,
+       "cor": "rgb(51, 51, 51)"
+      },
+      {
+       "t": "Concluídos",
+       "ativo": false,
+       "cor": "rgb(51, 51, 51)"
+      }
+     ],
+     "ths": [
+      "Aberto há",
+      "",
+      "Nº Processo",
+      "Tipo de Processo",
+      "Solicitante",
+      "Analista",
+      "Téc. Adm.",
+      "Status",
+      ""
+     ],
+     "meus": true,
+     "status": [
+      "Em análise analista",
+      "Em análise supervisor",
+      "Aguarda complementos",
+      "Em revisão analista"
+     ],
+     "itens": [
+      {
+       "id": "AGUARDANDO_ANALISE",
+       "isActive": null
+      },
+      {
+       "id": "TRAMITANDO",
+       "isActive": null
+      },
+      {
+       "id": "HISTORICO",
+       "isActive": null
+      }
+     ],
+     "trocouNoBundle": true,
+     "aposClicarConcluidos": [
+      "Concluídos",
+      "Data/Hora/Nº Processo/Tipo de Processo/Solicitante/Analista/Téc. Adm./Status/"
+     ]
+    }
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T4-3",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Hover: overlay da cor do primeiro plano com --surface-opacity-xs. Hoje rgba(19,81,180,.16) em hover. Depois rgba(19,81,180,0); \"Exportar\" mantém .16.",
+   "tipoDoSeletor": "T4",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T4",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": "muito difícil",
+   "discordaNivel": false,
+   "exigeInteracao": true,
+   "medidas": {
+    "antes": {
+     "repouso": {
+      "w": 97.3,
+      "h": 40,
+      "background-image": "none",
+      "cursor": "pointer"
+     },
+     "hover": {
+      "w": 97.3,
+      "h": 40,
+      "background-image": "linear-gradient(rgba(19, 81, 180, 0.16), rgba(19, 81, 180, 0.16))",
+      "cursor": "pointer"
+     }
+    },
+    "depois": {
+     "repouso": {
+      "w": 97.3,
+      "h": 40,
+      "background-image": "none",
+      "cursor": "pointer"
+     },
+     "hover": {
+      "w": 97.3,
+      "h": 40,
+      "background-image": "linear-gradient(rgba(19, 81, 180, 0), rgba(19, 81, 180, 0))",
+      "cursor": "pointer"
+     }
+    },
+    "exportarHover": "linear-gradient(rgba(19, 81, 180, 0.16), rgba(19, 81, 180, 0.16))"
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T4-4",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Foco (fundo claro) borda --gold-vivid-40. Hoje borda e anel rgb(194,133,12). Depois rgb(19,81,180). O foco continua visível (2 px): não vira falha de acessibilidade geral.",
+   "tipoDoSeletor": "T4",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T4",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": "muito difícil",
+   "discordaNivel": false,
+   "exigeInteracao": true,
+   "medidas": {
+    "antes": {
+     "focado": true,
+     "w": 233,
+     "h": 32,
+     "border-top-color": "rgb(194, 133, 12)",
+     "box-shadow": "rgb(194, 133, 12) 0px 0px 0px 2px",
+     "outline-color": "rgb(51, 51, 51)",
+     "outline-style": "none",
+     "outline-width": "3px"
+    },
+    "depois": {
+     "focado": true,
+     "w": 233,
+     "h": 32,
+     "border-top-color": "rgb(19, 81, 180)",
+     "box-shadow": "rgb(19, 81, 180) 0px 0px 0px 2px",
+     "outline-color": "rgb(51, 51, 51)",
+     "outline-style": "none",
+     "outline-width": "3px"
+    }
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T4-5",
+   "veredito": "APROVADO",
+   "categoriaReprovacao": null,
+   "motivo": "Hover do item da list do Select. Hoje overlay rgba(51,51,51,.16) sobre \"25\". Depois rgba(51,51,51,0).",
+   "tipoDoSeletor": "T4",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": "T4",
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": "muito difícil",
+   "discordaNivel": false,
+   "exigeInteracao": true,
+   "medidas": {
+    "antes": {
+     "texto": "25",
+     "hoverAtivo": true,
+     "w": 70,
+     "h": 53.3,
+     "background-image": "linear-gradient(rgba(51, 51, 51, 0.16), rgba(51, 51, 51, 0.16))",
+     "--hover": "0.16",
+     "cursor": "auto"
+    },
+    "depois": {
+     "texto": "25",
+     "hoverAtivo": true,
+     "w": 70,
+     "h": 53.3,
+     "background-image": "linear-gradient(rgba(51, 51, 51, 0), rgba(51, 51, 51, 0))",
+     "--hover": "0",
+     "cursor": "auto"
+    }
+   },
+   "colisoes": []
+  },
+  {
+   "id": "T4-6",
+   "veredito": "REPROVADO",
+   "categoriaReprovacao": "não observável",
+   "motivo": "O \"depois\" descrito não acontece: o fundo do item selecionado fica transparente, mas o rótulo continua branco (label rgb(255,255,255) sobre lista branca), e o \"10\" desaparece da lista. Não fica \"indistinguível dos demais\", como o candidato diz. O efeito real é texto invisível, que também cai em contraste, fora do escopo DS.",
+   "tipoDoSeletor": "T4",
+   "subtipoDoSeletor": null,
+   "tipoDoConferente": null,
+   "subtipoDoConferente": null,
+   "nivelDoSeletor": "muito difícil",
+   "nivelDoConferente": null,
+   "discordaNivel": false,
+   "exigeInteracao": true,
+   "medidas": {
+    "antes": {
+     "sel": {
+      "t": "10",
+      "w": 70,
+      "h": 53.3,
+      "background-color": "rgb(38, 112, 232)",
+      "color": "rgb(255, 255, 255)"
+     },
+     "radioMarcado": true,
+     "radioVisivel": "none|block",
+     "outro": {
+      "w": 70,
+      "h": 53.3,
+      "background-color": "rgb(255, 255, 255)",
+      "color": "rgb(51, 51, 51)"
+     },
+     "campo": ""
+    },
+    "depois": {
+     "sel": {
+      "t": "10",
+      "w": 70,
+      "h": 53.3,
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(51, 51, 51)"
+     },
+     "radioMarcado": true,
+     "radioVisivel": "none|block",
+     "outro": {
+      "w": 70,
+      "h": 53.3,
+      "background-color": "rgb(255, 255, 255)",
+      "color": "rgb(51, 51, 51)"
+     },
+     "campo": ""
+    },
+    "rotulo": {
+     "antes": {
+      "itemColor": "rgb(255, 255, 255)",
+      "itemBg": "rgb(38, 112, 232)",
+      "labelColor": "rgb(255, 255, 255)",
+      "listBg": "rgb(255, 255, 255)"
+     },
+     "depois": {
+      "itemColor": "rgb(51, 51, 51)",
+      "itemBg": "rgba(0, 0, 0, 0)",
+      "labelColor": "rgb(255, 255, 255)",
+      "listBg": "rgb(255, 255, 255)"
+     }
+    }
+   },
+   "colisoes": []
+  }
+ ],
+ "colisoes": [
+  {
+   "par": [
+    "T1-2",
+    "T2-2"
+   ],
+   "motivo": "Mesmo elemento (span.content do avatar), mesmo atributo class na mesma linha. T1-2 desfaz a superfície circular cuja cor T2-2 altera.",
+   "entreAprovados": true
+  },
+  {
+   "par": [
+    "T1-6",
+    "T2-1"
+   ],
+   "motivo": "T1-6 remove .br-table, que o seletor de T2-1 usa: construído junto, T2-1 deixa de pegar.",
+   "entreAprovados": false
+  },
+  {
+   "par": [
+    "T1-6",
+    "T3-1"
+   ],
+   "motivo": "Idem: o seletor de T3-1 depende de .br-table.",
+   "entreAprovados": false
+  }
+ ],
+ "contatosSemColisao": [
+  "T2-4 e T3-2: mesma tag \"Meus processos\", mas elementos e propriedades diferentes (fonte do label e raio da superfície). Não é colisão.",
+  "T3-5 e T4-5 (e T4-6, reprovado): mesmo template/lista do select, mas elementos e propriedades diferentes.",
+  "T3-4 e T4-2: mesmo br-tab, mas propriedades diferentes (tamanho do rótulo e item ativo).",
+  "T3-6 e T4-4: mesmo campo de busca, mas elementos diferentes (botão de ação interna e input interno)."
+ ]
+}
