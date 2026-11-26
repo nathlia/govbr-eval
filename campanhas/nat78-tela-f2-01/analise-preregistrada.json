@@ -326,7 +326,7 @@
     },
     "controle1Cobertura": {
       "regra": "errata 1, controle 1 (sem modelo): com a referência congelada, roda-se a linha de base e lê-se só a contagem, por tipo, de semeados que a varredura sem guia do oráculo marca; a F2 segue se pelo menos um for marcado e pelo menos um não for. Correspondência achado × spec feita à mão por um agente que não participa de mais nada; a sessão principal lê só as contagens; o diagnóstico guiado, o axe e o detalhe por spec continuam fechados até o fechamento da coleta",
-      "campanha": "linha de base da nat78-tela-f2-01 (disparo so-linha-de-base, emenda (a)) ou da ensaio-trio-f2-01 (coleta+linha-de-base) — decisão da sessão principal",
+      "campanha": "a linha de base do disparo coleta+linha-de-base da ensaio-trio-f2-01 (sem modelo: o dublê não muda o que a linha de base mede). Não a da nat78-tela-f2-01: a dela (emenda (a)) só existe depois do campaign.json final, que cita esta análise, que precisa deste fato antes",
       "estado": "PENDENTE",
       "veredito": "PENDENTE",
       "contagemPorTipo": "PENDENTE"
