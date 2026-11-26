@@ -168,7 +168,7 @@ try {
   });
   t("telas.json do repositório: só a tela E declara critérios; a D (processos) não declara (lote, LEIAME e manifesto da D seguem os da 1.4.7)", () => {
     const telas = JSON.parse(readFileSync(TELAS_PADRAO, "utf8")) as Record<string, { criteriosDeJulgamento?: unknown }>;
-    assert.deepEqual(Object.keys(telas).filter(k => telas[k]?.criteriosDeJulgamento !== undefined), ["cadastro-pais", "processos-f"]);
+    assert.deepEqual(Object.keys(telas).filter(k => telas[k]?.criteriosDeJulgamento !== undefined), ["cadastro-pais", "processos-f", "processos-f2"]);
     assert.equal(criteriosDeclarados("processos"), null);
     assert.equal(criteriosDeclarados("tela-inexistente"), null);
   });
