@@ -1,0 +1,37 @@
+{
+  "contract": "linha-de-base-campanha.v1",
+  "fixture": false,
+  "campaignId": "ensaio-trio-real-06",
+  "screen": {
+    "id": "solicitacao",
+    "version": "govbr-telas-site-03af89205307"
+  },
+  "baselineId": "lb-20261126-191127-solicitacao-dca36c",
+  "registro": {
+    "caminho": "linhas-de-base/ensaio-trio-real-06/solicitacao/lb-20261126-191127-solicitacao-dca36c/baseline.json",
+    "sha256": "d78f1411bd0ced1d2552522c7e5ceb739fde971b2f25fd7434541bfe78b167ef"
+  },
+  "medidaEm": "2026-11-26T19:11:27Z",
+  "manifestoColeta": {
+    "caminho": "coletas/ensaio-trio-real-06/f49259cac3afc507c379797d4f64d0364a790cd1e910f572090c39335e77b2e3/manifesto-coleta.json",
+    "sha256": "f49259cac3afc507c379797d4f64d0364a790cd1e910f572090c39335e77b2e3"
+  },
+  "snapshotSetId": "snapshots-8e30c703c07fbbb7",
+  "site": {
+    "siteSha256": "03af89205307be91fa0f27055022b139b61a228f17865889fa8e4b675470cdb4",
+    "manifestSha256": "d394b6e44cf45d1cbad60c79675d63c935d946fc0ab8609d30544e7b732a4d83"
+  },
+  "oracle": {
+    "version": "3.7.12",
+    "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+    "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637"
+  },
+  "repos": {
+    "govbr-eval": "2eb237a387ff6c58157e42bc25e159e0b87c671d",
+    "govbr-telas": "b663a264da2fd1197dd234737a8c74297cbead60",
+    "govbr-ds-validator": "816f4bae41f4486b7055f0ac265167e87ce0d5e5"
+  },
+  "imagesLockSha256": "8bc5c8e0d9dd07c69bb691a867607a04fcae7512c02349b4c2e97f2bff25f49b",
+  "regra": "emenda (a) às regras de falha (§ 7.2): a linha de base da campanha é medida e congelada uma vez, antes do primeiro slot, por um disparo so-linha-de-base, registrada em campanhas/<id>/linha-de-base.json e commitada antes do slot 1; todo trio usa este registro, conferido contra o manifesto de coleta de cada slot (identidade executável, site, oráculo, commits do govbr-ds-validator e do govbr-telas, lock de imagens) e pelo git (o commit do govbr-eval de cada slot contém o registro e só difere do da linha de base por ele)",
+  "geradoEm": "2026-11-26T19:13:03Z"
+}
