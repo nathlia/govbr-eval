@@ -4,6 +4,7 @@
  * uma análise por execução), conta, por execução, as specs SEMEADAS confirmadas e decide o portão.
  *
  *   npm run portao:teto -- --passada PASSADA --saida PASTA_NOVA [--analise DIR ...] [--origem PASTA_DA_ORIGEM]
+ *       [--braco ferramentas --limiar n-menos-2]
  *     → PASTA_NOVA/{portao-teto.json, portao-teto.json.sha256, portao-teto.md}       (o que a sessão principal lê)
  *     → PASTA_NOVA/portao-teto-por-spec.json (+ .sha256)                               (LACRADO: ids das specs)
  *
@@ -21,6 +22,12 @@
  * Recusa: passada fora da política 1.3.0; análise com mais de uma execução de agente ou com execução que não é do braço
  * `sem` (o `ferramentas` e o `com` não rodam no portão); número de execuções ≠ 3; referências diferentes entre as análises;
  * estrato semeado vazio, com spec fora da referência, repetida, exposta ou fora da classe ds.
+ *
+ * Braço e regra do limiar (adendo 2 da F2, errata 1, controle 2: "teto do ferramentas"): `--braco ferramentas --limiar
+ * n-menos-2` lê 3 execuções só do `ferramentas` (campanha `portao-ferramentas-f2-01`), julgadas do mesmo jeito (pendente conta
+ * como confirmado), e passa se a mediana do máximo ≤ n − 2. Sem as duas opções, o portão é o de antes (braço `sem`, ⌊n/2⌋) e a
+ * saída é byte a byte a de antes (nenhum campo novo). O `com` nunca roda em piloto (recusado). Braço diferente do `sem` exige
+ * `--limiar` explícito (para o ⌊n/2⌋ do `sem` nunca valer por omissão no piloto do `ferramentas`).
  *
  * Determinístico: sem carimbo de tempo, sem rede, sem modelo. Toda entrada lida entra com sha256 em `entradas`.
  */
@@ -56,14 +63,25 @@ export function semeadasDaReferencia(ref: Referencia): string[] {
 }
 
 export const limiarDoPortao = (n: number): number => Math.floor(n / 2);
+/** Regras do limiar: `metade` = ⌊n/2⌋ (portão de teto do `sem`, adendo da F §5; o padrão); `n-menos-2` = n − 2 (teto do `ferramentas`, adendo 2, errata 1). */
+export const REGRAS_DO_LIMIAR = ["metade", "n-menos-2"] as const;
+export type RegraDoLimiar = typeof REGRAS_DO_LIMIAR[number];
+export const ROTULO_DO_LIMIAR: Record<RegraDoLimiar, string> = { metade: "⌊n/2⌋", "n-menos-2": "n − 2" };
+export function limiarPorRegra(regra: RegraDoLimiar, n: number): number {
+  if (regra === "metade") return limiarDoPortao(n);
+  if (regra === "n-menos-2") return n - 2;
+  throw new Error(`regra do limiar ${JSON.stringify(regra)} fora de ${REGRAS_DO_LIMIAR.join(" | ")}`);
+}
+/** Braços que um piloto pode ler: o `com` nunca roda em piloto (adendo 2, errata 1). */
+export const BRACOS_DO_PORTAO = ["sem", "ferramentas"] as const;
 
 export interface ExecucaoDoPortao { analise: string; runId: string; confirmadas: string[]; maximo: string[] }
 export interface Veredito { mediana: number | null; medianaMax: number | null; n: number; limiar: number; veredito: "passa" | "nao-passa" }
 
 /** Mediana das execuções contra ⌊n/2⌋; o pendente conta como confirmado (adendo §5): o veredito sai da mediana do máximo. */
-export function vereditoDoPortao(execucoes: ExecucaoDoPortao[], n: number): Veredito {
-  if (execucoes.length !== EXECUCOES_DO_PORTAO) throw new Error(`o portão tem ${EXECUCOES_DO_PORTAO} execuções do sem (adendo §5); recebeu ${execucoes.length}`);
-  const limiar = limiarDoPortao(n);
+export function vereditoDoPortao(execucoes: ExecucaoDoPortao[], n: number, regra: RegraDoLimiar = "metade", braco = "sem"): Veredito {
+  if (execucoes.length !== EXECUCOES_DO_PORTAO) throw new Error(`o portão tem ${EXECUCOES_DO_PORTAO} execuções do ${braco} (adendo §5); recebeu ${execucoes.length}`);
+  const limiar = limiarPorRegra(regra, n);
   const med = mediana(execucoes.map(e => e.confirmadas.length))!, medMax = mediana(execucoes.map(e => e.maximo.length))!;
   const veredito = medMax <= limiar ? "passa" : "nao-passa";
   return { mediana: med, medianaMax: medMax, n, limiar, veredito };
@@ -73,12 +91,13 @@ export function vereditoDoPortao(execucoes: ExecucaoDoPortao[], n: number): Vere
  * Specs semeadas que UMA execução (uma análise, um pacote) confirma, pela regra do recálculo: `creditosDoTrio` com a
  * política 1.2.0 sobre o derivado da passada. A análise tem de ter exatamente uma execução de agente, do braço `sem`.
  */
-export function contagemDaExecucao(pkg: SemanticPackage, julgados: CartaoJulgado[], semeadas: readonly string[], bracos: readonly string[], rotulo: string, fonte: string): Omit<ExecucaoDoPortao, "analise"> {
+export function contagemDaExecucao(pkg: SemanticPackage, julgados: CartaoJulgado[], semeadas: readonly string[], bracos: readonly string[], rotulo: string, fonte: string, bracoDoPortao = "sem"): Omit<ExecucaoDoPortao, "analise"> {
   const agentes = pkg.runs.filter(r => r.kind === "agente");
   if (agentes.length !== 1) throw new Error(`${rotulo}: ${agentes.length} execuções de agente; o portão lê uma execução por análise (analisar --pacote)`);
   const braco = bracoDoRun(agentes[0], bracos);
-  if (braco !== "sem") throw new Error(`${rotulo}: execução do braço ${braco}; no portão de teto só roda o sem (adendo §5)`);
-  return { runId: agentes[0].id, ...contagemDoSem(pkg, julgados, semeadas, bracos, rotulo, fonte) };
+  if (braco !== bracoDoPortao) throw new Error(bracoDoPortao === "sem" ? `${rotulo}: execução do braço ${braco}; no portão de teto só roda o sem (adendo §5)`
+    : `${rotulo}: execução do braço ${braco}; este portão lê só o ${bracoDoPortao} (--braco)`);
+  return { runId: agentes[0].id, ...contagemDoBraco(pkg, julgados, semeadas, bracos, rotulo, fonte, bracoDoPortao) };
 }
 
 /**
@@ -87,17 +106,31 @@ export function contagemDaExecucao(pkg: SemanticPackage, julgados: CartaoJulgado
  * cartões dela, então o mesmo cálculo vale para o pacote de uma execução (o portão) e para o de um trio (o teste).
  */
 export function contagemDoSem(pkg: SemanticPackage, julgados: CartaoJulgado[], semeadas: readonly string[], bracos: readonly string[], rotulo: string, fonte: string): { confirmadas: string[]; maximo: string[] } {
+  return contagemDoBraco(pkg, julgados, semeadas, bracos, rotulo, fonte, "sem");
+}
+
+/** O mesmo crédito de `contagemDoSem`, para o braço dado (o `ferramentas` no piloto de teto da F2). */
+export function contagemDoBraco(pkg: SemanticPackage, julgados: CartaoJulgado[], semeadas: readonly string[], bracos: readonly string[], rotulo: string, fonte: string, braco: string): { confirmadas: string[]; maximo: string[] } {
   const cr = creditosDoTrio(pkg, julgados, { politica: "1.2.0", reviewer: `${PORTAO_VERSAO} · ${rotulo}`, fonte, bracos });
-  const x = cr.porBraco.sem;
+  const x = cr.porBraco[braco];
   const specDe = new Map(pkg.units.map(u => [u.id, u.specId]));
   const conj = (us: string[]) => [...new Set(us.map(u => specDe.get(u)).filter((s): s is string => !!s && semeadas.includes(s)))].sort();
   return { confirmadas: x ? conj(x.confirmadas) : [], maximo: x ? conj([...x.confirmadas, ...x.admissiveis]) : [] };
 }
 
-export interface OpcoesPortao { passada: string; analises?: string[]; origem?: string | null }
+export interface OpcoesPortao { passada: string; analises?: string[]; origem?: string | null;
+  /** Braço lido (padrão `sem`); `ferramentas` só com `limiar` explícito; `com` recusado. */
+  braco?: string;
+  /** Regra do limiar (padrão `metade` = ⌊n/2⌋). */
+  limiar?: RegraDoLimiar }
 export interface SaidaPortao { json: Record<string, unknown>; md: string; porSpec: Record<string, unknown> }
 
 export function avaliarPortao(o: OpcoesPortao): SaidaPortao {
+  const braco = o.braco ?? "sem", regraLimiar: RegraDoLimiar = o.limiar ?? "metade";
+  if (!(BRACOS_DO_PORTAO as readonly string[]).includes(braco)) throw new Error(`--braco ${braco}: o portão lê só ${BRACOS_DO_PORTAO.join(" | ")} (o com nunca roda em piloto)`);
+  if (!(REGRAS_DO_LIMIAR as readonly string[]).includes(regraLimiar)) throw new Error(`--limiar ${regraLimiar} fora de ${REGRAS_DO_LIMIAR.join(" | ")}`);
+  if (braco !== "sem" && o.limiar === undefined) throw new Error(`--braco ${braco} exige --limiar explícito (${REGRAS_DO_LIMIAR.join(" | ")})`);
+  const padrao = braco === "sem" && regraLimiar === "metade";
   const E = new Entradas();
   const p = lerPassada(o.passada, { analises: o.analises });
   E.arvore(join(p.dir, "lotes")); E.arvore(join(p.dir, "chave"));
@@ -133,15 +166,17 @@ export function avaliarPortao(o: OpcoesPortao): SaidaPortao {
     }
     const julgados: CartaoJulgado[] = p.itens.filter(i => i.par === a.dir).map(i => ({ id: i.id, cardId: i.cardIdOriginal, braco: i.braco, runId: i.runId,
       derivado: derivadoNa(i.id), resposta: p.julgados.get(i.id)!.resposta }));
-    execucoes.push({ analise: a.dir, ...contagemDaExecucao(pkg, julgados, semeadas!, camp.design.arms ?? ["sem", "com"], a.dir, fonte) });
+    execucoes.push({ analise: a.dir, ...contagemDaExecucao(pkg, julgados, semeadas!, camp.design.arms ?? ["sem", "com"], a.dir, fonte, braco) });
   }
   const ex = ordenar(execucoes, x => x.analise);
-  const v = vereditoDoPortao(ex, semeadas!.length);
+  const v = vereditoDoPortao(ex, semeadas!.length, regraLimiar, braco);
   const entradas = E.manifesto();
   E.conferir(entradas);
   const json: Record<string, unknown> = {
     formato: FORMATO_PORTAO, versao: PORTAO_VERSAO,
-    regra: `adendo da F §5: ${EXECUCOES_DO_PORTAO} execuções só do sem, julgadas às cegas; por execução, specs do estrato semeado com ≥ 1 unidade confirmada (creditosDoTrio, chave ${CHAVE_DO_PORTAO}: o derivado da passada 1.3.0, coluna detecção, D-102); cartão pendente conta como confirmado (máximo = confirmadas + pendentes); passa se a mediana do máximo ≤ ⌊n/2⌋, senão não passa`,
+    regra: padrao ? `adendo da F §5: ${EXECUCOES_DO_PORTAO} execuções só do sem, julgadas às cegas; por execução, specs do estrato semeado com ≥ 1 unidade confirmada (creditosDoTrio, chave ${CHAVE_DO_PORTAO}: o derivado da passada 1.3.0, coluna detecção, D-102); cartão pendente conta como confirmado (máximo = confirmadas + pendentes); passa se a mediana do máximo ≤ ⌊n/2⌋, senão não passa`
+      : `adendo 2 da F2, errata 1 (controle 2) sobre a regra do adendo da F §5: ${EXECUCOES_DO_PORTAO} execuções só do ${braco}, julgadas às cegas; por execução, specs do estrato semeado com ≥ 1 unidade confirmada (creditosDoTrio, chave ${CHAVE_DO_PORTAO}: o derivado da passada 1.3.0, coluna detecção, D-102); cartão pendente conta como confirmado (máximo = confirmadas + pendentes); passa se a mediana do máximo ≤ ${ROTULO_DO_LIMIAR[regraLimiar]}, senão não passa`,
+    ...(padrao ? {} : { braco, regraDoLimiar: regraLimiar }),
     passada: { nome: p.nome, versao: p.versao, politica: p.politica, julgamentosSha256: p.julgSha, adjudicada: false },
     origem: origemInfo ?? "sem origem medida: nenhum crédito sai por origem DS (lado conservador do portão)",
     referencia: refInfo,
@@ -151,23 +186,25 @@ export function avaliarPortao(o: OpcoesPortao): SaidaPortao {
   const lim = (e: ExecucaoDoPortao) => (e.confirmadas.length === e.maximo.length ? String(e.confirmadas.length) : `${e.confirmadas.length} [≤${e.maximo.length}]`);
   const fmt = (x: number | null) => (x === null ? "n/d" : String(x).replace(".", ","));
   const md = [
+    ...(padrao ? [] : [`- braço: ${braco}`]),
     `- execuções: ${ex.map(e => e.runId).join(", ")}`,
     `- specs semeadas confirmadas por execução: ${ex.map(lim).join(", ")}`,
     `- mediana: ${fmt(v.mediana)}${v.mediana === v.medianaMax ? "" : ` [com os pendentes: ${fmt(v.medianaMax)}; o portão lê esta]`}`,
     `- n: ${v.n}`,
-    `- limiar: ${v.limiar} (⌊n/2⌋)`,
+    `- limiar: ${v.limiar} (${ROTULO_DO_LIMIAR[regraLimiar]})`,
     `- veredito: ${v.veredito}`,
   ].join("\n") + "\n";
   const porSpec = { formato: FORMATO_PORTAO_POR_SPEC, aviso: "LACRADO: ids das specs semeadas achadas por execução. A sessão principal não abre (adendo §5: só a contagem por execução); nenhum resultado por defeito é usado no portão",
+    ...(padrao ? {} : { braco }),
     passada: { nome: p.nome, julgamentosSha256: p.julgSha }, portaoSha256: sha(jsonTexto(json)),
     execucoes: ex.map(e => ({ analise: e.analise, runId: e.runId, confirmadas: e.confirmadas, maximo: e.maximo })) };
   return { json, md, porSpec };
 }
 
-const USO = "uso: portao-teto.ts --passada PASSADA --saida PASTA_NOVA [--analise DIR ...] [--origem PASTA_DA_ORIGEM]";
+const USO = "uso: portao-teto.ts --passada PASSADA --saida PASTA_NOVA [--analise DIR ...] [--origem PASTA_DA_ORIGEM] [--braco sem|ferramentas] [--limiar metade|n-menos-2]";
 
 export function executar(argv: string[]): number {
-  const a = lerArgs(argv, ["--passada", "--saida", "--analise", "--origem"], []);
+  const a = lerArgs(argv, ["--passada", "--saida", "--analise", "--origem", "--braco", "--limiar"], []);
   if ("erro" in a) { console.error(`RECUSADO: ${a.erro}\n${USO}`); return 1; }
   try {
     if (a.modo.length) throw new Error(`argumento solto: ${a.modo.join(" ")}`);
@@ -176,8 +213,12 @@ export function executar(argv: string[]): number {
     const r = relative(passada, saida);
     if (r === "" || (!r.startsWith("..") && !isAbsolute(r))) throw new Error("--saida não pode ficar dentro da passada");
     if (existsSync(saida)) throw new Error(`--saida ${saida} já existe (pasta NOVA)`);
-    const origem = um("--origem", false);
-    const s = avaliarPortao({ passada, analises: a.opts.get("--analise"), origem: origem ? resolve(origem) : null });
+    const origem = um("--origem", false), braco = um("--braco", false), limiar = um("--limiar", false);
+    if (braco !== null && !(BRACOS_DO_PORTAO as readonly string[]).includes(braco)) throw new Error(`--braco ${braco}: só ${BRACOS_DO_PORTAO.join(" | ")} (o com nunca roda em piloto)`);
+    if (limiar !== null && !(REGRAS_DO_LIMIAR as readonly string[]).includes(limiar)) throw new Error(`--limiar ${limiar} fora de ${REGRAS_DO_LIMIAR.join(" | ")}`);
+    if (braco !== null && braco !== "sem" && limiar === null) throw new Error(`--braco ${braco} exige --limiar explícito`);
+    const s = avaliarPortao({ passada, analises: a.opts.get("--analise"), origem: origem ? resolve(origem) : null,
+      ...(braco !== null ? { braco } : {}), ...(limiar !== null ? { limiar: limiar as RegraDoLimiar } : {}) });
     const jTxt = jsonTexto(s.json), pTxt = jsonTexto(s.porSpec);
     gravarImutavel(saida, [["portao-teto.json", jTxt], ["portao-teto.json.sha256", `${sha(jTxt)}  portao-teto.json\n`], ["portao-teto.md", s.md],
       ["portao-teto-por-spec.json", pTxt], ["portao-teto-por-spec.json.sha256", `${sha(pTxt)}  portao-teto-por-spec.json\n`]]);

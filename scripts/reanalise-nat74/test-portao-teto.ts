@@ -5,6 +5,8 @@
  *   2. dados arquivados da D (fechada; só leitura): a contagem por execução é a MESMA do recálculo arquivado de 26/11 (a
  *      coluna `sem` do primário, por trio), com a referência F sintética (semeado = as 9 não expostas da D); e o caminho de
  *      arquivo (passada → análises → referência) chega até a recusa de análise com três execuções de agente.
+ *   3. piloto de teto do ferramentas (adendo 2 da F2, errata 1, controle 2): limiar n − 2, braço como parâmetro, recusas
+ *      (com; ferramentas sem --limiar), e a contagem do ferramentas = a coluna ferramentas do recálculo arquivado da D.
  *   npx tsx scripts/reanalise-nat74/test-portao-teto.ts
  */
 import assert from "node:assert/strict";
@@ -13,7 +15,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import type { SemanticPackage } from "../semantic-flow";
 import { EVAL, RESULTADOS, lerJson } from "./comum";
-import { EXECUCOES_DO_PORTAO, avaliarPortao, contagemDaExecucao, contagemDoSem, executar, limiarDoPortao, semeadasDaReferencia, vereditoDoPortao, type ExecucaoDoPortao } from "./portao-teto";
+import { EXECUCOES_DO_PORTAO, REGRAS_DO_LIMIAR, avaliarPortao, contagemDaExecucao, contagemDoBraco, contagemDoSem, executar, limiarDoPortao, limiarPorRegra, semeadasDaReferencia, vereditoDoPortao, type ExecucaoDoPortao, type RegraDoLimiar } from "./portao-teto";
 import { Entradas, carregarCampanha, julgadosDoTrio, type Referencia, type TabelaComparacao } from "./recalculo-campanha";
 
 let n = 0, falhas = 0, pulados = 0;
@@ -71,6 +73,37 @@ try {
     assert.equal(silencioso(() => executar(["--passada", tmp, "--saida", join(tmp, "dentro")])), 1);
   });
 
+  console.log("piloto de teto do ferramentas (F2, errata 1): sintético");
+  t("[F2] limiar por regra: metade = ⌊n/2⌋ (o de antes); n-menos-2 = n − 2 (10 de 12, 9 de 11, 8 de 10); regra desconhecida recusa", () => {
+    assert.deepEqual([...REGRAS_DO_LIMIAR], ["metade", "n-menos-2"]);
+    for (const n of [10, 11, 12]) assert.equal(limiarPorRegra("metade", n), limiarDoPortao(n));
+    assert.deepEqual([12, 11, 10].map(n => limiarPorRegra("n-menos-2", n)), [10, 9, 8]);
+    assert.throws(() => limiarPorRegra("dois-terços" as RegraDoLimiar, 12), /regra do limiar/);
+  });
+  t("[F2] veredito do ferramentas com n − 2: passa se a mediana do máximo ≤ n − 2; pendente conta como confirmado; sem a regra, o de antes", () => {
+    assert.deepEqual(vereditoDoPortao([ex(10), ex(11), ex(9)], 12, "n-menos-2", "ferramentas"), { mediana: 10, medianaMax: 10, n: 12, limiar: 10, veredito: "passa" });
+    assert.equal(vereditoDoPortao([ex(11), ex(11), ex(3)], 12, "n-menos-2", "ferramentas").veredito, "nao-passa");
+    assert.deepEqual(vereditoDoPortao([ex(10, 11), ex(10, 11), ex(2)], 12, "n-menos-2", "ferramentas"), { mediana: 10, medianaMax: 11, n: 12, limiar: 10, veredito: "nao-passa" });
+    assert.equal(vereditoDoPortao([ex(8), ex(8), ex(8)], 10, "n-menos-2", "ferramentas").veredito, "passa", "n = 10: limiar 8");
+    assert.equal(vereditoDoPortao([ex(9), ex(9), ex(9)], 10, "n-menos-2", "ferramentas").veredito, "nao-passa");
+    assert.throws(() => vereditoDoPortao([ex(1), ex(2)], 12, "n-menos-2", "ferramentas"), /3 execuções do ferramentas/);
+    assert.deepEqual(vereditoDoPortao([ex(6), ex(7), ex(2)], 12), vereditoDoPortao([ex(6), ex(7), ex(2)], 12, "metade", "sem"), "padrão = sem, ⌊n/2⌋");
+  });
+  t("[F2] braço do portão como parâmetro: com --braco ferramentas, execução do sem (ou do com) recusa; o com nunca é aceito; ferramentas sem --limiar recusa", () => {
+    const run = (id: string, perfil: string) => ({ id, kind: "agente", tool: null, config: { oracleProfile: perfil }, cardIds: [] });
+    const pkg = (runs: unknown[]) => ({ cards: [], units: [], runs }) as unknown as SemanticPackage;
+    const B = ["sem", "ferramentas", "com"];
+    assert.throws(() => contagemDaExecucao(pkg([run("r1", "none")]), [], ["F-01"], B, "p01", "f", "ferramentas"), /braço sem; este portão lê só o ferramentas/);
+    assert.throws(() => contagemDaExecucao(pkg([run("r1", "evaluation")]), [], ["F-01"], B, "p01", "f", "ferramentas"), /braço com; este portão lê só o ferramentas/);
+    const p = join(tmp, "nao-existe");
+    assert.throws(() => avaliarPortao({ passada: p, braco: "com", limiar: "n-menos-2" }), /o com nunca roda em piloto/);
+    assert.throws(() => avaliarPortao({ passada: p, braco: "ferramentas" }), /exige --limiar explícito/);
+    assert.throws(() => avaliarPortao({ passada: p, braco: "ferramentas", limiar: "x" as RegraDoLimiar }), /--limiar x fora de/);
+    assert.equal(silencioso(() => executar(["--passada", p, "--saida", join(tmp, "y"), "--braco", "com", "--limiar", "n-menos-2"])), 1);
+    assert.equal(silencioso(() => executar(["--passada", p, "--saida", join(tmp, "y"), "--braco", "ferramentas"])), 1);
+    assert.equal(silencioso(() => executar(["--passada", p, "--saida", join(tmp, "y"), "--limiar", "metade", "--limiar", "metade"])), 1, "opção repetida");
+  });
+
   console.log("portão de teto: dados arquivados da D (fechada; só leitura)");
   const DD = join(RESULTADOS, "analises", "nat78-tela-d-01"), PD = join(DD, "passada-adjudicada-20261118T1"), ARQ = join(DD, "recalculo-20261126T1", "recalculo.json");
   if (!existsSync(join(PD, "julgamentos.json")) || !existsSync(ARQ)) { pulados++; console.log("  PULADO passada ou recálculo arquivado da D ausente"); }
@@ -92,6 +125,15 @@ try {
       });
       assert.deepEqual(contagens, arq.porTrio.map(x => x.a));
       assert.equal(contagens.length, 9);
+    });
+    t("[F2] contagem do ferramentas por execução = a coluna ferramentas do primário do recálculo arquivado (mesma regra de crédito), trio a trio", () => {
+      const c = carregarCampanha({ passadas: [PD], origens: [join(DD, "origem-20261118T1")] }, new Entradas());
+      const arq = lerJson<{ tabelas: Record<string, TabelaComparacao[]> }>(ARQ).tabelas["principal|1.2.0|primario"].find(x => x.comparacao === "ferramentas-x-com")!;
+      const contagens = [...c.analises].sort((x, y) => (x.coleta.trio < y.coleta.trio ? -1 : 1)).map(a => {
+        const r = contagemDoBraco(a.pkg, julgadosDoTrio(a, c.derivadoNa), semeadas, c.bracos, a.nome, "teste", "ferramentas");
+        return { min: r.confirmadas.length, max: r.maximo.length };
+      });
+      assert.deepEqual(contagens, arq.porTrio.map(x => x.a));
     });
     t("caminho de arquivo: passada → análises → referência → recusa a análise com três execuções de agente (nunca conta um trio)", () => {
       const camp = join(tmp, "d"); mkdirSync(camp);
