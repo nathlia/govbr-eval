@@ -234,7 +234,11 @@ cegos, que recebem só os arquivos indicados.
    mesma regra) sobre as 9 não expostas (13 como sensibilidade, e as 53 unidades das não expostas como sensibilidade por
    unidade), na tela A sobre as 12 A-* (as 14 unidades A-* como sensibilidade por instância; P-* à parte), na tela E
    (`cadastro-pais` 1.0.0) sobre as specs do DS semeadas não expostas (sensibilidades: todas as specs, as unidades do
-   primário e "com U-09", a spec retirada no denominador com crédito zero). **Tela E, "sem ids expostos"** (variante da
+   primário e "com U-09", a spec retirada no denominador com crédito zero), e na tela F (`processos-f` 1.0.0, estudo de
+   seguimento do adendo de 26/11, fora da família de Holm da D e da E) sobre o estrato semeado da referência
+   (`_meta.estratos.semeado.specs`: os defeitos do DS injetados; a regra recusa estrato vazio, semeada fora da classe ds
+   pela `classeDaSpec`, semeada exposta, e estratos semeado/natural que não repartem a referência; sensibilidades: todas =
+   semeadas + naturais não expostas, as unidades do primário e, havendo exposta, "com as expostas"). **Tela E, "sem ids expostos"** (variante da
    referência, pré-registrada como "só muda a coluna fundamentada"): `regraDoDesfecho.fundamentada` declara, por spec que
    a variante muda, os ids que ela retira de `rules` (principal − variante, conferidos com `_meta.fundamentacao.porSpec`), e
    `recalculo.json › fundamentada` traz a coluna fundamentada (`specFundamentada`, a mesma de `e14-deteccao.ts`) por trio e

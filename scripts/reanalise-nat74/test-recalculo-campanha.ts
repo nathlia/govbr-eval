@@ -233,6 +233,72 @@ try {
     });
   }
 
+  // Tela F (processos-f 1.0.0; adendo de 26/11 §2, §4, §9): referência SINTÉTICA, só a forma dos campos que a regra lê (ids,
+  // categories, contagem, estratos); nenhuma spec, âncora ou descrição real (a referência da F não existe nesta bancada).
+  type RefF = Parameters<typeof regraDaTela>[1];
+  const refFSint = (o: { sem?: string[]; nat?: string[]; exp?: string[]; expD?: string[] | null; version?: string; cat?: Record<string, string[]> } = {}): RefF => ({
+    _meta: { version: o.version ?? "1.0.0", suite: "processos-f",
+      estratos: { semeado: { specs: o.sem ?? ["S-01", "S-02", "S-03", "S-04"] }, natural: { specs: o.nat ?? ["N-01", "N-02", "N-03"] }, exposto: { specs: o.exp ?? ["N-03"] } },
+      ...(o.expD === null ? {} : { exposto: { specs: o.expD ?? o.exp ?? ["N-03"] } }) },
+    violations: [
+      { id: "S-01", expectedCount: 1, categories: o.cat?.["S-01"] ?? ["componente"] }, { id: "S-02", expectedCount: 2, categories: ["token"] },
+      { id: "S-03", expectedCount: 1, categories: ["tipografia", "estrutura"] }, { id: "S-04", expectedCount: 1, categories: ["comportamento"] },
+      { id: "N-01", expectedCount: 3, categories: ["navegacao", "acessibilidade"] }, { id: "N-02", expectedCount: 1, categories: ["componente", "estrutura"] },
+      { id: "N-03", expectedCount: 1, categories: ["token", "acessibilidade"] }] });
+  t("[tela F] desfecho processos-f 1.0.0 (sintético): primário = estrato semeado por spec; todas = semeadas + naturais não expostas; unidades do primário; com as expostas", () => {
+    const f = regraDaTela("processos-f", refFSint());
+    assert.equal(f.tela, "processos-f"); assert.equal(f.referencia, "1.0.0"); assert.equal(f.unidadeDelta, "specs"); assert.equal(f.fundamentada, undefined, "coluna fundamentada como na D");
+    assert.deepEqual(f.conjuntos.map(c => [c.id, c.modo, c.tipo]), [["primario", "spec", "primario"], ["todas", "spec", "sensibilidade"], ["unidades", "unidade", "sensibilidade"], ["com-expostas", "spec", "sensibilidade"]]);
+    assert.deepEqual(conjuntoDe(f, "primario").specs, ["S-01", "S-02", "S-03", "S-04"]);
+    assert.deepEqual(conjuntoDe(f, "todas").specs, ["S-01", "S-02", "S-03", "S-04", "N-01", "N-02"]);
+    assert.deepEqual(conjuntoDe(f, "unidades").specs, conjuntoDe(f, "primario").specs); assert.match(conjuntoDe(f, "unidades").rotulo, /\(5;/);
+    assert.equal(conjuntoDe(f, "com-expostas").specs.length, 7);
+    assert.ok(f.conjuntos.every(c => c.semCredito === undefined));
+    // sem exposta: o conjunto "com as expostas" não existe (seria igual a todas)
+    const semExp = regraDaTela("processos-f", refFSint({ exp: [] }));
+    assert.deepEqual(semExp.conjuntos.map(c => c.id), ["primario", "todas", "unidades"]); assert.equal(conjuntoDe(semExp, "todas").specs.length, 7);
+    // a referência sem a forma da D (_meta.exposto) também é aceita
+    assert.deepEqual(regraDaTela("processos-f", refFSint({ expD: null })).conjuntos, f.conjuntos);
+  });
+  t("[tela F] contagem: spec semeada com 1 unidade confirmada conta 1 (D-102); natural não conta no primário; exposta só em com-expostas", () => {
+    const f = regraDaTela("processos-f", refFSint());
+    const sp: Record<string, string> = { a: "S-01", b: "S-02", c: "S-02", d: "N-01", e: "N-03" };
+    const sd = (u: string) => sp[u];
+    assert.equal(contar(f, "primario", sd)(["a", "b", "c", "d", "e"]), 2);
+    assert.equal(contar(f, "unidades", sd)(["a", "b", "c", "d", "e"]), 3);
+    assert.equal(contar(f, "todas", sd)(["a", "b", "c", "d", "e"]), 3);
+    assert.equal(contar(f, "com-expostas", sd)(["a", "b", "c", "d", "e"]), 4);
+  });
+  t("[tela F] recusas: estrato semeado vazio ou ausente, semeada fora da classe ds, semeada exposta, estratos que não repartem a referência, exposto da forma D divergente, versão sem regra", () => {
+    assert.throws(() => regraDaTela("processos-f", refFSint({ sem: [], nat: ["S-01", "S-02", "S-03", "S-04", "N-01", "N-02", "N-03"] })), /estrato semeado vazio/);
+    assert.throws(() => regraDaTela("processos-f", { ...refFSint(), _meta: { version: "1.0.0", suite: "processos-f" } }), /estrato semeado vazio/);
+    assert.throws(() => regraDaTela("processos-f", refFSint({ cat: { "S-01": ["componente", "acessibilidade"] } })), /fora da classe ds pela categories.*S-01/);
+    assert.throws(() => regraDaTela("processos-f", refFSint({ exp: ["S-02", "N-03"] })), /semeada marcada como exposta \(S-02\)/);
+    assert.throws(() => regraDaTela("processos-f", refFSint({ nat: ["N-01", "N-02"] })), /fora dos estratos semeado e natural \(N-03\)/);
+    assert.throws(() => regraDaTela("processos-f", refFSint({ nat: ["S-04", "N-01", "N-02", "N-03"] })), /semeado e natural ao mesmo tempo \(S-04\)/);
+    assert.throws(() => regraDaTela("processos-f", refFSint({ sem: ["S-01", "S-02", "S-03", "S-04", "X-99"] })), /X-99 do estrato semeado fora da referência/);
+    assert.throws(() => regraDaTela("processos-f", refFSint({ sem: ["S-01", "S-01", "S-02", "S-03", "S-04"] })), /repetida no estrato semeado/);
+    assert.throws(() => regraDaTela("processos-f", { ...refFSint(), _meta: { ...refFSint()._meta, estratos: { semeado: { specs: ["S-01"] } } } }), /natural\.specs/);
+    assert.throws(() => regraDaTela("processos-f", refFSint({ expD: ["N-02"] })), /_meta\.exposto\.specs ≠ _meta\.estratos\.exposto\.specs/);
+    assert.throws(() => regraDaTela("processos-f", refFSint({ version: "1.1.0" })), /sem regra de desfecho pré-registrada/);
+    assert.throws(() => regraDaTela("processos", refFSint({ expD: null })), /sem _meta\.exposto/, "a regra da D não lê a referência da F");
+  });
+  t("[tela F] campanha sintética: D_fc^F no primário, todas, unidades e com as expostas", () => {
+    const f = regraDaTela("processos-f", refFSint());
+    const sp: Record<string, string> = { a: "S-01", b: "S-02", c: "S-02", d: "N-01", e: "N-03", g: "S-04" };
+    const br = (confirmadas: string[]) => ({ confirmadas, admissiveis: [], pendentes: 0 });
+    const k = chaveVariante("principal", "1.2.0");
+    const triosF: TrioEntrada[] = [
+      { trio: "p01", ordem: ["sem", "ferramentas", "com"], linhaDeBase: null, creditos: { [k]: { sem: br([]), ferramentas: br(["d"]), com: br(["a", "b", "c", "d", "e"]) } } },
+      { trio: "p02", ordem: ["com", "sem", "ferramentas"], linhaDeBase: null, creditos: { [k]: { sem: br(["d"]), ferramentas: br(["a", "g", "e"]), com: br(["b"]) } } }];
+    const c: Comparacao = { id: "ferramentas-x-com", arms: ["ferramentas", "com"], role: "primary" };
+    const tab = (conjunto: string) => tabelaDaComparacao(triosF, c, { variante: "principal", politica: "1.2.0", conjunto, regra: f, specDe: u => sp[u], nPlanejado: 9, sementeBase: "sintetico" });
+    assert.deepEqual(tab("primario").porTrio.map(x => x.d), [2, -1]);
+    assert.deepEqual(tab("todas").porTrio.map(x => x.d), [2, -1]);
+    assert.deepEqual(tab("unidades").porTrio.map(x => x.d), [3, -1]);
+    assert.deepEqual(tab("com-expostas").porTrio.map(x => x.d), [3, -2]);
+  });
+
   t("contagem: modo spec conta specs distintas; modo unidade conta unidades; só o conjunto pedido", () => {
     const d = regraDaTela("processos", refD), a = regraDaTela("solicitacao", refA);
     const spec: Record<string, string> = { u1: "D-01", u2: "D-01", u3: "D-11", u4: "A-04", u5: "A-04", u6: "P-01", u7: "A-01" };

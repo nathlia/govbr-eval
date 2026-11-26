@@ -36,7 +36,9 @@
  * as specs do DS semeadas não expostas, sensibilidade = todas as specs, as unidades do primário e "com U-09" (a spec retirada
  * no denominador, crédito zero nos três braços); e, só na coluna fundamentada (descritiva, sem teste), "sem ids expostos"
  * (`fundamentadaDoTrio`: crédito fundamentado só por id exposto da spec sai, pela citação gravada no próprio achado; mesma
- * passada, nenhum juiz de novo). δ = 2 specs. Outra tela: recusa.
+ * passada, nenhum juiz de novo); tela F (`processos-f`, 1.0.0; estudo de seguimento, adendo de 26/11) por SPEC, primário = o
+ * estrato semeado (defeitos do DS injetados, todos da classe ds, nenhum exposto), sensibilidade = todas (semeadas + naturais
+ * não expostas), as unidades do primário e, como na D, com as expostas. δ = 2 specs. Outra tela: recusa.
  *
  * `--por-protocolo` (NAT-78 §4.5): sensibilidade por protocolo AO LADO do primário. O estado do oráculo de cada slot vem da
  * `summary.json` da análise (`mcpIsolamento.usoOraculo` = `run.status.oracleUsage`); o slot conta quando o estado é o que o
@@ -107,8 +109,12 @@ export const conjuntoDe = (r: RegraDesfecho, id: string): Conjunto => { const c 
 
 export interface Referencia {
   _meta: { version: string; suite?: string; exposto?: { specs: string[] };
-    /** Tela E (cadastro-pais): estratos da página construída (semeadas por classe selada; expostas). */
-    estratos?: { semeada?: { DS?: string[]; G?: string[] }; exposto?: { specs: string[] } };
+    /**
+     * Tela E (cadastro-pais): estratos da página construída (semeadas por classe selada; expostas). Tela F (processos-f):
+     * `semeado` (os defeitos do DS injetados, o primário), `natural` (os da rota, da referência da D reconferidos na cópia) e
+     * `exposto` (os do casco, dentro do natural).
+     */
+    estratos?: { semeada?: { DS?: string[]; G?: string[] }; semeado?: { specs?: string[] }; natural?: { specs?: string[] }; exposto?: { specs: string[] } };
     /**
      * Tela E: variantes de sensibilidade declaradas antes da coleta; a "com U-09" traz a spec retirada pelo desvio; a "sem
      * ids expostos", o `rules` de cada spec que muda (os ids expostos retirados).
@@ -116,7 +122,8 @@ export interface Referencia {
     sensibilidades?: { comU09?: { spec?: { id: string } }; semIdsExpostos?: { rules?: Record<string, string[]> } };
     /** Tela E: por spec, os ids de `rules` não expostos e os expostos (conferidos contra a variante "sem ids expostos"). */
     fundamentacao?: { porSpec?: Record<string, { expostos?: { id: string }[] }> } };
-  violations: { id: string; expectedCount?: number; categories?: string[]; rules?: string[] }[];
+  /** `nivel` (tela F): o nível de dificuldade da spec semeada, se a referência o repete; tem de ser o do arquivo de níveis. */
+  violations: { id: string; expectedCount?: number; categories?: string[]; rules?: string[]; nivel?: string }[];
 }
 
 /**
@@ -217,7 +224,45 @@ export function regraDaTela(tela: string, ref: Referencia): RegraDesfecho {
       { id: "com-u09", rotulo: `com a ${u09} (${ids.length + 1} specs; a ${u09} no denominador com crédito zero nos três braços; sensibilidade)`, specs: [...ids, u09], modo: "spec", tipo: "sensibilidade", semCredito: [u09] }],
       fundamentada: [semIds] };
   }
-  throw new Error(`tela ${tela} (referência ${ref._meta.version}) sem regra de desfecho pré-registrada (só processos 1.0.0/1.1.0, solicitacao 2.0.0 e cadastro-pais 1.0.0)`);
+  // processos-f 1.0.0 (tela F, estudo de seguimento; adendo de 26/11 §2, §4 "Referência da F", §9): primário = o estrato
+  // semeado (os defeitos do DS injetados), por spec (D-102). Toda spec semeada tem de ser da classe ds pela D-156 3.i
+  // (`classeDaSpec`) e nenhuma pode ser exposta; o estrato semeado e o natural repartem a referência (nada fora, nada nos
+  // dois); as expostas (casco) ficam dentro do natural e, se a referência também traz `_meta.exposto.specs` (a forma da D, que
+  // o e14-deteccao --sem-expostas lê), as duas listas são iguais. Sensibilidades (adendo §2): "todas" = semeadas + naturais
+  // não expostas; a mesma comparação do primário por unidade; e, como na D, "com as expostas" (todas as specs), só quando
+  // há exposta. A coluna fundamentada é a de sempre (sem sensibilidade própria, como na D).
+  if (tela === "processos-f" && ref._meta.version === "1.0.0") {
+    const est = ref._meta.estratos;
+    const sem = est?.semeado?.specs, nat = est?.natural?.specs, exp = est?.exposto?.specs;
+    const rot = `processos-f ${ref._meta.version}`;
+    if (!Array.isArray(sem) || !sem.length) throw new Error(`referência ${rot} sem _meta.estratos.semeado.specs (estrato semeado vazio)`);
+    if (!Array.isArray(nat)) throw new Error(`referência ${rot} sem _meta.estratos.natural.specs`);
+    if (!Array.isArray(exp)) throw new Error(`referência ${rot} sem _meta.estratos.exposto.specs`);
+    for (const [nome, xs] of [["semeado", sem], ["natural", nat], ["exposto", exp]] as const) {
+      if (new Set(xs).size !== xs.length) throw new Error(`${rot}: spec repetida no estrato ${nome}`);
+      for (const s of xs) if (!ids.includes(s)) throw new Error(`${rot}: spec ${s} do estrato ${nome} fora da referência`);
+    }
+    const nosDois = sem.filter(s => nat.includes(s));
+    if (nosDois.length) throw new Error(`${rot}: spec(s) nos estratos semeado e natural ao mesmo tempo (${nosDois.join(", ")})`);
+    const semEstrato = ids.filter(s => !sem.includes(s) && !nat.includes(s));
+    if (semEstrato.length) throw new Error(`${rot}: spec(s) fora dos estratos semeado e natural (${semEstrato.join(", ")})`);
+    const semeadaExposta = sem.filter(s => exp.includes(s));
+    if (semeadaExposta.length) throw new Error(`${rot}: spec semeada marcada como exposta (${semeadaExposta.join(", ")}): o primário não tem exposta`);
+    const naoDs = ref.violations.filter(v => sem.includes(v.id) && classeDaSpec(v.categories ?? []) !== "ds").map(v => v.id);
+    if (naoDs.length) throw new Error(`${rot}: spec(s) semeada(s) fora da classe ds pela categories (D-156 3.i): ${naoDs.join(", ")}`);
+    const iguais = (a: string[], b: string[]) => JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
+    const expD = ref._meta.exposto?.specs;
+    if (expD !== undefined && !iguais(expD, exp)) throw new Error(`${rot}: _meta.exposto.specs ≠ _meta.estratos.exposto.specs`);
+    const prim = ref.violations.filter(v => sem.includes(v.id));
+    const todas = ref.violations.filter(v => sem.includes(v.id) || !exp.includes(v.id));
+    const nu = prim.reduce((n, v) => n + (v.expectedCount ?? 1), 0);
+    return { tela, referencia: ref._meta.version, unidadeDelta: "specs", conjuntos: [
+      { id: "primario", rotulo: `specs do DS semeadas (${prim.length})`, specs: prim.map(v => v.id), modo: "spec", tipo: "primario" },
+      { id: "todas", rotulo: `todas: as semeadas e as naturais não expostas (${todas.length}; sensibilidade)`, specs: todas.map(v => v.id), modo: "spec", tipo: "sensibilidade" },
+      { id: "unidades", rotulo: `unidades das specs semeadas (${nu}; por unidade, sensibilidade)`, specs: prim.map(v => v.id), modo: "unidade", tipo: "sensibilidade" },
+      ...(exp.length ? [{ id: "com-expostas", rotulo: `com as expostas (${ids.length} specs; sensibilidade)`, specs: ids, modo: "spec" as const, tipo: "sensibilidade" as const }] : [])] };
+  }
+  throw new Error(`tela ${tela} (referência ${ref._meta.version}) sem regra de desfecho pré-registrada (só processos 1.0.0/1.1.0, solicitacao 2.0.0, cadastro-pais 1.0.0 e processos-f 1.0.0)`);
 }
 
 /** Conta o conjunto de unidades confirmadas no modo da tela, restrito às specs do conjunto. */
