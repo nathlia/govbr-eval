@@ -288,6 +288,15 @@ cegos, que recebem só os arquivos indicados.
    `summary.json` nem é lida e a saída é byte a byte a de antes (conferido contra o `7ab7b0c` no ensaio, T4 e adjudicada).
    Testes: `npm run test:revisao-recalculo` (inclui a equivalência da vinculação copiada de `montar.ts` contra o próprio
    `montarDecisoes`, em todo cartão × spec de pacotes reais: deriva da cópia falha o teste).
+   **Portão de teto da tela F (adendo de 26/11 §5; sem modelo):** `npm run portao:teto -- --passada <passada julgada e
+   ingerida> --saida <pasta nova> [--analise DIR …] [--origem <pasta>]` lê UMA passada cega (política 1.3.0) sobre as
+   análises individuais das 3 execuções só do `sem` (`analisar --pacote … --sem-linha-de-base`, campanha piloto
+   `portao-teto-f-01` com ausência planejada de linha de base) e conta, por execução, as specs do estrato semeado com ≥ 1
+   unidade confirmada pela MESMA regra do recálculo (`creditosDoTrio`, chave `principal|1.2.0`, D-102). Grava
+   `portao-teto.json` e `portao-teto.md` (execuções, contagem por execução, mediana, n, limiar ⌊n/2⌋, veredito; nenhum id
+   de spec) e, à parte, o lacrado `portao-teto-por-spec.json`. Recusa passada fora da 1.3.0, análise com mais de uma
+   execução de agente ou de outro braço, número de execuções ≠ 3, referências diferentes e estrato semeado inválido;
+   pendente só no máximo (sem acordo dos dois lados do limiar, "indeterminado"). Testes: `npm run test:portao-teto`.
 
 7. Material da autora (§8.4; sem modelo): `npm run revisao:material-autora -- preparar --passada <passada adjudicada>
    --saida <pasta nova> [--analise DIR] [--coleta ARQ] [--origem <pasta da origem>] [--teto 10|15] [--site <site congelado>]`

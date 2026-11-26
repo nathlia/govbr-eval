@@ -98,6 +98,8 @@
     "test:revisao-campanha": "tsx scripts/reanalise-nat74/test-revisao-campanha.ts",
     "revisao:recalculo": "tsx scripts/reanalise-nat74/recalculo-campanha.ts",
     "test:revisao-recalculo": "tsx scripts/reanalise-nat74/test-recalculo-campanha.ts",
+    "portao:teto": "tsx scripts/reanalise-nat74/portao-teto.ts",
+    "test:portao-teto": "tsx scripts/reanalise-nat74/test-portao-teto.ts",
     "test:revisao-criterios": "tsx scripts/reanalise-nat74/test-e14-criterios.ts",
     "revisao:origem": "tsx scripts/reanalise-nat74/origem-campanha.ts",
     "test:revisao-origem": "tsx scripts/reanalise-nat74/test-origem-campanha.ts",
