@@ -40,7 +40,7 @@
       "arquivo": null,
       "sha256": null,
       "declaracao": "telas.json › processos-f.criteriosDeJulgamento { arquivo, sha256 } (o mesmo caminho da E, eval 055e8d2: passada nat78-primeira-passada-1.4.8 com o LEIAME nat78-leiame-juiz-1.4.8-criterios)",
-      "nota": "adendo §4: critérios de julgamento escritos antes da coleta para toda spec sem predicado. Se a F declarar critérios, os juízes da F leem a 1.4.8 como na E; se não, a 1.4.7 como na D."
+      "nota": "adendo §4: critérios de julgamento escritos antes da coleta para toda spec sem predicado; decidido em 26/11 (coordenador): a F declara os critérios e a passada dos juízes é a nat78-primeira-passada-1.4.8, como na E."
     },
     "classes": {
       "arquivo": null,
@@ -60,7 +60,7 @@
     "nome": "D_fc^F",
     "formula": "D_fc^F = specs do DS semeadas confirmadas por com − as confirmadas por ferramentas, por trio",
     "conjunto": "primario",
-    "conjuntoDescricao": "as 12 specs semeadas da referência congelada da F (estrato semeado; nenhuma exposta por regra); por spec (D-102): spec confirmada = pelo menos uma unidade confirmada pela revisão fechada. Se a composição final tiver menos de 12 (adendo §4 item 4: mínimo 10, pelo menos 2 por nível), o conjunto é o estrato semeado congelado, com a contagem dita aqui",
+    "conjuntoDescricao": "as n specs semeadas da referência congelada da F (estrato semeado, ids F-01, F-02, …; nenhuma exposta por regra), seja qual for n (adendo §4: 12 planejadas, mínimo 10); por spec (D-102): spec confirmada = pelo menos uma unidade confirmada pela revisão fechada. As naturais mantêm os ids da referência da D",
     "politica": "1.3.0 (crédito da 1.2.0 + R16; D-156 item 2), como na D e na E",
     "coluna": "deteccao",
     "fonte": "revisao:recalculo › recalculo.json › tabelas['principal|1.2.0|primario'] (na passada 1.3.0 essas chaves leem o derivado 1.3.0: notaPolitica), comparação ferramentas-x-com; regra de desfecho processos-f 1.0.0 em recalculo-campanha.ts › regraDaTela (eval bancada-f 0062026; testes em test-recalculo-campanha.ts)"
@@ -138,7 +138,7 @@
     { "item": "adendo congelado (commit sozinho e sha256 do blob)", "estado": "rascunho em revisão pelo Codex" },
     { "item": "referência ground-truth-processos-f.json 1.0.0: sha256, commit de congelamento, contagens", "estado": "não existe nesta bancada (agente da referência)" },
     { "item": "arquivo de níveis tela-f/niveis-1.0.0.json: sha256 (e a declaração em telas.json)", "estado": "congela com a referência" },
-    { "item": "critérios de julgamento da F (arquivo, sha256, declaração em telas.json)", "estado": "agente da referência; decide se a F lê a passada 1.4.8 (com critérios) ou a 1.4.7" },
+    { "item": "critérios de julgamento da F (arquivo, sha256, declaração em telas.json)", "estado": "agente da referência; a passada é a 1.4.8 (decidido em 26/11)" },
     { "item": "classes ds × geral e NAT-71 da F (arquivos e sha256)", "estado": "depois da referência" },
     { "item": "inventário do DOM da F (CONG-18 da F), pacote govbr-telas (site, manifesto), lock só com a imagem screens", "estado": "rodada 2 da bancada (bancada-tela-f-2026-11-26.md)" },
     { "item": "portão de teto (adendo §5) passado e composição final (12 ou a recomposição 2/2/4/4)", "estado": "antes do congelamento desta análise; as execuções do portão não entram na amostra" },
