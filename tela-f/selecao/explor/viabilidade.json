@@ -1,0 +1,117 @@
+{
+ "breadcrumbSemHome": "<style>@import\"assets/mock/vendor/fontawesome-5.11.2/css/all.min.css\";/*!\n * GOVBR-DS: Design System de Governo\n * Versão 3.0.0\n * Suporte:\n   - Serpro: DIDES/SUPSE/SESEP\n */:root{--blue-90:#11181d;--blue-80:#1f303e;--blue-70:#274863;--blue-60:#2c608a;--blue-50:#2378c3;--blue-40:#4f97d1;--blue-30:#73b3e7;--blue-20:#aacdec;--blue-10:#dbe8fb;--blue-5:#eff6fb;--blue-cool-90:#0f191c;--blue-cool-80:#14333d;--blue-cool-70:#224a58;--blue-cool-60:#2e6276;--blue-cool-50:#3a7d95;--blue-cool-40:#6499af;--blue-cool-30:#82b4c9;--blue-cool-20:#adcfdc;--blue-cool-10:#dae9ee;--blue-cool-5:#e7f2f5;--blue-warm-90:#13171f;--blue-warm-80:#252f3e;--blue-warm-70:#2f4668;--blue-warm-60:#345d96;--blue-warm-50:#4a77",
+ "focoVarHost": {
+  "cls": "focus-visible br-button secondary middle focus-visible",
+  "outline": "rgb(19, 81, 180) solid 4px",
+  "offset": "4px"
+ },
+ "uppercaseHerdado": "uppercase",
+ "avatarIconeAntes": "fas fa-caret-down fa-chevron-down",
+ "avatarIconeDepois": {
+  "icon": "fas fa-caret-down fa-chevron-up",
+  "expanded": "true"
+ },
+ "nCheckbox": 6,
+ "assinarSelecionados": {
+  "cls": "br-button primary middle",
+  "rect": [
+   92,
+   1821,
+   243,
+   40
+  ],
+  "bg": "rgb(19, 81, 180)",
+  "color": "rgb(255, 255, 255)",
+  "radius": "1680px",
+  "inner": "<style>@import\"assets/mock/vendor/fontawesome-5.11.2/css/all.min.css\";*,:after,:before{box-sizing:border-box}body{margin:0}main{display:block}a{background-color:transparent}strong{font-weight:bolder}code{font-family:monospace;font-size:1em}small{font-size:80%}img{border-style:none}button,input,selec",
+  "voltar": [
+   1091,
+   1941,
+   97,
+   40
+  ]
+ },
+ "hoverItemFiltro": {
+  "antes": "none",
+  "depois": {
+   "bgImage": "linear-gradient(rgba(51, 51, 51, 0.16), rgba(51, 51, 51, 0.16))",
+   "bg": "rgb(255, 255, 255)",
+   "cursor": "auto",
+   "labelCursor": "default"
+  }
+ },
+ "listaFiltroMaxH": {
+  "maxH": "404px",
+  "overflow": "auto",
+  "h": 404,
+  "n": 18
+ },
+ "hoverLinha": {
+  "antes": "rgba(0, 0, 0, 0)|none",
+  "depois": "rgba(0, 0, 0, 0)|none"
+ },
+ "hoverExportar": "linear-gradient(rgba(19, 81, 180, 0.16), rgba(19, 81, 180, 0.16))",
+ "focoAvatar": {
+  "id": "avatar-dropdown-trigger",
+  "outline": "rgb(194, 133, 12) dashed 4px",
+  "offset": "4px"
+ },
+ "assumir": [
+  {
+   "disabled": true,
+   "opacity": "0.45",
+   "cursor": "not-allowed",
+   "color": "rgb(19, 81, 180)"
+  },
+  {
+   "disabled": true,
+   "opacity": "0.45",
+   "cursor": "not-allowed",
+   "color": "rgb(19, 81, 180)"
+  },
+  {
+   "disabled": true,
+   "opacity": "0.45",
+   "cursor": "not-allowed",
+   "color": "rgb(19, 81, 180)"
+  },
+  {
+   "disabled": true,
+   "opacity": "0.45",
+   "cursor": "not-allowed",
+   "color": "rgb(19, 81, 180)"
+  },
+  {
+   "disabled": true,
+   "opacity": "0.45",
+   "cursor": "not-allowed",
+   "color": "rgb(19, 81, 180)"
+  },
+  {
+   "disabled": true,
+   "opacity": "0.45",
+   "cursor": "not-allowed",
+   "color": "rgb(19, 81, 180)"
+  },
+  {
+   "disabled": true,
+   "opacity": "0.45",
+   "cursor": "not-allowed",
+   "color": "rgb(19, 81, 180)"
+  },
+  {
+   "disabled": true,
+   "opacity": "0.45",
+   "cursor": "not-allowed",
+   "color": "rgb(19, 81, 180)"
+  },
+  {
+   "disabled": true,
+   "opacity": "0.45",
+   "cursor": "not-allowed",
+   "color": "rgb(19, 81, 180)"
+  }
+ ],
+ "selectPagIconeAberto": "fas fa-angle-up",
+ "selectPagIconeFechado": "fas fa-angle-down"
+}

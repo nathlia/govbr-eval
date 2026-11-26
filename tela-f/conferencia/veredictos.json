@@ -1,0 +1,1070 @@
+[
+  {
+    "id": "F-facil-1",
+    "nivel": "facil",
+    "ordem": 1,
+    "aprovado": false,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/tag__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "tag__designer §4 Dimensões: altura fixa, \"não é permitida mais de uma linha de texto\" — normativo e aplicável à tag de interação."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Regra de anatomia/dimensão da tag do DS; não é critério WCAG/e-MAG."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: rótulo white-space:nowrap, 24px de altura dentro da tag de 32px (uma linha)."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado: rótulo passa a 2 linhas (2 caixas de linha) e a tag cresce para 40px (min-height:32px, não height fixa). O efeito descrito (\"texto vaza acima/abaixo\", superfície mantém 32px) NÃO ocorre; só ~4px de \"processos\" passam da borda direita."
+      },
+      "nivelCorreto": {
+        "ok": false,
+        "evidencia": "O que se vê é uma tag de 2 linhas e 40px (mais alta que as tags de filtro de 32px), sem vazamento evidente; não é quebra óbvia para leigo — seria médio/difícil, não fácil."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Trocar a classe de truncamento por largura máxima própria é erro plausível."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "processos.component.html linha 29 (template da rota), sem efeito funcional."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "Mesma tag de F-medio-3, mas outro elemento (span interno) e outra propriedade; não esconde o arredondamento."
+      }
+    },
+    "motivoReprovacao": "nivelCorreto: O que se vê é uma tag de 2 linhas e 40px (mais alta que as tags de filtro de 32px), sem vazamento evidente; não é quebra óbvia para leigo — seria médio/difícil, não fácil."
+  },
+  {
+    "id": "F-facil-2",
+    "nivel": "facil",
+    "ordem": 2,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/table__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "table__designer \"Truncamento\": recurso opcional, mas quando usado \"devem ser truncados exibindo as reticências\" + tooltip — corte sem reticências viola."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Regra de truncamento do componente Table; não é critério WCAG."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: coluna Solicitante (td 5) white-space:normal, scrollWidth=clientWidth=120, sem truncamento."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado: nowrap+overflow hidden → scrollWidth 332/454/206 > clientWidth 120, text-overflow:clip, sem title; nomes cortados no meio."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Texto cortado no meio da palavra é perceptível sem conhecer o DS."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Encurtar linhas altas com overflow:hidden esquecendo text-overflow é comum."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "processos.component.html linha 90, estilo inline no td da rota."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "F-dificil-4 também toca td, mas propriedade diferente (padding vs largura/overflow)."
+      }
+    }
+  },
+  {
+    "id": "F-facil-3",
+    "nivel": "facil",
+    "ordem": 3,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/input__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "input__designer Espaçamentos: \"Ação interna | margin-top/bottom | --spacing-vertical-center\" — ação deve ficar centrada verticalmente no campo."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Anatomia/espaçamento do Input do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: botão 32×32 em y=420, campo 233×32 em y=418; desvio de centro 2px."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado (margin-top -12px): botão em y=430–462, campo em y=402–434; desvio de centro 28px, lupa abaixo da borda do campo."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Lupa solta fora do campo é visível para qualquer pessoa."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Posição depende de margem negativa \"mágica\"; fácil de desajustar."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "search-table.utils.ts (template do app, componente compartilhado da aplicação, não da biblioteca DS)."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "Nenhum outro candidato toca a busca."
+      }
+    }
+  },
+  {
+    "id": "F-facil-4",
+    "nivel": "facil",
+    "ordem": 4,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/button__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "button__designer: \"o crescimento do botão deve acompanhar o tamanho do rótulo, porém as margens internas devem ser respeitadas\" — largura fixa que corta o rótulo viola."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Regra de dimensionamento do Button do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: botão 118×40, padding 24/24, rótulo \"Exportar\" inteiro."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado: host 72px com overflow hidden; captura mostra \"Expor\" e lado direito sem borda."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Botão com rótulo e borda cortados é quebra evidente."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Largura fixa em botões de cabeçalho é erro comum."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "processos.component.html linha 9, estilo no host (não depende de alcançar o shadow root)."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "F-medio-2 usa o Exportar como referência de comparação; o lado esquerdo continua pílula, então não esconde aquele defeito (registrado nas notas)."
+      }
+    }
+  },
+  {
+    "id": "F-facil-5",
+    "nivel": "facil",
+    "ordem": 5,
+    "aprovado": false,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/tag__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": false,
+        "evidencia": "tag__designer §5 exige \"consistência nos espaços entre as tags\"; o depois medido tem espaçamento uniforme de -20px entre todas as vizinhas — consistente. A cláusula não proíbe sobreposição; a violação alegada não decorre dela."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Regra de distribuição de tags do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: gaps 8/8/8/8 px entre tags vizinhas."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado: gaps -20/-20/-20/-20 px (tags encavaladas)."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Sobreposição é visível para qualquer pessoa."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Margem negativa para compactar a barra é plausível."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "multiple-search-table.utils.ts (template do app)."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "Tags de filtro continuam clicáveis; não esconde os candidatos que abrem a lista."
+      }
+    },
+    "motivoReprovacao": "clausulaSustenta: tag__designer §5 exige \"consistência nos espaços entre as tags\"; o depois medido tem espaçamento uniforme de -20px entre todas as vizinhas — consistente. A cláusula não proíbe sobreposição; a violação alegada não decorre dela."
+  },
+  {
+    "id": "F-facil-6",
+    "nivel": "facil",
+    "ordem": 6,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/button__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "button__designer §6 Área de Proteção: manter espaçamento mínimo para que a área de interação não se confunda com a de outros componentes — sobreposição viola."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Regra de área de proteção do Button do DS (não é critério WCAG-only)."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: Voltar 24px abaixo da paginação (gap 24), sem interseção."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado (margin-top -20px): gap -20px; caixa do Voltar intersecta o input \"Página\"."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Botão encavalado em outro controle é visível sem conhecer o DS."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Ajuste de margem para subir o rodapé."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "processos.component.html linha 164 (contêiner da rota)."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "F-medio-2 muda o Voltar (raio), outra propriedade; cobre parte do select \"Página\", referência de F-medio-5, mas não o select defeituoso (notas)."
+      }
+    }
+  },
+  {
+    "id": "F-medio-1",
+    "nivel": "medio",
+    "ordem": 1,
+    "aprovado": false,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/button__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": false,
+        "evidencia": "button__designer: \"Utilize de forma limitada. Somente em ações estratégicas, voltadas para o objetivo principal de uma tela\" é orientação de julgamento; numa lista de processos para supervisor, assinar pode ser defensavelmente a ação principal (a própria tela já tem \"Assinar selecionados\" primário). Não torna o depois inequivocamente violação."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Hierarquia de ênfase do Button do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: 0 botões primários na tela; \"Assinar\" com classe br-button (terciário), fundo transparente."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado recriando o host com type=\"primary\" (a troca do atributo em tempo de execução não re-renderiza): 3 botões br-button primary, fundo rgb(19,81,180)."
+      },
+      "nivelCorreto": {
+        "ok": false,
+        "evidencia": "Os três \"Assinar\" são consistentes entre si; o erro alegado vem da regra de uso da ênfase primária, não de inconsistência — seria difícil."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Destacar ação importante em cada linha é plausível."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "processos.component.html linha 118."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "Nenhum outro candidato toca esses botões."
+      }
+    },
+    "motivoReprovacao": "clausulaSustenta: button__designer: \"Utilize de forma limitada. Somente em ações estratégicas, voltadas para o objetivo principal de uma tela\" é orientação de julgamento; numa lista de processos para supervisor, assinar pode ser defensavelmente a ação principal (a própria tela já tem \"Assinar selecionados\" primário). Não torna o depois inequivocamente violação. | nivelCorreto: Os três \"Assinar\" são consistentes entre si; o erro alegado vem da regra de uso da ênfase primária, não de inconsistência — seria difícil."
+  },
+  {
+    "id": "F-medio-2",
+    "nivel": "medio",
+    "ordem": 2,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/button__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "button__designer Arredondamento: \"Superfície (Padrão) | border-radius | --surface-rounder-pill\" — tabela de especificação normativa."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Token de arredondamento do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: Voltar e Exportar com border-radius 1680px (pílula)."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado (botão do core com raio sm): Voltar 4px, Exportar 1680px; borda/cor/altura/padding iguais aos do web component."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Percebido ao comparar os dois secundários da mesma página."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Trocar o web component por markup do core e \"padronizar\" o raio é plausível."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "processos.component.html linha 165; classe do core já carregada globalmente (conferido: estilo aplicado)."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "F-facil-6 move o contêiner (margem) e F-facil-4 corta o lado direito do Exportar; nenhum esconde o raio de 4px nem a pílula do lado esquerdo do Exportar."
+      }
+    }
+  },
+  {
+    "id": "F-medio-3",
+    "nivel": "medio",
+    "ordem": 3,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/tag__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "tag__designer \"Arredondamento [Tag de Interação] | Superfície | --surface-rounder-sm\"; \"Meus processos\" é tag de interação persistente."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Token de arredondamento da tag do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: \"Meus processos\" 4px, tags de filtro 4px."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado: \"Meus processos\" com raio pílula (16783px) enquanto as vizinhas seguem 4px."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Inconsistência de forma entre tags da mesma barra."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Confundir com a tag de contagem/ícone (pílula) é plausível."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "processos.component.html linha 25."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "F-facil-1 mexe no span interno da mesma tag (outra propriedade)."
+      }
+    }
+  },
+  {
+    "id": "F-medio-4",
+    "nivel": "medio",
+    "ordem": 4,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/table__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "table__designer Cores: \"Header da Tabela | background | --gray-5\"."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Token de cor do header da Table."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: todas as 9 th com rgb(240,240,240)."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado: th \"Téc. Adm.\" rgb(255,255,255), demais rgb(240,240,240)."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Percebido pela inconsistência com as outras células do mesmo header."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Estilo inline copiado ao adicionar coluna."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "processos.component.html linha 72."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "Nenhum outro candidato toca o fundo do header."
+      }
+    }
+  },
+  {
+    "id": "F-medio-5",
+    "nivel": "medio",
+    "ordem": 5,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/pagination__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "pagination__designer: nos módulos com escolha, \"deve-se utilizar o componente select personalizado, onde o seu input ... estará em densidade alta, sem contorno\"."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Composição da paginação do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: inputs \"total\" e \"page\" com border 1px solid transparente, 32px."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado: input do \"Exibir\" com borda rgb(136,136,136); \"Página\" segue transparente."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Evidente ao comparar os dois selects da mesma barra."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Reaproveitar select de formulário com borda."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "Classe no template da paginação + regra em src/styles.css (app). RISCO: depende de estilo global alcançar o input do componente filho br-select-pnip."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "F-muito-dificil-4 usa o mesmo select, mas outro elemento (item da lista) e outra propriedade."
+      }
+    },
+    "risco": "depende de estilo global alcançar o input do componente filho br-select-pnip."
+  },
+  {
+    "id": "F-medio-6",
+    "nivel": "medio",
+    "ordem": 6,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/pagination__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "pagination__designer Cores/Interativo: \"Texto Módulos | color | --color-secondary-08\"; a informação \"1–9 de 9 itens\" é texto de módulo não interativo."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Token de cor da paginação."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: texto rgb(51,51,51) = --color-secondary-08 (#333), igual aos rótulos Exibir/Página."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado: texto rgb(19,81,180) enquanto rótulos seguem rgb(51,51,51)."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Só destoa comparando com os outros textos da mesma paginação."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Destacar o total com a cor \"da marca\"."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "govbr-custom-pagination.component.html (template do app)."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "Nenhum outro candidato toca esse texto."
+      }
+    }
+  },
+  {
+    "id": "F-dificil-1",
+    "nivel": "dificil",
+    "ordem": 1,
+    "aprovado": false,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/pagination__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": false,
+        "evidencia": "A tabela de iconografia da paginação pede angle-left/right, mas fundamentos-visuais/iconografia.md (tabela de ícones por ação, \"É fundamental que ... utilizem os ícones abaixo com mesma ação\") atribui fa-chevron-left a \"Voltar\" e fa-chevron-right a \"Avançar\". O depois é defensável pela documentação: há contradição."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Iconografia do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: classes \"fas fa-angle-left\" e \"fas fa-angle-right\"."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado: classes passam a fa-chevron-*; mensurável no DOM."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Parece correto; só a especificação revela."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Chevron é usado em outros componentes do DS."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "govbr-custom-pagination.component.html."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "Nenhum outro candidato toca as setas."
+      }
+    },
+    "motivoReprovacao": "clausulaSustenta: A tabela de iconografia da paginação pede angle-left/right, mas fundamentos-visuais/iconografia.md (tabela de ícones por ação, \"É fundamental que ... utilizem os ícones abaixo com mesma ação\") atribui fa-chevron-left a \"Voltar\" e fa-chevron-right a \"Avançar\". O depois é defensável pela documentação: há contradição."
+  },
+  {
+    "id": "F-dificil-2",
+    "nivel": "dificil",
+    "ordem": 2,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/avatar__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "avatar__designer \"1. Superfície circular (Obrigatório)\": \"A representação do usuário deve estar contida em uma superfície circular\"."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Anatomia do Avatar do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: span.content 40×40, border-radius 50%."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado: border-radius 4px (quadrado arredondado)."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Avatar quadrado parece intencional; só a regra do DS revela."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Uniformizar raio com selos/tags do cabeçalho."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "header.component.html linha 7 (layout do app), estilo inline."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "F-dificil-6 toca o botão que contém o avatar, outro elemento/propriedade."
+      }
+    }
+  },
+  {
+    "id": "F-dificil-3",
+    "nivel": "dificil",
+    "ordem": 3,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/button__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "button__designer Tipografia: \"Rótulo (Padrão) ... Text-transform none\"."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Tipografia do Button do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: botão interno text-transform none, \"Limpar filtros\" (desabilitado, opacidade 0.45, visível)."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado (classe text-uppercase no host): botão interno text-transform uppercase, \"LIMPAR FILTROS\"."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Caixa alta parece escolha de estilo; só a especificação revela."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Convenção de outros design systems."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "multiple-search-table.utils.ts. RISCO: depende de text-transform ser herdado para dentro do shadow root (funcionou no navegador)."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "Nenhum outro candidato toca esse rótulo."
+      }
+    },
+    "risco": "depende de text-transform ser herdado para dentro do shadow root (funcionou no navegador)."
+  },
+  {
+    "id": "F-dificil-4",
+    "nivel": "dificil",
+    "ordem": 4,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/table__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "table__designer Espaçamentos: Linhas padrão 2x (16px), baixa 3x (24px), alta base (8px); 12px não corresponde a nenhuma densidade."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Tokens de densidade da Table."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: td 16px 24px; th 16px 24px (densidade padrão)."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado: td 12px 24px; th segue 16px 24px."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Tabela continua com aparência normal; só a medição revela."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Compactar linhas \"no olho\"."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "processos.component.scss (estilo da rota; td está no template da rota, encapsulamento emulado alcança)."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "F-facil-2 toca td da coluna 5 em outras propriedades."
+      }
+    }
+  },
+  {
+    "id": "F-dificil-5",
+    "nivel": "dificil",
+    "ordem": 5,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: fundamentos-visuais/estados.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "estados.md \"Especificação para Estado Interativo\": background/foreground sobre fundo claro --blue-warm-vivid-70; o link do nº do processo é elemento interativo."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Token da cor de interação do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: 9 links com rgb(19,81,180) = #1351B4."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado: links rgb(0,94,162) = #005EA2."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Continua parecendo link azul; só o token revela."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "A própria tabela usa text-blue-vivid-60 no header."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "processos.component.html linha 87."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "Nenhum outro candidato toca esses links."
+      }
+    }
+  },
+  {
+    "id": "F-dificil-6",
+    "nivel": "dificil",
+    "ordem": 6,
+    "aprovado": false,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/signin__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": false,
+        "evidencia": "A tabela de cores é do Sign-in (botão de autenticar). header__designer diz que o botão de autenticar \"É apresentado apenas quando o usuário estiver deslogado. Após o login, ele será substituído pelo Avatar.\" O elemento medido é o gatilho do usuário logado; nada estabelece que ele seja um sign-in de ênfase secundária. A cláusula não é normativa para este caso."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Cor de componente do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido: background rgb(248,248,248), 40px, pílula."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado: background rgb(232,245,255)."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Parece coerente; só uma tabela de cores revelaria."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Harmonizar com o selo de perfil."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "header.component.scss (o botão está no template do header)."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "F-dificil-2 toca o avatar interno (outro elemento)."
+      }
+    },
+    "motivoReprovacao": "clausulaSustenta: A tabela de cores é do Sign-in (botão de autenticar). header__designer diz que o botão de autenticar \"É apresentado apenas quando o usuário estiver deslogado. Após o login, ele será substituído pelo Avatar.\" O elemento medido é o gatilho do usuário logado; nada estabelece que ele seja um sign-in de ênfase secundária. A cláusula não é normativa para este caso."
+  },
+  {
+    "id": "F-muito-dificil-1",
+    "nivel": "muito-dificil",
+    "ordem": 1,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/select__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "select__designer \"Sombra no componente list\": \"uma sombra deve ser utilizada\"; especificação Sombra Superfície --surface-shadow-md."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Elevação do Select/List do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido com a lista aberta (Tipo de processo): position absolute, z-index 1, box-shadow rgba(0,0,0,0.16) 0 3px 6px. Fechada, a lista não existe."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado (estilo inline): box-shadow none com a lista aberta."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Exige abrir o filtro e a regra do select."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Visual \"flat\"."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "multiple-search-table.utils.ts, estilo inline (vence a regra do DS)."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "F-muito-dificil-6 toca itens da mesma lista, outra propriedade; F-muito-dificil-2 usa a lista só como caminho."
+      }
+    }
+  },
+  {
+    "id": "F-muito-dificil-2",
+    "nivel": "muito-dificil",
+    "ordem": 2,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: componentes/tag__designer.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "tag__designer \"Alinhamento [tag de Interação]\": Icon --spacing-horizontal-left, Tertiary-button --spacing-horizontal-right — o botão fechar fica à direita."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Anatomia/alinhamento da tag do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido após selecionar a 1ª opção: ícone x=104, rótulo x=132, fechar x=294 (extremidade direita)."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado: fechar x=116, ícone x=118, rótulo x=172; o botão continua removendo o filtro."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "A tag só existe após interação e a posição só é erro pela especificação."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Padrão \"chip\" de outras bibliotecas."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "multiple-search-table.utils.ts (reordenar elementos do template), função preservada."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "Nenhum outro candidato toca a tag selecionada."
+      }
+    }
+  },
+  {
+    "id": "F-muito-dificil-3",
+    "nivel": "muito-dificil",
+    "ordem": 3,
+    "aprovado": false,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: fundamentos-visuais/estados.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "estados.md \"Especificação para Estado Desabilitado\": opacity --surface-opacity-md, cursor not-allowed."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Tokens do estado desabilitado do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido na aba Aguardando análise: 9 \"Assumir\" disabled, opacity 0.45, cursor not-allowed (na aba inicial não existem)."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado: opacity 1, cursor pointer; clique de mouse bloqueado."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Exige trocar de aba e conhecer a especificação."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Bloquear por CSS em vez de disabled."
+      },
+      "injetavelNoFonte": {
+        "ok": false,
+        "evidencia": "A mudança quebra a função: sem disabled o botão interno recebe foco e Enter executa assumirProcesso — medido: a página navegou para /processos/alteracao-certificado/… com um perfil para o qual a ação estava bloqueada. \"O clique continua sem efeito\" só vale para mouse."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "F-muito-dificil-5 foca o item de aba, não toca os botões."
+      }
+    },
+    "motivoReprovacao": "injetavelNoFonte: A mudança quebra a função: sem disabled o botão interno recebe foco e Enter executa assumirProcesso — medido: a página navegou para /processos/alteracao-certificado/… com um perfil para o qual a ação estava bloqueada. \"O clique continua sem efeito\" só vale para mouse."
+  },
+  {
+    "id": "F-muito-dificil-4",
+    "nivel": "muito-dificil",
+    "ordem": 4,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: fundamentos-visuais/estados.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "estados.md \"Especificação para Estado Selecionado\": background/foreground --blue-warm-vivid-50."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Token do estado selecionado do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido com a lista do \"Exibir\" aberta: item \"10\" selecionado, background rgb(38,112,232) = #2670E8, texto branco."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado: background rgb(19,81,180) = #1351B4."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Exige abrir o select e conhecer o token; visualmente continua azul."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Usar a cor primária do tema."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "src/styles.css ou estilos de br-select.component.ts (componente do app, não a biblioteca). RISCO: estilo global alcançando o componente filho; regra global também atinge o select \"Página\"."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "F-medio-5 toca o input do mesmo select (outro elemento/propriedade)."
+      }
+    },
+    "risco": "estilo global alcançando o componente filho; regra global também atinge o select \"Página\"."
+  },
+  {
+    "id": "F-muito-dificil-5",
+    "nivel": "muito-dificil",
+    "ordem": 5,
+    "aprovado": true,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: fundamentos-visuais/estados.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "estados.md \"Especificação para Foco\": border fundo claro --gold-vivid-40; \"Especificação para Estado Foco\": style dashed."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Cor/estilo do foco do DS; o foco continua visível (WCAG 2.4.7 atendido), então é só do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido via Tab: botão \"Aguardando análise\" no shadow de br-tab com outline rgb(194,133,12) dashed 4px, offset -4px."
+      },
+      "observavel": {
+        "ok": true,
+        "evidencia": "Simulado (variáveis no host): outline rgb(19,81,180) solid 4px."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Só aparece com teclado e só é erro pela especificação."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Tematizar o foco com a cor da marca."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "processos.component.html linha 13 (style no host). RISCO: depende de custom properties atravessarem o shadow root de br-tab (funcionou no navegador)."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "Nenhum outro candidato toca o foco das abas."
+      }
+    },
+    "risco": "depende de custom properties atravessarem o shadow root de br-tab (funcionou no navegador)."
+  },
+  {
+    "id": "F-muito-dificil-6",
+    "nivel": "muito-dificil",
+    "ordem": 6,
+    "aprovado": false,
+    "criterios": {
+      "clausulaLiteral": {
+        "ok": true,
+        "evidencia": "Trecho encontrado literalmente no arquivo citado (todas as partes separadas por \"[…]\"; ver clausulas.json). Arquivo: fundamentos-visuais/estados.md."
+      },
+      "clausulaSustenta": {
+        "ok": true,
+        "evidencia": "estados.md \"Especificação para Estado Hover\": overlay da cor do primeiro plano, opacity --surface-opacity-xs — um hover sem overlay violaria."
+      },
+      "especificoDoDS": {
+        "ok": true,
+        "evidencia": "Especificação de estado do DS."
+      },
+      "conformeHoje": {
+        "ok": true,
+        "evidencia": "Medido com a lista aberta e mouse sobre o 2º item: background-image linear-gradient(rgba(51,51,51,0.16)…), fundo branco, rótulo #333."
+      },
+      "observavel": {
+        "ok": false,
+        "evidencia": "A regra proposta perde em especificidade para a do DS (.br-select .br-item:not([disabled]):not(:disabled):hover). Simulado: o overlay rgba(51,51,51,0.16) permanece, fundo fica rgb(19,81,180) e o rótulo continua rgb(51,51,51). O depois descrito (\"sem overlay\", texto branco) não ocorre, e o resultado real não viola a cláusula citada (overlay intacto)."
+      },
+      "nivelCorreto": {
+        "ok": true,
+        "evidencia": "Exige abrir a lista e passar o mouse."
+      },
+      "realista": {
+        "ok": true,
+        "evidencia": "Hover \"forte\" é plausível."
+      },
+      "injetavelNoFonte": {
+        "ok": true,
+        "evidencia": "src/styles.css (app). RISCO: estilo global sobre itens do DS."
+      },
+      "independente": {
+        "ok": true,
+        "evidencia": "F-muito-dificil-1 toca a sombra da mesma lista (outra propriedade)."
+      }
+    },
+    "risco": "estilo global sobre itens do DS.",
+    "motivoReprovacao": "observavel: A regra proposta perde em especificidade para a do DS (.br-select .br-item:not([disabled]):not(:disabled):hover). Simulado: o overlay rgba(51,51,51,0.16) permanece, fundo fica rgb(19,81,180) e o rótulo continua rgb(51,51,51). O depois descrito (\"sem overlay\", texto branco) não ocorre, e o resultado real não viola a cláusula citada (overlay intacto)."
+  }
+]

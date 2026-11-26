@@ -1,0 +1,152 @@
+{
+  "facil1": {
+    "tag": {
+      "x": 92,
+      "y": 346,
+      "w": 116,
+      "h": 40,
+      "b": 387,
+      "r": 208
+    },
+    "linhasTexto": [
+      {
+        "x": 132,
+        "r": 175,
+        "y": 344,
+        "b": 367
+      },
+      {
+        "x": 132,
+        "r": 212,
+        "y": 364,
+        "b": 387
+      }
+    ],
+    "display": "inline-flex",
+    "minH": "32px",
+    "h": "40.3125px",
+    "pad": "0px 12px",
+    "filtroH": 32
+  },
+  "medio1": [
+    {
+      "cls": "br-button primary middle",
+      "bg": "rgb(19, 81, 180)"
+    },
+    {
+      "cls": "br-button primary middle",
+      "bg": "rgb(19, 81, 180)"
+    },
+    {
+      "cls": "br-button primary middle",
+      "bg": "rgb(19, 81, 180)"
+    }
+  ],
+  "md2": {
+    "opcoes": [
+      "Habilitação de Técnico Responsável",
+      "Certificação Higiênico-Sanitária",
+      "CAOL - Cert. Acred Origem Legal do Pescado",
+      "Habilitação Mercados Específicos",
+      "Desvínculo de Embarcação",
+      "Alteração de Certificado HS",
+      "Suspender certificação",
+      "Cancelamento de Certificação",
+      "Vinculação de embarcação"
+    ],
+    "antes": {
+      "tag": {
+        "x": 92,
+        "y": 382,
+        "w": 242,
+        "h": 32,
+        "b": 414,
+        "r": 334
+      },
+      "icone": {
+        "x": 104,
+        "y": 390,
+        "w": 24,
+        "h": 16,
+        "b": 406,
+        "r": 128
+      },
+      "rotulo": {
+        "x": 132,
+        "y": 386,
+        "w": 150,
+        "h": 24,
+        "b": 410,
+        "r": 282
+      },
+      "fechar": {
+        "x": 294,
+        "y": 384,
+        "w": 28,
+        "h": 28,
+        "b": 412,
+        "r": 322
+      },
+      "texto": "Habilitação de Técnico Responsável"
+    },
+    "depois": {
+      "tag": {
+        "x": 92,
+        "y": 382,
+        "w": 242,
+        "h": 32,
+        "b": 414,
+        "r": 334
+      },
+      "icone": {
+        "x": 118,
+        "y": 390,
+        "w": 24,
+        "h": 16,
+        "b": 406,
+        "r": 142
+      },
+      "rotulo": {
+        "x": 172,
+        "y": 386,
+        "w": 150,
+        "h": 24,
+        "b": 410,
+        "r": 322
+      },
+      "fechar": {
+        "x": 116,
+        "y": 384,
+        "w": 28,
+        "h": 28,
+        "b": 412,
+        "r": 144
+      },
+      "texto": "Habilitação de Técnico Responsável"
+    },
+    "removeOk": true
+  },
+  "md6regras": [
+    ".br-footer .br-item:not(:disabled):hover { background-image: linear-gradient(rgba(var(--interactive-rgb),var(--hover)),rgba(var(--interactive-rgb),var(--hover))); }",
+    ".br-input .br-list .br-item:not(:disabled):hover { background-image: linear-gradient(rgba(var(--color-rgb),var(--hover)),rgba(var(--color-rgb),var(--hover))); }",
+    ".br-item[data-toggle=\"selection\"]:not(:disabled):hover { background-image: linear-gradient(rgba(var(--color-rgb),var(--hover)),rgba(var(--color-rgb),var(--hover))); }",
+    ".br-item .br-checkbox:not(.hidden-label) input:hover:not(:disabled) + label::before, .br-item .br-radio:not(.hidden-label) input:hover:not(:disabled) + label::before { background-image: none; }",
+    ".br-item[data-toggle]:not(:disabled):hover { background-image: linear-gradient(rgba(var(--color-rgb),var(--hover)),rgba(var(--color-rgb),var(--hover))); }",
+    "a.br-item:not(:disabled):hover { background-image: linear-gradient(rgba(var(--interactive-rgb),var(--hover)),rgba(var(--interactive-rgb),var(--hover))); }",
+    "button.br-item:not(:disabled):hover { background-image: linear-gradient(rgba(var(--color-rgb),var(--hover)),rgba(var(--color-rgb),var(--hover))); }",
+    ".br-list .br-item .content:hover button.br-button { background-image: linear-gradient(rgba(var(--interactive-rgb),var(--hover)),rgba(var(--interactive-rgb),var(--hover))); }",
+    ".br-select .br-item .br-checkbox input:hover:not(:disabled) + label::before, .br-select .br-item .br-radio input:hover:not(:disabled) + label::before { background-image: none; }",
+    ".br-select .br-item:not([disabled]):not(:disabled):hover { background-image: linear-gradient(rgba(var(--color-rgb),var(--hover)),rgba(var(--color-rgb),var(--hover))); }",
+    ".br-select .br-item.selected:not(:disabled):hover, .br-select .br-item[selected]:not(:disabled):hover { background-image: linear-gradient(rgba(var(--color-rgb),var(--hover)),rgba(var(--color-rgb),var(--hover))); }",
+    ".br-select .br-item.highlighted .br-checkbox:hover, .br-select .br-item.highlighted .br-radio:hover, .br-select .br-item[highlighted] .br-checkbox:hover, .br-select .br-item[highlighted] .br-radio:hover { background: linear-gradient(rgba(var(--interactive-rgb),var(--hover)),rgba(var(--interactive-rg",
+    ".accordion-example .br-list .br-item .content:hover button.br-button { background-image: linear-gradient(rgba(var(--interactive-rgb),var(--hover)),rgba(var(--interactive-rgb),var(--hover))); }",
+    ".accordion-example .br-list .br-item .br-checkbox input:hover:not(:disabled) + label::before, .accordion-example .br-list .br-item .br-radio input:hover:not(:disabled) + label::before { background-image: linear-gradient(rgba(var(--interactive-rgb),var(--hover)),rgba(var(--interactive-rgb),var(--hove"
+  ],
+  "md6depois": {
+    "hoverAtivo": true,
+    "bgImg": "linear-gradient(rgba(51, 51, 51, 0.16), rgba(51, 51, 51, 0.16))",
+    "bg": "rgb(19, 81, 180)",
+    "itemColor": "rgb(255, 255, 255)",
+    "labelColor": "rgb(51, 51, 51)"
+  }
+}

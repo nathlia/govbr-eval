@@ -1,0 +1,821 @@
+{
+ "_meta": {
+  "regra": "adendo-tela-f-protocolo-2026-11-26.md § 4 item 3; método em tela-f/metodo.md; juízos e cálculo em tela-f/filtros.mjs",
+  "insumos": {
+   "candidatos": {
+    "arquivo": "tela-f/selecao/candidatos.json",
+    "sha256": "e81cb4b9cff076f83743d77c2da249a0df62b00f40cfceff88193e3131510d2a"
+   },
+   "veredictos": {
+    "arquivo": "tela-f/conferencia/veredictos.json",
+    "sha256": "9fe92e8d35510cc81cc531f70d98ce9045a90f90614761d61b477b5ae01ff1ac"
+   },
+   "clausulasBase": {
+    "arquivo": "tela-f/clausulas-base.json",
+    "sha256": "eec9198c5defd619cc177add5c14f533b2e083880b84712df48857ba55ad3bc6"
+   },
+   "base": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/normalizacao/rules.jsonl",
+    "sha256": "408402bd14f62571759a437e56cacc8bb7b811ade0dc2d09fea83ef6593b430a",
+    "camposLidos": [
+     "id",
+     "source.corpusFile",
+     "source.charRange",
+     "originalText"
+    ]
+   },
+   "mapaIds": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/normalizacao/mapa-ids.json",
+    "sha256": "d545f34fbe28b60dd32e7475f8c381e9fdcf3b033a297774b05e29a41ed76a39",
+    "camposLidos": [
+     "antigo",
+     "novos",
+     "originalTextAntigo"
+    ]
+   },
+   "referencias": [
+    {
+     "tela": "A",
+     "arquivo": "ground-truth-solicitacao.json",
+     "sha256": "0832f339d18037f85cfced4549e9eb3c1e85e0903b2ad95e89bcfc6030f76f2f",
+     "versao": "2.1.0"
+    },
+    {
+     "tela": "A2",
+     "arquivo": "ground-truth-acompanhamento.json",
+     "sha256": "1ed853e980c104bcc42a6dffe6dd61af69427ddf820bd52450998da73a2f03bc",
+     "versao": "1.0.0"
+    },
+    {
+     "tela": "A2",
+     "arquivo": "tela-a2/candidata/ground-truth-acompanhamento.json",
+     "sha256": "0cd3dbf575afe086db34fefce5bb59197433b3a2b783d66c88884923d6e154be",
+     "versao": "1.0.0-candidata"
+    },
+    {
+     "tela": "B",
+     "arquivo": "ground-truth-vistorias.json",
+     "sha256": "bbde01f90d58d008d60b913e6178b69d9a27d0194291431d692073d59ea10648",
+     "versao": "1.1.0"
+    },
+    {
+     "tela": "D",
+     "arquivo": "ground-truth-processos.json",
+     "sha256": "f719db686c86a6ee333cfd29bdfe9c16d85486306661d2ed85eb27660ec183ac",
+     "versao": "1.0.0"
+    },
+    {
+     "tela": "D",
+     "arquivo": "ground-truth-processos-1.1.0.json",
+     "sha256": "2eacba80efb373c4923f7f85593c684647e6b5ec58ad5a341329d96a44632569",
+     "versao": "1.1.0"
+    },
+    {
+     "tela": "E",
+     "arquivo": "ground-truth-cadastro-pais.json",
+     "sha256": "661cc54b7b291bc6e455065ecb23c08e5279bf7a0e9c7d6494afd78ae112c528",
+     "versao": "1.0.0"
+    }
+   ],
+   "pnipMock": "F:/Dev Nath/TCC/.tmp-eval/pnip-mock-f, ramo tela-f @ 3d02f68 (só leitura)"
+  },
+  "resolucaoDosIdsDasReferencias": {
+   "naBase": 127,
+   "mapaNovos": 7,
+   "mapaTexto": 46,
+   "foraDeFormatoIgnorados": 236,
+   "naoResolvidos": 39,
+   "idsDaBaseUsados": 67
+  },
+  "sobreviventesPorNivelDepoisDeCadaFiltro": {
+   "facil": {
+    "candidatos": 6,
+    "conferente": 4,
+    "a": 4,
+    "b": 4,
+    "c": 3,
+    "d": 2,
+    "e": 2
+   },
+   "medio": {
+    "candidatos": 6,
+    "conferente": 5,
+    "a": 5,
+    "b": 5,
+    "c": 5,
+    "d": 1,
+    "e": 1
+   },
+   "dificil": {
+    "candidatos": 6,
+    "conferente": 4,
+    "a": 4,
+    "b": 4,
+    "c": 4,
+    "d": 1,
+    "e": 1
+   },
+   "muito-dificil": {
+    "candidatos": 6,
+    "conferente": 4,
+    "a": 4,
+    "b": 4,
+    "c": 4,
+    "d": 1,
+    "e": 1
+   }
+  }
+ },
+ "candidatos": [
+  {
+   "id": "F-facil-1",
+   "nivel": "facil",
+   "ordem": 1,
+   "conferente": "reprovado",
+   "risco": null,
+   "motivoConferente": "nivelCorreto: O que se vê é uma tag de 2 linhas e 40px (mais alta que as tags de filtro de 32px), sem vazamento evidente; não é quebra óbvia para leigo — seria médio/difícil, não fácil.",
+   "sobrevive": false,
+   "saiEm": "conferente"
+  },
+  {
+   "id": "F-facil-2",
+   "nivel": "facil",
+   "ordem": 2,
+   "conferente": "aprovado",
+   "risco": null,
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "td do solicitante existe em processos.component.html (l. 90–91, template da rota); estilo inline no td; estado inicial."
+    },
+    "b": {
+     "passa": true,
+     "razao": "nenhum defeito natural na célula do solicitante; F-dificil-4 (atrás) toca td em outra propriedade."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
+    },
+    "d": {
+     "passa": true,
+     "razao": "id(s) citável(is) na base literal: govbr-3.7.0-component-table-bc0d039ca6cc",
+     "ids": [
+      "govbr-3.7.0-component-table-bc0d039ca6cc"
+     ]
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"componente\"] → classe ds; corte do texto da célula (reticências/tooltip do truncamento da Table); nome, papel, teclado e contraste intactos.",
+     "categories": [
+      "componente"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "F-facil-3",
+   "nivel": "facil",
+   "ordem": 3,
+   "conferente": "aprovado",
+   "risco": null,
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "search-table.utils.ts tem [style.margin-top]=\"'-38px'\" nos dois botões (l. 19 e 28); template do app, light DOM; estado inicial."
+    },
+    "b": {
+     "passa": true,
+     "razao": "D-05 é o nome acessível do campo (outro elemento/propriedade); o tamanho/raio desses botões é fundo da D (E-03 removida), não spec."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum id ligado (ver d): nada a comparar"
+    },
+    "d": {
+     "passa": false,
+     "razao": "trecho localizado no corpus (componentes/input__designer.md), mas nenhum id da base literal tem faixa sobreposta a ele",
+     "ids": []
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"estrutura\"] → classe ds; posição da ação interna relativa ao campo (alinhamento); nome e operação intactos.",
+     "categories": [
+      "estrutura"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "d"
+  },
+  {
+   "id": "F-facil-4",
+   "nivel": "facil",
+   "ordem": 4,
+   "conferente": "aprovado",
+   "risco": null,
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "br-button Exportar em processos.component.html l. 9; estilo no hospedeiro (fora do shadow DOM); estado inicial."
+    },
+    "b": {
+     "passa": true,
+     "razao": "nenhum defeito natural no Exportar (K-04 é controle conforme de foco, outra propriedade)."
+    },
+    "c": {
+     "passa": false,
+     "razao": "id usado em referência: govbr-3.7.0-component-button-81f5e26ec0ef (A2:U-06)"
+    },
+    "d": {
+     "passa": true,
+     "razao": "id(s) citável(is) na base literal: govbr-3.7.0-component-button-81f5e26ec0ef, govbr-3.7.0-component-button-b1c0168342fb",
+     "ids": [
+      "govbr-3.7.0-component-button-81f5e26ec0ef",
+      "govbr-3.7.0-component-button-b1c0168342fb"
+     ]
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"componente\"] → classe ds; largura da superfície do botão e corte do rótulo; nome acessível intacto (atributo label).",
+     "categories": [
+      "componente"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "c"
+  },
+  {
+   "id": "F-facil-5",
+   "nivel": "facil",
+   "ordem": 5,
+   "conferente": "reprovado",
+   "risco": null,
+   "motivoConferente": "clausulaSustenta: tag__designer §5 exige \"consistência nos espaços entre as tags\"; o depois medido tem espaçamento uniforme de -20px entre todas as vizinhas — consistente. A cláusula não proíbe sobreposição; a violação alegada não decorre dela.",
+   "sobrevive": false,
+   "saiEm": "conferente"
+  },
+  {
+   "id": "F-facil-6",
+   "nivel": "facil",
+   "ordem": 6,
+   "conferente": "aprovado",
+   "risco": null,
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "div.d-flex.justify-content-end.mt-4 em processos.component.html l. 164; estado inicial."
+    },
+    "b": {
+     "passa": true,
+     "razao": "nenhum defeito natural no contêiner do Voltar; D-10 é o iframe depois dele (outro elemento)."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
+    },
+    "d": {
+     "passa": true,
+     "razao": "id(s) citável(is) na base literal: govbr-3.7.0-component-button-0cfc7ea7ab46",
+     "ids": [
+      "govbr-3.7.0-component-button-0cfc7ea7ab46"
+     ]
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"estrutura\"] → classe ds; espaço entre o botão e o componente vizinho (área de proteção); nome, papel, teclado intactos.",
+     "categories": [
+      "estrutura"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "F-medio-1",
+   "nivel": "medio",
+   "ordem": 1,
+   "conferente": "reprovado",
+   "risco": null,
+   "motivoConferente": "clausulaSustenta: button__designer: \"Utilize de forma limitada. Somente em ações estratégicas, voltadas para o objetivo principal de uma tela\" é orientação de julgamento; numa lista de processos para supervisor, assinar pode ser defensavelmente a ação principal (a própria tela já tem \"Assinar selecionados\" primário). Não torna o depois inequivocamente violação. | nivelCorreto: Os três \"Assinar\" são consistentes entre si; o erro alegado vem da regra de uso da ênfase primária, não de inconsistência — seria difícil.",
+   "sobrevive": false,
+   "saiEm": "conferente"
+  },
+  {
+   "id": "F-medio-2",
+   "nivel": "medio",
+   "ordem": 2,
+   "conferente": "aprovado",
+   "risco": null,
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "br-button Voltar em processos.component.html l. 165 trocado por markup .br-button do core (light DOM, classe já global); estado inicial."
+    },
+    "b": {
+     "passa": true,
+     "razao": "nenhum defeito natural no Voltar; F-facil-6 (à frente) move o contêiner (outro elemento/propriedade)."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum id ligado (ver d): nada a comparar"
+    },
+    "d": {
+     "passa": false,
+     "razao": "trecho localizado no corpus (componentes/button__designer.md), mas nenhum id da base literal tem faixa sobreposta a ele",
+     "ids": []
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"token\"] → classe ds; raio da superfície do botão; nada de acessibilidade muda.",
+     "categories": [
+      "token"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "d"
+  },
+  {
+   "id": "F-medio-3",
+   "nivel": "medio",
+   "ordem": 3,
+   "conferente": "aprovado",
+   "risco": null,
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "span.br-tag.interaction em processos.component.html l. 25; binding de estilo no próprio span (light DOM); estado inicial."
+    },
+    "b": {
+     "passa": true,
+     "razao": "D-03 está no mesmo elemento mas em outra propriedade/regra (papel, foco, teclado — não forma da superfície)."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum id ligado (ver d): nada a comparar"
+    },
+    "d": {
+     "passa": false,
+     "razao": "trecho localizado no corpus (componentes/tag__designer.md), mas nenhum id da base literal tem faixa sobreposta a ele",
+     "ids": []
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"token\"] → classe ds; raio da superfície da tag; nada de acessibilidade muda.",
+     "categories": [
+      "token"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "d"
+  },
+  {
+   "id": "F-medio-4",
+   "nivel": "medio",
+   "ordem": 4,
+   "conferente": "aprovado",
+   "risco": null,
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "th Téc. Adm. em processos.component.html l. 72 (aba Tramitando, padrão); estilo inline; estado inicial."
+    },
+    "b": {
+     "passa": true,
+     "razao": "D-08 é o th vazio da coluna de ações (outro elemento); o texto do th continua ≥ 4,5:1 sobre branco (K-06 segue conforme)."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum id ligado (ver d): nada a comparar"
+    },
+    "d": {
+     "passa": false,
+     "razao": "trecho localizado no corpus (componentes/table__designer.md), mas nenhum id da base literal tem faixa sobreposta a ele",
+     "ids": []
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"token\"] → classe ds; cor de fundo de uma célula do header; contraste do texto continua ≥ 4,5:1.",
+     "categories": [
+      "token"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "d"
+  },
+  {
+   "id": "F-medio-5",
+   "nivel": "medio",
+   "ordem": 5,
+   "conferente": "aprovado",
+   "risco": "depende de estilo global alcançar o input do componente filho br-select-pnip.",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "div.pagination-per-page em govbr-custom-pagination.component.html + regra em src/styles.css (global, permitido na fase 0 § 5); risco do conferente mantido."
+    },
+    "b": {
+     "passa": true,
+     "razao": "D-05 cita os seletores da paginação só como comparação (rótulo do campo de busca); nenhum defeito natural na borda do input."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
+    },
+    "d": {
+     "passa": true,
+     "razao": "id(s) citável(is) na base literal: govbr-3.7.0-component-pagination-68ef5027b4e7",
+     "ids": [
+      "govbr-3.7.0-component-pagination-68ef5027b4e7"
+     ]
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"token\"] → classe ds; contorno do input do select da paginação; nome e operação intactos; borda não é indicador de estado.",
+     "categories": [
+      "token"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "F-medio-6",
+   "nivel": "medio",
+   "ordem": 6,
+   "conferente": "aprovado",
+   "risco": null,
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "div.pagination-information em govbr-custom-pagination.component.html; estilo inline; estado inicial."
+    },
+    "b": {
+     "passa": true,
+     "razao": "nenhum defeito natural no módulo de informação da paginação."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum id ligado (ver d): nada a comparar"
+    },
+    "d": {
+     "passa": false,
+     "razao": "trecho localizado no corpus (componentes/pagination__designer.md), mas nenhum id da base literal tem faixa sobreposta a ele",
+     "ids": []
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"token\"] → classe ds; cor do texto do módulo de informação; contraste continua ≥ 4,5:1.",
+     "categories": [
+      "token"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "d"
+  },
+  {
+   "id": "F-dificil-1",
+   "nivel": "dificil",
+   "ordem": 1,
+   "conferente": "reprovado",
+   "risco": null,
+   "motivoConferente": "clausulaSustenta: A tabela de iconografia da paginação pede angle-left/right, mas fundamentos-visuais/iconografia.md (tabela de ícones por ação, \"É fundamental que ... utilizem os ícones abaixo com mesma ação\") atribui fa-chevron-left a \"Voltar\" e fa-chevron-right a \"Avançar\". O depois é defensável pela documentação: há contradição.",
+   "sobrevive": false,
+   "saiEm": "conferente"
+  },
+  {
+   "id": "F-dificil-2",
+   "nivel": "dificil",
+   "ordem": 2,
+   "conferente": "aprovado",
+   "risco": null,
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "span.content do avatar em header.component.html l. 7 (light DOM); estilo inline; estado inicial."
+    },
+    "b": {
+     "passa": true,
+     "razao": "D-14 está no mesmo elemento mas em outra propriedade/regra (contraste da inicial, não forma da superfície)."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
+    },
+    "d": {
+     "passa": true,
+     "razao": "id(s) citável(is) na base literal: govbr-3.7.0-component-avatar-723660559374",
+     "ids": [
+      "govbr-3.7.0-component-avatar-723660559374"
+     ]
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"componente\"] → classe ds; forma da superfície do avatar (anatomia); contraste da inicial não muda (já é D-14).",
+     "categories": [
+      "componente"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "F-dificil-3",
+   "nivel": "dificil",
+   "ordem": 3,
+   "conferente": "aprovado",
+   "risco": "depende de text-transform ser herdado para dentro do shadow root (funcionou no navegador).",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "br-button Limpar filtros em multiple-search-table.utils.ts l. 55; classe no hospedeiro, propriedade herdada atravessa o shadow DOM (fase 0 § 5); risco do conferente mantido."
+    },
+    "b": {
+     "passa": true,
+     "razao": "nenhum defeito natural no rótulo do Limpar filtros."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum id ligado (ver d): nada a comparar"
+    },
+    "d": {
+     "passa": false,
+     "razao": "trecho localizado no corpus (componentes/button__designer.md), mas nenhum id da base literal tem faixa sobreposta a ele",
+     "ids": []
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"tipografia\"] → classe ds; caixa do rótulo do botão (text-transform); nome acessível intacto.",
+     "categories": [
+      "tipografia"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "d"
+  },
+  {
+   "id": "F-dificil-4",
+   "nivel": "dificil",
+   "ordem": 4,
+   "conferente": "aprovado",
+   "risco": null,
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "processos.component.scss (3 linhas; td do template da rota, encapsulamento emulado alcança); bem abaixo do orçamento de CSS; estado inicial."
+    },
+    "b": {
+     "passa": true,
+     "razao": "nenhum defeito natural no padding das células; F-facil-2 (à frente) toca a coluna 5 em outra propriedade."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum id ligado (ver d): nada a comparar"
+    },
+    "d": {
+     "passa": false,
+     "razao": "trecho localizado no corpus (componentes/table__designer.md), mas nenhum id da base literal tem faixa sobreposta a ele",
+     "ids": []
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"token\"] → classe ds; padding vertical das células (densidade); nada de acessibilidade muda.",
+     "categories": [
+      "token"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "d"
+  },
+  {
+   "id": "F-dificil-5",
+   "nivel": "dificil",
+   "ordem": 5,
+   "conferente": "aprovado",
+   "risco": null,
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "a[role=button] em processos.component.html l. 87; classe utilitária do core; estado inicial."
+    },
+    "b": {
+     "passa": true,
+     "razao": "D-02 está no mesmo elemento mas em outra propriedade/regra (foco/teclado, não cor)."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum id ligado (ver d): nada a comparar"
+    },
+    "d": {
+     "passa": false,
+     "razao": "trecho localizado no corpus (fundamentos-visuais/estados.md), mas nenhum id da base literal tem faixa sobreposta a ele",
+     "ids": []
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"token\"] → classe ds; cor do link entre azuis da paleta; contraste continua ≥ 4,5:1; continua distinguível como interativo pela cor.",
+     "categories": [
+      "token"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "d"
+  },
+  {
+   "id": "F-dificil-6",
+   "nivel": "dificil",
+   "ordem": 6,
+   "conferente": "reprovado",
+   "risco": null,
+   "motivoConferente": "clausulaSustenta: A tabela de cores é do Sign-in (botão de autenticar). header__designer diz que o botão de autenticar \"É apresentado apenas quando o usuário estiver deslogado. Após o login, ele será substituído pelo Avatar.\" O elemento medido é o gatilho do usuário logado; nada estabelece que ele seja um sign-in de ênfase secundária. A cláusula não é normativa para este caso.",
+   "sobrevive": false,
+   "saiEm": "conferente"
+  },
+  {
+   "id": "F-muito-dificil-1",
+   "nivel": "muito-dificil",
+   "ordem": 1,
+   "conferente": "aprovado",
+   "risco": null,
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "div.br-list em multiple-search-table.utils.ts l. 44; estado = lista de um filtro aberta por clique (dados atuais dão as listas; manipulador intocado)."
+    },
+    "b": {
+     "passa": true,
+     "razao": "listas abertas dos filtros ficaram fora da D (fora_de_escopo); nenhum candidato à frente toca a sombra da lista."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
+    },
+    "d": {
+     "passa": true,
+     "razao": "id(s) citável(is) na base literal: govbr-3.7.0-component-select-ba2187bb7906",
+     "ids": [
+      "govbr-3.7.0-component-select-ba2187bb7906"
+     ]
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"token\"] → classe ds; sombra da lista flutuante; nada de acessibilidade muda.",
+     "categories": [
+      "token"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": true
+  },
+  {
+   "id": "F-muito-dificil-2",
+   "nivel": "muito-dificil",
+   "ordem": 2,
+   "conferente": "aprovado",
+   "risco": null,
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "tag selecionada em multiple-search-table.utils.ts l. 24–28; reordenar filhos do template; estado = filtro aberto + opção escolhida (alcançável com os dados atuais)."
+    },
+    "b": {
+     "passa": true,
+     "razao": "nenhum defeito natural na tag selecionada; nenhum candidato à frente toca a ordem dos filhos dela."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum id ligado (ver d): nada a comparar"
+    },
+    "d": {
+     "passa": false,
+     "razao": "trecho localizado no corpus (componentes/tag__designer.md), mas nenhum id da base literal tem faixa sobreposta a ele",
+     "ids": []
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"componente\"] → classe ds; ordem visual dos filhos da tag selecionada (anatomia); o botão continua com a mesma função e posição no DOM relativa ao rótulo muda só no visual/ordem.",
+     "categories": [
+      "componente"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "d"
+  },
+  {
+   "id": "F-muito-dificil-3",
+   "nivel": "muito-dificil",
+   "ordem": 3,
+   "conferente": "reprovado",
+   "risco": null,
+   "motivoConferente": "injetavelNoFonte: A mudança quebra a função: sem disabled o botão interno recebe foco e Enter executa assumirProcesso — medido: a página navegou para /processos/alteracao-certificado/… com um perfil para o qual a ação estava bloqueada. \"O clique continua sem efeito\" só vale para mouse.",
+   "sobrevive": false,
+   "saiEm": "conferente"
+  },
+  {
+   "id": "F-muito-dificil-4",
+   "nivel": "muito-dificil",
+   "ordem": 4,
+   "conferente": "aprovado",
+   "risco": "estilo global alcançando o componente filho; regra global também atinge o select \"Página\".",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "br-select.component.ts/.html do app (src/app/shared/br-select) ou src/styles.css; estado = lista do Exibir aberta (parada já existente na D); risco do conferente mantido."
+    },
+    "b": {
+     "passa": true,
+     "razao": "K-10 (controle conforme) está nos rádios da mesma lista, outra propriedade; F-medio-5 (à frente) toca o input, outro elemento."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum id ligado (ver d): nada a comparar"
+    },
+    "d": {
+     "passa": false,
+     "razao": "trecho localizado no corpus (fundamentos-visuais/estados.md), mas nenhum id da base literal tem faixa sobreposta a ele",
+     "ids": []
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"token\"] → classe ds; cor de fundo do item selecionado; texto branco sobre azul mais escuro mantém contraste.",
+     "categories": [
+      "token"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "d"
+  },
+  {
+   "id": "F-muito-dificil-5",
+   "nivel": "muito-dificil",
+   "ordem": 5,
+   "conferente": "aprovado",
+   "risco": "depende de custom properties atravessarem o shadow root de br-tab (funcionou no navegador).",
+   "filtros": {
+    "a": {
+     "passa": true,
+     "razao": "br-tab em processos.component.html l. 13; custom properties no hospedeiro atravessam o shadow DOM (fase 0 § 5); estado = foco por teclado num item de aba; risco do conferente mantido."
+    },
+    "b": {
+     "passa": true,
+     "razao": "K-05 (controle conforme) é o papel/teclado das abas, outra propriedade; nenhum defeito natural no foco das abas."
+    },
+    "c": {
+     "passa": true,
+     "razao": "nenhum id ligado (ver d): nada a comparar"
+    },
+    "d": {
+     "passa": false,
+     "razao": "trecho localizado no corpus (fundamentos-visuais/estados.md), mas nenhum id da base literal tem faixa sobreposta a ele",
+     "ids": []
+    },
+    "e": {
+     "passa": true,
+     "razao": "categories [\"token\"] → classe ds; cor e estilo do contorno de foco; o foco continua visível, 4px, contraste alto; só o token do DS muda.",
+     "categories": [
+      "token"
+     ],
+     "classe": "ds"
+    }
+   },
+   "sobrevive": false,
+   "saiEm": "d"
+  },
+  {
+   "id": "F-muito-dificil-6",
+   "nivel": "muito-dificil",
+   "ordem": 6,
+   "conferente": "reprovado",
+   "risco": "estilo global sobre itens do DS.",
+   "motivoConferente": "observavel: A regra proposta perde em especificidade para a do DS (.br-select .br-item:not([disabled]):not(:disabled):hover). Simulado: o overlay rgba(51,51,51,0.16) permanece, fundo fica rgb(19,81,180) e o rótulo continua rgb(51,51,51). O depois descrito (\"sem overlay\", texto branco) não ocorre, e o resultado real não viola a cláusula citada (overlay intacto).",
+   "sobrevive": false,
+   "saiEm": "conferente"
+  }
+ ]
+}

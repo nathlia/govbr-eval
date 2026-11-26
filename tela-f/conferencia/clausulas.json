@@ -1,0 +1,320 @@
+[
+  {
+    "id": "F-facil-1",
+    "arquivo": "componentes/tag__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "O componente *tag* possui uma altura fixa e por isso não é permitida mais de uma linha de texto ou ícone no mesmo componente.",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-facil-2",
+    "arquivo": "componentes/table__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "Os textos devem ser truncados exibindo as reticências no final. Ao passar o *mouse* sobre o texto truncado é revelado o texto completo pelo uso de *tooltip*.",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-facil-3",
+    "arquivo": "componentes/input__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "| Ação interna                               | margin-top/bottom          | `--spacing-vertical-center` |",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-facil-4",
+    "arquivo": "componentes/button__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "**Importante:** o crescimento do botão deve acompanhar o tamanho do rótulo, porém as margens internas devem ser respeitadas.",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-facil-5",
+    "arquivo": "componentes/tag__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "*Tags* podem estar agrupadas tanto horizontal quanto verticalmente mantendo a consistência nos espaços entre as *tags*.",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-facil-6",
+    "arquivo": "componentes/button__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "Quando o botão estiver próximo a algum outro componente, mantenha um espaçamento mínimo para que a o botão seja notado na tela e que sua área de interação não se confunda com as de outros componentes.",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-medio-1",
+    "arquivo": "componentes/button__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "Utilize de forma limitada. Somente em ações estratégicas, voltadas para o objetivo principal de uma tela.",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-medio-2",
+    "arquivo": "componentes/button__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "| Superfície (Padrão) | border-radius | `--surface-rounder-pill` |",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-medio-3",
+    "arquivo": "componentes/tag__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "### Arredondamento [*Tag* de Interação]",
+        "literal": true,
+        "normalizado": true
+      },
+      {
+        "parte": "| Superfície | top-left-bottom-right | `--surface-rounder-sm` |",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-medio-4",
+    "arquivo": "componentes/table__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "| Header da Tabela                  | background | `--gray-5`             |",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-medio-5",
+    "arquivo": "componentes/pagination__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "deve-se utilizar o componente *select* personalizado, onde o seu *input* (Campo de Entrada de Texto) estará em densidade alta, sem contorno e pré definido",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-medio-6",
+    "arquivo": "componentes/pagination__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "| Texto Módulos                           | color      | `--color-secondary-08` |",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-dificil-1",
+    "arquivo": "componentes/pagination__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "| Seta Lateral Esquerda       | <i class=\"angle-left\"></i>  | `--icone-size-base` | angle-left           |",
+        "literal": true,
+        "normalizado": true
+      },
+      {
+        "parte": "| Seta Lateral Direita        | <i class=\"angle-right\"></i> | `--icone-size-base` | angle-right          |",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-dificil-2",
+    "arquivo": "componentes/avatar__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "A representação do usuário deve estar contida em uma superfície circular.",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-dificil-3",
+    "arquivo": "componentes/button__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "| Rótulo (Padrão) | `--font-size-scale-up-01` | `--font-weight-semi-bold` |     `none`     |",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-dificil-4",
+    "arquivo": "componentes/table__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "| Linhas (Densidade Padrão)             | padding-top    |  `--spacing-scale-2x`  |",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-dificil-5",
+    "arquivo": "fundamentos-visuais/estados.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "| background/foreground (Sobre um fundo Claro)  | color    | `--blue-warm-vivid-70` |",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-dificil-6",
+    "arquivo": "componentes/signin__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "### Cores (ênfase secundária - fundo claro)",
+        "literal": true,
+        "normalizado": true
+      },
+      {
+        "parte": "| Superfície    | background color | `--gray-2`             |",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-muito-dificil-1",
+    "arquivo": "componentes/select__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "O componente *list* será apresentado flutuando sobre a tela e uma sombra deve ser utilizada para proporcionar contraste entre o componente e o conteúdo de tela ao fundo.",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-muito-dificil-2",
+    "arquivo": "componentes/tag__designer.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "| Tertiary-button            | `--spacing-horizontal-right`  |",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-muito-dificil-3",
+    "arquivo": "fundamentos-visuais/estados.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "| background/foreground | opacity  | `--surface-opacity-md`  |",
+        "literal": true,
+        "normalizado": true
+      },
+      {
+        "parte": "| cursor                | cursor   | `not-allowed`           |",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-muito-dificil-4",
+    "arquivo": "fundamentos-visuais/estados.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "| background/foreground | color    | `--blue-warm-vivid-50` |",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-muito-dificil-5",
+    "arquivo": "fundamentos-visuais/estados.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "| border (Sobre um fundo Claro)  | color    | `--gold-vivid-40` |",
+        "literal": true,
+        "normalizado": true
+      },
+      {
+        "parte": "| border  | style    | `dashed`               |",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  },
+  {
+    "id": "F-muito-dificil-6",
+    "arquivo": "fundamentos-visuais/estados.md",
+    "existe": true,
+    "partes": [
+      {
+        "parte": "A cor do elemento *Overlay* será sempre a cor do Primeiro Plano do elemento *hover*.",
+        "literal": true,
+        "normalizado": true
+      },
+      {
+        "parte": "| background (Sobre um fundo Claro)  | opacity  | `--surface-opacity-xs` |",
+        "literal": true,
+        "normalizado": true
+      }
+    ]
+  }
+]

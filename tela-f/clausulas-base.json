@@ -1,0 +1,346 @@
+{
+ "_meta": {
+  "regra": "tela-f/mapear-clausulas.mjs (cabeçalho): só id, source.corpusFile, source.charRange e originalText da base literal",
+  "base": {
+   "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/normalizacao/rules.jsonl",
+   "sha256": "408402bd14f62571759a437e56cacc8bb7b811ade0dc2d09fea83ef6593b430a",
+   "regras": 2971,
+   "camposLidos": [
+    "id",
+    "source.corpusFile",
+    "source.charRange",
+    "originalText"
+   ]
+  },
+  "arquivosDoCorpus": {
+   "componentes/table__designer.md": "7c7deb5e54314d5c0a045d7a67aeb8b0a6becd0932a559bd620bd4ba6452c82e",
+   "componentes/input__designer.md": "53a723f27af14da6f8a27bdda81d44fe6f95fee309a9661773c215391a1b4f7e",
+   "componentes/button__designer.md": "97ffa84ac951fa1409ee30c897e14040cc3301342cd92ea5763bfa6feb66b673",
+   "componentes/tag__designer.md": "217ff4ad33cdec95444daa29fd88ebb1b3cb9083e67b263056c3213e8e726c8f",
+   "componentes/pagination__designer.md": "73c81987c388272bf34dea74891eca99515bace33357b182be9cb05125f97b19",
+   "componentes/avatar__designer.md": "e934668acff74f8d756aefc418f8526864e7a70c896d3b967dfeb1e8f7b87c9e",
+   "fundamentos-visuais/estados.md": "4a60fd28e435b743db2380436eb7246cedbe3071ae85e7cae4752aceba39ecc2",
+   "componentes/select__designer.md": "015496bfba8116ccabbcd07cc102996eb647824e126b7199256959592f12f8bf"
+  }
+ },
+ "porCandidato": {
+  "F-facil-2": {
+   "arquivo": "componentes/table__designer.md",
+   "partes": [
+    {
+     "parte": "Os textos devem ser truncados exibindo as reticências no final. Ao passar o mouse sobre o texto truncado é revelado o texto completo pelo uso de tooltip.",
+     "achada": true,
+     "faixaNoArquivo": [
+      6737,
+      6894
+     ],
+     "ids": [
+      {
+       "id": "govbr-3.7.0-component-table-bc0d039ca6cc",
+       "faixa": [
+        6737,
+        6800
+       ],
+       "textoContemParte": false
+      }
+     ]
+    }
+   ]
+  },
+  "F-facil-3": {
+   "arquivo": "componentes/input__designer.md",
+   "partes": [
+    {
+     "parte": "Ação interna | margin-top/bottom | --spacing-vertical-center",
+     "achada": true,
+     "faixaNoArquivo": [
+      19261,
+      19361
+     ],
+     "ids": []
+    }
+   ]
+  },
+  "F-facil-4": {
+   "arquivo": "componentes/button__designer.md",
+   "partes": [
+    {
+     "parte": "Importante: o crescimento do botão deve acompanhar o tamanho do rótulo, porém as margens internas devem ser respeitadas.",
+     "achada": true,
+     "faixaNoArquivo": [
+      3109,
+      3231
+     ],
+     "ids": [
+      {
+       "id": "govbr-3.7.0-component-button-81f5e26ec0ef",
+       "faixa": [
+        3123,
+        3181
+       ],
+       "textoContemParte": false
+      },
+      {
+       "id": "govbr-3.7.0-component-button-b1c0168342fb",
+       "faixa": [
+        3183,
+        3231
+       ],
+       "textoContemParte": false
+      }
+     ]
+    }
+   ]
+  },
+  "F-facil-6": {
+   "arquivo": "componentes/button__designer.md",
+   "partes": [
+    {
+     "parte": "Quando o botão estiver próximo a algum outro componente, mantenha um espaçamento mínimo para que a o botão seja notado na tela e que sua área de interação não se confunda com as de outros componentes.",
+     "achada": true,
+     "faixaNoArquivo": [
+      12495,
+      12695
+     ],
+     "ids": [
+      {
+       "id": "govbr-3.7.0-component-button-0cfc7ea7ab46",
+       "faixa": [
+        12495,
+        12695
+       ],
+       "textoContemParte": true
+      }
+     ]
+    }
+   ]
+  },
+  "F-medio-2": {
+   "arquivo": "componentes/button__designer.md",
+   "partes": [
+    {
+     "parte": "Superfície (Padrão) | border-radius | --surface-rounder-pill",
+     "achada": true,
+     "faixaNoArquivo": [
+      17499,
+      17560
+     ],
+     "ids": []
+    }
+   ]
+  },
+  "F-medio-3": {
+   "arquivo": "componentes/tag__designer.md",
+   "partes": [
+    {
+     "parte": "### Arredondamento [Tag de Interação]",
+     "achada": true,
+     "faixaNoArquivo": [
+      20526,
+      20565
+     ],
+     "ids": []
+    },
+    {
+     "parte": "Superfície | top-left-bottom-right | --surface-rounder-sm",
+     "achada": true,
+     "faixaNoArquivo": [
+      20697,
+      20755
+     ],
+     "ids": []
+    }
+   ]
+  },
+  "F-medio-4": {
+   "arquivo": "componentes/table__designer.md",
+   "partes": [
+    {
+     "parte": "Header da Tabela | background | --gray-5",
+     "achada": true,
+     "faixaNoArquivo": [
+      19994,
+      20052
+     ],
+     "ids": []
+    }
+   ]
+  },
+  "F-medio-5": {
+   "arquivo": "componentes/pagination__designer.md",
+   "partes": [
+    {
+     "parte": "deve-se utilizar o componente select personalizado, onde o seu input (Campo de Entrada de Texto) estará em densidade alta, sem contorno e pré definido",
+     "achada": true,
+     "faixaNoArquivo": [
+      9735,
+      9889
+     ],
+     "ids": [
+      {
+       "id": "govbr-3.7.0-component-pagination-68ef5027b4e7",
+       "faixa": [
+        9635,
+        9936
+       ],
+       "textoContemParte": true
+      }
+     ]
+    }
+   ]
+  },
+  "F-medio-6": {
+   "arquivo": "componentes/pagination__designer.md",
+   "partes": [
+    {
+     "parte": "Texto Módulos | color | --color-secondary-08",
+     "achada": true,
+     "faixaNoArquivo": [
+      17779,
+      17855
+     ],
+     "ids": []
+    }
+   ]
+  },
+  "F-dificil-2": {
+   "arquivo": "componentes/avatar__designer.md",
+   "partes": [
+    {
+     "parte": "A representação do usuário deve estar contida em uma superfície circular.",
+     "achada": true,
+     "faixaNoArquivo": [
+      1430,
+      1503
+     ],
+     "ids": [
+      {
+       "id": "govbr-3.7.0-component-avatar-723660559374",
+       "faixa": [
+        1430,
+        1503
+       ],
+       "textoContemParte": true
+      }
+     ]
+    }
+   ]
+  },
+  "F-dificil-3": {
+   "arquivo": "componentes/button__designer.md",
+   "partes": [
+    {
+     "parte": "Rótulo (Padrão) | --font-size-scale-up-01 | --font-weight-semi-bold | none",
+     "achada": true,
+     "faixaNoArquivo": [
+      14674,
+      14757
+     ],
+     "ids": []
+    }
+   ]
+  },
+  "F-dificil-4": {
+   "arquivo": "componentes/table__designer.md",
+   "partes": [
+    {
+     "parte": "Linhas (Densidade Padrão) | padding-top | --spacing-scale-2x",
+     "achada": true,
+     "faixaNoArquivo": [
+      22709,
+      22786
+     ],
+     "ids": []
+    }
+   ]
+  },
+  "F-dificil-5": {
+   "arquivo": "fundamentos-visuais/estados.md",
+   "partes": [
+    {
+     "parte": "background/foreground (Sobre um fundo Claro) | color | --blue-warm-vivid-70",
+     "achada": true,
+     "faixaNoArquivo": [
+      12776,
+      12856
+     ],
+     "ids": []
+    }
+   ]
+  },
+  "F-muito-dificil-1": {
+   "arquivo": "componentes/select__designer.md",
+   "partes": [
+    {
+     "parte": "O componente list será apresentado flutuando sobre a tela e uma sombra deve ser utilizada para proporcionar contraste entre o componente e o conteúdo de tela ao fundo.",
+     "achada": true,
+     "faixaNoArquivo": [
+      3147,
+      3316
+     ],
+     "ids": [
+      {
+       "id": "govbr-3.7.0-component-select-ba2187bb7906",
+       "faixa": [
+        3147,
+        3316
+       ],
+       "textoContemParte": true
+      }
+     ]
+    }
+   ]
+  },
+  "F-muito-dificil-2": {
+   "arquivo": "componentes/tag__designer.md",
+   "partes": [
+    {
+     "parte": "Tertiary-button | --spacing-horizontal-right",
+     "achada": true,
+     "faixaNoArquivo": [
+      15316,
+      15372
+     ],
+     "ids": []
+    }
+   ]
+  },
+  "F-muito-dificil-4": {
+   "arquivo": "fundamentos-visuais/estados.md",
+   "partes": [
+    {
+     "parte": "background/foreground | color | --blue-warm-vivid-50",
+     "achada": true,
+     "faixaNoArquivo": [
+      25669,
+      25725
+     ],
+     "ids": []
+    }
+   ]
+  },
+  "F-muito-dificil-5": {
+   "arquivo": "fundamentos-visuais/estados.md",
+   "partes": [
+    {
+     "parte": "border (Sobre um fundo Claro) | color | --gold-vivid-40",
+     "achada": true,
+     "faixaNoArquivo": [
+      21137,
+      21197
+     ],
+     "ids": []
+    },
+    {
+     "parte": "border | style | dashed",
+     "achada": true,
+     "faixaNoArquivo": [
+      21451,
+      21479
+     ],
+     "ids": []
+    }
+   ]
+  }
+ }
+}

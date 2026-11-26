@@ -1,0 +1,586 @@
+pnip-root [ng-version="15.2.10"] {0,0 1280x2478} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+  pnip-header {0,0 1280x115} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+    br-header [image="assets/images/govbr-logo.png" signature="Ministério da Pesca e Aquicultura" title="Plataforma Nacional da Indústria do Pesc" has-menu=""] {0,0 1280x115} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+      #shadow-root
+        (S) header.br-header.mb-4 {0,0 1280x115} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgb(255, 255, 255)
+          (S) div.container-lg {20,16 1240x83} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+            (S) div.header-top {60,16 1160x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+              (S) div.header-logo {60,16 1160x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                (S) img.large-img [src="assets/images/govbr-logo.png" alt="logo"] {60,16 111x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                (S) span.br-divider.vertical.mx-half.mx-sm-1 {191,16 1x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                (S) div.header-sign {212,26 217x20} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Ministério da Pesca e Aquicultura"
+              (S) slot [name="headerAction"] {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+            (S) div.header-bottom {60,64 1160x35} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+              (S) div.header-menu {60,64 1160x35} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                (S) div.header-menu-trigger {60,67 32x32} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  (S) slot [name="headerMenu"] {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                    (S) button#navigation.br-button.small.circle [aria-label="Menu" data-toggle="menu" data-target="#main-navigation" type="button"] {60,67 32x32} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                      (S) i.fas.fa-bars [aria-hidden="true"] {64,75 24x16} fs=16px fw=900 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                (S) div.header-info {108,64 501x35} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  (S) div.header-title {108,64 501x35} fs=24.192px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Plataforma Nacional da Indústria do Pescado"
+    div.container-lg {20,40 1240x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+      div.drop-menu-login.row.justify-content-end {48,40 1184x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+        button#avatar-dropdown-trigger.br-sign-in [type="button" aria-controls="avatar-menu" data-toggle="dropdown" data-target="avatar-menu" aria-label="Avatar com dropdown" data-visible="false" aria-expanded="false"] {840,40 392x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgb(248, 248, 248)
+          span.br-avatar [title="U"] {856,40 40x40} fs=24.192px fw=700 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+            span.content.bg-orange-vivid-30.text-pure-0 {856,40 40x40} fs=24.192px fw=700 c=rgb(255, 255, 255) bg=rgb(255, 140, 0) "U"
+          span.ml-2.text-gray-80.text-weight-regular {904,48 288x24} fs=16.8px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Olá,"
+            span.text-weight-semi-bold {938,48 139x23} fs=16.8px fw=600 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Usuária de Teste,"
+            span.bg-blue-vivid-5.text-weight-bold.dropdown-user-perfil.p-1 style="border-radius: 4px;" {1078,43 114x33} fs=16.8px fw=700 c=rgb(19, 81, 180) bg=rgb(232, 245, 255) "SUPERVISOR"
+          i.fas.fa-caret-down.fa-chevron-down [aria-hidden="true"] {1192,52 24x16} fs=16px fw=900 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+        div#avatar-menu.br-list.dropdown-menu.mt-1 [hidden="hidden" role="menu" aria-labelledby="avatar-dropdown-trigger" aria-hidden="true"] {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgb(255, 255, 255)
+          div.dropdown-user-info {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+            span.dropdown-name {0,0 0x0} fs=16px fw=600 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Usuária de Teste"
+            br {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+            span.dropdown-email {0,0 0x0} fs=12px fw=500 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0) "usuaria.teste@exemplo.invalid"
+          div.mt-4 {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+            div.mb-5 {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+              span.bg-blue-vivid-5.text-weight-bold.dropdown-user-perfil.p-2 style="border-radius: 4px;" {0,0 0x0} fs=14px fw=700 c=rgb(19, 81, 180) bg=rgb(232, 245, 255) "SUPERVISOR"
+            div.text-center {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+              span.text-blue-vivid-60.text-weight-bold style="cursor: pointer;" {0,0 0x0} fs=14px fw=700 c=rgb(0, 94, 162) bg=rgba(0, 0, 0, 0) "Trocar unidade"
+                i.fas.fa-building.mr-1 {0,0 0x0} fs=16px fw=900 c=rgb(0, 94, 162) bg=rgba(0, 0, 0, 0)
+            hr.solid {0,0 0x0} fs=14px fw=400 c=rgb(128, 128, 128) bg=rgba(0, 0, 0, 0)
+          button.br-item.dropdown-button [type="button" href="javascript:void(0)"] {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+            img [src="../../../assets/images/exit-icon.png"] {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+            p {0,0 0x0} fs=16px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0) "Sair"
+  main.container-lg.pb-3 {20,135 1240x2343} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+    router-outlet {60,141 0x19} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+    pnip-mpa {60,141 1160x2320} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+      router-outlet {60,141 0x19} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+      pnip-mpa-processos {60,141 1160x2320} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+        br-breadcrumb {60,135 118x40} fs=11.662px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+          #shadow-root
+            (S) div.br-breadcrumb {60,135 118x40} fs=11.662px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+              (S) ul.crumb-list {60,135 118x40} fs=11.662px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                (S) li.crumb.home {60,135 44x40} fs=11.662px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  (S) a [href="/portal-mpa/"] {60,139 44x32} fs=11.662px fw=500 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                    (S) button.br-button.small.circle [aria-label="" type="button"] {66,139 32x32} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                      (S) span.sr-only {82,155 1x1} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0) "Home"
+                      (S) i.fas.fa-home [aria-hidden="true"] {70,147 24x16} fs=16px fw=900 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                (S) li.crumb [data-active="active"] {96,135 82x40} fs=11.662px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  (S) i.fas.fa-chevron-right.icon [aria-hidden="true"] {96,149 24x12} fs=12px fw=900 c=rgb(204, 204, 204) bg=rgba(0, 0, 0, 0)
+                  (S) span {114,147 64x17} fs=11.662px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Processos"
+        br-divider.mt-0.mb-0 [size="medium"] {60,175 1160x2} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+          #shadow-root
+            (S) span.br-divider.md.mt-0.mb-0 {60,175 1160x2} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+        div.p-5 {60,177 1160x1780} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+          div.row {80,209 1120x64} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+            div.col {80,209 978x64} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+              h2.text-bold.text-blue-vivid-60.mt-0.mb-4.pb-0 {92,209 954x40} fs=34.832px fw=700 c=rgb(0, 94, 162) bg=rgba(0, 0, 0, 0) "Processos"
+            div.col-auto.align-self-end {1058,233 142x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+              br-button [type="secondary" label="Exportar"] {1070,239 118x19} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                #shadow-root
+                  (S) button.br-button.secondary.middle [aria-label="" type="button"] {1070,233 118x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgb(255, 255, 255)
+                    (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                      (S) span {1095,241 68x24} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                        (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0) "Exportar"
+          br-tab {92,273 1096x41} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+            #shadow-root
+              (S) div.br-tab.small [data-counter="false"] {92,273 1096x41} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                (S) nav.tab-nav [aria-label="Abas de Navegação Simples"] {92,273 1096x41} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  (S) ul {92,273 1096x41} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                    (S) li.tab-item {92,273 236x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                      (S) button [type="button" data-panel="AGUARDANDO_ANALISE" aria-label="AGUARDANDO_ANALISE"] {92,273 236x40} fs=20.16px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        (S) span.name {116,277 188x28} fs=20.16px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Aguardando análise"
+                    (S) li.tab-item.active {328,273 155x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                      (S) button [type="button" data-panel="TRAMITANDO" aria-label="TRAMITANDO"] {328,273 155x40} fs=20.16px fw=500 c=rgb(12, 50, 111) bg=rgba(0, 0, 0, 0)
+                        (S) span.name {352,277 107x28} fs=20.16px fw=500 c=rgb(12, 50, 111) bg=rgba(0, 0, 0, 0) "Tramitando"
+                    (S) li.tab-item {484,273 154x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                      (S) button [type="button" data-panel="HISTORICO" aria-label="HISTORICO"] {484,273 154x40} fs=20.16px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        (S) span.name {508,277 106x28} fs=20.16px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Concluídos"
+                (S) div.tab-content {92,314 1096x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  (S) slot {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+            br-tab-item#AGUARDANDO_ANALISE [title="Aguardando análise"] {92,314 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+              #shadow-root
+                (S) div#AGUARDANDO_ANALISE.tab-panel style="display: none;" {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  (S) slot {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+            br-tab-item#TRAMITANDO [title="Tramitando" is-active="true"] {92,314 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+              #shadow-root
+                (S) div#TRAMITANDO.tab-panel.active {92,314 1096x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  (S) slot {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+            br-tab-item#HISTORICO [title="Concluídos"] {92,314 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+              #shadow-root
+                (S) div#HISTORICO.tab-panel style="display: none;" {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  (S) slot {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+          div.tab-panel.mt-3.pt-3 {92,330 1096x1475} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+            div.col {92,346 1096x1459} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+              div.row {80,346 1120x36} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                div.col-auto.mb-1 {80,346 203x32} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  span.br-tag.interaction.small style="cursor: pointer;" {92,346 179x32} fs=16.8px fw=500 c=rgb(255, 255, 255) bg=rgb(19, 81, 180)
+                    i.fas.fa-chart-bar.mr-1 [aria-hidden="true"] {104,354 24x16} fs=16px fw=900 c=rgb(255, 255, 255) bg=rgba(0, 0, 0, 0)
+                    span.text-truncate {132,350 127x24} fs=16.8px fw=500 c=rgb(255, 255, 255) bg=rgba(0, 0, 0, 0) "Meus processos"
+              div.row {80,382 1120x76} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                div.col {80,382 863x76} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  pnip-multiple-search-table-utils#searchTableUtils {92,382 839x72} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                    div.mb-1 {92,382 839x72} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                      div.row.pl-2 {80,382 863x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                      div.row.align-items-center.pl-2 {80,382 863x72} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        div.col-auto.px-1 {88,382 163x32} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          span.br-tag.interaction.small.bg-pure-0.border-solid-sm.border-gray-50 style="cursor: pointer;" {92,382 155x32} fs=16.8px fw=500 c=rgb(255, 255, 255) bg=rgb(255, 255, 255)
+                            i.fa-clock.far.mr-1.text-gray-50 {105,390 24x16} fs=16px fw=400 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0)
+                            span.text-gray-50 {133,386 77x24} fs=16.8px fw=500 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0) "Aberto há"
+                            span.fa-caret-down.fas.text-gray-50 {210,390 24x16} fs=16px fw=900 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0)
+                        div.col-auto.px-1 {251,382 222x32} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          span.br-tag.interaction.small.bg-pure-0.border-solid-sm.border-gray-50 style="cursor: pointer;" {255,382 214x32} fs=16.8px fw=500 c=rgb(255, 255, 255) bg=rgb(255, 255, 255)
+                            i.fa-chart-bar.fas.mr-1.text-gray-50 {268,390 24x16} fs=16px fw=900 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0)
+                            span.text-gray-50 {296,386 136x24} fs=16.8px fw=500 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0) "Tipo de processo"
+                            span.fa-caret-down.fas.text-gray-50 {432,390 24x16} fs=16px fw=900 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0)
+                        div.col-auto.px-1 {473,382 135x32} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          span.br-tag.interaction.small.bg-pure-0.border-solid-sm.border-gray-50 style="cursor: pointer;" {477,382 127x32} fs=16.8px fw=500 c=rgb(255, 255, 255) bg=rgb(255, 255, 255)
+                            i.fa-hourglass-start.fas.mr-1.text-gray-50 {490,390 24x16} fs=16px fw=900 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0)
+                            span.text-gray-50 {518,386 49x24} fs=16.8px fw=500 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0) "Status"
+                            span.fa-caret-down.fas.text-gray-50 {567,390 24x16} fs=16px fw=900 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0)
+                        div.col-auto.px-1 {608,382 185x32} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          span.br-tag.interaction.small.bg-pure-0.border-solid-sm.border-gray-50 style="cursor: pointer;" {612,382 177x32} fs=16.8px fw=500 c=rgb(255, 255, 255) bg=rgb(255, 255, 255)
+                            i.fa-fish.fas.mr-1.text-gray-50 {625,390 24x16} fs=16px fw=900 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0)
+                            span.text-gray-50 {653,386 99x24} fs=16.8px fw=500 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0) "Espécie alvo"
+                            span.fa-caret-down.fas.text-gray-50 {752,390 24x16} fs=16px fw=900 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0)
+                        div.col-auto.px-1 {88,418 223x32} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          span.br-tag.interaction.small.bg-pure-0.border-solid-sm.border-gray-50 style="cursor: pointer;" {92,418 215x32} fs=16.8px fw=500 c=rgb(255, 255, 255) bg=rgb(255, 255, 255)
+                            i.fa-anchor.fas.mr-1.text-gray-50 {105,426 24x16} fs=16px fw=900 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0)
+                            span.text-gray-50 {133,422 137x24} fs=16.8px fw=500 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0) "Método de pesca"
+                            span.fa-caret-down.fas.text-gray-50 {270,426 24x16} fs=16px fw=900 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0)
+                        div.col-auto.px-1 {311,418 157x32} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          span.br-tag.interaction.small.bg-pure-0.border-solid-sm.border-gray-50 style="cursor: pointer;" {315,418 149x32} fs=16.8px fw=500 c=rgb(255, 255, 255) bg=rgb(255, 255, 255)
+                            i.fa-network-wired.fas.mr-1.text-gray-50 {328,426 24x16} fs=16px fw=900 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0)
+                            span.text-gray-50 {356,422 71x24} fs=16.8px fw=500 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0) "Petrecho"
+                            span.fa-caret-down.fas.text-gray-50 {427,426 24x16} fs=16px fw=900 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0)
+                        div.col-auto.px-1 {468,414 160x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          br-button [icon="" label="Limpar filtros" disabled=""] {472,420 152x19} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [aria-label="" type="button" disabled=""] {472,414 152x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {496,422 104x24} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0) "Limpar filtros"
+                div.col-auto.align-self-end {943,414 257x44} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  pnip-search-table-utils {955,418 233x32} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                    div.table-header {955,418 233x32} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                      div.search-bar.mb-2 {955,418 233x32} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        div.br-input {955,418 233x32} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          br-input#search.ng-valid.ng-touched.ng-dirty [placeholder="Pesquise aqui ..." density="small" name="search" value=""] {955,418 233x32} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) div.br-input.small.ng-valid.ng-touched.ng-dirty [name="search"] {955,418 233x32} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                                (S) input#search.ng-valid.ng-touched.ng-dirty [name="search" type="text" placeholder="Pesquise aqui ..."] {955,418 233x32} fs=16.8px fw=500 c=rgb(51, 51, 51) bg=rgb(255, 255, 255)
+                          button.br-button [type="button" aria-label="Buscar"] style="margin-top: -38px;" {1152,420 32x32} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                            i.fas.fa-search [aria-hidden="true"] {1156,428 24x16} fs=16px fw=900 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+              div {92,458 1096x1347} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                div.mb-2 {92,458 1096x20} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Última atualização: 09:30"
+                  i.fa-clock.far.text-gray-50 {218,460 24x16} fs=16px fw=400 c=rgb(117, 117, 117) bg=rgba(0, 0, 0, 0)
+                div.br-table {92,487 1096x1319} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  table.table {92,487 1150x1319} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                    thead.thead-light {92,487 1150x73} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                      tr {92,487 1150x73} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        th.text-blue-vivid-60.text-bold [scope="col"] {92,487 94x73} fs=14px fw=700 c=rgb(0, 94, 162) bg=rgb(240, 240, 240) "Aberto há"
+                          br-icon-base [icon-name="sort-down" family-name="fas"] {136,523 24x19} fs=14px fw=700 c=rgb(0, 94, 162) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) i.fas.fa-sort-down [aria-hidden="true"] {136,525 24x16} fs=16px fw=900 c=rgb(0, 94, 162) bg=rgba(0, 0, 0, 0)
+                        th {186,487 66x73} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgb(240, 240, 240)
+                          input [type="checkbox"] style="transform: scale(1.5); margin-left: 5px;" {212,512 20x20} fs=16.8px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        th.text-blue-vivid-60.text-bold [scope="col"] {252,487 203x73} fs=14px fw=700 c=rgb(0, 94, 162) bg=rgb(240, 240, 240) "Nº Processo"
+                        th.text-blue-vivid-60.text-bold [scope="col"] {455,487 131x73} fs=14px fw=700 c=rgb(0, 94, 162) bg=rgb(240, 240, 240) "Tipo de Processo"
+                        th.text-blue-vivid-60.text-bold [scope="col"] {587,487 120x73} fs=14px fw=700 c=rgb(0, 94, 162) bg=rgb(240, 240, 240) "Solicitante"
+                        th.text-blue-vivid-60.text-bold [scope="col"] {707,487 106x73} fs=14px fw=700 c=rgb(0, 94, 162) bg=rgb(240, 240, 240) "Analista"
+                        th.text-blue-vivid-60.text-bold [scope="col"] {812,487 113x73} fs=14px fw=700 c=rgb(0, 94, 162) bg=rgb(240, 240, 240) "Téc. Adm."
+                        th.text-blue-vivid-60.text-bold.text-center [scope="col"] {925,487 163x73} fs=14px fw=700 c=rgb(0, 94, 162) bg=rgb(240, 240, 240) "Status"
+                        th.text-blue-vivid-60.text-bold [scope="col"] {1089,487 154x73} fs=14px fw=700 c=rgb(0, 94, 162) bg=rgb(240, 240, 240)
+                    tbody {92,559 1150x1246} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                      tr {92,559 1150x154} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td [title="15/03/2026 22:30:00"] {92,559 94x154} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "11 horas"
+                        td {186,559 66x154} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td {252,559 203x154} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          a [role="button"] style="cursor: pointer;" {276,616 155x39} fs=14px fw=500 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0) "00000.000010/2026-00"
+                        td {455,559 131x154} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Alteração de Certificado HS"
+                        td {587,559 120x154} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Pessoa Exemplo Dias"
+                          span {611,616 58x80} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "/ Barco Exemplo Alfa"
+                        td {707,559 106x154} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Usuária De Teste"
+                        td {812,559 113x154} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "PESSOA EXEMPLO TECNICA"
+                        td {925,559 163x154} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          pnip-status-solicitacao-utils {949,612 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            div.d-flex.justify-content-center {949,612 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              div.pt-1.pb-1.pl-2.pr-2.bg-orange-vivid-40 style="border-radius: 4px; width: fit-content; padding-bottom: 2px;" {949,612 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgb(230, 111, 14)
+                                div.text-secondary-01.text-center {957,616 99x41} fs=14px fw=500 c=rgb(255, 255, 255) bg=rgba(0, 0, 0, 0) "Em análise analista"
+                        td {1089,559 154x154} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Ver processo"] {1113,602 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Ver processo" aria-label="" type="button"] {1113,596 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-info [icon-name="eye" family-name="fas"] style="cursor: pointer;" {1137,604 24x24} fs=16.8px fw=600 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-eye.text-info [aria-hidden="true"] style="cursor: pointer;" {1137,609 24x16} fs=16px fw=900 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Desassociar processo do analista respons"] {1113,642 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Desassociar processo do analista respons" aria-label="" type="button"] {1113,636 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-danger [icon-name="user-times" family-name="fas"] {1137,644 24x24} fs=16.8px fw=600 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-user-times.text-danger [aria-hidden="true"] {1137,649 24x16} fs=16px fw=900 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                      tr {92,713 1150x175} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td [title="13/03/2026 06:30:00"] {92,713 94x175} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "3 dias"
+                        td {186,713 66x175} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          input [type="checkbox"] style="transform: scale(1.5);" {207,791 20x20} fs=16.8px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td {252,713 203x175} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          a [role="button"] style="cursor: pointer;" {276,781 151x39} fs=14px fw=500 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0) "00000.000011/2026-00"
+                        td {455,713 131x175} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "CAOL - Cert. Acred Origem Legal do Pescado"
+                        td {587,713 120x175} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Pessoa Exemplo Esteves"
+                          span {611,771 63x100} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "/ Comercio Exemplo Do Mar (fictícia)"
+                        td {707,713 106x175} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Pessoa Exemplo Analista Dois"
+                        td {812,713 113x175} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Não Assumido"
+                        td {925,713 163x175} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          pnip-status-solicitacao-utils {949,777 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            div.d-flex.justify-content-center {949,777 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              div.pt-1.pb-1.pl-2.pr-2.bg-orange-vivid-40 style="border-radius: 4px; width: fit-content; padding-bottom: 2px;" {949,777 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgb(230, 111, 14)
+                                div.text-secondary-01.text-center {957,781 99x41} fs=14px fw=500 c=rgb(255, 255, 255) bg=rgba(0, 0, 0, 0) "Em análise supervisor"
+                        td {1089,713 154x175} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Ver processo"] {1113,747 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Ver processo" aria-label="" type="button"] {1113,741 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-info [icon-name="eye" family-name="fas"] style="cursor: pointer;" {1137,749 24x24} fs=16.8px fw=600 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-eye.text-info [aria-hidden="true"] style="cursor: pointer;" {1137,754 24x16} fs=16px fw=900 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Desassociar processo do analista respons" disabled=""] {1113,787 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Desassociar processo do analista respons" aria-label="" type="button" disabled=""] {1113,781 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-danger [icon-name="user-times" family-name="fas"] {1137,789 24x24} fs=16.8px fw=600 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-user-times.text-danger [aria-hidden="true"] {1137,794 24x16} fs=16px fw=900 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Assinar"] {1113,827 106x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Assinar"
+                            #shadow-root
+                              (S) button.br-button.middle [title="Assinar" aria-label="" type="button"] {1113,821 106x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                      tr {92,889 1150x113} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td [title="07/03/2026 22:30:00"] {92,889 94x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "8 dias"
+                        td {186,889 66x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          input [type="checkbox"] style="transform: scale(1.5);" {207,935 20x20} fs=16.8px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td {252,889 203x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          a [role="button"] style="cursor: pointer;" {276,925 153x39} fs=14px fw=500 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0) "00000.000013/2026-00"
+                        td {455,889 131x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Habilitação de Técnico Responsável"
+                        td {587,889 120x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Pessoa Exemplo Gomes"
+                        td {707,889 106x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Usuária De Teste"
+                        td {812,889 113x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "PESSOA EXEMPLO TECNICA"
+                        td {925,889 163x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          pnip-status-solicitacao-utils {949,921 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            div.d-flex.justify-content-center {949,921 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              div.pt-1.pb-1.pl-2.pr-2.bg-indigo-vivid-40 style="border-radius: 4px; width: fit-content; padding-bottom: 2px;" {949,921 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgb(130, 137, 255)
+                                div.text-secondary-01.text-center {957,925 99x41} fs=14px fw=500 c=rgb(255, 255, 255) bg=rgba(0, 0, 0, 0) "Aguarda complementos"
+                        td {1089,889 154x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Ver processo"] {1113,911 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Ver processo" aria-label="" type="button"] {1113,905 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-info [icon-name="eye" family-name="fas"] style="cursor: pointer;" {1137,913 24x24} fs=16.8px fw=600 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-eye.text-info [aria-hidden="true"] style="cursor: pointer;" {1137,918 24x16} fs=16px fw=900 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Desassociar processo do analista respons" disabled=""] {1113,951 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Desassociar processo do analista respons" aria-label="" type="button" disabled=""] {1113,945 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-danger [icon-name="user-times" family-name="fas"] {1137,953 24x24} fs=16.8px fw=600 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-user-times.text-danger [aria-hidden="true"] {1137,958 24x16} fs=16px fw=900 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                      tr {92,1002 1150x113} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td [title="28/02/2026 19:30:00"] {92,1002 94x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "15 dias"
+                        td {186,1002 66x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          input [type="checkbox"] style="transform: scale(1.5);" {207,1048 20x20} fs=16.8px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td {252,1002 203x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          a [role="button"] style="cursor: pointer;" {276,1038 154x39} fs=14px fw=500 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0) "00000.000016/2026-00"
+                        td {455,1002 131x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Vinculação de embarcação"
+                        td {587,1002 120x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Pessoa Exemplo Cardoso"
+                        td {707,1002 106x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Usuária De Teste"
+                        td {812,1002 113x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "PESSOA EXEMPLO TECNICA"
+                        td {925,1002 163x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          pnip-status-solicitacao-utils {949,1034 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            div.d-flex.justify-content-center {949,1034 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              div.pt-1.pb-1.pl-2.pr-2.bg-indigo-vivid-60 style="border-radius: 4px; width: fit-content; padding-bottom: 2px;" {949,1034 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgb(74, 80, 196)
+                                div.text-secondary-01.text-center {957,1038 99x41} fs=14px fw=500 c=rgb(255, 255, 255) bg=rgba(0, 0, 0, 0) "Em revisão analista"
+                        td {1089,1002 154x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Ver processo"] {1113,1024 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Ver processo" aria-label="" type="button"] {1113,1018 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-info [icon-name="eye" family-name="fas"] style="cursor: pointer;" {1137,1026 24x24} fs=16.8px fw=600 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-eye.text-info [aria-hidden="true"] style="cursor: pointer;" {1137,1031 24x16} fs=16px fw=900 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Desassociar processo do analista respons" disabled=""] {1113,1064 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Desassociar processo do analista respons" aria-label="" type="button" disabled=""] {1113,1058 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-danger [icon-name="user-times" family-name="fas"] {1137,1066 24x24} fs=16.8px fw=600 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-user-times.text-danger [aria-hidden="true"] {1137,1071 24x16} fs=16px fw=900 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                      tr {92,1115 1150x155} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td [title="20/02/2026 19:30:00"] {92,1115 94x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "23 dias"
+                        td {186,1115 66x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td {252,1115 203x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          a [role="button"] style="cursor: pointer;" {276,1172 154x39} fs=14px fw=500 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0) "00000.000019/2026-00"
+                        td {455,1115 131x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Alteração de Certificado HS"
+                        td {587,1115 120x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Pessoa Exemplo Farias"
+                          span {611,1172 58x80} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "/ Barco Exemplo Eco"
+                        td {707,1115 106x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Usuária De Teste"
+                        td {812,1115 113x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Não Assumido"
+                        td {925,1115 163x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          pnip-status-solicitacao-utils {949,1168 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            div.d-flex.justify-content-center {949,1168 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              div.pt-1.pb-1.pl-2.pr-2.bg-orange-vivid-40 style="border-radius: 4px; width: fit-content; padding-bottom: 2px;" {949,1168 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgb(230, 111, 14)
+                                div.text-secondary-01.text-center {957,1172 99x41} fs=14px fw=500 c=rgb(255, 255, 255) bg=rgba(0, 0, 0, 0) "Em análise supervisor"
+                        td {1089,1115 154x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Ver processo"] {1113,1138 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Ver processo" aria-label="" type="button"] {1113,1132 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-info [icon-name="eye" family-name="fas"] style="cursor: pointer;" {1137,1140 24x24} fs=16.8px fw=600 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-eye.text-info [aria-hidden="true"] style="cursor: pointer;" {1137,1145 24x16} fs=16px fw=900 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Desassociar processo do analista respons" disabled=""] {1113,1178 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Desassociar processo do analista respons" aria-label="" type="button" disabled=""] {1113,1172 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-danger [icon-name="user-times" family-name="fas"] {1137,1180 24x24} fs=16.8px fw=600 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-user-times.text-danger [aria-hidden="true"] {1137,1185 24x16} fs=16px fw=900 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Assinar"] {1113,1218 106x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Assinar"
+                            #shadow-root
+                              (S) button.br-button.middle [title="Assinar" aria-label="" type="button"] {1113,1212 106x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                      tr {92,1269 1150x113} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td [title="05/02/2026 16:30:00"] {92,1269 94x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "38 dias"
+                        td {186,1269 66x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          input [type="checkbox"] style="transform: scale(1.5);" {207,1315 20x20} fs=16.8px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td {252,1269 203x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          a [role="button"] style="cursor: pointer;" {276,1306 155x39} fs=14px fw=500 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0) "00000.000025/2026-00"
+                        td {455,1269 131x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Vinculação de embarcação"
+                        td {587,1269 120x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Pessoa Exemplo Esteves"
+                        td {707,1269 106x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Usuária De Teste"
+                        td {812,1269 113x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "PESSOA EXEMPLO TECNICA"
+                        td {925,1269 163x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          pnip-status-solicitacao-utils {949,1302 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            div.d-flex.justify-content-center {949,1302 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              div.pt-1.pb-1.pl-2.pr-2.bg-secondary-06 style="border-radius: 4px; width: fit-content; padding-bottom: 2px;" {949,1302 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgb(136, 136, 136)
+                                div.text-secondary-01.text-center {957,1306 99x41} fs=14px fw=500 c=rgb(255, 255, 255) bg=rgba(0, 0, 0, 0) "Aguardando plano de ação"
+                        td {1089,1269 154x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Ver processo"] {1113,1292 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Ver processo" aria-label="" type="button"] {1113,1286 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-info [icon-name="eye" family-name="fas"] style="cursor: pointer;" {1137,1294 24x24} fs=16.8px fw=600 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-eye.text-info [aria-hidden="true"] style="cursor: pointer;" {1137,1299 24x16} fs=16px fw=900 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Desassociar processo do analista respons" disabled=""] {1113,1332 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Desassociar processo do analista respons" aria-label="" type="button" disabled=""] {1113,1326 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-danger [icon-name="user-times" family-name="fas"] {1137,1334 24x24} fs=16.8px fw=600 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-user-times.text-danger [aria-hidden="true"] {1137,1339 24x16} fs=16px fw=900 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                      tr {92,1382 1150x155} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td [title="31/01/2026 08:30:00"] {92,1382 94x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "44 dias"
+                        td {186,1382 66x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          input [type="checkbox"] style="transform: scale(1.5);" {207,1449 20x20} fs=16.8px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td {252,1382 203x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          a [role="button"] style="cursor: pointer;" {276,1439 154x39} fs=14px fw=500 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0) "00000.000027/2026-00"
+                        td {455,1382 131x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Certificação Higiênico-Sanitária"
+                        td {587,1382 120x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Pessoa Exemplo Gomes"
+                          span {611,1439 59x80} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "/ Barco Exemplo Charlie"
+                        td {707,1382 106x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Pessoa Exemplo Analista Dois"
+                        td {812,1382 113x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Não Assumido"
+                        td {925,1382 163x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          pnip-status-solicitacao-utils {949,1435 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            div.d-flex.justify-content-center {949,1435 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              div.pt-1.pb-1.pl-2.pr-2.bg-orange-vivid-40 style="border-radius: 4px; width: fit-content; padding-bottom: 2px;" {949,1435 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgb(230, 111, 14)
+                                div.text-secondary-01.text-center {957,1439 99x41} fs=14px fw=500 c=rgb(255, 255, 255) bg=rgba(0, 0, 0, 0) "Em análise supervisor"
+                        td {1089,1382 154x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Ver processo"] {1113,1405 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Ver processo" aria-label="" type="button"] {1113,1400 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-info [icon-name="eye" family-name="fas"] style="cursor: pointer;" {1137,1408 24x24} fs=16.8px fw=600 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-eye.text-info [aria-hidden="true"] style="cursor: pointer;" {1137,1413 24x16} fs=16px fw=900 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Desassociar processo do analista respons" disabled=""] {1113,1445 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Desassociar processo do analista respons" aria-label="" type="button" disabled=""] {1113,1440 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-danger [icon-name="user-times" family-name="fas"] {1137,1448 24x24} fs=16.8px fw=600 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-user-times.text-danger [aria-hidden="true"] {1137,1453 24x16} fs=16px fw=900 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Assinar"] {1113,1485 106x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Assinar"
+                            #shadow-root
+                              (S) button.br-button.middle [title="Assinar" aria-label="" type="button"] {1113,1480 106x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                      tr {92,1537 1150x155} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td [title="29/01/2026 13:30:00"] {92,1537 94x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "45 dias"
+                        td {186,1537 66x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td {252,1537 203x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          a [role="button"] style="cursor: pointer;" {276,1594 155x39} fs=14px fw=500 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0) "00000.000028/2026-00"
+                        td {455,1537 131x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Alteração de Certificado HS"
+                        td {587,1537 120x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Pessoa Exemplo Alves"
+                          span {611,1594 58x80} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "/ Barco Exemplo Delta"
+                        td {707,1537 106x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Usuária De Teste"
+                        td {812,1537 113x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "PESSOA EXEMPLO TECNICA"
+                        td {925,1537 163x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          pnip-status-solicitacao-utils {949,1590 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            div.d-flex.justify-content-center {949,1590 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              div.pt-1.pb-1.pl-2.pr-2.bg-orange-vivid-40 style="border-radius: 4px; width: fit-content; padding-bottom: 2px;" {949,1590 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgb(230, 111, 14)
+                                div.text-secondary-01.text-center {957,1594 99x41} fs=14px fw=500 c=rgb(255, 255, 255) bg=rgba(0, 0, 0, 0) "Em análise diretor"
+                        td {1089,1537 154x155} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Ver processo"] {1113,1580 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Ver processo" aria-label="" type="button"] {1113,1574 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-info [icon-name="eye" family-name="fas"] style="cursor: pointer;" {1137,1582 24x24} fs=16.8px fw=600 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-eye.text-info [aria-hidden="true"] style="cursor: pointer;" {1137,1587 24x16} fs=16px fw=900 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Desassociar processo do analista respons" disabled=""] {1113,1620 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Desassociar processo do analista respons" aria-label="" type="button" disabled=""] {1113,1614 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-danger [icon-name="user-times" family-name="fas"] {1137,1622 24x24} fs=16.8px fw=600 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-user-times.text-danger [aria-hidden="true"] {1137,1627 24x16} fs=16px fw=900 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                      tr {92,1692 1150x113} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td [title="21/01/2026 13:30:00"] {92,1692 94x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "53 dias"
+                        td {186,1692 66x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          input [type="checkbox"] style="transform: scale(1.5);" {207,1738 20x20} fs=16.8px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        td {252,1692 203x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          a [role="button"] style="cursor: pointer;" {276,1728 153x39} fs=14px fw=500 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0) "00000.000031/2026-00"
+                        td {455,1692 131x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Habilitação de Técnico Responsável"
+                        td {587,1692 120x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Pessoa Exemplo Dias"
+                        td {707,1692 106x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Usuária De Teste"
+                        td {812,1692 113x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Não Assumido"
+                        td {925,1692 163x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          pnip-status-solicitacao-utils {949,1724 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            div.d-flex.justify-content-center {949,1724 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              div.pt-1.pb-1.pl-2.pr-2.bg-secondary-06 style="border-radius: 4px; width: fit-content; padding-bottom: 2px;" {949,1724 115x49} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgb(136, 136, 136)
+                                div.text-secondary-01.text-center {957,1728 99x41} fs=14px fw=500 c=rgb(255, 255, 255) bg=rgba(0, 0, 0, 0) "Aguardando SFPA"
+                        td {1089,1692 154x113} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Ver processo"] {1113,1714 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Ver processo" aria-label="" type="button"] {1113,1708 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-info [icon-name="eye" family-name="fas"] style="cursor: pointer;" {1137,1716 24x24} fs=16.8px fw=600 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-eye.text-info [aria-hidden="true"] style="cursor: pointer;" {1137,1721 24x16} fs=16px fw=900 c=rgb(21, 91, 203) bg=rgba(0, 0, 0, 0)
+                          br-button [title="Desassociar processo do analista respons" disabled=""] {1113,1754 72x19} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            #shadow-root
+                              (S) button.br-button.middle [title="Desassociar processo do analista respons" aria-label="" type="button" disabled=""] {1113,1748 72x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                                  (S) span {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                                    (S) slot {0,0 0x0} fs=16px fw=400 c=rgb(0, 0, 0) bg=rgba(0, 0, 0, 0)
+                            br-icon-base.text-danger [icon-name="user-times" family-name="fas"] {1137,1756 24x24} fs=16.8px fw=600 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+                              #shadow-root
+                                (S) i.fas.fa-user-times.text-danger [aria-hidden="true"] {1137,1761 24x16} fs=16px fw=900 c=rgb(229, 34, 7) bg=rgba(0, 0, 0, 0)
+          govbr-custom-pagination {92,1805 1096x56} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+            div.row.d-flex.align-content-center.justify-content-center {80,1805 1120x56} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+              div.col {80,1805 327x56} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+              div.col.text-center.mt-3 {407,1821 327x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                nav.br-pagination.small [aria-label="Paginação de resultados" data-total="1" data-current="1"] {419,1821 303x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  ul {504,1821 132x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                    li {504,1821 40x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                      button.br-button.circle [type="button" aria-label="Página anterior" disabled=""] {504,1821 40x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                        i.fas.fa-angle-left [aria-hidden="true"] {512,1833 24x16} fs=16px fw=900 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                    li {544,1823 52x36} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                      li {544,1823 52x36} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        a.page.active [href="javascript:void(0)"] {548,1823 44x36} fs=14px fw=600 c=rgb(255, 255, 255) bg=rgb(12, 50, 111) "1"
+                    li {596,1821 40x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                      button.br-button.circle [type="button" aria-label="Página seguinte" disabled=""] {596,1821 40x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                        i.fas.fa-angle-right [aria-hidden="true"] {604,1833 24x16} fs=16px fw=900 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+              div.col-5.mt-3.text-end {733,1821 467x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                nav.br-pagination [aria-label="paginação"] {745,1821 443x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  div.pagination-per-page {754,1821 131x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                    br-select-pnip [label="Exibir"] {754,1821 131x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                      div.br-select style="max-width: 100%;" {754,1821 131x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        div.br-input.small {754,1821 131x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          label [for="total"] {754,1831 35x20} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Exibir"
+                          div.input-group {797,1821 88x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            div.input-icon {0,0 0x0} fs=14px fw=400 c=rgb(136, 136, 136) bg=rgba(0, 0, 0, 0)
+                              i.fas.fa-search [aria-hidden="true"] {0,0 0x0} fs=16px fw=900 c=rgb(136, 136, 136) bg=rgba(0, 0, 0, 0)
+                            input#total [type="text" autocomplete="off" placeholder="Selecione"] {797,1825 88x32} fs=16.8px fw=500 c=rgb(51, 51, 51) bg=rgb(255, 255, 255)
+                          button.br-button [type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger"] {845,1825 32x32} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                            i.fas.fa-angle-up [aria-hidden="true"] {849,1833 24x16} fs=16px fw=900 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                        div.br-list [tabindex="0"] {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgb(255, 255, 255)
+                          div.br-item.selected [tabindex="-1"] {0,0 0x0} fs=14px fw=400 c=rgb(255, 255, 255) bg=rgb(38, 112, 232)
+                            div.br-radio {0,0 0x0} fs=14px fw=400 c=rgb(255, 255, 255) bg=rgba(0, 0, 0, 0)
+                              input#total0 [type="radio" value="10" checked=""] {0,0 0x0} fs=16.8px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              label [for="total0"] {0,0 0x0} fs=14px fw=500 c=rgb(255, 255, 255) bg=rgba(0, 0, 0, 0) "10"
+                          div.br-item [tabindex="-1"] {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgb(255, 255, 255)
+                            div.br-radio {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              input#total1 [type="radio" value="25"] {0,0 0x0} fs=16.8px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              label [for="total1"] {0,0 0x0} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "25"
+                          div.br-item [tabindex="-1"] {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgb(255, 255, 255)
+                            div.br-radio {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              input#total2 [type="radio" value="50"] {0,0 0x0} fs=16.8px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              label [for="total2"] {0,0 0x0} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "50"
+                          div.br-item [tabindex="-1"] {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgb(255, 255, 255)
+                            div.br-radio {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              input#total3 [type="radio" value="100"] {0,0 0x0} fs=16.8px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              label [for="total3"] {0,0 0x0} fs=14px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "100"
+                  span.br-divider.d-none.d-sm-block.mx-3 {901,1821 1x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  div.pagination-information.d-sm-flex [aria-live="polite"] {918,1821 89x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "– de itens"
+                    span {918,1831 6x20} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "1"
+                    span.per-page {932,1831 8x20} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "9"
+                    span.total {964,1831 8x20} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "9"
+                  span.br-divider.d-none.d-sm-block.mx-3 {1023,1821 1x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                  div.pagination-per-page {1040,1821 140x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                    br-select-pnip [label="Página"] {1040,1821 140x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                      div.br-select style="max-width: 100%;" {1040,1821 140x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                        div.br-input.small {1040,1821 140x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                          label [for="page"] {1040,1831 44x20} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0) "Página"
+                          div.input-group {1092,1821 88x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                            div.input-icon {0,0 0x0} fs=14px fw=400 c=rgb(136, 136, 136) bg=rgba(0, 0, 0, 0)
+                              i.fas.fa-search [aria-hidden="true"] {0,0 0x0} fs=16px fw=900 c=rgb(136, 136, 136) bg=rgba(0, 0, 0, 0)
+                            input#page [type="text" autocomplete="off" placeholder="Selecione"] {1092,1825 88x32} fs=16.8px fw=500 c=rgb(51, 51, 51) bg=rgb(255, 255, 255)
+                          button.br-button [type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger"] {1140,1825 32x32} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                            i.fas.fa-angle-up [aria-hidden="true"] {1144,1833 24x16} fs=16px fw=900 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                        div.br-list [tabindex="0"] {0,0 0x0} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgb(255, 255, 255)
+                          div.br-item.selected [tabindex="-1"] {0,0 0x0} fs=14px fw=400 c=rgb(255, 255, 255) bg=rgb(38, 112, 232)
+                            div.br-radio {0,0 0x0} fs=14px fw=400 c=rgb(255, 255, 255) bg=rgba(0, 0, 0, 0)
+                              input#page0 [type="radio" value="1" checked=""] {0,0 0x0} fs=16.8px fw=500 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+                              label [for="page0"] {0,0 0x0} fs=14px fw=500 c=rgb(255, 255, 255) bg=rgba(0, 0, 0, 0) "1"
+          div.d-flex.justify-content-end.mt-4 {92,1885 1096x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+            br-button [label="Voltar" type="secondary"] {1091,1885 97x40} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)
+              #shadow-root
+                (S) button.br-button.secondary.middle [aria-label="" type="button"] {1091,1885 97x40} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgb(255, 255, 255)
+                  (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                    (S) span {1116,1893 47x24} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0)
+                      (S) slot {0,0 0x0} fs=16.8px fw=600 c=rgb(19, 81, 180) bg=rgba(0, 0, 0, 0) "Voltar"
+        iframe style="border: none; width: 100%; height: 500px;" {60,1957 1160x500} fs=14px fw=400 c=rgb(51, 51, 51) bg=rgba(0, 0, 0, 0)

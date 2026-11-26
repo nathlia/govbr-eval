@@ -1,0 +1,870 @@
+{
+  "F-facil-1": {
+    "antes": {
+      "tag": {
+        "x": 92,
+        "y": 346,
+        "w": 179,
+        "h": 32,
+        "b": 378,
+        "r": 271
+      },
+      "tagH": "32px",
+      "tagOverflow": "visible",
+      "label": {
+        "x": 132,
+        "y": 350,
+        "w": 127,
+        "h": 24,
+        "b": 374,
+        "r": 259
+      },
+      "ws": "nowrap",
+      "cls": "text-truncate"
+    },
+    "depois": {
+      "tag": {
+        "x": 92,
+        "y": 346,
+        "w": 116,
+        "h": 40,
+        "b": 387,
+        "r": 208
+      },
+      "tagH": "40.3125px",
+      "tagOverflow": "visible",
+      "label": {
+        "x": 132,
+        "y": 346,
+        "w": 64,
+        "h": 40,
+        "b": 387,
+        "r": 196
+      },
+      "ws": "normal",
+      "cls": ""
+    }
+  },
+  "F-facil-2": {
+    "antes": [
+      {
+        "t": "Pessoa Exemplo Dias / Barco Exemplo Alfa",
+        "ws": "normal",
+        "to": "clip",
+        "ov": "visible",
+        "sw": 120,
+        "cw": 120,
+        "title": null
+      },
+      {
+        "t": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+        "ws": "normal",
+        "to": "clip",
+        "ov": "visible",
+        "sw": 120,
+        "cw": 120,
+        "title": null
+      },
+      {
+        "t": "Pessoa Exemplo Gomes",
+        "ws": "normal",
+        "to": "clip",
+        "ov": "visible",
+        "sw": 120,
+        "cw": 120,
+        "title": null
+      },
+      {
+        "t": "Pessoa Exemplo Cardoso",
+        "ws": "normal",
+        "to": "clip",
+        "ov": "visible",
+        "sw": 120,
+        "cw": 120,
+        "title": null
+      }
+    ],
+    "depois": [
+      {
+        "t": "Pessoa Exemplo Dias / Barco Exemplo Alfa",
+        "ws": "nowrap",
+        "to": "clip",
+        "ov": "hidden",
+        "sw": 332,
+        "cw": 120,
+        "title": null
+      },
+      {
+        "t": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+        "ws": "nowrap",
+        "to": "clip",
+        "ov": "hidden",
+        "sw": 454,
+        "cw": 120,
+        "title": null
+      },
+      {
+        "t": "Pessoa Exemplo Gomes",
+        "ws": "nowrap",
+        "to": "clip",
+        "ov": "hidden",
+        "sw": 206,
+        "cw": 120,
+        "title": null
+      },
+      {
+        "t": "Pessoa Exemplo Cardoso",
+        "ws": "nowrap",
+        "to": "clip",
+        "ov": "hidden",
+        "sw": 214,
+        "cw": 120,
+        "title": null
+      }
+    ]
+  },
+  "F-facil-3": {
+    "antes": {
+      "campo": {
+        "x": 955,
+        "y": 418,
+        "w": 233,
+        "h": 32,
+        "b": 450,
+        "r": 1188
+      },
+      "botao": {
+        "x": 1152,
+        "y": 420,
+        "w": 32,
+        "h": 32,
+        "b": 452,
+        "r": 1184
+      },
+      "mt": "-38px",
+      "desvioCentro": 2,
+      "dentro": false
+    },
+    "depois": {
+      "campo": {
+        "x": 955,
+        "y": 402,
+        "w": 233,
+        "h": 32,
+        "b": 434,
+        "r": 1188
+      },
+      "botao": {
+        "x": 1152,
+        "y": 430,
+        "w": 32,
+        "h": 32,
+        "b": 462,
+        "r": 1184
+      },
+      "mt": "-12px",
+      "desvioCentro": 28,
+      "dentro": false
+    }
+  },
+  "F-facil-4": {
+    "antes": {
+      "host": {
+        "x": 1070,
+        "y": 239,
+        "w": 118,
+        "h": 19,
+        "b": 258,
+        "r": 1188
+      },
+      "btn": {
+        "x": 1070,
+        "y": 233,
+        "w": 118,
+        "h": 40,
+        "b": 273,
+        "r": 1188
+      },
+      "pl": "24px",
+      "pr": "24px",
+      "hostOverflow": "visible",
+      "texto": "Exportar"
+    },
+    "depois": {
+      "host": {
+        "x": 1116,
+        "y": 229,
+        "w": 72,
+        "h": 40,
+        "b": 269,
+        "r": 1188
+      },
+      "btn": {
+        "x": 1116,
+        "y": 229,
+        "w": 72,
+        "h": 40,
+        "b": 269,
+        "r": 1188
+      },
+      "pl": "24px",
+      "pr": "24px",
+      "hostOverflow": "hidden",
+      "texto": "Exportar"
+    }
+  },
+  "F-facil-5": {
+    "antes": {
+      "ts": [
+        {
+          "t": "Aberto há",
+          "x": 92,
+          "y": 382,
+          "w": 155,
+          "h": 32,
+          "b": 414,
+          "r": 247
+        },
+        {
+          "t": "Tipo de processo",
+          "x": 255,
+          "y": 382,
+          "w": 214,
+          "h": 32,
+          "b": 414,
+          "r": 469
+        },
+        {
+          "t": "Status",
+          "x": 477,
+          "y": 382,
+          "w": 127,
+          "h": 32,
+          "b": 414,
+          "r": 604
+        },
+        {
+          "t": "Espécie alvo",
+          "x": 612,
+          "y": 382,
+          "w": 177,
+          "h": 32,
+          "b": 414,
+          "r": 789
+        },
+        {
+          "t": "Método de pesca",
+          "x": 92,
+          "y": 418,
+          "w": 215,
+          "h": 32,
+          "b": 450,
+          "r": 307
+        },
+        {
+          "t": "Petrecho",
+          "x": 315,
+          "y": 418,
+          "w": 149,
+          "h": 32,
+          "b": 450,
+          "r": 464
+        }
+      ],
+      "gaps": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    "depois": {
+      "ts": [
+        {
+          "t": "Aberto há",
+          "x": 92,
+          "y": 382,
+          "w": 155,
+          "h": 32,
+          "b": 414,
+          "r": 247
+        },
+        {
+          "t": "Tipo de processo",
+          "x": 227,
+          "y": 382,
+          "w": 214,
+          "h": 32,
+          "b": 414,
+          "r": 441
+        },
+        {
+          "t": "Status",
+          "x": 421,
+          "y": 382,
+          "w": 127,
+          "h": 32,
+          "b": 414,
+          "r": 548
+        },
+        {
+          "t": "Espécie alvo",
+          "x": 528,
+          "y": 382,
+          "w": 177,
+          "h": 32,
+          "b": 414,
+          "r": 705
+        },
+        {
+          "t": "Método de pesca",
+          "x": 685,
+          "y": 382,
+          "w": 215,
+          "h": 32,
+          "b": 414,
+          "r": 900
+        },
+        {
+          "t": "Petrecho",
+          "x": 92,
+          "y": 418,
+          "w": 149,
+          "h": 32,
+          "b": 450,
+          "r": 241
+        }
+      ],
+      "gaps": [
+        -20,
+        -20,
+        -20,
+        -20
+      ]
+    }
+  },
+  "F-facil-6": {
+    "antes": {
+      "voltar": {
+        "x": 1091,
+        "y": 1885,
+        "w": 97,
+        "h": 40,
+        "b": 1925,
+        "r": 1188
+      },
+      "paginacao": {
+        "x": 92,
+        "y": 1805,
+        "w": 1096,
+        "h": 56,
+        "b": 1861,
+        "r": 1188
+      },
+      "selects": [
+        {
+          "x": 797,
+          "y": 1825,
+          "w": 88,
+          "h": 32,
+          "b": 1857,
+          "r": 885
+        },
+        {
+          "x": 1092,
+          "y": 1825,
+          "w": 88,
+          "h": 32,
+          "b": 1857,
+          "r": 1180
+        }
+      ],
+      "gap": 24,
+      "intersecta": [
+        false,
+        false
+      ]
+    },
+    "depois": {
+      "voltar": {
+        "x": 1091,
+        "y": 1841,
+        "w": 97,
+        "h": 40,
+        "b": 1881,
+        "r": 1188
+      },
+      "paginacao": {
+        "x": 92,
+        "y": 1805,
+        "w": 1096,
+        "h": 56,
+        "b": 1861,
+        "r": 1188
+      },
+      "selects": [
+        {
+          "x": 797,
+          "y": 1825,
+          "w": 88,
+          "h": 32,
+          "b": 1857,
+          "r": 885
+        },
+        {
+          "x": 1092,
+          "y": 1825,
+          "w": 88,
+          "h": 32,
+          "b": 1857,
+          "r": 1180
+        }
+      ],
+      "gap": -20,
+      "intersecta": [
+        false,
+        true
+      ]
+    }
+  },
+  "F-medio-1": {
+    "antes": [
+      {
+        "title": "Ver processo",
+        "cls": "br-button middle",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(19, 81, 180)"
+      },
+      {
+        "title": "Desassociar processo do analista responsável",
+        "cls": "br-button middle",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(19, 81, 180)"
+      },
+      {
+        "title": "Ver processo",
+        "cls": "br-button middle",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(19, 81, 180)"
+      },
+      {
+        "title": "Assinar",
+        "cls": "br-button middle",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(19, 81, 180)"
+      },
+      {
+        "title": "Assinar",
+        "cls": "br-button middle",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(19, 81, 180)"
+      },
+      {
+        "title": "Assinar",
+        "cls": "br-button middle",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(19, 81, 180)"
+      }
+    ],
+    "primariasNaTela": 0,
+    "depois": [
+      {
+        "title": "Ver processo",
+        "cls": "br-button middle",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(19, 81, 180)"
+      },
+      {
+        "title": "Desassociar processo do analista responsável",
+        "cls": "br-button middle",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(19, 81, 180)"
+      },
+      {
+        "title": "Ver processo",
+        "cls": "br-button middle",
+        "bg": "rgba(0, 0, 0, 0)",
+        "color": "rgb(19, 81, 180)"
+      },
+      {
+        "title": "Assinar",
+        "cls": "br-button primary middle",
+        "bg": "rgb(19, 81, 180)",
+        "color": "rgb(255, 255, 255)"
+      },
+      {
+        "title": "Assinar",
+        "cls": "br-button primary middle",
+        "bg": "rgb(19, 81, 180)",
+        "color": "rgb(255, 255, 255)"
+      },
+      {
+        "title": "Assinar",
+        "cls": "br-button primary middle",
+        "bg": "rgb(19, 81, 180)",
+        "color": "rgb(255, 255, 255)"
+      }
+    ]
+  },
+  "F-medio-2": {
+    "antes": {
+      "exportarRadius": "1680px",
+      "voltarRadius": "1680px",
+      "voltarBorder": "1px solid rgb(19, 81, 180)",
+      "voltarH": 40,
+      "voltarColor": "rgb(19, 81, 180)",
+      "voltarPad": "24px"
+    },
+    "depois": {
+      "exportarRadius": "1680px",
+      "voltarRadius": "4px",
+      "voltarBorder": "1px solid rgb(19, 81, 180)",
+      "voltarH": 40,
+      "voltarColor": "rgb(19, 81, 180)",
+      "voltarPad": "24px"
+    }
+  },
+  "F-medio-3": {
+    "antes": [
+      {
+        "t": "Meus processos",
+        "r": "4px"
+      },
+      {
+        "t": "Aberto há",
+        "r": "4px"
+      },
+      {
+        "t": "Tipo de processo",
+        "r": "4px"
+      }
+    ],
+    "depois": [
+      {
+        "t": "Meus processos",
+        "r": "16783.2px"
+      },
+      {
+        "t": "Aberto há",
+        "r": "4px"
+      },
+      {
+        "t": "Tipo de processo",
+        "r": "4px"
+      }
+    ]
+  },
+  "F-medio-4": {
+    "antes": [
+      "Aberto há:rgb(240, 240, 240)",
+      ":rgb(240, 240, 240)",
+      "Nº Processo:rgb(240, 240, 240)",
+      "Tipo de Processo:rgb(240, 240, 240)",
+      "Solicitante:rgb(240, 240, 240)",
+      "Analista:rgb(240, 240, 240)",
+      "Téc. Adm.:rgb(240, 240, 240)",
+      "Status:rgb(240, 240, 240)",
+      ":rgb(240, 240, 240)"
+    ],
+    "depois": [
+      "Aberto há:rgb(240, 240, 240)",
+      ":rgb(240, 240, 240)",
+      "Nº Processo:rgb(240, 240, 240)",
+      "Tipo de Processo:rgb(240, 240, 240)",
+      "Solicitante:rgb(240, 240, 240)",
+      "Analista:rgb(240, 240, 240)",
+      "Téc. Adm.:rgb(255, 255, 255)",
+      "Status:rgb(240, 240, 240)",
+      ":rgb(240, 240, 240)"
+    ]
+  },
+  "F-medio-5": {
+    "antes": [
+      {
+        "id": "total",
+        "border": "1px solid rgba(0, 0, 0, 0)",
+        "h": 32
+      },
+      {
+        "id": "page",
+        "border": "1px solid rgba(0, 0, 0, 0)",
+        "h": 32
+      }
+    ],
+    "depois": [
+      {
+        "id": "total",
+        "border": "1px solid rgb(136, 136, 136)",
+        "h": 32
+      },
+      {
+        "id": "page",
+        "border": "1px solid rgba(0, 0, 0, 0)",
+        "h": 32
+      }
+    ]
+  },
+  "F-medio-6": {
+    "antes": {
+      "info": "1– 9 de 9 itens",
+      "infoColor": "rgb(51, 51, 51)",
+      "labels": [
+        "Exibir:rgb(51, 51, 51)",
+        "10:rgb(255, 255, 255)",
+        "25:rgb(51, 51, 51)",
+        "50:rgb(51, 51, 51)",
+        "100:rgb(51, 51, 51)",
+        "Página:rgb(51, 51, 51)",
+        "1:rgb(255, 255, 255)"
+      ],
+      "varSec08": "#333"
+    },
+    "depois": {
+      "info": "1– 9 de 9 itens",
+      "infoColor": "rgb(19, 81, 180)",
+      "labels": [
+        "Exibir:rgb(51, 51, 51)",
+        "10:rgb(255, 255, 255)",
+        "25:rgb(51, 51, 51)",
+        "50:rgb(51, 51, 51)",
+        "100:rgb(51, 51, 51)",
+        "Página:rgb(51, 51, 51)",
+        "1:rgb(255, 255, 255)"
+      ],
+      "varSec08": "#333"
+    }
+  },
+  "F-dificil-1": {
+    "antes": [
+      "fas fa-angle-left",
+      "fas fa-angle-right"
+    ],
+    "depois": [
+      "fas fa-chevron-left",
+      "fas fa-chevron-right"
+    ]
+  },
+  "F-dificil-2": {
+    "antes": {
+      "x": 856,
+      "y": 40,
+      "w": 40,
+      "h": 40,
+      "b": 80,
+      "r": 896,
+      "radius": "50%",
+      "letra": "U",
+      "fs": "24.192px",
+      "fw": "700",
+      "avatarRadius": "0px",
+      "avatarOverflow": "visible"
+    },
+    "depois": {
+      "x": 856,
+      "y": 40,
+      "w": 40,
+      "h": 40,
+      "b": 80,
+      "r": 896,
+      "radius": "4px",
+      "letra": "U",
+      "fs": "24.192px",
+      "fw": "700",
+      "avatarRadius": "0px",
+      "avatarOverflow": "visible"
+    }
+  },
+  "F-dificil-3": {
+    "antes": {
+      "tt": "none",
+      "txt": "Limpar filtros",
+      "disabled": true,
+      "opacity": "0.45",
+      "visivel": {
+        "x": 472,
+        "y": 414,
+        "w": 152,
+        "h": 40,
+        "b": 454,
+        "r": 624
+      }
+    },
+    "depois": {
+      "tt": "uppercase",
+      "txt": "LIMPAR FILTROS",
+      "disabled": true,
+      "opacity": "0.45",
+      "visivel": {
+        "x": 472,
+        "y": 414,
+        "w": 180,
+        "h": 40,
+        "b": 454,
+        "r": 652
+      }
+    }
+  },
+  "F-dificil-4": {
+    "antes": {
+      "td": "16px 24px 16px 24px",
+      "th": "16px 24px 16px 24px",
+      "table": "br-table"
+    },
+    "depois": {
+      "td": "12px 24px 12px 24px",
+      "th": "16px 24px 16px 24px",
+      "table": "br-table"
+    }
+  },
+  "F-dificil-5": {
+    "antes": {
+      "n": 9,
+      "color": "rgb(19, 81, 180)",
+      "deco": "none",
+      "outros": [
+        "1:rgb(255, 255, 255)"
+      ]
+    },
+    "depois": {
+      "n": 9,
+      "color": "rgb(0, 94, 162)",
+      "deco": "none",
+      "outros": [
+        "1:rgb(255, 255, 255)"
+      ]
+    }
+  },
+  "F-dificil-6": {
+    "antes": {
+      "bg": "rgb(248, 248, 248)",
+      "h": 40,
+      "radius": "1680px"
+    },
+    "depois": {
+      "bg": "rgb(232, 245, 255)",
+      "h": 40,
+      "radius": "1680px"
+    }
+  },
+  "F-muito-dificil-1": {
+    "inicial": null,
+    "antes": {
+      "shadow": "rgba(0, 0, 0, 0.16) 0px 3px 6px 0px",
+      "pos": "absolute",
+      "z": "1",
+      "x": 255,
+      "y": 418,
+      "w": 214,
+      "h": 404,
+      "b": 822,
+      "r": 469
+    },
+    "depois": {
+      "shadow": "none",
+      "pos": "absolute",
+      "z": "1",
+      "x": 255,
+      "y": 418,
+      "w": 214,
+      "h": 404,
+      "b": 822,
+      "r": 469
+    }
+  },
+  "F-muito-dificil-2": {
+    "erro": "Error: page.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')\n    at rect (eval at evaluate (:303:30), <anonymous>:1:36)\n    at eval (eval at evaluate (:303:30), <anonymous>:1:462)\n    at eval (eval at evaluate (:303:30), <anonymous>:1:499)\n    at eval (eval at evaluate (:303:30), <anonymous>:1:507)\n    at eval (<anonymous>)\n    at UtilityScript.evaluate (<anony"
+  },
+  "F-muito-dificil-3": {
+    "inicialN": 0,
+    "antes": [
+      {
+        "dis": true,
+        "op": "0.45",
+        "cur": "not-allowed",
+        "hostPE": "auto"
+      },
+      {
+        "dis": true,
+        "op": "0.45",
+        "cur": "not-allowed",
+        "hostPE": "auto"
+      },
+      {
+        "dis": true,
+        "op": "0.45",
+        "cur": "not-allowed",
+        "hostPE": "auto"
+      }
+    ],
+    "nAntes": 9,
+    "depois": [
+      {
+        "dis": false,
+        "op": "1",
+        "cur": "pointer",
+        "hostPE": "none"
+      },
+      {
+        "dis": false,
+        "op": "1",
+        "cur": "pointer",
+        "hostPE": "none"
+      },
+      {
+        "dis": false,
+        "op": "1",
+        "cur": "pointer",
+        "hostPE": "none"
+      }
+    ]
+  },
+  "F-muito-dificil-4": {
+    "inicial": {
+      "listaVisivel": "none/0",
+      "txt": "10",
+      "bg": "rgb(38, 112, 232)",
+      "color": "rgb(255, 255, 255)"
+    },
+    "antes": {
+      "listaVisivel": "block/212",
+      "txt": "10",
+      "bg": "rgb(38, 112, 232)",
+      "color": "rgb(255, 255, 255)"
+    },
+    "depois": {
+      "listaVisivel": "block/212",
+      "txt": "10",
+      "bg": "rgb(19, 81, 180)",
+      "color": "rgb(255, 255, 255)"
+    }
+  },
+  "F-muito-dificil-5": {
+    "antes": {
+      "el": "BUTTON. Aguardando análise",
+      "outline": "rgb(194, 133, 12) dashed 4px",
+      "offset": "-4px"
+    },
+    "depois": {
+      "el": "BUTTON. Aguardando análise",
+      "outline": "rgb(19, 81, 180) solid 4px",
+      "offset": "-4px"
+    }
+  },
+  "F-muito-dificil-6": {
+    "semHover": {
+      "bgImg": "none",
+      "bg": "rgb(255, 255, 255)",
+      "color": "rgb(51, 51, 51)"
+    },
+    "antes": {
+      "bgImg": "linear-gradient(rgba(51, 51, 51, 0.16), rgba(51, 51, 51, 0.16))",
+      "bg": "rgb(255, 255, 255)",
+      "color": "rgb(51, 51, 51)"
+    },
+    "depois": {
+      "bgImg": "linear-gradient(rgba(51, 51, 51, 0.16), rgba(51, 51, 51, 0.16))",
+      "bg": "rgb(19, 81, 180)",
+      "color": "rgb(51, 51, 51)"
+    }
+  }
+}

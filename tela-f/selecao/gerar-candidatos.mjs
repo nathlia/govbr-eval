@@ -1,0 +1,311 @@
+// Gera candidatos.json e candidatos.md e confere se cada trecho citado existe literalmente no corpus.
+import fs from 'node:fs';
+import path from 'node:path';
+
+const CORPUS = 'F:/Dev Nath/TCC/ds-rules/govbr-ds-3.7.0-corpus';
+const OUT = 'F:/Dev Nath/TCC/.tmp-eval/tela-f-selada/selecao';
+const SRC = 'pnip-mock/src/app';
+const PROC = `${SRC}/pages/portal-mpa/processos/processos.component.html`;
+const MULTI = `${SRC}/utils/components/multiple-search-table.utils.ts`;
+const SEARCH = `${SRC}/utils/components/search-table.utils.ts`;
+const PAG = `${SRC}/utils/components/govbr-custom-pagination/govbr-custom-pagination.component`;
+const HEADER = `${SRC}/layout/header/header.component`;
+const SELECT = `${SRC}/shared/br-select/br-select.component.ts`;
+
+// Trechos com várias partes usam " […] " como separador; cada parte é conferida literalmente.
+const C = [
+  // ---------------- FÁCIL ----------------
+  {
+    id: 'F-facil-1', nivel: 'facil', ordem: 1, componente: 'Tag (tag de interação persistente "Meus processos")',
+    elemento: 'pnip-mpa-processos div.tab-panel span.br-tag.interaction (1ª ocorrência, texto "Meus processos") > span.text-truncate — light DOM',
+    estado: 'inicial (aba Tramitando, perfil mpa)',
+    conformeHoje: 'Rótulo em uma única linha: span.text-truncate com white-space:nowrap, altura 24,3px dentro da superfície de 32px (height:32px).',
+    mudanca: `${PROC}, linha 29: <span class="text-truncate">Meus processos</span> → <span style="display:inline-block; max-width:64px; white-space:normal; line-height:1.2">Meus processos</span>. A superfície mantém height:32px.`,
+    observavel: 'O rótulo quebra em duas linhas (altura do span > 32px) e o texto vaza acima/abaixo da superfície azul da tag; visível na captura sem medir nada.',
+    clausula: { arquivo: 'componentes/tag__designer.md', trecho: 'O componente *tag* possui uma altura fixa e por isso não é permitida mais de uma linha de texto ou ícone no mesmo componente.' },
+    porQueRealista: 'Desenvolvedor limita a largura do rótulo para "economizar espaço" na linha de filtros e troca a classe de truncamento por estilo próprio.',
+    porQueEsteNivel: 'Texto saindo da caixa é uma quebra visual óbvia para qualquer pessoa, sem conhecer o DS.'
+  },
+  {
+    id: 'F-facil-2', nivel: 'facil', ordem: 2, componente: 'Table (truncamento de célula)',
+    elemento: 'div.br-table table tbody tr > td:nth-child(5) (coluna "Solicitante") — light DOM',
+    estado: 'inicial',
+    conformeHoje: 'Células da coluna Solicitante sem truncamento: white-space:normal, scrollWidth == clientWidth (120 = 120); o texto quebra em linhas e aparece inteiro.',
+    mudanca: `${PROC}, linha 90: <td> (célula do solicitante) → <td style="max-width:90px; white-space:nowrap; overflow:hidden">. text-overflow continua "clip" (sem reticências).`,
+    observavel: 'Nomes como "Pessoa Exemplo Dias / Barco Exemplo Alfa" aparecem cortados no meio de palavra, sem "…" e sem tooltip; scrollWidth > clientWidth e text-overflow:clip.',
+    clausula: { arquivo: 'componentes/table__designer.md', trecho: 'Os textos devem ser truncados exibindo as reticências no final. Ao passar o *mouse* sobre o texto truncado é revelado o texto completo pelo uso de *tooltip*.' },
+    porQueRealista: 'Tentativa comum de reduzir a altura das linhas (hoje muito altas) cortando o texto com overflow:hidden, esquecendo text-overflow e title.',
+    porQueEsteNivel: 'Texto cortado no meio da palavra é perceptível por qualquer leitor da tabela.'
+  },
+  {
+    id: 'F-facil-3', nivel: 'facil', ordem: 3, componente: 'Input (ação interna do campo de busca)',
+    elemento: 'pnip-search-table-utils div.br-input > button.br-button[aria-label="Buscar"] (e o irmão [aria-label="Limpar"]) — light DOM, sobreposto ao br-input#search (shadow)',
+    estado: 'inicial',
+    conformeHoje: 'Botão circular 32×32 (y=420) dentro do campo 233×32 (y=418): centrado verticalmente no campo (desvio de 2px), encostado à direita.',
+    mudanca: `${SEARCH}: nos dois botões, [style.margin-top]="'-38px'" → [style.margin-top]="'-12px'".`,
+    observavel: 'A lupa (e o "×" após digitar) fica abaixo do campo, a ~26px do lugar, fora da borda do input; o centro vertical do botão deixa de coincidir com o do campo.',
+    clausula: { arquivo: 'componentes/input__designer.md', trecho: '| Ação interna                               | margin-top/bottom          | `--spacing-vertical-center` |' },
+    porQueRealista: 'O posicionamento da ação depende de um margin-top negativo "mágico"; um ajuste de layout ou de densidade do campo desalinha o botão.',
+    porQueEsteNivel: 'Ícone solto fora do campo de busca é quebra visível para qualquer pessoa.'
+  },
+  {
+    id: 'F-facil-4', nivel: 'facil', ordem: 4, componente: 'Button (secundário "Exportar")',
+    elemento: 'br-button[label="Exportar"] → shadow: button.br-button.secondary',
+    estado: 'inicial',
+    conformeHoje: 'Botão 118×40 com rótulo "Exportar" inteiro, padding-left/right 24px, borda pill completa.',
+    mudanca: `${PROC}, linha 9: <br-button type="secondary" label="Exportar" …> → acrescentar style="display:inline-block; width:72px; overflow:hidden" no host.`,
+    observavel: 'Só ~72px do botão aparecem: o rótulo fica cortado ("Expor…" sem reticências) e falta a borda/arredondamento do lado direito.',
+    clausula: { arquivo: 'componentes/button__designer.md', trecho: '**Importante:** o crescimento do botão deve acompanhar o tamanho do rótulo, porém as margens internas devem ser respeitadas.' },
+    porQueRealista: 'Largura fixa dada a botões de cabeçalho para alinhar colunas, sem conferir o rótulo.',
+    porQueEsteNivel: 'Botão com texto e borda cortados é quebra evidente.'
+  },
+  {
+    id: 'F-facil-5', nivel: 'facil', ordem: 5, componente: 'Tag (grupo de tags de filtro)',
+    elemento: 'pnip-multiple-search-table-utils div.row.align-items-center > div.col-auto.px-1 (colunas das tags "Aberto há", "Tipo de processo", "Status", "Espécie alvo", "Método de pesca", "Petrecho") — light DOM',
+    estado: 'inicial',
+    conformeHoje: 'Espaço constante de 8px entre tags vizinhas (x: 92–247 | 255–469 | 477–604 | 612–789; 2ª linha 92–307 | 315–464). Observação: essas tags já têm borda (fora do DS em outra propriedade); a distribuição está conforme.',
+    mudanca: `${MULTI}, template: <div class="col-auto px-1" *ngFor="let p of params"> → <div class="col-auto px-1" style="margin-right:-28px" *ngFor="let p of params">.`,
+    observavel: 'Cada tag de filtro passa a sobrepor ~20px da seguinte (bordas e ícones encavalados); espaçamento entre tags negativo.',
+    clausula: { arquivo: 'componentes/tag__designer.md', trecho: '*Tags* podem estar agrupadas tanto horizontal quanto verticalmente mantendo a consistência nos espaços entre as *tags*.' },
+    porQueRealista: 'Compactar a barra de filtros com margem negativa para caber em uma linha.',
+    porQueEsteNivel: 'Elementos encavalados são vistos por qualquer pessoa.'
+  },
+  {
+    id: 'F-facil-6', nivel: 'facil', ordem: 6, componente: 'Button (área de proteção do "Voltar")',
+    elemento: 'pnip-mpa-processos div.d-flex.justify-content-end.mt-4 > br-button[label="Voltar"] (shadow: button.br-button.secondary)',
+    estado: 'inicial',
+    conformeHoje: 'Voltar em y=1885 (40px de altura), 24px abaixo da faixa de paginação (que termina em y≈1861); nenhuma sobreposição.',
+    mudanca: `${PROC}, linha 164: <div class="d-flex justify-content-end mt-4"> → <div class="d-flex justify-content-end" style="margin-top:-20px">.`,
+    observavel: 'O botão Voltar sobe e cobre parte do seletor "Página" da paginação (caixas se intersectam); a paginação continua utilizável pela parte não coberta.',
+    clausula: { arquivo: 'componentes/button__designer.md', trecho: 'Quando o botão estiver próximo a algum outro componente, mantenha um espaçamento mínimo para que a o botão seja notado na tela e que sua área de interação não se confunda com as de outros componentes.' },
+    porQueRealista: 'Ajuste de espaçamento vertical para "subir" o rodapé da página.',
+    porQueEsteNivel: 'Botão encavalado em outro controle é quebra visível sem conhecer o DS.'
+  },
+  // ---------------- MÉDIO ----------------
+  {
+    id: 'F-medio-1', nivel: 'medio', ordem: 1, componente: 'Button (ênfase das ações da tabela)',
+    elemento: 'div.br-table tbody br-button[title="Assinar"] → shadow: button.br-button',
+    estado: 'inicial (3 linhas exibem "Assinar")',
+    conformeHoje: 'Ênfase terciária (classe br-button sem primary/secondary; fundo transparente, texto #1351B4), igual às demais ações da linha; nenhum botão primário na tela inicial.',
+    mudanca: `${PROC}, linha 118: <br-button *ngIf="podeAssinar(p)" title="Assinar" …> → acrescentar type="primary".`,
+    observavel: 'Três botões primários azuis preenchidos ("Assinar") repetidos nas linhas, ao lado de ações terciárias; ênfase primária usada em ação de linha, não na ação principal da tela.',
+    clausula: { arquivo: 'componentes/button__designer.md', trecho: 'Utilize de forma limitada. Somente em ações estratégicas, voltadas para o objetivo principal de uma tela.' },
+    porQueRealista: 'Querer destacar a ação "importante" de assinatura em cada linha.',
+    porQueEsteNivel: 'Só destoa ao comparar com as outras ações da mesma linha/tela (hierarquia inconsistente).'
+  },
+  {
+    id: 'F-medio-2', nivel: 'medio', ordem: 2, componente: 'Button (arredondamento do secundário "Voltar")',
+    elemento: 'botão "Voltar" (hoje br-button[label="Voltar"] → shadow button.br-button.secondary)',
+    estado: 'inicial',
+    conformeHoje: 'border-radius pill (computado 1680px = 999em) igual ao "Exportar", ambos secundários.',
+    mudanca: `${PROC}, linha 165: <br-button label="Voltar" type="secondary" (click)="voltar()"/> → <button type="button" class="br-button secondary" style="border-radius:var(--surface-rounder-sm)" (click)="voltar()">Voltar</button> (classe do core, já carregada globalmente).`,
+    observavel: 'Voltar com cantos de 4px enquanto Exportar (mesma ênfase) é pílula.',
+    clausula: { arquivo: 'componentes/button__designer.md', trecho: '| Superfície (Padrão) | border-radius | `--surface-rounder-pill` |' },
+    porQueRealista: 'Trocar o web component por markup do core e "padronizar" o raio com o de inputs/tags.',
+    porQueEsteNivel: 'Percebido ao comparar os dois botões secundários da mesma página.'
+  },
+  {
+    id: 'F-medio-3', nivel: 'medio', ordem: 3, componente: 'Tag (arredondamento da tag de interação)',
+    elemento: 'pnip-mpa-processos div.tab-panel span.br-tag.interaction (texto "Meus processos") — light DOM',
+    estado: 'inicial',
+    conformeHoje: 'border-radius 4px (--surface-rounder-sm), igual às tags de filtro (4px) e às tags de filtro selecionado.',
+    mudanca: `${PROC}, linha 25: no <span class="br-tag interaction small" …> acrescentar [style.border-radius]="'var(--surface-rounder-pill)'".`,
+    observavel: '"Meus processos" em formato pílula enquanto as tags vizinhas têm cantos de 4px.',
+    clausula: { arquivo: 'componentes/tag__designer.md', trecho: '### Arredondamento [*Tag* de Interação] […] | Superfície | top-left-bottom-right | `--surface-rounder-sm` |' },
+    porQueRealista: 'Confundir a tag de interação com a tag de contagem/ícone (que é pílula) ao "destacar" o filtro principal.',
+    porQueEsteNivel: 'Só destoa ao comparar com as outras tags da mesma barra.'
+  },
+  {
+    id: 'F-medio-4', nivel: 'medio', ordem: 4, componente: 'Table (header da tabela)',
+    elemento: 'div.br-table thead th com texto "Téc. Adm." (7ª coluna na aba Tramitando) — light DOM',
+    estado: 'inicial',
+    conformeHoje: 'Todas as células do header com background rgb(240,240,240) = --gray-5.',
+    mudanca: `${PROC}, linha 72: <th class="text-blue-vivid-60 text-bold" scope="col" …>Téc. Adm.</th> → acrescentar style="background-color: var(--pure-0)".`,
+    observavel: 'Uma célula do header branca (#FFFFFF), abrindo um "buraco" na faixa cinza do cabeçalho.',
+    clausula: { arquivo: 'componentes/table__designer.md', trecho: '| Header da Tabela                  | background | `--gray-5`             |' },
+    porQueRealista: 'Estilo inline copiado de outra tabela/coluna ao adicionar uma coluna nova.',
+    porQueEsteNivel: 'Percebido pela inconsistência com as outras células do mesmo header.'
+  },
+  {
+    id: 'F-medio-5', nivel: 'medio', ordem: 5, componente: 'Pagination (select do módulo de exibição)',
+    elemento: 'govbr-custom-pagination div.pagination-per-page (1º, rótulo "Exibir") br-select-pnip input#total — light DOM',
+    estado: 'inicial',
+    conformeHoje: 'Inputs "Exibir" e "Página" sem contorno (border 1px solid transparente), densidade alta (32px).',
+    mudanca: `${PAG}.html: no 1º <div class="pagination-per-page"> acrescentar a classe pp-exibir; em src/styles.css (global, pois o input pertence ao componente filho br-select-pnip): .pp-exibir input { border-color: var(--gray-40) !important; }.`,
+    observavel: 'O input do "Exibir" com borda cinza visível (#888) enquanto o do "Página" continua sem contorno.',
+    clausula: { arquivo: 'componentes/pagination__designer.md', trecho: 'deve-se utilizar o componente *select* personalizado, onde o seu *input* (Campo de Entrada de Texto) estará em densidade alta, sem contorno e pré definido' },
+    porQueRealista: 'Reaproveitar o select padrão de formulário (com borda) num dos módulos da paginação.',
+    porQueEsteNivel: 'Fica evidente ao comparar os dois selects da mesma barra.'
+  },
+  {
+    id: 'F-medio-6', nivel: 'medio', ordem: 6, componente: 'Pagination (módulo de informação)',
+    elemento: 'govbr-custom-pagination div.pagination-information ("1–9 de 9 itens") — light DOM',
+    estado: 'inicial',
+    conformeHoje: 'Texto do módulo em rgb(51,51,51) (#333 = --color-secondary-08), igual aos rótulos "Exibir" e "Página".',
+    mudanca: `${PAG}.html: <div class="pagination-information d-sm-flex" aria-live="polite"> → acrescentar style="color: var(--blue-warm-vivid-70)".`,
+    observavel: 'O texto "1–9 de 9 itens" (não interativo) em azul #1351B4, a cor de interação, diferente dos demais textos de módulo.',
+    clausula: { arquivo: 'componentes/pagination__designer.md', trecho: '| Texto Módulos                           | color      | `--color-secondary-08` |' },
+    porQueRealista: 'Destacar o total de itens com a cor "da marca".',
+    porQueEsteNivel: 'Só destoa comparando com os outros textos de módulo da mesma paginação.'
+  },
+  // ---------------- DIFÍCIL ----------------
+  {
+    id: 'F-dificil-1', nivel: 'dificil', ordem: 1, componente: 'Pagination (ícones das setas de navegação)',
+    elemento: 'govbr-custom-pagination nav.br-pagination.small button.br-button.circle[aria-label="Página anterior"|"Página seguinte"] > i — light DOM',
+    estado: 'inicial',
+    conformeHoje: 'Ícones fas fa-angle-left e fas fa-angle-right.',
+    mudanca: `${PAG}.html: fa-angle-left → fa-chevron-left; fa-angle-right → fa-chevron-right.`,
+    observavel: 'Classes dos ícones das setas = fa-chevron-*; traço mais longo/fino que o angle; a tela continua com aparência normal.',
+    clausula: { arquivo: 'componentes/pagination__designer.md', trecho: '| Seta Lateral Esquerda       | <i class="angle-left"></i>  | `--icone-size-base` | angle-left           | […] | Seta Lateral Direita        | <i class="angle-right"></i> | `--icone-size-base` | angle-right          |' },
+    porQueRealista: 'Trocar por chevron, que é o ícone usado no breadcrumb e em listas do DS.',
+    porQueEsteNivel: 'Parece correto; só é erro diante da especificação de iconografia da paginação.'
+  },
+  {
+    id: 'F-dificil-2', nivel: 'dificil', ordem: 2, componente: 'Avatar (letra, no sign-in do cabeçalho)',
+    elemento: 'pnip-header button#avatar-dropdown-trigger span.br-avatar > span.content — light DOM',
+    estado: 'inicial',
+    conformeHoje: 'Superfície 40×40 com border-radius 50% (circular), letra "U" bold 24,19px.',
+    mudanca: `${HEADER}.html, linha 7: <span class="content bg-orange-vivid-30 text-pure-0"> → acrescentar style="border-radius: var(--surface-rounder-sm)".`,
+    observavel: 'Avatar quadrado com cantos de 4px (border-radius 4px) em vez de círculo.',
+    clausula: { arquivo: 'componentes/avatar__designer.md', trecho: 'A representação do usuário deve estar contida em uma superfície circular.' },
+    porQueRealista: 'Uniformizar o avatar com o raio das tags/badges do cabeçalho.',
+    porQueEsteNivel: 'Um avatar quadrado parece intencional; só é erro sabendo que o DS exige superfície circular.'
+  },
+  {
+    id: 'F-dificil-3', nivel: 'dificil', ordem: 3, componente: 'Button (rótulo do terciário "Limpar filtros")',
+    elemento: 'pnip-multiple-search-table-utils br-button[label="Limpar filtros"] → shadow: button.br-button',
+    estado: 'inicial (desabilitado, mas visível)',
+    conformeHoje: 'text-transform: none ("Limpar filtros").',
+    mudanca: `${MULTI}, template: <br-button icon label="Limpar filtros" …> → acrescentar class="text-uppercase" (text-transform é herdado pelo shadow DOM; conferido no navegador).`,
+    observavel: 'Rótulo renderizado "LIMPAR FILTROS" (text-transform: uppercase no botão interno).',
+    clausula: { arquivo: 'componentes/button__designer.md', trecho: '| Rótulo (Padrão) | `--font-size-scale-up-01` | `--font-weight-semi-bold` |     `none`     |' },
+    porQueRealista: 'Convenção de outros design systems (botões em caixa alta).',
+    porQueEsteNivel: 'Caixa alta parece um estilo válido; só é erro pela especificação de text-transform do botão.'
+  },
+  {
+    id: 'F-dificil-4', nivel: 'dificil', ordem: 4, componente: 'Table (espaçamento das linhas)',
+    elemento: 'div.br-table table tbody td (todas as células do corpo) — light DOM',
+    estado: 'inicial',
+    conformeHoje: 'padding 16px 24px (top/bottom = --spacing-scale-2x, left/right = --spacing-scale-3x): densidade padrão; header também 16px/24px.',
+    mudanca: `${PROC.replace('.html', '.scss')}: acrescentar .br-table .table tbody td { padding-top: 12px !important; padding-bottom: 12px !important; }.`,
+    observavel: 'padding-top/bottom das células = 12px, valor que não corresponde a nenhuma densidade da tabela (8px alta, 16px padrão, 24px baixa).',
+    clausula: { arquivo: 'componentes/table__designer.md', trecho: '| Linhas (Densidade Padrão)             | padding-top    |  `--spacing-scale-2x`  |' },
+    porQueRealista: 'Compactar linhas muito altas com um valor "no olho".',
+    porQueEsteNivel: 'A tabela continua com aparência normal; só a medição contra a tabela de espaçamentos revela o erro.'
+  },
+  {
+    id: 'F-dificil-5', nivel: 'dificil', ordem: 5, componente: 'Estado interativo (link do nº do processo na tabela)',
+    elemento: 'div.br-table tbody td a[role="button"] (nº do processo) — light DOM',
+    estado: 'inicial',
+    conformeHoje: 'color rgb(19,81,180) = #1351B4 (--blue-warm-vivid-70).',
+    mudanca: `${PROC}, linha 87: <a [style.cursor]="'pointer'" role="button" …> → acrescentar class="text-blue-vivid-60".`,
+    observavel: 'Links do nº do processo em #005EA2 (blue-vivid-60), outro azul fora da família de interação.',
+    clausula: { arquivo: 'fundamentos-visuais/estados.md', trecho: '| background/foreground (Sobre um fundo Claro)  | color    | `--blue-warm-vivid-70` |' },
+    porQueRealista: 'Reaproveitar a classe de cor usada no cabeçalho da própria tabela.',
+    porQueEsteNivel: 'Continua parecendo um link azul; só o token exato da cor de interação denuncia.'
+  },
+  {
+    id: 'F-dificil-6', nivel: 'dificil', ordem: 6, componente: 'Sign-in (superfície, ênfase secundária)',
+    elemento: 'pnip-header button#avatar-dropdown-trigger.br-sign-in — light DOM',
+    estado: 'inicial',
+    conformeHoje: 'background-color rgb(248,248,248) = --gray-2; superfície 40px de altura, pílula.',
+    mudanca: `${HEADER}.scss: acrescentar .br-sign-in { background-color: var(--blue-vivid-5) !important; } (mesmo azul-claro do selo de perfil).`,
+    observavel: 'Superfície do sign-in em rgb(232,245,255) (azul-claro) em vez de #F8F8F8.',
+    clausula: { arquivo: 'componentes/signin__designer.md', trecho: '### Cores (ênfase secundária - fundo claro) […] | Superfície    | background color | `--gray-2`             |' },
+    porQueRealista: 'Harmonizar o fundo do botão com o selo de perfil "SUPERVISOR".',
+    porQueEsteNivel: 'O resultado parece coerente; só a tabela de cores do sign-in mostra o erro.'
+  },
+  // ---------------- MUITO DIFÍCIL ----------------
+  {
+    id: 'F-muito-dificil-1', nivel: 'muito-dificil', ordem: 1, componente: 'Select / List (lista suspensa de opções do filtro)',
+    elemento: 'pnip-multiple-search-table-utils div.br-select > div.br-list.d-block — light DOM',
+    estado: 'clicar em qualquer tag de filtro (ex.: "Tipo de processo") para abrir a lista de opções',
+    conformeHoje: 'Lista flutuante (position:absolute, z-index 1) com box-shadow rgba(0,0,0,0.16) 0 3px 6px.',
+    mudanca: `${MULTI}, template: <div class="br-list d-block mt-1"> → <div class="br-list d-block mt-1" style="box-shadow:none">.`,
+    observavel: 'Com a lista aberta, box-shadow: none; a lista flutua sobre a tabela sem sombra.',
+    clausula: { arquivo: 'componentes/select__designer.md', trecho: 'O componente *list* será apresentado flutuando sobre a tela e uma sombra deve ser utilizada para proporcionar contraste entre o componente e o conteúdo de tela ao fundo.' },
+    porQueRealista: 'Remover a sombra para um visual "flat".',
+    porQueEsteNivel: 'Só aparece ao abrir o filtro, e a ausência de sombra só é erro pela regra do select.'
+  },
+  {
+    id: 'F-muito-dificil-2', nivel: 'muito-dificil', ordem: 2, componente: 'Tag (tag de interação dispensável — filtro selecionado)',
+    elemento: 'pnip-multiple-search-table-utils div.row.pl-2 span.br-tag.interaction > button.br-button.inverted.circle — light DOM',
+    estado: 'abrir uma tag de filtro e escolher uma opção (ex.: Tipo de processo → "Certificação Higiênico-Sanitária")',
+    conformeHoje: 'Ordem ícone (x=104) → rótulo (x=132) → botão fechar (x=294, extremidade direita).',
+    mudanca: `${MULTI}, template da tag selecionada: mover <button class="br-button inverted circle" …> para antes de <i class="{{s.icon}} mr-1">.`,
+    observavel: 'Botão "×" à esquerda do ícone e do rótulo, em vez de na extremidade direita da tag.',
+    clausula: { arquivo: 'componentes/tag__designer.md', trecho: '| Tertiary-button            | `--spacing-horizontal-right`  |' },
+    porQueRealista: 'Padrão de "chip" de outras bibliotecas com o fechar à esquerda.',
+    porQueEsteNivel: 'A tag só existe após interação e a posição do botão só é erro pela anatomia/alinhamento da tag.'
+  },
+  {
+    id: 'F-muito-dificil-3', nivel: 'muito-dificil', ordem: 3, componente: 'Estado desabilitado (botão "Assumir")',
+    elemento: 'div.br-table tbody br-button[title="Assumir processo"] → shadow: button.br-button',
+    estado: 'clicar na aba "Aguardando análise" (os 9 botões "Assumir" ficam desabilitados para este perfil)',
+    conformeHoje: 'button disabled, opacity 0.45 (--surface-opacity-md), cursor not-allowed.',
+    mudanca: `${PROC}, linhas 121–127: remover o binding [disabled]="…" e, com a mesma condição, aplicar [style.pointer-events]="cond ? 'none' : null" no host (o clique continua sem efeito).`,
+    observavel: 'Na aba Aguardando análise, os "Assumir" aparecem com opacity 1 e sem cursor not-allowed, iguais a botões habilitados, mas não respondem.',
+    clausula: { arquivo: 'fundamentos-visuais/estados.md', trecho: '| background/foreground | opacity  | `--surface-opacity-md`  | […] | cursor                | cursor   | `not-allowed`           |' },
+    porQueRealista: 'Bloquear o clique por CSS em vez de usar o atributo disabled.',
+    porQueEsteNivel: 'Exige trocar de aba e saber como o DS especifica o estado desabilitado.'
+  },
+  {
+    id: 'F-muito-dificil-4', nivel: 'muito-dificil', ordem: 4, componente: 'Select (item selecionado na lista do "Exibir")',
+    elemento: 'govbr-custom-pagination div.pagination-per-page br-select-pnip div.br-list > div.br-item.selected — light DOM',
+    estado: 'clicar no input "Exibir" da paginação para abrir a lista (10/25/50/100)',
+    conformeHoje: 'Item selecionado ("10") com background rgb(38,112,232) = #2670E8 (--blue-warm-vivid-50) e texto branco.',
+    mudanca: `${SELECT} (estilos do componente) ou src/styles.css: .br-select .br-item.selected { background-color: var(--blue-warm-vivid-70) !important; } (limitar a br-select-pnip se for global).`,
+    observavel: 'Com a lista aberta, item selecionado em #1351B4 em vez de #2670E8.',
+    clausula: { arquivo: 'fundamentos-visuais/estados.md', trecho: '| background/foreground | color    | `--blue-warm-vivid-50` |' },
+    porQueRealista: 'Usar a cor "primária" do tema para o selecionado.',
+    porQueEsteNivel: 'Requer abrir o select e conhecer o token do estado selecionado; visualmente continua "azul".'
+  },
+  {
+    id: 'F-muito-dificil-5', nivel: 'muito-dificil', ordem: 5, componente: 'Tab / estado de foco',
+    elemento: 'br-tab → shadow: li.tab-item > button[data-panel] ',
+    estado: 'navegar por teclado (Tab) até um item de aba',
+    conformeHoje: 'Foco: outline rgb(194,133,12) (#C2850C = --gold-vivid-40) dashed 4px, offset -4px.',
+    mudanca: `${PROC}, linha 13: <br-tab (onTabItemClick)="…"> → acrescentar style="--focus-style: solid; --focus: var(--blue-warm-vivid-70); --focus-color: var(--blue-warm-vivid-70)" (as variáveis atravessam o shadow DOM; conferido no navegador).`,
+    observavel: 'Item de aba focado por teclado com contorno azul #1351B4 sólido em vez de dourado tracejado.',
+    clausula: { arquivo: 'fundamentos-visuais/estados.md', trecho: '| border (Sobre um fundo Claro)  | color    | `--gold-vivid-40` | […] | border  | style    | `dashed`               |' },
+    porQueRealista: 'Tematizar o foco com a cor da marca.',
+    porQueEsteNivel: 'Só aparece navegando por teclado e só é erro pela especificação de foco do DS.'
+  },
+  {
+    id: 'F-muito-dificil-6', nivel: 'muito-dificil', ordem: 6, componente: 'List / estado hover (opções do filtro)',
+    elemento: 'pnip-multiple-search-table-utils div.br-select div.br-list > div.br-item — light DOM',
+    estado: 'abrir uma tag de filtro e passar o mouse sobre uma opção',
+    conformeHoje: 'Hover: background-image linear-gradient(rgba(51,51,51,0.16)…) — overlay da cor do primeiro plano (#333) com opacidade 0.16 (--surface-opacity-xs); fundo branco.',
+    mudanca: 'src/styles.css (global): pnip-multiple-search-table-utils .br-list .br-item:hover { background-image: none; background-color: var(--blue-warm-vivid-70); color: var(--pure-0); }',
+    observavel: 'Com o mouse sobre uma opção, o item fica azul sólido com texto branco (parece "selecionado"), sem overlay de 16%.',
+    clausula: { arquivo: 'fundamentos-visuais/estados.md', trecho: 'A cor do elemento *Overlay* será sempre a cor do Primeiro Plano do elemento *hover*. […] | background (Sobre um fundo Claro)  | opacity  | `--surface-opacity-xs` |' },
+    porQueRealista: 'Hover "forte" para indicar clicabilidade.',
+    porQueEsteNivel: 'Só aparece com mouse sobre a lista aberta e exige a regra de overlay do estado hover.'
+  },
+];
+
+// conferência literal
+const problemas = [];
+for (const c of C) {
+  const txt = fs.readFileSync(path.join(CORPUS, c.clausula.arquivo), 'utf8');
+  for (const parte of c.clausula.trecho.split(' […] ')) if (!txt.includes(parte)) problemas.push(`${c.id}: trecho não encontrado: ${parte}`);
+  if (c.clausula.arquivo.startsWith('normalizacao')) problemas.push(`${c.id}: arquivo proibido`);
+}
+const porNivel = C.reduce((a, c) => (a[c.nivel] = (a[c.nivel] || 0) + 1, a), {});
+console.log('por nível', porNivel, 'total', C.length);
+console.log(problemas.length ? problemas.join('\n') : 'todos os trechos conferidos literalmente');
+fs.writeFileSync(path.join(OUT, 'candidatos.json'), JSON.stringify(C, null, 2));
+
+const nomes = { facil: 'Fácil', medio: 'Médio', dificil: 'Difícil', 'muito-dificil': 'Muito difícil' };
+let md = '# Candidatos de defeitos DS para a tela Processos (/pnip-d/portal-mpa/processos?mock-perfil=mpa)\n\n';
+md += 'Gerado por `gerar-candidatos.mjs` a partir de `candidatos.json` (mesmo conteúdo). Viewport 1280×900. Ordem dentro de cada nível = preferência.\n\n';
+for (const n of ['facil', 'medio', 'dificil', 'muito-dificil']) {
+  md += `## ${nomes[n]}\n\n`;
+  for (const c of C.filter(x => x.nivel === n)) {
+    md += `### ${c.id} — ${c.componente}\n\n`;
+    md += `- **Elemento:** ${c.elemento}\n- **Estado:** ${c.estado}\n- **Conforme hoje (medido):** ${c.conformeHoje}\n- **Mudança:** ${c.mudanca}\n- **Observável:** ${c.observavel}\n`;
+    md += `- **Cláusula:** \`${c.clausula.arquivo}\`\n\n  > ${c.clausula.trecho.replace(/\n/g, ' ')}\n\n`;
+    md += `- **Por que é realista:** ${c.porQueRealista}\n- **Por que este nível:** ${c.porQueEsteNivel}\n\n`;
+  }
+}
+fs.writeFileSync(path.join(OUT, 'candidatos.md'), md);
