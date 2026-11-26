@@ -1,0 +1,688 @@
+{
+ "semSemente": {
+  "paginacao": [
+   {
+    "aria": "Página anterior",
+    "x": 504,
+    "y": 1821.4,
+    "w": 40,
+    "h": 40
+   },
+   {
+    "aria": "Página seguinte",
+    "x": 596,
+    "y": 1821.4,
+    "w": 40,
+    "h": 40
+   }
+  ],
+  "paginacaoUl": [
+   {
+    "filhos": 3,
+    "lis": [
+     "|",
+     "|1",
+     "|"
+    ]
+   }
+  ],
+  "avatar": [
+   {
+    "classe": "content bg-orange-vivid-30 text-pure-0",
+    "x": 855.9,
+    "y": 40.1,
+    "w": 40,
+    "h": 40,
+    "border-top-left-radius": "50%",
+    "display": "flex",
+    "background-color": "rgb(255, 140, 0)",
+    "color": "rgb(255, 255, 255)",
+    "font-size": "24.192px",
+    "font-weight": "700"
+   }
+  ],
+  "avatarContent": 1,
+  "h2": [
+   {
+    "t": "Processos",
+    "font-size": "34.832px",
+    "font-weight": "700",
+    "color": "rgb(0, 94, 162)"
+   }
+  ],
+  "meus": [
+   {
+    "t": "Meus processos",
+    "font-size": "16.8px"
+   }
+  ],
+  "tagsFiltro": [
+   {
+    "t": "Aberto há",
+    "font-size": "16.8px",
+    "border-top-left-radius": "4px"
+   },
+   {
+    "t": "Tipo de processo",
+    "font-size": "16.8px",
+    "border-top-left-radius": "4px"
+   },
+   {
+    "t": "Status",
+    "font-size": "16.8px",
+    "border-top-left-radius": "4px"
+   },
+   {
+    "t": "Espécie alvo",
+    "font-size": "16.8px",
+    "border-top-left-radius": "4px"
+   },
+   {
+    "t": "Método de pesca",
+    "font-size": "16.8px",
+    "border-top-left-radius": "4px"
+   },
+   {
+    "t": "Petrecho",
+    "font-size": "16.8px",
+    "border-top-left-radius": "4px"
+   }
+  ],
+  "divisor": [
+   {
+    "classe": "br-divider md mt-0 mb-0",
+    "border-top-color": "rgb(204, 204, 204)",
+    "border-top-width": "2px"
+   }
+  ],
+  "breadcrumbShadow": [
+   "<style>@import\"assets/mock/vendor/fontawesome-5.11.2/css/all.min.css\";/*! * GOVBR-DS: Design System de Governo * Versão 3.0.0 * Suporte: - Serpro: DIDES/SUPSE/SESEP */:root{--blue-90:#11181d;--blue-80:#1f303e;--blue-70:#274863;--blue-60:#2c608a;--blue-50:#2378c3;--blue-40:#4f97d1;--blue-30:#73b3e7;--blue-20:#aacdec;--blue-10:#dbe8fb;--blue-5:#eff6fb;--blue-cool-90:#0f191c;--blue-cool-80:#14333d;--blue-cool-70:#224a58;--blue-cool-60:#2e6276;--blue-cool-50:#3a7d95;--blue-cool-40:#6499af;--blue-cool-30:#82b4c9;--blue-cool-20:#adcfdc;--blue-cool-10:#dae9ee;--blue-cool-5:#e7f2f5;--blue-warm-90:#13171f;--blue-warm-80:#252f3e;--blue-warm-70:#2f4668;--blue-warm-60:#345d96;--blue-warm-50:#4a77b4;--blue-warm-40:#7292c7;--blue-warm-30:#98afd2;--blue-warm-20:#c5d4eb;--blue-warm-10:#e1e7f1;--blue-warm-5:#ecf1f7;--blue-vivid-80:#112f4e;--blue-vivid-70:#0b4778;--blue-vivid-60:#005ea2;--blue-vivid-50:#0076d6;--blue-vivid-40:#2491ff;--blue-vivid-30:#58b4ff;--blue-vivid-20:#a1d3ff;--blue-vivid-10:#cfe8ff;--blue-vivid-5:#e8f5ff;--blue-cool-vivid-80:#002d3f;--blue-cool-vivid-70:#074b69;--blue-cool-vivid-60:#07648d;--blue-cool-vivid-50:#0d7ea2;--blue-cool-vivid-40:#28a0cb;--blue-cool-vivid-30:#59b9de;--blue-cool-vivid-20:#97d4ea;--blue-cool-vivid-10:#c3ebfa;--blue-cool-vivid-5:#e1f3f8;--blue-warm-vivid-90:#071d41;--blue-warm-vivid-80:#0c326f;--blue-warm-vivid-70:#1351b4;--blue-warm-vivid-60:#155bcb;--blue-warm-vivid-50:#2670e8;--blue-warm-vivid-40:#5992ed;--blue-warm-vivid-30:#81aefc;--blue-warm-"
+  ],
+  "breadcrumbHome": [
+   {
+    "tag": "I",
+    "pai": "BUTTON.br-button small circle",
+    "color": "rgb(19, 81, 180)"
+   }
+  ],
+  "breadcrumbA": [
+   {
+    "t": "Home",
+    "contemIcone": true,
+    "color": "rgb(19, 81, 180)"
+   }
+  ],
+  "breadcrumbLi": [
+   {
+    "c": "crumb home",
+    "t": "Home",
+    "color": "rgb(51, 51, 51)"
+   },
+   {
+    "c": "crumb",
+    "t": "Processos",
+    "color": "rgb(51, 51, 51)"
+   }
+  ],
+  "abas": [
+   {
+    "t": "Aguardando análise",
+    "font-size": "20.16px",
+    "font-weight": "500"
+   },
+   {
+    "t": "Tramitando",
+    "font-size": "20.16px",
+    "font-weight": "500"
+   },
+   {
+    "t": "Concluídos",
+    "font-size": "20.16px",
+    "font-weight": "500"
+   }
+  ],
+  "abasLi": [
+   {
+    "t": "Aguardando análise",
+    "ativo": false,
+    "color": "rgb(51, 51, 51)"
+   },
+   {
+    "t": "Tramitando",
+    "ativo": true,
+    "color": "rgb(51, 51, 51)"
+   },
+   {
+    "t": "Concluídos",
+    "ativo": false,
+    "color": "rgb(51, 51, 51)"
+   }
+  ],
+  "abaItens": [
+   {
+    "id": "AGUARDANDO_ANALISE",
+    "isActive": null
+   },
+   {
+    "id": "TRAMITANDO",
+    "isActive": "true"
+   },
+   {
+    "id": "HISTORICO",
+    "isActive": null
+   }
+  ],
+  "meusPresente": [
+   "Meus processos",
+   "Aberto há",
+   "Tipo de processo",
+   "Status",
+   "Espécie alvo",
+   "Método de pesca",
+   "Petrecho"
+  ],
+  "ths": [
+   "Aberto há",
+   "",
+   "Nº Processo",
+   "Tipo de Processo",
+   "Solicitante",
+   "Analista",
+   "Téc. Adm.",
+   "Status",
+   ""
+  ],
+  "desab": [
+   {
+    "title": null,
+    "label": "Limpar filtros",
+    "naTabela": false,
+    "host": "0.45",
+    "interno": {
+     "opacity": "0.45",
+     "cursor": "not-allowed"
+    }
+   },
+   {
+    "title": "Desassociar processo do analista responsável",
+    "label": null,
+    "naTabela": true,
+    "host": "0.45",
+    "interno": {
+     "opacity": "0.45",
+     "cursor": "not-allowed"
+    }
+   },
+   {
+    "title": "Desassociar processo do analista responsável",
+    "label": null,
+    "naTabela": true,
+    "host": "0.45",
+    "interno": {
+     "opacity": "0.45",
+     "cursor": "not-allowed"
+    }
+   },
+   {
+    "title": "Desassociar processo do analista responsável",
+    "label": null,
+    "naTabela": true,
+    "host": "0.45",
+    "interno": {
+     "opacity": "0.45",
+     "cursor": "not-allowed"
+    }
+   },
+   {
+    "title": "Desassociar processo do analista responsável",
+    "label": null,
+    "naTabela": true,
+    "host": "0.45",
+    "interno": {
+     "opacity": "0.45",
+     "cursor": "not-allowed"
+    }
+   },
+   {
+    "title": "Desassociar processo do analista responsável",
+    "label": null,
+    "naTabela": true,
+    "host": "0.45",
+    "interno": {
+     "opacity": "0.45",
+     "cursor": "not-allowed"
+    }
+   },
+   {
+    "title": "Desassociar processo do analista responsável",
+    "label": null,
+    "naTabela": true,
+    "host": "0.45",
+    "interno": {
+     "opacity": "0.45",
+     "cursor": "not-allowed"
+    }
+   },
+   {
+    "title": "Desassociar processo do analista responsável",
+    "label": null,
+    "naTabela": true,
+    "host": "0.45",
+    "interno": {
+     "opacity": "0.45",
+     "cursor": "not-allowed"
+    }
+   },
+   {
+    "title": "Desassociar processo do analista responsável",
+    "label": null,
+    "naTabela": true,
+    "host": "0.45",
+    "interno": {
+     "opacity": "0.45",
+     "cursor": "not-allowed"
+    }
+   }
+  ],
+  "desabTodos": [
+   "Limpar filtros@processos",
+   "Desassociar processo do analista responsável@processos",
+   "Desassociar processo do analista responsável@processos",
+   "Desassociar processo do analista responsável@processos",
+   "Desassociar processo do analista responsável@processos",
+   "Desassociar processo do analista responsável@processos",
+   "Desassociar processo do analista responsável@processos",
+   "Desassociar processo do analista responsável@processos",
+   "Desassociar processo do analista responsável@processos"
+  ],
+  "voltar": [
+   {
+    "hover": "0.16",
+    "interno": {
+     "--hover": "0.16",
+     "background-image": "none"
+    }
+   }
+  ],
+  "exportar": [
+   {
+    "hover": "0.16"
+   }
+  ],
+  "exibirInput": 1,
+  "voltarHover": [
+   {
+    "background-image": "linear-gradient(rgba(19, 81, 180, 0.16), rgba(19, 81, 180, 0.16))"
+   }
+  ],
+  "listaExibir": [
+   {
+    "box-shadow": "rgba(0, 0, 0, 0.16) 0px 3px 6px 0px",
+    "display": "block"
+   }
+  ],
+  "listaPagina": [],
+  "tagEscolhida": [
+   {
+    "t": "Últimos 60 dias",
+    "filhos": [
+     "I.fa-clock far mr-1",
+     "SPAN.text-truncate",
+     "BUTTON.br-button inverted circle"
+    ],
+    "botao": {
+     "classe": "br-button inverted circle",
+     "x": 267,
+     "y": 384.3,
+     "w": 28,
+     "h": 28,
+     "border-top-left-radius": "50%",
+     "background-color": "rgb(19, 81, 180)",
+     "border-top-style": "none",
+     "border-top-width": "0px",
+     "color": "rgb(255, 255, 255)"
+    }
+   }
+  ],
+  "linhas": 9
+ },
+ "semeada": {
+  "paginacao": [
+   {
+    "aria": "Página seguinte",
+    "x": 576,
+    "y": 1814.8,
+    "w": 40,
+    "h": 40
+   }
+  ],
+  "paginacaoUl": [
+   {
+    "filhos": 2,
+    "lis": [
+     "|1",
+     "|"
+    ]
+   }
+  ],
+  "avatar": [
+   {
+    "classe": "bg-orange-vivid-30 text-pure-0",
+    "x": 877.7,
+    "y": 40.1,
+    "w": 18.2,
+    "h": 40,
+    "border-top-left-radius": "0px",
+    "display": "block",
+    "background-color": "rgb(255, 140, 0)",
+    "color": "rgb(255, 255, 255)",
+    "font-size": "24.192px",
+    "font-weight": "700"
+   }
+  ],
+  "avatarContent": 0,
+  "h2": [
+   {
+    "t": "Processos",
+    "font-size": "32px",
+    "font-weight": "700",
+    "color": "rgb(0, 94, 162)"
+   }
+  ],
+  "meus": [
+   {
+    "t": "Meus processos",
+    "font-size": "15px"
+   }
+  ],
+  "tagsFiltro": [
+   {
+    "t": "Aberto há",
+    "font-size": "16.8px",
+    "border-top-left-radius": "4px"
+   },
+   {
+    "t": "Tipo de processo",
+    "font-size": "16.8px",
+    "border-top-left-radius": "4px"
+   },
+   {
+    "t": "Status",
+    "font-size": "16.8px",
+    "border-top-left-radius": "4px"
+   },
+   {
+    "t": "Espécie alvo",
+    "font-size": "16.8px",
+    "border-top-left-radius": "4px"
+   },
+   {
+    "t": "Método de pesca",
+    "font-size": "16.8px",
+    "border-top-left-radius": "4px"
+   },
+   {
+    "t": "Petrecho",
+    "font-size": "16.8px",
+    "border-top-left-radius": "4px"
+   }
+  ],
+  "divisor": [
+   {
+    "classe": "br-divider md mt-0 mb-0",
+    "border-top-color": "rgb(214, 214, 214)",
+    "border-top-width": "2px"
+   }
+  ],
+  "breadcrumbShadow": [
+   "<style>@import\"assets/mock/vendor/fontawesome-5.11.2/css/all.min.css\";/*! * GOVBR-DS: Design System de Governo * Versão 3.0.0 * Suporte: - Serpro: DIDES/SUPSE/SESEP */:root{--blue-90:#11181d;--blue-80:#1f303e;--blue-70:#274863;--blue-60:#2c608a;--blue-50:#2378c3;--blue-40:#4f97d1;--blue-30:#73b3e7;--blue-20:#aacdec;--blue-10:#dbe8fb;--blue-5:#eff6fb;--blue-cool-90:#0f191c;--blue-cool-80:#14333d;--blue-cool-70:#224a58;--blue-cool-60:#2e6276;--blue-cool-50:#3a7d95;--blue-cool-40:#6499af;--blue-cool-30:#82b4c9;--blue-cool-20:#adcfdc;--blue-cool-10:#dae9ee;--blue-cool-5:#e7f2f5;--blue-warm-90:#13171f;--blue-warm-80:#252f3e;--blue-warm-70:#2f4668;--blue-warm-60:#345d96;--blue-warm-50:#4a77b4;--blue-warm-40:#7292c7;--blue-warm-30:#98afd2;--blue-warm-20:#c5d4eb;--blue-warm-10:#e1e7f1;--blue-warm-5:#ecf1f7;--blue-vivid-80:#112f4e;--blue-vivid-70:#0b4778;--blue-vivid-60:#005ea2;--blue-vivid-50:#0076d6;--blue-vivid-40:#2491ff;--blue-vivid-30:#58b4ff;--blue-vivid-20:#a1d3ff;--blue-vivid-10:#cfe8ff;--blue-vivid-5:#e8f5ff;--blue-cool-vivid-80:#002d3f;--blue-cool-vivid-70:#074b69;--blue-cool-vivid-60:#07648d;--blue-cool-vivid-50:#0d7ea2;--blue-cool-vivid-40:#28a0cb;--blue-cool-vivid-30:#59b9de;--blue-cool-vivid-20:#97d4ea;--blue-cool-vivid-10:#c3ebfa;--blue-cool-vivid-5:#e1f3f8;--blue-warm-vivid-90:#071d41;--blue-warm-vivid-80:#0c326f;--blue-warm-vivid-70:#1351b4;--blue-warm-vivid-60:#155bcb;--blue-warm-vivid-50:#2670e8;--blue-warm-vivid-40:#5992ed;--blue-warm-vivid-30:#81aefc;--blue-warm-"
+  ],
+  "breadcrumbHome": [
+   {
+    "tag": "I",
+    "pai": "BUTTON.br-button small circle",
+    "color": "rgb(0, 94, 162)"
+   }
+  ],
+  "breadcrumbA": [
+   {
+    "t": "Home",
+    "contemIcone": true,
+    "color": "rgb(0, 94, 162)"
+   }
+  ],
+  "breadcrumbLi": [
+   {
+    "c": "crumb home",
+    "t": "Home",
+    "color": "rgb(51, 51, 51)"
+   },
+   {
+    "c": "crumb",
+    "t": "Processos",
+    "color": "rgb(51, 51, 51)"
+   }
+  ],
+  "abas": [
+   {
+    "t": "Aguardando análise",
+    "font-size": "16.8px",
+    "font-weight": "500"
+   },
+   {
+    "t": "Tramitando",
+    "font-size": "16.8px",
+    "font-weight": "500"
+   },
+   {
+    "t": "Concluídos",
+    "font-size": "16.8px",
+    "font-weight": "500"
+   }
+  ],
+  "abasLi": [
+   {
+    "t": "Aguardando análise",
+    "ativo": true,
+    "color": "rgb(51, 51, 51)"
+   },
+   {
+    "t": "Tramitando",
+    "ativo": false,
+    "color": "rgb(51, 51, 51)"
+   },
+   {
+    "t": "Concluídos",
+    "ativo": false,
+    "color": "rgb(51, 51, 51)"
+   }
+  ],
+  "abaItens": [
+   {
+    "id": "AGUARDANDO_ANALISE",
+    "isActive": null
+   },
+   {
+    "id": "TRAMITANDO",
+    "isActive": null
+   },
+   {
+    "id": "HISTORICO",
+    "isActive": null
+   }
+  ],
+  "meusPresente": [
+   "Meus processos",
+   "Aberto há",
+   "Tipo de processo",
+   "Status",
+   "Espécie alvo",
+   "Método de pesca",
+   "Petrecho"
+  ],
+  "ths": [
+   "Aberto há",
+   "",
+   "Nº Processo",
+   "Tipo de Processo",
+   "Solicitante",
+   "Analista",
+   "Téc. Adm.",
+   "Status",
+   ""
+  ],
+  "desab": [
+   {
+    "title": null,
+    "label": "Limpar filtros",
+    "naTabela": false,
+    "host": "0.45",
+    "interno": {
+     "opacity": "0.45",
+     "cursor": "not-allowed"
+    }
+   },
+   {
+    "title": "Desassociar processo do analista responsável",
+    "label": null,
+    "naTabela": true,
+    "host": "1",
+    "interno": {
+     "opacity": "1",
+     "cursor": "not-allowed"
+    }
+   },
+   {
+    "title": "Desassociar processo do analista responsável",
+    "label": null,
+    "naTabela": true,
+    "host": "1",
+    "interno": {
+     "opacity": "1",
+     "cursor": "not-allowed"
+    }
+   },
+   {
+    "title": "Desassociar processo do analista responsável",
+    "label": null,
+    "naTabela": true,
+    "host": "1",
+    "interno": {
+     "opacity": "1",
+     "cursor": "not-allowed"
+    }
+   },
+   {
+    "title": "Desassociar processo do analista responsável",
+    "label": null,
+    "naTabela": true,
+    "host": "1",
+    "interno": {
+     "opacity": "1",
+     "cursor": "not-allowed"
+    }
+   },
+   {
+    "title": "Desassociar processo do analista responsável",
+    "label": null,
+    "naTabela": true,
+    "host": "1",
+    "interno": {
+     "opacity": "1",
+     "cursor": "not-allowed"
+    }
+   },
+   {
+    "title": "Desassociar processo do analista responsável",
+    "label": null,
+    "naTabela": true,
+    "host": "1",
+    "interno": {
+     "opacity": "1",
+     "cursor": "not-allowed"
+    }
+   },
+   {
+    "title": "Desassociar processo do analista responsável",
+    "label": null,
+    "naTabela": true,
+    "host": "1",
+    "interno": {
+     "opacity": "1",
+     "cursor": "not-allowed"
+    }
+   },
+   {
+    "title": "Desassociar processo do analista responsável",
+    "label": null,
+    "naTabela": true,
+    "host": "1",
+    "interno": {
+     "opacity": "1",
+     "cursor": "not-allowed"
+    }
+   }
+  ],
+  "desabTodos": [
+   "Limpar filtros@processos",
+   "Desassociar processo do analista responsável@processos",
+   "Desassociar processo do analista responsável@processos",
+   "Desassociar processo do analista responsável@processos",
+   "Desassociar processo do analista responsável@processos",
+   "Desassociar processo do analista responsável@processos",
+   "Desassociar processo do analista responsável@processos",
+   "Desassociar processo do analista responsável@processos",
+   "Desassociar processo do analista responsável@processos"
+  ],
+  "voltar": [
+   {
+    "hover": "0",
+    "interno": {
+     "--hover": "0",
+     "background-image": "none"
+    }
+   }
+  ],
+  "exportar": [
+   {
+    "hover": "0.16"
+   }
+  ],
+  "exibirInput": 1,
+  "voltarHover": [
+   {
+    "background-image": "linear-gradient(rgba(19, 81, 180, 0), rgba(19, 81, 180, 0))"
+   }
+  ],
+  "listaExibir": [
+   {
+    "box-shadow": "rgba(0, 0, 0, 0.16) 0px 6px 6px 0px",
+    "display": "block"
+   }
+  ],
+  "listaPagina": [],
+  "tagEscolhida": [
+   {
+    "t": "Últimos 60 dias",
+    "filhos": [
+     "I.fa-clock far mr-1",
+     "SPAN.text-truncate",
+     "BUTTON.inverted circle"
+    ],
+    "botao": {
+     "classe": "inverted circle",
+     "x": 255,
+     "y": 376.5,
+     "w": 40,
+     "h": 30.3,
+     "border-top-left-radius": "0px",
+     "background-color": "rgb(240, 240, 240)",
+     "border-top-style": "outset",
+     "border-top-width": "2px",
+     "color": "rgb(0, 0, 0)"
+    }
+   }
+  ],
+  "linhas": 9
+ }
+}

@@ -1,0 +1,4753 @@
+{
+ "estados": {
+  "inicial": {
+   "elementos": [
+    534,
+    534
+   ],
+   "pares": 534,
+   "soA": 0,
+   "soB": 0,
+   "eventos": {
+    "A": {
+     "externas": [],
+     "erros": [],
+     "falhas": []
+    },
+    "B": {
+     "externas": [],
+     "erros": [],
+     "falhas": []
+    }
+   },
+   "diferencas": 59,
+   "porMudanca": {
+    "R-01": 18,
+    "R-03": 6,
+    "R-02": 10,
+    "M-10+R-04": 25
+   },
+   "semAtribuicao": [],
+   "todas": [
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]",
+     "desc": "4|br-header|||Plataforma Nacional da Indústria do Pescado|||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "box-shadow",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]",
+     "desc": "5|header||||||",
+     "a": "rgba(0, 0, 0, 0.16) 0px 1px 6px 0px",
+     "b": "rgba(0, 0, 0, 0.3) 0px 2px 12px 0px",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]",
+     "desc": "5|header||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]",
+     "desc": "6|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]",
+     "desc": "7|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]",
+     "desc": "8|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/img[0]",
+     "desc": "9|img||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/span[1]",
+     "desc": "9|span||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/div[2]",
+     "desc": "9|div||||||Ministério da Pesca e Aquicultura",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/slot[1]",
+     "desc": "8|slot|||||headerAction|",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]",
+     "desc": "7|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]",
+     "desc": "8|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "9|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]",
+     "desc": "10|slot|||||headerMenu|",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]/button[0]",
+     "desc": "11|button|navigation|Menu||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]/button[0]/i[0]",
+     "desc": "12|i||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[1]",
+     "desc": "9|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[1]/div[0]",
+     "desc": "10|div||||||Plataforma Nacional da Indústria do Pesc",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]",
+     "desc": "15|br-input|search||||search|",
+     "a": "class=\"ng-valid ng-touched ng-dirty\" density=\"small\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" value=\"\"",
+     "b": "class=\"ng-valid ng-touched ng-dirty\" density=\"small\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" style=\"--focus: var(--blue-warm-vivid-70);\" value=\"\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]",
+     "desc": "15|br-input|search||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]",
+     "desc": "16|div|||||search|",
+     "a": "class=\"br-input small ng-valid ng-touched ng-dirty\" name=\"search\"",
+     "b": "class=\"br-input small ng-valid ng-touched ng-dirty\" name=\"search\" style=\"--focus: var(--blue-warm-vivid-70);\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]",
+     "desc": "16|div|||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "class=\"ng-valid ng-touched ng-dirty\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" type=\"text\"",
+     "b": "class=\"ng-valid ng-touched ng-dirty\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" style=\"--focus: var(--blue-warm-vivid-70);\" type=\"text\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "aria-label=\"Buscar\" class=\"br-button\" style=\"margin-top: -38px;\" type=\"button\"",
+     "b": "aria-label=\"Buscar\" class=\"br-button\" style=\"--button-size: var(--button-medium); margin-top: -38px;\" type=\"button\"",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "block-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "height",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "inline-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "perspective-origin",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "16px 16px",
+     "b": "20px 20px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "transform",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "matrix(1, 0, 0, 1, 0, 4)",
+     "b": "matrix(1, 0, 0, 1, 0, 0)",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "transform-origin",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "16px 16px",
+     "b": "20px 20px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "width",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--button-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--button-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]/i[0]",
+     "desc": "16|i||||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item selected\" tabindex=\"-1\"",
+     "b": "class=\"br-item selected\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/input[0]",
+     "desc": "17|input|total0|||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/label[1]",
+     "desc": "17|label||||||10",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]/input[0]",
+     "desc": "17|input|total1|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]/label[1]",
+     "desc": "17|label||||||25",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]/input[0]",
+     "desc": "17|input|total2|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]/label[1]",
+     "desc": "17|label||||||50",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]/input[0]",
+     "desc": "17|input|total3|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]/label[1]",
+     "desc": "17|label||||||100",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item selected\" tabindex=\"-1\"",
+     "b": "class=\"br-item selected\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/input[0]",
+     "desc": "17|input|page0|||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/label[1]",
+     "desc": "17|label||||||1",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    }
+   ]
+  },
+  "rolado-hover-voltar": {
+   "elementos": [
+    534,
+    534
+   ],
+   "pares": 534,
+   "soA": 0,
+   "soB": 0,
+   "eventos": {
+    "A": {
+     "externas": [],
+     "erros": [],
+     "falhas": []
+    },
+    "B": {
+     "externas": [],
+     "erros": [],
+     "falhas": []
+    }
+   },
+   "diferencas": 59,
+   "porMudanca": {
+    "R-01": 18,
+    "R-03": 6,
+    "R-02": 10,
+    "M-10+R-04": 25
+   },
+   "semAtribuicao": [],
+   "todas": [
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]",
+     "desc": "4|br-header|||Plataforma Nacional da Indústria do Pescado|||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "box-shadow",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]",
+     "desc": "5|header||||||",
+     "a": "rgba(0, 0, 0, 0.16) 0px 1px 6px 0px",
+     "b": "rgba(0, 0, 0, 0.3) 0px 2px 12px 0px",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]",
+     "desc": "5|header||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]",
+     "desc": "6|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]",
+     "desc": "7|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]",
+     "desc": "8|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/img[0]",
+     "desc": "9|img||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/span[1]",
+     "desc": "9|span||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/div[2]",
+     "desc": "9|div||||||Ministério da Pesca e Aquicultura",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/slot[1]",
+     "desc": "8|slot|||||headerAction|",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]",
+     "desc": "7|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]",
+     "desc": "8|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "9|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]",
+     "desc": "10|slot|||||headerMenu|",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]/button[0]",
+     "desc": "11|button|navigation|Menu||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]/button[0]/i[0]",
+     "desc": "12|i||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[1]",
+     "desc": "9|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[1]/div[0]",
+     "desc": "10|div||||||Plataforma Nacional da Indústria do Pesc",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]",
+     "desc": "15|br-input|search||||search|",
+     "a": "class=\"ng-valid ng-touched ng-dirty\" density=\"small\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" value=\"\"",
+     "b": "class=\"ng-valid ng-touched ng-dirty\" density=\"small\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" style=\"--focus: var(--blue-warm-vivid-70);\" value=\"\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]",
+     "desc": "15|br-input|search||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]",
+     "desc": "16|div|||||search|",
+     "a": "class=\"br-input small ng-valid ng-touched ng-dirty\" name=\"search\"",
+     "b": "class=\"br-input small ng-valid ng-touched ng-dirty\" name=\"search\" style=\"--focus: var(--blue-warm-vivid-70);\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]",
+     "desc": "16|div|||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "class=\"ng-valid ng-touched ng-dirty\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" type=\"text\"",
+     "b": "class=\"ng-valid ng-touched ng-dirty\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" style=\"--focus: var(--blue-warm-vivid-70);\" type=\"text\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "aria-label=\"Buscar\" class=\"br-button\" style=\"margin-top: -38px;\" type=\"button\"",
+     "b": "aria-label=\"Buscar\" class=\"br-button\" style=\"--button-size: var(--button-medium); margin-top: -38px;\" type=\"button\"",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "block-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "height",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "inline-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "perspective-origin",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "16px 16px",
+     "b": "20px 20px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "transform",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "matrix(1, 0, 0, 1, 0, 4)",
+     "b": "matrix(1, 0, 0, 1, 0, 0)",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "transform-origin",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "16px 16px",
+     "b": "20px 20px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "width",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--button-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--button-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]/i[0]",
+     "desc": "16|i||||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item selected\" tabindex=\"-1\"",
+     "b": "class=\"br-item selected\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/input[0]",
+     "desc": "17|input|total0|||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/label[1]",
+     "desc": "17|label||||||10",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]/input[0]",
+     "desc": "17|input|total1|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]/label[1]",
+     "desc": "17|label||||||25",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]/input[0]",
+     "desc": "17|input|total2|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]/label[1]",
+     "desc": "17|label||||||50",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]/input[0]",
+     "desc": "17|input|total3|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]/label[1]",
+     "desc": "17|label||||||100",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item selected\" tabindex=\"-1\"",
+     "b": "class=\"br-item selected\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/input[0]",
+     "desc": "17|input|page0|||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/label[1]",
+     "desc": "17|label||||||1",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    }
+   ]
+  },
+  "exibir-aberto": {
+   "elementos": [
+    534,
+    534
+   ],
+   "pares": 534,
+   "soA": 0,
+   "soB": 0,
+   "eventos": {
+    "A": {
+     "externas": [],
+     "erros": [],
+     "falhas": []
+    },
+    "B": {
+     "externas": [],
+     "erros": [],
+     "falhas": []
+    }
+   },
+   "diferencas": 59,
+   "porMudanca": {
+    "R-01": 18,
+    "R-03": 6,
+    "R-02": 10,
+    "M-10+R-04": 25
+   },
+   "semAtribuicao": [],
+   "todas": [
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]",
+     "desc": "4|br-header|||Plataforma Nacional da Indústria do Pescado|||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "box-shadow",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]",
+     "desc": "5|header||||||",
+     "a": "rgba(0, 0, 0, 0.16) 0px 1px 6px 0px",
+     "b": "rgba(0, 0, 0, 0.3) 0px 2px 12px 0px",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]",
+     "desc": "5|header||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]",
+     "desc": "6|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]",
+     "desc": "7|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]",
+     "desc": "8|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/img[0]",
+     "desc": "9|img||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/span[1]",
+     "desc": "9|span||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/div[2]",
+     "desc": "9|div||||||Ministério da Pesca e Aquicultura",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/slot[1]",
+     "desc": "8|slot|||||headerAction|",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]",
+     "desc": "7|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]",
+     "desc": "8|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "9|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]",
+     "desc": "10|slot|||||headerMenu|",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]/button[0]",
+     "desc": "11|button|navigation|Menu||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]/button[0]/i[0]",
+     "desc": "12|i||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[1]",
+     "desc": "9|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[1]/div[0]",
+     "desc": "10|div||||||Plataforma Nacional da Indústria do Pesc",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]",
+     "desc": "15|br-input|search||||search|",
+     "a": "class=\"ng-valid ng-touched ng-dirty\" density=\"small\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" value=\"\"",
+     "b": "class=\"ng-valid ng-touched ng-dirty\" density=\"small\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" style=\"--focus: var(--blue-warm-vivid-70);\" value=\"\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]",
+     "desc": "15|br-input|search||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]",
+     "desc": "16|div|||||search|",
+     "a": "class=\"br-input small ng-valid ng-touched ng-dirty\" name=\"search\"",
+     "b": "class=\"br-input small ng-valid ng-touched ng-dirty\" name=\"search\" style=\"--focus: var(--blue-warm-vivid-70);\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]",
+     "desc": "16|div|||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "class=\"ng-valid ng-touched ng-dirty\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" type=\"text\"",
+     "b": "class=\"ng-valid ng-touched ng-dirty\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" style=\"--focus: var(--blue-warm-vivid-70);\" type=\"text\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "aria-label=\"Buscar\" class=\"br-button\" style=\"margin-top: -38px;\" type=\"button\"",
+     "b": "aria-label=\"Buscar\" class=\"br-button\" style=\"--button-size: var(--button-medium); margin-top: -38px;\" type=\"button\"",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "block-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "height",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "inline-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "perspective-origin",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "16px 16px",
+     "b": "20px 20px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "transform",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "matrix(1, 0, 0, 1, 0, 4)",
+     "b": "matrix(1, 0, 0, 1, 0, 0)",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "transform-origin",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "16px 16px",
+     "b": "20px 20px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "width",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--button-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--button-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]/i[0]",
+     "desc": "16|i||||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item selected\" tabindex=\"-1\"",
+     "b": "class=\"br-item selected\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/input[0]",
+     "desc": "17|input|total0|||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/label[1]",
+     "desc": "17|label||||||10",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]/input[0]",
+     "desc": "17|input|total1|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]/label[1]",
+     "desc": "17|label||||||25",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]/input[0]",
+     "desc": "17|input|total2|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]/label[1]",
+     "desc": "17|label||||||50",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]/input[0]",
+     "desc": "17|input|total3|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]/label[1]",
+     "desc": "17|label||||||100",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item selected\" tabindex=\"-1\"",
+     "b": "class=\"br-item selected\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/input[0]",
+     "desc": "17|input|page0|||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/label[1]",
+     "desc": "17|label||||||1",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    }
+   ]
+  },
+  "filtro-status-escolhido": {
+   "elementos": [
+    171,
+    171
+   ],
+   "pares": 171,
+   "soA": 0,
+   "soB": 0,
+   "eventos": {
+    "A": {
+     "externas": [],
+     "erros": [],
+     "falhas": []
+    },
+    "B": {
+     "externas": [],
+     "erros": [],
+     "falhas": []
+    }
+   },
+   "diferencas": 34,
+   "porMudanca": {
+    "R-01": 18,
+    "R-03": 6,
+    "R-02": 10
+   },
+   "semAtribuicao": [],
+   "todas": [
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]",
+     "desc": "4|br-header|||Plataforma Nacional da Indústria do Pescado|||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "box-shadow",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]",
+     "desc": "5|header||||||",
+     "a": "rgba(0, 0, 0, 0.16) 0px 1px 6px 0px",
+     "b": "rgba(0, 0, 0, 0.3) 0px 2px 12px 0px",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]",
+     "desc": "5|header||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]",
+     "desc": "6|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]",
+     "desc": "7|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]",
+     "desc": "8|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/img[0]",
+     "desc": "9|img||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/span[1]",
+     "desc": "9|span||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/div[2]",
+     "desc": "9|div||||||Ministério da Pesca e Aquicultura",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/slot[1]",
+     "desc": "8|slot|||||headerAction|",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]",
+     "desc": "7|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]",
+     "desc": "8|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "9|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]",
+     "desc": "10|slot|||||headerMenu|",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]/button[0]",
+     "desc": "11|button|navigation|Menu||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]/button[0]/i[0]",
+     "desc": "12|i||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[1]",
+     "desc": "9|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[1]/div[0]",
+     "desc": "10|div||||||Plataforma Nacional da Indústria do Pesc",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]",
+     "desc": "15|br-input|search||||search|",
+     "a": "class=\"ng-valid ng-touched ng-dirty\" density=\"small\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" value=\"\"",
+     "b": "class=\"ng-valid ng-touched ng-dirty\" density=\"small\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" style=\"--focus: var(--blue-warm-vivid-70);\" value=\"\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]",
+     "desc": "15|br-input|search||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]",
+     "desc": "16|div|||||search|",
+     "a": "class=\"br-input small ng-valid ng-touched ng-dirty\" name=\"search\"",
+     "b": "class=\"br-input small ng-valid ng-touched ng-dirty\" name=\"search\" style=\"--focus: var(--blue-warm-vivid-70);\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]",
+     "desc": "16|div|||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "class=\"ng-valid ng-touched ng-dirty\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" type=\"text\"",
+     "b": "class=\"ng-valid ng-touched ng-dirty\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" style=\"--focus: var(--blue-warm-vivid-70);\" type=\"text\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "aria-label=\"Buscar\" class=\"br-button\" style=\"margin-top: -38px;\" type=\"button\"",
+     "b": "aria-label=\"Buscar\" class=\"br-button\" style=\"--button-size: var(--button-medium); margin-top: -38px;\" type=\"button\"",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "block-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "height",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "inline-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "perspective-origin",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "16px 16px",
+     "b": "20px 20px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "transform",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "matrix(1, 0, 0, 1, 0, 4)",
+     "b": "matrix(1, 0, 0, 1, 0, 0)",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "transform-origin",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "16px 16px",
+     "b": "20px 20px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "width",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--button-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--button-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]/i[0]",
+     "desc": "16|i||||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    }
+   ]
+  },
+  "busca-focada": {
+   "elementos": [
+    534,
+    534
+   ],
+   "pares": 534,
+   "soA": 0,
+   "soB": 0,
+   "eventos": {
+    "A": {
+     "externas": [],
+     "erros": [],
+     "falhas": []
+    },
+    "B": {
+     "externas": [],
+     "erros": [],
+     "falhas": []
+    }
+   },
+   "diferencas": 68,
+   "porMudanca": {
+    "R-01": 18,
+    "R-03": 15,
+    "R-02": 10,
+    "M-10+R-04": 25
+   },
+   "semAtribuicao": [],
+   "todas": [
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]",
+     "desc": "4|br-header|||Plataforma Nacional da Indústria do Pescado|||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "box-shadow",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]",
+     "desc": "5|header||||||",
+     "a": "rgba(0, 0, 0, 0.16) 0px 1px 6px 0px",
+     "b": "rgba(0, 0, 0, 0.3) 0px 2px 12px 0px",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]",
+     "desc": "5|header||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]",
+     "desc": "6|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]",
+     "desc": "7|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]",
+     "desc": "8|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/img[0]",
+     "desc": "9|img||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/span[1]",
+     "desc": "9|span||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/div[2]",
+     "desc": "9|div||||||Ministério da Pesca e Aquicultura",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/slot[1]",
+     "desc": "8|slot|||||headerAction|",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]",
+     "desc": "7|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]",
+     "desc": "8|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "9|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]",
+     "desc": "10|slot|||||headerMenu|",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]/button[0]",
+     "desc": "11|button|navigation|Menu||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]/button[0]/i[0]",
+     "desc": "12|i||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[1]",
+     "desc": "9|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[1]/div[0]",
+     "desc": "10|div||||||Plataforma Nacional da Indústria do Pesc",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]",
+     "desc": "15|br-input|search||||search|",
+     "a": "class=\"ng-valid ng-touched ng-dirty\" density=\"small\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" value=\"\"",
+     "b": "class=\"ng-valid ng-touched ng-dirty\" density=\"small\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" style=\"--focus: var(--blue-warm-vivid-70);\" value=\"\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]",
+     "desc": "15|br-input|search||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]",
+     "desc": "16|div|||||search|",
+     "a": "class=\"br-input small ng-valid ng-touched ng-dirty\" name=\"search\"",
+     "b": "class=\"br-input small ng-valid ng-touched ng-dirty\" name=\"search\" style=\"--focus: var(--blue-warm-vivid-70);\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]",
+     "desc": "16|div|||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "class=\"ng-valid ng-touched ng-dirty\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" type=\"text\"",
+     "b": "class=\"ng-valid ng-touched ng-dirty\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" style=\"--focus: var(--blue-warm-vivid-70);\" type=\"text\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "border-block-end-color",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "rgb(194, 133, 12)",
+     "b": "rgb(19, 81, 180)",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "border-block-start-color",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "rgb(194, 133, 12)",
+     "b": "rgb(19, 81, 180)",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "border-bottom-color",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "rgb(194, 133, 12)",
+     "b": "rgb(19, 81, 180)",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "border-inline-end-color",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "rgb(194, 133, 12)",
+     "b": "rgb(19, 81, 180)",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "border-inline-start-color",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "rgb(194, 133, 12)",
+     "b": "rgb(19, 81, 180)",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "border-left-color",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "rgb(194, 133, 12)",
+     "b": "rgb(19, 81, 180)",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "border-right-color",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "rgb(194, 133, 12)",
+     "b": "rgb(19, 81, 180)",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "border-top-color",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "rgb(194, 133, 12)",
+     "b": "rgb(19, 81, 180)",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "box-shadow",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "rgb(194, 133, 12) 0px 0px 0px 2px",
+     "b": "rgb(19, 81, 180) 0px 0px 0px 2px",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "aria-label=\"Buscar\" class=\"br-button\" style=\"margin-top: -38px;\" type=\"button\"",
+     "b": "aria-label=\"Buscar\" class=\"br-button\" style=\"--button-size: var(--button-medium); margin-top: -38px;\" type=\"button\"",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "block-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "height",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "inline-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "perspective-origin",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "16px 16px",
+     "b": "20px 20px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "transform",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "matrix(1, 0, 0, 1, 0, 4)",
+     "b": "matrix(1, 0, 0, 1, 0, 0)",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "transform-origin",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "16px 16px",
+     "b": "20px 20px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "width",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--button-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--button-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]/i[0]",
+     "desc": "16|i||||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item selected\" tabindex=\"-1\"",
+     "b": "class=\"br-item selected\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/input[0]",
+     "desc": "17|input|total0|||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/label[1]",
+     "desc": "17|label||||||10",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]/input[0]",
+     "desc": "17|input|total1|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]/label[1]",
+     "desc": "17|label||||||25",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]/input[0]",
+     "desc": "17|input|total2|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]/label[1]",
+     "desc": "17|label||||||50",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]/input[0]",
+     "desc": "17|input|total3|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]/label[1]",
+     "desc": "17|label||||||100",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item selected\" tabindex=\"-1\"",
+     "b": "class=\"br-item selected\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/input[0]",
+     "desc": "17|input|page0|||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/label[1]",
+     "desc": "17|label||||||1",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    }
+   ]
+  },
+  "exibir-aberto-hover-25": {
+   "elementos": [
+    534,
+    534
+   ],
+   "pares": 534,
+   "soA": 0,
+   "soB": 0,
+   "eventos": {
+    "A": {
+     "externas": [],
+     "erros": [],
+     "falhas": []
+    },
+    "B": {
+     "externas": [],
+     "erros": [],
+     "falhas": []
+    }
+   },
+   "diferencas": 60,
+   "porMudanca": {
+    "R-01": 18,
+    "R-03": 6,
+    "R-02": 10,
+    "M-10+R-04": 26
+   },
+   "semAtribuicao": [],
+   "todas": [
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]",
+     "desc": "4|br-header|||Plataforma Nacional da Indústria do Pescado|||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "box-shadow",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]",
+     "desc": "5|header||||||",
+     "a": "rgba(0, 0, 0, 0.16) 0px 1px 6px 0px",
+     "b": "rgba(0, 0, 0, 0.3) 0px 2px 12px 0px",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]",
+     "desc": "5|header||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]",
+     "desc": "6|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]",
+     "desc": "7|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]",
+     "desc": "8|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/img[0]",
+     "desc": "9|img||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/span[1]",
+     "desc": "9|span||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/div[2]",
+     "desc": "9|div||||||Ministério da Pesca e Aquicultura",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/slot[1]",
+     "desc": "8|slot|||||headerAction|",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]",
+     "desc": "7|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]",
+     "desc": "8|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "9|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]",
+     "desc": "10|slot|||||headerMenu|",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]/button[0]",
+     "desc": "11|button|navigation|Menu||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]/button[0]/i[0]",
+     "desc": "12|i||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[1]",
+     "desc": "9|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[1]/div[0]",
+     "desc": "10|div||||||Plataforma Nacional da Indústria do Pesc",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]",
+     "desc": "15|br-input|search||||search|",
+     "a": "class=\"ng-valid ng-touched ng-dirty\" density=\"small\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" value=\"\"",
+     "b": "class=\"ng-valid ng-touched ng-dirty\" density=\"small\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" style=\"--focus: var(--blue-warm-vivid-70);\" value=\"\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]",
+     "desc": "15|br-input|search||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]",
+     "desc": "16|div|||||search|",
+     "a": "class=\"br-input small ng-valid ng-touched ng-dirty\" name=\"search\"",
+     "b": "class=\"br-input small ng-valid ng-touched ng-dirty\" name=\"search\" style=\"--focus: var(--blue-warm-vivid-70);\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]",
+     "desc": "16|div|||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "class=\"ng-valid ng-touched ng-dirty\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" type=\"text\"",
+     "b": "class=\"ng-valid ng-touched ng-dirty\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" style=\"--focus: var(--blue-warm-vivid-70);\" type=\"text\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "aria-label=\"Buscar\" class=\"br-button\" style=\"margin-top: -38px;\" type=\"button\"",
+     "b": "aria-label=\"Buscar\" class=\"br-button\" style=\"--button-size: var(--button-medium); margin-top: -38px;\" type=\"button\"",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "block-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "height",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "inline-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "perspective-origin",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "16px 16px",
+     "b": "20px 20px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "transform",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "matrix(1, 0, 0, 1, 0, 4)",
+     "b": "matrix(1, 0, 0, 1, 0, 0)",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "transform-origin",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "16px 16px",
+     "b": "20px 20px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "width",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--button-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--button-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]/i[0]",
+     "desc": "16|i||||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item selected\" tabindex=\"-1\"",
+     "b": "class=\"br-item selected\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/input[0]",
+     "desc": "17|input|total0|||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/label[1]",
+     "desc": "17|label||||||10",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "background-image",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]",
+     "desc": "15|div||||||",
+     "a": "linear-gradient(rgba(51, 51, 51, 0.16), rgba(51, 51, 51, 0.16))",
+     "b": "linear-gradient(rgba(51, 51, 51, 0), rgba(51, 51, 51, 0))",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]/input[0]",
+     "desc": "17|input|total1|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]/label[1]",
+     "desc": "17|label||||||25",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]/input[0]",
+     "desc": "17|input|total2|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]/label[1]",
+     "desc": "17|label||||||50",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]/input[0]",
+     "desc": "17|input|total3|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]/label[1]",
+     "desc": "17|label||||||100",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item selected\" tabindex=\"-1\"",
+     "b": "class=\"br-item selected\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/input[0]",
+     "desc": "17|input|page0|||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/label[1]",
+     "desc": "17|label||||||1",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    }
+   ]
+  },
+  "rolado": {
+   "elementos": [
+    534,
+    534
+   ],
+   "pares": 534,
+   "soA": 0,
+   "soB": 0,
+   "eventos": {
+    "A": {
+     "externas": [],
+     "erros": [],
+     "falhas": []
+    },
+    "B": {
+     "externas": [],
+     "erros": [],
+     "falhas": []
+    }
+   },
+   "diferencas": 59,
+   "porMudanca": {
+    "R-01": 18,
+    "R-03": 6,
+    "R-02": 10,
+    "M-10+R-04": 25
+   },
+   "semAtribuicao": [],
+   "todas": [
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]",
+     "desc": "4|br-header|||Plataforma Nacional da Indústria do Pescado|||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "box-shadow",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]",
+     "desc": "5|header||||||",
+     "a": "rgba(0, 0, 0, 0.16) 0px 1px 6px 0px",
+     "b": "rgba(0, 0, 0, 0.3) 0px 2px 12px 0px",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]",
+     "desc": "5|header||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]",
+     "desc": "6|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]",
+     "desc": "7|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]",
+     "desc": "8|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/img[0]",
+     "desc": "9|img||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/span[1]",
+     "desc": "9|span||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/div[0]/div[2]",
+     "desc": "9|div||||||Ministério da Pesca e Aquicultura",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[0]/slot[1]",
+     "desc": "8|slot|||||headerAction|",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]",
+     "desc": "7|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]",
+     "desc": "8|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "9|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]",
+     "desc": "10|slot|||||headerMenu|",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]/button[0]",
+     "desc": "11|button|navigation|Menu||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[0]/slot[0]/button[0]/i[0]",
+     "desc": "12|i||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[1]",
+     "desc": "9|div||||||",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--surface-shadow-sm",
+     "caminho": "html/body[1]/pnip-root[0]/pnip-header[0]/br-header[0]/#shadow/header[1]/div[0]/div[1]/div[0]/div[1]/div[0]",
+     "desc": "10|div||||||Plataforma Nacional da Indústria do Pesc",
+     "a": "0 1px 6px rgba(0,0,0,0.16)",
+     "b": "0 2px 12px rgba(0, 0, 0, .3)",
+     "m": [
+      "R-01"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]",
+     "desc": "15|br-input|search||||search|",
+     "a": "class=\"ng-valid ng-touched ng-dirty\" density=\"small\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" value=\"\"",
+     "b": "class=\"ng-valid ng-touched ng-dirty\" density=\"small\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" style=\"--focus: var(--blue-warm-vivid-70);\" value=\"\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]",
+     "desc": "15|br-input|search||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]",
+     "desc": "16|div|||||search|",
+     "a": "class=\"br-input small ng-valid ng-touched ng-dirty\" name=\"search\"",
+     "b": "class=\"br-input small ng-valid ng-touched ng-dirty\" name=\"search\" style=\"--focus: var(--blue-warm-vivid-70);\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]",
+     "desc": "16|div|||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "class=\"ng-valid ng-touched ng-dirty\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" type=\"text\"",
+     "b": "class=\"ng-valid ng-touched ng-dirty\" id=\"search\" name=\"search\" placeholder=\"Pesquise aqui ...\" style=\"--focus: var(--blue-warm-vivid-70);\" type=\"text\"",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--focus",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/br-input[0]/#shadow/div[1]/input[0]",
+     "desc": "17|input|search||||search|",
+     "a": "#c2850c",
+     "b": "#1351b4",
+     "m": [
+      "R-03"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "aria-label=\"Buscar\" class=\"br-button\" style=\"margin-top: -38px;\" type=\"button\"",
+     "b": "aria-label=\"Buscar\" class=\"br-button\" style=\"--button-size: var(--button-medium); margin-top: -38px;\" type=\"button\"",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "block-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "height",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "inline-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "perspective-origin",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "16px 16px",
+     "b": "20px 20px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "transform",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "matrix(1, 0, 0, 1, 0, 4)",
+     "b": "matrix(1, 0, 0, 1, 0, 0)",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "transform-origin",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "16px 16px",
+     "b": "20px 20px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "width",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--button-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]",
+     "desc": "15|button||Buscar||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--button-size",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/div[2]/div[0]/div[1]/div[1]/pnip-search-table-utils[0]/div[0]/div[0]/div[0]/button[1]/i[0]",
+     "desc": "16|i||||||",
+     "a": "32px",
+     "b": "40px",
+     "m": [
+      "R-02"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item selected\" tabindex=\"-1\"",
+     "b": "class=\"br-item selected\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/input[0]",
+     "desc": "17|input|total0|||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/label[1]",
+     "desc": "17|label||||||10",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]/input[0]",
+     "desc": "17|input|total1|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[1]/div[0]/label[1]",
+     "desc": "17|label||||||25",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]/input[0]",
+     "desc": "17|input|total2|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[2]/div[0]/label[1]",
+     "desc": "17|label||||||50",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item\" tabindex=\"-1\"",
+     "b": "class=\"br-item\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]",
+     "desc": "15|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]/input[0]",
+     "desc": "17|input|total3|||||",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[0]/br-select-pnip[0]/div[0]/div[1]/div[3]/div[0]/label[1]",
+     "desc": "17|label||||||100",
+     "a": "0.16",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "dom",
+     "o": "atributos",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "class=\"br-item selected\" tabindex=\"-1\"",
+     "b": "class=\"br-item selected\" style=\"--hover: 0;\" tabindex=\"-1\"",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]",
+     "desc": "15|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]",
+     "desc": "16|div||||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/input[0]",
+     "desc": "17|input|page0|||||",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    },
+    {
+     "tipo": "estilo",
+     "prop": "--hover",
+     "caminho": "html/body[1]/pnip-root[0]/main[1]/pnip-mpa[1]/pnip-mpa-processos[1]/div[2]/govbr-custom-pagination[3]/div[0]/div[2]/nav[0]/div[4]/br-select-pnip[0]/div[0]/div[1]/div[0]/div[0]/label[1]",
+     "desc": "17|label||||||1",
+     "a": "0.3",
+     "b": "0",
+     "m": [
+      "M-10",
+      "R-04"
+     ]
+    }
+   ]
+  }
+ },
+ "resumo": {
+  "total": 398,
+  "semAtribuicao": 0
+ }
+}

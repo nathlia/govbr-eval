@@ -1,0 +1,1632 @@
+[preparar-vendor] ok: 20 @import reescritos → assets/mock/vendor/fontawesome-5.11.2/css/all.min.css
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+- Generating index html...
+6 rules skipped due to selector errors:
+  [data-toggle=dropdown]+* -> Cannot read properties of undefined (reading 'type')
+  .dropdown [data-toggle=dropdown-legacy]+* -> Cannot read properties of undefined (reading 'type')
+  .dropdown [data-toggle=dropdown]+* -> Cannot read properties of undefined (reading 'type')
+  .br-menu .menu-header .menu-title img+* -> Cannot read properties of undefined (reading 'type')
+  .br-table .top-bar .dropdown [data-toggle=dropdown-legacy]+* -> Cannot read properties of undefined (reading 'type')
+  .br-table .top-bar .dropdown [data-toggle=dropdown]+* -> Cannot read properties of undefined (reading 'type')
+✔ Index html generation complete.
+
+Initial Chunk Files           | Names                                                                                                   |  Raw Size | Estimated Transfer Size
+scripts.fc2a7d38df25b0e7.js   | scripts                                                                                                 |   2.12 MB |               210.87 kB
+main.988c8b55962d65fe.js      | main                                                                                                    |   1.12 MB |               239.91 kB
+styles.0756bc3ea9d8bc23.css   | styles                                                                                                  | 727.58 kB |                47.61 kB
+polyfills.bb260d31d7a6057d.js | polyfills                                                                                               |  33.11 kB |                10.67 kB
+runtime.650d718d4cdd9f8f.js   | runtime                                                                                                 |   4.69 kB |                 2.25 kB
+
+| Initial Total                                                                                           |   3.98 MB |               511.32 kB
+
+Lazy Chunk Files              | Names                                                                                                   |  Raw Size | Estimated Transfer Size
+8021.ecf492da7f20ed18.js      | shared-relatorio-relatorio-module                                                                       | 381.27 kB |                56.24 kB
+2478.61ef1a7ffdb24696.js      | pages-portal-mpa-mpa-module                                                                             | 308.52 kB |                80.31 kB
+1543.da233086adb68f1b.js      | propesc-vistorias-vistorias-propesc-module                                                              | 241.97 kB |                43.29 kB
+722.2dc30ed71a420857.js       | caol-solicitacao-solicitacao-certificacao-caol-module                                                   | 222.35 kB |                34.46 kB
+5560.7a1e06fdc92d85bd.js      | processos-processos-module                                                                              | 222.18 kB |                37.34 kB
+361.e5724023bdd7b019.js       | embarcacoes-embarcacoes-module                                                                          | 215.30 kB |                32.02 kB
+8276.a91e8cd7b2f00868.js      | pages-portal-admin-admin-module                                                                         |  82.71 kB |                22.09 kB
+9699.ea50271627cc7bf0.js      | iniciar-processo-iniciar-processo-module                                                                |  79.67 kB |                16.39 kB
+2143.699a0077ac1a9c10.js      | processos-processos-module                                                                              |  72.09 kB |                13.42 kB
+6914.8b3dd3339ae0535c.js      | caol-certificacao-caol-module                                                                           |  68.02 kB |                15.83 kB
+9491.cd505c64d9fdec75.js      | shared-embarcacoes-embarcacoes-module                                                                   |  64.64 kB |                13.46 kB
+586.642813a3920801b4.js       | uniao-europeia-solicitar-certificado-solicitar-certificado-uniao-europeia-module                        |  59.40 kB |                12.99 kB
+9180.5cb3a3286bd2c02f.js      | higienico-sanitario-solicitacao-solicitacao-certificacao-higienico-sanitario-module                     |  56.73 kB |                12.08 kB
+7915.51dfc966a010c720.js      | shared-habilitacao-tr-habilitacao-tr-module                                                             |  54.06 kB |                10.21 kB
+942.1b17153a6dc39ff4.js       | pages-portal-tr-tr-module                                                                               |  47.26 kB |                10.80 kB
+1094.608fa8431d5c6322.js      | pages-portal-mpa-mpa-module                                                                             |  44.52 kB |                 9.91 kB
+9706.d2a0c49ccd6fa0b0.js      | pac-pac-module                                                                                          |  44.17 kB |                 9.26 kB
+5229.6d5e3942fb2bfe5a.js      | shared-empresa-empresa-module                                                                           |  40.43 kB |                 9.58 kB
+4929.d4821a5c71a0c6c6.js      | entidade-classe-entidade-classe-module                                                                  |  35.68 kB |                 7.68 kB
+9489.ae5d55573ec83d69.js      | pages-portal-tr-tr-module                                                                               |  34.65 kB |                 6.88 kB
+5945.52cfc6c27d5ffe0e.js      | beneficiario-individual-beneficiario-module                                                             |  30.62 kB |                 6.97 kB
+2523.e69c9b8c4fddc791.js      | shared-relatorio-relatorio-module                                                                       |  30.04 kB |                 7.39 kB
+1045.0de982bdef1f93cb.js      | gerenciar-usuarios-gerenciar-usuarios-module                                                            |  25.21 kB |                 6.16 kB
+1822.7a095d27266ae076.js      | embarcacoes-embarcacoes-module                                                                          |  24.59 kB |                 6.25 kB
+3343.1aa3489875d01e80.js      | pages-portal-tr-tr-module                                                                               |  23.86 kB |                 6.35 kB
+2967.e373f91cf78ebfc2.js      | usuario-usuario-module                                                                                  |  22.56 kB |                 5.77 kB
+8446.c79ac9b9fd0fb86e.js      | shared-solicitar-cancelamento-certificado-higienico-sanitario-solicitar-cancelamento-certificado-module |  21.72 kB |                 5.28 kB
+1409.e386a649789dc844.js      | unidade-unidade-module                                                                                  |  21.54 kB |                 5.33 kB
+10.c8f744a1532cd9fb.js        | pages-portal-admin-admin-module                                                                         |  21.50 kB |                 5.51 kB
+7843.b3f8bb2f8b4b26ae.js      | pages-portal-tr-tr-module                                                                               |  20.92 kB |                 5.69 kB
+2912.e034a1c474632fd7.js      | shared-relatorio-relatorio-module                                                                       |  19.86 kB |                 4.70 kB
+common.34c564358d552135.js    | common                                                                                                  |  19.71 kB |                 5.70 kB
+9266.12ed835eff28f36f.js      | modulo-modulo-module                                                                                    |  19.58 kB |                 5.68 kB
+6729.1477e79df622c936.js      | shared-portos-portos-module                                                                             |  18.99 kB |                 4.71 kB
+1918.16355f73dd262e7c.js      | empresa-empresa-module                                                                                  |  18.48 kB |                 4.47 kB
+6651.548a4f7521d57f10.js      | processos-processos-module                                                                              |  17.72 kB |                 4.21 kB
+589.4046a73faee0160a.js       | pages-portal-admin-admin-module                                                                         |  17.21 kB |                 4.74 kB
+1750.cdf67816d38f1544.js      | embarcacoes-embarcacoes-module                                                                          |  17.15 kB |                 3.70 kB
+4343.9e17595cd869d191.js      | shared-produtos-produtos-module                                                                         |  15.57 kB |                 4.16 kB
+7133.6ca80d5373b3bef4.js      | principal-principal-module                                                                              |  15.44 kB |                 4.30 kB
+7114.3b1b47af7f39e46e.js      | pages-portal-tr-tr-module                                                                               |  15.18 kB |                 4.68 kB
+3195.8fc457ed674a235b.js      | shared-habilitacao-tr-habilitacao-tr-module                                                             |  14.97 kB |                 4.54 kB
+3314.1704c7eebcf9371a.js      | processos-processos-module                                                                              |  14.60 kB |                 3.54 kB
+7359.33b34d8738ed8f1c.js      | unidade-unidade-module                                                                                  |  14.47 kB |                 3.85 kB
+7804.4444e6c37ba81d3b.js      | shared-importador-importador-module                                                                     |  13.92 kB |                 4.43 kB
+3268.633e62ef1cf45276.js      | shared-especies-especies-module                                                                         |  12.37 kB |                 3.41 kB
+3216.296100d9f6c22bab.js      | pages-portal-admin-admin-module                                                                         |  12.29 kB |                 3.56 kB
+3502.e9cb5d2c87d65d80.js      | gestao-gestao-module                                                                                    |  12.13 kB |                 3.86 kB
+1805.1f4d0881f335ce0e.js      | pages-portal-cidadao-cidadao-module                                                                     |  12.11 kB |                 3.49 kB
+4598.26ae7ee701837719.js      | pages-portal-mpa-mpa-module                                                                             |  11.66 kB |                 3.48 kB
+6775.2424c5df33619c51.js      | shared-relatorio-relatorio-module                                                                       |  11.51 kB |                 3.47 kB
+2121.f682f03b8b44e4e2.js      | integracoes-integracoes-module                                                                          |  10.30 kB |                 2.56 kB
+9385.2cf257b5a9f8b4b9.js      | exportar-hs-exportar-hs-module                                                                          |   9.36 kB |                 3.12 kB
+3981.bdab889a078b5296.js      | pais-importador-pais-importador-module                                                                  |   9.22 kB |                 2.97 kB
+2777.805629175d4fe18b.js      | qliks-qlik-module                                                                                       |   9.04 kB |                 2.94 kB
+6026.4f54edee2baba25a.js      | tipo-processamento-tipo-processamento-module                                                            |   8.83 kB |                 2.72 kB
+9919.690cf63aec8664c1.js      | principal-principal-module                                                                              |   8.42 kB |                 2.90 kB
+2400.3dd8360f90a3fc8f.js      | embalagem-embalagem-module                                                                              |   7.87 kB |                 2.63 kB
+6567.a9300109ff21d0d5.js      | portal-mpa-propesc-vistorias-vistorias-propesc-module                                                   |   7.01 kB |                 2.68 kB
+9513.8d4b04d9a65b24e3.js      | shared-relatorio-relatorio-module                                                                       |   6.90 kB |                 1.75 kB
+5562.0125050667e67450.js      | certificacao-certificacao-module                                                                        |   6.47 kB |                 2.15 kB
+3265.78cd3ec05d7abfc5.js      | qlik-qlik-module                                                                                        |   5.54 kB |                 1.99 kB
+8253.a242a9f02d1e6e91.js      | propesc-vistorias-vistorias-propesc-module                                                              |   5.25 kB |                 2.12 kB
+4270.0f1a4d2abc0c455b.js      | principal-principal-module                                                                              |   4.14 kB |                 1.66 kB
+2434.4e314791f479f08e.js      | principal-principal-module                                                                              |   4.09 kB |                 1.63 kB
+247.3c4c235809e492d6.js       | unidade-unidade-module                                                                                  |   4.05 kB |                 1.21 kB
+8827.a9ac97f65d0a71b4.js      | logs-emails-logs-emails-module                                                                          |   3.78 kB |                 1.52 kB
+2416.2d64befe7a6bfbe8.js      | shared-relatorio-relatorio-module                                                                       |   3.71 kB |                 1.05 kB
+375.e54462808ab48b5a.js       | iniciar-processo-iniciar-processo-module                                                                |   3.71 kB |                 1.44 kB
+4664.75a82b44813d09ad.js      | certificacao-solicitar-certificacao-module                                                              |   3.47 kB |                 1.46 kB
+4573.216ce9394d45a24c.js      | principal-principal-module                                                                              |   3.29 kB |                 1.34 kB
+4952.010dbe4230f21cc2.js      | shared-subvencao-oleo-diesel-subvencao-oleo-diesel-module                                               |   2.83 kB |                 1.18 kB
+9324.78f68d3dd97b1857.js      | shared-relatorio-relatorio-module                                                                       |   2.18 kB |               734 bytes
+9930.9a5ac9e67974ec4e.js      | shared-empresa-empresa-module                                                                           |   1.96 kB |               871 bytes
+1237.d403d80baa391aa2.js      | pages-portal-emp-emp-module                                                                             |   1.86 kB |               656 bytes
+8793.7d63e74f77abc155.js      | shared-embarcacoes-embarcacoes-module                                                                   |   1.86 kB |               625 bytes
+681.f8d1cd3596ebbcb7.js       | shared-solicitar-cancelamento-certificado-higienico-sanitario-solicitar-cancelamento-certificado-module |   1.50 kB |               532 bytes
+1846.d86951ba7b65377e.js      | shared-dados-pessoais-dados-pessoais-module                                                             | 621 bytes |               299 bytes
+299.c747945d4d5cd299.js       | shared-especies-especies-module                                                                         | 428 bytes |               287 bytes
+5659.07f411351be1548f.js      | shared-extracao-sisrgp-extracao-sisrgp-module                                                           | 428 bytes |               277 bytes
+
+Build at: 2026-11-26T21:57:52.872Z - Hash: 170a2b8d073a826b - Time: 206284ms
+
+Warning: src/app/pages/portal-cidadao/processos/higienico-sanitario/higienico-sanitario.component.html:44:20 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+44             {{dto?.status == StatusSolicitacao.INDEFERIDA? 'Indeferimento': 'Certificado'}}
+                      ~~~~~~
+
+  src/app/pages/portal-cidadao/processos/higienico-sanitario/higienico-sanitario.component.ts:18:17
+    18    templateUrl: "./higienico-sanitario.component.html",
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component HigienicoSanitarioComponent.
+
+
+Warning: src/app/pages/portal-cidadao/processos/solicitacao-alteracao/solicitacao-alteracao.component.html:9:63 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+9             Alteração de Certificado {{ solicitacaoAlteracao?.protocolo }}
+                                                                ~~~~~~~~~
+
+  src/app/pages/portal-cidadao/processos/solicitacao-alteracao/solicitacao-alteracao.component.ts:15:17
+    15    templateUrl: './solicitacao-alteracao.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SolicitacaoAlteracaoComponent.
+
+
+Warning: src/app/pages/portal-cidadao/processos/solicitacao-alteracao/solicitacao-alteracao.component.html:32:50 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+32          <td>{{ solicitacaoAlteracao.embarcacao?.nome }}</td>
+                                                    ~~~~
+
+  src/app/pages/portal-cidadao/processos/solicitacao-alteracao/solicitacao-alteracao.component.ts:15:17
+    15    templateUrl: './solicitacao-alteracao.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SolicitacaoAlteracaoComponent.
+
+
+Warning: src/app/pages/portal-cidadao/processos/solicitacao-alteracao/solicitacao-alteracao.component.html:55:89 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+55          <br-input label="Nome da embarcação" [value]="solicitacaoAlteracao.embarcacao?.nome" [attr.disabled]="true"></br-input>
+                                                                                           ~~~~
+
+  src/app/pages/portal-cidadao/processos/solicitacao-alteracao/solicitacao-alteracao.component.ts:15:17
+    15    templateUrl: './solicitacao-alteracao.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SolicitacaoAlteracaoComponent.
+
+
+Warning: src/app/pages/portal-cidadao/processos/solicitacao-alteracao/solicitacao-alteracao.component.html:58:74 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+58          <br-input label="TIE" [value]="solicitacaoAlteracao.embarcacao?.numTie" [attr.disabled]="true"></br-input>
+                                                                            ~~~~~~
+
+  src/app/pages/portal-cidadao/processos/solicitacao-alteracao/solicitacao-alteracao.component.ts:15:17
+    15    templateUrl: './solicitacao-alteracao.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SolicitacaoAlteracaoComponent.
+
+
+Warning: src/app/pages/portal-cidadao/processos/solicitacao-alteracao/solicitacao-alteracao.component.html:61:75 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+61          <br-input label="RAEP" [value]="solicitacaoAlteracao.embarcacao?.numRaep" [attr.disabled]="true"></br-input>
+                                                                             ~~~~~~~
+
+  src/app/pages/portal-cidadao/processos/solicitacao-alteracao/solicitacao-alteracao.component.ts:15:17
+    15    templateUrl: './solicitacao-alteracao.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SolicitacaoAlteracaoComponent.
+
+
+Warning: src/app/pages/portal-cidadao/processos/solicitacao-alteracao/solicitacao-alteracao.component.html:64:73 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+64          <br-input label="UF" [value]="solicitacaoAlteracao.embarcacao?.uf" [attr.disabled]="true"></br-input>
+                                                                           ~~
+
+  src/app/pages/portal-cidadao/processos/solicitacao-alteracao/solicitacao-alteracao.component.ts:15:17
+    15    templateUrl: './solicitacao-alteracao.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SolicitacaoAlteracaoComponent.
+
+
+Warning: src/app/pages/portal-emp/certificacao/caol/detalhes/detalhes-certificacao-caol.component.html:12:38 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+12             <div class="mt-1">{{dto?.observacao}}</div>
+                                        ~~~~~~~~~~
+
+  src/app/pages/portal-emp/certificacao/caol/detalhes/detalhes-certificacao-caol.component.ts:28:17
+    28    templateUrl: './detalhes-certificacao-caol.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesCertificacaoCaolComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/certificacao-caol/processo-certificacao-caol.component.html:26:87 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+26             Parecer técnico salvo por <strong>{{dto.tecnicoAdministrativoResponsavel?.nome || ''}}</strong>.  Se necessário,
+                                                                                         ~~~~
+
+  src/app/pages/portal-mpa/processos/certificacao-caol/processo-certificacao-caol.component.ts:40:17
+    40    templateUrl: './processo-certificacao-caol.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ProcessoCertificacaoCaolComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/solicitacao-alteracao-higienico-sanitario/solicitacao-alteracao.component.html:9:63 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+9             Alteração de Certificado {{ solicitacaoAlteracao?.protocolo }}
+                                                                ~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/solicitacao-alteracao-higienico-sanitario/solicitacao-alteracao.component.ts:18:16
+    18   templateUrl: './solicitacao-alteracao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SolicitacaoAlteracaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/solicitacao-alteracao-higienico-sanitario/solicitacao-alteracao.component.html:36:50 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+36          <td>{{ solicitacaoAlteracao.embarcacao?.nome }}</td>
+                                                    ~~~~
+
+  src/app/pages/portal-mpa/processos/solicitacao-alteracao-higienico-sanitario/solicitacao-alteracao.component.ts:18:16
+    18   templateUrl: './solicitacao-alteracao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SolicitacaoAlteracaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/solicitacao-alteracao-higienico-sanitario/solicitacao-alteracao.component.html:73:105 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+73       <div class="col-5"><br-input label="Nome da embarcação" [value]="solicitacaoAlteracao.embarcacao?.nome" [attr.disabled]="true"></br-input></div>
+                                                                                                           ~~~~
+
+  src/app/pages/portal-mpa/processos/solicitacao-alteracao-higienico-sanitario/solicitacao-alteracao.component.ts:18:16
+    18   templateUrl: './solicitacao-alteracao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SolicitacaoAlteracaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/solicitacao-alteracao-higienico-sanitario/solicitacao-alteracao.component.html:75:74 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+75          <br-input label="TIE" [value]="solicitacaoAlteracao.embarcacao?.numTie" [attr.disabled]="true"></br-input>
+                                                                            ~~~~~~
+
+  src/app/pages/portal-mpa/processos/solicitacao-alteracao-higienico-sanitario/solicitacao-alteracao.component.ts:18:16
+    18   templateUrl: './solicitacao-alteracao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SolicitacaoAlteracaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/solicitacao-alteracao-higienico-sanitario/solicitacao-alteracao.component.html:78:75 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+78          <br-input label="RAEP" [value]="solicitacaoAlteracao.embarcacao?.numRaep" [attr.disabled]="true"></br-input>
+                                                                             ~~~~~~~
+
+  src/app/pages/portal-mpa/processos/solicitacao-alteracao-higienico-sanitario/solicitacao-alteracao.component.ts:18:16
+    18   templateUrl: './solicitacao-alteracao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SolicitacaoAlteracaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/solicitacao-alteracao-higienico-sanitario/solicitacao-alteracao.component.html:81:73 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+81          <br-input label="UF" [value]="solicitacaoAlteracao.embarcacao?.uf" [attr.disabled]="true"></br-input>
+                                                                           ~~
+
+  src/app/pages/portal-mpa/processos/solicitacao-alteracao-higienico-sanitario/solicitacao-alteracao.component.ts:18:16
+    18   templateUrl: './solicitacao-alteracao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SolicitacaoAlteracaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/solicitacao-uniao-europeia.component.html:10:87 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+10                [html]="'Verificação de Conformidade agendada para ' + formatDate(dto?.prazoNovaVistoria!) + '.'" [status]="'success'">
+                                                                                         ~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/solicitacao-uniao-europeia.component.ts:34:17
+    34    templateUrl: './solicitacao-uniao-europeia.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SolicitacaoUniaoEuropeiaComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/solicitacao-uniao-europeia.component.html:405:80 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+405             <pnip-ue-revisao-vistoria-shared [uuid]="uuid" [vistoriaDTO]="dto?.vistoriaDTO!"/>
+                                                                                   ~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/solicitacao-uniao-europeia.component.ts:34:17
+    34    templateUrl: './solicitacao-uniao-europeia.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SolicitacaoUniaoEuropeiaComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/vistoria.component.html:74:45 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+74                   [uuid]="preenchimentoDTO?.uuid!"
+                                               ~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/vistoria.component.ts:21:16
+    21   templateUrl: './vistoria.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component VistoriaComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/vistoria.component.html:75:52 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+75                   [vistoriaDTO]="preenchimentoDTO?.metadado!"
+                                                      ~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/vistoria.component.ts:21:16
+    21   templateUrl: './vistoria.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component VistoriaComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:32:110 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+32       <div class="col-6"><br-input label="Nome da embarcação" [attr.disabled]="true" [value]="embarcacaoDTO?.nome"/></div>
+                                                                                                                ~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:33:109 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+33       <div class="col-3"><br-input label="Código embarcação" [attr.disabled]="true" [value]="embarcacaoDTO?.numRaep"/></div>
+                                                                                                               ~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:34:107 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+34       <div class="col-3"><br-input label="Código de frota" [attr.disabled]="true" [value]="embarcacaoDTO?.codigoFrota"/></div>
+                                                                                                             ~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:37:112 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+37       <div class="col-2"><br-input label="Tempo médio de pesca" [attr.disabled]="true" [value]="embarcacaoDTO?.tempoMedioPesca"/></div>
+                                                                                                                  ~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:38:163 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+38       <div class="col"><br-input label="Capacidade total de armazenamento" appNumberMask class="ngxmask-br-input" [attr.disabled]="true" [value]="+embarcacaoDTO?.armazenamentoTotal!"/></div>
+                                                                                                                                                                     ~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:39:168 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+39       <div class="col"><br-input label="Capacidade de armazenamento do pescado" appNumberMask class="ngxmask-br-input" [attr.disabled]="true" [value]="+embarcacaoDTO?.armazenamentoPescado!"/></div>
+                                                                                                                                                                          ~~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:40:132 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+40       <div class="col"><br-input label="Tipo de conservação adotado para o pescado" [attr.disabled]="true" [value]="embarcacaoDTO?.tipoConservacao"/></div>
+                                                                                                                                      ~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:44:97 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+44       <div class="col-5"><br-input label="Nome completo" [attr.disabled]="true" [value]="trDTO?.usuario?.nome"></br-input></div>
+                                                                                                   ~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:45:92 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+45       <div class="col-2"><br-input label="Telefone" [attr.disabled]="true" [value]="trDTO?.usuario?.telefone"></br-input></div>
+                                                                                              ~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:46:90 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+46       <div class="col-5"><br-input label="E-mail" [attr.disabled]="true" [value]="trDTO?.usuario?.email"></br-input></div>
+                                                                                            ~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:49:87 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+49       <div class="col-2"><br-input label="CPF" [attr.disabled]="true" [value]="trDTO?.usuario?.cpf"></br-input></div>
+                                                                                         ~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:50:98 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+50       <div class="col-3"><br-input label="Nº Habilitação" [attr.disabled]="true" [value]="trDTO?.numHabilitacao"></br-input></div>
+                                                                                                    ~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:51:92 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+51       <div class="col-3"><br-input label="Formação" [attr.disabled]="true" [value]="trDTO?.formacao"></br-input></div>
+                                                                                              ~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:52:102 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+52       <div class="col-2"><br-input label="Conselho de classe" [attr.disabled]="true" [value]="trDTO?.conselhoClasse"></br-input></div>
+                                                                                                        ~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:53:93 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+53       <div class="col-2"><br-input label="UF/Região" [attr.disabled]="true" [value]="trDTO?.ufConselho"></br-input></div>
+                                                                                               ~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:57:103 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+57       <div class="col"><br-input label="Nome completo" [attr.disabled]="true" [value]="embarcacaoDTO?.nomeRepresentante || embarcacaoDTO?.nomeProprietarioResponsavel"/></div>
+                                                                                                         ~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:57:139 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+57       <div class="col"><br-input label="Nome completo" [attr.disabled]="true" [value]="embarcacaoDTO?.nomeRepresentante || embarcacaoDTO?.nomeProprietarioResponsavel"/></div>
+                                                                                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:58:93 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+58       <div class="col"><br-input label="CPF" [attr.disabled]="true" [value]="embarcacaoDTO?.cpfRepresentante || embarcacaoDTO?.cpfResponsavel"/></div>
+                                                                                               ~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:58:128 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+58       <div class="col"><br-input label="CPF" [attr.disabled]="true" [value]="embarcacaoDTO?.cpfRepresentante || embarcacaoDTO?.cpfResponsavel"/></div>
+                                                                                                                                  ~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:59:96 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+59       <div class="col"><br-input label="E-mail" [attr.disabled]="true" [value]="embarcacaoDTO?.emailRepresentante || embarcacaoDTO?.emailProprietario"/></div>
+                                                                                                  ~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.html:59:133 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+59       <div class="col"><br-input label="E-mail" [attr.disabled]="true" [value]="embarcacaoDTO?.emailRepresentante || embarcacaoDTO?.emailProprietario"/></div>
+                                                                                                                                       ~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/1-dados-verificacao-conformidade/dados-verificacao-conformidade.component.ts:18:17
+    18    templateUrl: './dados-verificacao-conformidade.component.html'
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosVerificacaoConformidadeComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/2-requisitos-gerais/requisitos-gerais.component.html:3:113 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+3       <div class="col-7"><br-input label="Nome da embarcação" [attr.disabled]="true" [value]="preenchimentoDTO?.metadado?.embarcacaoDTO?.nome"/></div>
+                                                                                                                  ~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/2-requisitos-gerais/requisitos-gerais.component.ts:10:16
+    10   templateUrl: './requisitos-gerais.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RequisitosGeraisComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/2-requisitos-gerais/requisitos-gerais.component.html:4:110 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+4       <div class="col"><br-input label="Código embarcação" [attr.disabled]="true" [value]="preenchimentoDTO?.metadado?.embarcacaoDTO?.numRaep"/></div>
+                                                                                                               ~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/2-requisitos-gerais/requisitos-gerais.component.ts:10:16
+    10   templateUrl: './requisitos-gerais.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RequisitosGeraisComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/2-requisitos-gerais/requisitos-gerais.component.html:5:108 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+5       <div class="col"><br-input label="Código de frota" [attr.disabled]="true" [value]="preenchimentoDTO?.metadado?.embarcacaoDTO?.codigoFrota"/></div>
+                                                                                                             ~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/2-requisitos-gerais/requisitos-gerais.component.ts:10:16
+    10   templateUrl: './requisitos-gerais.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RequisitosGeraisComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/2-requisitos-gerais/requisitos-gerais.component.html:10:35 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+10          [dto]="preenchimentoDTO?.metadado?.requisitosGerais!"
+                                     ~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/2-requisitos-gerais/requisitos-gerais.component.ts:10:16
+    10   templateUrl: './requisitos-gerais.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RequisitosGeraisComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/3-equipamentos-conserva-pescado/equipamentos-conserva-pescado.component.html:5:35 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+5          [dto]="preenchimentoDTO?.metadado?.equipamentosConservarPescado!"
+                                    ~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/3-equipamentos-conserva-pescado/equipamentos-conserva-pescado.component.ts:10:16
+    10   templateUrl: './equipamentos-conserva-pescado.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component EquipamentosConservaPescadoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/4-requisitos-praticas-higiene/requisitos-praticas-higiene.component.html:5:35 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+5          [dto]="preenchimentoDTO?.metadado?.requisitosPraticasHigiene!"
+                                    ~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/4-requisitos-praticas-higiene/requisitos-praticas-higiene.component.ts:10:16
+    10   templateUrl: './requisitos-praticas-higiene.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RequisitosPraticasHigieneComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/5-requisitos-agua-abastecimento/requisitos-agua-abastecimento.component.html:5:35 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+5          [dto]="preenchimentoDTO?.metadado?.requisitosAguaAbastecimento!"
+                                    ~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/5-requisitos-agua-abastecimento/requisitos-agua-abastecimento.component.ts:10:16
+    10   templateUrl: './requisitos-agua-abastecimento.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RequisitosAguaAbastecimentoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/6-avaliacao-organoleptica/avaliacao-organoleptica.component.html:5:35 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+5          [dto]="preenchimentoDTO?.metadado?.requisitosAvaliacaoOrganoleptica!"
+                                    ~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/6-avaliacao-organoleptica/avaliacao-organoleptica.component.ts:14:16
+    14   templateUrl: './avaliacao-organoleptica.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AvaliacaoOrganolepticaComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/6-avaliacao-organoleptica/grupos-pescado/grupos-pescado-avaliacao-organoleptica.component.html:13:42 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+13                   [optionSelected]="dto?.especies"
+                                            ~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/6-avaliacao-organoleptica/grupos-pescado/grupos-pescado-avaliacao-organoleptica.component.ts:10:17
+    10    templateUrl: './grupos-pescado-avaliacao-organoleptica.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GruposPescadoAvaliacaoOrganolepticaComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:21:92 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+21          <br-input label="Nome da embarcação" [attr.disabled]="true" [value]="vistoriaDTO?.embarcacaoDTO?.nome"/>
+                                                                                              ~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:24:91 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+24          <br-input label="Código embarcação" [attr.disabled]="true" [value]="vistoriaDTO?.embarcacaoDTO?.numRaep"/>
+                                                                                             ~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:27:89 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+27          <br-input label="Código de frota" [attr.disabled]="true" [value]="vistoriaDTO?.embarcacaoDTO?.codigoFrota"/>
+                                                                                           ~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:32:94 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+32          <br-input label="Tempo médio de pesca" [attr.disabled]="true" [value]="vistoriaDTO?.embarcacaoDTO?.tempoMedioPesca"/>
+                                                                                                ~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:35:122 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+35          <br-input label="Capacidade total de armazenamento" appNumberMask [attr.disabled]="true" [value]="+vistoriaDTO?.embarcacaoDTO?.armazenamentoTotal!"/>
+                                                                                                                            ~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:38:127 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+38          <br-input label="Capacidade de armazenamento do pescado" appNumberMask [attr.disabled]="true" [value]="+vistoriaDTO?.embarcacaoDTO?.armazenamentoPescado!"/>
+                                                                                                                                 ~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:41:116 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+41          <br-input label="Tipo de conservação adotado para o pescado" [attr.disabled]="true" [value]="vistoriaDTO?.embarcacaoDTO?.tipoConservacao"/>
+                                                                                                                      ~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:46:103 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+46       <div class="col-5"><br-input label="Nome completo" [attr.disabled]="true" [value]="vistoriaDTO?.trDTO?.usuario?.nome"></br-input></div>
+                                                                                                         ~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:47:98 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+47       <div class="col-2"><br-input label="Telefone" [attr.disabled]="true" [value]="vistoriaDTO?.trDTO?.usuario?.telefone"></br-input></div>
+                                                                                                    ~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:48:96 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+48       <div class="col-5"><br-input label="E-mail" [attr.disabled]="true" [value]="vistoriaDTO?.trDTO?.usuario?.email"></br-input></div>
+                                                                                                  ~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:51:93 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+51       <div class="col-2"><br-input label="CPF" [attr.disabled]="true" [value]="vistoriaDTO?.trDTO?.usuario?.cpf"></br-input></div>
+                                                                                               ~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:52:104 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+52       <div class="col-3"><br-input label="Nº Habilitação" [attr.disabled]="true" [value]="vistoriaDTO?.trDTO?.numHabilitacao"></br-input></div>
+                                                                                                          ~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:53:98 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+53       <div class="col-3"><br-input label="Formação" [attr.disabled]="true" [value]="vistoriaDTO?.trDTO?.formacao"></br-input></div>
+                                                                                                    ~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:54:108 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+54       <div class="col-2"><br-input label="Conselho de classe" [attr.disabled]="true" [value]="vistoriaDTO?.trDTO?.conselhoClasse"></br-input></div>
+                                                                                                              ~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:55:99 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+55       <div class="col-2"><br-input label="UF/Região" [attr.disabled]="true" [value]="vistoriaDTO?.trDTO?.ufConselho"></br-input></div>
+                                                                                                     ~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:62:38 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+62                [value]="vistoriaDTO?.embarcacaoDTO?.nomeProprietarioResponsavel || vistoriaDTO?.embarcacaoDTO?.nomeRepresentante"/>
+                                        ~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:62:97 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+62                [value]="vistoriaDTO?.embarcacaoDTO?.nomeProprietarioResponsavel || vistoriaDTO?.embarcacaoDTO?.nomeRepresentante"/>
+                                                                                                   ~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:66:38 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+66                [value]="vistoriaDTO?.embarcacaoDTO?.cpfResponsavel || vistoriaDTO?.embarcacaoDTO?.cpfRepresentante"/>
+                                        ~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:66:84 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+66                [value]="vistoriaDTO?.embarcacaoDTO?.cpfResponsavel || vistoriaDTO?.embarcacaoDTO?.cpfRepresentante"/>
+                                                                                      ~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:70:38 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+70                [value]="vistoriaDTO?.embarcacaoDTO?.emailProprietario || vistoriaDTO?.embarcacaoDTO?.emailRepresentante"/>
+                                        ~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.html:70:87 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+70                [value]="vistoriaDTO?.embarcacaoDTO?.emailProprietario || vistoriaDTO?.embarcacaoDTO?.emailRepresentante"/>
+                                                                                         ~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/processos/uniao-europeia/solicitacao-uniao-europeia/vistoria/7-revisao/revisao.component.ts:14:16
+    14   templateUrl: './revisao.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/agendar/agendar-vistoria-propesc.component.html:50:39 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+50                   <td>{{ vistoriaDTO?.vistoriaNotificacao?.dataHoraVisto | date: 'dd/MM/yyyy' }}</td>
+                                         ~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/agendar/agendar-vistoria-propesc.component.ts:30:16
+    30   templateUrl: './agendar-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AgendarVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/agendar/agendar-vistoria-propesc.component.html:51:39 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+51                   <td>{{ vistoriaDTO?.vistoriaNotificacao?.dataHoraVisto | date: 'HH:mm:ss' }}</td>
+                                         ~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/agendar/agendar-vistoria-propesc.component.ts:30:16
+    30   templateUrl: './agendar-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AgendarVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/agendar/agendar-vistoria-propesc.component.html:62:39 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+62                   <td>{{ vistoriaDTO?.vistoriaNotificacao?.dataHoraDownloadBoleto | date: 'dd/MM/yyyy' }}</td>
+                                         ~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/agendar/agendar-vistoria-propesc.component.ts:30:16
+    30   templateUrl: './agendar-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AgendarVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/agendar/agendar-vistoria-propesc.component.html:63:39 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+63                   <td>{{ vistoriaDTO?.vistoriaNotificacao?.dataHoraDownloadBoleto | date: 'HH:mm:ss' }}</td>
+                                         ~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/agendar/agendar-vistoria-propesc.component.ts:30:16
+    30   templateUrl: './agendar-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AgendarVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/agendar/agendar-vistoria-propesc.component.html:87:41 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+87                      <td>{{vistoriaDTO?.dataHoraInicio | date :'dd/MM/yyyy'}}</td>
+                                           ~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/agendar/agendar-vistoria-propesc.component.ts:30:16
+    30   templateUrl: './agendar-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AgendarVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/agendar/agendar-vistoria-propesc.component.html:88:41 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+88                      <td>{{vistoriaDTO?.solicitante?.nome}}</td>
+                                           ~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/agendar/agendar-vistoria-propesc.component.ts:30:16
+    30   templateUrl: './agendar-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AgendarVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/agendar/agendar-vistoria-propesc.component.html:89:41 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+89                      <td>{{vistoriaDTO?.vistoriador?.nome}}</td>
+                                           ~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/agendar/agendar-vistoria-propesc.component.ts:30:16
+    30   templateUrl: './agendar-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AgendarVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/agendar/agendar-vistoria-propesc.component.html:90:80 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+90                      <td><pnip-status-solicitacao-utils [status]="vistoriaDTO?.status!"/></td>
+                                                                                  ~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/agendar/agendar-vistoria-propesc.component.ts:30:16
+    30   templateUrl: './agendar-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AgendarVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:13:83 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+13          <br-input density="small" label="Data da vistoria" [value]="vistoriaDTO?.dataHoraInicio | date: 'dd/MM/yyyy'" [attr.disabled]="true"/>
+                                                                                     ~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:16:83 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+16          <br-input density="small" label="Hora da vistoria" [value]="vistoriaDTO?.dataHoraConclusao | date: 'HH:mm'" [attr.disabled]="true"/>
+                                                                                     ~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:19:119 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+19          <br-input density="small" label="Protocolo SEI" [(ngModel)]="vistoriaDTO.protocoloSei" [value]="vistoriaDTO?.protocoloSei" [attr.disabled]="true"/>
+                                                                                                                         ~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:24:87 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+24          <br-input density="small" label="Porto de desembarque" [value]="vistoriaDTO?.portoDesembarque" [attr.disabled]="true"/>
+                                                                                         ~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:27:87 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+27          <br-input density="small" label="Endereço" [title]="getEndereco(vistoriaDTO?.enderecoDesembarque!)" [value]="getEndereco(vistoriaDTO?.enderecoDesembarque!)" [attr.disabled]="true"/>
+                                                                                         ~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:27:144 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+27          <br-input density="small" label="Endereço" [title]="getEndereco(vistoriaDTO?.enderecoDesembarque!)" [value]="getEndereco(vistoriaDTO?.enderecoDesembarque!)" [attr.disabled]="true"/>
+                                                                                                                                                  ~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:30:73 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+30          <br-input density="small" label="Cidade" [value]="vistoriaDTO?.enderecoDesembarque?.cidade" [attr.disabled]="true"/>
+                                                                           ~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:33:95 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+33          <br-input density="small" label="UF" [value]="PropescUtils.estadoParaUF(vistoriaDTO?.enderecoDesembarque?.uf)" [attr.disabled]="true"/>
+                                                                                                 ~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:41:85 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+41          <br-input density="small" label="Nome da embarcação" [value]="vistoriaDTO?.embarcacao?.nome" [attr.disabled]="true"/>
+                                                                                       ~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:44:70 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+44          <br-input density="small" label="TIE" [value]="vistoriaDTO?.embarcacao?.numTie" [attr.disabled]="true"/>
+                                                                        ~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:47:71 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+47          <br-input density="small" label="RAEP" [value]="vistoriaDTO?.embarcacao?.numRaep" [attr.disabled]="true"/>
+                                                                         ~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:50:80 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+50          <br-input density="small" label="Validade RAEP" [value]="vistoriaDTO?.embarcacao?.validadeRaep | date: 'dd/MM/yyyy'" [attr.disabled]="true"/>
+                                                                                  ~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:58:86 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+58          <br-input density="small" label="Nome do responsável" [value]="vistoriaDTO?.responsavelEmbarcacao?.nome" [attr.disabled]="true"/>
+                                                                                        ~~~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:61:73 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+61          <br-input density="small" label="E-mail" [value]="vistoriaDTO?.responsavelEmbarcacao?.email" [attr.disabled]="true"/>
+                                                                           ~~~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:64:75 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+64          <br-input density="small" label="Telefone" [value]="vistoriaDTO?.responsavelEmbarcacao?.telefone" mask="(##) #-####-####" [attr.disabled]="true"/>
+                                                                             ~~~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:72:86 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+72          <br-input density="small" label="Nome do solicitante" [value]="vistoriaDTO?.solicitante?.nome" [attr.disabled]="true"/>
+                                                                                        ~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:75:73 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+75          <br-input density="small" label="E-mail" [value]="vistoriaDTO?.solicitante?.email" [attr.disabled]="true"/>
+                                                                           ~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:78:75 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+78          <br-input density="small" label="Telefone" [value]="vistoriaDTO?.solicitante?.telefone" mask="(##) #-####-####" [attr.disabled]="true"/>
+                                                                             ~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:86:86 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+86          <br-input density="small" label="Nome do vistoriador" [value]="vistoriaDTO?.vistoriador?.nome" [attr.disabled]="true"/>
+                                                                                        ~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:90:38 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+90                [value]="vistoriaDTO?.vistoriador?.numConselhoClasse"/>
+                                        ~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.html:93:73 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+93          <br-input density="small" label="E-mail" [value]="vistoriaDTO?.vistoriador?.email" [attr.disabled]="true"/>
+                                                                           ~~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/detalhes/detalhes-vistoria-propesc.component.ts:13:16
+    13   templateUrl: './detalhes-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/editar-dados-vistoria/editar-dados-vistoria-propesc.component.html:202:48 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+202                         <strong>{{ novoBoleto?.name || 'boleto.pdf' }}</strong>
+                                                   ~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/editar-dados-vistoria/editar-dados-vistoria-propesc.component.ts:25:17
+    25    templateUrl: './editar-dados-vistoria-propesc.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component EditarDadosVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/editar-preenchimento/editar-preenchimento-vistoria-propesc.component.html:8:85 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+8          <br-input density="small" label="Nome da embarcação" [value]="vistoriaDTO?.embarcacao?.nome" [attr.disabled]="true"/>
+                                                                                      ~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/editar-preenchimento/editar-preenchimento-vistoria-propesc.component.ts:22:16
+    22   templateUrl: './editar-preenchimento-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component EditarPreenchimentoVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/editar-preenchimento/editar-preenchimento-vistoria-propesc.component.html:11:70 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+11          <br-input density="small" label="TIE" [value]="vistoriaDTO?.embarcacao?.numTie" [attr.disabled]="true"/>
+                                                                        ~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/editar-preenchimento/editar-preenchimento-vistoria-propesc.component.ts:22:16
+    22   templateUrl: './editar-preenchimento-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component EditarPreenchimentoVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/editar-preenchimento/editar-preenchimento-vistoria-propesc.component.html:14:71 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+14          <br-input density="small" label="RAEP" [value]="vistoriaDTO?.embarcacao?.numRaep" [attr.disabled]="true"/>
+                                                                         ~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/editar-preenchimento/editar-preenchimento-vistoria-propesc.component.ts:22:16
+    22   templateUrl: './editar-preenchimento-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component EditarPreenchimentoVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-mpa/propesc/vistorias/editar-preenchimento/editar-preenchimento-vistoria-propesc.component.html:17:80 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+17          <br-input density="small" label="Validade RAEP" [value]="vistoriaDTO?.embarcacao?.validadeRaep | date: 'dd/MM/yyyy'" [attr.disabled]="true"/>
+                                                                                  ~~~~~~~~~~
+
+  src/app/pages/portal-mpa/propesc/vistorias/editar-preenchimento/editar-preenchimento-vistoria-propesc.component.ts:22:16
+    22   templateUrl: './editar-preenchimento-vistoria-propesc.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component EditarPreenchimentoVistoriaPropescComponent.
+
+
+Warning: src/app/pages/portal-tr/certificacao/alteracao-certificado/detalhes/detalhes-alteracao-certificado.component.html:9:63 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+9             Alteração de Certificado {{ solicitacaoAlteracao?.protocolo }}
+                                                                ~~~~~~~~~
+
+  src/app/pages/portal-tr/certificacao/alteracao-certificado/detalhes/detalhes-alteracao-certificado.component.ts:13:16
+    13   templateUrl: './detalhes-alteracao-certificado.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesAlteracaoCertificadoComponent.
+
+
+Warning: src/app/pages/portal-tr/certificacao/alteracao-certificado/detalhes/detalhes-alteracao-certificado.component.html:32:50 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+32          <td>{{ solicitacaoAlteracao.embarcacao?.nome }}</td>
+                                                    ~~~~
+
+  src/app/pages/portal-tr/certificacao/alteracao-certificado/detalhes/detalhes-alteracao-certificado.component.ts:13:16
+    13   templateUrl: './detalhes-alteracao-certificado.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesAlteracaoCertificadoComponent.
+
+
+Warning: src/app/pages/portal-tr/certificacao/alteracao-certificado/detalhes/detalhes-alteracao-certificado.component.html:52:89 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+52          <br-input label="Nome da embarcação" [value]="solicitacaoAlteracao.embarcacao?.nome" [attr.disabled]="true"></br-input>
+                                                                                           ~~~~
+
+  src/app/pages/portal-tr/certificacao/alteracao-certificado/detalhes/detalhes-alteracao-certificado.component.ts:13:16
+    13   templateUrl: './detalhes-alteracao-certificado.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesAlteracaoCertificadoComponent.
+
+
+Warning: src/app/pages/portal-tr/certificacao/alteracao-certificado/detalhes/detalhes-alteracao-certificado.component.html:55:74 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+55          <br-input label="TIE" [value]="solicitacaoAlteracao.embarcacao?.numTie" [attr.disabled]="true"></br-input>
+                                                                            ~~~~~~
+
+  src/app/pages/portal-tr/certificacao/alteracao-certificado/detalhes/detalhes-alteracao-certificado.component.ts:13:16
+    13   templateUrl: './detalhes-alteracao-certificado.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesAlteracaoCertificadoComponent.
+
+
+Warning: src/app/pages/portal-tr/certificacao/alteracao-certificado/detalhes/detalhes-alteracao-certificado.component.html:58:75 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+58          <br-input label="RAEP" [value]="solicitacaoAlteracao.embarcacao?.numRaep" [attr.disabled]="true"></br-input>
+                                                                             ~~~~~~~
+
+  src/app/pages/portal-tr/certificacao/alteracao-certificado/detalhes/detalhes-alteracao-certificado.component.ts:13:16
+    13   templateUrl: './detalhes-alteracao-certificado.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesAlteracaoCertificadoComponent.
+
+
+Warning: src/app/pages/portal-tr/certificacao/alteracao-certificado/detalhes/detalhes-alteracao-certificado.component.html:61:73 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+61          <br-input label="UF" [value]="solicitacaoAlteracao.embarcacao?.uf" [attr.disabled]="true"></br-input>
+                                                                           ~~
+
+  src/app/pages/portal-tr/certificacao/alteracao-certificado/detalhes/detalhes-alteracao-certificado.component.ts:13:16
+    13   templateUrl: './detalhes-alteracao-certificado.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesAlteracaoCertificadoComponent.
+
+
+Warning: src/app/pages/portal-tr/certificacao/higienico-sanitario/detalhes/detalhes-certificacao-higienico-sanitario.component.html:44:23 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+44                {{dto?.status == StatusSolicitacao.INDEFERIDA? 'Indeferimento': 'Certificado'}}
+                         ~~~~~~
+
+  src/app/pages/portal-tr/certificacao/higienico-sanitario/detalhes/detalhes-certificacao-higienico-sanitario.component.ts:19:17
+    19    templateUrl: './detalhes-certificacao-higienico-sanitario.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DetalhesCertificacaoHigienicoSanitarioComponent.
+
+
+Warning: src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/3-dados-da-embarcacao/dados-da-embarcacao.component.html:16:54 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+16       <br-input label="Número Marinha" [value]="dto?.numTie" [attr.disabled]="true"/>
+                                                        ~~~~~~
+
+  src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/3-dados-da-embarcacao/dados-da-embarcacao.component.ts:11:17
+    11    templateUrl: './dados-da-embarcacao.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosDaEmbarcacaoComponent.
+
+
+Warning: src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/3-dados-da-embarcacao/dados-da-embarcacao.component.html:19:44 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+19       <br-input label="RAEP" [value]="dto?.numRaep" [attr.disabled]="true"/>
+                                              ~~~~~~~
+
+  src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/3-dados-da-embarcacao/dados-da-embarcacao.component.ts:11:17
+    11    templateUrl: './dados-da-embarcacao.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosDaEmbarcacaoComponent.
+
+
+Warning: src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/3-dados-da-embarcacao/dados-da-embarcacao.component.html:22:55 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+22       <br-input label="Código de frota" [value]="dto?.codigoFrota" [attr.disabled]="true"/>
+                                                         ~~~~~~~~~~~
+
+  src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/3-dados-da-embarcacao/dados-da-embarcacao.component.ts:11:17
+    11    templateUrl: './dados-da-embarcacao.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosDaEmbarcacaoComponent.
+
+
+Warning: src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.html:9:54 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+9       <br-input label="Número Marinha" [value]="dto?.numTie" [attr.disabled]="true"/>
+                                                       ~~~~~~
+
+  src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.ts:12:17
+    12    templateUrl: './dados-complementares.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosComplementaresComponent.
+
+
+Warning: src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.html:12:44 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+12       <br-input label="RAEP" [value]="dto?.numRaep" [attr.disabled]="true"/>
+                                              ~~~~~~~
+
+  src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.ts:12:17
+    12    templateUrl: './dados-complementares.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosComplementaresComponent.
+
+
+Warning: src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.html:15:55 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+15       <br-input label="Código de frota" [value]="dto?.codigoFrota" [attr.disabled]="true"/>
+                                                         ~~~~~~~~~~~
+
+  src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.ts:12:17
+    12    templateUrl: './dados-complementares.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosComplementaresComponent.
+
+
+Warning: src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.html:23:59 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+23       <br-input label="Armazenamento total" [value]="dto?.armazenamentoTotal | number: '1.0-0' : 'pt-BR'"
+                                                             ~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.ts:12:17
+    12    templateUrl: './dados-complementares.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosComplementaresComponent.
+
+
+Warning: src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.html:27:64 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+27       <br-input label="Armazenamento de pescado" [value]="dto?.armazenamentoPescado | number: '1.0-0' : 'pt-BR'"
+                                                                  ~~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.ts:12:17
+    12    templateUrl: './dados-complementares.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosComplementaresComponent.
+
+
+Warning: src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.html:31:59 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+31       <br-input label="Tipo de conservação" [value]="dto?.tipoConservacao" [attr.disabled]="true"/>
+                                                             ~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.ts:12:17
+    12    templateUrl: './dados-complementares.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosComplementaresComponent.
+
+
+Warning: src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.html:34:53 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+34       <br-input label="Nº sanitários" [value]="dto?.qtdSanitarios" [attr.disabled]="true"/>
+                                                       ~~~~~~~~~~~~~
+
+  src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.ts:12:17
+    12    templateUrl: './dados-complementares.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosComplementaresComponent.
+
+
+Warning: src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.html:42:60 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+42       <br-input label="Tempo médio de pesca" [value]="dto?.tempoMedioPesca" [attr.disabled]="true"/>
+                                                              ~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.ts:12:17
+    12    templateUrl: './dados-complementares.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosComplementaresComponent.
+
+
+Warning: src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.html:45:58 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+45       <br-input label="Mercado de atuação" [value]="dto?.mercadoAtuacao" [attr.disabled]="true"/>
+                                                            ~~~~~~~~~~~~~~
+
+  src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/4-dados-complementares/dados-complementares.component.ts:12:17
+    12    templateUrl: './dados-complementares.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DadosComplementaresComponent.
+
+
+Warning: src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/5-revisar-solicitacao/revisar-solicitacao.component.html:11:57 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+11          <br-input label="Número Marinha" [value]="dto?.numTie" [attr.disabled]="true"/>
+                                                           ~~~~~~
+
+  src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/5-revisar-solicitacao/revisar-solicitacao.component.ts:13:17
+    13    templateUrl: './revisar-solicitacao.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisarSolicitacaoComponent.
+
+
+Warning: src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/5-revisar-solicitacao/revisar-solicitacao.component.html:14:47 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+14          <br-input label="RAEP" [value]="dto?.numRaep" [attr.disabled]="true"/>
+                                                 ~~~~~~~
+
+  src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/5-revisar-solicitacao/revisar-solicitacao.component.ts:13:17
+    13    templateUrl: './revisar-solicitacao.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisarSolicitacaoComponent.
+
+
+Warning: src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/5-revisar-solicitacao/revisar-solicitacao.component.html:17:58 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+17          <br-input label="Código de frota" [value]="dto?.codigoFrota" [attr.disabled]="true"/>
+                                                            ~~~~~~~~~~~
+
+  src/app/pages/portal-tr/embarcacoes/vincular-embarcacao/embarcacao-certificada/5-revisar-solicitacao/revisar-solicitacao.component.ts:13:17
+    13    templateUrl: './revisar-solicitacao.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisarSolicitacaoComponent.
+
+
+Warning: src/app/pages/portal-tr/iniciar-processo/alterar-dados-embarcacao/solicitacao/2-editar-dados-certificado/editar-dados-certificado.component.html:153:90 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+153             <br-input density="small" label="CPF do responsável" [value]="formatCpf(dto?.cpfResponsavelEmbarcacao)"
+                                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-tr/iniciar-processo/alterar-dados-embarcacao/solicitacao/2-editar-dados-certificado/editar-dados-certificado.component.ts:23:16
+    23   templateUrl: './editar-dados-certificado.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component EditarDadosCertificadoComponent.
+
+
+Warning: src/app/pages/portal-tr/iniciar-processo/alterar-dados-embarcacao/solicitacao/2-editar-dados-certificado/editar-dados-certificado.component.html:161:77 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+161                <br-input density="small" label="Razão social" [value]="dto?.razaoSocialRepresentante"
+                                                                                ~~~~~~~~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-tr/iniciar-processo/alterar-dados-embarcacao/solicitacao/2-editar-dados-certificado/editar-dados-certificado.component.ts:23:16
+    23   templateUrl: './editar-dados-certificado.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component EditarDadosCertificadoComponent.
+
+
+Warning: src/app/pages/portal-tr/iniciar-processo/alterar-dados-embarcacao/solicitacao/2-editar-dados-certificado/editar-dados-certificado.component.html:165:69 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+165                <br-input density="small" label="CNPJ" [value]="dto?.cnpjRepresentante"
+                                                                        ~~~~~~~~~~~~~~~~~
+
+  src/app/pages/portal-tr/iniciar-processo/alterar-dados-embarcacao/solicitacao/2-editar-dados-certificado/editar-dados-certificado.component.ts:23:16
+    23   templateUrl: './editar-dados-certificado.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component EditarDadosCertificadoComponent.
+
+
+Warning: src/app/shared/conversa-onboard/conversa-onboarding.component.html:10:34 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+10       <h3>{{ steps[currentStep]?.title }}</h3>
+                                    ~~~~~
+
+  src/app/shared/conversa-onboard/conversa-onboarding.component.ts:13:16
+    13   templateUrl: './conversa-onboarding.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ConversaOnboardingComponent.
+
+
+Warning: src/app/shared/conversa-onboard/conversa-onboarding.component.html:11:33 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+11       <p>{{ steps[currentStep]?.description }}</p>
+                                   ~~~~~~~~~~~
+
+  src/app/shared/conversa-onboard/conversa-onboarding.component.ts:13:16
+    13   templateUrl: './conversa-onboarding.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ConversaOnboardingComponent.
+
+
+Warning: src/app/shared/embarcacoes/timeline-embarcacao/timeline-embarcacao.component.html:9:41 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be safely removed.
+
+9                <span>Dados Históricos{{ timeline?.[0]?.nomeEmbarcacao ? ' - ' + timeline[0].nomeEmbarcacao : '' }}</span>
+                                          ~~~~~~~~~~~~~
+
+  src/app/shared/embarcacoes/timeline-embarcacao/timeline-embarcacao.component.ts:10:17
+    10    templateUrl: './timeline-embarcacao.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component TimelineEmbarcacaoComponent.
+
+
+Warning: src/app/shared/historico-documentos/historico-documentos.component.html:17:41 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+17         <td>{{despacho.usuarioAcaoNome?.toUpperCase()}}</td>
+                                           ~~~~~~~~~~~
+
+  src/app/shared/historico-documentos/historico-documentos.component.ts:23:17
+    23    templateUrl: './historico-documentos.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component HistoricoDocumentosComponent.
+
+
+Warning: src/app/shared/historico-documentos/historico-documentos.component.html:20:107 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+20           {{despacho.kind == 'INCLUSAO' ? getDescription(despacho.codigoDescricao) : despacho.tramitacao?.statusTramitacao?.descricao}}
+                                                                                                             ~~~~~~~~~~~~~~~~
+
+  src/app/shared/historico-documentos/historico-documentos.component.ts:23:17
+    23    templateUrl: './historico-documentos.component.html',
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component HistoricoDocumentosComponent.
+
+
+Warning: src/app/shared/pnip-filter-panel/pnip-filter-panel.component.html:58:66 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+58       <button style="margin-top: -5px;"  [disabled]="!(selected?.length || buttonEnabled)"  class="br-button secondary" (click)="reset()">Limpar Filtro</button>
+                                                                    ~~~~~~
+
+  src/app/shared/pnip-filter-panel/pnip-filter-panel.component.ts:6:16
+    6   templateUrl: './pnip-filter-panel.component.html',
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FilterPanelComponent.
+
+
+Warning: src/app/shared/revisao-vistoria-ue/revisao-vistoria-ue.component.html:204:38 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+204                [value]="vistoriaDTO?.qtdTotalNaoConformidades" />
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~
+
+  src/app/shared/revisao-vistoria-ue/revisao-vistoria-ue.component.ts:21:16
+    21   templateUrl: './revisao-vistoria-ue.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoVistoriaUeComponent.
+
+
+Warning: src/app/shared/revisao-vistoria-ue/revisao-vistoria-ue.component.html:211:38 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.
+
+211                [value]="vistoriaDTO?.qtdTotalNaoConformidadesCriticas"
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  src/app/shared/revisao-vistoria-ue/revisao-vistoria-ue.component.ts:21:16
+    21   templateUrl: './revisao-vistoria-ue.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RevisaoVistoriaUeComponent.
+
+
+Warning: src/app/shared/visualizador-slides/visualizador-slides.component.html:66:36 - warning NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be safely removed.
+
+66    Você está no arquivo <strong>{{ slides?.[idxSlide]?.nome || 'Sem anexos' }}</strong>
+                                      ~~~~~~~~~~~~~~~~~~
+
+  src/app/shared/visualizador-slides/visualizador-slides.component.ts:26:16
+    26   templateUrl: './visualizador-slides.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component VisualizadorSlidesComponent.
+
+
+Warning: F:/Dev Nath/TCC/.tmp-eval/pnip-mock-f2/src/app/shared/conversa/conversa.component.css exceeded maximum budget. Budget 5.00 kB was not met by 2.84 kB with a total of 7.84 kB.
+
+
+[build-mock] saída em dist/pnip-f2/  (sirva com: node mock-tools/servir.mjs)

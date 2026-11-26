@@ -1,0 +1,281 @@
+{
+ "titulo": "Auditoria de afirmações sobre uma página (processos do portal MPA, aplicação PNIP em modo mock)",
+ "pagina": {
+  "arvore": "F:/Dev Nath/TCC/.tmp-eval/corpus-tela-f2/public/pnip-f2/",
+  "rota": "/pnip-f2/portal-mpa/processos?mock-perfil=mpa",
+  "endereco": "http://127.0.0.1:3320/pnip-f2/portal-mpa/processos?mock-perfil=mpa",
+  "comoServir": "já servida em http://127.0.0.1:3320 (servidor estático deixado de pé); se não responder: node servir.mjs \"F:/Dev Nath/TCC/.tmp-eval/corpus-tela-f2/public/pnip-f2\" 3320 (este pacote) e abrir http://127.0.0.1:3320/pnip-f2/portal-mpa/processos?mock-perfil=mpa",
+  "janela": "1280×900, Chromium, fuso America/Sao_Paulo; recarregar a página volta ao estado inicial"
+ },
+ "tarefa": [
+  "Para cada afirmação, alcance o estado indicado em `comoChegar`, ache o elemento (`elemento` é um seletor CSS; `>>>` entra no shadow root do hospedeiro) e verifique, medindo na página (estilo computado, caixas, texto, DOM), se a página mostra exatamente o que `aPaginaMostra` diz.",
+  "Responda por afirmação, em `respostas.json` (formato em LEIA.md): `veredicto` = `verdadeira` (a página mostra isso), `falsa` (a página não mostra isso) ou `indecidivel` (a frase não permite decidir pela página: diga o que falta); `violaClausula` = `sim` | `nao` | `nao-se-aplica` (se verdadeira: o que a página mostra contraria o trecho citado da documentação?); `clausulaConfere` = `sim` | `nao` (o trecho existe literalmente no arquivo citado); `juizDecide` = `sim` | `nao` (um juiz que só tem a página e esta frase consegue decidir, sem ambiguidade de elemento, estado ou fato?); `medida` = o que você mediu; `nota` = o que mais importar.",
+  "A `norma` e a `documentacao` dizem de onde vem a expectativa; confira o trecho no arquivo, mas o veredicto é sobre a página. Não use nenhuma ferramenta de validação automática (validadores de design system, axe ou similares) nem nenhum servidor MCP: só o navegador e a documentação."
+ ],
+ "afirmacoes": [
+  {
+   "id": "A-01",
+   "comoChegar": "carregar a rota; clicar na tag de filtro \"Aberto há\" (barra de filtros acima da tabela), esperar a lista de opções e escolher \"Últimos 60 dias\"",
+   "elemento": "pnip-multiple-search-table-utils div.row.pl-2:not(.align-items-center) span.br-tag.interaction > button",
+   "aPaginaMostra": "Na tag do filtro escolhido (acima da barra de filtros), o botão de remover (×) é um botão nativo do navegador — fundo cinza rgb(240, 240, 240), borda outset de 2 px, cantos retos, cerca de 40×30 px — sem a classe `br-button`, e não um botão circular azul.",
+   "norma": "O Button exige a classe `br-button` no contêiner do componente.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/button__desenvolvedor.md",
+    "trecho": "| class    | string | **br-button** | Container do componente. |"
+   }
+  },
+  {
+   "id": "A-02",
+   "comoChegar": "carregar a rota, rolar até o fim da página e passar o mouse sobre o botão \"Voltar\"",
+   "elemento": "pnip-mpa-processos br-button[label=\"Voltar\"]",
+   "aPaginaMostra": "Com o mouse em cima, o botão secundário \"Voltar\" não muda: o overlay de hover do botão interno tem opacidade 0, enquanto o \"Exportar\", do mesmo tipo, escurece.",
+   "norma": "O estado hover sobre fundo claro aplica o overlay com --surface-opacity-xs.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/fundamentos-visuais/estados.md",
+    "trecho": "| background (Sobre um fundo Claro)  | opacity  | `--surface-opacity-xs` |"
+   }
+  },
+  {
+   "id": "A-03",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-multiple-search-table-utils br-button[label=\"Limpar filtros\"]",
+   "aPaginaMostra": "O botão \"Limpar filtros\", desabilitado, tem opacidade 1: fica igual a um botão habilitado, e só o cursor indica o estado.",
+   "norma": "No estado desabilitado, fundo e primeiro plano têm opacidade --surface-opacity-md.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/fundamentos-visuais/estados.md",
+    "trecho": "| background/foreground | opacity  | `--surface-opacity-md`  |"
+   }
+  },
+  {
+   "id": "A-04",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos table tbody td:nth-of-type(4)",
+   "aPaginaMostra": "O texto das células da coluna \"Tipo de Processo\" tem font-size 15px, valor fora da escala tipográfica (os degraus vizinhos são 14 px e 16,8 px).",
+   "norma": "O texto das linhas da Table usa --font-size-scale-base.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/table__designer.md",
+    "trecho": "| Linhas           | `--font-size-scale-base`  | `--font-weight-medium`    |"
+   }
+  },
+  {
+   "id": "A-05",
+   "comoChegar": "carregar a rota; clicar no campo do seletor \"Exibir\" da paginação (no rodapé da tabela) e esperar a lista de opções abrir",
+   "elemento": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip div.br-list",
+   "aPaginaMostra": "A lista de opções do seletor \"Exibir\", aberta, tem sombra rgba(0, 0, 0, 0.16) 0 6px 6px (deslocamento vertical de 6 px).",
+   "norma": "A superfície do Select usa --surface-shadow-md (0 3px 6px).",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/select__designer.md",
+    "trecho": "| Superfície | `--surface-shadow-md` |"
+   }
+  },
+  {
+   "id": "A-06",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos table thead",
+   "aPaginaMostra": "A tabela de processos não tem linha de cabeçalho: as colunas não têm títulos (nenhum th com texto).",
+   "norma": "O header da tabela é elemento obrigatório.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/table__designer.md",
+    "trecho": "O *header* da tabela é um elemento obrigatório, pois descreve o tipo de conteúdo exibido em cada coluna."
+   }
+  },
+  {
+   "id": "A-07",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos br-button[label=Exportar] >>> button",
+   "aPaginaMostra": "O rótulo e a borda do botão secundário \"Exportar\" estão em rgb(0, 94, 162) (#005ea2), não no azul de interação #1351b4.",
+   "norma": "O ícone e o rótulo do Button de ênfase secundária usam --blue-warm-vivid-70.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/button__designer.md",
+    "trecho": "| Ícone, Rótulo (Secundária)                |    text color    | `--blue-warm-vivid-70` |     -     |"
+   }
+  },
+  {
+   "id": "A-08",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-multiple-search-table-utils div.row.align-items-center span.br-tag",
+   "aPaginaMostra": "Os rótulos das tags de filtro \"Tipo de processo\" e \"Status\" têm font-size 15px, menores que o da tag \"Aberto há\" (16,8 px).",
+   "norma": "O label da Tag de interação usa --font-size-scale-up-01.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/tag__designer.md",
+    "trecho": "| Label | size        | `--font-size-scale-up-01` |"
+   }
+  },
+  {
+   "id": "A-09",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos > br-divider >>> .br-divider",
+   "aPaginaMostra": "A linha do Divider logo abaixo do breadcrumb tem cor rgb(214, 214, 214) (#d6d6d6).",
+   "norma": "O Divider sobre fundo claro usa --gray-20 (#ccc).",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/divider__designer.md",
+    "trecho": "| *Divider* (fundo claro)  | background | `--gray-20` |"
+   }
+  },
+  {
+   "id": "A-10",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "govbr-custom-pagination nav.br-pagination > ul",
+   "aPaginaMostra": "A paginação do rodapé não mostra nenhum identificador de página: entre as setas não aparece o número da página.",
+   "norma": "Os Identificadores de Páginas são elemento obrigatório da Pagination.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/pagination__designer.md",
+    "trecho": "| 2   | Identificadores de Páginas |   [Button](/ds/components/button?tab=designer)   | Obrigatório |"
+   }
+  },
+  {
+   "id": "A-11",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos table tbody br-button[disabled]",
+   "aPaginaMostra": "Os botões \"Desassociar processo do analista responsável\" desabilitados, na coluna de ações, têm opacidade 1, iguais ao habilitado da 1ª linha; o botão \"Limpar filtros\", também desabilitado, tem opacidade 0,45.",
+   "norma": "No estado desabilitado, fundo e primeiro plano têm opacidade --surface-opacity-md.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/fundamentos-visuais/estados.md",
+    "trecho": "| background/foreground | opacity  | `--surface-opacity-md`  |"
+   }
+  },
+  {
+   "id": "A-12",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos br-tab >>> button",
+   "aPaginaMostra": "Os rótulos das três abas (\"Aguardando análise\", \"Tramitando\", \"Concluídos\") têm font-size 16,8 px.",
+   "norma": "O rótulo da Tab usa --font-size-scale-up-02 (20,16 px) com --font-weight-medium.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/tab__designer.md",
+    "trecho": "| Rótulo da *Tab*       | `--font-size-scale-up-02` | `--font-weight-medium`    |"
+   }
+  },
+  {
+   "id": "A-13",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos br-button[label=Exportar] >>> button",
+   "aPaginaMostra": "O rótulo do botão \"Exportar\" tem font-size 14px, um degrau abaixo do previsto para o rótulo do Button.",
+   "norma": "O rótulo do Button padrão usa --font-size-scale-up-01 com --font-weight-semi-bold.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/button__designer.md",
+    "trecho": "| Rótulo (Padrão) | `--font-size-scale-up-01` | `--font-weight-semi-bold` |     `none`     |"
+   }
+  },
+  {
+   "id": "A-14",
+   "comoChegar": "carregar a rota; clicar no campo do seletor \"Exibir\" da paginação (no rodapé da tabela) e esperar a lista de opções abrir",
+   "elemento": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip .br-list .br-item.selected",
+   "aPaginaMostra": "Na lista do seletor \"Exibir\" aberta, nenhum item aparece selecionado: o \"10\", valor atual do campo, tem o mesmo fundo branco dos demais itens.",
+   "norma": "O fundo do estado Selecionado é --blue-warm-vivid-50.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/fundamentos-visuais/estados.md",
+    "trecho": "| background/foreground | color    | `--blue-warm-vivid-50` |"
+   }
+  },
+  {
+   "id": "A-15",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos h2",
+   "aPaginaMostra": "O título da página, h2 \"Processos\", tem font-size 32px (2rem).",
+   "norma": "O título H2 usa --font-size-scale-up-05 (34,832 px nesta janela).",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/fundamentos-visuais/tipografia.md",
+    "trecho": "| Size          | `--font-size-scale-up-05` |"
+   }
+  },
+  {
+   "id": "A-16",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-header .br-avatar > span",
+   "aPaginaMostra": "O avatar de letra do cabeçalho (\"U\") é um retângulo laranja estreito (cerca de 18×40 px, cantos retos) com a letra encostada, e não um círculo; o conteúdo interno do avatar não tem a classe `content`.",
+   "norma": "No Avatar, a classe `content` é propriedade obrigatória do conteúdo interno.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/avatar__desenvolvedor.md",
+    "trecho": "| class    | string | **content**   | Aplicado no conteúdo interno. Pode conter imagem, ícone ou letra. |"
+   }
+  },
+  {
+   "id": "A-17",
+   "comoChegar": "carregar a rota e passar o mouse sobre o botão \"Exportar\" (topo da página, ao lado do título)",
+   "elemento": "pnip-mpa-processos br-button[label=Exportar] >>> button",
+   "aPaginaMostra": "Com o mouse em cima, o botão secundário \"Exportar\" não muda: o overlay de hover do botão interno tem opacidade 0.",
+   "norma": "O estado hover sobre fundo claro aplica o overlay com --surface-opacity-xs.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/fundamentos-visuais/estados.md",
+    "trecho": "| background (Sobre um fundo Claro)  | opacity  | `--surface-opacity-xs` |"
+   }
+  },
+  {
+   "id": "A-18",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "govbr-custom-pagination nav.br-pagination > ul",
+   "aPaginaMostra": "Na paginação do rodapé da tabela só existe a seta \"Página seguinte\" (botão circular à direita do número da página); a seta \"Página anterior\" não existe, e o número \"1\" fica sem seta antes dele.",
+   "norma": "A Pagination tem duas setas de navegação obrigatórias, um botão para a esquerda e outro para a direita.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/pagination__designer.md",
+    "trecho": "Constituem um *Botão* para esquerda e outro para direita. A cada clique, o usuário poderá navegar página por página de forma crescente ou decrescente (direita / esquerda)."
+   }
+  },
+  {
+   "id": "A-19",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos div.tab-panel > div.col > div.row:first-of-type span.br-tag.interaction > span.text-truncate",
+   "aPaginaMostra": "O rótulo da tag de interação \"Meus processos\" tem font-size 15px, menor que o das tags de filtro da mesma barra (16,8 px).",
+   "norma": "O label da Tag de interação usa --font-size-scale-up-01.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/tag__designer.md",
+    "trecho": "| Label | size        | `--font-size-scale-up-01` |"
+   }
+  },
+  {
+   "id": "A-20",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos br-tab >>> li.tab-item:first-child",
+   "aPaginaMostra": "A aba \"Aguardando análise\" aparece como aba ativa, mas o conteúdo exibido é o da aba \"Tramitando\" (tag \"Meus processos\", colunas Analista e Téc. Adm.).",
+   "norma": "O item ativo da Tab mostra ao usuário em qual aba ele se encontra.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/tab__designer.md",
+    "trecho": "A - O Item da *Tab* Ativo tem a finalidade de mostrar ao usuário em qual aba ele se encontra."
+   }
+  },
+  {
+   "id": "A-21",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos table tbody td:nth-of-type(4)",
+   "aPaginaMostra": "O texto das células da coluna \"Tipo de Processo\" está em rgb(85, 85, 85) (#555555), cinza que não é cor da paleta.",
+   "norma": "Interfaces digitais do governo usam sempre as cores pré-definidas da paleta.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/fundamentos-visuais/cores.md",
+    "trecho": "Interfaces digitais do governo devem utilizar sempre as cores pré-definidas. Havendo a necessidade de acrescentar uma nova cor à paleta do DS, faz-se necessário que a cor seja testada do ponto de vista de acessibilidade e passe por uma prévia aprovação da equipe de design do DS."
+   }
+  },
+  {
+   "id": "A-22",
+   "comoChegar": "carregar a rota; clicar na tag de filtro \"Aberto há\" (barra de filtros acima da tabela) e esperar a lista de opções abrir",
+   "elemento": "pnip-multiple-search-table-utils div.br-select > div.br-list",
+   "aPaginaMostra": "A lista de opções do filtro \"Aberto há\", aberta, tem sombra rgba(0, 0, 0, 0.16) 0 6px 6px (deslocamento vertical de 6 px).",
+   "norma": "A superfície do Select usa --surface-shadow-md (0 3px 6px).",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/select__designer.md",
+    "trecho": "| Superfície | `--surface-shadow-md` |"
+   }
+  },
+  {
+   "id": "A-23",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos br-breadcrumb >>> li.crumb.home i.fa-home",
+   "aPaginaMostra": "O ícone da casa do botão Home do breadcrumb está em rgb(0, 94, 162) (#005ea2), não no azul de interação #1351b4 usado pelo botão \"Exportar\".",
+   "norma": "O ícone do Botão Terciário Home do Breadcrumb usa --blue-warm-vivid-70.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/breadcrumb__designer.md",
+    "trecho": "| Botão Terciário Home     | icon       | `--blue-warm-vivid-70` |"
+   }
+  },
+  {
+   "id": "A-24",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos table tbody br-button[title=Assinar] >>> button",
+   "aPaginaMostra": "Os botões \"Assinar\" da coluna de ações não têm a classe `br-button`: aparecem como botões nativos do navegador (fundo cinza, borda outset, cantos retos).",
+   "norma": "O Button exige a classe `br-button` no contêiner do componente.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/button__desenvolvedor.md",
+    "trecho": "| class    | string | **br-button** | Container do componente. |"
+   }
+  }
+ ]
+}

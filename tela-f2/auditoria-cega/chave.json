@@ -1,0 +1,214 @@
+{
+ "_meta": {
+  "semente": "tela-f2/auditoria-cega 2026-11-26 (gravada antes de montar o pedido)",
+  "ordem": "sha256(semente|origem) crescente",
+  "pedidoSha256": "f2b13c9ab03df3a6cb2567534ec64cded1174938119afa6a3e6e4b98af7e5232",
+  "data": "2026-11-26",
+  "regra": "iscas escritas e medidas falsas na página semeada antes de qualquer resposta; nada da chave vai para pedido/",
+  "pagina": "http://127.0.0.1:3320"
+ },
+ "afirmacoes": [
+  {
+   "id": "A-01",
+   "origem": "F2-03",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-02",
+   "origem": "F2-12",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-03",
+   "origem": "I-10",
+   "tipo": "isca",
+   "medidaNaPagina": "0.45",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-04",
+   "origem": "I-04",
+   "tipo": "isca",
+   "medidaNaPagina": [
+    "14px",
+    "14px",
+    "14px",
+    "14px",
+    "14px",
+    "14px",
+    "14px",
+    "14px",
+    "14px"
+   ],
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-05",
+   "origem": "F2-09",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-06",
+   "origem": "I-02",
+   "tipo": "isca",
+   "medidaNaPagina": [
+    "Aberto há",
+    "Nº Processo",
+    "Tipo de Processo",
+    "Solicitante",
+    "Analista",
+    "Téc. Adm.",
+    "Status"
+   ],
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-07",
+   "origem": "I-07",
+   "tipo": "isca",
+   "medidaNaPagina": "rgb(19, 81, 180)/rgb(19, 81, 180)",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-08",
+   "origem": "I-05",
+   "tipo": "isca",
+   "medidaNaPagina": [
+    "Aberto há/16.8px",
+    "Tipo de processo/16.8px",
+    "Status/16.8px",
+    "Espécie alvo/16.8px",
+    "Método de pesca/16.8px",
+    "Petrecho/16.8px"
+   ],
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-09",
+   "origem": "F2-06",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-10",
+   "origem": "I-03",
+   "tipo": "isca",
+   "medidaNaPagina": [
+    "1/true"
+   ],
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-11",
+   "origem": "F2-10",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-12",
+   "origem": "F2-08",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-13",
+   "origem": "I-08",
+   "tipo": "isca",
+   "medidaNaPagina": "16.8px",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-14",
+   "origem": "I-11",
+   "tipo": "isca",
+   "medidaNaPagina": [
+    "10/rgb(38, 112, 232)",
+    "25/rgb(255, 255, 255)",
+    "50/rgb(255, 255, 255)",
+    "100/rgb(255, 255, 255)"
+   ],
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-15",
+   "origem": "F2-04",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-16",
+   "origem": "F2-02",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-17",
+   "origem": "I-12",
+   "tipo": "isca",
+   "medidaNaPagina": "linear-gradient(rgba(19, 81, 180, 0.16), rgba(19, 81, 180, 0.16))",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-18",
+   "origem": "F2-01",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-19",
+   "origem": "F2-05",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-20",
+   "origem": "F2-11",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-21",
+   "origem": "I-06",
+   "tipo": "isca",
+   "medidaNaPagina": [
+    "rgb(51, 51, 51)",
+    "rgb(51, 51, 51)",
+    "rgb(51, 51, 51)",
+    "rgb(51, 51, 51)",
+    "rgb(51, 51, 51)",
+    "rgb(51, 51, 51)",
+    "rgb(51, 51, 51)",
+    "rgb(51, 51, 51)",
+    "rgb(51, 51, 51)"
+   ],
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-22",
+   "origem": "I-09",
+   "tipo": "isca",
+   "medidaNaPagina": "rgba(0, 0, 0, 0.16) 0px 3px 6px 0px",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-23",
+   "origem": "F2-07",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-24",
+   "origem": "I-01",
+   "tipo": "isca",
+   "medidaNaPagina": [
+    "br-button middle/1680px",
+    "br-button middle/1680px",
+    "br-button middle/1680px"
+   ],
+   "esperado": "falsa"
+  }
+ ]
+}

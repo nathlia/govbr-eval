@@ -1,0 +1,299 @@
+{
+ "origem": "ground-truth-processos-f2.json, tela F2 (processos), referência 1.0.0 — só as specs a classificar",
+ "referenciaSha256": "d7ddb7179862ffb7ce9e59432fa72c64af6dd806daecdc9db3a11d8cce00adee",
+ "estados": [
+  {
+   "id": "inicial",
+   "note": "aba padrão \"Tramitando\" com \"Meus processos\" ligado — primeiro paint da lista paginada"
+  },
+  {
+   "id": "lista-exibir",
+   "note": "lista do seletor \"Exibir\" (itens por página) da paginação aberta — última parada do segmento 0"
+  },
+  {
+   "id": "filtro-escolhido",
+   "note": "segmento 2 (depois de ida e volta por navegação, a rota recomeça): filtro \"Aberto há\" aberto e a opção \"Últimos 60 dias\" escolhida — a tag do filtro escolhido aparece; a lista continua com as mesmas 9 linhas; última parada do segmento 2"
+  }
+ ],
+ "specs": [
+  {
+   "id": "F2-01",
+   "state": "inicial",
+   "anchor": "govbr-custom-pagination nav.br-pagination > ul",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-pagination-4323d08f3e2d",
+    "govbr-3.7.0-component-pagination-0a0e2ad9474e"
+   ],
+   "categories": [
+    "componente",
+    "estrutura"
+   ],
+   "description": "Paginação no rodapé da tabela: só existe a seta \"Página seguinte\" (botão circular à direita do número da página); a seta \"Página anterior\" não existe — a lista da paginação tem 2 itens, a página \"1\" e a seta seguinte, e a página fica encostada à esquerda, sem seta antes dela. A Pagination tem duas setas de navegação obrigatórias, um botão para a esquerda e outro para a direita."
+  },
+  {
+   "id": "F2-02",
+   "state": "inicial",
+   "anchor": "pnip-header .br-avatar > span",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-development-avatar-23d40d3d6ea4"
+   ],
+   "categories": [
+    "componente",
+    "estrutura"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "border-top-left-radius"
+    ],
+    "allowed": [
+     "50%"
+    ],
+    "note": "Superfície circular do Avatar (border-radius 50%, o que o core computa com a classe content no conteúdo interno)."
+   },
+   "description": "Avatar de letra no cabeçalho (\"U\"): o conteúdo interno do avatar não tem a classe `content` (o span tem só bg-orange-vivid-30 e text-pure-0). Sem ela, o avatar vira um retângulo laranja estreito (cerca de 18×40 px, border-radius 0, display block) com a letra encostada, em vez da superfície circular de 40×40 com a letra centralizada. No Avatar, a classe `content` é propriedade obrigatória do conteúdo interno."
+  },
+  {
+   "id": "F2-03",
+   "state": "filtro-escolhido",
+   "anchor": "pnip-multiple-search-table-utils div.row.pl-2:not(.align-items-center) span.br-tag.interaction > button",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-development-button-b77ff20ad216"
+   ],
+   "categories": [
+    "componente",
+    "estrutura"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "border-top-left-radius"
+    ],
+    "allowed": [
+     "50%"
+    ],
+    "note": "Button circular do DS (border-radius 50% com a classe br-button); o botão nativo mede 0px."
+   },
+   "description": "Tag do filtro escolhido (aparece depois de abrir um filtro e escolher uma opção, aqui \"Aberto há\" → \"Últimos 60 dias\"): o botão de remover (×) é um <button> sem a classe `br-button` (só `inverted circle`) e aparece como botão nativo do navegador — fundo cinza rgb(240, 240, 240), borda outset de 2 px, cantos retos, cerca de 40×30 px, ícone preto — em vez do botão circular azul de 28×28. O botão continua removendo o filtro. O Button exige a classe `br-button` no contêiner do componente."
+  },
+  {
+   "id": "F2-04",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos h2",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [],
+   "categories": [
+    "tipografia",
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "font-size"
+    ],
+    "allowed": [
+     "34.832px"
+    ],
+    "note": "--font-size-scale-up-05, o tamanho do título H2 (34,832 px nesta janela de 1280 px)."
+   },
+   "description": "Título da página, h2 \"Processos\": font-size 32px (2rem), valor fora da escala tipográfica (os degraus vizinhos são 29,036 px e 34,832 px). O título H2 usa --font-size-scale-up-05 (34,832 px nesta janela)."
+  },
+  {
+   "id": "F2-05",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos div.tab-panel > div.col > div.row:first-of-type span.br-tag.interaction > span.text-truncate",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-tag-4daf30055f40"
+   ],
+   "categories": [
+    "tipografia",
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "font-size"
+    ],
+    "allowed": [
+     "16.8px"
+    ],
+    "note": "--font-size-scale-up-01 (16,8 px), o tamanho do label da Tag de interação; as tags de filtro da mesma barra medem 16.8px."
+   },
+   "description": "Tag de interação \"Meus processos\": o rótulo tem font-size 15px, menor que o das tags de filtro da mesma barra (16,8 px) e fora da escala tipográfica (os degraus vizinhos são 14 px e 16,8 px). O label da Tag de interação usa --font-size-scale-up-01."
+  },
+  {
+   "id": "F2-06",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos > br-divider >>> .br-divider",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-divider-a199ae1e328c"
+   ],
+   "categories": [
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "border-top-color"
+    ],
+    "allowed": [
+     "rgb(204, 204, 204)"
+    ],
+    "note": "--gray-20 (#ccc), a cor do Divider sobre fundo claro."
+   },
+   "description": "Divider logo abaixo do breadcrumb: a linha (2 px) tem cor rgb(214, 214, 214) (#d6d6d6), que não é cor da paleta (os cinzas vizinhos são #e6e6e6 e #ccc). O Divider sobre fundo claro usa --gray-20 (#ccc)."
+  },
+  {
+   "id": "F2-07",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos br-breadcrumb >>> li.crumb.home i.fa-home",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-breadcrumb-7c8bed7156ec"
+   ],
+   "categories": [
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "color"
+    ],
+    "allowed": [
+     "rgb(19, 81, 180)"
+    ],
+    "note": "--blue-warm-vivid-70 (#1351b4), a cor do ícone do Botão Terciário Home."
+   },
+   "description": "Breadcrumb, botão Home: o ícone da casa está em rgb(0, 94, 162) (#005ea2, --blue-vivid-60), outro azul da paleta, diferente do azul de interação usado pelos demais elementos interativos da página (#1351b4, o do botão \"Exportar\"). O ícone do Botão Terciário Home do Breadcrumb usa --blue-warm-vivid-70."
+  },
+  {
+   "id": "F2-08",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos br-tab >>> button",
+   "scope": "composicao",
+   "expectedCount": 1,
+   "participantCount": 3,
+   "rules": [
+    "govbr-3.7.0-component-tab-b717690fd662"
+   ],
+   "categories": [
+    "tipografia",
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "font-size"
+    ],
+    "allowed": [
+     "20.16px"
+    ],
+    "note": "--font-size-scale-up-02 (20,16 px), o tamanho do rótulo da Tab."
+   },
+   "description": "Rótulos das três abas (\"Aguardando análise\", \"Tramitando\", \"Concluídos\"): font-size 16,8 px (--font-size-scale-up-01, o tamanho do texto dos botões), um degrau abaixo do previsto; o peso continua medium. O rótulo da Tab usa --font-size-scale-up-02 (20,16 px) com --font-weight-medium. Um único estilo no componente define os três rótulos: uma unidade para o conjunto."
+  },
+  {
+   "id": "F2-09",
+   "state": "lista-exibir",
+   "anchor": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip div.br-list",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-select-bc89a8785c08"
+   ],
+   "categories": [
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "box-shadow"
+    ],
+    "allowed": [
+     "rgba(0, 0, 0, 0.16) 0px 3px 6px 0px"
+    ],
+    "note": "--surface-shadow-md (0 3px 6px, preto a 16%), a sombra da superfície do Select."
+   },
+   "description": "Lista do seletor \"Exibir\" da paginação, aberta: a superfície da lista tem sombra rgba(0, 0, 0, 0.16) 0 6px 6px (--surface-shadow-lg), mais deslocada para baixo que a prevista. A superfície do Select usa --surface-shadow-md (0 3px 6px)."
+  },
+  {
+   "id": "F2-10",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos table tbody br-button[disabled]",
+   "scope": "composicao",
+   "expectedCount": 1,
+   "participantCount": 8,
+   "rules": [],
+   "categories": [
+    "comportamento",
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "opacity"
+    ],
+    "allowed": [
+     "0.45"
+    ],
+    "note": "--surface-opacity-md (0,45), a opacidade do estado desabilitado; o \"Limpar filtros\" desabilitado, na mesma página, mede 0.45."
+   },
+   "description": "Botões \"Desassociar processo do analista responsável\" desabilitados na coluna de ações (8): opacidade 1, iguais ao habilitado da 1ª linha (ícone vermelho cheio); só o cursor not-allowed indica o estado. O botão \"Limpar filtros\", também desabilitado, tem opacidade 0,45. No estado desabilitado, fundo e primeiro plano têm opacidade --surface-opacity-md. Uma única regra define os oito: uma unidade para o conjunto."
+  },
+  {
+   "id": "F2-11",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos br-tab >>> li.tab-item:first-child",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-tab-50ac44341161"
+   ],
+   "categories": [
+    "comportamento"
+   ],
+   "acceptance": {
+    "kind": "classe-no-elemento",
+    "tag": "li",
+    "classe": "active",
+    "note": "O item \"Aguardando análise\" (1º item da Tab) carrega a marca de item ativo enquanto o conteúdo exibido é o da aba \"Tramitando\"."
+   },
+   "description": "Abas: o item \"Aguardando análise\" aparece como aba ativa (marca de item ativo, texto destacado), mas o conteúdo exibido é o da aba \"Tramitando\" (tag \"Meus processos\", colunas Analista e Téc. Adm., processos em tramitação); o item \"Tramitando\" aparece como inativo. O item ativo da Tab mostra ao usuário em qual aba ele se encontra."
+  },
+  {
+   "id": "F2-12",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos br-button[label=\"Voltar\"]",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [],
+   "categories": [
+    "comportamento",
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "--hover"
+    ],
+    "allowed": [
+     "0.16"
+    ],
+    "note": "--surface-opacity-xs (0,16), a opacidade do overlay de hover que o Button lê da custom property --hover; o \"Exportar\", do mesmo tipo, mede 0.16."
+   },
+   "description": "Botão secundário \"Voltar\", no fim da página: com o mouse em cima, o botão não muda — o overlay de hover tem opacidade 0 (background-image linear-gradient(rgba(19, 81, 180, 0), rgba(19, 81, 180, 0)) no botão interno) —, enquanto o \"Exportar\", do mesmo tipo, escurece (overlay com opacidade 0,16). O estado hover sobre fundo claro aplica o overlay com --surface-opacity-xs."
+  }
+ ]
+}

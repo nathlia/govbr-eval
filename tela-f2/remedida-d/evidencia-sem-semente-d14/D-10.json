@@ -1,0 +1,49 @@
+{
+ "id": "D-10",
+ "ancora": "pnip-mpa-processos > iframe",
+ "estado": "inicial",
+ "normas": [
+  "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+  "emag:4.4",
+  "wcag:2.4.7",
+  "govbr-3.7.0-accessibility-global-7e6420514860",
+  "emag:1.1",
+  "wcag:4.1.2"
+ ],
+ "medidas": {
+  "iframe": {
+   "src": null,
+   "title": null,
+   "name": null,
+   "aria": null,
+   "doc": {
+    "url": "about:blank",
+    "filhos": 0
+   },
+   "caixa": [
+    1160,
+    500
+   ],
+   "ax": {
+    "papel": "Iframe",
+    "nome": ""
+   }
+  },
+  "tabDepoisDoVoltar": [
+   "iframe",
+   "body",
+   "iframe",
+   "body",
+   "iframe"
+  ],
+  "focoNoIframe": {
+   "contorno": "none 3px rgb(51, 51, 51)",
+   "sombra": "none",
+   "focoVisivel": false
+  },
+  "shiftTabDoIframe": {
+   "tag": "button",
+   "texto": "Voltar"
+  }
+ }
+}

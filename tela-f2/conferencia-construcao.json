@@ -1,0 +1,249 @@
+{
+ "_meta": {
+  "data": "2026-11-26",
+  "regra": "cabeçalho de tela-f2/conferir-construcao.mjs; sem oráculo, sem axe, sem detector",
+  "referencia": {
+   "arquivo": "ground-truth-processos-f2.json",
+   "sha256": "d7ddb7179862ffb7ce9e59432fa72c64af6dd806daecdc9db3a11d8cce00adee",
+   "status": "rascunho"
+  },
+  "builds": {
+   "semeado": ".tmp-eval/pnip-f2-semeada (lista b113879f…; = govbr-corpus tela-f2 a7d6ccd public/pnip-f2)",
+   "semSemente": ".tmp-eval/pnip-f2-sem-semente (lista 1b44c9cc…)"
+  },
+  "contagens": {
+   "semeadas": 12,
+   "pegam": 12,
+   "naturaisComEvidenciaIgual": 13,
+   "naturais": 13,
+   "paresDaDComEvidenciaIgual": 12,
+   "paresDaD": 12
+  }
+ },
+ "semeadas": [
+  {
+   "spec": "F2-01",
+   "estado": "inicial",
+   "mudanca": "M-11",
+   "construtor": "passou",
+   "semSemente": "setas: Página anterior, Página seguinte",
+   "semeada": "setas: Página seguinte",
+   "pega": true,
+   "como": "sonda.json: botões circulares de seta em nav.br-pagination nos dois builds"
+  },
+  {
+   "spec": "F2-02",
+   "estado": "inicial",
+   "mudanca": "M-01",
+   "construtor": "passou",
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds"
+  },
+  {
+   "spec": "F2-03",
+   "estado": "filtro-escolhido",
+   "mudanca": "M-12",
+   "construtor": "passou",
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds"
+  },
+  {
+   "spec": "F2-04",
+   "estado": "inicial",
+   "mudanca": "M-04",
+   "construtor": "passou",
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds"
+  },
+  {
+   "spec": "F2-05",
+   "estado": "inicial",
+   "mudanca": "M-07",
+   "construtor": "passou",
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds"
+  },
+  {
+   "spec": "F2-06",
+   "estado": "inicial",
+   "mudanca": "M-03",
+   "construtor": "passou",
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds"
+  },
+  {
+   "spec": "F2-07",
+   "estado": "inicial",
+   "mudanca": "M-02",
+   "construtor": "passou",
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds"
+  },
+  {
+   "spec": "F2-08",
+   "estado": "inicial",
+   "mudanca": "M-05",
+   "construtor": "passou",
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds"
+  },
+  {
+   "spec": "F2-09",
+   "estado": "lista-exibir",
+   "mudanca": "M-10",
+   "construtor": "passou",
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds"
+  },
+  {
+   "spec": "F2-10",
+   "estado": "inicial",
+   "mudanca": "M-09",
+   "construtor": "passou",
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds"
+  },
+  {
+   "spec": "F2-11",
+   "estado": "inicial",
+   "mudanca": "M-06",
+   "construtor": "passou",
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds"
+  },
+  {
+   "spec": "F2-12",
+   "estado": "inicial",
+   "mudanca": "M-08",
+   "construtor": "passou",
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds"
+  }
+ ],
+ "naturais": [
+  {
+   "spec": "D-01",
+   "igual": true
+  },
+  {
+   "spec": "D-02",
+   "igual": true
+  },
+  {
+   "spec": "D-03",
+   "igual": true
+  },
+  {
+   "spec": "D-04",
+   "igual": true
+  },
+  {
+   "spec": "D-05",
+   "igual": true
+  },
+  {
+   "spec": "D-06",
+   "igual": true
+  },
+  {
+   "spec": "D-07",
+   "igual": true
+  },
+  {
+   "spec": "D-08",
+   "igual": true
+  },
+  {
+   "spec": "D-10",
+   "igual": true
+  },
+  {
+   "spec": "D-11",
+   "igual": true
+  },
+  {
+   "spec": "D-12",
+   "igual": true
+  },
+  {
+   "spec": "D-13",
+   "igual": true
+  },
+  {
+   "spec": "D-14",
+   "igual": true
+  }
+ ],
+ "paresDaD": [
+  {
+   "par": "K-01",
+   "igual": true
+  },
+  {
+   "par": "K-02",
+   "igual": true
+  },
+  {
+   "par": "K-03",
+   "igual": true
+  },
+  {
+   "par": "K-04",
+   "igual": true
+  },
+  {
+   "par": "K-05",
+   "igual": true
+  },
+  {
+   "par": "K-06",
+   "igual": true
+  },
+  {
+   "par": "K-07",
+   "igual": true
+  },
+  {
+   "par": "K-08",
+   "igual": true
+  },
+  {
+   "par": "K-09",
+   "igual": true
+  },
+  {
+   "par": "K-10",
+   "igual": true
+  },
+  {
+   "par": "K-11",
+   "igual": true
+  },
+  {
+   "par": "K-12",
+   "igual": true
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "id": "K-06",
+ "ancora": "pnip-mpa-processos table thead th.text-bold:not(:last-child)",
+ "estado": "inicial",
+ "normas": [
+  "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+  "emag:4.1",
+  "wcag:1.4.3"
+ ],
+ "medidas": {
+  "th-contraste": [
+   {
+    "texto": "Aberto há",
+    "razao": 5.9
+   },
+   {
+    "texto": "Nº Processo",
+    "razao": 5.9
+   },
+   {
+    "texto": "Tipo de Processo",
+    "razao": 5.9
+   },
+   {
+    "texto": "Solicitante",
+    "razao": 5.9
+   },
+   {
+    "texto": "Analista",
+    "razao": 5.9
+   },
+   {
+    "texto": "Téc. Adm.",
+    "razao": 5.9
+   },
+   {
+    "texto": "Status",
+    "razao": 5.9
+   }
+  ]
+ }
+}

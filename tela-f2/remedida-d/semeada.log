@@ -1,0 +1,10 @@
+file:///F:/Dev%20Nath/TCC/.tmp-eval/eval-tela-f2/tela-f2/remedida-d/conferir-auditoria.mjs:251
+    ev("D-14", "contraste", xs.map((x, i) => ({ parada: STATES[i].id, texto: x.texto, cor: x.cor, fundo: x.fundo, fonte: x.fonte, razao: x.razao })));
+                                                                               ^
+
+TypeError: Cannot read properties of undefined (reading 'texto')
+    at file:///F:/Dev%20Nath/TCC/.tmp-eval/eval-tela-f2/tela-f2/remedida-d/conferir-auditoria.mjs:251:80
+    at Array.map (<anonymous>)
+    at file:///F:/Dev%20Nath/TCC/.tmp-eval/eval-tela-f2/tela-f2/remedida-d/conferir-auditoria.mjs:251:32
+
+Node.js v25.2.1

@@ -1,0 +1,16 @@
+import {chromium, servir, abrir} from '../comum.mjs';
+const s = await servir('F:/Dev Nath/TCC/.tmp-eval/pnip-f2-sem-semente', 4733);
+const b = await chromium.launch({headless: true});
+const {ctx, pagina: p} = await abrir(b, s.base);
+await p.locator('pnip-multiple-search-table-utils span.br-tag.interaction', {hasText: 'Status'}).click();
+await p.waitForTimeout(400);
+await p.locator('pnip-multiple-search-table-utils div.br-list .br-item .br-radio').first().click();
+await p.waitForTimeout(800);
+const html = () => p.evaluate(() => document.querySelector('pnip-multiple-search-table-utils div.row.pl-2').outerHTML.replace(/\s+/g,' '));
+console.log(await html());
+const btn = p.locator('pnip-multiple-search-table-utils div.row.pl-2 span.br-tag.interaction > button').first();
+await btn.click();
+await p.waitForTimeout(1500);
+console.log(await html());
+console.log(await p.evaluate(() => sessionStorage.length + ' ' + JSON.stringify(Object.keys(sessionStorage))));
+await ctx.close(); await b.close(); s.s.close();

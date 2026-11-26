@@ -1,0 +1,738 @@
+{
+ "M-01": {
+  "passou": false,
+  "antes": {
+   "classe": "content bg-orange-vivid-30 text-pure-0",
+   "w": 40,
+   "h": 40,
+   "display": "flex",
+   "border-radius": "50%",
+   "background-color": "rgb(255, 140, 0)",
+   "font-size": "24.192px"
+  },
+  "antesEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  },
+  "depois": {
+   "classe": "content bg-orange-vivid-30 text-pure-0",
+   "w": 40,
+   "h": 40,
+   "display": "flex",
+   "border-radius": "50%",
+   "background-color": "rgb(255, 140, 0)",
+   "font-size": "24.192px"
+  },
+  "depoisEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  }
+ },
+ "M-02": {
+  "passou": false,
+  "antes": {
+   "icone": "rgb(19, 81, 180)",
+   "crumbProcessos": "rgb(51, 51, 51)"
+  },
+  "antesEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  },
+  "depois": {
+   "icone": "rgb(19, 81, 180)",
+   "crumbProcessos": "rgb(51, 51, 51)"
+  },
+  "depoisEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  }
+ },
+ "M-03": {
+  "passou": false,
+  "antes": {
+   "border-top-color": "rgb(204, 204, 204)",
+   "border-top-width": "2px",
+   "border-top-style": "solid"
+  },
+  "antesEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  },
+  "depois": {
+   "border-top-color": "rgb(204, 204, 204)",
+   "border-top-width": "2px",
+   "border-top-style": "solid"
+  },
+  "depoisEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  }
+ },
+ "M-04": {
+  "passou": false,
+  "antes": {
+   "font-size": "34.832px",
+   "font-weight": "700",
+   "color": "rgb(0, 94, 162)",
+   "w": 954.3,
+   "h": 40.05
+  },
+  "antesEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  },
+  "depois": {
+   "font-size": "34.832px",
+   "font-weight": "700",
+   "color": "rgb(0, 94, 162)",
+   "w": 954.3,
+   "h": 40.05
+  },
+  "depoisEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  }
+ },
+ "M-05": {
+  "passou": false,
+  "antes": [
+   {
+    "rotulo": "Aguardando análise",
+    "font-size": "20.16px",
+    "font-weight": "500"
+   },
+   {
+    "rotulo": "Tramitando",
+    "font-size": "20.16px",
+    "font-weight": "500"
+   },
+   {
+    "rotulo": "Concluídos",
+    "font-size": "20.16px",
+    "font-weight": "500"
+   }
+  ],
+  "antesEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  },
+  "depois": [
+   {
+    "rotulo": "Aguardando análise",
+    "font-size": "20.16px",
+    "font-weight": "500"
+   },
+   {
+    "rotulo": "Tramitando",
+    "font-size": "20.16px",
+    "font-weight": "500"
+   },
+   {
+    "rotulo": "Concluídos",
+    "font-size": "20.16px",
+    "font-weight": "500"
+   }
+  ],
+  "depoisEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  }
+ },
+ "M-06": {
+  "passou": false,
+  "antes": {
+   "ativo": [
+    {
+     "rotulo": "Tramitando",
+     "cor": "rgb(12, 50, 111)"
+    }
+   ],
+   "conteudo": {
+    "ths": [
+     "Aberto há",
+     "",
+     "Nº Processo",
+     "Tipo de Processo",
+     "Solicitante",
+     "Analista",
+     "Téc. Adm.",
+     "Status",
+     ""
+    ],
+    "linhas": [
+     "11 horas |  | 00000.000010/2026-00 | Alteração de Certificado HS | Pessoa Exemplo Dias / Barco Exemplo Alfa | Usuária De Teste | PESSOA EXEMPLO TECNICA | Em análise analista | ",
+     "3 dias |  | 00000.000011/2026-00 | CAOL - Cert. Acred Origem Legal do Pescado | Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia) | Pessoa Exemplo Analista Dois | Não Assumido | Em análise supervisor | Assinar",
+     "8 dias |  | 00000.000013/2026-00 | Habilitação de Técnico Responsável | Pessoa Exemplo Gomes | Usuária De Teste | PESSOA EXEMPLO TECNICA | Aguarda complementos | ",
+     "15 dias |  | 00000.000016/2026-00 | Vinculação de embarcação | Pessoa Exemplo Cardoso | Usuária De Teste | PESSOA EXEMPLO TECNICA | Em revisão analista | ",
+     "23 dias |  | 00000.000019/2026-00 | Alteração de Certificado HS | Pessoa Exemplo Farias / Barco Exemplo Eco | Usuária De Teste | Não Assumido | Em análise supervisor | Assinar",
+     "38 dias |  | 00000.000025/2026-00 | Vinculação de embarcação | Pessoa Exemplo Esteves | Usuária De Teste | PESSOA EXEMPLO TECNICA | Aguardando plano de ação | ",
+     "44 dias |  | 00000.000027/2026-00 | Certificação Higiênico-Sanitária | Pessoa Exemplo Gomes / Barco Exemplo Charlie | Pessoa Exemplo Analista Dois | Não Assumido | Em análise supervisor | Assinar",
+     "45 dias |  | 00000.000028/2026-00 | Alteração de Certificado HS | Pessoa Exemplo Alves / Barco Exemplo Delta | Usuária De Teste | PESSOA EXEMPLO TECNICA | Em análise diretor | ",
+     "53 dias |  | 00000.000031/2026-00 | Habilitação de Técnico Responsável | Pessoa Exemplo Dias | Usuária De Teste | Não Assumido | Aguardando SFPA | "
+    ],
+    "tag": [
+     "Meus processos"
+    ]
+   },
+   "depoisConcluidos": {
+    "ths": [
+     "Data/Hora",
+     "Nº Processo",
+     "Tipo de Processo",
+     "Solicitante",
+     "Analista",
+     "Téc. Adm.",
+     "Status",
+     ""
+    ],
+    "linhas": [
+     "15/03/2026 16:30 | 00000.000033/2026-00 | Habilitação Mercados Específicos | Pessoa Exemplo Farias / Barco Exemplo Delta | Usuária De Teste | PESSOA EXEMPLO TECNICA | Deferida | ",
+     "07/03/2026 15:30 | 00000.000034/2026-00 | Vinculação de embarcação | Pessoa Exemplo Gomes | Pessoa Exemplo Analista Dois | Não Assumido | Indeferida | ",
+     "28/02/2026 11:30 | 00000.000035/2026-00 | Desvínculo de Embarcação | Pessoa Exemplo Alves / Barco Exemplo Alfa | Pessoa Exemplo Analista Um | PESSOA EXEMPLO TECNICA | Cancelada | ",
+     "20/02/2026 10:30 | 00000.000036/2026-00 | Certificação Higiênico-Sanitária | Pessoa Exemplo Barros / Barco Exemplo Bravo | Usuária De Teste | PESSOA EXEMPLO TECNICA | Concluído | ",
+     "12/02/2026 09:30 | 00000.000037/2026-00 | Alteração de Certificado HS | Pessoa Exemplo Cardoso / Barco Exemplo Charlie | Pessoa Exemplo Analista Um | PESSOA EXEMPLO TECNICA | Deferida | ",
+     "04/02/2026 08:30 | 00000.000038/2026-00 | CAOL - Cert. Acred Origem Legal do Pescado | Pessoa Exemplo Dias / Pescados Exemplo Ltda (fictícia) | Pessoa Exemplo Analista Dois | Não Assumido | Indeferida | ",
+     "27/01/2026 07:30 | 00000.000039/2026-00 | Suspender certificação | Pessoa Exemplo Esteves / Barco Exemplo Eco | Usuária De Teste | PESSOA EXEMPLO TECNICA | Cancelada | ",
+     "19/01/2026 06:30 | 00000.000040/2026-00 | Habilitação de Técnico Responsável | Pessoa Exemplo Farias | Pessoa Exemplo Analista Dois | PESSOA EXEMPLO TECNICA | Concluído | ",
+     "11/01/2026 05:30 | 00000.000041/2026-00 | Cancelamento de Certificação | Pessoa Exemplo Gomes / Barco Exemplo Bravo | Pessoa Exemplo Analista Um | PESSOA EXEMPLO TECNICA | Deferida | ",
+     "04/01/2026 01:30 | 00000.000042/2026-00 | Habilitação Mercados Específicos | Pessoa Exemplo Alves / Barco Exemplo Charlie | Usuária De Teste | Não Assumido | Indeferida | "
+    ],
+    "tag": []
+   },
+   "mudouAoClicarConcluidos": true
+  },
+  "antesEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  },
+  "depois": {
+   "ativo": [
+    {
+     "rotulo": "Tramitando",
+     "cor": "rgb(12, 50, 111)"
+    }
+   ],
+   "conteudo": {
+    "ths": [
+     "Aberto há",
+     "",
+     "Nº Processo",
+     "Tipo de Processo",
+     "Solicitante",
+     "Analista",
+     "Téc. Adm.",
+     "Status",
+     ""
+    ],
+    "linhas": [
+     "11 horas |  | 00000.000010/2026-00 | Alteração de Certificado HS | Pessoa Exemplo Dias / Barco Exemplo Alfa | Usuária De Teste | PESSOA EXEMPLO TECNICA | Em análise analista | ",
+     "3 dias |  | 00000.000011/2026-00 | CAOL - Cert. Acred Origem Legal do Pescado | Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia) | Pessoa Exemplo Analista Dois | Não Assumido | Em análise supervisor | Assinar",
+     "8 dias |  | 00000.000013/2026-00 | Habilitação de Técnico Responsável | Pessoa Exemplo Gomes | Usuária De Teste | PESSOA EXEMPLO TECNICA | Aguarda complementos | ",
+     "15 dias |  | 00000.000016/2026-00 | Vinculação de embarcação | Pessoa Exemplo Cardoso | Usuária De Teste | PESSOA EXEMPLO TECNICA | Em revisão analista | ",
+     "23 dias |  | 00000.000019/2026-00 | Alteração de Certificado HS | Pessoa Exemplo Farias / Barco Exemplo Eco | Usuária De Teste | Não Assumido | Em análise supervisor | Assinar",
+     "38 dias |  | 00000.000025/2026-00 | Vinculação de embarcação | Pessoa Exemplo Esteves | Usuária De Teste | PESSOA EXEMPLO TECNICA | Aguardando plano de ação | ",
+     "44 dias |  | 00000.000027/2026-00 | Certificação Higiênico-Sanitária | Pessoa Exemplo Gomes / Barco Exemplo Charlie | Pessoa Exemplo Analista Dois | Não Assumido | Em análise supervisor | Assinar",
+     "45 dias |  | 00000.000028/2026-00 | Alteração de Certificado HS | Pessoa Exemplo Alves / Barco Exemplo Delta | Usuária De Teste | PESSOA EXEMPLO TECNICA | Em análise diretor | ",
+     "53 dias |  | 00000.000031/2026-00 | Habilitação de Técnico Responsável | Pessoa Exemplo Dias | Usuária De Teste | Não Assumido | Aguardando SFPA | "
+    ],
+    "tag": [
+     "Meus processos"
+    ]
+   },
+   "depoisConcluidos": {
+    "ths": [
+     "Data/Hora",
+     "Nº Processo",
+     "Tipo de Processo",
+     "Solicitante",
+     "Analista",
+     "Téc. Adm.",
+     "Status",
+     ""
+    ],
+    "linhas": [
+     "15/03/2026 16:30 | 00000.000033/2026-00 | Habilitação Mercados Específicos | Pessoa Exemplo Farias / Barco Exemplo Delta | Usuária De Teste | PESSOA EXEMPLO TECNICA | Deferida | ",
+     "07/03/2026 15:30 | 00000.000034/2026-00 | Vinculação de embarcação | Pessoa Exemplo Gomes | Pessoa Exemplo Analista Dois | Não Assumido | Indeferida | ",
+     "28/02/2026 11:30 | 00000.000035/2026-00 | Desvínculo de Embarcação | Pessoa Exemplo Alves / Barco Exemplo Alfa | Pessoa Exemplo Analista Um | PESSOA EXEMPLO TECNICA | Cancelada | ",
+     "20/02/2026 10:30 | 00000.000036/2026-00 | Certificação Higiênico-Sanitária | Pessoa Exemplo Barros / Barco Exemplo Bravo | Usuária De Teste | PESSOA EXEMPLO TECNICA | Concluído | ",
+     "12/02/2026 09:30 | 00000.000037/2026-00 | Alteração de Certificado HS | Pessoa Exemplo Cardoso / Barco Exemplo Charlie | Pessoa Exemplo Analista Um | PESSOA EXEMPLO TECNICA | Deferida | ",
+     "04/02/2026 08:30 | 00000.000038/2026-00 | CAOL - Cert. Acred Origem Legal do Pescado | Pessoa Exemplo Dias / Pescados Exemplo Ltda (fictícia) | Pessoa Exemplo Analista Dois | Não Assumido | Indeferida | ",
+     "27/01/2026 07:30 | 00000.000039/2026-00 | Suspender certificação | Pessoa Exemplo Esteves / Barco Exemplo Eco | Usuária De Teste | PESSOA EXEMPLO TECNICA | Cancelada | ",
+     "19/01/2026 06:30 | 00000.000040/2026-00 | Habilitação de Técnico Responsável | Pessoa Exemplo Farias | Pessoa Exemplo Analista Dois | PESSOA EXEMPLO TECNICA | Concluído | ",
+     "11/01/2026 05:30 | 00000.000041/2026-00 | Cancelamento de Certificação | Pessoa Exemplo Gomes / Barco Exemplo Bravo | Pessoa Exemplo Analista Um | PESSOA EXEMPLO TECNICA | Deferida | ",
+     "04/01/2026 01:30 | 00000.000042/2026-00 | Habilitação Mercados Específicos | Pessoa Exemplo Alves / Barco Exemplo Charlie | Usuária De Teste | Não Assumido | Indeferida | "
+    ],
+    "tag": []
+   },
+   "mudouAoClicarConcluidos": true
+  },
+  "depoisEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  }
+ },
+ "M-07": {
+  "passou": false,
+  "antes": {
+   "meus": "16.8px",
+   "vizinhas": [
+    "16.8px",
+    "16px",
+    "16.8px",
+    "16px",
+    "16.8px",
+    "16px",
+    "16.8px",
+    "16px",
+    "16.8px",
+    "16px",
+    "16.8px",
+    "16px"
+   ]
+  },
+  "antesEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  },
+  "depois": {
+   "meus": "16.8px",
+   "vizinhas": [
+    "16.8px",
+    "16px",
+    "16.8px",
+    "16px",
+    "16.8px",
+    "16px",
+    "16.8px",
+    "16px",
+    "16.8px",
+    "16px",
+    "16.8px",
+    "16px"
+   ]
+  },
+  "depoisEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  }
+ },
+ "M-08": {
+  "passou": false,
+  "antes": {
+   "repousoVoltar": "none",
+   "hoverVoltar": "linear-gradient(rgba(19, 81, 180, 0.16), rgba(19, 81, 180, 0.16))",
+   "hoverExportar": "linear-gradient(rgba(19, 81, 180, 0.16), rgba(19, 81, 180, 0.16))"
+  },
+  "antesEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  },
+  "depois": {
+   "repousoVoltar": "none",
+   "hoverVoltar": "linear-gradient(rgba(19, 81, 180, 0.16), rgba(19, 81, 180, 0.16))",
+   "hoverExportar": "linear-gradient(rgba(19, 81, 180, 0.16), rgba(19, 81, 180, 0.16))"
+  },
+  "depoisEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  }
+ },
+ "M-09": {
+  "passou": false,
+  "antes": {
+   "nDesabilitados": 8,
+   "desabilitados": [
+    {
+     "host": "0.45",
+     "botao": {
+      "opacity": "0.45",
+      "cursor": "not-allowed"
+     }
+    },
+    {
+     "host": "0.45",
+     "botao": {
+      "opacity": "0.45",
+      "cursor": "not-allowed"
+     }
+    },
+    {
+     "host": "0.45",
+     "botao": {
+      "opacity": "0.45",
+      "cursor": "not-allowed"
+     }
+    },
+    {
+     "host": "0.45",
+     "botao": {
+      "opacity": "0.45",
+      "cursor": "not-allowed"
+     }
+    },
+    {
+     "host": "0.45",
+     "botao": {
+      "opacity": "0.45",
+      "cursor": "not-allowed"
+     }
+    },
+    {
+     "host": "0.45",
+     "botao": {
+      "opacity": "0.45",
+      "cursor": "not-allowed"
+     }
+    },
+    {
+     "host": "0.45",
+     "botao": {
+      "opacity": "0.45",
+      "cursor": "not-allowed"
+     }
+    },
+    {
+     "host": "0.45",
+     "botao": {
+      "opacity": "0.45",
+      "cursor": "not-allowed"
+     }
+    }
+   ],
+   "habilitado1": {
+    "host": "1",
+    "botao": {
+     "opacity": "1",
+     "cursor": "pointer"
+    }
+   },
+   "habilitado1Disabled": false,
+   "limpar": {
+    "host": "0.45",
+    "botao": {
+     "opacity": "0.45",
+     "cursor": "not-allowed"
+    },
+    "disabled": true
+   }
+  },
+  "antesEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  },
+  "depois": {
+   "nDesabilitados": 8,
+   "desabilitados": [
+    {
+     "host": "0.45",
+     "botao": {
+      "opacity": "0.45",
+      "cursor": "not-allowed"
+     }
+    },
+    {
+     "host": "0.45",
+     "botao": {
+      "opacity": "0.45",
+      "cursor": "not-allowed"
+     }
+    },
+    {
+     "host": "0.45",
+     "botao": {
+      "opacity": "0.45",
+      "cursor": "not-allowed"
+     }
+    },
+    {
+     "host": "0.45",
+     "botao": {
+      "opacity": "0.45",
+      "cursor": "not-allowed"
+     }
+    },
+    {
+     "host": "0.45",
+     "botao": {
+      "opacity": "0.45",
+      "cursor": "not-allowed"
+     }
+    },
+    {
+     "host": "0.45",
+     "botao": {
+      "opacity": "0.45",
+      "cursor": "not-allowed"
+     }
+    },
+    {
+     "host": "0.45",
+     "botao": {
+      "opacity": "0.45",
+      "cursor": "not-allowed"
+     }
+    },
+    {
+     "host": "0.45",
+     "botao": {
+      "opacity": "0.45",
+      "cursor": "not-allowed"
+     }
+    }
+   ],
+   "habilitado1": {
+    "host": "1",
+    "botao": {
+     "opacity": "1",
+     "cursor": "pointer"
+    }
+   },
+   "habilitado1Disabled": false,
+   "limpar": {
+    "host": "0.45",
+    "botao": {
+     "opacity": "0.45",
+     "cursor": "not-allowed"
+    },
+    "disabled": true
+   }
+  },
+  "depoisEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  }
+ },
+ "M-10": {
+  "passou": false,
+  "antes": {
+   "estiloAntesDeAbrir": null,
+   "aberta": true,
+   "display": "block",
+   "boxShadow": "rgba(0, 0, 0, 0.16) 0px 3px 6px 0px",
+   "estilo": null
+  },
+  "antesEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  },
+  "depois": {
+   "estiloAntesDeAbrir": null,
+   "aberta": true,
+   "display": "block",
+   "boxShadow": "rgba(0, 0, 0, 0.16) 0px 3px 6px 0px",
+   "estilo": null
+  },
+  "depoisEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  }
+ },
+ "M-11": {
+  "passou": false,
+  "antes": {
+   "n": 2,
+   "botoes": [
+    {
+     "rotulo": "Página anterior",
+     "w": 40,
+     "h": 40,
+     "raio": "50%"
+    },
+    {
+     "rotulo": "Página seguinte",
+     "w": 40,
+     "h": 40,
+     "raio": "50%"
+    }
+   ],
+   "pagina1": [
+    "1"
+   ]
+  },
+  "antesEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  },
+  "depois": {
+   "n": 2,
+   "botoes": [
+    {
+     "rotulo": "Página anterior",
+     "w": 40,
+     "h": 40,
+     "raio": "50%"
+    },
+    {
+     "rotulo": "Página seguinte",
+     "w": 40,
+     "h": 40,
+     "raio": "50%"
+    }
+   ],
+   "pagina1": [
+    "1"
+   ]
+  },
+  "depoisEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  }
+ },
+ "M-12": {
+  "passou": false,
+  "antes": {
+   "rotuloOpcao": "Aguardando análise",
+   "botao": {
+    "classe": "br-button inverted circle",
+    "w": 28,
+    "h": 28,
+    "border-radius": "50%",
+    "background-color": "rgb(19, 81, 180)",
+    "border-top-style": "none",
+    "border-top-width": "0px",
+    "etiqueta": "Aguardando análise"
+   },
+   "removeuAoClicar": false
+  },
+  "antesEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  },
+  "depois": {
+   "rotuloOpcao": "Aguardando análise",
+   "botao": {
+    "classe": "br-button inverted circle",
+    "w": 28,
+    "h": 28,
+    "border-radius": "50%",
+    "background-color": "rgb(19, 81, 180)",
+    "border-top-style": "none",
+    "border-top-width": "0px",
+    "etiqueta": "Aguardando análise"
+   },
+   "removeuAoClicar": false
+  },
+  "depoisEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  }
+ },
+ "R-01": {
+  "passou": false,
+  "antes": {
+   "inicial": "rgba(0, 0, 0, 0.16) 0px 1px 6px 0px",
+   "rolada": "rgba(0, 0, 0, 0.16) 0px 1px 6px 0px"
+  },
+  "antesEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  },
+  "depois": {
+   "inicial": "rgba(0, 0, 0, 0.16) 0px 1px 6px 0px",
+   "rolada": "rgba(0, 0, 0, 0.16) 0px 1px 6px 0px"
+  },
+  "depoisEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  }
+ },
+ "R-02": {
+  "passou": false,
+  "antes": {
+   "w": 32,
+   "h": 32,
+   "raio": "50%",
+   "campoH": 32,
+   "passaEmCima": false,
+   "passaEmbaixo": true
+  },
+  "antesEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  },
+  "depois": {
+   "w": 32,
+   "h": 32,
+   "raio": "50%",
+   "campoH": 32,
+   "passaEmCima": false,
+   "passaEmbaixo": true
+  },
+  "depoisEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  }
+ },
+ "R-03": {
+  "passou": false,
+  "antes": {
+   "focado": true,
+   "border-top-color": "rgb(194, 133, 12)",
+   "box-shadow": "rgb(194, 133, 12) 0px 0px 0px 2px"
+  },
+  "antesEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  },
+  "depois": {
+   "focado": true,
+   "border-top-color": "rgb(194, 133, 12)",
+   "box-shadow": "rgb(194, 133, 12) 0px 0px 0px 2px"
+  },
+  "depoisEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  }
+ },
+ "R-04": {
+  "passou": false,
+  "antes": {
+   "rotulo": "25",
+   "bg": "linear-gradient(rgba(51, 51, 51, 0.16), rgba(51, 51, 51, 0.16))"
+  },
+  "antesEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  },
+  "depois": {
+   "rotulo": "25",
+   "bg": "linear-gradient(rgba(51, 51, 51, 0.16), rgba(51, 51, 51, 0.16))"
+  },
+  "depoisEventos": {
+   "externas": [],
+   "erros": [],
+   "falhas": []
+  }
+ }
+}
