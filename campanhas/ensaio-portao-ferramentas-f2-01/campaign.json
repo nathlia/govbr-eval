@@ -1,0 +1,158 @@
+{
+  "contract": "campaign.v2",
+  "fixture": true,
+  "campaignId": "ensaio-portao-ferramentas-f2-01",
+  "kind": "pilot",
+  "title": "ENSAIO sem modelo do controle de teto do ferramentas da F2 (dublê, braço ferramentas ×3, so-coleta; nunca dado; o veredito não significa nada)",
+  "objective": "Ensaio de ponta a ponta sem modelo do controle 2 (errata 1 do adendo 2): cliente real contra o dublê (cenário honesto), braço ferramentas ×3 com o oráculo 3.7.12 knowledge-free (aderência used-adherent), etapas so-coleta, análise individual --sem-linha-de-base, passada cega com respostas fabricadas, npm run portao:teto -- --braco ferramentas --limiar n-menos-2. Põe o oráculo contra a F2: só depois de o portão do sem passar. Mesmo instrumento da portao-ferramentas-f2-01; só o modelo e o provedor são os do dublê. RASCUNHO: site PENDENTE, frozenAt nulo.",
+  "hypotheses": [
+    "Controle de viabilidade, sem hipótese científica: a mediana do ferramentas nas n specs semeadas é ≤ n − 2?"
+  ],
+  "createdAt": "2026-11-26T21:20:00Z",
+  "frozenAt": null,
+  "design": {
+    "screens": [
+      {
+        "id": "processos-f2",
+        "label": "Processos (cópia semeada da rota da tela D, ala pnip-f2)",
+        "version": "govbr-telas-site-PENDENTE"
+      }
+    ],
+    "arms": [
+      "sem",
+      "ferramentas",
+      "com"
+    ],
+    "models": [
+      {
+        "family": "claude",
+        "requested": "claude-opus-duble-teste"
+      }
+    ],
+    "effort": "high",
+    "repetitions": 3,
+    "order": "sequencial",
+    "seed": null,
+    "comparisons": [
+      {
+        "id": "ferramentas-x-com",
+        "arms": [
+          "ferramentas",
+          "com"
+        ],
+        "role": "primary",
+        "question": "Não se aplica ao controle (só o ferramentas roda); declarada porque o contrato campaign.v2 exige uma comparação principal. Nenhuma comparação é calculada; a diferença primária nunca é olhada (errata 1)."
+      }
+    ]
+  },
+  "fixed": {
+    "protocolSha256": "8139bb0cd71d273e1f63294b2523478fd54fc2e05033cfc58f58bda174d83e3c",
+    "client": {
+      "name": "claude-code",
+      "version": "2.1.288 (Claude Code)"
+    },
+    "provider": {
+      "name": "stub",
+      "authMethod": "unknown"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "147.0.7727.15"
+    },
+    "playwrightMcp": "@playwright/mcp@0.0.70",
+    "isolationPolicyVersion": "isolamento-runner-1.1.0",
+    "oracleProfiles": {
+      "com": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.12",
+        "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "evaluation",
+        "tools": [
+          "get_component_spec",
+          "get_design_tokens",
+          "get_ds_rules",
+          "get_emag_rules",
+          "get_finding_details",
+          "get_page_rules",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "04ae14378db09bd4cdef48841e3d1a9388b701e18279fe08a04267af3c74614c"
+      },
+      "ferramentas": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.12",
+        "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "knowledge-free",
+        "tools": [
+          "get_finding_details",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "5b9c59aaa490f5de2a4a497eda8a2e3dbedd25b2a8288fed8eb049f7233d40dc"
+      }
+    },
+    "scorerVersion": "flow-semantic-1.8.2"
+  },
+  "limits": {
+    "timeoutSeconds": 1800,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 5,
+    "retryOn": [
+      "rate-limited",
+      "model-unavailable",
+      "auth-failed",
+      "preflight-failed",
+      "vm-lost",
+      "harness-error",
+      "archive-unavailable",
+      "cancelled"
+    ],
+    "attemptSelection": "Como no portão do sem: entra a primeira tentativa elegível de cada uma das 3 execuções; nova tentativa só por falha técnica, no máximo 2 por execução e 5 no controle. Tempo esgotado (1.800 s) é resultado do agente: inelegível, sem nova tentativa."
+  },
+  "failurePolicy": "Execução inelegível (técnico, isolamento, submissão, identidade, uso do oráculo fora de used-adherent) não entra no controle; com menos de 3 execuções elegíveis dentro do teto, o controle não decide (npm run portao:teto recusa ≠ 3) e a sessão principal registra o motivo. Isolamento reprovado = execução perdida, sem resgate.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": [
+      {
+        "screenId": "processos-f2",
+        "justification": "Adendo 2, errata 1, controle 2: o controle conta só as specs semeadas que o agente do ferramentas confirma (creditosDoTrio, chave principal|1.2.0); a linha de base não entra na conta. A linha de base da F2 é medida uma vez no controle 1 (cobertura, sem modelo) e fica lacrada até o fim da coleta (adendo 2 §5; errata 1 abre só a contagem da varredura sem guia); uma linha de base por execução poria cartões de varredura e axe na passada cega deste piloto sem mudar a contagem. Disparo com etapas = so-coleta (o oráculo knowledge-free roda dentro da execução do agente, como em todo slot ferramentas); análise com --sem-linha-de-base.",
+        "declaredAt": "2026-11-26T21:20:00Z",
+        "analysisPath": "individual"
+      }
+    ]
+  },
+  "analysisPlan": {
+    "primaryOutcome": "Por execução do ferramentas, as specs do estrato semeado com ≥ 1 unidade confirmada pela passada cega (mesma regra de crédito do portão do sem); mediana das 3; passa se a mediana do máximo (pendente conta como confirmado) ≤ n − 2. npm run portao:teto -- --passada <passada> --saida <pasta nova> --braco ferramentas --limiar n-menos-2. A sessão principal lê só portao-teto.md; os ids ficam no lacrado.",
+    "secondaryOutcomes": [],
+    "uncertaintyMethod": null,
+    "exclusionRules": "Só execuções do braço ferramentas, uma por análise individual (analisar --pacote … --sem-linha-de-base); outra configuração é recusada pelo portão (--braco ferramentas). Cartão pendente conta como confirmado (errata 1, 'julgadas como no portão do sem')."
+  },
+  "budget": {
+    "approved": false,
+    "amount": null,
+    "currency": "USD",
+    "approvedBy": null,
+    "approvedAt": null
+  },
+  "pendingDecisions": [
+    {
+      "topic": "Ensaio sem modelo: custo zero (dublê); disparável depois do portão do sem, com o site da F2 e frozenAt",
+      "issue": "NAT-139",
+      "owner": "sessão principal"
+    }
+  ]
+}
