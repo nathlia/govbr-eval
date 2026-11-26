@@ -1,0 +1,34 @@
+processos-f2 · ground-truth-processos-f2.json 1.0.0 · http://127.0.0.1:3331/pnip-f2/portal-mpa/processos?mock-perfil=mpa
+estados: inicial → lista-exibir → filtro-escolhido · 25 specs · 69 unidades
+
+  inicial  segmento 0 · /pnip-f2/portal-mpa/processos
+  lista-exibir  segmento 0 · /pnip-f2/portal-mpa/processos
+  filtro-escolhido  segmento 2 · /pnip-f2/portal-mpa/processos
+
+  F2-01  1 unidade(s) · inicial · sem predicado
+  F2-02  1 unidade(s) · inicial · sustenta — alguma propriedade de [border-top-left-radius] fora de {50%} (mesmo desfecho (sustenta) em inicial, lista-exibir: 1 participante(s) medidos em "inicial": border-top-left-radius=0px)
+  F2-03  1 unidade(s) · filtro-escolhido · sustenta — alguma propriedade de [border-top-left-radius] fora de {50%} (1 participante(s) medidos em "filtro-escolhido": border-top-left-radius=0px)
+  F2-04  1 unidade(s) · inicial · sustenta — alguma propriedade de [font-size] fora de {34.832px} (mesmo desfecho (sustenta) em inicial, lista-exibir: 1 participante(s) medidos em "inicial": font-size=32px)
+  F2-05  1 unidade(s) · inicial · sustenta — alguma propriedade de [font-size] fora de {16.8px} (mesmo desfecho (sustenta) em inicial, lista-exibir: 1 participante(s) medidos em "inicial": font-size=15px)
+  F2-06  1 unidade(s) · inicial · sustenta — alguma propriedade de [border-top-color] fora de {rgb(204, 204, 204)} (mesmo desfecho (sustenta) em inicial, lista-exibir: 1 participante(s) medidos em "inicial": border-top-color=rgb(214, 214, 214))
+  F2-07  1 unidade(s) · inicial · sustenta — alguma propriedade de [color] fora de {rgb(19, 81, 180)} (mesmo desfecho (sustenta) em inicial, lista-exibir: 1 participante(s) medidos em "inicial": color=rgb(0, 94, 162))
+  F2-08  1 unidade(s) · inicial · sustenta — alguma propriedade de [font-size] fora de {20.16px} (mesmo desfecho (sustenta) em inicial, lista-exibir: 3 participante(s) medidos em "inicial": font-size=16.8px | font-size=16.8px | font-size=16.8px)
+  F2-09  1 unidade(s) · lista-exibir · sustenta — alguma propriedade de [box-shadow] fora de {rgba(0, 0, 0, 0.16) 0px 3px 6px 0px} (mesmo desfecho (sustenta) em inicial, lista-exibir: 1 participante(s) medidos em "inicial": box-shadow=rgba(0, 0, 0, 0.16) 0px 6px 6px 0px)
+  F2-10  1 unidade(s) · inicial · sustenta — alguma propriedade de [opacity] fora de {0.45} (mesmo desfecho (sustenta) em inicial, lista-exibir: 8 participante(s) medidos em "inicial": opacity=1 | opacity=1 | opacity=1 | opacity=1 | opacity=1 | opacity=1 | opacity=1 | opacity=1)
+  F2-11  1 unidade(s) · inicial · sustenta — o próprio <li> carrega a classe .active (mesmo desfecho (sustenta) em inicial, lista-exibir: 1 participante(s) medidos em "inicial": <li class="tab-item active">)
+  F2-12  1 unidade(s) · inicial · sustenta — alguma propriedade de [--hover] fora de {0.16} (mesmo desfecho (sustenta) em inicial, lista-exibir: 1 participante(s) medidos em "inicial": --hover=0)
+  D-01  18 unidade(s) · inicial · sem predicado
+  D-02  9 unidade(s) · inicial · sem predicado
+  D-03  7 unidade(s) · inicial · sem predicado
+  D-04  7 unidade(s) · inicial · sem predicado
+  D-05  1 unidade(s) · inicial · sem predicado
+  D-06  8 unidade(s) · inicial · sem predicado
+  D-07  1 unidade(s) · inicial · sem predicado
+  D-08  1 unidade(s) · inicial · sem predicado
+  D-10  1 unidade(s) · inicial · sem predicado
+  D-11  1 unidade(s) · sempre · sem predicado
+  D-12  1 unidade(s) · sempre · sem predicado
+  D-13  1 unidade(s) · sempre · sem predicado
+  D-14  1 unidade(s) · sempre · sem predicado
+
+Referência conferida: estados, contagens e predicados sustentam na página.
