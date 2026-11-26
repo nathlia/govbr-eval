@@ -1,0 +1,158 @@
+{
+  "contract": "campaign.v2",
+  "fixture": true,
+  "campaignId": "ensaio-portao-f2-01",
+  "kind": "pilot",
+  "title": "ENSAIO sem modelo do portão de teto da F2 (dublê, braço sem ×3, so-coleta; nunca dado; o veredito não significa nada)",
+  "objective": "Ensaio de ponta a ponta sem modelo do portão de teto da F2 (adendo 2 §5 e §7: ensaios como na F antes da cadeia de congelamento): cliente real contra o dublê roteirizado (cenário honesto), braço sem ×3, etapas so-coleta, análise individual --sem-linha-de-base, passada cega com respostas fabricadas, npm run portao:teto. Mesmo instrumento da portao-teto-f2-01 (fixed, limites, tarefa); só o modelo e o provedor são os do dublê. RASCUNHO: site PENDENTE, frozenAt nulo.",
+  "hypotheses": [
+    "Portão de desenho, sem hipótese científica: a mediana do sem nas n specs semeadas é ≤ ⌊n/2⌋?"
+  ],
+  "createdAt": "2026-11-26T21:20:00Z",
+  "frozenAt": null,
+  "design": {
+    "screens": [
+      {
+        "id": "processos-f2",
+        "label": "Processos (cópia semeada da rota da tela D, ala pnip-f2)",
+        "version": "govbr-telas-site-PENDENTE"
+      }
+    ],
+    "arms": [
+      "sem",
+      "ferramentas",
+      "com"
+    ],
+    "models": [
+      {
+        "family": "claude",
+        "requested": "claude-opus-duble-teste"
+      }
+    ],
+    "effort": "high",
+    "repetitions": 3,
+    "order": "sequencial",
+    "seed": null,
+    "comparisons": [
+      {
+        "id": "ferramentas-x-com",
+        "arms": [
+          "ferramentas",
+          "com"
+        ],
+        "role": "primary",
+        "question": "Não se aplica ao portão (só o sem roda); declarada porque o contrato campaign.v2 exige uma comparação principal. Nenhuma comparação é calculada no portão."
+      }
+    ]
+  },
+  "fixed": {
+    "protocolSha256": "8139bb0cd71d273e1f63294b2523478fd54fc2e05033cfc58f58bda174d83e3c",
+    "client": {
+      "name": "claude-code",
+      "version": "2.1.288 (Claude Code)"
+    },
+    "provider": {
+      "name": "stub",
+      "authMethod": "unknown"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "147.0.7727.15"
+    },
+    "playwrightMcp": "@playwright/mcp@0.0.70",
+    "isolationPolicyVersion": "isolamento-runner-1.1.0",
+    "oracleProfiles": {
+      "com": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.12",
+        "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "evaluation",
+        "tools": [
+          "get_component_spec",
+          "get_design_tokens",
+          "get_ds_rules",
+          "get_emag_rules",
+          "get_finding_details",
+          "get_page_rules",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "04ae14378db09bd4cdef48841e3d1a9388b701e18279fe08a04267af3c74614c"
+      },
+      "ferramentas": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.12",
+        "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "knowledge-free",
+        "tools": [
+          "get_finding_details",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "5b9c59aaa490f5de2a4a497eda8a2e3dbedd25b2a8288fed8eb049f7233d40dc"
+      }
+    },
+    "scorerVersion": "flow-semantic-1.8.2"
+  },
+  "limits": {
+    "timeoutSeconds": 1800,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 5,
+    "retryOn": [
+      "rate-limited",
+      "model-unavailable",
+      "auth-failed",
+      "preflight-failed",
+      "vm-lost",
+      "harness-error",
+      "archive-unavailable",
+      "cancelled"
+    ],
+    "attemptSelection": "Como no protocolo NAT-78 §7.2: entra no portão a primeira tentativa elegível de cada uma das 3 execuções; nova tentativa só por falha técnica, no máximo 2 por execução e 5 no portão. Tempo esgotado (1.800 s) é resultado do agente: inelegível, sem nova tentativa."
+  },
+  "failurePolicy": "Execução inelegível (técnico, isolamento, submissão, identidade) não entra no portão; com menos de 3 execuções elegíveis dentro do teto, o portão não decide (npm run portao:teto recusa ≠ 3) e a sessão principal registra o motivo. Isolamento reprovado = execução perdida, sem resgate.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": [
+      {
+        "screenId": "processos-f2",
+        "justification": "Adendo 2 §5 e adendo da F §3/errata 1: o oráculo não roda na tela F2 antes de o portão de teto do sem passar (nem varredura, nem verificação, nem linha de base); a linha de base mede com o validator. O portão dispara com etapas = so-coleta e é analisado com --sem-linha-de-base.",
+        "declaredAt": "2026-11-26T21:20:00Z",
+        "analysisPath": "individual"
+      }
+    ]
+  },
+  "analysisPlan": {
+    "primaryOutcome": "Por execução, as specs do estrato semeado (_meta.estratos.semeado.specs da referência candidata da F2; n de 10 a 12) com ≥ 1 unidade confirmada pela passada cega (política do juiz 1.3.0, coluna detecção, a regra do recálculo: recalculo-campanha.ts › creditosDoTrio, chave principal|1.2.0); mediana das 3; passa se a mediana do máximo (pendente conta como confirmado) ≤ ⌊n/2⌋. npm run portao:teto (padrão). Só a contagem por execução, a mediana, n, o limiar e o veredito saem para a sessão principal (portao-teto.md); os ids ficam no lacrado portao-teto-por-spec.json.",
+    "secondaryOutcomes": [],
+    "uncertaintyMethod": null,
+    "exclusionRules": "Só execuções do braço sem, uma por análise individual (analisar --pacote … --sem-linha-de-base); outra configuração é recusada pelo portão. Cartão pendente na passada conta como confirmado (adendo §5): o veredito sai da mediana do máximo."
+  },
+  "budget": {
+    "approved": false,
+    "amount": null,
+    "currency": "USD",
+    "approvedBy": null,
+    "approvedAt": null
+  },
+  "pendingDecisions": [
+    {
+      "topic": "Ensaio sem modelo: custo zero (dublê); disparável com o site da F2 e frozenAt (a mesma condição da portao-teto-f2-01)",
+      "issue": "NAT-139",
+      "owner": "sessão principal"
+    }
+  ]
+}
