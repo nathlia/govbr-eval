@@ -1,0 +1,351 @@
+{
+ "_meta": {
+  "data": "2026-11-26",
+  "criterio": "ver cabeçalho de tela-f/conferir-ids-base.mjs",
+  "validador": {
+   "dir": "F:/Dev Nath/TCC/govbr-ds-validator",
+   "tag": "congelado-3.7.12",
+   "commit": "816f4bae41f4486b7055f0ac265167e87ce0d5e5",
+   "baseAtiva": "3.7.0-literal-2026-10-15",
+   "ruleFiles": {
+    "normalized/rules.jsonl": "ca8f428a52063ac8c208cca96432a40c84af8e75b4742744367a47717f9f28b8",
+    "normalized/carried-over.jsonl": "16e0a764e4a0f05b3f116df83f1400598a95173f5dec34f775c0a9b843cade19"
+   },
+   "registros": 5490,
+   "camposLidos": [
+    "id",
+    "originalText",
+    "source.corpusFile",
+    "source.charRange"
+   ]
+  },
+  "referencia": {
+   "arquivo": "ground-truth-processos-f.json",
+   "version": "1.0.0",
+   "sha256": "ec7a66e4da55dcc7d8878721f7bb9e2aba9a765b1c7d6b98abc57d4ec830f1bd",
+   "status": "RASCUNHO — não congelado. Falta o que es"
+  },
+  "contagens": {
+   "semeadoIds": 12,
+   "semeadoIdsCasam": 12,
+   "semeadoSemId": 1,
+   "semeadoSemIdConfirmado": 1,
+   "naturalIds": 19,
+   "naturalIdsExistem": 19
+  }
+ },
+ "linhas": [
+  {
+   "spec": "F-01",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-table-bc0d039ca6cc",
+   "existe": true,
+   "arquivo": "componentes/table__designer.md",
+   "charRange": [
+    6737,
+    6800
+   ],
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F-01",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-table-4aac83c034bd",
+   "existe": true,
+   "arquivo": "componentes/table__designer.md",
+   "charRange": [
+    6801,
+    6894
+   ],
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F-02",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-input-2b3b4e282965",
+   "existe": true,
+   "arquivo": "componentes/input__designer.md",
+   "charRange": [
+    19259,
+    19364
+   ],
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F-03",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-button-0cfc7ea7ab46",
+   "existe": true,
+   "arquivo": "componentes/button__designer.md",
+   "charRange": [
+    12495,
+    12695
+   ],
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F-04",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-button-4e73723a0df8",
+   "existe": true,
+   "arquivo": "componentes/button__designer.md",
+   "charRange": [
+    17497,
+    17563
+   ],
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F-05",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-tag-6e456d98e420",
+   "existe": true,
+   "arquivo": "componentes/tag__designer.md",
+   "charRange": [
+    20695,
+    20758
+   ],
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F-06",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-table-559426cdec19",
+   "existe": true,
+   "arquivo": "componentes/table__designer.md",
+   "charRange": [
+    19992,
+    20067
+   ],
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F-07",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-avatar-723660559374",
+   "existe": true,
+   "arquivo": "componentes/avatar__designer.md",
+   "charRange": [
+    1430,
+    1503
+   ],
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F-08",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-button-71d4266a8572",
+   "existe": true,
+   "arquivo": "componentes/button__designer.md",
+   "charRange": [
+    14672,
+    14764
+   ],
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F-09",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-table-d08c9e4951e5",
+   "existe": true,
+   "arquivo": "componentes/table__designer.md",
+   "charRange": [
+    22707,
+    22790
+   ],
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F-10",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-select-ba2187bb7906",
+   "existe": true,
+   "arquivo": "componentes/select__designer.md",
+   "charRange": [
+    3147,
+    3316
+   ],
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F-11",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-tag-07d13ad49df0",
+   "existe": true,
+   "arquivo": "componentes/tag__designer.md",
+   "charRange": [
+    15314,
+    15376
+   ],
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F-12",
+   "estrato": "semeado",
+   "id": null,
+   "semIdMapeado": true,
+   "arquivo": "fundamentos-visuais/estados.md",
+   "registrosComOMesmoTexto": [],
+   "rulesVazio": true,
+   "resultado": "casa",
+   "nota": "continua sem registro na base servida"
+  },
+  {
+   "spec": "D-01",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-component-button-7ef75d42ac65",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-02",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-cba01678f54a",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-02",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-5e5dd3d9b3cb",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-02",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-41850b4791b8",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-03",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-cba01678f54a",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-03",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-5e5dd3d9b3cb",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-03",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-41850b4791b8",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-03",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-5817ddd685a6",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-04",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-1c77d9289315",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-05",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-1c77d9289315",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-06",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-d3badaa7e5ca",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-07",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-8ca3df343265",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-08",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-9b31bc6b5b43",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-10",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-a399e39c0110",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-10",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-f12b1bae5784",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-11",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-735a059968e3",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-12",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-eae0553d6387",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-13",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-e77859710a44",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-14",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-d3badaa7e5ca",
+   "existe": true,
+   "resultado": "casa"
+  }
+ ]
+}

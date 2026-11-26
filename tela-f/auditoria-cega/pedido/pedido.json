@@ -1,0 +1,281 @@
+{
+ "titulo": "Auditoria de afirmações sobre uma página (processos do portal MPA, aplicação PNIP em modo mock)",
+ "pagina": {
+  "arvore": "F:/Dev Nath/TCC/.tmp-eval/corpus-tela-f/public/pnip-f/",
+  "rota": "/pnip-f/portal-mpa/processos?mock-perfil=mpa",
+  "comoServir": "node servir.mjs \"F:/Dev Nath/TCC/.tmp-eval/corpus-tela-f/public/pnip-f\" 3230  (este pacote; depois abrir http://127.0.0.1:3230/pnip-f/portal-mpa/processos?mock-perfil=mpa)",
+  "janela": "1280×900, Chromium, fuso America/Sao_Paulo; recarregar a página volta ao estado inicial"
+ },
+ "tarefa": [
+  "Para cada afirmação, alcance o estado indicado em `comoChegar`, ache o elemento (`elemento` é um seletor CSS; `>>>` entra no shadow root do hospedeiro) e verifique, medindo na página (estilo computado, caixas, texto), se a página mostra exatamente o que `aPaginaMostra` diz.",
+  "Responda por afirmação: `veredito` = `verdadeira` (a página mostra isso), `falsa` (a página não mostra isso) ou `indecidivel` (a frase não permite decidir pela página: diga o que falta); `medida` = o que você mediu; `clareza` = se a frase identifica sem ambiguidade o elemento, o estado e o fato (`clara` | `ambigua`, com o porquê).",
+  "A `norma` e a `documentacao` dizem de onde vem a expectativa; confira se o trecho citado existe no arquivo, mas o veredito é sobre a página. Não use nenhuma ferramenta de validação automática (validadores de design system, axe ou similares): só o navegador e a documentação.",
+  "Escreva as respostas em `respostas.json` ao lado deste arquivo, uma entrada por id, sem alterar nada no pedido."
+ ],
+ "afirmacoes": [
+  {
+   "id": "A-01",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "govbr-custom-pagination div.pagination-information",
+   "aPaginaMostra": "O texto \"1–9 de 9 itens\" da paginação está em azul rgb(19, 81, 180) (#1351b4), enquanto os rótulos \"Exibir\" e \"Página\" estão em rgb(51, 51, 51).",
+   "norma": "O texto dos módulos da Pagination tem cor --color-secondary-08.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/pagination__designer.md",
+    "trecho": "| Texto Módulos                           | color      | `--color-secondary-08` |"
+   }
+  },
+  {
+   "id": "A-02",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos table tbody td:nth-of-type(4)",
+   "aPaginaMostra": "Na coluna \"Tipo de Processo\" da tabela, o texto de cada célula fica numa linha só e é cortado na largura da coluna (white-space: nowrap; overflow: hidden): textos longos aparecem cortados, sem reticências.",
+   "norma": "O truncamento da Table pede reticências no fim do texto e o texto completo em tooltip.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/table__designer.md",
+    "trecho": "Os textos devem ser truncados exibindo as reticências no final. Ao passar o *mouse* sobre o texto truncado é revelado o texto completo pelo uso de *tooltip*."
+   }
+  },
+  {
+   "id": "A-03",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos table tbody td:nth-of-type(3) a",
+   "aPaginaMostra": "Os números de processo da coluna \"Nº Processo\" estão em rgb(0, 94, 162) (#005ea2), não no azul de interação.",
+   "norma": "O primeiro plano de um elemento interativo sobre fundo claro é --blue-warm-vivid-70.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/fundamentos-visuais/estados.md",
+    "trecho": "| background/foreground (Sobre um fundo Claro)  | color    | `--blue-warm-vivid-70` |"
+   }
+  },
+  {
+   "id": "A-04",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip input#total",
+   "aPaginaMostra": "O campo do seletor \"Exibir\" da paginação tem borda cinza visível (rgb(136, 136, 136)), enquanto o do seletor \"Página\" não tem contorno.",
+   "norma": "Nos módulos da Pagination com escolha, o input do select fica em densidade alta, sem contorno.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/pagination__designer.md",
+    "trecho": "deve-se utilizar o componente *select* personalizado, onde o seu *input* (Campo de Entrada de Texto) estará em densidade alta, sem contorno e pré definido"
+   }
+  },
+  {
+   "id": "A-05",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos div.tab-panel > div.col > div.row:first-of-type span.br-tag.interaction",
+   "aPaginaMostra": "A tag de interação \"Meus processos\" tem forma de pílula (border-radius ≥ 16 px), enquanto as tags de filtro da mesma barra têm cantos de 4 px.",
+   "norma": "O arredondamento da superfície da Tag de interação é --surface-rounder-sm.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/tag__designer.md",
+    "trecho": "### Arredondamento [*Tag* de Interação] […] | Superfície | top-left-bottom-right | `--surface-rounder-sm` |"
+   }
+  },
+  {
+   "id": "A-06",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-search-table-utils div.br-input > button.br-button",
+   "aPaginaMostra": "O botão da lupa (ação interna \"Buscar\") do campo de pesquisa da lista fica deslocado para baixo: o centro vertical dele está cerca de 26–28 px abaixo do centro do campo, e a lupa aparece fora da borda inferior do campo.",
+   "norma": "A ação interna do Input fica centralizada verticalmente no campo (--spacing-vertical-center).",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/input__designer.md",
+    "trecho": "| Ação interna                               | margin-top/bottom          | `--spacing-vertical-center` |"
+   }
+  },
+  {
+   "id": "A-07",
+   "comoChegar": "carregar a rota; clicar no campo do seletor \"Exibir\" da paginação (no rodapé da tabela) e esperar a lista de opções abrir",
+   "elemento": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip .br-list",
+   "aPaginaMostra": "A lista de opções do seletor \"Exibir\", aberta, flutua sobre a página sem sombra (box-shadow: none).",
+   "norma": "Uma sombra deve dar contraste entre a lista flutuante do Select e o conteúdo da tela ao fundo.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/select__designer.md",
+    "trecho": "O componente *list* será apresentado flutuando sobre a tela e uma sombra deve ser utilizada para proporcionar contraste entre o componente e o conteúdo de tela ao fundo."
+   }
+  },
+  {
+   "id": "A-08",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos br-button[label=Exportar] >>> button",
+   "aPaginaMostra": "O botão secundário \"Exportar\", no topo da página, tem cantos de 4 px.",
+   "norma": "A superfície do Button padrão tem arredondamento --surface-rounder-pill.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/button__designer.md",
+    "trecho": "| Superfície (Padrão) | border-radius | `--surface-rounder-pill` |"
+   }
+  },
+  {
+   "id": "A-09",
+   "comoChegar": "carregar a rota; clicar na tag de filtro \"Aberto há\" (barra de filtros acima da tabela), esperar a lista de opções e escolher \"Últimos 60 dias\"",
+   "elemento": "pnip-multiple-search-table-utils div.row.pl-2:not(.align-items-center) span.br-tag.interaction",
+   "aPaginaMostra": "Na tag do filtro escolhido (acima da barra de filtros), o botão de fechar (×) fica à esquerda, antes do ícone e do rótulo, e não na extremidade direita da tag.",
+   "norma": "Na Tag de interação, o ícone se alinha à esquerda e o botão terciário (fechar) à direita.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/tag__designer.md",
+    "trecho": "| Tertiary-button            | `--spacing-horizontal-right`  |"
+   }
+  },
+  {
+   "id": "A-10",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos table thead th:nth-of-type(8)",
+   "aPaginaMostra": "No cabeçalho da tabela, a célula \"Status\" tem fundo branco (rgb(255, 255, 255)), não o cinza rgb(240, 240, 240).",
+   "norma": "O fundo do header da Table é --gray-5.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/table__designer.md",
+    "trecho": "| Header da Tabela                  | background | `--gray-5`             |"
+   }
+  },
+  {
+   "id": "A-11",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-multiple-search-table-utils br-button[label=\"Limpar filtros\"] >>> button",
+   "aPaginaMostra": "O rótulo do botão \"Limpar filtros\" aparece em caixa alta, \"LIMPAR FILTROS\" (text-transform: uppercase no botão interno).",
+   "norma": "O rótulo do Button padrão não tem transformação de caixa (text-transform: none).",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/button__designer.md",
+    "trecho": "| Rótulo (Padrão) | `--font-size-scale-up-01` | `--font-weight-semi-bold` |     `none`     |"
+   }
+  },
+  {
+   "id": "A-12",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos table thead th:nth-of-type(7)",
+   "aPaginaMostra": "No cabeçalho da tabela, a célula \"Téc. Adm.\" tem fundo branco (rgb(255, 255, 255)), enquanto as demais células do cabeçalho têm fundo rgb(240, 240, 240).",
+   "norma": "O fundo do header da Table é --gray-5.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/table__designer.md",
+    "trecho": "| Header da Tabela                  | background | `--gray-5`             |"
+   }
+  },
+  {
+   "id": "A-13",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos > div.p-5 > div.d-flex.justify-content-end",
+   "aPaginaMostra": "O botão \"Voltar\", no fim da página, se sobrepõe à caixa do seletor \"Página\" da paginação (o contêiner dele tem margin-top: -20px): as duas áreas de interação ficam encavaladas, sem espaço entre elas.",
+   "norma": "A área de proteção do Button pede um espaçamento mínimo em relação aos componentes vizinhos.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/button__designer.md",
+    "trecho": "Quando o botão estiver próximo a algum outro componente, mantenha um espaçamento mínimo para que a o botão seja notado na tela e que sua área de interação não se confunda com as de outros componentes."
+   }
+  },
+  {
+   "id": "A-14",
+   "comoChegar": "carregar a rota; clicar no campo do seletor \"Exibir\" da paginação (no rodapé da tabela) e esperar a lista de opções abrir",
+   "elemento": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip .br-list .br-item.selected",
+   "aPaginaMostra": "Na lista do seletor \"Exibir\" aberta, o item selecionado (\"10\") tem fundo rgb(19, 81, 180) (#1351b4) com texto branco.",
+   "norma": "O fundo do estado Selecionado é --blue-warm-vivid-50 (#2670e8).",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/fundamentos-visuais/estados.md",
+    "trecho": "| background/foreground | color    | `--blue-warm-vivid-50` |"
+   }
+  },
+  {
+   "id": "A-15",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-multiple-search-table-utils div.row.align-items-center > div.col-auto.px-1:nth-child(2) > span.br-tag",
+   "aPaginaMostra": "A tag de filtro \"Tipo de processo\" tem forma de pílula (border-radius ≥ 16 px), não cantos de 4 px.",
+   "norma": "O arredondamento da superfície da Tag de interação é --surface-rounder-sm.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/tag__designer.md",
+    "trecho": "### Arredondamento [*Tag* de Interação] […] | Superfície | top-left-bottom-right | `--surface-rounder-sm` |"
+   }
+  },
+  {
+   "id": "A-16",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-multiple-search-table-utils div.row.align-items-center > div.col-auto.px-1:nth-child(3) > span.br-tag",
+   "aPaginaMostra": "O rótulo da tag de filtro \"Status\" quebra em duas linhas, e a tag fica mais alta que as vizinhas (mais de 32 px).",
+   "norma": "A Tag tem altura fixa e não admite mais de uma linha de texto.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/tag__designer.md",
+    "trecho": "O componente *tag* possui uma altura fixa e por isso não é permitida mais de uma linha de texto ou ícone no mesmo componente."
+   }
+  },
+  {
+   "id": "A-17",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos table tbody td:nth-of-type(5)",
+   "aPaginaMostra": "Na coluna \"Solicitante\" da tabela, o texto de cada célula fica numa linha só e é cortado na largura da coluna (white-space: nowrap; overflow: hidden; text-overflow: clip): nomes longos aparecem cortados no meio da palavra, sem reticências, e a célula não tem title nem tooltip com o texto completo.",
+   "norma": "O truncamento da Table pede reticências no fim do texto e o texto completo em tooltip.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/table__designer.md",
+    "trecho": "Os textos devem ser truncados exibindo as reticências no final. Ao passar o *mouse* sobre o texto truncado é revelado o texto completo pelo uso de *tooltip*."
+   }
+  },
+  {
+   "id": "A-18",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos table tbody br-button[title=Assinar] >>> button",
+   "aPaginaMostra": "Os botões \"Assinar\" da coluna de ações têm cantos de 4 px, não forma de pílula.",
+   "norma": "A superfície do Button padrão tem arredondamento --surface-rounder-pill.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/button__designer.md",
+    "trecho": "| Superfície (Padrão) | border-radius | `--surface-rounder-pill` |"
+   }
+  },
+  {
+   "id": "A-19",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-header .br-avatar .content",
+   "aPaginaMostra": "O avatar de letra do cabeçalho (\"U\") é um quadrado de 40×40 com cantos de 4 px, não um círculo.",
+   "norma": "A representação do usuário no Avatar fica contida numa superfície circular.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/avatar__designer.md",
+    "trecho": "A representação do usuário deve estar contida em uma superfície circular."
+   }
+  },
+  {
+   "id": "A-20",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos table tbody td",
+   "aPaginaMostra": "As células do corpo da tabela têm padding-top e padding-bottom de 12 px; o cabeçalho tem 16 px.",
+   "norma": "As linhas da Table têm espaçamento vertical de 8 px (densidade alta), 16 px (padrão) ou 24 px (baixa).",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/table__designer.md",
+    "trecho": "| Linhas (Densidade Padrão)             | padding-top    |  `--spacing-scale-2x`  |"
+   }
+  },
+  {
+   "id": "A-21",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos br-button[label=Exportar] >>> button",
+   "aPaginaMostra": "O botão \"Exportar\" tem margens internas laterais de 8 px (padding-left e padding-right), apertando o rótulo contra as bordas.",
+   "norma": "O botão cresce com o rótulo, mas as margens internas devem ser respeitadas.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/button__designer.md",
+    "trecho": "**Importante:** o crescimento do botão deve acompanhar o tamanho do rótulo, porém as margens internas devem ser respeitadas."
+   }
+  },
+  {
+   "id": "A-22",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos > div.p-5 > div.d-flex.justify-content-end > button.br-button.secondary",
+   "aPaginaMostra": "O botão secundário \"Voltar\" tem cantos de 4 px, enquanto o outro botão secundário da página, \"Exportar\", tem forma de pílula.",
+   "norma": "A superfície do Button padrão tem arredondamento --surface-rounder-pill.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/button__designer.md",
+    "trecho": "| Superfície (Padrão) | border-radius | `--surface-rounder-pill` |"
+   }
+  },
+  {
+   "id": "A-23",
+   "comoChegar": "carregar a rota e esperar a tabela de processos (estado inicial, aba \"Tramitando\")",
+   "elemento": "pnip-mpa-processos br-button[label=Exportar] >>> button",
+   "aPaginaMostra": "O rótulo do botão \"Exportar\" aparece em caixa alta, \"EXPORTAR\" (text-transform: uppercase).",
+   "norma": "O rótulo do Button padrão não tem transformação de caixa (text-transform: none).",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/button__designer.md",
+    "trecho": "| Rótulo (Padrão) | `--font-size-scale-up-01` | `--font-weight-semi-bold` |     `none`     |"
+   }
+  },
+  {
+   "id": "A-24",
+   "comoChegar": "carregar a rota; clicar na tag de filtro \"Aberto há\" (barra de filtros acima da tabela) e esperar a lista de opções abrir",
+   "elemento": "pnip-multiple-search-table-utils div.br-select > div.br-list",
+   "aPaginaMostra": "A lista de opções do filtro \"Aberto há\", aberta, flutua sobre a tabela sem sombra (box-shadow: none).",
+   "norma": "Uma sombra deve dar contraste entre a lista flutuante do Select e o conteúdo da tela ao fundo.",
+   "documentacao": {
+    "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/componentes/select__designer.md",
+    "trecho": "O componente *list* será apresentado flutuando sobre a tela e uma sombra deve ser utilizada para proporcionar contraste entre o componente e o conteúdo de tela ao fundo."
+   }
+  }
+ ]
+}

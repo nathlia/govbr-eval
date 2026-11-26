@@ -1,0 +1,507 @@
+{
+ "_meta": {
+  "rota": "/pnip-f/portal-mpa/processos?mock-perfil=mpa",
+  "viewport": "1280x900",
+  "navegador": "Chromium headless (Playwright do govbr-eval)",
+  "semOraculo": true,
+  "semAxe": true,
+  "arvores": {
+   "sem-semente": "F:/Dev Nath/TCC/.tmp-eval/pnip-f-sem-semente",
+   "semeada": "F:/Dev Nath/TCC/.tmp-eval/pnip-f-semeada"
+  },
+  "geradoEm": "2026-11-26T09:10:42.408Z",
+  "aplicacao": "aplicar-mudancas.mjs: troca literal no fonte, fim de linha CRLF preservado; 7 arquivos",
+  "builds": {
+   "semSemente": "e694a39f30ec7f619f6cb5346551614641089b666eb80656889bbb5cd812744c",
+   "semeada": "195f1e47b4dea2fb0281d47de0f35e2de59d9048e01eace8b57bc45a453955b0",
+   "deterministico": "2 builds limpos da semeada, mesma lista"
+  },
+  "independencia": "Não medida uma a uma (exigiria 12 builds). Argumento pelo diff (diferencas-atribuidas.json): toda diferença de estilo/atributo/estrutura cai na zona de uma única entrada, exceto duas sobreposições de elemento sem sobreposição de propriedade: a célula do solicitante (F-01: max-width/overflow/text-wrap; F-09: padding vertical) e o contêiner/botão Voltar (F-03: margem do contêiner; F-04: o próprio botão). As demais diferenças são de tamanho em ancestrais (propagação de layout). Cada conferência mede uma grandeza local ao elemento (estilo computado, ou posição relativa a um vizinho que nenhuma outra entrada move: campo de busca, paginação, filhos da tag).",
+  "funcionamento": "funcionamento.json: mesma sequência nos dois builds (linhas inicial/filtro/remoção/busca/limpar busca/meus processos/página 2/exibir 25/abas) com contagens idênticas; 0 requisições externas, 0 erros de página, 0 respostas >= 400 em todos os estados"
+ },
+ "resumo": {
+  "pegou": 12,
+  "de": 12,
+  "naoPegou": []
+ },
+ "mudancas": [
+  {
+   "id": "F-01",
+   "estado": "inicial",
+   "medidoSemeado": {
+    "coluna": 4,
+    "celulas": [
+     {
+      "whiteSpace": "nowrap",
+      "overflow": "hidden",
+      "textOverflow": "clip",
+      "scrollWidth": 332,
+      "clientWidth": 120
+     },
+     {
+      "whiteSpace": "nowrap",
+      "overflow": "hidden",
+      "textOverflow": "clip",
+      "scrollWidth": 454,
+      "clientWidth": 120
+     },
+     {
+      "whiteSpace": "nowrap",
+      "overflow": "hidden",
+      "textOverflow": "clip",
+      "scrollWidth": 206,
+      "clientWidth": 120
+     },
+     {
+      "whiteSpace": "nowrap",
+      "overflow": "hidden",
+      "textOverflow": "clip",
+      "scrollWidth": 214,
+      "clientWidth": 120
+     },
+     {
+      "whiteSpace": "nowrap",
+      "overflow": "hidden",
+      "textOverflow": "clip",
+      "scrollWidth": 340,
+      "clientWidth": 120
+     },
+     {
+      "whiteSpace": "nowrap",
+      "overflow": "hidden",
+      "textOverflow": "clip",
+      "scrollWidth": 210,
+      "clientWidth": 120
+     },
+     {
+      "whiteSpace": "nowrap",
+      "overflow": "hidden",
+      "textOverflow": "clip",
+      "scrollWidth": 371,
+      "clientWidth": 120
+     },
+     {
+      "whiteSpace": "nowrap",
+      "overflow": "hidden",
+      "textOverflow": "clip",
+      "scrollWidth": 348,
+      "clientWidth": 120
+     },
+     {
+      "whiteSpace": "nowrap",
+      "overflow": "hidden",
+      "textOverflow": "clip",
+      "scrollWidth": 187,
+      "clientWidth": 120
+     }
+    ]
+   },
+   "medidoSemSemente": {
+    "coluna": 4,
+    "celulas": [
+     {
+      "whiteSpace": "normal",
+      "overflow": "visible",
+      "textOverflow": "clip",
+      "scrollWidth": 120,
+      "clientWidth": 120
+     },
+     {
+      "whiteSpace": "normal",
+      "overflow": "visible",
+      "textOverflow": "clip",
+      "scrollWidth": 120,
+      "clientWidth": 120
+     },
+     {
+      "whiteSpace": "normal",
+      "overflow": "visible",
+      "textOverflow": "clip",
+      "scrollWidth": 120,
+      "clientWidth": 120
+     },
+     {
+      "whiteSpace": "normal",
+      "overflow": "visible",
+      "textOverflow": "clip",
+      "scrollWidth": 120,
+      "clientWidth": 120
+     },
+     {
+      "whiteSpace": "normal",
+      "overflow": "visible",
+      "textOverflow": "clip",
+      "scrollWidth": 120,
+      "clientWidth": 120
+     },
+     {
+      "whiteSpace": "normal",
+      "overflow": "visible",
+      "textOverflow": "clip",
+      "scrollWidth": 120,
+      "clientWidth": 120
+     },
+     {
+      "whiteSpace": "normal",
+      "overflow": "visible",
+      "textOverflow": "clip",
+      "scrollWidth": 120,
+      "clientWidth": 120
+     },
+     {
+      "whiteSpace": "normal",
+      "overflow": "visible",
+      "textOverflow": "clip",
+      "scrollWidth": 120,
+      "clientWidth": 120
+     },
+     {
+      "whiteSpace": "normal",
+      "overflow": "visible",
+      "textOverflow": "clip",
+      "scrollWidth": 120,
+      "clientWidth": 120
+     }
+    ]
+   },
+   "violadoNoSemeado": true,
+   "conformeNoSemSemente": true,
+   "veredito": "pegou",
+   "implementacao": "como na lista (aplicar-mudancas.mjs), sem alternativa"
+  },
+  {
+   "id": "F-02",
+   "estado": "inicial",
+   "medidoSemeado": {
+    "campo": {
+     "top": 402.265625,
+     "bottom": 434.265625
+    },
+    "botao": {
+     "top": 430.265625,
+     "bottom": 462.265625
+    },
+    "centroBotaoMenosCentroCampo": 28
+   },
+   "medidoSemSemente": {
+    "campo": {
+     "top": 418.265625,
+     "bottom": 450.265625
+    },
+    "botao": {
+     "top": 420.265625,
+     "bottom": 452.265625
+    },
+    "centroBotaoMenosCentroCampo": 2
+   },
+   "violadoNoSemeado": true,
+   "conformeNoSemSemente": true,
+   "veredito": "pegou",
+   "implementacao": "como na lista (aplicar-mudancas.mjs), sem alternativa"
+  },
+  {
+   "id": "F-03",
+   "estado": "inicial",
+   "medidoSemeado": {
+    "distanciaPaginacaoVoltar": -20,
+    "intersectaCampoPagina": true,
+    "voltar": [
+     1091,
+     1663,
+     97,
+     40
+    ],
+    "campoPagina": [
+     1092,
+     1647,
+     88,
+     32
+    ]
+   },
+   "medidoSemSemente": {
+    "distanciaPaginacaoVoltar": 24,
+    "intersectaCampoPagina": false,
+    "voltar": [
+     1091,
+     1885,
+     97,
+     40
+    ],
+    "campoPagina": [
+     1092,
+     1825,
+     88,
+     32
+    ]
+   },
+   "violadoNoSemeado": true,
+   "conformeNoSemSemente": true,
+   "veredito": "pegou",
+   "implementacao": "como na lista (aplicar-mudancas.mjs), sem alternativa"
+  },
+  {
+   "id": "F-04",
+   "estado": "inicial",
+   "medidoSemeado": {
+    "elemento": "button.br-button.secondary",
+    "luzDom": true,
+    "texto": "Voltar",
+    "borderRadius": "4px",
+    "exportarBorderRadius": "1680px",
+    "cliqueVolta": true
+   },
+   "medidoSemSemente": {
+    "elemento": "br-button",
+    "luzDom": false,
+    "texto": "Voltar",
+    "borderRadius": "1680px",
+    "exportarBorderRadius": "1680px",
+    "cliqueVolta": true
+   },
+   "violadoNoSemeado": true,
+   "conformeNoSemSemente": true,
+   "veredito": "pegou",
+   "implementacao": "como na lista (aplicar-mudancas.mjs), sem alternativa"
+  },
+  {
+   "id": "F-05",
+   "estado": "inicial",
+   "medidoSemeado": {
+    "meusProcessos": "16783.2px",
+    "tagsDeFiltro": [
+     "4px"
+    ]
+   },
+   "medidoSemSemente": {
+    "meusProcessos": "4px",
+    "tagsDeFiltro": [
+     "4px"
+    ]
+   },
+   "violadoNoSemeado": true,
+   "conformeNoSemSemente": true,
+   "veredito": "pegou",
+   "implementacao": "como na lista (aplicar-mudancas.mjs), sem alternativa"
+  },
+  {
+   "id": "F-06",
+   "estado": "inicial",
+   "medidoSemeado": [
+    {
+     "th": "Aberto há",
+     "bg": "rgb(240, 240, 240)"
+    },
+    {
+     "th": "",
+     "bg": "rgb(240, 240, 240)"
+    },
+    {
+     "th": "Nº Processo",
+     "bg": "rgb(240, 240, 240)"
+    },
+    {
+     "th": "Tipo de Processo",
+     "bg": "rgb(240, 240, 240)"
+    },
+    {
+     "th": "Solicitante",
+     "bg": "rgb(240, 240, 240)"
+    },
+    {
+     "th": "Analista",
+     "bg": "rgb(240, 240, 240)"
+    },
+    {
+     "th": "Téc. Adm.",
+     "bg": "rgb(255, 255, 255)"
+    },
+    {
+     "th": "Status",
+     "bg": "rgb(240, 240, 240)"
+    },
+    {
+     "th": "",
+     "bg": "rgb(240, 240, 240)"
+    }
+   ],
+   "medidoSemSemente": [
+    {
+     "th": "Aberto há",
+     "bg": "rgb(240, 240, 240)"
+    },
+    {
+     "th": "",
+     "bg": "rgb(240, 240, 240)"
+    },
+    {
+     "th": "Nº Processo",
+     "bg": "rgb(240, 240, 240)"
+    },
+    {
+     "th": "Tipo de Processo",
+     "bg": "rgb(240, 240, 240)"
+    },
+    {
+     "th": "Solicitante",
+     "bg": "rgb(240, 240, 240)"
+    },
+    {
+     "th": "Analista",
+     "bg": "rgb(240, 240, 240)"
+    },
+    {
+     "th": "Téc. Adm.",
+     "bg": "rgb(240, 240, 240)"
+    },
+    {
+     "th": "Status",
+     "bg": "rgb(240, 240, 240)"
+    },
+    {
+     "th": "",
+     "bg": "rgb(240, 240, 240)"
+    }
+   ],
+   "violadoNoSemeado": true,
+   "conformeNoSemSemente": true,
+   "veredito": "pegou",
+   "implementacao": "como na lista (aplicar-mudancas.mjs), sem alternativa"
+  },
+  {
+   "id": "F-07",
+   "estado": "inicial",
+   "medidoSemeado": {
+    "borderRadius": "4px"
+   },
+   "medidoSemSemente": {
+    "borderRadius": "50%"
+   },
+   "violadoNoSemeado": true,
+   "conformeNoSemSemente": true,
+   "veredito": "pegou",
+   "implementacao": "como na lista (aplicar-mudancas.mjs), sem alternativa"
+  },
+  {
+   "id": "F-08",
+   "estado": "inicial",
+   "medidoSemeado": {
+    "textTransform": "uppercase",
+    "textoRenderizado": "LIMPAR FILTROS"
+   },
+   "medidoSemSemente": {
+    "textTransform": "none",
+    "textoRenderizado": "Limpar filtros"
+   },
+   "violadoNoSemeado": true,
+   "conformeNoSemSemente": true,
+   "veredito": "pegou",
+   "implementacao": "como na lista (aplicar-mudancas.mjs), sem alternativa"
+  },
+  {
+   "id": "F-09",
+   "estado": "inicial",
+   "medidoSemeado": {
+    "td": [
+     "12px/24px/12px/24px"
+    ],
+    "nTd": 81,
+    "th": [
+     "16px/24px/16px/24px"
+    ]
+   },
+   "medidoSemSemente": {
+    "td": [
+     "16px/24px/16px/24px"
+    ],
+    "nTd": 81,
+    "th": [
+     "16px/24px/16px/24px"
+    ]
+   },
+   "violadoNoSemeado": true,
+   "conformeNoSemSemente": true,
+   "veredito": "pegou",
+   "implementacao": "como na lista (aplicar-mudancas.mjs), sem alternativa"
+  },
+  {
+   "id": "F-10",
+   "estado": "filtro-aberto",
+   "medidoSemeado": {
+    "boxShadow": "none"
+   },
+   "medidoSemSemente": {
+    "boxShadow": "rgba(0, 0, 0, 0.16) 0px 3px 6px 0px"
+   },
+   "violadoNoSemeado": true,
+   "conformeNoSemSemente": true,
+   "veredito": "pegou",
+   "implementacao": "como na lista (aplicar-mudancas.mjs), sem alternativa"
+  },
+  {
+   "id": "F-11",
+   "estado": "filtro-escolhido",
+   "medidoSemeado": {
+    "botao": 116,
+    "icone": 144,
+    "rotulo": 172,
+    "ordemDom": [
+     "button",
+     "i",
+     "span"
+    ],
+    "removeFiltro": true
+   },
+   "medidoSemSemente": {
+    "botao": 294,
+    "icone": 104,
+    "rotulo": 132,
+    "ordemDom": [
+     "i",
+     "span",
+     "button"
+    ],
+    "removeFiltro": true
+   },
+   "violadoNoSemeado": true,
+   "conformeNoSemSemente": true,
+   "veredito": "pegou",
+   "implementacao": "como na lista (aplicar-mudancas.mjs), sem alternativa"
+  },
+  {
+   "id": "F-12",
+   "estado": "lista-exibir",
+   "medidoSemeado": {
+    "exibir": {
+     "listaVisivel": true,
+     "item": "10",
+     "bg": "rgb(19, 81, 180)",
+     "cor": "rgb(255, 255, 255)"
+    },
+    "pagina": {
+     "listaVisivel": false,
+     "item": "1",
+     "bg": "rgb(38, 112, 232)",
+     "cor": "rgb(255, 255, 255)"
+    }
+   },
+   "medidoSemSemente": {
+    "exibir": {
+     "listaVisivel": true,
+     "item": "10",
+     "bg": "rgb(38, 112, 232)",
+     "cor": "rgb(255, 255, 255)"
+    },
+    "pagina": {
+     "listaVisivel": false,
+     "item": "1",
+     "bg": "rgb(38, 112, 232)",
+     "cor": "rgb(255, 255, 255)"
+    }
+   },
+   "violadoNoSemeado": true,
+   "conformeNoSemSemente": true,
+   "veredito": "pegou",
+   "implementacao": "como na lista (aplicar-mudancas.mjs), sem alternativa"
+  }
+ ]
+}

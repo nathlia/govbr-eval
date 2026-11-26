@@ -24,7 +24,7 @@ const ler = p => readFileSync(join(RAIZ, p));
 const dBuf = ler("ground-truth-processos-1.1.0.json"), D = JSON.parse(dBuf);
 const compBuf = ler("tela-f/composicao.json"), comp = JSON.parse(compBuf);
 const clBuf = ler("tela-f/clausulas-oraculo.json"), cl = JSON.parse(clBuf);
-const confBuf = ler("tela-d/conformes.json"), conformes = JSON.parse(confBuf);
+const confBuf = ler("tela-f/conformes.json"), conformes = JSON.parse(confBuf);
 const ALA = "/pnip-f/portal-mpa/processos";
 
 // ---------- estados ----------
@@ -55,7 +55,7 @@ const S = {
   "F-01": { anchor: "pnip-mpa-processos table tbody td:nth-of-type(5)", scope: "todos", expectedCount: 9, state: "inicial",
     acceptance: { kind: "estilo-computado", properties: ["white-space", "overflow-x", "text-overflow"], forbidden: ["nowrap", "hidden", "clip"], quantifier: "todas",
       note: "Valores medidos nas células do solicitante: texto em uma linha, cortado pelo overflow, sem reticências. Sustenta só quando as três propriedades estão nesses valores (texto truncado sem reticências)." },
-    description: "Coluna \"Solicitante\" da tabela (9 células): o texto fica numa linha só, cortado numa largura máxima de 90 px (white-space: nowrap; overflow: hidden; text-overflow: clip). Nomes longos aparecem cortados no meio da palavra, sem reticências, e a célula não tem title nem tooltip que mostre o texto completo (scrollWidth > clientWidth). O truncamento da Table pede reticências no fim do texto e o texto completo em tooltip." },
+    description: "Coluna \"Solicitante\" da tabela (9 células): o texto fica numa linha só e é cortado na largura da coluna (white-space: nowrap; overflow: hidden; text-overflow: clip). Nomes longos aparecem cortados no meio da palavra, sem reticências, e a célula não tem title nem tooltip que mostre o texto completo (scrollWidth > clientWidth). O truncamento da Table pede reticências no fim do texto e o texto completo em tooltip." },
   "F-02": { anchor: "pnip-search-table-utils div.br-input > button.br-button", scope: "unico", expectedCount: 1, state: "inicial",
     acceptance: { kind: "estilo-computado", properties: ["margin-top"], forbidden: ["-12px"], note: "Margem medida no botão da ação interna; com ela o centro do botão fica ~26–28 px abaixo do centro do campo." },
     description: "Ação interna \"Buscar\" do campo de pesquisa da lista: o botão da lupa (32×32) fica deslocado para baixo do campo — o centro vertical dele está cerca de 26–28 px abaixo do centro vertical do campo, e a lupa aparece fora da borda inferior do campo. A ação interna do Input fica centralizada verticalmente no campo (--spacing-vertical-center)." },
@@ -102,7 +102,6 @@ const semId = Object.fromEntries(comp.semeadas.filter(s => s.semIdMapeado).map(s
 
 const naturais = D.violations.map(v => JSON.parse(JSON.stringify(v)));
 const exp = D._meta.exposto.specs;
-const tocados = { "K-06": "F-06 (mesmo th, fundo)", "K-11": "F-12 (o item selecionado é um dos 4 br-item)", "K-12": "F-12 (o item selecionado é um dos 4 br-item)" };
 
 const ref = {
   _meta: {
@@ -130,10 +129,10 @@ const ref = {
       specs: semId,
     },
     conformes: {
-      nota: "Rascunho: os 12 controles da D (tela-d/conformes.json, sha256 " + sha(confBuf) + "), a re-medir na página semeada. Os marcados em `tocadosPorSemeada` têm elemento participante de uma spec semeada e serão trocados pelo procedimento de tela-d/sortear-conformes.mjs (não à mão) antes do congelamento.",
-      origem: "tela-d/conformes.json",
-      itens: conformes.itens,
-      tocadosPorSemeada: tocados,
+      nota: "Controles conformes (protocolo NAT-78 § 5.2: denominador da taxa de falso alarme). Procedimento da D (tela-d/sortear-conformes.mjs) com as âncoras das semeadas somadas à exclusão de elemento-âncora: saem K-06, K-11 e K-12 da D (elemento participante de semeada), entra breadcrumb-orientacao; 10 elegíveis ≤ 12, sem sorteio. Re-medidos na página semeada pelo código da D (tela-f/remedida-d/semeada.log). Arquivo irmão com sha256.",
+      arquivo: "tela-f/conformes.json",
+      sha256: sha(confBuf),
+      itens: conformes.itens.map(({ id, deD, state, selector, count, rules, medida }) => ({ id, deD, state, selector, count, rules, medida })),
     },
     fundo: D._meta.fundo,
     fora_de_escopo: "Como na D (abaixo), menos o que os estados novos trazem para dentro: a lista aberta do filtro \"Aberto há\" e a tag do filtro escolhido (\"Últimos 60 dias\") são paradas da F. Fora continuam: abas \"Aguardando análise\"/\"Concluídos\", \"Meus processos\" desligado, outros filtros e opções, troca de página, \"Exportar\", \"Ver processo\", números de processo, breadcrumb e \"Voltar\" (navegam ou recarregam), os dois SweetAlert2, menu do avatar, a rota de vistorias atravessada pela navegação (segmento 2, sem parada), outras janelas e zoom, linguagem e microcopy, conteúdo das fixtures, regras só da base literal. Texto da D: " + D._meta.fora_de_escopo,
@@ -143,7 +142,10 @@ const ref = {
       referenciaD: { arquivo: "ground-truth-processos-1.1.0.json", version: D._meta.version, sha256: sha(dBuf) },
       composicao: { arquivo: "tela-f/composicao.json", sha256: sha(compBuf) },
       clausulas: { arquivo: "tela-f/clausulas-oraculo.json", sha256: sha(clBuf) },
-      construcao: "tela-f/construcao/ (agente de construção; evidência a citar no congelamento)",
+      construcao: "tela-f/construcao/ (12/12 pegaram; conferencia-construcao.json, diferencas-atribuidas.json, pagina-congelada.json: lista 195f1e47…)",
+      remedidaNaturais: "tela-f/remedida-d/ (código da D na ala pnip-f: evidência das 13 naturais idêntica entre o build sem semente e o semeado)",
+      lacunas: "tela-f/lacunas-construcao.json",
+      idsNaBase: "tela-f/conferencia-ids-base.json",
     },
   },
   violations: [...semeadas, ...naturais],

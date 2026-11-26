@@ -1,0 +1,195 @@
+{
+ "_meta": {
+  "semente": "tela-f/auditoria-cega 2026-11-26 (gravada antes de montar o pedido)",
+  "ordem": "sha256(semente|origem) crescente",
+  "pedidoSha256": "4f562dc6a06de0342fba56d46b3c91232ea5585817e63913e4351fd7d5c8b5bd",
+  "data": "2026-11-26",
+  "regra": "iscas escritas e medidas falsas na página antes de qualquer resposta; nada da chave vai para pedido/",
+  "pagina": "http://127.0.0.1:3219"
+ },
+ "afirmacoes": [
+  {
+   "id": "A-01",
+   "origem": "I-11",
+   "tipo": "isca",
+   "medidaNaPagina": "rgb(51, 51, 51)",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-02",
+   "origem": "I-05",
+   "tipo": "isca",
+   "medidaNaPagina": [
+    "normal/visible/false",
+    "normal/visible/false",
+    "normal/visible/false",
+    "normal/visible/false",
+    "normal/visible/false",
+    "normal/visible/false",
+    "normal/visible/false",
+    "normal/visible/false",
+    "normal/visible/false"
+   ],
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-03",
+   "origem": "I-12",
+   "tipo": "isca",
+   "medidaNaPagina": [
+    "rgb(19, 81, 180)",
+    "rgb(19, 81, 180)",
+    "rgb(19, 81, 180)",
+    "rgb(19, 81, 180)",
+    "rgb(19, 81, 180)",
+    "rgb(19, 81, 180)",
+    "rgb(19, 81, 180)",
+    "rgb(19, 81, 180)",
+    "rgb(19, 81, 180)"
+   ],
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-04",
+   "origem": "I-10",
+   "tipo": "isca",
+   "medidaNaPagina": "rgba(0, 0, 0, 0)",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-05",
+   "origem": "F-05",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-06",
+   "origem": "F-02",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-07",
+   "origem": "I-06",
+   "tipo": "isca",
+   "medidaNaPagina": "rgba(0, 0, 0, 0.16) 0px 3px 6px 0px",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-08",
+   "origem": "I-01",
+   "tipo": "isca",
+   "medidaNaPagina": "1680px",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-09",
+   "origem": "F-11",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-10",
+   "origem": "I-04",
+   "tipo": "isca",
+   "medidaNaPagina": "rgb(240, 240, 240)",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-11",
+   "origem": "F-08",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-12",
+   "origem": "F-06",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-13",
+   "origem": "F-03",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-14",
+   "origem": "F-12",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-15",
+   "origem": "I-03",
+   "tipo": "isca",
+   "medidaNaPagina": "4px",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-16",
+   "origem": "I-08",
+   "tipo": "isca",
+   "medidaNaPagina": {
+    "texto": "Status",
+    "altura": 32
+   },
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-17",
+   "origem": "F-01",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-18",
+   "origem": "I-09",
+   "tipo": "isca",
+   "medidaNaPagina": [
+    "1680px",
+    "1680px",
+    "1680px"
+   ],
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-19",
+   "origem": "F-07",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-20",
+   "origem": "F-09",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-21",
+   "origem": "I-07",
+   "tipo": "isca",
+   "medidaNaPagina": "24px/24px",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-22",
+   "origem": "F-04",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-23",
+   "origem": "I-02",
+   "tipo": "isca",
+   "medidaNaPagina": "none",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-24",
+   "origem": "F-10",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  }
+ ]
+}

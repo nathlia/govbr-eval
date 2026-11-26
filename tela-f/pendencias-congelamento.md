@@ -1,52 +1,59 @@
-# Tela F — o que falta para congelar a referência (depois que o build semeado existir)
+# Tela F: o que falta para congelar a referência
 
-Rascunho atual: `ground-truth-processos-f.json` 1.0.0, montado por `tela-f/montar-referencia-rascunho.mjs`.
-Nada aqui roda oráculo ou axe na página F, e nenhum passo chama modelo, exceto os auditores e os classificadores
-cegos (itens 6 e 7).
+Estado em 26/11/2026, depois da construção. Na referência `ground-truth-processos-f.json` 1.0.0 (RASCUNHO), a parte
+medível está fechada. Faltam os passos que dependem de agentes cegos e o fechamento.
 
-1. **Build e evidência da construção.** Ler `tela-f/construcao/` quando o coordenador disser que a construção acabou.
-   Uma semeada que não pegou sai e entra a reserva (`lista-de-mudancas-reserva.json`, `podeSubstituir`). A
-   referência é remontada com `node tela-f/montar-referencia-rascunho.mjs --forcar`, depois de escrever no
-   script a spec da substituta (âncora, estado, predicado e descrição), a partir de `composicao.json`.
-2. **`conferir:referencia` no build semeado servido.** Rodar `node tela-f/servir.mjs <árvore semeada> 3219` e
-   `APP_URL=http://127.0.0.1:3219 npx tsx scripts/check-reference.ts --tela processos-f`. A entrada
-   `processos-f` de `telas.json` é da bancada. Se ainda não existir, usar uma entrada temporária, sem commit, como
-   foi feito no rascunho. Critério para passar: 0 problemas. Todos os predicados das semeadas têm de dar
-   **sustenta**; as âncoras e contagens têm de bater em todas as specs; os 4 estados e os 2 segmentos
-   (aditividade, `path`, sem recarga, cada parada estável por 1 s) também.
-   - Contrafactual, já feito no build sem semente (`conferir-referencia-sem-semente-rascunho.log`): os 11 predicados
-     dão **refuta**; as 13 naturais resolvem com as contagens da D; nenhum problema de estado. A âncora da F-04 não
-     casa no build sem semente, e isso é esperado: o elemento só existe no semeado. Repetir no fim com a
-     referência final.
-3. **Âncoras e a árvore da navegação.** Conferir na página semeada que a árvore do segmento 3 (depois da ida e
-   volta) é a de uma entrada direta na rota com os mesmos passos. O scanner entra direto (`entradaDireta`), e o
-   preflight e o manifesto da coleta recusam se as duas divergirem. No build sem semente: 590 = 590, nenhuma
-   diferença (`explorar-estados.json`).
-4. **Re-medida das naturais (D-01…D-14) na página semeada.** Usar o código da D (`tela-d/conferir-auditoria.mjs`)
-   apontado para a ala `pnip-f`. Toda unidade natural tem de continuar violada e com a mesma âncora e contagem.
-   Se mudar, é **achado de coviolação a relatar**, e nada se ajusta em silêncio. Pontos de atenção, porque o
-   elemento é o mesmo de uma semeada, mas com outra propriedade: D-03 × F-05 (tag "Meus processos") e
-   D-14 × F-07 (avatar).
-5. **Controles conformes.** Re-medir os 12 de `tela-d/conformes.json` na página semeada. Três têm elemento que
-   participa de uma semeada: K-06 (F-06), K-11 e K-12 (F-12). Esses três saem e são repostos pelo procedimento
-   de `tela-d/sortear-conformes.mjs`, nunca à mão. O procedimento acrescenta às exclusões as âncoras das semeadas
-   e grava uma semente nova antes do sorteio. Depois, gravar `_meta.conformes` e o arquivo irmão com sha256.
-6. **Duas auditorias cegas das descrições das semeadas.** A pergunta é se cada spec está escrita de modo que um
-   juiz consiga decidir pela página. Os auditores recebem só a descrição, o estado e a página, sem nível, sem
-   cláusula e sem saber que houve semeadura. Divergência vai para a autora ou para o coordenador. Se uma descrição
-   mudar, mudam juntos `criterios-de-julgamento-sem-predicado.json` (F-11 e as linhas das outras).
-7. **Classes NAT-71 por dois classificadores cegos** para as 12 semeadas, com a autora nos desacordos. As naturais
-   mantêm as classes da D. Depois, gravar `_meta.classes`.
-8. **Conferência de ids contra a base servida.** Seguir o molde de `tela-e2/conferir-ids-base.mjs`, lendo só id,
-   texto e fonte de `govbr-ds-validator` na tag `congelado-3.7.12`. Cada id de `rules` das semeadas tem de existir
-   com o texto que `clausulas-oraculo.json` ligou. Para a F-12 (`_meta.semIdMapeado`), confirmar que continua sem
-   registro. As naturais mantêm a migração da D 1.1.0.
-9. **Fechar e congelar.**
-   - Tirar "RASCUNHO" de `_meta.status` e preencher `_meta.evidencia` (construção e re-medida) e `_meta.auditoria`.
-   - Rodar `npx tsx tela-d/classes-d156.ts --referencia ground-truth-processos-f.json --saida tela-f/classes-d156-1.0.0.json`.
-     O teste a seco no rascunho deu as 12 semeadas como `ds`, com 13 ds e 8 geral entre as 21 não expostas.
-   - Rodar `node tela-f/niveis.mjs --selar`, que grava o sha256 da referência congelada.
-   - Preencher o sha256 da referência em `criterios-de-julgamento-sem-predicado.json` e em `sem-id-mapeado-1.0.0.json`.
+## Feito
+
+1. **Construção.** As 12 mudanças pegaram, sem nenhuma diferença sem atribuição. A evidência está em `construcao/`,
+   commitada. As 12 entradas do diff do fonte (`pnip-mock` 3d02f68..f8905a8) são as da `lista-de-mudancas.json`, uma
+   a uma; a da F-11 é a reordenação equivalente.
+2. **`check-reference` no build semeado servido** (`conferir-referencia-semeada.log`): 0 problemas. Foram 4 estados
+   em 2 segmentos, 25 specs e 77 unidades, com todas as âncoras resolvendo. Os 11 predicados sustentam. As 13
+   naturais têm as contagens da D (57 unidades). O contrafactual no build sem semente está em
+   `conferir-referencia-sem-semente-rascunho.log`, com os 11 predicados refutando.
+3. **Re-medida das naturais e dos controles** com o código da D (`remedida-d/`, cópia com trocas só de ala e caminho;
+   ver `preparar.mjs`). Rodou nos dois builds:
+   - A evidência das 13 naturais é byte a byte igual entre o build sem semente e o semeado. Não há nenhuma
+     coviolação.
+   - As falhas que aparecem nos dois builds são esperadas, porque a ala não é a pnip-d: bytes/manifesto,
+     `_meta.states`/`path` e o destino da D-02 em `/pnip-f/login`.
+   - Só o semeado muda o par `botoes-rotulo` (excluído) e o valor do K-06 da D (excluído).
+4. **Lacunas da construção** (`lacunas-construcao.json`): nenhuma semeada tem pseudo-elemento como observável. Nas
+   células da F-01 e da F-09, medidas nos dois builds, a largura útil é igual (120 px). No semeado, 9 de 9 células
+   cortam o texto, sem reticências e sem title; o padding vertical passa de 16 para 12 px nas 81 células e o
+   cabeçalho segue em 16 px. A descrição da F-01 foi corrigida: não cita largura máxima.
+5. **Controles** (`sortear-conformes-f.mjs` → `conformes.json`): procedimento da D, com as âncoras das semeadas
+   somadas à exclusão.
+   - Saem K-06, K-11 e K-12 (e o par `botoes-rotulo`).
+   - Entra `breadcrumb-orientacao`.
+   - Sobram 10 elegíveis, que é ≤ 12, então não há sorteio: a F fica com **10 controles**.
+   - Todos estão conformes na página semeada.
+6. **Ids × base servida** (`conferir-ids-base.mjs` → `conferencia-ids-base.json`): os 12 ids das semeadas existem na
+   base servida e casam, e a F-12 continua sem id (`sem-id-mapeado-1.0.0.json`). Os 19 ids das naturais existem.
+7. **Pacote da auditoria cega** (`auditoria-cega/montar.mjs`):
+   - 24 afirmações: as 12 semeadas e 12 iscas falsas na página (medidas), embaralhadas com a semente gravada.
+   - O pedido fica em `auditoria-cega/pedido/` e numa cópia em `.tmp-eval/tela-f-auditoria/pedido/`.
+   - A chave fica em `auditoria-cega/chave.json`.
+   - Nenhum auditor foi iniciado.
+
+## Falta
+
+1. **Duas auditorias cegas** sobre `.tmp-eval/tela-f-auditoria/pedido/`, independentes e só com a cópia de fora. Na
+   leitura, usar `chave.json`:
+   - Uma semeada `falsa` ou `indecidivel` pede revisão da descrição.
+   - Uma isca `verdadeira` pede revisão do auditor ou da isca.
+   - Se a descrição de uma semeada mudar, mudam juntos `criterios-de-julgamento-sem-predicado.json` e a descrição
+     na referência.
+2. **Classes NAT-71** das 12 semeadas, por dois classificadores cegos, com a autora nos desacordos; depois
+   `_meta.classes`. As naturais mantêm as classes da D.
+3. **Fechamento**:
+   - Tirar "RASCUNHO" de `_meta.status`; preencher `_meta.evidencia` e `_meta.auditoria`.
+   - `npx tsx tela-d/classes-d156.ts --referencia ground-truth-processos-f.json --saida tela-f/classes-d156-1.0.0.json`.
+   - `node tela-f/niveis.mjs --selar`.
+   - Preencher o sha256 da referência em `criterios-de-julgamento-sem-predicado.json` e `sem-id-mapeado-1.0.0.json`.
    - Gravar `ground-truth-processos-f.sha256`.
+   - Repetir `check-reference` no build semeado (do corpus, ramo `tela-f` 157a3cc) com a entrada real de `telas.json`.
+   - Repetir `conferir-ids-base.mjs`.
    - Rodar `regraDaTela`/`conferirNiveis` do ramo `bancada-f` sobre a referência final.
    - Fazer um commit só com isso.

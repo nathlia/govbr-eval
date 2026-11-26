@@ -153,13 +153,13 @@
    }
   },
   "conformes": {
-   "nota": "Rascunho: os 12 controles da D (tela-d/conformes.json, sha256 6bef1c8d9be18e819422a78750d38244d9fdb0b93d08cb1a71eea2b4cb5e90c2), a re-medir na página semeada. Os marcados em `tocadosPorSemeada` têm elemento participante de uma spec semeada e serão trocados pelo procedimento de tela-d/sortear-conformes.mjs (não à mão) antes do congelamento.",
-   "origem": "tela-d/conformes.json",
+   "nota": "Controles conformes (protocolo NAT-78 § 5.2: denominador da taxa de falso alarme). Procedimento da D (tela-d/sortear-conformes.mjs) com as âncoras das semeadas somadas à exclusão de elemento-âncora: saem K-06, K-11 e K-12 da D (elemento participante de semeada), entra breadcrumb-orientacao; 10 elegíveis ≤ 12, sem sorteio. Re-medidos na página semeada pelo código da D (tela-f/remedida-d/semeada.log). Arquivo irmão com sha256.",
+   "arquivo": "tela-f/conformes.json",
+   "sha256": "1cdb4cfbe35307337bba800120855d3224fb25573e2837c718435a66ad1b2e39",
    "itens": [
     {
      "id": "K-01",
-     "par": "breadcrumb-tab",
-     "tipo": "breadcrumb",
+     "deD": "K-01",
      "state": "inicial",
      "selector": "pnip-mpa-processos br-breadcrumb >>> a",
      "count": 1,
@@ -170,8 +170,7 @@
     },
     {
      "id": "K-02",
-     "par": "breadcrumb-li",
-     "tipo": "breadcrumb",
+     "deD": "K-02",
      "state": "inicial",
      "selector": "pnip-mpa-processos br-breadcrumb >>> li",
      "count": 2,
@@ -183,8 +182,19 @@
     },
     {
      "id": "K-03",
-     "par": "titulo-contraste",
-     "tipo": "estrutura",
+     "deD": null,
+     "state": "inicial",
+     "selector": "pnip-mpa-processos br-breadcrumb",
+     "count": 1,
+     "rules": [
+      "govbr-3.7.0-accessibility-global-75c11ccac582",
+      "emag:3.4"
+     ],
+     "medida": "breadcrumb hierárquico presente; último item = \"Processos\" (localização atual)."
+    },
+    {
+     "id": "K-04",
+     "deD": "K-03",
      "state": "inicial",
      "selector": "pnip-mpa-processos h2",
      "count": 1,
@@ -196,9 +206,8 @@
      "medida": "h2 \"Processos\": #005ea2 sobre #fff = 6,72:1 (≥ 4,5:1; a norma tem a unidade D-06)."
     },
     {
-     "id": "K-04",
-     "par": "exportar-foco",
-     "tipo": "button",
+     "id": "K-05",
+     "deD": "K-04",
      "state": "inicial",
      "selector": "pnip-mpa-processos br-button[label=Exportar] >>> button",
      "count": 1,
@@ -210,9 +219,8 @@
      "medida": "com foco por Tab, o botão \"Exportar\" ganha outline dashed 4px rgb(194,133,12) (a norma tem a unidade D-10)."
     },
     {
-     "id": "K-05",
-     "par": "abas-teclado",
-     "tipo": "tab",
+     "id": "K-06",
+     "deD": "K-05",
      "state": "inicial",
      "selector": "pnip-mpa-processos br-tab >>> button",
      "count": 3,
@@ -222,23 +230,8 @@
      "medida": "as três abas são <button> tabIndex 0; Enter ≡ clique (3/3 nas três, teste de estados)."
     },
     {
-     "id": "K-06",
-     "par": "th-contraste",
-     "tipo": "table",
-     "state": "inicial",
-     "selector": "pnip-mpa-processos table thead th.text-bold:not(:last-child)",
-     "count": 7,
-     "rules": [
-      "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
-      "emag:4.1",
-      "wcag:1.4.3"
-     ],
-     "medida": "os 7 títulos de coluna com texto: #005ea2 sobre #f0f0f0 ≥ 4,5:1 (a norma tem a unidade D-06)."
-    },
-    {
      "id": "K-07",
-     "par": "assinar-rotulo",
-     "tipo": "button",
+     "deD": "K-07",
      "state": "inicial",
      "selector": "pnip-mpa-processos table tbody br-button[title=Assinar]",
      "count": 3,
@@ -249,8 +242,7 @@
     },
     {
      "id": "K-08",
-     "par": "status-contraste",
-     "tipo": "estrutura",
+     "deD": "K-08",
      "state": "inicial",
      "selector": "pnip-status-solicitacao-utils .bg-indigo-vivid-60 > div",
      "count": 1,
@@ -263,8 +255,7 @@
     },
     {
      "id": "K-09",
-     "par": "divisor",
-     "tipo": "divider",
+     "deD": "K-09",
      "state": "inicial",
      "selector": "pnip-mpa-processos > br-divider",
      "count": 1,
@@ -275,8 +266,7 @@
     },
     {
      "id": "K-10",
-     "par": "radio-rotulo",
-     "tipo": "radio",
+     "deD": "K-10",
      "state": "lista-exibir",
      "selector": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip .br-radio input[type=radio]",
      "count": 4,
@@ -287,37 +277,8 @@
       "govbr-3.7.0-accessibility-global-b5fad7ce076d"
      ],
      "medida": "os 4 rádios da lista \"Exibir\" com <label for> associado (labels.length = 1; a norma tem as unidades D-04/D-05)."
-    },
-    {
-     "id": "K-11",
-     "par": "item-superficie",
-     "tipo": "item",
-     "state": "lista-exibir",
-     "selector": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip .br-item",
-     "count": 4,
-     "rules": [
-      "govbr-3.7.0-component-item-a6d29ea54434"
-     ],
-     "medida": "hover aplica gradiente em toda a superfície do br-item; clique perto da borda do item (fora do texto) escolhe a opção."
-    },
-    {
-     "id": "K-12",
-     "par": "item-padding",
-     "tipo": "item",
-     "state": "lista-exibir",
-     "selector": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip .br-item",
-     "count": 4,
-     "rules": [
-      "govbr-3.7.0-component-item-a10751502b98"
-     ],
-     "medida": "padding computado 16px (--spacing-scale-2x) nos quatro br-item."
     }
-   ],
-   "tocadosPorSemeada": {
-    "K-06": "F-06 (mesmo th, fundo)",
-    "K-11": "F-12 (o item selecionado é um dos 4 br-item)",
-    "K-12": "F-12 (o item selecionado é um dos 4 br-item)"
-   }
+   ]
   },
   "fundo": "Condições que o autor da tela não escreveu (método § 5, adendo da D § C), que não são unidades — alegação correta sobre elas entra como descoberta: (1) código do DS 3.4.1/1.16.0: tamanho 32×32 e raio dos alvos \"Buscar\" e \"Exibir lista\" (regra .br-input .br-button do core; E-03, D-135), aria-label das abas = id do br-tab-item quando a prop aria-label falta (\"AGUARDANDO_ANALISE\", \"TRAMITANDO\", \"HISTORICO\" — a escolha do id é autoral, o recurso é do web component; sem norma no universo, auditoria.md § 6), alt=\"logo\" fixo no logo do <br-header>, aria-label=\"\" no botão interno de todo br-button e no botão Home do breadcrumb, item atual do breadcrumb sem aria-current, texto visualmente oculto \"Home\", Menu e Home 32×32 dos web components, regra `.br-select .br-list:focus{outline:none}` do core (a lista do seletor não mostra foco), grid de 24 px do core (E-08), aba ativa sem aria-selected; (2) interno de bibliotecas de terceiros — nenhum visível nas paradas; (3) isolamento/mock: nenhuma perda medida (fontes e ícones locais, 0 externos, 0 escritas, 0 chamadas sem fixture); o link do breadcrumb aponta para /portal-mpa/ sem /pnip-d/ e recarrega (artefato do base href); os números de processo das linhas 1, 5 e 8 recarregam em /login (destino do mock); o conteúdo da lista, dos status e das opções dos filtros vem do manipulador só-leitura; \"Aberto há\" deriva do relógio congelado.",
   "fora_de_escopo": "Como na D (abaixo), menos o que os estados novos trazem para dentro: a lista aberta do filtro \"Aberto há\" e a tag do filtro escolhido (\"Últimos 60 dias\") são paradas da F. Fora continuam: abas \"Aguardando análise\"/\"Concluídos\", \"Meus processos\" desligado, outros filtros e opções, troca de página, \"Exportar\", \"Ver processo\", números de processo, breadcrumb e \"Voltar\" (navegam ou recarregam), os dois SweetAlert2, menu do avatar, a rota de vistorias atravessada pela navegação (segmento 2, sem parada), outras janelas e zoom, linguagem e microcopy, conteúdo das fixtures, regras só da base literal. Texto da D: Vistas excluídas pela regra de escolha (adendo da D § B; tela-d/selecao.json): abas \"Aguardando análise\"/\"Concluídos\", \"Meus processos\", filtros aplicados e troca de página (recarregam a lista no lugar: não aditivas), \"Exportar\", \"Ver processo\", números de processo, breadcrumb, \"Voltar\" (navegam ou recarregam), os dois SweetAlert2 (\"Desassociar\", \"Assinar\": diálogo sem componente do DS novo), menu do avatar (nada novo), listas abertas dos filtros (não eram gatilho pelo seletor congelado). Também fora: outras janelas e zoom, linguagem e microcopy (salvo decisão da autora), conteúdo das fixtures (processos, nomes, números, datas, status, opções), regras só da base literal. Alegação correta sobre o que está fora vira descoberta e não muda o denominador.",
@@ -337,7 +298,10 @@
     "arquivo": "tela-f/clausulas-oraculo.json",
     "sha256": "fb97d983adea02d8b8627405fb802e2f60ccf5bff9cdb289c53cac403fdc85ca"
    },
-   "construcao": "tela-f/construcao/ (agente de construção; evidência a citar no congelamento)"
+   "construcao": "tela-f/construcao/ (12/12 pegaram; conferencia-construcao.json, diferencas-atribuidas.json, pagina-congelada.json: lista 195f1e47…)",
+   "remedidaNaturais": "tela-f/remedida-d/ (código da D na ala pnip-f: evidência das 13 naturais idêntica entre o build sem semente e o semeado)",
+   "lacunas": "tela-f/lacunas-construcao.json",
+   "idsNaBase": "tela-f/conferencia-ids-base.json"
   }
  },
  "violations": [
@@ -369,7 +333,7 @@
    "categories": [
     "componente"
    ],
-   "description": "Coluna \"Solicitante\" da tabela (9 células): o texto fica numa linha só, cortado numa largura máxima de 90 px (white-space: nowrap; overflow: hidden; text-overflow: clip). Nomes longos aparecem cortados no meio da palavra, sem reticências, e a célula não tem title nem tooltip que mostre o texto completo (scrollWidth > clientWidth). O truncamento da Table pede reticências no fim do texto e o texto completo em tooltip."
+   "description": "Coluna \"Solicitante\" da tabela (9 células): o texto fica numa linha só e é cortado na largura da coluna (white-space: nowrap; overflow: hidden; text-overflow: clip). Nomes longos aparecem cortados no meio da palavra, sem reticências, e a célula não tem title nem tooltip que mostre o texto completo (scrollWidth > clientWidth). O truncamento da Table pede reticências no fim do texto e o texto completo em tooltip."
   },
   {
    "id": "F-02",

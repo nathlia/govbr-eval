@@ -1,0 +1,126 @@
+FALHA bytes: árvore pnip-d/ = manifesto (public e dist), nada fora — 190 arquivos · manifesto sha256 undefined
+FALHA bytes: lista caminho⇥sha256 = a do inventário da fase 1 — 195f1e47b4dea2fb0281d47de0f35e2de59d9048e01eace8b57bc45a453955b0
+ok   referência: _meta.setup = sequencia.mjs — 2 passos
+FALHA referência: _meta.states = sequencia.mjs — inicial@0 lista-exibir@2
+ok   referência: url, waitFor e viewport — /pnip-d/portal-mpa/processos?mock-perfil=mpa
+ok   referência: sha256 de conformes.json citado no _meta — 6bef1c8d9be18e819422a78750d38244d9fdb0b93d08cb1a71eea2b4cb5e90c2
+ok   referência: _meta.conformes.itens = conformes.json — 12 controles
+ok   conformes: cada K é um par elegível com o mesmo seletor/contagem — breadcrumb-tab, breadcrumb-li, titulo-contraste, exportar-foco, abas-teclado, th-contraste, assinar-rotulo, status-contraste, divisor, radio-rotulo, item-superficie, item-padding
+ok   inicial: path — /pnip-f/portal-mpa/processos
+ok   inicial: mesmo documento (sem recarga) — marca do documento intacta
+ok   inicial: nenhuma escrita, nenhum externo, nenhuma chamada sem fixture — rede 0 · registro do mock 0 · externos 0 · sem fixture 0
+ok   D-01 @inicial: âncora resolve 18 — 18 elemento(s), 18 visível(is)
+ok   D-02 @inicial: âncora resolve 9 — 9 elemento(s), 9 visível(is)
+ok   D-03 @inicial: âncora resolve 7 — 7 elemento(s), 7 visível(is)
+ok   D-04 @inicial: âncora resolve 7 — 7 elemento(s), 7 visível(is)
+ok   D-05 @inicial: âncora resolve 1 — 1 elemento(s), 1 visível(is)
+ok   D-06 @inicial: âncora resolve 8 — 8 elemento(s), 8 visível(is)
+ok   D-07 @inicial: âncora resolve 1 — 1 elemento(s), 1 visível(is)
+ok   D-08 @inicial: âncora resolve 1 — 1 elemento(s), 1 visível(is)
+ok   D-10 @inicial: âncora resolve 1 — 1 elemento(s), 1 visível(is)
+ok   D-11 @inicial: âncora resolve 1 — 1 elemento(s), 1 visível(is)
+ok   D-12 @inicial: âncora resolve 1 — 1 elemento(s), 1 visível(is)
+ok   D-13 @inicial: âncora resolve 1 — 1 elemento(s), 0 visível(is)
+ok   D-14 @inicial: âncora resolve 1 — 1 elemento(s), 1 visível(is)
+ok   breadcrumb-tab @inicial: âncora resolve 1 — 1 elemento(s), 1 visível(is)
+ok   breadcrumb-li @inicial: âncora resolve 2 — 2 elemento(s), 2 visível(is)
+ok   breadcrumb-orientacao @inicial: âncora resolve 1 — 1 elemento(s), 1 visível(is)
+ok   titulo-contraste @inicial: âncora resolve 1 — 1 elemento(s), 1 visível(is)
+FALHA botoes-rotulo @inicial: âncora resolve 2 — 1 elemento(s), 1 visível(is)
+ok   exportar-foco @inicial: âncora resolve 1 — 1 elemento(s), 1 visível(is)
+ok   abas-teclado @inicial: âncora resolve 3 — 3 elemento(s), 3 visível(is)
+ok   th-contraste @inicial: âncora resolve 7 — 7 elemento(s), 7 visível(is)
+ok   assinar-rotulo @inicial: âncora resolve 3 — 3 elemento(s), 3 visível(is)
+ok   status-contraste @inicial: âncora resolve 1 — 1 elemento(s), 1 visível(is)
+ok   divisor @inicial: âncora resolve 1 — 1 elemento(s), 1 visível(is)
+ok   lista-exibir: path — /pnip-f/portal-mpa/processos
+ok   lista-exibir: mesmo documento (sem recarga) — marca do documento intacta
+ok   lista-exibir: nenhuma escrita, nenhum externo, nenhuma chamada sem fixture — rede 0 · registro do mock 0 · externos 0 · sem fixture 0
+ok   D-11 @lista-exibir: âncora resolve 1 — 1 elemento(s), 1 visível(is)
+ok   D-12 @lista-exibir: âncora resolve 1 — 1 elemento(s), 1 visível(is)
+ok   D-13 @lista-exibir: âncora resolve 1 — 1 elemento(s), 0 visível(is)
+ok   D-14 @lista-exibir: âncora resolve 1 — 1 elemento(s), 1 visível(is)
+ok   radio-rotulo @lista-exibir: âncora resolve 4 — 4 elemento(s), 4 visível(is)
+ok   item-superficie @lista-exibir: âncora resolve 4 — 4 elemento(s), 4 visível(is)
+ok   item-padding @lista-exibir: âncora resolve 4 — 4 elemento(s), 4 visível(is)
+ok   segmento único (inicial → lista-exibir): âncoras com atributos e texto inalterados — nenhuma diferença
+ok   D-01 18 botões de ação das linhas: sem label nem circle no hospedeiro, sem texto visível, não circulares — 18 · caixas 72×40 · raio 1680px
+ok   D-01 o nome vem só do title (Ver processo ×9, Desassociar… ×9; 8 desabilitados) — Ver processo | Desassociar processo do analista responsável
+ok   D-02 9 números de processo: <a role=button> sem href nem tabindex, não focáveis na árvore — 00000.000010/2026-00, 00000.000011/2026-00, 00000.000013/2026-00, 00000.000016/2026-00, 00000.000019/2026-00, 00000.000025/2026-00, 00000.000027/2026-00, 00000.000028/2026-00, 00000.000031/2026-00
+ok   D-03 7 etiquetas interativas: <span> sem role nem tabindex, tabIndex -1, cursor pointer, papel generic sem nome — Meus processos, Aberto há, Tipo de processo, Status, Espécie alvo, Método de pesca, Petrecho
+ok   D-04 7 checkboxes da tabela sem rótulo (labels 0, sem aria-label/labelledby/title, nome "") — 7 · nomes ""
+ok   D-05 campo de pesquisa sem rótulo: labels 0, sem aria-label/labelledby, br-input sem label; nome = placeholder — labels 0 · AX textbox "Pesquise aqui ..."
+ok   D-06 8 status com texto branco abaixo de 4,5:1 — Em análise analista 3.16 · Em análise supervisor 3.16 · Aguarda complementos 3.01 · Em análise supervisor 3.16 · Aguardando plano de ação 3.54 · Em análise supervisor 3.16 · Em análise diretor 3.16 · Aguardando SFPA 3.54
+ok   D-07 tabela sem caption nem nome — caption null · AX table ""
+ok   D-08 th da coluna de ações vazio (columnheader sem nome) — texto "" · AX columnheader ""
+ok   D-09 removida da 1.0.0 (D-135) — 1.0.0
+ok   D-10 iframe vazio sem nome: sem src/title/name, about:blank, papel Iframe nome "" — 1160×500 · AX Iframe ""
+ok   D-11 sem salto para o conteúdo (2 paradas) — inicial: âncoras # 0, .br-skiplink 0 · lista-exibir: âncoras # 0, .br-skiplink 0
+ok   D-12 um só título (h2), nenhum h1 — h2 · h2
+ok   D-13 <title> "PNIP" nas 2 paradas — inicial: "PNIP" · lista-exibir: "PNIP"
+ok   D-14 inicial do avatar < 4,5:1 nas 2 paradas — "U" 2.33:1 · "U" 2.33:1
+ok   conforme breadcrumb-li — Home | Processos
+ok   conforme breadcrumb-orientacao — último item "Processos"
+ok   conforme titulo-contraste — Processos 6.72:1
+ok   conforme botoes-rotulo — "Exportar"
+ok   conforme assinar-rotulo — "Assinar" (projetado no slot) 106×40, "Assinar" (projetado no slot) 106×40, "Assinar" (projetado no slot) 106×40
+ok   conforme th-contraste — mín 5.9:1 em 7
+ok   conforme status-contraste — Em revisão analista 6.49:1
+ok   conforme abas-teclado — botões tabIndex 0; Enter ≡ clique nas três (estados.json)
+ok   conforme divisor — tabIndex -1 · AX none(ignorado)
+ok   conforme radio-rotulo — 1,1,1,1
+ok   conforme item-padding — 16px 16px 16px 16px
+ok   lang pt-br (698e0a4783a9) — pt-br
+ok   sem meta refresh, 0 animações (2.3, 2.4, 2.6, 2.7, 5.5) — 0,0
+ok   Rawline em todo texto visível (406774b1cb87) — Rawline, Raleway, sans-serif
+ok   cores na paleta 3.7.0 (21b1a2733f7b) — nenhuma fora (468 cores na paleta)
+ok   fontes antes do CSS do DS (a43ad8231ad0) — assets/mock/vendor/rawline/css/rawline.css → assets/mock/vendor/raleway/raleway.css → assets/mock/vendor/fontawesome-5.15.4/css/all.min.css → styles.89078f6f34339d7d.css
+ok   scripts sem type redundante (9826b6862644) — ∅,∅,∅,module,module,∅,module
+ok   nenhum diálogo aberto sem ação (5be1f553cc03) — 0,0
+ok   sem rolagem horizontal em 1280 — 1280,1280
+ok   decisoes.json: 186 linhas, viola só nas regras das unidades — 16 linhas viola
+ok   toda spec cita ao menos uma linha viola de decisoes.json — D-01,D-02,D-03,D-04,D-05,D-06,D-07,D-08,D-10,D-11,D-12,D-13,D-14
+ok   D-10 o iframe é ponto de Tab sem indicação de foco (outline none, sem sombra) — none 3px rgb(51, 51, 51) / none / :focus-visible false
+ok   D-10 depois do Voltar o Tab alterna iframe ↔ body (E-01) — iframe → body → iframe → body → iframe
+ok   D-02 nenhum número de processo alcançado por Tab real — 0 de 9
+ok   D-03 nenhuma etiqueta interativa alcançada por Tab real — 0 de 7
+ok   D-04 os 7 checkboxes estão no Tab (são controles operáveis sem nome) — 7 alcançados
+ok   D-01 os 10 botões de ícone habilitados estão no Tab (9 Ver processo + 1 Desassociar) — 10
+ok   D-11 1º ponto de Tab não é salto (é o botão Menu) — 1º: <button> :nth-of-type(2)>div>div:nth-of-type(1)>slot>button
+ok   conforme breadcrumb-tab — link Home no Tab: 1
+ok   conforme exportar-foco — dashed 4px rgb(194, 133, 12)
+ok   indicador de foco em todo ponto de Tab da inicial, fora o iframe (21fbcc2fe37b) — 34/34 (fora: iframe = D-10; 2 lista do seletor — fundo, core .br-select .br-list:focus{outline:none})
+ok   fundo: a lista do seletor focada não muda de estilo (regra do core): sem contorno, só a sombra que já tinha — none 3px rgb(0, 0, 0) / rgba(0, 0, 0, 0.16) 0px 3px 6px 0px · none 3px rgb(0, 0, 0) / rgba(0, 0, 0, 0.16) 0px 3px 6px 0px
+ok   E-05 (registro): depois da lista do "Exibir" o Tab cai no <body> — body
+ok   D-10 Shift+Tab a partir do iframe volta ao "Voltar" (E-01) — button "Voltar"
+ok   D-02 o clique no número abre …/documentos (6 linhas), que o "Ver processo" da linha não abre — 1: login · 2: documentos · 3: documentos · 4: documentos · 5: login · 6: documentos · 7: documentos · 8: login · 9: documentos
+ok   D-02 linhas 1, 5 e 8: o número recarrega em /login (artefato do mock, adendo § C) — /pnip-f/login,/pnip-f/login,/pnip-f/login
+ok   D-03 cada etiqueta responde ao clique (Meus processos: 9→10 linhas; filtros: abrem opções), sem escrita — Meus processos: 9→10 linhas, +0 opções · Aberto há: 9→9 linhas, +5 opções · Tipo de processo: 9→9 linhas, +10 opções · Status: 9→9 linhas, +19 opções · Espécie alvo: 9→9 linhas, +4 opções · Método de pesca: 9→9 linhas, +3 opções · Petrecho: 9→9 linhas, +4 opções
+ok   conforme item-superficie — hover: gradiente · clique na borda do item "25" escolhe: valor "25"
+ok   evidência D-01 reproduz o sha256 registrado — d88f4e5c720481e298427afbfa11c35c726dccab94f4f09e8ddda43a74e90bac
+FALHA evidência D-02 reproduz o sha256 registrado — fc0efb29a34072ea9ae377bdab9bc73010eb8ce0e0e72cb6a890ef805010885e
+ok   evidência D-03 reproduz o sha256 registrado — e48922e428667ba231aaa16c9f5b00ef45ceda816b6566893f80313d7f73737a
+ok   evidência D-04 reproduz o sha256 registrado — 58fd20c6ab46743c36c4df9da6b0e4409fef83c1f58f56417e1cbc547fb6c609
+ok   evidência D-05 reproduz o sha256 registrado — 4aa3391cc90d49d4b40cf75784ef65f4bfefcd96bba98fb1537f8a52ffb8e7c6
+ok   evidência D-06 reproduz o sha256 registrado — e7390d97009895fa8cf335d498cc88360b18f90438dcb0a0b8a6a5adae801a3f
+ok   evidência D-07 reproduz o sha256 registrado — b0330f05e7af531cd06c53323ea7e9834b0a239724ad0c0463a98f048c06555f
+ok   evidência D-08 reproduz o sha256 registrado — 138cf66aa2bbebc3bc89dfc295551d57b3ddcb07043024b3cd8c73ceccb2a7c9
+ok   evidência D-10 reproduz o sha256 registrado — 17516852381a3da20d4940c399d7d9cae227a0a10e1fe652ddf68a00275a0ada
+ok   evidência D-11 reproduz o sha256 registrado — db45d7e4488ff153e574d646755a458b6ff5524b9757c92577736d505ec36c8f
+ok   evidência D-12 reproduz o sha256 registrado — 754fbd617be302f0333deb95d2319bc9d938ecf0382f71225bfab4f88d05f42d
+ok   evidência D-13 reproduz o sha256 registrado — 4ebebb531ee13b6524139bcc2378dcf44cfabc07b459e5161119c9ad370f7806
+ok   evidência D-14 reproduz o sha256 registrado — 2e87f08f589649cf257830b2edd8d8ef03f04e8a4a560ede2e8ae925fb40e6ad
+ok   evidência K-01 reproduz o sha256 registrado — c81006e24cc16b7d2dcc7393de169b1f1940beaf1344c3a8fd7ee3c65a28a6e1
+ok   evidência K-02 reproduz o sha256 registrado — e4760a8d9e2b6e760a5f8bd437ba781def317c9fa44e214a8de7ff60c08ef38a
+ok   evidência K-03 reproduz o sha256 registrado — 930b77972065f43428ab4c309d110253a2cd5da09a8e5b1fcc951f26aeb75504
+ok   evidência K-04 reproduz o sha256 registrado — 1d1c8d755f432fb96407fbf81bd94bacb255ddff68a22543b8815833859c105e
+ok   evidência K-05 reproduz o sha256 registrado — 87916ed6ccdef8fc9781de424db7d737e694f85e3e18a4cbf51179768811823a
+FALHA evidência K-06 reproduz o sha256 registrado — 58520999ba579b6540a3067bc66060653feaac7cd375b04b04c2d842b3eaa40b
+ok   evidência K-07 reproduz o sha256 registrado — b35b921592636419462c5525897db594f6f7151015184c10945386f6224ce4ce
+ok   evidência K-08 reproduz o sha256 registrado — 338ed17730d116a8bb8ffc0304083783af860123459ecccb08844207fd0391b9
+ok   evidência K-09 reproduz o sha256 registrado — 0010fa01eb5e4ed6fa14efcc84a3919b0db9d08f019ea553ae581a0a944e5e0b
+ok   evidência K-10 reproduz o sha256 registrado — 3ca4c26c79cf160669131ac7837a200f26842f18826db65fd9c2dbff1f32d448
+ok   evidência K-11 reproduz o sha256 registrado — fdb8381588ed2504414a3380a3e256681e41fa7a4d67801b47c7a6a1226dc2b6
+ok   evidência K-12 reproduz o sha256 registrado — 1bc7db396c6803dec76738fd86037ed0cc0dbb8210d65ba02a75f75d931b3a29
+
+118/124

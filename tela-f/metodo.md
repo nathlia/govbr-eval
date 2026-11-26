@@ -162,3 +162,19 @@ Feito sem o build semeado. Nenhum modelo, nenhum oráculo, nenhum axe. A pasta `
 - **Controles.** 3 dos 12 controles da D têm elemento participante de uma semeada e serão repostos pelo
   procedimento da D (`pendencias-congelamento.md` § 5).
 - **O que falta:** `pendencias-congelamento.md`.
+
+## Depois da construção (26/11): parte medível da referência
+
+Feito sem modelo, sem oráculo e sem axe na página F.
+
+- **Construção conferida contra a lista.** As 12 entradas da `lista-de-mudancas.json` estão no diff do fonte
+  (pnip-mock 3d02f68..f8905a8, 7 arquivos). A F-11 é a reordenação equivalente. A evidência do construtor
+  (`construcao/`) foi commitada sem mudança.
+- **`check-reference` no build semeado** (`conferir-referencia-semeada.log`): 0 problemas, 11/11 predicados
+  sustentam, 77 unidades, naturais com as contagens da D.
+- **Naturais e controles re-medidos com o código da D** (`remedida-d/`) nos dois builds. A evidência das 13
+  naturais é idêntica entre os builds: 0 coviolações.
+- **Controles:** 10, pelo procedimento da D (`sortear-conformes-f.mjs`).
+- **Lacunas do construtor** medidas onde tocam spec (`lacunas-construcao.json`).
+- **Ids × base servida:** 12/12, e a F-12 segue sem id.
+- **Auditoria cega:** pacote com 24 afirmações (`auditoria-cega/`). O que falta está em `pendencias-congelamento.md`.
