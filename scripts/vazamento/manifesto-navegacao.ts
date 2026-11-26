@@ -44,7 +44,11 @@ export const CAMPOS_OPERACIONAIS = ["url", "waitFor", "viewport", "setup", "stat
  * `portao`, `decisoesDaAutora`, `regraMesmaClausula`, `fundamentacao`, `correcoesDaPagina`, `desvios`, `sensibilidades`,
  * `pagina`: estratos do sorteio, regras de co-violação, portão de adequação, decisões, desvios, variantes de
  * sensibilidade e hashes da página; classificados pelo nome e pela forma, sem ler o conteúdo). Nenhum deles muda como
- * se chega às paradas: a entrada, a janela, o setup e as paradas da E estão nos campos operacionais.
+ * se chega às paradas: a entrada, a janela, o setup e as paradas da E estão nos campos operacionais. Os da tela F
+ * (26/11/2026: `origem`, `escolha`, `idsNaBase`, `semIdMapeado`, `confirmacaoCega`: proveniência da seleção, da
+ * construção e da confirmação cega, objetos; `estados_resumo`: um resumo por parada, objeto com uma chave por estado,
+ * documental porque as paradas e o caminho até elas estão em `setup` e `states`; `niveis`, `criteriosDeJulgamento`,
+ * `paginaCongelada`: textos que apontam arquivos de `tela-f/`), classificados pelo nome e pela forma, sem ler o conteúdo.
  */
 export const CAMPOS_DOCUMENTAIS = [
   "version", "version_note", "historico", "status", "page", "suite", "ds", "unit_of_evaluation", "setup_rationale",
@@ -53,6 +57,7 @@ export const CAMPOS_DOCUMENTAIS = [
   "reconciliacao", "remedida", "candidata", "classes", "evidencia", "metodo",
   "estratos", "coviolacoes", "portao", "decisoesDaAutora", "regraMesmaClausula", "fundamentacao", "correcoesDaPagina",
   "desvios", "sensibilidades", "pagina",
+  "origem", "escolha", "idsNaBase", "semIdMapeado", "confirmacaoCega", "estados_resumo", "niveis", "criteriosDeJulgamento", "paginaCongelada",
 ] as const;
 /** Campos de um passo do `setup` (FlowSetupStep): todos operacionais. */
 export const CAMPOS_DO_PASSO = ["action", "selector", "value", "ms", "path", "waitFor"] as const;
