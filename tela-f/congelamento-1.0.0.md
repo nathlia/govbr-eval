@@ -89,3 +89,22 @@ Todas sem modelo, sem oráculo e sem axe na página F.
    uma entrada direta.
 7. **O portão de teto (§ 5) ainda não rodou.** Ele aceita ou rejeita a composição inteira; se rejeitar, a
    recomposição fixada é sair F-03 e F-06 e entrar R-03 e R-04, com reconstrução e nova referência.
+
+## Adendo ao congelamento (26/11, antes de qualquer execução)
+
+A passada de julgamento 1.4.8 exige um critério para **cada** spec da referência. O arquivo de critérios cobria só
+12 das 25. Por isso `tela-f/criterios-naturais.mjs` acrescentou os 13 itens que faltavam, no formato completo
+(observável, estado e critério), o mesmo das specs sem predicado. Os itens foram derivados só da descrição, do estado
+e da âncora que a referência congelada registra: nenhuma medida nova e nenhum juízo novo; tiraram-se apenas as
+remissões a arquivos de outras telas.
+
+O campo `classe` dos itens sem predicado passou a ser uniforme, e esse campo não vai ao juiz. **A referência não
+mudou**: o sha256 continua `d32088bfd7ecb44c2bf75de58f95f425047aa0b2180e80dad9fefbec24d5b3e0`. Só muda o arquivo de
+critérios:
+
+| Arquivo | sha256 antes | sha256 agora |
+|---|---|---|
+| `tela-f/criterios-de-julgamento-sem-predicado.json` | `3daa97943b657ad0334846e3f99f6f943cf90462bdcc26d1571d6b5efd3a9ef2` | `26622cd77b90d3cce45a99020aa37a520011c5eff4ff7dc31a1903a4db3d34d0` |
+
+Itens com critério: 25 de 25. Isso foi conferido com a mesma regra de `criteriosParaOJuiz` (ramo `bancada-f`):
+um item por spec da referência, nenhum duplicado e todos com `situacao: fixado`.
