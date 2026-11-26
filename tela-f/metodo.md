@@ -194,3 +194,15 @@ de vistorias, sem parada.
 - Vão aos classificadores as 12 semeadas.
 - As 13 naturais, idênticas byte a byte às da D 1.1.0, herdam a classe final da D (`classes-nat71/heranca-naturais.json`).
 - A frase C-6 dos critérios ficou neutra, sem dizer que há semeadura. O mesmo vale para o `medidoEm` da F-11.
+
+## Congelamento (26/11)
+
+Feito por `fechar-1.0.0.mjs`, que roda depois de `montar-referencia-rascunho.mjs`.
+- **Confirmação cega:** 12 de 12 semeadas confirmadas pelos dois auditores; 12 de 12 iscas falsas nos dois;
+  0 descrições reescritas.
+- **NAT-71:**
+  - O orquestrador fixou a regra: o classificador 3 só desempata onde 1 e 2 discordam.
+  - Acordo de classe 10/12 e de nível 12/12; 2 desempates; 0 sem maioria.
+  - 13 classes herdadas da D.
+- **Página e verificação final:** `check-reference` final na ala do corpus: 0 problemas, 11/11 predicados.
+- **Registro:** hashes e limitações em `congelamento-1.0.0.md`.

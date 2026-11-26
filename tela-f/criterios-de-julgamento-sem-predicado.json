@@ -2,11 +2,11 @@
  "_meta": {
   "titulo": "Tela F — critérios de julgamento fixados antes da coleta para as specs sem predicado (observável, estado, critério)",
   "data": "2026-11-26",
-  "status": "RASCUNHO, fixado antes de qualquer execução de agente na tela F; vira definitivo com a referência congelada (sha256 preenchido no congelamento). Não muda o que a referência cobra (specs, unidades, rules, estados, classes).",
+  "status": "Fixado antes de qualquer execução de agente na tela F, com a referência congelada 1.0.0. Não muda o que a referência cobra (specs, unidades, rules, estados, classes).",
   "referencia": {
    "arquivo": "ground-truth-processos-f.json",
    "versao": "1.0.0",
-   "sha256": "PENDENTE-CONGELAMENTO"
+   "sha256": "d32088bfd7ecb44c2bf75de58f95f425047aa0b2180e80dad9fefbec24d5b3e0"
   },
   "mandato": "Para cada spec sem predicado implementado, o observável, o estado em que é observado e o critério de decisão do juiz cego ficam escritos antes da coleta (adendo da F § 4 'Referência da F'; mesmo formato da tela E2). Para as specs com predicado, uma linha de observável/estado/critério, porque o predicado sustenta a spec mas não credita alegação.",
   "naoFeito": "Nenhum modelo, nenhuma ferramenta do validator, nenhum axe. As specs naturais (D-01…D-14) mantêm os critérios e a política de julgamento da tela D.",

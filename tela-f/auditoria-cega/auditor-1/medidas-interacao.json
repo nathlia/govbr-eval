@@ -1,0 +1,247 @@
+{
+ "A-07": {
+  "display": "block",
+  "visibility": "visible",
+  "position": "absolute",
+  "zIndex": "1",
+  "boxShadow": "rgba(0, 0, 0, 0.16) 0px 3px 6px 0px",
+  "filter": "none",
+  "bg": "rgb(255, 255, 255)",
+  "box": {
+   "x": 814.9,
+   "y": 467.5,
+   "w": 70,
+   "h": 212.2
+  },
+  "attrs": [
+   "tabindex=0",
+   "class=br-list",
+   "expanded="
+  ],
+  "parentShadow": "none",
+  "itensVisiveis": [
+   {
+    "x": 814.9,
+    "y": 467.5,
+    "w": 70,
+    "h": 53.3
+   },
+   {
+    "x": 814.9,
+    "y": 520.8,
+    "w": 70,
+    "h": 53.3
+   },
+   {
+    "x": 814.9,
+    "y": 574.1,
+    "w": 70,
+    "h": 53.3
+   },
+   {
+    "x": 814.9,
+    "y": 627.4,
+    "w": 70,
+    "h": 52.3
+   }
+  ],
+  "antes": {
+   "display": "none",
+   "visibility": "visible",
+   "box": {
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0
+   },
+   "expanded": false
+  }
+ },
+ "A-14": [
+  {
+   "cls": "br-item selected",
+   "txt": "10",
+   "bg": "rgb(19, 81, 180)",
+   "color": "rgb(255, 255, 255)",
+   "labelColor": "rgb(255, 255, 255)",
+   "labelBg": "rgba(0, 0, 0, 0)",
+   "box": {
+    "x": 814.9,
+    "y": 467.5,
+    "w": 70,
+    "h": 53.3
+   }
+  },
+  {
+   "cls": "br-item",
+   "txt": "25",
+   "bg": "rgb(255, 255, 255)",
+   "color": "rgb(51, 51, 51)",
+   "labelColor": "rgb(51, 51, 51)",
+   "labelBg": "rgba(0, 0, 0, 0)",
+   "box": {
+    "x": 814.9,
+    "y": 520.8,
+    "w": 70,
+    "h": 53.3
+   }
+  },
+  {
+   "cls": "br-item",
+   "txt": "50",
+   "bg": "rgb(255, 255, 255)",
+   "color": "rgb(51, 51, 51)",
+   "labelColor": "rgb(51, 51, 51)",
+   "labelBg": "rgba(0, 0, 0, 0)",
+   "box": {
+    "x": 814.9,
+    "y": 574.1,
+    "w": 70,
+    "h": 53.3
+   }
+  },
+  {
+   "cls": "br-item",
+   "txt": "100",
+   "bg": "rgb(255, 255, 255)",
+   "color": "rgb(51, 51, 51)",
+   "labelColor": "rgb(51, 51, 51)",
+   "labelBg": "rgba(0, 0, 0, 0)",
+   "box": {
+    "x": 814.9,
+    "y": 627.4,
+    "w": 70,
+    "h": 52.3
+   }
+  }
+ ],
+ "A-24": [
+  {
+   "display": "block",
+   "visibility": "visible",
+   "position": "absolute",
+   "zIndex": "1",
+   "boxShadow": "none",
+   "filter": "none",
+   "bg": "rgb(255, 255, 255)",
+   "box": {
+    "x": 92,
+    "y": 418.3,
+    "w": 155.1,
+    "h": 148.2
+   },
+   "itens": [
+    "Últimos 7 dias",
+    "Últimos 30 dias",
+    "Últimos 60 dias",
+    "Últimos 90 dias"
+   ],
+   "sobreTabela": true
+  }
+ ],
+ "opcoes60": 1,
+ "A-09": [
+  {
+   "txt": "Últimos 60 dias",
+   "html": "<span class=\"br-tag interaction small\"><button type=\"button\" class=\"br-button inverted circle\"><i aria-hidden=\"true\" class=\"fas fa-times\"></i></button><i aria-hidden=\"true\" class=\"fa-clock far mr-1\"></i><span class=\"text-truncate\" style=\"max-width: 150px;\">Últimos 60 dias</span></span>",
+   "box": {
+    "x": 92,
+    "y": 382.3,
+    "w": 215,
+    "h": 32
+   },
+   "filhos": [
+    {
+     "tag": "button",
+     "cls": "br-button inverted circle",
+     "aria": null,
+     "txt": "",
+     "box": {
+      "x": 116,
+      "y": 384.3,
+      "w": 28,
+      "h": 28
+     },
+     "order": "0"
+    },
+    {
+     "tag": "i",
+     "cls": "fa-clock far mr-1",
+     "aria": null,
+     "txt": "",
+     "box": {
+      "x": 144,
+      "y": 390.3,
+      "w": 24,
+      "h": 16
+     },
+     "order": "0"
+    },
+    {
+     "tag": "span",
+     "cls": "text-truncate",
+     "aria": null,
+     "txt": "Últimos 60 dias",
+     "box": {
+      "x": 172,
+      "y": 386.1,
+      "w": 123,
+      "h": 24.3
+     },
+     "order": "0"
+    }
+   ],
+   "cs": {
+    "display": "inline-flex",
+    "flex-direction": "row"
+   },
+   "rowCls": "row pl-2"
+  }
+ ],
+ "A-13b": {
+  "voltar": {
+   "x": 1090.8,
+   "y": 429.5,
+   "w": 97.3,
+   "h": 40
+  },
+  "inputPagina": {
+   "x": 1091.7,
+   "y": 413.5,
+   "w": 88,
+   "h": 32
+  },
+  "pontos": [
+   {
+    "x": 1095.8,
+    "y": 434.5,
+    "topo": "button.br-button secondary"
+   },
+   {
+    "x": 1130.8,
+    "y": 439.5,
+    "topo": "button.br-button secondary"
+   },
+   {
+    "x": 1170.8,
+    "y": 444.5,
+    "topo": "button.br-button secondary"
+   },
+   {
+    "x": 1130.8,
+    "y": 459.5,
+    "topo": "button.br-button secondary"
+   }
+  ]
+ },
+ "A-17b": {
+  "tooltipsNoDom": [],
+  "corte": {
+   "indice": 10,
+   "char": "e",
+   "antes": " Pessoa Ex"
+  },
+  "ariaDescribedby": null,
+  "mouseOver": true
+ }
+}

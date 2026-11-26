@@ -1,0 +1,93 @@
+{
+ "arquivo": "classificador-2",
+ "referencia": "specs.json (tela F, processos-f 1.0.0)",
+ "referenciaSha256": "2d808971790132e7c59d1a19f64d50a9f55d44975042eee99783fabe36b20ade",
+ "definicoes": "pedido/LEIA.md, pedido/definicoes.md (NAT-71 §3.1–3.2, protocolo NAT-78 §5.3), pedido/specs.json, pedido/criterios-de-julgamento.json (auxiliar). Norma do DS não consultada; nenhuma ferramenta usada.",
+ "nota_nivel": "Nível a exige predicado em ferramenta (checker do validator, regra do axe, regra Stylelint) com positivos e negativos que passam. O pedido não traz evidência de nenhum detector testado para estas specs; o predicado de aceitação da referência (estilo-computado) mostra que a definição determinística existe, o que é o nível b. Nenhuma spec foi posta em a por falta dessa evidência, não por impossibilidade.",
+ "specs": [
+  {
+   "id": "F-01",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "A spec cobra o estilo computado das células (white-space nowrap, overflow hidden, text-overflow clip), decidível em cada elemento num estado (§3.1 Layout/visual). A ausência de tooltip é parte da descrição, mas a aceitação não a cobra. Predicado determinístico definido na referência, sem detector testado conhecido (b)."
+  },
+  {
+   "id": "F-02",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "Entre layout/visual e contextual/relacional: o desalinhamento é geometria do botão relativa ao campo (contêiner↔item), mas a referência cobra um valor de estilo computado num elemento (margin-top -12px), que é espaçamento/geometria (§3.1 Layout/visual). Predicado determinístico escrito, não testado em ferramenta (b)."
+  },
+  {
+   "id": "F-03",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "Entre layout/visual e contextual/relacional: a sobreposição envolve dois elementos (Voltar e seletor 'Página'), mas o que a referência cobra é o margin-top -20px do contêiner, espaçamento num elemento (§3.1 Layout/visual). Predicado determinístico (b); também escrevível como interseção de caixas."
+  },
+  {
+   "id": "F-04",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "Raio computado do botão (4px em vez de pílula) é layout/visual (§3.1: raio). Limítrofe com semântico pela regra 'token certo para o contexto' (--surface-rounder-sm existe), mas aqui o papel é fixado pela classe br-button, sem interpretar intenção, então o predicado é determinístico (b)."
+  },
+  {
+   "id": "F-05",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "Raio computado da Tag de interação (pílula em vez de 4px) é layout/visual (§3.1). Limítrofe com semântico ('token certo para o contexto': --surface-rounder-pill existe), mas o papel vem da classe br-tag.interaction, sem julgamento de significado; valor permitido único → predicado determinístico (b)."
+  },
+  {
+   "id": "F-06",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "Cor de fundo computada de um th (branco em vez de --gray-5) é layout/visual (§3.1: cor). Limítrofe com semântico pela regra do token para o papel (branco está na paleta), mas o papel 'header da Table' é estrutural (th), sem interpretação; valor permitido fixo (b)."
+  },
+  {
+   "id": "F-07",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "Raio computado da superfície do Avatar (4px em vez de 50%) é layout/visual (§3.1: raio). Limítrofe com semântico só pela regra do token para o papel (usa --surface-rounder-sm), mas o papel é dado pelo componente br-avatar; predicado determinístico (b)."
+  },
+  {
+   "id": "F-08",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "Entre layout/visual e sintático: a referência cobra o text-transform computado do botão interno (estilo de um elemento, §3.1 Layout/visual), mas a causa é uma classe (text-uppercase) no hospedeiro, que seria decidível como atributo. Predicado determinístico, sem detector testado conhecido (b)."
+  },
+  {
+   "id": "F-09",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "Padding vertical computado das células (12px) fora dos valores das três densidades é espaçamento e 'valor fora dos tokens' (§3.1 Layout/visual); a composição só agrega a mesma medida em 81 células. Conjunto de valores permitidos fechado → predicado determinístico (b)."
+  },
+  {
+   "id": "F-10",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "box-shadow none na lista aberta é estilo computado de um elemento num estado (lista-filtro) (§3.1 Layout/visual); alcançar o estado não torna a decisão relacional. Predicado determinístico (proibido 'none'), sem detector testado conhecido (b)."
+  },
+  {
+   "id": "F-11",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "Decidir exige relacionar três filhos da tag (botão de fechar, ícone, rótulo) e a ordem entre eles (contêiner↔item, §3.1 Contextual/relacional). Sem predicado na referência, mas a regra é determinística (x do botão > x do rótulo, ou ordem no DOM), logo escrevível e não implementada (b)."
+  },
+  {
+   "id": "F-12",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "Cor de fundo computada do item selecionado (#1351b4 em vez de #2670e8) é layout/visual (§3.1: cor). Limítrofe com semântico porque #1351b4 está na paleta e o erro é 'token certo para o contexto', mas o contexto (estado Selecionado, classe .selected) é estrutural e o valor permitido é fixo, sem interpretação (b)."
+  }
+ ]
+}

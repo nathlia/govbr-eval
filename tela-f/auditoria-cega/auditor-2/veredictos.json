@@ -1,0 +1,194 @@
+[
+ {
+  "claimId": "A-01",
+  "veredicto": "falsa",
+  "medida": "div.pagination-information color = rgb(51, 51, 51); spans '1','9','9' também rgb(51, 51, 51); rótulos <label> 'Exibir' e 'Página' = rgb(51, 51, 51). Nenhum azul.",
+  "clausulaConfere": "sim",
+  "violaClausula": null,
+  "nota": "Token --color-secondary-08 resolve para #333 na página, igual ao medido. | trecho no arquivo: linha(s) 381"
+ },
+ {
+  "claimId": "A-02",
+  "veredicto": "falsa",
+  "medida": "9 células td:nth-of-type(4): white-space: normal; overflow: visible; text-overflow: clip; scrollWidth = clientWidth = 131 px. Textos quebram em várias linhas (alturas 105–145 px), nada cortado.",
+  "clausulaConfere": "sim",
+  "violaClausula": null,
+  "nota": "trecho no arquivo: linha(s) 157"
+ },
+ {
+  "claimId": "A-03",
+  "veredicto": "falsa",
+  "medida": "9 links a: color = rgb(19, 81, 180) (#1351b4), não rgb(0, 94, 162).",
+  "clausulaConfere": "sim",
+  "violaClausula": null,
+  "nota": "#1351b4 é o --blue-warm-vivid-70 resolvido na página. | trecho no arquivo: linha(s) 198"
+ },
+ {
+  "claimId": "A-04",
+  "veredicto": "falsa",
+  "medida": "input#total ('Exibir'): border 1px solid rgba(0, 0, 0, 0) em todos os lados, box-shadow none, outline none. input#page ('Página'): idem. Nenhuma borda cinza rgb(136,136,136) em nenhum dos dois.",
+  "clausulaConfere": "sim",
+  "violaClausula": null,
+  "nota": "trecho no arquivo: linha(s) 200"
+ },
+ {
+  "claimId": "A-05",
+  "veredicto": "verdadeira",
+  "medida": "span.br-tag.interaction 'Meus processos': border-radius 16783.2px nos 4 cantos (pílula; altura 32 px). Tags de filtro (Aberto há, Tipo de processo, Status, Espécie alvo, Método de pesca, Petrecho): border-radius 4px.",
+  "clausulaConfere": "sim",
+  "violaClausula": "sim",
+  "nota": "--surface-rounder-sm = 4px na página; a pílula contradiz. | trecho no arquivo: linha(s) 426, 430"
+ },
+ {
+  "claimId": "A-06",
+  "veredicto": "verdadeira",
+  "medida": "Campo (br-input) top 402.3 / bottom 434.3, centro 418.3. Botão 'Buscar' top 430.3 / bottom 462.3, centro 446.3 → 28.0 px abaixo; style margin-top: -12px. Ícone da lupa top 438.3 / bottom 454.3: inteiro abaixo da borda inferior do campo (434.3).",
+  "clausulaConfere": "sim",
+  "violaClausula": "sim",
+  "nota": "trecho no arquivo: linha(s) 363"
+ },
+ {
+  "claimId": "A-07",
+  "veredicto": "falsa",
+  "medida": "Após clicar em input#total, .br-list aberta (display block, position absolute, itens 10/25/50/100): box-shadow = rgba(0, 0, 0, 0.16) 0px 3px 6px 0px.",
+  "clausulaConfere": "sim",
+  "violaClausula": null,
+  "nota": "trecho no arquivo: linha(s) 71"
+ },
+ {
+  "claimId": "A-08",
+  "veredicto": "falsa",
+  "medida": "button interno de br-button[label=Exportar]: border-radius 1680px nos 4 cantos (pílula, altura 40 px).",
+  "clausulaConfere": "sim",
+  "violaClausula": null,
+  "nota": "trecho no arquivo: linha(s) 348"
+ },
+ {
+  "claimId": "A-09",
+  "veredicto": "verdadeira",
+  "medida": "Após escolher 'Últimos 60 dias', surge div.row.pl-2 com span.br-tag.interaction 'Últimos 60 dias' (x 92–307). Ordem horizontal dos filhos: botão fechar (button.br-button.circle com i.fa-times) x 116–144; ícone fa-clock x 144–168; rótulo x 172–295. O × está à esquerda, antes do ícone e do rótulo.",
+  "clausulaConfere": "sim",
+  "violaClausula": "sim",
+  "nota": "Na tabela 'Alinhamento [tag de Interação]' o Tertiary-button é --spacing-horizontal-right. | trecho no arquivo: linha(s) 291"
+ },
+ {
+  "claimId": "A-10",
+  "veredicto": "falsa",
+  "medida": "th:nth-of-type(8) 'Status': background-color rgb(240, 240, 240).",
+  "clausulaConfere": "sim",
+  "violaClausula": null,
+  "nota": "trecho no arquivo: linha(s) 382"
+ },
+ {
+  "claimId": "A-11",
+  "veredicto": "verdadeira",
+  "medida": "button interno de br-button 'Limpar filtros': text-transform uppercase (classe text-uppercase); textContent 'Limpar filtros', innerText renderizado 'LIMPAR FILTROS'.",
+  "clausulaConfere": "sim",
+  "violaClausula": "sim",
+  "nota": "trecho no arquivo: linha(s) 299"
+ },
+ {
+  "claimId": "A-12",
+  "veredicto": "verdadeira",
+  "medida": "th:nth-of-type(7) 'Téc. Adm.': background-color rgb(255, 255, 255). Os outros 8 th (1–6, 8, 9): rgb(240, 240, 240).",
+  "clausulaConfere": "sim",
+  "violaClausula": "sim",
+  "nota": "--gray-5 = #f0f0f0 na página. | trecho no arquivo: linha(s) 382"
+ },
+ {
+  "claimId": "A-13",
+  "veredicto": "verdadeira",
+  "medida": "Contêiner d-flex.justify-content-end: margin-top -20px. Botão 'Voltar' x 1090.8–1188, y 1662.5–1702.5. Caixa do seletor 'Página' x 1040–1179.7, y 1642.5–1682.5 → interseção 88.9 × 20 px. Input 'Página' (y 1646.5–1678.5) interseção 88 × 16 px. elementFromPoint no centro do input e no centro da seta do seletor 'Página' devolve o botão 'Voltar'.",
+  "clausulaConfere": "sim",
+  "violaClausula": "sim",
+  "nota": "trecho no arquivo: linha(s) 250"
+ },
+ {
+  "claimId": "A-14",
+  "veredicto": "verdadeira",
+  "medida": "Lista 'Exibir' aberta: .br-item.selected (texto '10') background-color rgb(19, 81, 180), color rgb(255, 255, 255) (label também branco). Demais itens: fundo branco, texto rgb(51,51,51).",
+  "clausulaConfere": "sim",
+  "violaClausula": "sim",
+  "nota": "Medido #1351b4 (= --blue-warm-vivid-70 na página); a cláusula pede --blue-warm-vivid-50 (#2670e8). | trecho no arquivo: linha(s) 430"
+ },
+ {
+  "claimId": "A-15",
+  "veredicto": "falsa",
+  "medida": "span.br-tag 'Tipo de processo': border-radius 4px nos 4 cantos, altura 32 px.",
+  "clausulaConfere": "sim",
+  "violaClausula": null,
+  "nota": "trecho no arquivo: linha(s) 426, 430"
+ },
+ {
+  "claimId": "A-16",
+  "veredicto": "falsa",
+  "medida": "span.br-tag 'Status': altura 32 px, igual às vizinhas (todas 32 px); rótulo de uma palavra, numa só linha (as duas posições verticais de caixas de texto, 386.1 e 390.3, são do ícone e do rótulo na mesma linha).",
+  "clausulaConfere": "sim",
+  "violaClausula": null,
+  "nota": "trecho no arquivo: linha(s) 220"
+ },
+ {
+  "claimId": "A-17",
+  "veredicto": "verdadeira",
+  "medida": "9 células td:nth-of-type(5): style inline 'max-width: 90px; white-space: nowrap; overflow: hidden'; computado white-space nowrap, overflow hidden, text-overflow clip; scrollWidth 206–454 > clientWidth 120. Visível 'Pessoa Exemp' (corte no meio da palavra, sem reticências). Nenhum title/aria-describedby na célula ou filhos; após hover de 1,2 s nenhum tooltip visível.",
+  "clausulaConfere": "sim",
+  "violaClausula": "sim",
+  "nota": "trecho no arquivo: linha(s) 157"
+ },
+ {
+  "claimId": "A-18",
+  "veredicto": "falsa",
+  "medida": "3 botões internos de br-button[title=Assinar]: border-radius 1680px (pílula).",
+  "clausulaConfere": "sim",
+  "violaClausula": null,
+  "nota": "trecho no arquivo: linha(s) 348"
+ },
+ {
+  "claimId": "A-19",
+  "veredicto": "verdadeira",
+  "medida": "pnip-header .br-avatar .content (letra 'U'): 40 × 40 px, border-radius 4px nos 4 cantos.",
+  "clausulaConfere": "sim",
+  "violaClausula": "sim",
+  "nota": "trecho no arquivo: linha(s) 41"
+ },
+ {
+  "claimId": "A-20",
+  "veredicto": "verdadeira",
+  "medida": "Todas as 81 td: padding-top/bottom 12px/12px. Todos os th: 16px/16px.",
+  "clausulaConfere": "sim",
+  "violaClausula": "sim",
+  "nota": "12 px não é 8, 16 nem 24 px; --spacing-scale-2x = 16px na página. | trecho no arquivo: linha(s) 423"
+ },
+ {
+  "claimId": "A-21",
+  "veredicto": "falsa",
+  "medida": "button interno de Exportar: padding-left 24px, padding-right 24px (largura 117.7 px).",
+  "clausulaConfere": "sim",
+  "violaClausula": null,
+  "nota": "trecho no arquivo: linha(s) 74"
+ },
+ {
+  "claimId": "A-22",
+  "veredicto": "verdadeira",
+  "medida": "button.br-button.secondary 'Voltar': border-radius 4px nos 4 cantos. button interno de 'Exportar' (secondary): border-radius 1680px (pílula).",
+  "clausulaConfere": "sim",
+  "violaClausula": "sim",
+  "nota": "trecho no arquivo: linha(s) 348"
+ },
+ {
+  "claimId": "A-23",
+  "veredicto": "falsa",
+  "medida": "button interno de Exportar: text-transform none; innerText 'Exportar'.",
+  "clausulaConfere": "sim",
+  "violaClausula": null,
+  "nota": "trecho no arquivo: linha(s) 299"
+ },
+ {
+  "claimId": "A-24",
+  "veredicto": "verdadeira",
+  "medida": "Após clicar na tag 'Aberto há': div.br-select > div.br-list (display block, position absolute, z-index 1, y 418–566, itens 'Últimos 7/30/60/90 dias') sobre a barra de filtros e o cabeçalho da tabela (th começa em y 486.6); box-shadow none.",
+  "clausulaConfere": "sim",
+  "violaClausula": "sim",
+  "nota": "trecho no arquivo: linha(s) 71"
+ }
+]
