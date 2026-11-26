@@ -8,7 +8,7 @@
   "hypotheses": [
     "Portão de desenho, sem hipótese científica: a mediana do sem nas specs semeadas é ≤ ⌊n/2⌋?"
   ],
-  "createdAt": "2026-11-26T18:00:00Z",
+  "createdAt": "2026-11-26T08:00:00Z",
   "frozenAt": null,
   "design": {
     "screens": [
@@ -130,7 +130,7 @@
       {
         "screenId": "processos-f",
         "justification": "Adendo de 26/11 §3: o oráculo não roda na tela F antes do congelamento da referência (nem varredura, nem verificação, nem linha de base); a linha de base mede com o validator. O portão dispara com etapas = so-coleta e é analisado com --sem-linha-de-base.",
-        "declaredAt": "2026-11-26T18:00:00Z",
+        "declaredAt": "2026-11-26T08:00:00Z",
         "analysisPath": "individual"
       }
     ]
