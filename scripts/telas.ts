@@ -94,6 +94,12 @@ export interface Tela {
    * critério de cada defeito no lote. Sem o campo, a passada é a de sempre. A coleta não o lê.
    */
   criteriosDeJulgamento?: { arquivo: string; sha256: string };
+  /**
+   * Arquivo de níveis de dificuldade das specs semeadas (tela F; arquivo relativo à raiz deste repo + sha256). Só o recálculo
+   * o lê (`scripts/reanalise-nat74/recalculo-campanha.ts › lerNiveis`): confere o sha256, a referência citada e que os ids
+   * são exatamente o estrato semeado, e acrescenta a tabela descritiva por nível. Sem o campo, a saída é a de sempre.
+   */
+  niveis?: { arquivo: string; sha256: string };
   /** Observação declarada sobre a tela: o que ela é e o que ela ainda não tem. */
   nota?: string;
   isolamento: TelaIsolamento;

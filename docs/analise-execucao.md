@@ -238,7 +238,16 @@ cegos, que recebem só os arquivos indicados.
    seguimento do adendo de 26/11, fora da família de Holm da D e da E) sobre o estrato semeado da referência
    (`_meta.estratos.semeado.specs`: os defeitos do DS injetados; a regra recusa estrato vazio, semeada fora da classe ds
    pela `classeDaSpec`, semeada exposta, e estratos semeado/natural que não repartem a referência; sensibilidades: todas =
-   semeadas + naturais não expostas, as unidades do primário e, havendo exposta, "com as expostas"). **Tela E, "sem ids expostos"** (variante da
+   semeadas + naturais não expostas, as unidades do primário e, havendo exposta, "com as expostas"). **Tela F, tabela por
+   nível** (descritiva pré-declarada, sem D nem teste): a tela declara em `telas.json › <tela>.niveis { arquivo, sha256 }`
+   o arquivo de níveis (`tela-f-niveis-1.0.0`: `referencia { arquivo, versao, sha256 }` + `niveis { spec: facil | medio |
+   dificil | muito-dificil }`); o recálculo confere, antes de qualquer conta, o sha256 declarado, a referência citada (o
+   arquivo de `telas.json`, a versão e o sha256 do `referencia.json` das análises) e que os ids são exatamente o estrato
+   semeado, e grava `recalculo.json › porNivel` (por nível e `total` = o primário, por braço: detecção da chave
+   `principal|1.2.0` por trio, "x [≤y]" com os pendentes, e a mediana; a fundamentada da leitura principal ao lado) mais uma
+   seção no `tabela.md`, depois da coluna fundamentada. A `processos-f` sem a declaração para. Sem a declaração (as outras
+   telas), `telas.json` nem entra no manifesto e a saída é byte a byte a de antes (conferido contra os recálculos
+   arquivados da D e da E de 26/11). **Tela E, "sem ids expostos"** (variante da
    referência, pré-registrada como "só muda a coluna fundamentada"): `regraDoDesfecho.fundamentada` declara, por spec que
    a variante muda, os ids que ela retira de `rules` (principal − variante, conferidos com `_meta.fundamentacao.porSpec`), e
    `recalculo.json › fundamentada` traz a coluna fundamentada (`specFundamentada`, a mesma de `e14-deteccao.ts`) por trio e

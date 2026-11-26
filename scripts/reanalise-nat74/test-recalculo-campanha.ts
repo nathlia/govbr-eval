@@ -8,9 +8,9 @@
  */
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import type { SemanticPackage, SemanticReviews } from "../semantic-flow";
 import { EVAL, RESULTADOS, lerJson, sha } from "./comum";
 import { mapaRetrospectivo } from "./mapa";
@@ -19,7 +19,7 @@ import { montarDecisoes } from "./montar";
 import type { AtomoClassificado } from "./politica";
 import { NAO_PERGUNTADO } from "./e14-comum";
 import {
-  Entradas, TRIO_COM_SLOT_FORA, chavePorProtocolo, chaveVariante, colunaFundamentada, conjuntoDe, contar, contarFundamentada, ehIdDeVerificacao, executar, fundamentadaDoTrio, fundamentadaMd, idCanonico,
+  Entradas, FORMATO_NIVEIS, NIVEIS, TRIO_COM_SLOT_FORA, conferirNiveis, lerNiveis, mediana, niveisDeclarados, porNivelMd, tabelaPorNivel, chavePorProtocolo, chaveVariante, colunaFundamentada, conjuntoDe, contar, contarFundamentada, ehIdDeVerificacao, executar, fundamentadaDoTrio, fundamentadaMd, idCanonico,
   leituraComDelta, normaDaFundamentacao, recalcular, regraDaTela, removidosS4, sensibilidadeSemIdsExpostos, slotsPorProtocolo,
   tabelaDaComparacao, tabelaPorProtocolo, unidadesDaSpec, vereditoNaPolitica,
   type CartaoJulgado, type Comparacao, type Contestado, type TabelaComparacao, type TrioEntrada,
@@ -299,6 +299,78 @@ try {
     assert.deepEqual(tab("com-expostas").porTrio.map(x => x.d), [3, -2]);
   });
 
+  // ── [tela F] arquivo de níveis (telas.json › <tela>.niveis) e a tabela descritiva por nível; tudo sintético.
+  {
+    const refF = refFSint();
+    const refFTxt = JSON.stringify(refF), refFSha = sha(refFTxt);
+    const NIV = { "S-01": "facil", "S-02": "medio", "S-03": "dificil", "S-04": "muito-dificil" };
+    const docN = (o: Record<string, unknown> = {}) => ({ formato: FORMATO_NIVEIS, referencia: { arquivo: "ground-truth-processos-f.json", versao: "1.0.0", sha256: refFSha }, niveis: NIV, ...o });
+    t("[tela F, níveis] conferência: formato, referência (versão, sha256, arquivo de telas.json), ids = estrato semeado, vocabulário, nivel da referência", () => {
+      assert.deepEqual(conferirNiveis(docN(), refF, refFSha, "ground-truth-processos-f.json").niveis, NIV);
+      assert.throws(() => conferirNiveis(docN({ formato: "x" }), refF, refFSha, null), /formato/);
+      assert.throws(() => conferirNiveis(docN({ referencia: { arquivo: "ground-truth-processos-f.json", versao: "0.9.0", sha256: refFSha } }), refF, refFSha, null), /referência 0\.9\.0/);
+      assert.throws(() => conferirNiveis(docN(), refF, "0".repeat(64), null), /sha256 da referência/);
+      assert.throws(() => conferirNiveis(docN(), refF, refFSha, "ground-truth-outra.json"), /≠ a de telas\.json/);
+      assert.throws(() => conferirNiveis(docN({ niveis: { "S-01": "facil", "S-02": "medio", "S-03": "dificil" } }), refF, refFSha, null), /≠ estrato semeado/);
+      assert.throws(() => conferirNiveis(docN({ niveis: { ...NIV, "N-01": "facil" } }), refF, refFSha, null), /≠ estrato semeado/, "natural não tem nível");
+      assert.throws(() => conferirNiveis(docN({ niveis: { ...NIV, "S-04": "extremo" } }), refF, refFSha, null), /fora de facil \| medio \| dificil \| muito-dificil/);
+      const comNivel = { ...refF, violations: refF.violations.map(v => (v.id === "S-02" ? { ...v, nivel: "facil" } : v)) };
+      assert.throws(() => conferirNiveis(docN(), comNivel, refFSha, null), /S-02 é medio no arquivo e facil na referência/);
+      assert.throws(() => conferirNiveis(docN(), refD, refFSha, null), /referência 1\.0\.0|semeado/);
+      assert.deepEqual([...NIVEIS], ["facil", "medio", "dificil", "muito-dificil"]);
+    });
+    t("[tela F, níveis] declaração em telas.json: sem o campo → null (nada lido para o manifesto); fora do formato e sha256 divergente recusam; com o campo, telas.json e o arquivo entram no manifesto", () => {
+      const dir = join(tmp, "niveis"); mkdirSync(join(dir, "tela-f"), { recursive: true });
+      const nTxt = JSON.stringify(docN()); writeFileSync(join(dir, "tela-f", "niveis-1.0.0.json"), nTxt);
+      const telas = (decl: unknown, nome = "telas.json") => { writeFileSync(join(dir, nome), JSON.stringify({ "processos-f": { reference: "ground-truth-processos-f.json", ...(decl === undefined ? {} : { niveis: decl }) } })); return join(dir, nome); };
+      const E0 = new Entradas();
+      assert.equal(lerNiveis("processos-f", refF, refFSha, E0, telas(undefined, "sem.json")), null); assert.deepEqual(E0.manifesto(), {});
+      assert.equal(niveisDeclarados("processos", telas(undefined, "sem.json")), null);
+      assert.throws(() => niveisDeclarados("processos-f", telas({ arquivo: "tela-f/niveis-1.0.0.json" }, "ruim.json")), /fora do formato/);
+      assert.throws(() => niveisDeclarados("processos-f", telas({ arquivo: "tela-f/niveis-1.0.0.json", sha256: sha(nTxt), extra: 1 }, "ruim2.json")), /fora do formato/);
+      assert.throws(() => lerNiveis("processos-f", refF, refFSha, new Entradas(), telas({ arquivo: "tela-f/niveis-1.0.0.json", sha256: "0".repeat(64) }, "sha.json")), /sha256 de tela-f\/niveis-1\.0\.0\.json ≠ o declarado/);
+      assert.throws(() => lerNiveis("processos-f", refF, refFSha, new Entradas(), telas({ arquivo: "tela-f/nao-existe.json", sha256: sha(nTxt) }, "falta.json")), /não existe/);
+      const E1 = new Entradas();
+      const n = lerNiveis("processos-f", refF, refFSha, E1, telas({ arquivo: "tela-f/niveis-1.0.0.json", sha256: sha(nTxt) }))!;
+      assert.equal(n.declaracao.sha256, sha(nTxt)); assert.equal(n.doc.niveis["S-03"], "dificil");
+      assert.deepEqual(Object.keys(E1.manifesto()).map(k => k.split("/").slice(-2).join("/")).sort(), ["niveis/telas.json", "tela-f/niveis-1.0.0.json"]);
+    });
+    t("[tela F, níveis] tabela: specs confirmadas por nível × braço, por trio e mediana; [máximo] com pendentes; braço ausente = null; total = primário; fundamentada ao lado", () => {
+      const sp: Record<string, string> = { a: "S-01", b: "S-02", c: "S-02", d: "N-01", e: "S-03", g: "S-04" };
+      const br = (confirmadas: string[], admissiveis: string[] = []) => ({ confirmadas, admissiveis, pendentes: admissiveis.length });
+      const k = chaveVariante("principal", "1.2.0");
+      const tr: TrioEntrada[] = [
+        { trio: "p01", ordem: ["sem", "ferramentas", "com"], linhaDeBase: null, creditos: { [k]: { sem: br(["d"]), ferramentas: br(["a"]), com: br(["a", "b", "c", "d"], ["e"]) } } },
+        { trio: "p02", ordem: ["com", "sem", "ferramentas"], linhaDeBase: null, creditos: { [k]: { sem: br(["a"]), ferramentas: br(["b", "e", "g"]), com: br(["g"]) } } },
+        { trio: "p03", ordem: ["ferramentas", "com", "sem"], linhaDeBase: null, creditos: { [k]: { sem: br([]), ferramentas: br(["a", "b"]) } } }];
+      const fund: { trio: string; porBraco: Record<string, { principal: string[] }> }[] = [{ trio: "p01", porBraco: { sem: { principal: ["N-01"] }, ferramentas: { principal: [] }, com: { principal: ["S-01", "S-02", "N-01"] } } },
+        { trio: "p02", porBraco: { sem: { principal: ["S-01"] }, ferramentas: { principal: ["S-02", "S-03"] }, com: { principal: ["S-04"] } } },
+        { trio: "p03", porBraco: { sem: { principal: [] }, ferramentas: { principal: ["S-01"] } } }];
+      const decl = { arquivo: "tela-f/niveis-1.0.0.json", sha256: "a".repeat(64) };
+      const p = tabelaPorNivel({ declaracao: decl, doc: conferirNiveis(docN(), refF, refFSha, null) }, "processos-f", tr, fund, ["sem", "ferramentas", "com"], u => sp[u]);
+      assert.deepEqual(p.specs, { facil: ["S-01"], medio: ["S-02"], dificil: ["S-03"], "muito-dificil": ["S-04"] });
+      assert.deepEqual(Object.keys(p.deteccao), ["facil", "medio", "dificil", "muito-dificil", "total"]);
+      assert.deepEqual(p.deteccao.facil.com.porTrio, [{ min: 1, max: 1 }, { min: 0, max: 0 }, null]);
+      assert.deepEqual(p.deteccao.dificil.com.porTrio, [{ min: 0, max: 1 }, { min: 0, max: 0 }, null], "pendente só no máximo");
+      assert.deepEqual(p.deteccao.total.ferramentas.porTrio.map(x => x!.min), [1, 3, 2]); assert.equal(p.deteccao.total.ferramentas.mediana, 2);
+      assert.deepEqual([p.deteccao.total.com.mediana, p.deteccao.total.com.medianaMax], [1.5, 2], "mediana entre os 2 trios com o braço");
+      assert.deepEqual(p.deteccao.total.sem.porTrio.map(x => x!.min), [0, 1, 0], "natural (N-01) não entra");
+      for (const b of ["sem", "ferramentas", "com"]) for (let i = 0; i < 3; i++) {
+        const tot = p.deteccao.total[b].porTrio[i];
+        assert.equal(tot?.min ?? null, tot === null ? null : NIVEIS.reduce((s, n) => s + p.deteccao[n][b].porTrio[i]!.min, 0), "níveis somam o total");
+      }
+      assert.deepEqual(p.fundamentada.total.com.porTrio, [2, 1, null]); assert.deepEqual(p.fundamentada.medio.ferramentas.porTrio, [0, 1, 0]); assert.equal(p.fundamentada.total.sem.mediana, 0);
+      const regraF = regraDaTela("processos-f", refF);
+      const dfc = tabelaDaComparacao(tr, { id: "ferramentas-x-com", arms: ["ferramentas", "com"], role: "primary" }, { variante: "principal", politica: "1.2.0", conjunto: "primario", regra: regraF, specDe: u => sp[u], nPlanejado: 9, sementeBase: "s" });
+      assert.deepEqual(dfc.porTrio.map(r => [r.a?.min ?? null, r.b?.min ?? null]), [0, 1, 2].map(i => [p.deteccao.total.ferramentas.porTrio[i]?.min ?? null, p.deteccao.total.com.porTrio[i]?.min ?? null]), "total = o primário das tabelas");
+      const md = porNivelMd(p);
+      assert.match(md, /## Specs semeadas confirmadas por nível de dificuldade \(descritivo pré-declarado; sem D, sem teste\)/);
+      assert.match(md, /\| dificil \(1\) \| com \| 0 \[≤1\], 0, — \| 0 \[≤0,50\] \| 0, 0, — \| 0 \|/);
+      assert.match(md, /\| total \(4\) \| com \| 2 \[≤3\], 1, — \| 1,50 \[≤2\] \| 2, 1, — \| 1,50 \|/);
+      assert.equal(mediana([]), null); assert.equal(mediana([3, 1, 2]), 2); assert.equal(mediana([4, 1]), 2.5);
+    });
+  }
+
   t("contagem: modo spec conta specs distintas; modo unidade conta unidades; só o conjunto pedido", () => {
     const d = regraDaTela("processos", refD), a = regraDaTela("solicitacao", refA);
     const spec: Record<string, string> = { u1: "D-01", u2: "D-01", u3: "D-11", u4: "A-04", u5: "A-04", u6: "P-01", u7: "A-01" };
@@ -575,6 +647,71 @@ try {
       assert.deepEqual(x.tabelas[chavePorProtocolo("principal", "1.2.0", "primario")].map(t => t.porTrio.map(r => r.d)), tb(ra, "principal|1.2.0|primario").map(t => t.porTrio.map(r => r.d)));
       assert.ok(!Object.keys(rp.json.tabelas as object).some(k => k.startsWith(LEITURA_POR_PROTOCOLO)), "nunca dentro de `tabelas`");
     });
+  }
+  /**
+   * [tela F] De ponta a ponta sobre a passada ARQUIVADA da D (fechada; só leitura), com uma referência F SINTÉTICA feita da D
+   * 1.1.0: estrato semeado = D-01..D-04 (categories trocadas para "componente", só para a regra aceitar), natural = o resto,
+   * expostas = as da D. Nada da referência da F (que não existe aqui). As análises são copiadas só nos arquivos que o
+   * recálculo lê; a passada entra por junção (pastaDaAnalise acha as cópias ao lado dela). Mesmas --origem e --ratificacoes
+   * do recálculo arquivado de 26/11: "todas" da F tem de dar o primário da D, e "com as expostas" o da D.
+   */
+  console.log("recálculo de campanha nova: tela F de ponta a ponta sobre a passada arquivada da D (referência F sintética)");
+  {
+    const DD = join(RESULTADOS, "analises", "nat78-tela-d-01"), PD = join(DD, "passada-adjudicada-20261118T1"), ARQ = join(DD, "recalculo-20261126T1", "recalculo.json");
+    if (!existsSync(join(PD, "julgamentos.json")) || !existsSync(ARQ)) { pulados++; console.log("  PULADO passada ou recálculo arquivado da D ausente"); }
+    else {
+      type RefX = Parameters<typeof regraDaTela>[1];
+      const camp = join(tmp, "f-de-d"); mkdirSync(camp, { recursive: true });
+      const PF = join(camp, "passada-adjudicada-20261118T1");
+      symlinkSync(PD, PF, "junction");
+      const refD11 = lerJson<RefX>(join(EVAL, "ground-truth-processos-1.1.0.json"));
+      const SEM = ["D-01", "D-02", "D-03", "D-04"], EXP = refD11._meta.exposto!.specs;
+      const refFD: RefX = { ...refD11, _meta: { ...refD11._meta, version: "1.0.0", suite: "processos-f",
+        estratos: { semeado: { specs: SEM }, natural: { specs: refD11.violations.map(v => v.id).filter(s => !SEM.includes(s)) }, exposto: { specs: EXP } } },
+        violations: refD11.violations.map(v => (SEM.includes(v.id) ? { ...v, categories: ["componente"] } : v)) };
+      const refTxt = JSON.stringify(refFD, null, 2);
+      for (let i = 1; i <= 9; i++) {
+        const de = join(DD, `p0${i}`, "analisar-20261118T1"), para = join(camp, `p0${i}`, "analisar-20261118T1");
+        for (const f of ["revisao/package.json", "entradas/campanha.json", "coleta-trio.json", "summary.json"]) { mkdirSync(dirname(join(para, f)), { recursive: true }); copyFileSync(join(de, f), join(para, f)); }
+        writeFileSync(join(para, "entradas", "referencia.json"), refTxt);
+      }
+      mkdirSync(join(camp, "tela-f"));
+      const nTxt = JSON.stringify({ formato: FORMATO_NIVEIS, referencia: { arquivo: "ground-truth-processos-f.json", versao: "1.0.0", sha256: sha(refTxt) },
+        niveis: { "D-01": "facil", "D-02": "medio", "D-03": "dificil", "D-04": "muito-dificil" } });
+      writeFileSync(join(camp, "tela-f", "niveis-1.0.0.json"), nTxt);
+      const telasF = (niveis: unknown, nome = "telas.json") => { writeFileSync(join(camp, nome), JSON.stringify({ "processos-f": { reference: "ground-truth-processos-f.json", ...(niveis === undefined ? {} : { niveis }) } })); return join(camp, nome); };
+      const opts = { passadas: [PF], origens: [join(DD, "origem-20261118T1")], ratificacoes: join(DD, "respostas-autora-20261126T1", "respostas-autora.json") };
+      t("[tela F, ponta a ponta] recusas antes de qualquer conta: F sem a declaração de níveis; sha256 do arquivo de níveis divergente; níveis que não são o estrato semeado", () => {
+        assert.throws(() => recalcular({ ...opts, telas: telasF(undefined, "sem.json") }), /processos-f sem telas\.json › processos-f\.niveis/);
+        assert.throws(() => recalcular({ ...opts, telas: telasF({ arquivo: "tela-f/niveis-1.0.0.json", sha256: "0".repeat(64) }, "sha.json") }), /≠ o declarado/);
+        writeFileSync(join(camp, "tela-f", "niveis-5.json"), JSON.stringify({ ...JSON.parse(nTxt), niveis: { "D-01": "facil", "D-02": "medio", "D-03": "dificil", "D-05": "muito-dificil" } }));
+        assert.throws(() => recalcular({ ...opts, telas: telasF({ arquivo: "tela-f/niveis-5.json", sha256: sha(readFileSync(join(camp, "tela-f", "niveis-5.json"))) }, "ids.json") }), /≠ estrato semeado/);
+      });
+      const rf = recalcular({ ...opts, telas: telasF({ arquivo: "tela-f/niveis-1.0.0.json", sha256: sha(nTxt) }) });
+      const arq = lerJson<{ tabelas: Record<string, TabelaComparacao[]> }>(ARQ);
+      const tf = rf.json.tabelas as Record<string, TabelaComparacao[]>;
+      const resumo = (ts: TabelaComparacao[]) => ts.map(x => ({ c: x.comparacao, d: x.porTrio.map(r => [r.d, r.dMin, r.dMax]), p: x.estatistica.principal.p, media: x.estatistica.media }));
+      t("[tela F, ponta a ponta] conjuntos: primário 4 semeadas; todas = o primário da D (mesmos D por trio e p) e com as expostas = o da D, em toda variante e política", () => {
+        assert.deepEqual((rf.json.regraDoDesfecho as { conjuntos: { id: string; specs: string[] }[] }).conjuntos.map(c => [c.id, c.specs.length]), [["primario", 4], ["todas", 9], ["unidades", 4], ["com-expostas", 13]]);
+        for (const vp of ["principal|1.2.0", "principal|1.1.0", "S4'|1.2.0", "S4'|1.1.0"]) {
+          assert.deepEqual(resumo(tf[`${vp}|todas`]), resumo(arq.tabelas[`${vp}|primario`]), vp);
+          assert.deepEqual(resumo(tf[`${vp}|com-expostas`]), resumo(arq.tabelas[`${vp}|com-expostas`]), vp);
+        }
+        assert.equal(rf.json.tela, "processos-f"); assert.equal(rf.json.referencia, "1.0.0");
+      });
+      t("[tela F, ponta a ponta] tabela por nível: total = primário (por trio e braço), níveis somam o total; telas.json e o arquivo de níveis no manifesto; seção no tabela.md", () => {
+        const p = rf.json.porNivel as ReturnType<typeof tabelaPorNivel>;
+        assert.deepEqual(p.trios, ["p01", "p02", "p03", "p04", "p05", "p06", "p07", "p08", "p09"]);
+        const fc = tf["principal|1.2.0|primario"].find(x => x.comparacao === "ferramentas-x-com")!;
+        assert.deepEqual(p.deteccao.total.ferramentas.porTrio, fc.porTrio.map(r => r.a)); assert.deepEqual(p.deteccao.total.com.porTrio, fc.porTrio.map(r => r.b));
+        for (const b of ["sem", "ferramentas", "com"]) p.trios.forEach((_, i) => assert.equal(NIVEIS.reduce((s, n) => s + p.deteccao[n][b].porTrio[i]!.min, 0), p.deteccao.total[b].porTrio[i]!.min));
+        assert.ok(NIVEIS.every(n => p.specs[n].length === 1));
+        const e = Object.keys(rf.json.entradas as object);
+        assert.ok(e.some(k => k.endsWith("f-de-d/telas.json")) && e.some(k => k.endsWith("tela-f/niveis-1.0.0.json")));
+        assert.match(rf.md, /## Specs semeadas confirmadas por nível de dificuldade/);
+        assert.ok(rf.md.indexOf("## Specs semeadas confirmadas por nível") > rf.md.indexOf("## S4'"));
+      });
+    }
   }
 } finally { rmSync(tmp, { recursive: true, force: true }); }
 

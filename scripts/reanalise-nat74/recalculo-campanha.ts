@@ -62,7 +62,7 @@ import {
 import {
   FORMATO_CHAVE_AUTORA, FORMATO_RESPOSTAS_AUTORA, desfechoDaAutora, desfechoDaPassada, ratifica, type ChaveAutora, type DocRespostasAutora,
 } from "./autora-respostas";
-import { POLITICA_SENSIBILIDADE, TCC, jsonTexto, ordenar, posix, rotuloPolitica, sha, type VersaoPolitica } from "./comum";
+import { EVAL, POLITICA_SENSIBILIDADE, TCC, jsonTexto, ordenar, posix, rotuloPolitica, sha, type VersaoPolitica } from "./comum";
 import type { OracleUsage } from "../../contracts";
 import { bracoDoRun, referenciasDoAchado } from "./e14-campanha";
 import { IDS_REFERENCIA, type Derivado, type Resposta } from "./e14-comum";
@@ -519,6 +519,140 @@ export function colunaFundamentada(regra: RegraDesfecho, bracos: readonly string
     sensibilidades: [...sens], porTrio, contagens };
 }
 
+// ───────────────────────────────────────────────────────────────── specs semeadas por nível (tela F, descritivo)
+
+/**
+ * [tela F] Arquivo de níveis (adendo de 26/11 §4: id da spec semeada → nível de dificuldade), congelado com a referência e
+ * declarado pela tela em `telas.json › <tela>.niveis { arquivo, sha256 }` (o mesmo padrão de `criteriosDeJulgamento`).
+ */
+export const FORMATO_NIVEIS = "tela-f-niveis-1.0.0";
+export const NIVEIS = ["facil", "medio", "dificil", "muito-dificil"] as const;
+export type Nivel = typeof NIVEIS[number];
+export interface DeclaracaoNiveis { arquivo: string; sha256: string }
+export interface ArquivoNiveis { formato: typeof FORMATO_NIVEIS; referencia: { arquivo: string; versao: string; sha256: string }; niveis: Record<string, Nivel> }
+/** Telas do instrumento (padrão: `telas.json` deste repositório). */
+export const TELAS_JSON = join(EVAL, "telas.json");
+
+/**
+ * `niveis` da tela em `telas.json`, ou `null` (tela sem a declaração, ou fora do arquivo). Fora do formato
+ * `{ arquivo: texto, sha256: 64 hex }`, para. Lido sem registro em `Entradas`: só a tela que declara entra no manifesto
+ * (`lerNiveis`), para que as telas sem a declaração saiam byte a byte como antes.
+ */
+export function niveisDeclarados(telaId: string, telasAbs: string = TELAS_JSON): DeclaracaoNiveis | null {
+  const d = (JSON.parse(lerTexto(telasAbs)) as Record<string, { niveis?: unknown } | undefined>)[telaId]?.niveis;
+  if (d === undefined) return null;
+  const x = d as Partial<DeclaracaoNiveis> | null;
+  if (!x || typeof x !== "object" || Array.isArray(x) || typeof x.arquivo !== "string" || !x.arquivo.trim() || typeof x.sha256 !== "string" || !/^[0-9a-f]{64}$/.test(x.sha256)
+    || Object.keys(x).some(k => k !== "arquivo" && k !== "sha256"))
+    throw new Error(`telas.json › ${telaId}.niveis fora do formato { arquivo, sha256 }`);
+  return { arquivo: x.arquivo, sha256: x.sha256 };
+}
+
+/**
+ * Confere o arquivo de níveis contra a referência da campanha: formato, referência citada (arquivo = o de `telas.json`,
+ * versão, sha256 do arquivo da referência que as análises leram), ids exatamente o estrato semeado
+ * (`_meta.estratos.semeado.specs`), nível no vocabulário, e o `nivel` que a referência repetir numa spec igual ao do arquivo.
+ */
+export function conferirNiveis(doc: unknown, ref: Referencia, refSha256: string, refArquivo: string | null): ArquivoNiveis {
+  const d = doc as Partial<ArquivoNiveis> | null;
+  if (!d || typeof d !== "object" || d.formato !== FORMATO_NIVEIS) throw new Error(`arquivo de níveis: formato ${JSON.stringify(d?.formato)} ≠ ${FORMATO_NIVEIS}`);
+  const r = d.referencia;
+  if (!r || typeof r.arquivo !== "string" || typeof r.versao !== "string" || typeof r.sha256 !== "string") throw new Error("arquivo de níveis sem referencia { arquivo, versao, sha256 }");
+  if (r.versao !== ref._meta.version) throw new Error(`arquivo de níveis: referência ${r.versao} ≠ a da campanha (${ref._meta.version})`);
+  if (r.sha256 !== refSha256) throw new Error(`arquivo de níveis: sha256 da referência ${r.sha256.slice(0, 8)}… ≠ o da referência das análises (${refSha256.slice(0, 8)}…)`);
+  if (refArquivo !== null && r.arquivo !== refArquivo) throw new Error(`arquivo de níveis: referência ${r.arquivo} ≠ a de telas.json (${refArquivo})`);
+  const niveis = d.niveis;
+  if (!niveis || typeof niveis !== "object" || Array.isArray(niveis)) throw new Error("arquivo de níveis sem niveis { spec: nível }");
+  const sem = ref._meta.estratos?.semeado?.specs;
+  if (!sem?.length) throw new Error("arquivo de níveis declarado para referência sem _meta.estratos.semeado.specs");
+  const ids = Object.keys(niveis);
+  if (JSON.stringify([...ids].sort()) !== JSON.stringify([...sem].sort()))
+    throw new Error(`arquivo de níveis: specs (${[...ids].sort().join(", ")}) ≠ estrato semeado da referência (${[...sem].sort().join(", ")})`);
+  for (const [s, n] of Object.entries(niveis)) {
+    if (!(NIVEIS as readonly string[]).includes(n)) throw new Error(`arquivo de níveis: ${s} com nível ${JSON.stringify(n)} fora de ${NIVEIS.join(" | ")}`);
+    const naRef = ref.violations.find(v => v.id === s)?.nivel;
+    if (naRef !== undefined && naRef !== n) throw new Error(`arquivo de níveis: ${s} é ${n} no arquivo e ${naRef} na referência`);
+  }
+  return { formato: FORMATO_NIVEIS, referencia: { arquivo: r.arquivo, versao: r.versao, sha256: r.sha256 }, niveis: niveis as Record<string, Nivel> };
+}
+
+/** O arquivo de níveis da tela, lido (registrado em `E`) e conferido; `null` se a tela não o declara. */
+export function lerNiveis(telaId: string, ref: Referencia, refSha256: string, E: Entradas, telasAbs: string = TELAS_JSON): { declaracao: DeclaracaoNiveis; doc: ArquivoNiveis } | null {
+  const decl = niveisDeclarados(telaId, telasAbs);
+  if (!decl) return null;
+  const telas = JSON.parse(E.texto(telasAbs)) as Record<string, { reference?: string | null }>;
+  const abs = join(dirname(telasAbs), decl.arquivo);
+  if (!existsSync(abs)) throw new Error(`telas.json › ${telaId}.niveis: ${decl.arquivo} não existe`);
+  const txt = E.texto(abs);
+  if (sha(readFileSync(abs)) !== decl.sha256) throw new Error(`telas.json › ${telaId}.niveis: sha256 de ${decl.arquivo} ≠ o declarado (${decl.sha256.slice(0, 8)}…)`);
+  return { declaracao: decl, doc: conferirNiveis(JSON.parse(txt), ref, refSha256, telas[telaId]?.reference ?? null) };
+}
+
+export interface PorNivel {
+  tipo: string; regra: string; declaradoEm: string; arquivo: string; sha256: string; formato: string; referencia: ArquivoNiveis["referencia"];
+  /** A chave das tabelas lida (detecção): variante principal, política principal. */
+  chave: string; bracos: string[]; trios: string[];
+  /** Por nível (na ordem de `NIVEIS`), as specs semeadas dele. */
+  specs: Record<string, string[]>;
+  /** Por linha (cada nível e `total`) × braço: confirmadas [máximo com os pendentes] por trio (null = braço ausente) e medianas. */
+  deteccao: Record<string, Record<string, { porTrio: ({ min: number; max: number } | null)[]; mediana: number | null; medianaMax: number | null }>>;
+  /** Por linha × braço: specs fundamentadas (`specFundamentada`) por trio (null = braço ausente) e a mediana. */
+  fundamentada: Record<string, Record<string, { porTrio: (number | null)[]; mediana: number | null }>>;
+}
+
+export const mediana = (xs: number[]): number | null => {
+  if (!xs.length) return null;
+  const s = [...xs].sort((a, b) => a - b), m = Math.floor(s.length / 2);
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+};
+
+/**
+ * Specs semeadas confirmadas por nível e por braço, por trio e mediana (adendo §2, "descritivo pré-declarado, sem teste"):
+ * coluna detecção (chave `principal|1.2.0`, a mesma das tabelas principais; spec confirmada = ≥ 1 unidade confirmada, D-102)
+ * e, ao lado, a fundamentada da leitura principal. `total` = o primário. Sem D, sem teste.
+ */
+export function tabelaPorNivel(niveis: { declaracao: DeclaracaoNiveis; doc: ArquivoNiveis }, telaId: string, trios: TrioEntrada[],
+  fund: { trio: string; porBraco: Record<string, { principal: string[] }> }[], bracos: readonly string[], specDe: (u: string) => string | undefined): PorNivel {
+  const chave = chaveVariante("principal", "1.2.0");
+  const specs: Record<string, string[]> = Object.fromEntries(NIVEIS.map(n => [n, Object.keys(niveis.doc.niveis).filter(s => niveis.doc.niveis[s] === n).sort()]));
+  const linhas: [string, Set<string>][] = [...NIVEIS.map(n => [n, new Set(specs[n])] as [string, Set<string>]), ["total", new Set(Object.keys(niveis.doc.niveis))]];
+  const conta = (us: string[], alvo: Set<string>) => new Set(us.map(specDe).filter((s): s is string => !!s && alvo.has(s))).size;
+  const deteccao: PorNivel["deteccao"] = {}, fundamentada: PorNivel["fundamentada"] = {};
+  for (const [linha, alvo] of linhas) {
+    deteccao[linha] = {}; fundamentada[linha] = {};
+    for (const b of bracos) {
+      const porTrio = trios.map(t => { const x = t.creditos[chave]?.[b]; return x ? { min: conta(x.confirmadas, alvo), max: conta([...x.confirmadas, ...x.admissiveis], alvo) } : null; });
+      const ok = porTrio.filter((x): x is { min: number; max: number } => x !== null);
+      deteccao[linha][b] = { porTrio, mediana: mediana(ok.map(x => x.min)), medianaMax: mediana(ok.map(x => x.max)) };
+      const fPorTrio = trios.map(t => { const x = fund.find(f => f.trio === t.trio)?.porBraco[b]; return x ? x.principal.filter(s => alvo.has(s)).length : null; });
+      fundamentada[linha][b] = { porTrio: fPorTrio, mediana: mediana(fPorTrio.filter((x): x is number => x !== null)) };
+    }
+  }
+  return { tipo: "descritiva pré-declarada (sem D, sem teste; adendo da tela F §2)",
+    regra: "por nível do arquivo de níveis: specs semeadas do nível com ≥ 1 unidade confirmada (detecção, chave principal|1.2.0, D-102; [máximo] com os pendentes) e specs semeadas do nível fundamentadas (specFundamentada, leitura principal), por braço e trio, com a mediana entre os trios com o braço; total = o primário",
+    declaradoEm: `telas.json › ${telaId}.niveis`, arquivo: niveis.declaracao.arquivo, sha256: niveis.declaracao.sha256, formato: niveis.doc.formato, referencia: niveis.doc.referencia,
+    chave, bracos: [...bracos], trios: trios.map(t => t.trio), specs, deteccao, fundamentada };
+}
+
+/** Seção da tabela por nível no tabela.md. */
+export function porNivelMd(p: PorNivel): string {
+  const L = ["", "## Specs semeadas confirmadas por nível de dificuldade (descritivo pré-declarado; sem D, sem teste)", "",
+    `Níveis: \`${p.arquivo}\` (${p.formato}, sha256 ${p.sha256.slice(0, 8)}…, declarado em \`${p.declaradoEm}\`; referência ${p.referencia.arquivo} ${p.referencia.versao}). ` +
+    `Detecção = chave \`${p.chave}\` (spec confirmada = ≥ 1 unidade confirmada; "x [≤y]" = confirmado [máximo com os pendentes]); fundamentada ao lado (leitura principal). ` +
+    `Por trio na ordem ${p.trios.join(", ")}; — = braço ausente no trio; mediana entre os trios com o braço. \`total\` = o primário.`, "",
+    "| nível (specs) | braço | detecção por trio | mediana | fundamentada por trio | mediana |", "|---|---|---|---|---|---|"];
+  for (const linha of [...NIVEIS, "total"]) {
+    const n = linha === "total" ? Object.values(p.specs).flat().length : p.specs[linha].length;
+    for (const b of p.bracos) {
+      const d = p.deteccao[linha][b], f = p.fundamentada[linha][b];
+      const med = d.mediana === null ? "n/d" : d.mediana === d.medianaMax ? fmt(d.mediana) : `${fmt(d.mediana)} [≤${fmt(d.medianaMax)}]`;
+      L.push(`| ${linha} (${n}) | ${b} | ${d.porTrio.map(lim).join(", ")} | ${med} | ${f.porTrio.map(x => x ?? "—").join(", ")} | ${fmt(f.mediana)} |`);
+    }
+  }
+  L.push("");
+  return L.join("\n");
+}
+
 // ───────────────────────────────────────────────────────────────── D por comparação (parte pura)
 
 export interface Comparacao { id: string; arms: [string, string]; role: string | null }
@@ -706,7 +840,9 @@ export class Entradas {
 
 export interface OpcoesRecalculo { passadas: string[]; analises?: string[]; coletas?: string[]; residuoPassada?: string | null; ratificacoes?: string | null; reamostragens?: number; origens?: string[];
   /** NAT-78 §4.5: sensibilidade por protocolo ao lado (lê a `summary.json` de cada análise). Sem ela, saída byte a byte a de antes. */
-  porProtocolo?: boolean }
+  porProtocolo?: boolean;
+  /** `telas.json` lido para a declaração de níveis (padrão: o deste repositório; os testes passam um sintético). */
+  telas?: string }
 
 export interface Recalculo { json: Record<string, unknown>; md: string }
 
@@ -810,6 +946,10 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
   if (!o.passadas.length) throw new Error("--passada obrigatório (uma ou mais)");
   const E = new Entradas();
   const { passadas, derivadoNa, origemInfo, analises, camp, regra, bracos, comps, politicaDoJuiz } = carregarCampanha(o, E);
+  // [tela F] Arquivo de níveis, só para a tela que o declara em telas.json (a F tem de declarar), conferido antes de qualquer
+  // conta; sem a declaração, nada muda (telas.json nem entra no manifesto). A tabela por nível sai depois dos créditos.
+  const niveis = lerNiveis(regra.tela, analises[0].ref, E.manifesto()[E.rel(join(analises[0].dir, "entradas", "referencia.json"))], E, o.telas ?? TELAS_JSON);
+  if (!niveis && regra.tela === "processos-f") throw new Error("tela processos-f sem telas.json › processos-f.niveis: a tabela por nível é pré-declarada (adendo da F §2)");
 
   // Contestados (S4'), ratificações, resíduo.
   const contestados: (Contestado & { passada: string })[] = [];
@@ -934,11 +1074,14 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
   const fund = regra.fundamentada?.length ? colunaFundamentada(regra, bracos, ordenar(analises, x => x.coleta.trio).map(a =>
     ({ trio: a.coleta.trio, porBraco: fundamentadaDoTrio(a.pkg, julgadosDoTrio(a, derivadoNa), bracos, regra.fundamentada!) }))) : null;
   if (fund) json.fundamentada = fund;
+  const porNivel = niveis ? tabelaPorNivel(niveis, regra.tela, trios, ordenar(analises, x => x.coleta.trio).map(a =>
+    ({ trio: a.coleta.trio, porBraco: fundamentadaDoTrio(a.pkg, julgadosDoTrio(a, derivadoNa), bracos, []) })), bracos, specDe) : null;
+  if (porNivel) json.porNivel = porNivel;
   const pp = o.porProtocolo ? sensibilidadePorProtocolo(analises, trios, E, { regra, specDe, comps, nPlanejado, sementeBase, reamostragens: o.reamostragens }) : null;
   if (pp) json.sensibilidadePorProtocolo = pp;
   json.entradas = E.manifesto();
   E.conferir(json.entradas as Record<string, string>);
-  return { json, md: tabelaMd(json, tabelas, regra, comps, s4.disponivel) + (fund ? fundamentadaMd(fund, regra, bracos) : "") + (pp ? porProtocoloMd(pp, regra) : "") };
+  return { json, md: tabelaMd(json, tabelas, regra, comps, s4.disponivel) + (fund ? fundamentadaMd(fund, regra, bracos) : "") + (porNivel ? porNivelMd(porNivel) : "") + (pp ? porProtocoloMd(pp, regra) : "") };
 }
 
 export interface SensibilidadePorProtocolo {
