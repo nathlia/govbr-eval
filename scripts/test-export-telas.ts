@@ -246,7 +246,7 @@ function latestSurface(entry: string): string | null {
 
 // ───────────────────────────────────────────────────────────────── navegador
 
-interface SetupStep { action: "click" | "wait" | "navigate"; selector?: string; path?: string; waitFor?: string }
+interface SetupStep { action: "click" | "fill" | "wait" | "navigate"; selector?: string; value?: string; ms?: number; path?: string; waitFor?: string }
 interface Visit { outside: string[]; nonNetwork: number; console: string[]; failed: string[] }
 
 function referenceOf(tela: Tela): { waitFor: string; setup: SetupStep[] } {
@@ -258,7 +258,9 @@ function referenceOf(tela: Tela): { waitFor: string; setup: SetupStep[] } {
 
 async function runStep(page: Page, step: SetupStep): Promise<void> {
   if (step.action === "click") await page.click(step.selector!, { timeout: 10_000 });
-  else if (step.action === "wait") await page.waitForSelector(step.selector!, { timeout: 10_000 });
+  // `wait` sem seletor espera `ms` (FlowSetupStep; a referência da F usa os dois); `fill` digita `value`.
+  else if (step.action === "wait") { if (step.selector) await page.waitForSelector(step.selector, { timeout: 10_000 }); else await page.waitForTimeout(step.ms ?? 0); }
+  else if (step.action === "fill") await page.fill(step.selector!, step.value ?? "", { timeout: 10_000 });
   else if (step.action === "navigate") {
     if (step.selector) await page.click(step.selector, { timeout: 10_000 });
     else {
