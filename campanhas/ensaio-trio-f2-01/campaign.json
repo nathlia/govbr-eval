@@ -4,18 +4,18 @@
   "campaignId": "ensaio-trio-f2-01",
   "kind": "pilot",
   "title": "ENSAIO DESCARTÁVEL SEM MODELO (dublê) dos três braços na tela F2 (processos-f2), etapas coleta+linha-de-base: oráculo e linha de base na F2 depois do portão de teto do sem; nunca dado, nada daqui entra em número da tese",
-  "objective": "Adendo 2 §7 (ensaios como na F antes da cadeia de congelamento). Prova o encanamento dos três braços na F2 com o instrumento da nat78-tela-f2-01: cliente real contra o dublê roteirizado (cenário honesto), oráculo 3.7.12 nos perfis evaluation (com) e knowledge-free (ferramentas), coletor, paredes de isolamento, linha de base (axe + validator não guiado e guiado; prova também que a linha de base da F2 é medível, pré-condição do controle 1 da errata 1) e arquivamento, e depois a análise do trio, a passada cega 1.4.8 e o recálculo com a regra processos-f2 (tabelas por tipo, nível e interação). Um disparo por braço (campanha sem agenda, braço no disparo), par p01. Só depois de o portão do sem passar. Nada é comparado; nenhum número daqui é resultado. RASCUNHO: site PENDENTE, frozenAt nulo.",
+  "objective": "Adendo 2 §7 (ensaios como na F antes da cadeia de congelamento). Prova o encanamento dos três braços na F2 com o instrumento da nat78-tela-f2-01: cliente real contra o dublê roteirizado (cenário honesto), oráculo 3.7.12 nos perfis evaluation (com) e knowledge-free (ferramentas), coletor, paredes de isolamento, linha de base (axe + validator não guiado e guiado; prova também que a linha de base da F2 é medível, pré-condição do controle 1 da errata 1) e arquivamento, e depois a análise do trio, a passada cega 1.4.8 e o recálculo com a regra processos-f2 (tabelas por tipo, nível e interação). Um disparo por braço (campanha sem agenda, braço no disparo), par p01. Só depois de o portão do sem passar. Nada é comparado; nenhum número daqui é resultado. Pronta para disparo (bancada F2, rodada 2, 26/11/2026): site govbr-telas-site-1f645f0440df (govbr-telas 821e564), referência ground-truth-processos-f2.json 1.0.0 (sha256 0725eb73…f910c9), lock 62dd2ccc… (eval 84b0600), texto da tarefa 959f4e34… (30 min).",
   "hypotheses": [
     "Ensaio de infraestrutura: nenhuma hipótese científica."
   ],
   "createdAt": "2026-11-26T21:20:00Z",
-  "frozenAt": null,
+  "frozenAt": "2026-11-26T23:00:00Z",
   "design": {
     "screens": [
       {
         "id": "processos-f2",
         "label": "Processos (cópia semeada da rota da tela D, ala pnip-f2)",
-        "version": "govbr-telas-site-PENDENTE"
+        "version": "govbr-telas-site-1f645f0440df"
       }
     ],
     "arms": [
@@ -161,7 +161,7 @@
   },
   "pendingDecisions": [
     {
-      "topic": "Ensaio sem modelo: custo zero (dublê); disparável depois do portão do sem, com o site da F2, a referência e tela-f2/ commitadas (critérios e estratos declarados) e frozenAt",
+      "topic": "Ensaio sem modelo: custo zero (dublê); dispara só depois de o portão do sem passar (põe o oráculo e a linha de base na F2)",
       "issue": "NAT-139",
       "owner": "sessão principal"
     }

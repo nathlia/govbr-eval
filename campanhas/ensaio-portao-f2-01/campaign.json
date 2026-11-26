@@ -4,18 +4,18 @@
   "campaignId": "ensaio-portao-f2-01",
   "kind": "pilot",
   "title": "ENSAIO sem modelo do portão de teto da F2 (dublê, braço sem ×3, so-coleta; nunca dado; o veredito não significa nada)",
-  "objective": "Ensaio de ponta a ponta sem modelo do portão de teto da F2 (adendo 2 §5 e §7: ensaios como na F antes da cadeia de congelamento): cliente real contra o dublê roteirizado (cenário honesto), braço sem ×3, etapas so-coleta, análise individual --sem-linha-de-base, passada cega com respostas fabricadas, npm run portao:teto. Mesmo instrumento da portao-teto-f2-01 (fixed, limites, tarefa); só o modelo e o provedor são os do dublê. RASCUNHO: site PENDENTE, frozenAt nulo.",
+  "objective": "Ensaio de ponta a ponta sem modelo do portão de teto da F2 (adendo 2 §5 e §7: ensaios como na F antes da cadeia de congelamento): cliente real contra o dublê roteirizado (cenário honesto), braço sem ×3, etapas so-coleta, análise individual --sem-linha-de-base, passada cega com respostas fabricadas, npm run portao:teto. Mesmo instrumento da portao-teto-f2-01 (fixed, limites, tarefa); só o modelo e o provedor são os do dublê. Pronta para disparo (bancada F2, rodada 2, 26/11/2026): site govbr-telas-site-1f645f0440df (govbr-telas 821e564), referência ground-truth-processos-f2.json 1.0.0 (sha256 0725eb73…f910c9), lock 62dd2ccc… (eval 84b0600), texto da tarefa 959f4e34… (30 min).",
   "hypotheses": [
     "Portão de desenho, sem hipótese científica: a mediana do sem nas n specs semeadas é ≤ ⌊n/2⌋?"
   ],
   "createdAt": "2026-11-26T21:20:00Z",
-  "frozenAt": null,
+  "frozenAt": "2026-11-26T23:00:00Z",
   "design": {
     "screens": [
       {
         "id": "processos-f2",
         "label": "Processos (cópia semeada da rota da tela D, ala pnip-f2)",
-        "version": "govbr-telas-site-PENDENTE"
+        "version": "govbr-telas-site-1f645f0440df"
       }
     ],
     "arms": [
@@ -150,7 +150,7 @@
   },
   "pendingDecisions": [
     {
-      "topic": "Ensaio sem modelo: custo zero (dublê); disparável com o site da F2 e frozenAt (a mesma condição da portao-teto-f2-01)",
+      "topic": "Ensaio sem modelo: custo zero (dublê); só minutos do runner do GitHub",
       "issue": "NAT-139",
       "owner": "sessão principal"
     }

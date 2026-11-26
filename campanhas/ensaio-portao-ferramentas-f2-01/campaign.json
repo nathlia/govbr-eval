@@ -4,18 +4,18 @@
   "campaignId": "ensaio-portao-ferramentas-f2-01",
   "kind": "pilot",
   "title": "ENSAIO sem modelo do controle de teto do ferramentas da F2 (dublê, braço ferramentas ×3, so-coleta; nunca dado; o veredito não significa nada)",
-  "objective": "Ensaio de ponta a ponta sem modelo do controle 2 (errata 1 do adendo 2): cliente real contra o dublê (cenário honesto), braço ferramentas ×3 com o oráculo 3.7.12 knowledge-free (aderência used-adherent), etapas so-coleta, análise individual --sem-linha-de-base, passada cega com respostas fabricadas, npm run portao:teto -- --braco ferramentas --limiar n-menos-2. Põe o oráculo contra a F2: só depois de o portão do sem passar. Mesmo instrumento da portao-ferramentas-f2-01; só o modelo e o provedor são os do dublê. RASCUNHO: site PENDENTE, frozenAt nulo.",
+  "objective": "Ensaio de ponta a ponta sem modelo do controle 2 (errata 1 do adendo 2): cliente real contra o dublê (cenário honesto), braço ferramentas ×3 com o oráculo 3.7.12 knowledge-free (aderência used-adherent), etapas so-coleta, análise individual --sem-linha-de-base, passada cega com respostas fabricadas, npm run portao:teto -- --braco ferramentas --limiar n-menos-2. Põe o oráculo contra a F2: só depois de o portão do sem passar. Mesmo instrumento da portao-ferramentas-f2-01; só o modelo e o provedor são os do dublê. Pronta para disparo (bancada F2, rodada 2, 26/11/2026): site govbr-telas-site-1f645f0440df (govbr-telas 821e564), referência ground-truth-processos-f2.json 1.0.0 (sha256 0725eb73…f910c9), lock 62dd2ccc… (eval 84b0600), texto da tarefa 959f4e34… (30 min).",
   "hypotheses": [
     "Controle de viabilidade, sem hipótese científica: a mediana do ferramentas nas n specs semeadas é ≤ n − 2?"
   ],
   "createdAt": "2026-11-26T21:20:00Z",
-  "frozenAt": null,
+  "frozenAt": "2026-11-26T23:00:00Z",
   "design": {
     "screens": [
       {
         "id": "processos-f2",
         "label": "Processos (cópia semeada da rota da tela D, ala pnip-f2)",
-        "version": "govbr-telas-site-PENDENTE"
+        "version": "govbr-telas-site-1f645f0440df"
       }
     ],
     "arms": [
@@ -150,7 +150,7 @@
   },
   "pendingDecisions": [
     {
-      "topic": "Ensaio sem modelo: custo zero (dublê); disparável depois do portão do sem, com o site da F2 e frozenAt",
+      "topic": "Ensaio sem modelo: custo zero (dublê); dispara só depois de o portão do sem passar (põe o oráculo na F2)",
       "issue": "NAT-139",
       "owner": "sessão principal"
     }

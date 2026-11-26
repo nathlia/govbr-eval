@@ -4,18 +4,18 @@
   "campaignId": "portao-ferramentas-f2-01",
   "kind": "pilot",
   "title": "Controle de teto do ferramentas da tela F2 (adendo 2, errata 1, controle 2) — 3 execuções SÓ do braço ferramentas na composição candidata processos-f2, fora da amostra",
-  "objective": "RASCUNHO da bancada F2 (26/11/2026, ramo bancada-f2; não disparável: site, referência, lock, texto PENDENTES; frozenAt nulo). Controle 2 da errata 1 do adendo 2 (thesis 66f1195): depois do portão de teto do sem (§5) e do controle de cobertura (controle 1) passarem, 3 execuções só do braço ferramentas (oráculo 3.7.12, perfil knowledge-free: get_finding_details, scan_page, verify_finding), julgadas como no portão do sem (primeira passada cega; cartão pendente conta como confirmado). Passa se a mediana das specs semeadas confirmadas por execução for no máximo n − 2; se ficar a menos de duas specs do máximo, a F2 encerra antes da coleta. Decisão binária sobre a composição inteira; sem recomposição. O braço com não roda em nenhum piloto e a diferença primária nunca é olhada. npm run portao:teto -- --braco ferramentas --limiar n-menos-2 (recusa execução de outro braço). As execuções não entram na amostra da nat78-tela-f2-01; a sessão principal lê só portao-teto.md. Linha de base: ausência planejada (abaixo); a do controle 1 é a da campanha e fica lacrada.",
+  "objective": "Pronta para disparo (bancada F2, rodada 2, 26/11/2026): site govbr-telas-site-1f645f0440df (govbr-telas 821e564), referência ground-truth-processos-f2.json 1.0.0 (sha256 0725eb73…f910c9), lock 62dd2ccc… (eval 84b0600), texto da tarefa 959f4e34… (30 min). Controle 2 da errata 1 do adendo 2 (thesis 66f1195): depois do portão de teto do sem (§5) e do controle de cobertura (controle 1) passarem, 3 execuções só do braço ferramentas (oráculo 3.7.12, perfil knowledge-free: get_finding_details, scan_page, verify_finding), julgadas como no portão do sem (primeira passada cega; cartão pendente conta como confirmado). Passa se a mediana das specs semeadas confirmadas por execução for no máximo n − 2; se ficar a menos de duas specs do máximo, a F2 encerra antes da coleta. Decisão binária sobre a composição inteira; sem recomposição. O braço com não roda em nenhum piloto e a diferença primária nunca é olhada. npm run portao:teto -- --braco ferramentas --limiar n-menos-2 (recusa execução de outro braço). As execuções não entram na amostra da nat78-tela-f2-01; a sessão principal lê só portao-teto.md. Linha de base: ausência planejada (abaixo); a do controle 1 é a da campanha e fica lacrada.",
   "hypotheses": [
     "Controle de viabilidade, sem hipótese científica: a mediana do ferramentas nas n specs semeadas é ≤ n − 2?"
   ],
   "createdAt": "2026-11-26T21:20:00Z",
-  "frozenAt": null,
+  "frozenAt": "2026-11-26T23:00:00Z",
   "design": {
     "screens": [
       {
         "id": "processos-f2",
         "label": "Processos (cópia semeada da rota da tela D, ala pnip-f2)",
-        "version": "govbr-telas-site-PENDENTE"
+        "version": "govbr-telas-site-1f645f0440df"
       }
     ],
     "arms": [
@@ -150,7 +150,7 @@
   },
   "pendingDecisions": [
     {
-      "topic": "Disparável só depois do portão do sem e do controle 1 passarem, com o site da F2, a referência congelada, o lock com a imagem screens da F2 e frozenAt; custo (3 execuções ferramentas de 30 min + uma passada cega) dentro da cota",
+      "topic": "Dispara só depois de o portão do sem e o controle 1 passarem (errata 1); custo (3 execuções ferramentas de 30 min + uma passada cega) dentro da cota; sem orçamento próprio aprovado (piloto)",
       "issue": "NAT-139",
       "owner": "sessão principal"
     }

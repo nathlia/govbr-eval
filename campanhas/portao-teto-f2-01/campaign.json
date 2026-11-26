@@ -4,18 +4,18 @@
   "campaignId": "portao-teto-f2-01",
   "kind": "pilot",
   "title": "Portão de teto da tela F2 (adendo 2 de 26/11 ao protocolo NAT-78, §5) — 3 execuções SÓ do braço sem na tela candidata processos-f2, fora da amostra",
-  "objective": "RASCUNHO da bancada F2 (26/11/2026, ramo bancada-f2; não disparável: site, referência candidata, lock e texto da tarefa PENDENTES; frozenAt nulo). Portão de teto do adendo 2 §5 (regra do adendo da F §5 e da errata 1 dele, sem mudança): 3 execuções só do braço sem na composição candidata da F2, primeira passada cega contra as specs semeadas, cartão pendente conta como confirmado; passa se a mediana das specs semeadas confirmadas por execução for no máximo ⌊n/2⌋, com n = número de semeados da composição (10 a 12). Só o sem é disparado: o oráculo não roda na F2 antes de o portão passar; npm run portao:teto (padrão: braço sem, ⌊n/2⌋) recusa análise de outro braço. Sem linha de base (ausência planejada abaixo). As execuções do portão não entram na amostra da nat78-tela-f2-01; a sessão principal lê só portao-teto.md. Recomposição única (adendo 2 §5): campanha própria portao-teto-f2-02, com os mesmos campos e o site novo. Adendo 2 congelado em thesis 447e47f, errata 1 66f1195.",
+  "objective": "Pronta para disparo (bancada F2, rodada 2, 26/11/2026): site govbr-telas-site-1f645f0440df (govbr-telas 821e564), referência ground-truth-processos-f2.json 1.0.0 (sha256 0725eb73…f910c9), lock 62dd2ccc… (eval 84b0600), texto da tarefa 959f4e34… (30 min). Portão de teto do adendo 2 §5 (regra do adendo da F §5 e da errata 1 dele, sem mudança): 3 execuções só do braço sem na composição candidata da F2, primeira passada cega contra as specs semeadas, cartão pendente conta como confirmado; passa se a mediana das specs semeadas confirmadas por execução for no máximo ⌊n/2⌋, com n = número de semeados da composição (10 a 12). Só o sem é disparado: o oráculo não roda na F2 antes de o portão passar; npm run portao:teto (padrão: braço sem, ⌊n/2⌋) recusa análise de outro braço. Sem linha de base (ausência planejada abaixo). As execuções do portão não entram na amostra da nat78-tela-f2-01; a sessão principal lê só portao-teto.md. Recomposição única (adendo 2 §5): campanha própria portao-teto-f2-02, com os mesmos campos e o site novo. Adendo 2 congelado em thesis 447e47f, errata 1 66f1195.",
   "hypotheses": [
     "Portão de desenho, sem hipótese científica: a mediana do sem nas n specs semeadas é ≤ ⌊n/2⌋?"
   ],
   "createdAt": "2026-11-26T21:20:00Z",
-  "frozenAt": null,
+  "frozenAt": "2026-11-26T23:00:00Z",
   "design": {
     "screens": [
       {
         "id": "processos-f2",
         "label": "Processos (cópia semeada da rota da tela D, ala pnip-f2)",
-        "version": "govbr-telas-site-PENDENTE"
+        "version": "govbr-telas-site-1f645f0440df"
       }
     ],
     "arms": [
@@ -150,7 +150,7 @@
   },
   "pendingDecisions": [
     {
-      "topic": "Disparável só com: design.screens[0].version = govbr-telas-site-<12 hex> do pacote da F2, referência candidata da F2 e tela-f2/ commitadas no ref, lock com a imagem screens da F2, frozenAt; custo dentro da cota (piloto sem orçamento próprio)",
+      "topic": "Custo do portão (3 execuções sem de 30 min + uma passada cega) dentro da cota; sem orçamento próprio aprovado (piloto)",
       "issue": "NAT-139",
       "owner": "sessão principal"
     }
