@@ -1,6 +1,6 @@
 {
   "formato": "nat78-analise-preregistrada-1.0.0",
-  "estado": "RASCUNHO da bancada (26/11/2026, ramo bancada-f): não congelado. Os campos que dependem de hash (referência, níveis, critérios, classes, inventário, pacote, lock, adendo congelado) estão null e listados em pendentes; o commit sozinho que congela este arquivo vem depois de todos preenchidos, antes do campaign.json da F.",
+  "estado": "RASCUNHO da bancada (26/11/2026, ramo bancada-f, rodada 2b): todos os hashes conhecidos preenchidos (referência congelada, níveis, critérios, classes, inventário, pacote, lock, texto da tarefa, adendo congelado). Ainda não congelado: o commit sozinho que o congela vem depois do portão de teto (adendo §5), antes do campaign.json da F; pendentes abaixo.",
   "campanha": "nat78-tela-f-01",
   "item": "Adendo ao protocolo NAT-78 de 26/11/2026 (tela F, estudo de seguimento) §2, §4, §6, §9, sobre o protocolo congelado de 16/11 (CONG-15, thesis a46ab3f), que vale onde o adendo não diz nada: análise da tela F configurada ANTES da coleta, na forma da da tela E (campanhas/nat78-tela-e-01/analise-preregistrada.json, eval fbbd8ad). Só dados: nomes de conjunto, políticas, colunas, comandos e regras de leitura; nenhuma descrição, âncora, regra, nível nem id de spec da referência. Commitado sozinho, antes do campaign.json da F, que cita o sha256 deste arquivo em analysisPlan.",
   "seguimento": {
@@ -13,9 +13,12 @@
     "commitCongelado": "a46ab3fb950edf55df2d00b5da33a2552e695485",
     "adendo": {
       "documento": "thesis-workspace/planejamento/atual/adendo-tela-f-protocolo-2026-11-26.md",
-      "commitCongelado": null,
-      "sha256Blob": null,
-      "nota": "o adendo vira congelado quando for commitado sozinho, depois da revisão do Codex (método) e antes da primeira execução do portão de teto (adendo, cabeçalho)"
+      "commitCongelado": "e6f202fffa97c74a1f55f063dc407512dc8ceec3",
+      "sha256Blob": "68d67e7f02371153de9f7cfa48cad5eccaf2354242b88e980667b9feb34511e0",
+      "errata": [
+        "a5a982eb64a697040606d48b70594cc2822fc649 (errata 1: referência congelada como candidata antes do portão; oráculo só depois do portão)"
+      ],
+      "nota": "congelado sem a revisão do Codex, por decisão da autora (D-214 item 5); correção só por errata datada"
     }
   },
   "tela": {
@@ -24,34 +27,80 @@
     "referencia": {
       "arquivo": "ground-truth-processos-f.json",
       "versao": "1.0.0",
-      "sha256": null,
-      "commitCongelamento": null,
+      "sha256": "d32088bfd7ecb44c2bf75de58f95f425047aa0b2180e80dad9fefbec24d5b3e0",
+      "commitCongelamento": "dd7d21e4e5cb468d467ff8dbe835a1251bb933c1 (eval ramo tela-f, commit só com a referência; o anterior fc4a750 traz tela-f/); no ramo bancada-f byte a byte em 5375d26 (cherry-pick dos 7 commits do ramo tela-f, 214/214 arquivos iguais ao manifesto da entrega)",
+      "contagens": {
+        "specs": 25,
+        "unidades": 77,
+        "semeado": 12,
+        "natural": 13,
+        "exposto": 4,
+        "paradas": 4,
+        "segmentos": 3,
+        "segmentosComParada": 2
+      },
       "estratos": "declarados em _meta.estratos da própria referência: semeado (as specs do DS injetadas, todas da classe ds pela classeDaSpec; o primário), natural (as specs da referência 1.1.0 da D reconferidas na cópia) e exposto (as do casco, dentro do natural; também em _meta.exposto.specs, a forma da D). A regra de desfecho recusa estrato semeado vazio, semeada fora da classe ds, semeada exposta e estratos semeado/natural que não repartem a referência.",
-      "nota": "adendo §4 'Referência da F'. Contagens (specs, unidades, estados, conformes) entram aqui quando a referência congelar."
+      "conferencia": "npm run conferir:referencia -- --tela processos-f contra o site exportado (govbr-telas b663a26): estados inicial → lista-exibir → filtro-escolhido → lista-filtro, 25 specs, 77 unidades (tela-f/conferir-referencia-site-exportado-2026-11-26.log, eval 120b065)",
+      "regraDeDesfecho": "regraDaTela aceita: primário 12, todas 21, unidades das 12, com-expostas 25"
     },
     "niveis": {
       "arquivo": "tela-f/niveis-1.0.0.json",
       "formato": "tela-f-niveis-1.0.0",
-      "sha256": null,
+      "sha256": "6ea71d3b4347be06389445616a811aa3b3676b21f900ef465df50f013ccc6977",
       "declaracao": "telas.json › processos-f.niveis { arquivo, sha256 }",
-      "regra": "id da spec semeada → facil | medio | dificil | muito-dificil (adendo §4, definições dos níveis fixadas antes da escolha); só as semeadas têm nível; congelado com a referência. O recálculo para se o sha256 divergir da declaração, se a referência citada (arquivo, versão, sha256) não for a das análises, ou se os ids não forem exatamente o estrato semeado (recalculo-campanha.ts › lerNiveis, conferirNiveis)."
+      "regra": "id da spec semeada → facil | medio | dificil | muito-dificil (adendo §4, definições dos níveis fixadas antes da escolha); só as semeadas têm nível; congelado com a referência. O recálculo para se o sha256 divergir da declaração, se a referência citada (arquivo, versão, sha256) não for a das análises, ou se os ids não forem exatamente o estrato semeado (recalculo-campanha.ts › lerNiveis, conferirNiveis).",
+      "contagens": {
+        "facil": 3,
+        "medio": 3,
+        "dificil": 3,
+        "muito-dificil": 3
+      },
+      "commit": "c94f750 (declaração em telas.json)"
     },
     "criteriosDeJulgamento": {
-      "arquivo": null,
-      "sha256": null,
-      "declaracao": "telas.json › processos-f.criteriosDeJulgamento { arquivo, sha256 } (o mesmo caminho da E, eval 055e8d2: passada nat78-primeira-passada-1.4.8 com o LEIAME nat78-leiame-juiz-1.4.8-criterios)",
-      "nota": "adendo §4: critérios de julgamento escritos antes da coleta para toda spec sem predicado; decidido em 26/11 (coordenador): a F declara os critérios e a passada dos juízes é a nat78-primeira-passada-1.4.8, como na E."
+      "arquivo": "tela-f/criterios-de-julgamento-sem-predicado.json",
+      "sha256": "3daa97943b657ad0334846e3f99f6f943cf90462bdcc26d1571d6b5efd3a9ef2",
+      "declaracao": "telas.json › processos-f.criteriosDeJulgamento { arquivo, sha256 } (eval c94f750)",
+      "nota": "decidido em 26/11: a F declara os critérios e a passada dos juízes é a nat78-primeira-passada-1.4.8 (LEIAME nat78-leiame-juiz-1.4.8-criterios), como na E; a montagem para se o sha256 divergir"
     },
     "classes": {
-      "arquivo": null,
-      "sha256": null,
-      "nota": "classe ds × geral da D-156 3.i, pela classeDaSpec de e14-deteccao.ts e pelo gerador da D (tela-d/classes-d156.ts); as semeadas são todas ds por construção (a regra de desfecho confere); as naturais seguem as da D."
+      "arquivo": "tela-f/classes-d156-1.0.0.json",
+      "sha256": "a81e319185cdc770b6aa7d7345aa5d22ba19d6ca0fe7c58a5d90ed1fb58b3f8f",
+      "contagens": "não expostas 21 = ds 13 · geral 8; expostas 4 = geral 4",
+      "nota": "regerado pela bancada com tela-d/classes-d156.ts sobre a referência congelada: mesmo sha256 do arquivo entregue"
     },
-    "controlesConformes": { "arquivo": null, "itens": null },
+    "controlesConformes": {
+      "arquivo": "tela-f/conformes.json",
+      "sha256": "1cdb4cfbe35307337bba800120855d3224fb25573e2837c718435a66ad1b2e39",
+      "itens": 10
+    },
     "inventarioDom": {
       "arquivo": "scripts/vazamento/inventario-dom/processos-f.json",
-      "sha256": null,
-      "nota": "preso ao site do pacote govbr-telas da F"
+      "sha256": "008d0b81f0586c679233b042ef4eac4b1a571e995933187a52373b33cee616c4",
+      "commit": "d615cdc",
+      "manifestoNavegacao": "140a2f854df95c4c610e9dc0055c41993268d21a9b6212c19a97d23baa736277",
+      "nota": "4 paradas, 53 tags, 160 classes, 9 dinâmicas; preso ao site 03af89205307"
+    },
+    "paginaCongelada": {
+      "arquivo": "tela-f/pagina-congelada.json",
+      "sha256": "d0d3330fc1d8ff32dcb9e368274ee1ae8808361139cf900465d3fe12e3d63681",
+      "arquivos": 190,
+      "corpus": "govbr-corpus tela-f 157a3cccb658fe9746dd179b0352c349266e7e8a, public/pnip-f/ (190/190 iguais ao manifesto da ala e ao pacote)"
+    },
+    "pacote": {
+      "govbrTelas": "b663a264da2fd1197dd234737a8c74297cbead60",
+      "exportador": "export-telas-1.6.0",
+      "site": "03af89205307be91fa0f27055022b139b61a228f17865889fa8e4b675470cdb4",
+      "manifesto": "d394b6e44cf45d1cbad60c79675d63c935d946fc0ab8609d30544e7b732a4d83"
+    },
+    "lock": {
+      "arquivo": "runner/images.lock.json",
+      "sha256": "8bc5c8e0d9dd07c69bb691a867607a04fcae7512c02349b4c2e97f2bff25f49b",
+      "commit": "2370376 (commit sozinho; só a imagem screens muda em relação ao lock da D e da E)"
+    },
+    "textoDaTarefa": {
+      "sha256": "84faf4eb43279ae8f5c51b0487486bd74ef7b04efd9f8541148893c88c2164e",
+      "nota": "30 min com relógio, igual nos três braços; difere do da D (f7d82e70…) só na linha da URL"
     }
   },
   "desfechoPrimario": {
@@ -63,15 +112,29 @@
     "conjuntoDescricao": "as n specs semeadas da referência congelada da F (estrato semeado, ids F-01, F-02, …; nenhuma exposta por regra), seja qual for n (adendo §4: 12 planejadas, mínimo 10); por spec (D-102): spec confirmada = pelo menos uma unidade confirmada pela revisão fechada. As naturais mantêm os ids da referência da D",
     "politica": "1.3.0 (crédito da 1.2.0 + R16; D-156 item 2), como na D e na E",
     "coluna": "deteccao",
-    "fonte": "revisao:recalculo › recalculo.json › tabelas['principal|1.2.0|primario'] (na passada 1.3.0 essas chaves leem o derivado 1.3.0: notaPolitica), comparação ferramentas-x-com; regra de desfecho processos-f 1.0.0 em recalculo-campanha.ts › regraDaTela (eval bancada-f 0062026; testes em test-recalculo-campanha.ts)"
+    "fonte": "revisao:recalculo › recalculo.json › tabelas['principal|1.2.0|primario'] (na passada 1.3.0 essas chaves leem o derivado 1.3.0: notaPolitica), comparação ferramentas-x-com; regra de desfecho processos-f 1.0.0 em recalculo-campanha.ts › regraDaTela (eval bancada-f 0062026; testes em test-recalculo-campanha.ts; aceita a referência congelada: primário 12)"
   },
   "comparacoesSecundarias": [
-    { "pergunta": "D_sc^F", "comparacao": "sem-x-com", "nome": "D_sc^F", "formula": "D_sc^F = com − sem", "ressalva": "adendo §5 'Limite declarado': o portão de teto escolheu uma tela em que o sem vai mal, o que favorece com − sem; D_sc^F é lido com essa ressalva escrita ao lado" },
-    { "pergunta": "D_sf^F", "comparacao": "sem-x-ferramentas", "nome": "D_sf^F", "formula": "D_sf^F = ferramentas − sem", "ressalva": "a mesma seleção do portão de teto favorece ferramentas − sem" }
+    {
+      "pergunta": "D_sc^F",
+      "comparacao": "sem-x-com",
+      "nome": "D_sc^F",
+      "formula": "D_sc^F = com − sem",
+      "ressalva": "adendo §5 'Limite declarado': o portão de teto escolheu uma tela em que o sem vai mal, o que favorece com − sem; D_sc^F é lido com essa ressalva escrita ao lado"
+    },
+    {
+      "pergunta": "D_sf^F",
+      "comparacao": "sem-x-ferramentas",
+      "nome": "D_sf^F",
+      "formula": "D_sf^F = ferramentas − sem",
+      "ressalva": "a mesma seleção do portão de teto favorece ferramentas − sem"
+    }
   ],
   "politicas": {
     "principal": "1.3.0",
-    "aoLado": ["1.1.0"],
+    "aoLado": [
+      "1.1.0"
+    ],
     "pura120": {
       "como": "o mesmo caminho da D e da E: reingestão da passada final da F em pasta nova (npx tsx scripts/reanalise-nat74/e14-ingerir.ts --fila <passada final> --politica 1.2.0 --gravar-em <pasta nova>); a tabela de duas colunas lê esse julgamentos.json por e14-deteccao.ts --julgamentos <pasta nova>/julgamentos.json",
       "limite": "o mesmo da D e da E: revisao:recalculo lê só o julgamentos.json de dentro da passada; o D_fc^F na 1.2.0 pura exige uma cópia da passada reingerida na 1.2.0"
@@ -90,27 +153,75 @@
     "obrigatorio": "o recálculo da processos-f recusa rodar sem telas.json › processos-f.niveis"
   },
   "sensibilidades": [
-    { "id": "todas", "o-que": "as 12 semeadas mais as specs naturais não expostas da rota, por spec (adendo §2)", "fonte": "recalculo.json › tabelas['…|todas']" },
-    { "id": "unidades", "o-que": "a mesma comparação do primário contada por unidade, nas unidades das specs semeadas", "fonte": "recalculo.json › tabelas['…|unidades']" },
-    { "id": "com-expostas", "o-que": "todas as specs da referência, inclusive as do casco (expostas), por spec; existe só se a referência tiver exposta (a mesma sensibilidade da D)", "fonte": "recalculo.json › tabelas['…|com-expostas']" },
-    { "id": "politica-1.1.0", "o-que": "sem R15 e sem Q1 a", "fonte": "recalculo.json › tabelas['…|1.1.0|…']" },
-    { "id": "S4'", "o-que": "sem crédito contestado não ratificado, no braço que o recebeu", "fonte": "recalculo.json › tabelas[\"S4'|…\"] (passada adjudicada com contestados.json; ratificações por --ratificacoes <respostas-autora.json>)" },
-    { "id": "por-protocolo", "o-que": "§4.5: as mesmas três comparações só com as execuções aderentes ao uso declarado do oráculo; ANÁLISE DE SENSIBILIDADE, nunca o primário", "definicao": "nat78-aderencia-por-protocolo-1.0.0 (sem = absent-verified; ferramentas e com = used-adherent; used-with-errors à parte); trio com slot excluído sai das três comparações (TRIO_COM_SLOT_FORA = trio-inteiro)", "opcao": "--por-protocolo (revisao:recalculo)", "fonte": "recalculo.json › sensibilidadePorProtocolo" },
-    { "id": "pura-1.2.0", "o-que": "D_fc^F na política 1.2.0 pura, pela reingestão (politicas.pura120)", "fonte": "recalculo sobre a cópia da passada reingerida na 1.2.0" }
+    {
+      "id": "todas",
+      "o-que": "as 12 semeadas mais as specs naturais não expostas da rota, por spec (adendo §2)",
+      "fonte": "recalculo.json › tabelas['…|todas']"
+    },
+    {
+      "id": "unidades",
+      "o-que": "a mesma comparação do primário contada por unidade, nas unidades das specs semeadas",
+      "fonte": "recalculo.json › tabelas['…|unidades']"
+    },
+    {
+      "id": "com-expostas",
+      "o-que": "todas as specs da referência, inclusive as do casco (expostas), por spec; existe só se a referência tiver exposta (a mesma sensibilidade da D)",
+      "fonte": "recalculo.json › tabelas['…|com-expostas']"
+    },
+    {
+      "id": "politica-1.1.0",
+      "o-que": "sem R15 e sem Q1 a",
+      "fonte": "recalculo.json › tabelas['…|1.1.0|…']"
+    },
+    {
+      "id": "S4'",
+      "o-que": "sem crédito contestado não ratificado, no braço que o recebeu",
+      "fonte": "recalculo.json › tabelas[\"S4'|…\"] (passada adjudicada com contestados.json; ratificações por --ratificacoes <respostas-autora.json>)"
+    },
+    {
+      "id": "por-protocolo",
+      "o-que": "§4.5: as mesmas três comparações só com as execuções aderentes ao uso declarado do oráculo; ANÁLISE DE SENSIBILIDADE, nunca o primário",
+      "definicao": "nat78-aderencia-por-protocolo-1.0.0 (sem = absent-verified; ferramentas e com = used-adherent; used-with-errors à parte); trio com slot excluído sai das três comparações (TRIO_COM_SLOT_FORA = trio-inteiro)",
+      "opcao": "--por-protocolo (revisao:recalculo)",
+      "fonte": "recalculo.json › sensibilidadePorProtocolo"
+    },
+    {
+      "id": "pura-1.2.0",
+      "o-que": "D_fc^F na política 1.2.0 pura, pela reingestão (politicas.pura120)",
+      "fonte": "recalculo sobre a cópia da passada reingerida na 1.2.0"
+    }
   ],
   "incerteza": {
     "teste": "permutação exata por troca de sinais sobre a média de D_fc^F, bicaudal (estatistica-pareada.ts › testePermutacaoSinal)",
-    "robustez": ["Wilcoxon-Pratt exato", "teste do sinal exato"],
+    "robustez": [
+      "Wilcoxon-Pratt exato",
+      "teste do sinal exato"
+    ],
     "ic": "IC 95% bootstrap percentil, 10.000 reamostragens, mulberry32, semente = campanha.design.seed da F (recalculo: base|recalculo|<comparação>|<variante>|<política>|<conjunto>)",
     "alfaSecundarias": 0.05,
     "correcaoSecundarias": "nenhuma",
     "trioIncompleto": "entra só nas comparações que têm os dois braços",
-    "publicar": ["D por trio", "média", "mediana", "DP", "n planejado (9)", "n efetivo"]
+    "publicar": [
+      "D por trio",
+      "média",
+      "mediana",
+      "DP",
+      "n planejado (9)",
+      "n efetivo"
+    ]
   },
   "leitura": {
-    "limiar": { "alfa": 0.05, "teste": "próprio da F", "holm": "nenhum: a F não foi planejada com D e E e é lida como seguimento (adendo §2)" },
+    "limiar": {
+      "alfa": 0.05,
+      "teste": "próprio da F",
+      "holm": "nenhum: a F não foi planejada com D e E e é lida como seguimento (adendo §2)"
+    },
     "congelada": "vantagem do com exige p < 0,05 e média > 0; o simétrico é vantagem do ferramentas; o resto é nenhuma diferença detectável (adendo §2). Estrito (p < limiar). O recálculo lê com α = 0,05; na F essa é a leitura publicada (nenhum holmTelas é aplicado).",
-    "delta": { "valor": 2, "unidade": "specs por trio", "regra": "como no protocolo (§6.1): IC inteiro em [−2, +2] → o IC estimado caiu dentro da faixa pré-especificada de ±δ; cruzou ±2 → inconclusivo para o efeito relevante (recalculo-campanha.ts › leituraComDelta); com 12 specs, 2 specs são cerca de 17 pontos de recall" },
+    "delta": {
+      "valor": 2,
+      "unidade": "specs por trio",
+      "regra": "como no protocolo (§6.1): IC inteiro em [−2, +2] → o IC estimado caiu dentro da faixa pré-especificada de ±δ; cruzou ±2 → inconclusivo para o efeito relevante (recalculo-campanha.ts › leituraComDelta); com 12 specs, 2 specs são cerca de 17 pontos de recall"
+    },
     "publicar": "o que sair, favorável, nulo ou desfavorável (adendo §2)"
   },
   "tipoDeSpec": {
@@ -119,29 +230,70 @@
     "fonte": "e14-deteccao.ts › porClasse, rodado uma vez com e sem --sem-expostas (a F declara _meta.exposto.specs na forma da D)"
   },
   "classesNat71": {
-    "arquivo": null,
-    "sha256": null,
-    "estado": "pendente: duas classificações cegas das specs da F (adendo §4), arquivo final antes do commit desta análise"
+    "arquivo": "tela-f/classes-nat71/classes-finais.json",
+    "sha256": "f5bbae958acf8dfd1b821765ccc0312c049f4431bfb13bf47c82087ab69936de",
+    "commit": "4850823 (no ramo bancada-f; fc4a750 no ramo tela-f)",
+    "estado": "feito pelo agente da referência (12 semeadas classificadas às cegas; as 13 naturais herdam da D)"
   },
   "comandos": [
-    { "passo": "0", "o-que": "servir o site congelado da F (pacote govbr-telas da F)", "comando": "npx tsx scripts/reanalise-nat74/e14-campanha.ts --servir ../govbr-telas --porta <porta>" },
-    { "passo": "1", "o-que": "primeira passada cega da F, em passada própria (cartões da F nunca no mesmo lote de outra tela); política 1.3.0", "comando": "npx tsx scripts/reanalise-nat74/e14-campanha.ts --analise <análise p01> … --analise <análise p09> --saida <passada> --base-url http://127.0.0.1:<porta> --validador <checkout do validator 816f4bae41f4486b7055f0ac265167e87ce0d5e5>; juiz por lote; npx tsx scripts/reanalise-nat74/e14-ingerir.ts --fila <passada>" },
-    { "passo": "3", "o-que": "confiabilidade (antes da adjudicação)", "comando": "npm run revisao:confiabilidade -- amostra --passada <passada> --saida <revisao>; npm run revisao:confiabilidade -- medir --passada <passada> --amostra <revisao>/confiabilidade" },
-    { "passo": "2", "o-que": "consistência e adjudicação", "comando": "npm run revisao:consistencia -- --passada <passada> --saida <revisao>; npm run revisao:adjudicacao -- preparar --passada <passada> --confiabilidade <revisao>/confiabilidade --saida <revisao>; … revelar …; npm run revisao:adjudicacao -- aplicar --passada <passada> --adjudicacao <revisao>/adjudicacao --saida <pasta nova>" },
-    { "passo": "6", "o-que": "origem medida", "comando": "npm run revisao:origem -- medir --passada <passada adjudicada> --site <site congelado> --ds <pacote DS> [--ds …] --saida <pasta nova>" },
-    { "passo": "4", "o-que": "material da autora (teto 10)", "comando": "npm run revisao:material-autora -- preparar --passada <passada adjudicada> --origem <origem> --site <site congelado> --saida <pasta nova> --teto 10 --validador <checkout congelado>; npm run revisao:material-autora -- responder --material <pasta> --texto <linhas> --saida <pasta nova>" },
-    { "passo": "5", "o-que": "recálculo: D_fc^F (primária), D_sc^F, D_sf^F; 1.3.0 + 1.1.0; S4'; todas; unidades; com-expostas; tabela por nível; leitura com δ; α = 0,05 sem Holm", "comando": "npm run revisao:recalculo -- --passada <passada adjudicada> --saida <pasta nova> --origem <origem> --ratificacoes <respostas-autora.json>" },
-    { "passo": "5-pp", "o-que": "sensibilidade por protocolo (nunca o primário), em pasta própria", "comando": "npm run revisao:recalculo -- --passada <passada adjudicada> --saida <outra pasta nova> --origem <origem> --ratificacoes <respostas-autora.json> --por-protocolo" },
-    { "passo": "7", "o-que": "duas colunas por tipo de spec (semeadas ds; naturais ao lado)", "comando": "npx tsx scripts/reanalise-nat74/e14-deteccao.ts --passada <passada final> --saida <pasta nova> --coluna-principal deteccao [--sem-expostas]" }
+    {
+      "passo": "0",
+      "o-que": "servir o site congelado da F (pacote govbr-telas da F)",
+      "comando": "npx tsx scripts/reanalise-nat74/e14-campanha.ts --servir ../govbr-telas --porta <porta>"
+    },
+    {
+      "passo": "1",
+      "o-que": "primeira passada cega da F, em passada própria (cartões da F nunca no mesmo lote de outra tela); política 1.3.0",
+      "comando": "npx tsx scripts/reanalise-nat74/e14-campanha.ts --analise <análise p01> … --analise <análise p09> --saida <passada> --base-url http://127.0.0.1:<porta> --validador <checkout do validator 816f4bae41f4486b7055f0ac265167e87ce0d5e5>; juiz por lote; npx tsx scripts/reanalise-nat74/e14-ingerir.ts --fila <passada>"
+    },
+    {
+      "passo": "3",
+      "o-que": "confiabilidade (antes da adjudicação)",
+      "comando": "npm run revisao:confiabilidade -- amostra --passada <passada> --saida <revisao>; npm run revisao:confiabilidade -- medir --passada <passada> --amostra <revisao>/confiabilidade"
+    },
+    {
+      "passo": "2",
+      "o-que": "consistência e adjudicação",
+      "comando": "npm run revisao:consistencia -- --passada <passada> --saida <revisao>; npm run revisao:adjudicacao -- preparar --passada <passada> --confiabilidade <revisao>/confiabilidade --saida <revisao>; … revelar …; npm run revisao:adjudicacao -- aplicar --passada <passada> --adjudicacao <revisao>/adjudicacao --saida <pasta nova>"
+    },
+    {
+      "passo": "6",
+      "o-que": "origem medida",
+      "comando": "npm run revisao:origem -- medir --passada <passada adjudicada> --site <site congelado> --ds <pacote DS> [--ds …] --saida <pasta nova>"
+    },
+    {
+      "passo": "4",
+      "o-que": "material da autora (teto 10)",
+      "comando": "npm run revisao:material-autora -- preparar --passada <passada adjudicada> --origem <origem> --site <site congelado> --saida <pasta nova> --teto 10 --validador <checkout congelado>; npm run revisao:material-autora -- responder --material <pasta> --texto <linhas> --saida <pasta nova>"
+    },
+    {
+      "passo": "5",
+      "o-que": "recálculo: D_fc^F (primária), D_sc^F, D_sf^F; 1.3.0 + 1.1.0; S4'; todas; unidades; com-expostas; tabela por nível; leitura com δ; α = 0,05 sem Holm",
+      "comando": "npm run revisao:recalculo -- --passada <passada adjudicada> --saida <pasta nova> --origem <origem> --ratificacoes <respostas-autora.json>"
+    },
+    {
+      "passo": "5-pp",
+      "o-que": "sensibilidade por protocolo (nunca o primário), em pasta própria",
+      "comando": "npm run revisao:recalculo -- --passada <passada adjudicada> --saida <outra pasta nova> --origem <origem> --ratificacoes <respostas-autora.json> --por-protocolo"
+    },
+    {
+      "passo": "7",
+      "o-que": "duas colunas por tipo de spec (semeadas ds; naturais ao lado)",
+      "comando": "npx tsx scripts/reanalise-nat74/e14-deteccao.ts --passada <passada final> --saida <pasta nova> --coluna-principal deteccao [--sem-expostas]"
+    }
   ],
   "pendentes": [
-    { "item": "adendo congelado (commit sozinho e sha256 do blob)", "estado": "rascunho em revisão pelo Codex" },
-    { "item": "referência ground-truth-processos-f.json 1.0.0: sha256, commit de congelamento, contagens", "estado": "não existe nesta bancada (agente da referência)" },
-    { "item": "arquivo de níveis tela-f/niveis-1.0.0.json: sha256 (e a declaração em telas.json)", "estado": "congela com a referência" },
-    { "item": "critérios de julgamento da F (arquivo, sha256, declaração em telas.json)", "estado": "agente da referência; a passada é a 1.4.8 (decidido em 26/11)" },
-    { "item": "classes ds × geral e NAT-71 da F (arquivos e sha256)", "estado": "depois da referência" },
-    { "item": "inventário do DOM da F (CONG-18 da F), pacote govbr-telas (site, manifesto), lock só com a imagem screens", "estado": "rodada 2 da bancada (bancada-tela-f-2026-11-26.md)" },
-    { "item": "portão de teto (adendo §5) passado e composição final (12 ou a recomposição 2/2/4/4)", "estado": "antes do congelamento desta análise; as execuções do portão não entram na amostra" },
-    { "item": "D_fc^F na 1.2.0 pura", "estado": "o mesmo limite da D e da E; não bloqueia a coleta" }
+    {
+      "item": "portão de teto (adendo §5) passado",
+      "estado": "3 execuções só do sem (campanha piloto portao-teto-f-01); as execuções do portão não entram na amostra; o oráculo só roda na F depois dele (errata 1)"
+    },
+    {
+      "item": "depois do portão: test:isolation --tela processos-f, dublê dos três braços, portão de vazamento por reexecução",
+      "estado": "proibidos antes do portão (adendo §3 e errata 1)"
+    },
+    {
+      "item": "D_fc^F na 1.2.0 pura",
+      "estado": "o mesmo limite da D e da E; não bloqueia a coleta"
+    }
   ]
 }
