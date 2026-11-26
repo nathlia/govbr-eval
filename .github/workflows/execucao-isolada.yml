@@ -29,9 +29,9 @@ on:
         options: [roteirizado, duble, real]
         default: roteirizado
       tela:
-        description: "tela A (solicitacao), B (vistorias), A2 (acompanhamento), D (processos), E (cadastro-pais) ou F (processos-f)"
+        description: "tela A (solicitacao), B (vistorias), A2 (acompanhamento), D (processos), E (cadastro-pais), F (processos-f) ou F2 (processos-f2)"
         type: choice
-        options: [solicitacao, vistorias, acompanhamento, processos, cadastro-pais, processos-f]
+        options: [solicitacao, vistorias, acompanhamento, processos, cadastro-pais, processos-f, processos-f2]
         default: solicitacao
       braco:
         description: "sem, com (oráculo, perfil evaluation) ou ferramentas (oráculo, perfil knowledge-free) — da-agenda = o braço do slot; campanha sem agenda exige um dos três"
@@ -233,6 +233,7 @@ jobs:
             !/tela-e/
             !/tela-e2/
             !/tela-f/
+            !/tela-f2/
             !/controles/
             !/dashboard/
       - name: Node 24.21.0

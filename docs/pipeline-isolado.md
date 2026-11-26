@@ -114,6 +114,11 @@ das outras telas ficam byte a byte). Escopo e rótulo iguais aos da D em `runner
 (`f7d82e70…`, reproduzido) só na linha da URL (`/pnip-f/` no lugar de `/pnip-d/`). O lock da E fixa a imagem `screens`
 do site `968abbd974d5`: uma execução da F exige o lock refeito só na imagem `screens` (commit próprio).
 
+**Tela F2 (`tela = processos-f2`, adendo 2 de 26/11 ao NAT-78; ramo `bancada-f2`).** Mesmo caminho da F: quarta SPA do
+site congelado desde `export-telas-1.7.0`. Escopo e rótulo iguais aos da D ("Processos"), janela 1280×900. Exige pacote
+govbr-telas novo (com a ala `pnip-f2/` semeada) e o lock refeito só na imagem `screens` (commit próprio). `tela-f2/` fica
+fora do checkout esparso da coleta.
+
 **Trio (NAT-61, `braco = ferramentas`).** O terceiro braço usa o mesmo contêiner do oráculo do `com`, no
 perfil `knowledge-free` (validator ≥ 2.14.0); o checkout e a compilação do validator rodam em `com` e em
 `ferramentas`. Ensaio de trio sem campanha commitada: use um id de campanha com o segmento `trio`
