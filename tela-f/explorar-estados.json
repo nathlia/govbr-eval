@@ -1,0 +1,778 @@
+{
+ "base": "F:/Dev Nath/TCC/.tmp-eval/pnip-f-sem-semente",
+ "entrada": "/pnip-f/portal-mpa/processos?mock-perfil=mpa",
+ "opcoes": [
+  {
+   "filtro": 0,
+   "rotulo": "Aberto há",
+   "opcao": "Últimos 7 dias",
+   "linhas": 2,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 2,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 0,
+   "rotulo": "Aberto há",
+   "opcao": "Últimos 30 dias",
+   "linhas": 5,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 5,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 0,
+   "rotulo": "Aberto há",
+   "opcao": "Últimos 60 dias",
+   "linhas": 9,
+   "mesmasLinhas": true,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 9,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 0,
+   "rotulo": "Aberto há",
+   "opcao": "Últimos 90 dias",
+   "linhas": 9,
+   "mesmasLinhas": true,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 9,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 1,
+   "rotulo": "Tipo de processo",
+   "opcao": "Habilitação de Técnico Responsável",
+   "linhas": 2,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 2,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 1,
+   "rotulo": "Tipo de processo",
+   "opcao": "Certificação Higiênico-Sanitária",
+   "linhas": 1,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 1,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 1,
+   "rotulo": "Tipo de processo",
+   "opcao": "CAOL - Cert. Acred Origem Legal do Pescado",
+   "linhas": 1,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 1,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 1,
+   "rotulo": "Tipo de processo",
+   "opcao": "Habilitação Mercados Específicos",
+   "linhas": 0,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 0,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 0
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 1,
+   "rotulo": "Tipo de processo",
+   "opcao": "Desvínculo de Embarcação",
+   "linhas": 0,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 0,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 0
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 1,
+   "rotulo": "Tipo de processo",
+   "opcao": "Alteração de Certificado HS",
+   "linhas": 3,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 3,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 1,
+   "rotulo": "Tipo de processo",
+   "opcao": "Suspender certificação",
+   "linhas": 0,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 0,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 0
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 1,
+   "rotulo": "Tipo de processo",
+   "opcao": "Cancelamento de Certificação",
+   "linhas": 0,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 0,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 0
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 1,
+   "rotulo": "Tipo de processo",
+   "opcao": "Vinculação de embarcação",
+   "linhas": 2,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 2,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Aguardando análise",
+   "linhas": 0,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 0,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 0
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Aguardando SFPA",
+   "linhas": 1,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 1,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Assinatura Tec. Responsável",
+   "linhas": 0,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 0,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 0
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Assinatura Resp.Embarcação",
+   "linhas": 0,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 0,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 0
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Aguardando plano de ação",
+   "linhas": 1,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 1,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Em revisão analista",
+   "linhas": 1,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 1,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Em análise analista",
+   "linhas": 1,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 1,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Em análise supervisor",
+   "linhas": 3,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 3,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Em análise diretor",
+   "linhas": 1,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 1,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Deferida",
+   "linhas": 0,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 0,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 0
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Indeferida",
+   "linhas": 0,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 0,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 0
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Aguarda complementos",
+   "linhas": 1,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 1,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Cancelada",
+   "linhas": 0,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 0,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 0
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Vistoria pré agendada",
+   "linhas": 0,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 0,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 0
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Vistoria agendada",
+   "linhas": 0,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 0,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 0
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Vistoria preenchida",
+   "linhas": 0,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 0,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 0
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Não comparecimento",
+   "linhas": 0,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 0,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 0
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 2,
+   "rotulo": "Status",
+   "opcao": "Concluído",
+   "linhas": 0,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 0,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 0
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 3,
+   "rotulo": "Espécie alvo",
+   "opcao": "Espécie Exemplo A",
+   "linhas": 1,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 1,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 3,
+   "rotulo": "Espécie alvo",
+   "opcao": "Espécie Exemplo B",
+   "linhas": 7,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 7,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 3,
+   "rotulo": "Espécie alvo",
+   "opcao": "Espécie Exemplo C",
+   "linhas": 1,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 1,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 4,
+   "rotulo": "Método de pesca",
+   "opcao": "Método Exemplo 1",
+   "linhas": 3,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 3,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 4,
+   "rotulo": "Método de pesca",
+   "opcao": "Método Exemplo 2",
+   "linhas": 6,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 6,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 5,
+   "rotulo": "Petrecho",
+   "opcao": "Petrecho Exemplo X",
+   "linhas": 1,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 1,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 5,
+   "rotulo": "Petrecho",
+   "opcao": "Petrecho Exemplo Y",
+   "linhas": 7,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 7,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  },
+  {
+   "filtro": 5,
+   "rotulo": "Petrecho",
+   "opcao": "Petrecho Exemplo Z",
+   "linhas": 1,
+   "mesmasLinhas": false,
+   "contagens": {
+    "tagsInteraction": 8,
+    "linhas": 1,
+    "listaFiltro": 0,
+    "tagSelecionada": 7,
+    "itensExibir": 4
+   },
+   "erros": 0,
+   "mock": {
+    "naoMockados": []
+   }
+  }
+ ],
+ "navegacao": {
+  "vistorias": {
+   "path": "/pnip-f/portal-mpa/vistorias",
+   "h2": "Vistorias"
+  },
+  "volta": {
+   "path": "/pnip-f/portal-mpa/processos",
+   "mesmaPagina": true,
+   "linhas": [
+    "00000.000010/2026-00",
+    "00000.000011/2026-00",
+    "00000.000013/2026-00",
+    "00000.000016/2026-00",
+    "00000.000019/2026-00",
+    "00000.000025/2026-00",
+    "00000.000027/2026-00",
+    "00000.000028/2026-00",
+    "00000.000031/2026-00"
+   ],
+   "contagens": {
+    "tagsInteraction": 7,
+    "linhas": 9,
+    "listaFiltro": 0,
+    "tagSelecionada": 6,
+    "itensExibir": 4
+   }
+  },
+  "escolhido": {
+   "tagsInteraction": 8,
+   "linhas": 2,
+   "listaFiltro": 0,
+   "tagSelecionada": 7,
+   "itensExibir": 4
+  },
+  "listaDeNovo": {
+   "tagsInteraction": 8,
+   "linhas": 2,
+   "listaFiltro": 1,
+   "tagSelecionada": 7,
+   "itensExibir": 4
+  },
+  "erros": 0,
+  "mock": {
+   "naoMockados": []
+  },
+  "arvoreNavegadaVsDireta": {
+   "navegada": 590,
+   "direta": 590,
+   "soNaNavegada": [],
+   "soNaDireta": []
+  }
+ },
+ "linhasIniciais": [
+  "00000.000010/2026-00",
+  "00000.000011/2026-00",
+  "00000.000013/2026-00",
+  "00000.000016/2026-00",
+  "00000.000019/2026-00",
+  "00000.000025/2026-00",
+  "00000.000027/2026-00",
+  "00000.000028/2026-00",
+  "00000.000031/2026-00"
+ ],
+ "contagensIniciais": {
+  "tagsInteraction": 7,
+  "linhas": 9,
+  "listaFiltro": 0,
+  "tagSelecionada": 6,
+  "itensExibir": 4
+ }
+}

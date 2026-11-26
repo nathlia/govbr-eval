@@ -1,0 +1,33 @@
+{
+  "formato": "tela-f-sem-id-mapeado-1.0.0",
+  "titulo": "sem id mapeado",
+  "referencia": {
+    "arquivo": "ground-truth-processos-f.json",
+    "version": "1.0.0",
+    "sha256": "PENDENTE-CONGELAMENTO"
+  },
+  "validador": {
+    "versao": "3.7.12",
+    "tag": "congelado-3.7.12",
+    "commit": "816f4ba",
+    "fontes": {
+      "data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/rules.jsonl": "ca8f428a52063ac8c208cca96432a40c84af8e75b4742744367a47717f9f28b8",
+      "data/knowledge/versions/3.7.0-literal-2026-10-15/normalized/carried-over.jsonl": "16e0a764e4a0f05b3f116df83f1400598a95173f5dec34f775c0a9b843cade19"
+    }
+  },
+  "gerador": {
+    "script": "tela-f/mapear-clausulas-oraculo.mjs",
+    "sha256": "97fa17c9e34466d70ccb380ab260ecebf5bf2c398f7b123763868f066ca20d5a",
+    "saida": "tela-f/clausulas-oraculo.json"
+  },
+  "nota": "Specs semeadas cuja cláusula (trecho literal da documentação do DS 3.7.0) não tem registro na base que o oráculo congelado serve: ficam sem id em `rules` (adendo § 4 item 3, id na base: registro, não filtro). Nada foi escolhido por semelhança. A coluna fundamentada só credita por id as specs com id; esta fica na tabela descritiva \"sem id mapeado\" (adendo § 2).",
+  "total": 1,
+  "itens": [
+    {
+      "spec": "F-12",
+      "arquivo": "fundamentos-visuais/estados.md",
+      "trecho": "| background/foreground | color    | `--blue-warm-vivid-50` |",
+      "motivo": "trecho localizado literalmente no arquivo do corpus da versão servida; nenhum registro da base servida tem faixa sobreposta a ele"
+    }
+  ]
+}

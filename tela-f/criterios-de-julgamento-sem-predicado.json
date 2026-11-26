@@ -1,0 +1,64 @@
+{
+ "_meta": {
+  "titulo": "Tela F — critérios de julgamento fixados antes da coleta para as specs sem predicado (observável, estado, critério)",
+  "data": "2026-11-26",
+  "status": "RASCUNHO, fixado antes de qualquer execução de agente na tela F; vira definitivo com a referência congelada (sha256 preenchido no congelamento). Não muda o que a referência cobra (specs, unidades, rules, estados, classes).",
+  "referencia": {
+   "arquivo": "ground-truth-processos-f.json",
+   "versao": "1.0.0",
+   "sha256": "PENDENTE-CONGELAMENTO"
+  },
+  "mandato": "Para cada spec sem predicado implementado, o observável, o estado em que é observado e o critério de decisão do juiz cego ficam escritos antes da coleta (adendo da F § 4 'Referência da F'; mesmo formato da tela E2). Para as specs com predicado, uma linha de observável/estado/critério, porque o predicado sustenta a spec mas não credita alegação.",
+  "naoFeito": "Nenhum modelo, nenhuma ferramenta do validator, nenhum axe. As specs naturais (D-01…D-14) mantêm os critérios e a política de julgamento da tela D.",
+  "criteriosComuns": [
+   { "id": "C-1", "texto": "A unidade é (elemento × defeito) no estado aplicável; acerto = a alegação afirma o defeito daquela unidade, naquele elemento (ou composição declarada), num estado em que a unidade foi medida.", "fonte": "ground-truth-processos-f.json › _meta.unit_of_evaluation; docs/semantic-scoring.md" },
+   { "id": "C-2", "texto": "Citar uma norma de `rules` (ou a cláusula de uma spec sem id) sem mostrar o defeito daquela unidade (o observável, no elemento e no estado) não dá crédito: a norma só fundamenta uma alegação que já detectou o defeito.", "fonte": "mesma regra da tela E2 (C-2)" },
+   { "id": "C-3", "texto": "Detecção não depende de id. Uma spec sem id mapeado (`_meta.semIdMapeado`) é detectada pela alegação que afirma o defeito; a coluna fundamentada só credita por id as specs com id.", "fonte": "adendo da F § 2 e § 4 item 3" },
+   { "id": "C-4", "texto": "Alegação sobre condição listada em `_meta.fundo` ou `_meta.fora_de_escopo` não é acerto de spec: alegação correta ali vira descoberta.", "fonte": "ground-truth-processos-f.json › _meta.fundo; _meta.fora_de_escopo" },
+   { "id": "C-5", "texto": "Sem predicado (`nao-implementado`) não é aceitação nem recusa e nunca recai em 'casou por elemento, logo está certo': o juiz lê a afirmação; com evidência faltando, `evidencia-insuficiente`.", "fonte": "docs/semantic-scoring.md § Predicados de aceitação" },
+   { "id": "C-6", "texto": "Um elemento pode ter mais de uma spec (ex.: a mesma tag ou o mesmo avatar numa spec natural e numa semeada). A alegação credita a spec cujo defeito ela afirma; afirmar o defeito de uma não credita a outra.", "fonte": "docs/semantic-scoring.md (unidade = elemento × predicado de defeito atômico)" }
+  ]
+ },
+ "semPredicado": {
+  "F-11": {
+   "classe": "DS",
+   "aceitacaoNaReferencia": "sem predicado: o observável é a ordem visual dos filhos da tag (posição horizontal do botão de fechar em relação ao ícone e ao rótulo); nenhuma espécie implementada mede posição relativa.",
+   "observavel": {
+    "situacao": "fixado",
+    "elemento": "a tag do filtro escolhido, na linha acima da barra de filtros (aparece depois de escolher uma opção de um filtro)",
+    "localizador": "pnip-multiple-search-table-utils div.row.pl-2:not(.align-items-center) span.br-tag.interaction (scope unico, expectedCount 1)",
+    "oQueSeOlha": "a posição do botão de fechar (×, button.br-button.inverted.circle) dentro da tag: ele fica à esquerda, antes do ícone e do rótulo (x do botão < x do ícone < x do rótulo), em vez de na extremidade direita da tag. O botão continua funcionando (remove o filtro)."
+   },
+   "estado": {
+    "situacao": "fixado",
+    "declarado": "filtro-escolhido (e presente também em lista-filtro, a parada seguinte do mesmo segmento)",
+    "comoSeAlcanca": "na rota de processos, clicar a tag do filtro \"Aberto há\", esperar a lista de opções e escolher \"Últimos 60 dias\"; a tag do filtro escolhido aparece acima da barra. Qualquer filtro e opção produz a mesma tag; a referência usa este.",
+    "medidoEm": "a medir na página semeada servida (pendência do congelamento)"
+   },
+   "criterio": {
+    "situacao": "fixado",
+    "acerto": "A alegação afirma que, na tag do filtro escolhido (ou 'chip'/'etiqueta' do filtro aplicado), o botão de fechar/remover está à esquerda — antes do ícone e/ou do texto — e não no fim (à direita) da tag; ou que a ordem dos elementos da tag é a inversa da prevista (ícone à esquerda, fechar à direita). Vale para qualquer filtro escolhido, se a alegação descreve a mesma tag.",
+    "naoConta": [
+     "afirmar só que a tag não é acessível por teclado, que falta nome acessível ao botão ou que o contraste é baixo (outro defeito; ver C-6)",
+     "falar das tags de filtro da barra (Aberto há, Tipo de processo…) ou da tag \"Meus processos\", que não têm botão de fechar",
+     "citar a anatomia/alinhamento da Tag sem dizer onde o botão de fechar está nesta tag (C-2)"
+    ]
+   }
+  }
+ },
+ "comPredicado": {
+  "nota": "Os predicados medem a propriedade no estado da spec e sustentam a spec; não creditam alegação (docs/semantic-scoring.md § O que um predicado não faz). Por isso cada uma tem uma linha de observável, estado e critério.",
+  "F-01": { "observavel": "células da coluna \"Solicitante\": texto numa linha, cortado sem reticências e sem tooltip.", "estado": "inicial (e lista-exibir).", "criterio": "Acerto = afirmar que os textos dessa coluna são truncados/cortados sem reticências (…) ou sem tooltip/title que mostre o texto completo. Não conta: só dizer que a coluna é estreita, ou citar a norma de truncamento sem mostrar o corte nessa coluna (C-2)." },
+  "F-02": { "observavel": "botão da lupa (ação interna 'Buscar') do campo de pesquisa: deslocado para baixo, fora do campo.", "estado": "inicial (e lista-exibir).", "criterio": "Acerto = afirmar que a lupa/botão de busca está desalinhado verticalmente do campo (abaixo dele, fora da borda, não centralizado). Não conta: falta de rótulo do campo (spec natural D-05), tamanho 32×32 do botão (fundo)." },
+  "F-03": { "observavel": "botão 'Voltar' no rodapé: sobreposto ao seletor 'Página' da paginação, sem espaço entre os dois.", "estado": "inicial (e lista-exibir).", "criterio": "Acerto = afirmar que o 'Voltar' se sobrepõe/encosta na paginação (seletor 'Página') ou que falta espaçamento entre eles. Não conta: o iframe depois do Voltar (D-10), o raio do Voltar (F-04)." },
+  "F-04": { "observavel": "botão secundário 'Voltar': cantos de 4 px, enquanto o 'Exportar' (também secundário) é pílula.", "estado": "inicial (e lista-exibir).", "criterio": "Acerto = afirmar que o 'Voltar' tem forma/arredondamento diferente do previsto para o botão (cantos retos/pouco arredondados em vez de pílula) ou inconsistente com o 'Exportar'. Não conta: a posição do Voltar (F-03)." },
+  "F-05": { "observavel": "tag 'Meus processos': forma de pílula, enquanto as tags de filtro da mesma barra têm cantos de 4 px.", "estado": "inicial (e lista-exibir).", "criterio": "Acerto = afirmar que a tag 'Meus processos' tem arredondamento diferente do previsto/das outras tags (pílula). Não conta: falta de papel/teclado da tag (D-03; ver C-6)." },
+  "F-06": { "observavel": "célula 'Téc. Adm.' do cabeçalho da tabela: fundo branco numa faixa cinza.", "estado": "inicial (e lista-exibir).", "criterio": "Acerto = afirmar que essa célula do cabeçalho tem fundo diferente das demais/do previsto para o header. Não conta: o th vazio da coluna de ações (D-08), o contraste dos títulos." },
+  "F-07": { "observavel": "avatar de letra do cabeçalho: quadrado de cantos arredondados, não círculo.", "estado": "inicial (presente em todas as paradas).", "criterio": "Acerto = afirmar que o avatar não é circular (quadrado/cantos). Não conta: o contraste da letra (D-14; ver C-6)." },
+  "F-08": { "observavel": "botão 'Limpar filtros': rótulo em caixa alta.", "estado": "inicial (e lista-exibir).", "criterio": "Acerto = afirmar que o rótulo desse botão está em maiúsculas/caixa alta (text-transform). Não conta: o botão estar desabilitado (estado de uso da página)." },
+  "F-09": { "observavel": "células do corpo da tabela: espaçamento vertical de 12 px, fora das três densidades da Table.", "estado": "inicial (e lista-exibir).", "criterio": "Acerto = afirmar que o padding/altura das linhas da tabela não corresponde a nenhuma densidade (alta/padrão/baixa) ou ao espaçamento previsto. Uma unidade para o conjunto. Não conta: falar só da coluna de ações ou da coluna 'Solicitante' por outro motivo (F-01)." },
+  "F-10": { "observavel": "lista de opções aberta de um filtro da barra: sem sombra.", "estado": "lista-filtro (lista do filtro 'Aberto há' aberta).", "criterio": "Acerto = afirmar que a lista suspensa do filtro não tem sombra/elevação sobre o conteúdo. Não conta: a lista do seletor 'Exibir' (outro componente), falta de teclado nas tags (D-03)." },
+  "F-12": { "observavel": "lista do seletor 'Exibir' aberta: item selecionado com fundo #1351b4 em vez do azul do estado Selecionado (#2670e8).", "estado": "lista-exibir.", "criterio": "Acerto = afirmar que a cor do item selecionado nessa lista não é a do estado Selecionado do DS (tom/token errado). Não conta: a cor do item selecionado da lista 'Página' (não mudou), os rádios da lista (controle conforme)." }
+ },
+ "contagens": { "semPredicado": ["F-11"], "comPredicado": 11 }
+}

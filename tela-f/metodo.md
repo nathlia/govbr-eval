@@ -127,3 +127,38 @@ node tela-f/mapear-clausulas-oraculo.mjs  # → clausulas-oraculo.json (registro
 node tela-f/filtros.mjs                   # → filtros.json
 node tela-f/compor.mjs                    # → composicao.json, lista-de-mudancas*.json
 ```
+
+## Rascunho da referência (26/11, enquanto a construção injeta as mudanças)
+
+Feito sem o build semeado. Nenhum modelo, nenhum oráculo, nenhum axe. A pasta `construcao/` não foi tocada.
+
+- **`ground-truth-processos-f.json` 1.0.0 (RASCUNHO)**, na raiz, montado por `montar-referencia-rascunho.mjs`:
+  25 specs.
+  - Estrato semeado: F-01…F-12, 20 unidades, todas classe `ds`.
+  - Estrato natural: as 13 da D 1.1.0, copiadas sem mudança, 57 unidades.
+  - Estrato exposto: D-11…D-14, dentro do natural; `_meta.exposto` é igual a ele.
+  - Rota `/pnip-f/...`, `suite: processos-f`.
+  - Predicados de aceitação: 11 das 12 semeadas, todos da espécie `estilo-computado`; a F-11 fica sem predicado.
+  - A spec sem id fica em `_meta.semIdMapeado` e em `sem-id-mapeado-1.0.0.json`.
+- **Estados.** As duas paradas da D ficam intactas no segmento 1. Entram 2 novas no segmento 3, depois de ida e
+  volta por navegação (processos → vistorias → processos), porque escolher um filtro recarrega a lista e acrescenta
+  uma tag de interação; num segmento só, isso quebraria a aditividade e as contagens da D. A exploração no build sem
+  semente (`explorar-estados.mjs` → `explorar-estados.json`) achou:
+  - duas opções que mantêm as 9 linhas;
+  - a árvore depois da volta igual à de uma entrada direta;
+  - 0 erros e 0 chamadas sem fixture.
+- **Conferência no build sem semente** (`conferir-referencia-sem-semente-rascunho.log`, entrada temporária
+  `processos-f` em `telas.json`, sem commit):
+  - nenhum problema de estado, segmento, aditividade ou contagem;
+  - as 13 naturais resolvem com as contagens da D;
+  - os 11 predicados dão `refuta`, como deve ser sem a semente;
+  - a âncora da F-04 só existe no semeado.
+- **`niveis-1.0.0.json`** no formato `tela-f-niveis-1.0.0` de `conferirNiveis`, gerado por `niveis.mjs`; o sha256
+  é preenchido com `--selar` no congelamento.
+- **Critérios de julgamento** (`criterios-de-julgamento-sem-predicado.json`): a F-11 com observável, estado e
+  critério; as outras 11 com uma linha cada, porque o predicado não credita.
+- **Classes.** `tela-d/classes-d156.ts` roda sobre o rascunho (teste a seco: 12/12 semeadas `ds`). O arquivo
+  `classes-d156-1.0.0.json` só é gravado com a referência final.
+- **Controles.** 3 dos 12 controles da D têm elemento participante de uma semeada e serão repostos pelo
+  procedimento da D (`pendencias-congelamento.md` § 5).
+- **O que falta:** `pendencias-congelamento.md`.
