@@ -1,8 +1,8 @@
 {
  "_meta": {
   "version": "1.0.0",
-  "status": "RASCUNHO — não congelado. Falta o que está em tela-f/pendencias-congelamento.md (conferência na página semeada servida, re-medida das naturais e dos controles, auditorias cegas, classes NAT-71, conferência de ids, hashes).",
-  "version_note": "1.0.0 (rascunho de 26/11/2026): tela F do estudo de seguimento (adendo-tela-f-protocolo-2026-11-26.md). Estrato semeado F-01…F-12 (tela-f/composicao.json) + estrato natural = as 13 specs da referência 1.1.0 da D (sha256 2eacba80efb373c4923f7f85593c684647e6b5ec58ad5a341329d96a44632569), sem mudança, a reconferir na página semeada.",
+  "status": "1.0.0 congelada — 2026-11-26. Tela F (estudo de seguimento, adendo de 26/11): 25 specs (12 semeadas + 13 naturais da D), 77 unidades, 4 paradas em 3 segmentos (paradas nos segmentos 0 e 2), 10 controles conformes. Registro em tela-f/congelamento-1.0.0.md.",
+  "version_note": "1.0.0 (2026-11-26): estrato semeado F-01…F-12 escolhido à mão por agente cego ao oráculo (seletor), conferido por um segundo agente cego (conferente), filtrado e composto mecanicamente pelo agente da referência (tela-f/filtros.json, composicao.json) — curado, não sorteado; construído no fonte da rota (pnip-mock tela-f f8905a8; 12/12 pegaram). Estrato natural = as 13 specs da referência 1.1.0 da D, sem mudança, re-medidas na página semeada (evidência idêntica à do build sem semente).",
   "page": "Processos do portal MPA do PNIP — tela F (estudo de seguimento; cópia da rota da tela D na ala pnip-f, com defeitos do DS no fonte), aplicação real em modo mock",
   "url": "/pnip-f/portal-mpa/processos?mock-perfil=mpa",
   "waitFor": "main .br-table tbody tr",
@@ -300,10 +300,282 @@
     "arquivo": "tela-f/clausulas-oraculo.json",
     "sha256": "fb97d983adea02d8b8627405fb802e2f60ccf5bff9cdb289c53cac403fdc85ca"
    },
-   "construcao": "tela-f/construcao/ (12/12 pegaram; conferencia-construcao.json, diferencas-atribuidas.json, pagina-congelada.json: lista 195f1e47…)",
    "remedidaNaturais": "tela-f/remedida-d/ (código da D na ala pnip-f: evidência das 13 naturais idêntica entre o build sem semente e o semeado)",
    "lacunas": "tela-f/lacunas-construcao.json",
    "idsNaBase": "tela-f/conferencia-ids-base.json"
+  },
+  "escolha": {
+   "regra": "adendo-tela-f-protocolo-2026-11-26.md § 4",
+   "seletor": "tela-f/selecao/ (24 candidatos, 6 por nível, à mão, cego ao oráculo)",
+   "conferente": "tela-f/conferencia/ (17 de 24 aprovados)",
+   "filtros": "tela-f/filtros.json (17 → 16 sobreviventes; id na base é registro, não filtro)",
+   "composicao": "tela-f/composicao.json (3 por nível + reserva 0/2/1/1)",
+   "natureza": "curada por agente cego ao oráculo e conferida por um segundo, não sorteada"
+  },
+  "estados_resumo": {
+   "paradas": 4,
+   "segmentos": 3,
+   "segmentosComParada": [
+    0,
+    2
+   ],
+   "nota": "2 passos navigate: segmento 1 é a passagem pela rota de vistorias, sem parada"
+  },
+  "idsNaBase": {
+   "arquivo": "tela-f/conferencia-ids-base.json",
+   "validador": "govbr-ds-validator congelado-3.7.12 (816f4ba), só id/texto/fonte",
+   "semeadoIds": 12,
+   "semeadoIdsCasam": 12,
+   "semeadoSemId": 1,
+   "semeadoSemIdConfirmado": 1,
+   "naturalIds": 19,
+   "naturalIdsExistem": 19
+  },
+  "confirmacaoCega": {
+   "regra": "pacote neutro de 24 afirmações (as 12 semeadas como um juiz as lê + 12 iscas da mesma forma, falsas na página, medidas antes), embaralhado com semente gravada; confirmada = veredicto 'verdadeira' e violaClausula 'sim'; dois auditores cegos independentes (tela-f/auditoria-cega/)",
+   "pedidoSha256": "4f562dc6a06de0342fba56d46b3c91232ea5585817e63913e4351fd7d5c8b5bd",
+   "semeadas": {
+    "confirmadasPelosDois": 12,
+    "porUm": 0,
+    "porNenhum": 0
+   },
+   "iscas": {
+    "falsasNosDois": 12,
+    "verdadeiraEmAlgum": 0
+   },
+   "descricoesReescritas": 0
+  },
+  "porSpec": {
+   "F-01": {
+    "confirmacaoCega": {
+     "afirmacao": "A-17",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f/construcao/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F-02": {
+    "confirmacaoCega": {
+     "afirmacao": "A-06",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f/construcao/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F-03": {
+    "confirmacaoCega": {
+     "afirmacao": "A-13",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f/construcao/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F-04": {
+    "confirmacaoCega": {
+     "afirmacao": "A-22",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f/construcao/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F-05": {
+    "confirmacaoCega": {
+     "afirmacao": "A-05",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f/construcao/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F-06": {
+    "confirmacaoCega": {
+     "afirmacao": "A-12",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f/construcao/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F-07": {
+    "confirmacaoCega": {
+     "afirmacao": "A-19",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f/construcao/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F-08": {
+    "confirmacaoCega": {
+     "afirmacao": "A-11",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f/construcao/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F-09": {
+    "confirmacaoCega": {
+     "afirmacao": "A-20",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f/construcao/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F-10": {
+    "confirmacaoCega": {
+     "afirmacao": "A-24",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f/construcao/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F-11": {
+    "confirmacaoCega": {
+     "afirmacao": "A-09",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f/construcao/conferencia-construcao.json)",
+    "aceitacao": "nao-implementado (critério em tela-f/criterios-de-julgamento-sem-predicado.json)"
+   },
+   "F-12": {
+    "confirmacaoCega": {
+     "afirmacao": "A-14",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f/construcao/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   }
+  },
+  "classes": {
+   "nota": "NAT-71 (protocolo NAT-78 § 5.3): 12 semeadas por dois classificadores cegos, desempate pelo 3º cego por maioria; 13 naturais herdadas da D (spec idêntica)",
+   "arquivo": "tela-f/classes-nat71/classes-finais.json",
+   "d156": "tela-f/classes-d156-1.0.0.json"
+  },
+  "niveis": "tela-f/niveis-1.0.0.json (id da spec semeada → nível; fora da referência)",
+  "criteriosDeJulgamento": "tela-f/criterios-de-julgamento-sem-predicado.json",
+  "paginaCongelada": "tela-f/pagina-congelada.json (ala pnip-f, 190 arquivos, lista 195f1e47…; govbr-corpus tela-f 157a3cc)",
+  "evidencia": {
+   "construcao": "tela-f/construcao/",
+   "remedidaNaturais": "tela-f/remedida-d/",
+   "lacunas": "tela-f/lacunas-construcao.json",
+   "conferenciaReferencia": "tela-f/conferir-referencia-1.0.0.log"
   }
  },
  "violations": [
