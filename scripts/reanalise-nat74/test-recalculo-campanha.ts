@@ -19,7 +19,7 @@ import { montarDecisoes } from "./montar";
 import type { AtomoClassificado } from "./politica";
 import { NAO_PERGUNTADO } from "./e14-comum";
 import {
-  Entradas, FORMATO_NIVEIS, NIVEIS, TRIO_COM_SLOT_FORA, conferirNiveis, lerNiveis, mediana, niveisDeclarados, porNivelMd, tabelaPorNivel, chavePorProtocolo, chaveVariante, colunaFundamentada, conjuntoDe, contar, contarFundamentada, ehIdDeVerificacao, executar, fundamentadaDoTrio, fundamentadaMd, idCanonico,
+  Entradas, FORMATO_ESTRATOS, FORMATO_NIVEIS, INTERACAO, NIVEIS, conferirEstratos, estratosDeclarados, lerEstratos, porInteracaoMd, porTipoMd, tabelaPorInteracao, tabelaPorNivelDosEstratos, tabelaPorTipo, TRIO_COM_SLOT_FORA, conferirNiveis, lerNiveis, mediana, niveisDeclarados, porNivelMd, tabelaPorNivel, chavePorProtocolo, chaveVariante, colunaFundamentada, conjuntoDe, contar, contarFundamentada, ehIdDeVerificacao, executar, fundamentadaDoTrio, fundamentadaMd, idCanonico,
   leituraComDelta, normaDaFundamentacao, recalcular, regraDaTela, removidosS4, sensibilidadeSemIdsExpostos, slotsPorProtocolo,
   tabelaDaComparacao, tabelaPorProtocolo, unidadesDaSpec, vereditoNaPolitica,
   type CartaoJulgado, type Comparacao, type Contestado, type TabelaComparacao, type TrioEntrada,
@@ -371,6 +371,148 @@ try {
     });
   }
 
+  // ── [tela F2] (processos-f2 1.0.0; adendo 2 congelado, §3, §6, §7): mesma regra da F e arquivo de estratos (tipo, subtipo,
+  // nível, exigência de interação). Tudo SINTÉTICO: ids S-xx/N-xx inventados; os tipos do teste são dados, não código.
+  {
+    const SEM12 = Array.from({ length: 12 }, (_, i) => `S-${String(i + 1).padStart(2, "0")}`);
+    const refF2Sint = (n = 12, o: { tipoNaRef?: Record<string, string> } = {}): RefF => {
+      const sem = SEM12.slice(0, n);
+      return { _meta: { version: "1.0.0", suite: "processos-f2",
+        estratos: { semeado: { specs: sem }, natural: { specs: ["N-01", "N-02", "N-03"] }, exposto: { specs: ["N-03"] } }, exposto: { specs: ["N-03"] } },
+        violations: [...sem.map((id, i) => ({ id, expectedCount: 1 + (i % 2), categories: [["componente"], ["token"], ["tipografia", "estrutura"], ["comportamento"]][i % 4], ...(o.tipoNaRef?.[id] ? { tipo: o.tipoNaRef[id] } : {}) })),
+          { id: "N-01", expectedCount: 3, categories: ["navegacao", "acessibilidade"] }, { id: "N-02", expectedCount: 1, categories: ["componente", "estrutura"] },
+          { id: "N-03", expectedCount: 1, categories: ["token", "acessibilidade"] }] };
+    };
+    const TIPOS = [{ id: "T1", rotulo: "Estrutura", subtipos: ["anatomia", "marcacao"] }, { id: "T2", rotulo: "Valor fora do sistema" },
+      { id: "T3", rotulo: "Valor do sistema no lugar errado", definicao: "texto livre" }, { id: "T4", rotulo: "Estado e comportamento" }];
+    // S-01..S-12 → T1,T2,T3,T4 em rodízio; níveis em rodízio; interação nas de T4 e na S-02.
+    const estr = (n = 12) => Object.fromEntries(SEM12.slice(0, n).map((s, i) => {
+      const tipo = TIPOS[i % 4].id;
+      return [s, { tipo, ...(tipo === "T1" ? { subtipo: i % 8 === 0 ? "anatomia" : "marcacao" } : {}), nivel: NIVEIS[Math.floor(i / 4) % 4], exigeInteracao: tipo === "T4" || s === "S-02" }];
+    }));
+    const docE = (ref: RefF, o: Record<string, unknown> = {}) => ({ formato: FORMATO_ESTRATOS, referencia: { arquivo: "ground-truth-processos-f2.json", versao: "1.0.0", sha256: sha(JSON.stringify(ref)) },
+      tipos: TIPOS, specs: estr(ref._meta.estratos!.semeado!.specs!.length), ...o });
+    t("[tela F2] desfecho processos-f2 1.0.0 = a regra da F (mesmos conjuntos e recusas); primário = as n semeadas, n = 10, 11 ou 12 (nada fixa 12)", () => {
+      for (const n of [10, 11, 12]) {
+        const r = regraDaTela("processos-f2", refF2Sint(n)), f = regraDaTela("processos-f", { ...refF2Sint(n), _meta: { ...refF2Sint(n)._meta, suite: "processos-f" } });
+        assert.equal(r.tela, "processos-f2"); assert.equal(r.referencia, "1.0.0");
+        assert.deepEqual(r.conjuntos, f.conjuntos, "conjuntos idênticos aos da F");
+        assert.equal(conjuntoDe(r, "primario").specs.length, n); assert.match(conjuntoDe(r, "primario").rotulo, new RegExp(`\\(${n}\\)`));
+        assert.deepEqual(r.conjuntos.map(c => c.id), ["primario", "todas", "unidades", "com-expostas"]);
+        assert.equal(conjuntoDe(r, "todas").specs.length, n + 2);
+      }
+      const base = refF2Sint();
+      assert.throws(() => regraDaTela("processos-f2", { ...base, _meta: { ...base._meta, estratos: { ...base._meta.estratos, exposto: { specs: ["S-01", "N-03"] } }, exposto: { specs: ["S-01", "N-03"] } } }), /processos-f2 1\.0\.0: spec semeada marcada como exposta \(S-01\)/);
+      assert.throws(() => regraDaTela("processos-f2", { ...base, violations: base.violations.map(v => (v.id === "S-03" ? { ...v, categories: ["acessibilidade"] } : v)) }), /processos-f2 1\.0\.0: .*fora da classe ds.*S-03/);
+      assert.throws(() => regraDaTela("processos-f2", { ...base, _meta: { ...base._meta, version: "1.1.0" } }), /processos-f2 \(referência 1\.1\.0\) sem regra de desfecho pré-registrada/);
+    });
+    t("[tela F2] D_fc no primário com n = 10 (δ em specs; nenhuma conta depende de 12)", () => {
+      const r = regraDaTela("processos-f2", refF2Sint(10));
+      const sp: Record<string, string> = { a: "S-01", b: "S-10", c: "S-11", d: "N-01" };
+      const br = (confirmadas: string[]) => ({ confirmadas, admissiveis: [], pendentes: 0 });
+      const k = chaveVariante("principal", "1.2.0");
+      const tr: TrioEntrada[] = [{ trio: "p01", ordem: ["sem", "ferramentas", "com"], linhaDeBase: null, creditos: { [k]: { sem: br([]), ferramentas: br(["d"]), com: br(["a", "b", "c", "d"]) } } }];
+      const tab = tabelaDaComparacao(tr, { id: "ferramentas-x-com", arms: ["ferramentas", "com"], role: "primary" }, { variante: "principal", politica: "1.2.0", conjunto: "primario", regra: r, specDe: u => sp[u], nPlanejado: 9, sementeBase: "s" });
+      assert.deepEqual(tab.porTrio.map(x => x.d), [2], "S-11 não é semeada quando n = 10"); assert.equal(tab.delta, 2);
+    });
+    t("[tela F2, estratos] conferência aceita: tipos e subtipos vêm do arquivo; subtipo só no tipo que declara subtipos; n = 10..12", () => {
+      for (const n of [10, 11, 12]) {
+        const ref = refF2Sint(n), d = conferirEstratos(docE(ref), ref, sha(JSON.stringify(ref)), "ground-truth-processos-f2.json");
+        assert.equal(Object.keys(d.specs).length, n); assert.deepEqual(d.tipos.map(x => x.id), ["T1", "T2", "T3", "T4"]);
+        assert.equal(d.specs["S-01"].subtipo, "anatomia"); assert.equal(d.specs["S-02"].subtipo, undefined); assert.equal(d.specs["S-02"].exigeInteracao, true);
+      }
+      const outros = [{ id: "A", rotulo: "a" }, { id: "B", rotulo: "b" }];
+      const ref = refF2Sint(10);
+      const specs2 = Object.fromEntries(SEM12.slice(0, 10).map((s, i) => [s, { tipo: i < 5 ? "A" : "B", nivel: "medio", exigeInteracao: false }]));
+      assert.deepEqual(conferirEstratos(docE(ref, { tipos: outros, specs: specs2 }), ref, sha(JSON.stringify(ref)), null).tipos.map(x => x.id), ["A", "B"], "outra lista de tipos: o código não fixa T1..T4");
+    });
+    t("[tela F2, estratos] recusas: formato, referência, tipos, specs ≠ semeado, mais de um tipo ou nível, chave a mais/a menos, subtipo, interação, tipo não declarado, tipo declarado sem spec, divergência com a referência", () => {
+      const ref = refF2Sint(), s = sha(JSON.stringify(ref));
+      const E = estr();
+      const com = (spec: string, v: unknown) => docE(ref, { specs: { ...E, [spec]: v } });
+      const c = (d: unknown, re: RegExp, r: RefF = ref) => assert.throws(() => conferirEstratos(d, r, sha(JSON.stringify(r)), "ground-truth-processos-f2.json"), re);
+      c(docE(ref, { formato: FORMATO_NIVEIS }), /formato/);
+      c(docE(ref, { referencia: { arquivo: "ground-truth-processos-f2.json", versao: "1.0.0", sha256: "0".repeat(64) } }), /sha256 da referência/);
+      c(docE(ref, { referencia: { arquivo: "ground-truth-processos-f.json", versao: "1.0.0", sha256: s } }), /≠ a de telas\.json/);
+      c(docE(ref, { tipos: [] }), /sem tipos/);
+      c(docE(ref, { tipos: [...TIPOS, { id: "T2", rotulo: "de novo" }] }), /tipo repetido/);
+      c(docE(ref, { tipos: [...TIPOS, { id: "total", rotulo: "x" }] }), /"total" não pode ser id de tipo/);
+      c(docE(ref, { tipos: [{ id: "T1", rotulo: "Estrutura", subtipos: [] }, ...TIPOS.slice(1)] }), /tipos\[0\] fora do formato/);
+      c(docE(ref, { tipos: [{ ...TIPOS[0], extra: 1 }, ...TIPOS.slice(1)] }), /tipos\[0\] fora do formato/);
+      const { "S-12": _x, ...onze } = E; c(docE(ref, { specs: onze }), /≠ estrato semeado/);
+      c(docE(ref, { specs: { ...E, "N-01": E["S-02"] } }), /≠ estrato semeado/);
+      c(com("S-02", { tipo: ["T2", "T3"], nivel: "facil", exigeInteracao: false }), /S-02 tem de ter exatamente um tipo e um nível/);
+      c(com("S-02", { tipo: "T2", nivel: ["facil", "medio"], exigeInteracao: false }), /S-02 tem de ter exatamente um tipo e um nível/);
+      c(com("S-02", { tipo: "T2", exigeInteracao: false }), /S-02 tem de ter exatamente um tipo e um nível/);
+      c(com("S-02", { tipo: "T2", nivel: "facil" }), /S-02 tem de ter exatamente \{ exigeInteracao, nivel, tipo \}/);
+      c(com("S-02", { tipo: "T2", nivel: "facil", exigeInteracao: false, obs: "x" }), /S-02 tem de ter exatamente/);
+      c(com("S-02", { tipo: "T2", subtipo: "anatomia", nivel: "facil", exigeInteracao: false }), /S-02 tem de ter exatamente \{ exigeInteracao, nivel, tipo \}/);
+      c(com("S-01", { tipo: "T1", nivel: "facil", exigeInteracao: false }), /S-01 tem de ter exatamente \{ exigeInteracao, nivel, subtipo, tipo \}/);
+      c(com("S-01", { tipo: "T1", subtipo: "outro", nivel: "facil", exigeInteracao: false }), /subtipo "outro" fora dos subtipos de T1 \(anatomia \| marcacao\)/);
+      c(com("S-02", { tipo: "T2", nivel: "facil", exigeInteracao: "sim" }), /exigeInteracao "sim"/);
+      c(com("S-02", { tipo: "T9", nivel: "facil", exigeInteracao: false }), /tipo "T9" fora dos tipos declarados no próprio arquivo \(T1 \| T2 \| T3 \| T4\)/);
+      c(com("S-02", { tipo: "T2", nivel: "extremo", exigeInteracao: false }), /nível "extremo" fora de/);
+      c(docE(ref, { specs: Object.fromEntries(Object.entries(E).map(([k, v]) => [k, v.tipo === "T4" ? { tipo: "T3", nivel: v.nivel, exigeInteracao: v.exigeInteracao } : v])) }), /tipo\(s\) declarado\(s\) sem nenhuma spec semeada \(T4\)/);
+      const rT = refF2Sint(12, { tipoNaRef: { "S-03": "T2" } }); c(docE(rT), /S-03 é do tipo T3 no arquivo e T2 na referência/, rT);
+      const rN: RefF = { ...ref, violations: ref.violations.map(v => (v.id === "S-02" ? { ...v, nivel: "medio" } : v)) }; c(docE(rN), /S-02 é facil no arquivo e medio na referência/, rN);
+    });
+    t("[tela F2, estratos] declaração em telas.json: ausente → null (nada no manifesto); fora do formato e sha256 divergente recusam; presente → telas.json e o arquivo no manifesto", () => {
+      const ref = refF2Sint(), s = sha(JSON.stringify(ref));
+      const dir = join(tmp, "estratos-f2"); mkdirSync(join(dir, "tela-f2"), { recursive: true });
+      const eTxt = JSON.stringify(docE(ref)); writeFileSync(join(dir, "tela-f2", "estratos-1.0.0.json"), eTxt);
+      const telas = (decl: unknown, nome = "telas.json") => { writeFileSync(join(dir, nome), JSON.stringify({ "processos-f2": { reference: "ground-truth-processos-f2.json", ...(decl === undefined ? {} : { estratos: decl }) } })); return join(dir, nome); };
+      const E0 = new Entradas();
+      assert.equal(lerEstratos("processos-f2", ref, s, E0, telas(undefined, "sem.json")), null); assert.deepEqual(E0.manifesto(), {});
+      assert.equal(estratosDeclarados("processos", telas(undefined, "sem.json")), null);
+      assert.throws(() => estratosDeclarados("processos-f2", telas({ arquivo: "tela-f2/estratos-1.0.0.json" }, "ruim.json")), /processos-f2\.estratos fora do formato/);
+      assert.throws(() => lerEstratos("processos-f2", ref, s, new Entradas(), telas({ arquivo: "tela-f2/estratos-1.0.0.json", sha256: "0".repeat(64) }, "sha.json")), /processos-f2\.estratos: sha256 de tela-f2\/estratos-1\.0\.0\.json ≠ o declarado/);
+      const E1 = new Entradas();
+      const e = lerEstratos("processos-f2", ref, s, E1, telas({ arquivo: "tela-f2/estratos-1.0.0.json", sha256: sha(eTxt) }))!;
+      assert.equal(e.doc.specs["S-04"].tipo, "T4");
+      assert.deepEqual(Object.keys(E1.manifesto()).map(k => k.split("/").slice(-2).join("/")).sort(), ["estratos-f2/telas.json", "tela-f2/estratos-1.0.0.json"]);
+    });
+    t("[tela F2, tabelas] por tipo (denominador efetivo), por nível e por interação: linhas somam o total; total = o primário; md com as três seções", () => {
+      const ref = refF2Sint(11), doc = conferirEstratos(docE(ref), ref, sha(JSON.stringify(ref)), null);
+      const est = { declaracao: { arquivo: "tela-f2/estratos-1.0.0.json", sha256: "b".repeat(64) }, doc };
+      const sp: Record<string, string> = { a: "S-01", b: "S-02", c: "S-02", d: "N-01", e: "S-07", g: "S-08", h: "S-11" };
+      const br = (confirmadas: string[], admissiveis: string[] = []) => ({ confirmadas, admissiveis, pendentes: admissiveis.length });
+      const k = chaveVariante("principal", "1.2.0");
+      const tr: TrioEntrada[] = [
+        { trio: "p01", ordem: ["sem", "ferramentas", "com"], linhaDeBase: null, creditos: { [k]: { sem: br(["d"]), ferramentas: br(["a"]), com: br(["a", "b", "c", "d"], ["e"]) } } },
+        { trio: "p02", ordem: ["com", "sem", "ferramentas"], linhaDeBase: null, creditos: { [k]: { sem: br(["a"]), ferramentas: br(["b", "e", "g", "h"]), com: br(["g"]) } } }];
+      const fund: { trio: string; porBraco: Record<string, { principal: string[] }> }[] = [{ trio: "p01", porBraco: { sem: { principal: [] }, ferramentas: { principal: ["S-01"] }, com: { principal: ["S-01", "S-02"] } } },
+        { trio: "p02", porBraco: { sem: { principal: [] }, ferramentas: { principal: ["S-08"] }, com: { principal: [] } } }];
+      const B = ["sem", "ferramentas", "com"];
+      const pt = tabelaPorTipo(est, "processos-f2", tr, fund, B, u => sp[u]);
+      assert.deepEqual(pt.specs, { T1: ["S-01", "S-05", "S-09"], T2: ["S-02", "S-06", "S-10"], T3: ["S-03", "S-07", "S-11"], T4: ["S-04", "S-08"] });
+      assert.deepEqual(pt.denominador, { T1: 3, T2: 3, T3: 3, T4: 2, total: 11 }, "denominador efetivo por tipo");
+      assert.deepEqual(pt.subtipos, { T1: { anatomia: ["S-01", "S-09"], marcacao: ["S-05"] } });
+      assert.deepEqual(Object.keys(pt.deteccao), ["T1", "T2", "T3", "T4", "total"]);
+      assert.deepEqual(pt.deteccao.T3.com.porTrio, [{ min: 0, max: 1 }, { min: 0, max: 0 }], "pendente só no máximo");
+      assert.deepEqual(pt.deteccao.total.ferramentas.porTrio.map(x => x!.min), [1, 4]);
+      const pn = tabelaPorNivelDosEstratos(est, "processos-f2", tr, fund, B, u => sp[u]);
+      assert.deepEqual(pn.specs, { facil: ["S-01", "S-02", "S-03", "S-04"], medio: ["S-05", "S-06", "S-07", "S-08"], dificil: ["S-09", "S-10", "S-11"], "muito-dificil": [] });
+      assert.equal(pn.declaradoEm, "telas.json › processos-f2.estratos"); assert.match(pn.regra, /arquivo de estratos/); assert.match(pn.tipo, /adendo 2 da tela F2/);
+      const pi = tabelaPorInteracao(est, "processos-f2", tr, fund, B, u => sp[u]);
+      assert.deepEqual(pi.specs, { "exige-interacao": ["S-02", "S-04", "S-08"], "sem-interacao": ["S-01", "S-03", "S-05", "S-06", "S-07", "S-09", "S-10", "S-11"] });
+      for (const [p, linhas] of [[pt, ["T1", "T2", "T3", "T4"]], [pn, [...NIVEIS]], [pi, [...INTERACAO]]] as const)
+        for (const b of B) for (let i = 0; i < 2; i++) {
+          assert.equal(linhas.reduce((s, l) => s + p.deteccao[l][b].porTrio[i]!.min, 0), p.deteccao.total[b].porTrio[i]!.min, "linhas somam o total");
+          assert.equal(linhas.reduce((s, l) => s + p.fundamentada[l][b].porTrio[i]!, 0), p.fundamentada.total[b].porTrio[i]);
+        }
+      const r = regraDaTela("processos-f2", ref);
+      const dfc = tabelaDaComparacao(tr, { id: "ferramentas-x-com", arms: ["ferramentas", "com"], role: "primary" }, { variante: "principal", politica: "1.2.0", conjunto: "primario", regra: r, specDe: u => sp[u], nPlanejado: 9, sementeBase: "s" });
+      assert.deepEqual(dfc.porTrio.map(x => [x.a!.min, x.b!.min]), [0, 1].map(i => [pt.deteccao.total.ferramentas.porTrio[i]!.min, pt.deteccao.total.com.porTrio[i]!.min]), "total = o primário");
+      const md = porTipoMd(pt) + porNivelMd(pn) + porInteracaoMd(pi);
+      assert.match(md, /## Specs semeadas confirmadas por tipo de defeito/); assert.match(md, /\| tipo \(denominador\) \|/);
+      assert.match(md, /\| T4 Estado e comportamento \(2\) \| ferramentas \| 0, 1 \| 0,50 \|/);
+      assert.match(md, /\| total \(11\) \| com \| 2 \[≤3\], 1 \| 1,50 \[≤2\] \| 2, 0 \| 1 \|/);
+      assert.match(md, /\| muito-dificil \(0\) \| sem \| 0, 0 \| 0 \|/);
+      assert.match(md, /## Specs semeadas confirmadas por exigência de interação/); assert.match(md, /\| exige-interacao \(3\) \|/);
+      assert.ok(md.indexOf("por tipo de defeito") < md.indexOf("por nível de dificuldade") && md.indexOf("por nível de dificuldade") < md.indexOf("por exigência de interação"));
+    });
+  }
+
   t("contagem: modo spec conta specs distintas; modo unidade conta unidades; só o conjunto pedido", () => {
     const d = regraDaTela("processos", refD), a = regraDaTela("solicitacao", refA);
     const spec: Record<string, string> = { u1: "D-01", u2: "D-01", u3: "D-11", u4: "A-04", u5: "A-04", u6: "P-01", u7: "A-01" };
@@ -710,6 +852,78 @@ try {
         assert.ok(e.some(k => k.endsWith("f-de-d/telas.json")) && e.some(k => k.endsWith("tela-f/niveis-1.0.0.json")));
         assert.match(rf.md, /## Specs semeadas confirmadas por nível de dificuldade/);
         assert.ok(rf.md.indexOf("## Specs semeadas confirmadas por nível") > rf.md.indexOf("## S4'"));
+      });
+    }
+  }
+  /**
+   * [tela F2] De ponta a ponta sobre a passada ARQUIVADA da D (só leitura), com uma referência F2 SINTÉTICA feita da D 1.1.0:
+   * estrato semeado = as 9 não expostas (categories trocadas para "componente"), natural = as expostas; arquivo de estratos
+   * sintético (4 tipos em rodízio, subtipo no T1, níveis e interação inventados). Mesmas --origem e --ratificacoes do recálculo
+   * arquivado: o primário da F2 tem de dar o primário da D, e "com as expostas" o da D; as tabelas por tipo, nível e interação
+   * somam o primário.
+   */
+  console.log("recálculo de campanha nova: tela F2 de ponta a ponta sobre a passada arquivada da D (referência F2 sintética)");
+  {
+    const DD = join(RESULTADOS, "analises", "nat78-tela-d-01"), PD = join(DD, "passada-adjudicada-20261118T1"), ARQ = join(DD, "recalculo-20261126T1", "recalculo.json");
+    if (!existsSync(join(PD, "julgamentos.json")) || !existsSync(ARQ)) { pulados++; console.log("  PULADO passada ou recálculo arquivado da D ausente"); }
+    else {
+      type RefX = Parameters<typeof regraDaTela>[1];
+      const camp = join(tmp, "f2-de-d"); mkdirSync(camp, { recursive: true });
+      const PF = join(camp, "passada-adjudicada-20261118T1");
+      symlinkSync(PD, PF, "junction");
+      const refD11 = lerJson<RefX>(join(EVAL, "ground-truth-processos-1.1.0.json"));
+      const EXP = refD11._meta.exposto!.specs, SEM = refD11.violations.map(v => v.id).filter(s => !EXP.includes(s));
+      const refF2: RefX = { ...refD11, _meta: { ...refD11._meta, version: "1.0.0", suite: "processos-f2",
+        estratos: { semeado: { specs: SEM }, natural: { specs: EXP }, exposto: { specs: EXP } } },
+        violations: refD11.violations.map(v => (SEM.includes(v.id) ? { ...v, categories: ["componente"] } : v)) };
+      const refTxt = JSON.stringify(refF2, null, 2);
+      for (let i = 1; i <= 9; i++) {
+        const de = join(DD, `p0${i}`, "analisar-20261118T1"), para = join(camp, `p0${i}`, "analisar-20261118T1");
+        for (const f of ["revisao/package.json", "entradas/campanha.json", "coleta-trio.json", "summary.json"]) { mkdirSync(dirname(join(para, f)), { recursive: true }); copyFileSync(join(de, f), join(para, f)); }
+        writeFileSync(join(para, "entradas", "referencia.json"), refTxt);
+      }
+      mkdirSync(join(camp, "tela-f2"));
+      const TT = ["T1", "T2", "T3", "T4"];
+      const eTxt = JSON.stringify({ formato: FORMATO_ESTRATOS, referencia: { arquivo: "ground-truth-processos-f2.json", versao: "1.0.0", sha256: sha(refTxt) },
+        tipos: [{ id: "T1", rotulo: "Um", subtipos: ["anatomia", "marcacao"] }, { id: "T2", rotulo: "Dois" }, { id: "T3", rotulo: "Três" }, { id: "T4", rotulo: "Quatro" }],
+        specs: Object.fromEntries(SEM.map((s, i) => [s, { tipo: TT[i % 4], ...(i % 4 === 0 ? { subtipo: i % 8 === 0 ? "anatomia" : "marcacao" } : {}), nivel: NIVEIS[i % 4], exigeInteracao: i % 3 === 0 }])) }, null, 2);
+      writeFileSync(join(camp, "tela-f2", "estratos-1.0.0.json"), eTxt);
+      const nTxt = JSON.stringify({ formato: FORMATO_NIVEIS, referencia: { arquivo: "ground-truth-processos-f2.json", versao: "1.0.0", sha256: sha(refTxt) }, niveis: Object.fromEntries(SEM.map((s, i) => [s, NIVEIS[i % 4]])) });
+      writeFileSync(join(camp, "tela-f2", "niveis.json"), nTxt);
+      const telasF2 = (extra: Record<string, unknown>, nome = "telas.json") => { writeFileSync(join(camp, nome), JSON.stringify({ "processos-f2": { reference: "ground-truth-processos-f2.json", ...extra } })); return join(camp, nome); };
+      const decl = { arquivo: "tela-f2/estratos-1.0.0.json", sha256: sha(eTxt) };
+      const opts = { passadas: [PF], origens: [join(DD, "origem-20261118T1")], ratificacoes: join(DD, "respostas-autora-20261126T1", "respostas-autora.json") };
+      t("[tela F2, ponta a ponta] recusas antes de qualquer conta: F2 sem a declaração de estratos; níveis e estratos declarados juntos; sha256 divergente", () => {
+        assert.throws(() => recalcular({ ...opts, telas: telasF2({}, "sem.json") }), /processos-f2 sem telas\.json › processos-f2\.estratos/);
+        assert.throws(() => recalcular({ ...opts, telas: telasF2({ estratos: decl, niveis: { arquivo: "tela-f2/niveis.json", sha256: sha(nTxt) } }, "dois.json") }), /declara telas\.json › processos-f2\.niveis e \.estratos/);
+        assert.throws(() => recalcular({ ...opts, telas: telasF2({ estratos: { ...decl, sha256: "0".repeat(64) } }, "sha.json") }), /≠ o declarado/);
+      });
+      const rf = recalcular({ ...opts, telas: telasF2({ estratos: decl }) });
+      const arq = lerJson<{ tabelas: Record<string, TabelaComparacao[]> }>(ARQ);
+      const tf = rf.json.tabelas as Record<string, TabelaComparacao[]>;
+      const resumo = (ts: TabelaComparacao[]) => ts.map(x => ({ c: x.comparacao, d: x.porTrio.map(r => [r.d, r.dMin, r.dMax]), p: x.estatistica.principal.p, media: x.estatistica.media }));
+      t("[tela F2, ponta a ponta] primário (n = 9 semeadas) = o primário da D e com as expostas = o da D, em toda variante e política", () => {
+        assert.deepEqual((rf.json.regraDoDesfecho as { conjuntos: { id: string; specs: string[] }[] }).conjuntos.map(c => [c.id, c.specs.length]), [["primario", 9], ["todas", 9], ["unidades", 9], ["com-expostas", 13]]);
+        for (const vp of ["principal|1.2.0", "principal|1.1.0", "S4'|1.2.0", "S4'|1.1.0"]) {
+          assert.deepEqual(resumo(tf[`${vp}|primario`]), resumo(arq.tabelas[`${vp}|primario`]), vp);
+          assert.deepEqual(resumo(tf[`${vp}|com-expostas`]), resumo(arq.tabelas[`${vp}|com-expostas`]), vp);
+        }
+        assert.equal(rf.json.tela, "processos-f2");
+      });
+      t("[tela F2, ponta a ponta] por tipo (denominador), por nível e por interação: total = primário por trio e braço; linhas somam o total; manifesto; seções na ordem", () => {
+        const fc = tf["principal|1.2.0|primario"].find(x => x.comparacao === "ferramentas-x-com")!;
+        const pt = rf.json.porTipo as ReturnType<typeof tabelaPorTipo>, pn = rf.json.porNivel as ReturnType<typeof tabelaPorNivelDosEstratos>, pi = rf.json.porInteracao as ReturnType<typeof tabelaPorInteracao>;
+        assert.deepEqual(pt.denominador, { T1: 3, T2: 2, T3: 2, T4: 2, total: 9 });
+        for (const [p, linhas] of [[pt, TT], [pn, [...NIVEIS]], [pi, [...INTERACAO]]] as const) {
+          assert.deepEqual(p.deteccao.total.ferramentas.porTrio, fc.porTrio.map(r => r.a)); assert.deepEqual(p.deteccao.total.com.porTrio, fc.porTrio.map(r => r.b));
+          for (const b of ["sem", "ferramentas", "com"]) p.trios.forEach((_, i) => assert.equal(linhas.reduce((s, l) => s + p.deteccao[l][b].porTrio[i]!.min, 0), p.deteccao.total[b].porTrio[i]!.min));
+        }
+        assert.ok(!("porNivel" in rf.json) || pn.declaradoEm === "telas.json › processos-f2.estratos");
+        const e = Object.keys(rf.json.entradas as object);
+        assert.ok(e.some(k => k.endsWith("f2-de-d/telas.json")) && e.some(k => k.endsWith("tela-f2/estratos-1.0.0.json")));
+        const i4 = rf.md.indexOf("## S4'"), iT = rf.md.indexOf("## Specs semeadas confirmadas por tipo"), iN = rf.md.indexOf("## Specs semeadas confirmadas por nível"), iI = rf.md.indexOf("## Specs semeadas confirmadas por exigência");
+        assert.ok(i4 < iT && iT < iN && iN < iI, "S4' < tipo < nível < interação");
+        assert.deepEqual(Object.keys(rf.json).filter(k => k.startsWith("por")), ["porTipo", "porNivel", "porInteracao"]);
       });
     }
   }
