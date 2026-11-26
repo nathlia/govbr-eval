@@ -187,5 +187,40 @@
         "nota": "SPA, mesmas regras da tela B (vistorias.isolamento.site) sobre a árvore pnip-f/: árvore inteira congelada (chunks lazy montados em tempo de execução), índice a todo GET sem extensão sob /pnip-f/, e o único alias é o ícone do \"Sair\" (sob <base href=\"/pnip-f/\"> o template sai do prefixo). O manifesto da ala é proveniência e fica fora do site."
       }
     }
+  },
+  "processos-f2": {
+    "titulo": "tela F2 — processos do portal MPA do PNIP com defeitos do DS semeados com cota por tipo de defeito (cópia da rota da tela D na ala pnip-f2; segundo estudo de seguimento do NAT-78, adendo 2 de 26/11)",
+    "entry": "pnip-f2/portal-mpa/processos?mock-perfil=mpa",
+    "reference": null,
+    "sources": [],
+    "runs": {
+      "com": "results/runs-processos-f2",
+      "sem": "results/runs-processos-f2-ablacao",
+      "smoke": "results/runs-processos-f2-smoke"
+    },
+    "review": "results/semantic-review-processos-f2",
+    "nota": "Tela F2 (adendo 2 de 26/11 ao protocolo NAT-78, congelado com errata 1: segundo estudo de seguimento, fora da família de Holm da D e da E), ainda SEM referência (reference: null; a ground-truth-processos-f2.json 1.0.0 entra num commit pequeno junto com estratos e criteriosDeJulgamento). Cópia da rota da tela D com defeitos do DS injetados no fonte do pnip-mock (ramo tela-f2, a partir de 3d02f68) e build congelado byte a byte na ala própria govbr-corpus/public/pnip-f2/ (base href /pnip-f2/), para não mudar um byte das telas B, C, D e F. O `?mock-perfil=mpa` escolhe a mesma sessão fictícia de coordenadora da tela D, e o próprio app o retira da barra de endereço. Regra de reserva (adendo da F §3, mantida no adendo 2): o oráculo não roda nesta tela antes do congelamento da referência. Não é entrada Vite: sources vazio. Preparação e gabarito em tela-f2/ (fora do checkout esparso da coleta).",
+    "isolamento": {
+      "texto": "Processos",
+      "alvo": "br-tab",
+      "fonte": null,
+      "interacao": {
+        "clicar": ".br-tag.interaction",
+        "esperar": "main .br-table tbody tr:nth-child(10)",
+        "nota": "Prova de vida, não estado de gabarito: a mesma da tela D (a etiqueta \"Meus processos\", light DOM, desliga o filtro e a lista passa de 9 para 10 linhas por página). Os estados da referência serão os do _meta.setup dela."
+      },
+      "externos": [],
+      "site": {
+        "arvore": "pnip-f2/",
+        "excluir": [
+          "pnip-f2/manifesto.json"
+        ],
+        "indice": "pnip-f2/index.html",
+        "aliases": {
+          "/assets/images/exit-icon.png": "pnip-f2/assets/images/exit-icon.png"
+        },
+        "nota": "SPA, mesmas regras da tela B (vistorias.isolamento.site) sobre a árvore pnip-f2/: árvore inteira congelada (chunks lazy montados em tempo de execução), índice a todo GET sem extensão sob /pnip-f2/, e o único alias é o ícone do \"Sair\" (sob <base href=\"/pnip-f2/\"> o template sai do prefixo). O manifesto da ala é proveniência e fica fora do site."
+      }
+    }
   }
 }
