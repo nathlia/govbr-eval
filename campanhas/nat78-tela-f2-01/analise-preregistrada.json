@@ -1,0 +1,343 @@
+{
+  "formato": "nat78-analise-preregistrada-1.0.0",
+  "estado": "RASCUNHO da bancada F2 (26/11/2026, ramo bancada-f2): forma pronta; todo hash que depende da referência, do arquivo de estratos, dos critérios, das classes, do inventário, do pacote, do lock ou do texto da tarefa está marcado PENDENTE; os três controles de viabilidade são fatos pendentes. Não congelado: o commit sozinho que o congela vem depois dos três controles e antes do campaign.json da F2.",
+  "campanha": "nat78-tela-f2-01",
+  "item": "Adendo 2 ao protocolo NAT-78 de 26/11/2026 (tela F2, cotas por tipo de defeito; congelado em thesis 447e47f, errata 1 em 66f1195) §2, §5, §6, §7, sobre o adendo da F (que vale onde o adendo 2 não diz nada) e o protocolo congelado de 16/11 (CONG-15, thesis a46ab3f): análise da tela F2 configurada ANTES da coleta, na forma da da tela F (campanhas/nat78-tela-f-01/analise-preregistrada.json). Só dados: nomes de conjunto, políticas, colunas, comandos e regras de leitura; nenhuma descrição, âncora, regra, tipo, nível nem id de spec da referência. Commitado sozinho, antes do campaign.json da F2, que cita o sha256 deste arquivo em analysisPlan.",
+  "seguimento": {
+    "natureza": "segundo desenho de seguimento, feito DEPOIS de ver D, E e a F, inclusive depois de ver que o oráculo não marca nenhum dos 12 defeitos da F e quais eram (adendo 2 §2.1, §8.1): evidência de seguimento, não confirmatória; toda tabela da F2 leva esse rótulo",
+    "familiaHolm": "FORA da família de Holm de D e E (adendo 2 §2.5): teste próprio com α = 0,05",
+    "naoMuda": "os resultados de D e E e o registro da F (tentativa interrompida, D-217) ficam como estão",
+    "selecao": "a F2, se coletada, é uma tela que passou no portão do sem (§5) e nos dois controles da errata 1: a varredura sem guia do oráculo marca ao menos um semeado e deixa passar ao menos um (controle 1), e o ferramentas fica a pelo menos duas specs do máximo (controle 2). As duas condições entram na interpretação (errata 1, limite declarado)"
+  },
+  "protocolo": {
+    "documento": "thesis-workspace/planejamento/atual/protocolo-nat78-estudo-complementar-CONGELADO-2026-11-16.md (revisão 6 congelada)",
+    "commitCongelado": "a46ab3fb950edf55df2d00b5da33a2552e695485",
+    "adendo": {
+      "documento": "thesis-workspace/planejamento/atual/adendo-tela-f-protocolo-2026-11-26.md",
+      "commitCongelado": "e6f202fffa97c74a1f55f063dc407512dc8ceec3",
+      "sha256Blob": "68d67e7f02371153de9f7cfa48cad5eccaf2354242b88e980667b9feb34511e0",
+      "errata": [
+        "a5a982eb64a697040606d48b70594cc2822fc649 (errata 1: referência congelada como candidata antes do portão; oráculo só depois do portão)"
+      ],
+      "nota": "congelado sem a revisão do Codex, por decisão da autora (D-214 item 5); correção só por errata datada",
+      "papel": "adendo da F: vale onde o adendo 2 não diz nada"
+    },
+    "adendo2": {
+      "documento": "thesis-workspace/planejamento/atual/adendo-2-tela-f2-protocolo-2026-11-26.md",
+      "commitCongelado": "447e47f (thesis-workspace; hash completo a preencher no congelamento desta análise)",
+      "errata": [
+        "66f1195 (errata 1: controle de cobertura e controle de teto do ferramentas, aceitos antes de qualquer resultado da seleção)"
+      ],
+      "sha256ArquivoComErrata1": "b4e939634e06a03dada1e69a7fa0659c6b67b95c6997d08fc4b422c2a3ab395f"
+    }
+  },
+  "tela": {
+    "id": "processos-f2",
+    "rota": "/pnip-f2/portal-mpa/processos?mock-perfil=mpa",
+    "referencia": {
+      "arquivo": "ground-truth-processos-f2.json",
+      "versao": "1.0.0",
+      "sha256": "PENDENTE",
+      "commitCongelamento": "PENDENTE",
+      "contagens": {
+        "specs": "PENDENTE",
+        "unidades": "PENDENTE",
+        "semeado": "PENDENTE",
+        "natural": "PENDENTE",
+        "exposto": "PENDENTE",
+        "paradas": "PENDENTE",
+        "segmentos": "PENDENTE"
+      },
+      "estratos": "declarados em _meta.estratos da própria referência: semeado (as specs do DS injetadas, todas da classe ds pela classeDaSpec; o primário), natural (as specs da referência 1.1.0 da D reconferidas na cópia) e exposto (as do casco, dentro do natural; também em _meta.exposto.specs, a forma da D). A regra de desfecho recusa estrato semeado vazio, semeada fora da classe ds, semeada exposta e estratos semeado/natural que não repartem a referência.",
+      "conferencia": "npm run conferir:referencia -- --tela processos-f2 contra o site exportado (PENDENTE)",
+      "regraDeDesfecho": "regraDaTela processos-f2 1.0.0 = a regra da F (eval bancada-f2 56cc35c; testes em test-recalculo-campanha.ts): primário = as n semeadas (n de 10 a 12, nada fixa 12); todas; unidades; com-expostas se houver exposta"
+    },
+    "estratos": {
+      "arquivo": "tela-f2/estratos-1.0.0.json",
+      "formato": "tela-f2-estratos-1.0.0",
+      "sha256": "PENDENTE",
+      "declaracao": "telas.json › processos-f2.estratos { arquivo, sha256 }",
+      "regra": "por spec semeada: tipo (um dos tipos que o próprio arquivo declara: T1–T4 do adendo 2 §3), subtipo (só nos tipos que declaram subtipos: T1 anatomia | marcacao), nivel (facil | medio | dificil | muito-dificil, só rótulo: sem cota por nível, adendo 2 §4.6) e exigeInteracao (true | false, adendo 2 §3); todo tipo declarado com spec; ids = exatamente o estrato semeado; congelado com a referência. O recálculo para se o sha256 divergir da declaração, se a referência citada (arquivo, versão, sha256) não for a das análises, se faltar ou sobrar campo, ou se a processos-f2 não declarar o arquivo (recalculo-campanha.ts › lerEstratos, conferirEstratos).",
+      "contagens": {
+        "porTipo": "PENDENTE",
+        "porNivel": "PENDENTE",
+        "exigeInteracao": "PENDENTE"
+      }
+    },
+    "criteriosDeJulgamento": {
+      "arquivo": "tela-f2/criterios-de-julgamento-sem-predicado.json (nome esperado; o do agente da referência vale)",
+      "sha256": "PENDENTE",
+      "declaracao": "telas.json › processos-f2.criteriosDeJulgamento { arquivo, sha256 }",
+      "nota": "como na F: critério para TODA spec da referência (semeadas e naturais), passada dos juízes nat78-primeira-passada-1.4.8; a montagem para se faltar critério ou o sha256 divergir"
+    },
+    "classes": {
+      "arquivo": "tela-f2/classes-d156-1.0.0.json",
+      "sha256": "PENDENTE",
+      "nota": "tela-d/classes-d156.ts sobre a referência congelada; toda semeada sai ds (a regra de desfecho também confere)"
+    },
+    "controlesConformes": {
+      "arquivo": "tela-f2/conformes.json (se houver)",
+      "sha256": "PENDENTE"
+    },
+    "inventarioDom": {
+      "arquivo": "scripts/vazamento/inventario-dom/processos-f2.json",
+      "sha256": "PENDENTE",
+      "manifestoNavegacao": "PENDENTE",
+      "nota": "manifesto-navegacao.ts --tela processos-f2 → inventario-dom.ts → conferir-inventario.ts, depois do congelamento da referência"
+    },
+    "paginaCongelada": {
+      "arquivo": "tela-f2/pagina-congelada.json",
+      "sha256": "PENDENTE",
+      "arquivos": 190,
+      "corpus": "govbr-corpus tela-f2 (PENDENTE: commit da ala public/pnip-f2/ semeada)"
+    },
+    "pacote": {
+      "govbrTelas": "PENDENTE",
+      "exportador": "export-telas-1.7.0",
+      "site": "PENDENTE",
+      "manifesto": "PENDENTE"
+    },
+    "lock": {
+      "arquivo": "runner/images.lock.json",
+      "sha256": "PENDENTE",
+      "commit": "PENDENTE (commit sozinho; só a imagem screens muda em relação ao lock da F)"
+    },
+    "textoDaTarefa": {
+      "sha256": "PENDENTE",
+      "nota": "30 min com relógio, igual nos três braços; esperado diferir do da F só na linha da URL (/pnip-f2/)"
+    }
+  },
+  "desfechoPrimario": {
+    "pergunta": "QP-F2 (adendo 2 §2.4): o efeito do PERFIL COMPLETO do oráculo — a consulta à base normativa mais as checagens automáticas de DS que o perfil evaluation tem e o knowledge-free não tem (tokens e estrutura no scan_page da 3.7.12) — sobre a detecção de defeitos do DS semeados",
+    "comparacao": "ferramentas-x-com",
+    "nome": "D_fc^F2",
+    "formula": "D_fc^F2 = specs semeadas confirmadas por com − as confirmadas por ferramentas, por trio",
+    "conjunto": "primario",
+    "conjuntoDescricao": "as n specs do estrato semeado da referência congelada da F2, seja qual for n (adendo 2 §6: n = 12 se a composição ficar completa; entre 10 e 12 pela §4.5); por spec (D-102): spec confirmada = pelo menos uma unidade confirmada pela revisão fechada",
+    "nota": "com T1 e T2 no conjunto, parte de um ganho pode vir direto das checagens automáticas; o primário não separa a base normativa das checagens (adendo 2 §8.2). A contribuição específica da recuperação de regras é discutida só com evidência descritiva (coluna fundamentada, tabela por tipo)",
+    "politica": "1.3.0 (crédito da 1.2.0 + R16; D-156 item 2), como na D e na E",
+    "coluna": "deteccao",
+    "fonte": "revisao:recalculo › recalculo.json › tabelas['principal|1.2.0|primario'] (na passada 1.3.0 essas chaves leem o derivado 1.3.0: notaPolitica), comparação ferramentas-x-com; regra de desfecho processos-f2 1.0.0 em recalculo-campanha.ts › regraDaTela (eval bancada-f2 56cc35c)"
+  },
+  "comparacoesSecundarias": [
+    {
+      "pergunta": "D_sc^F2",
+      "comparacao": "sem-x-com",
+      "nome": "D_sc^F2",
+      "formula": "D_sc^F2 = com − sem",
+      "ressalva": "adendo 2 §6: o portão de teto escolheu uma tela em que o sem vai mal, o que favorece com − sem; lido com essa ressalva escrita ao lado"
+    },
+    {
+      "pergunta": "D_sf^F2",
+      "comparacao": "sem-x-ferramentas",
+      "nome": "D_sf^F2",
+      "formula": "D_sf^F2 = ferramentas − sem",
+      "ressalva": "a seleção pelo portão do sem favorece ferramentas − sem; o controle 2 (errata 1) escolheu uma tela em que o ferramentas fica a pelo menos duas specs do máximo"
+    }
+  ],
+  "politicas": {
+    "principal": "1.3.0",
+    "aoLado": [
+      "1.1.0"
+    ],
+    "pura120": {
+      "como": "o mesmo caminho da D e da E: reingestão da passada final da F2 em pasta nova (npx tsx scripts/reanalise-nat74/e14-ingerir.ts --fila <passada final> --politica 1.2.0 --gravar-em <pasta nova>); a tabela de duas colunas lê esse julgamentos.json por e14-deteccao.ts --julgamentos <pasta nova>/julgamentos.json",
+      "limite": "o mesmo da D e da E: revisao:recalculo lê só o julgamentos.json de dentro da passada; o D_fc^F2 na 1.2.0 pura exige uma cópia da passada reingerida na 1.2.0"
+    }
+  },
+  "colunas": {
+    "principal": "deteccao",
+    "aoLado": "fundamentada",
+    "testeNaFundamentada": false,
+    "nota": "como na D, na E e na F (D-157 item 4; N8): coluna principal detecção; fundamentada descritiva, ao lado, por braço e trio, com mediana; sem sensibilidade própria da coluna fundamentada."
+  },
+  "sensibilidades": [
+    {
+      "id": "todas",
+      "o-que": "as n semeadas mais as specs naturais não expostas da rota, por spec (adendo 2 §6)",
+      "fonte": "recalculo.json › tabelas['…|todas']"
+    },
+    {
+      "id": "unidades",
+      "o-que": "a mesma comparação do primário contada por unidade, nas unidades das specs semeadas",
+      "fonte": "recalculo.json › tabelas['…|unidades']"
+    },
+    {
+      "id": "com-expostas",
+      "o-que": "todas as specs da referência, inclusive as do casco (expostas), por spec; existe só se a referência tiver exposta (a mesma sensibilidade da D)",
+      "fonte": "recalculo.json › tabelas['…|com-expostas']"
+    },
+    {
+      "id": "politica-1.1.0",
+      "o-que": "sem R15 e sem Q1 a",
+      "fonte": "recalculo.json › tabelas['…|1.1.0|…']"
+    },
+    {
+      "id": "S4'",
+      "o-que": "sem crédito contestado não ratificado, no braço que o recebeu",
+      "fonte": "recalculo.json › tabelas[\"S4'|…\"] (passada adjudicada com contestados.json; ratificações por --ratificacoes <respostas-autora.json>)"
+    },
+    {
+      "id": "por-protocolo",
+      "o-que": "§4.5: as mesmas três comparações só com as execuções aderentes ao uso declarado do oráculo; ANÁLISE DE SENSIBILIDADE, nunca o primário",
+      "definicao": "nat78-aderencia-por-protocolo-1.0.0 (sem = absent-verified; ferramentas e com = used-adherent; used-with-errors à parte); trio com slot excluído sai das três comparações (TRIO_COM_SLOT_FORA = trio-inteiro)",
+      "opcao": "--por-protocolo (revisao:recalculo)",
+      "fonte": "recalculo.json › sensibilidadePorProtocolo"
+    },
+    {
+      "id": "pura-1.2.0",
+      "o-que": "D_fc^F2 na política 1.2.0 pura, pela reingestão (politicas.pura120)",
+      "fonte": "recalculo sobre a cópia da passada reingerida na 1.2.0"
+    }
+  ],
+  "incerteza": {
+    "teste": "permutação exata por troca de sinais sobre a média de D_fc^F2, bicaudal (estatistica-pareada.ts › testePermutacaoSinal)",
+    "robustez": [
+      "Wilcoxon-Pratt exato",
+      "teste do sinal exato"
+    ],
+    "ic": "IC 95% bootstrap percentil, 10.000 reamostragens, mulberry32, semente = campanha.design.seed da F2 (recalculo: base|recalculo|<comparação>|<variante>|<política>|<conjunto>)",
+    "alfaSecundarias": 0.05,
+    "correcaoSecundarias": "nenhuma",
+    "trioIncompleto": "entra só nas comparações que têm os dois braços",
+    "publicar": [
+      "D por trio",
+      "média",
+      "mediana",
+      "DP",
+      "n planejado (9)",
+      "n efetivo"
+    ]
+  },
+  "leitura": {
+    "limiar": {
+      "alfa": 0.05,
+      "teste": "próprio da F2",
+      "holm": "nenhum: a F2 é lida como seguimento (adendo 2 §2.5)"
+    },
+    "congelada": "vantagem do com exige p < 0,05 e média > 0; o simétrico é vantagem do ferramentas; o resto é nenhuma diferença detectável. Estrito (p < limiar). O recálculo lê com α = 0,05; na F2 essa é a leitura publicada (nenhum holmTelas é aplicado).",
+    "delta": {
+      "valor": 2,
+      "unidade": "specs por trio",
+      "regra": "como no protocolo (§6.1): IC inteiro em [−2, +2] → o IC estimado caiu dentro da faixa pré-especificada de ±δ; cruzou ±2 → inconclusivo para o efeito relevante (recalculo-campanha.ts › leituraComDelta); δ = 2 specs por trio, o equivalente em recall é 2/n (adendo 2 §6)"
+    },
+    "publicar": "o que sair, favorável, nulo ou desfavorável (adendo 2 §2.5)"
+  },
+  "tipoDeSpec": {
+    "regra": "ds × geral pela categories da referência (D-156 3.i; e14-deteccao.ts › classeDaSpec)",
+    "fonte": "e14-deteccao.ts › porClasse, rodado uma vez com e sem --sem-expostas (a F declara _meta.exposto.specs na forma da D)",
+    "naF2": "o primário já é a classe ds (as semeadas); as naturais ficam ao lado, descritivas, por braço e trio"
+  },
+  "classesNat71": {
+    "arquivo": "tela-f2/classes-nat71/classes-finais.json (se o agente da referência repetir o procedimento da F)",
+    "sha256": "PENDENTE",
+    "estado": "PENDENTE"
+  },
+  "comandos": [
+    {
+      "passo": "0",
+      "o-que": "servir o site congelado da F2 (pacote govbr-telas da F2)",
+      "comando": "npx tsx scripts/reanalise-nat74/e14-campanha.ts --servir ../govbr-telas --porta <porta>"
+    },
+    {
+      "passo": "1",
+      "o-que": "primeira passada cega da F2, em passada própria (cartões da F2 nunca no mesmo lote de outra tela); política 1.3.0",
+      "comando": "npx tsx scripts/reanalise-nat74/e14-campanha.ts --analise <análise p01> … --analise <análise p09> --saida <passada> --base-url http://127.0.0.1:<porta> --validador <checkout do validator 816f4bae41f4486b7055f0ac265167e87ce0d5e5>; juiz por lote; npx tsx scripts/reanalise-nat74/e14-ingerir.ts --fila <passada>"
+    },
+    {
+      "passo": "3",
+      "o-que": "confiabilidade (antes da adjudicação)",
+      "comando": "npm run revisao:confiabilidade -- amostra --passada <passada> --saida <revisao>; npm run revisao:confiabilidade -- medir --passada <passada> --amostra <revisao>/confiabilidade"
+    },
+    {
+      "passo": "2",
+      "o-que": "consistência e adjudicação",
+      "comando": "npm run revisao:consistencia -- --passada <passada> --saida <revisao>; npm run revisao:adjudicacao -- preparar --passada <passada> --confiabilidade <revisao>/confiabilidade --saida <revisao>; … revelar …; npm run revisao:adjudicacao -- aplicar --passada <passada> --adjudicacao <revisao>/adjudicacao --saida <pasta nova>"
+    },
+    {
+      "passo": "6",
+      "o-que": "origem medida",
+      "comando": "npm run revisao:origem -- medir --passada <passada adjudicada> --site <site congelado> --ds <pacote DS> [--ds …] --saida <pasta nova>"
+    },
+    {
+      "passo": "4",
+      "o-que": "material da autora (teto 10)",
+      "comando": "npm run revisao:material-autora -- preparar --passada <passada adjudicada> --origem <origem> --site <site congelado> --saida <pasta nova> --teto 10 --validador <checkout congelado>; npm run revisao:material-autora -- responder --material <pasta> --texto <linhas> --saida <pasta nova>"
+    },
+    {
+      "passo": "5",
+      "o-que": "recálculo: D_fc^F2 (primária), D_sc^F2, D_sf^F2; 1.3.0 + 1.1.0; S4'; todas; unidades; com-expostas; tabelas por tipo, nível e interação; leitura com δ; α = 0,05 sem Holm",
+      "comando": "npm run revisao:recalculo -- --passada <passada adjudicada> --saida <pasta nova> --origem <origem> --ratificacoes <respostas-autora.json>"
+    },
+    {
+      "passo": "5-pp",
+      "o-que": "sensibilidade por protocolo (nunca o primário), em pasta própria",
+      "comando": "npm run revisao:recalculo -- --passada <passada adjudicada> --saida <outra pasta nova> --origem <origem> --ratificacoes <respostas-autora.json> --por-protocolo"
+    },
+    {
+      "passo": "7",
+      "o-que": "duas colunas por tipo de spec (semeadas ds; naturais ao lado)",
+      "comando": "npx tsx scripts/reanalise-nat74/e14-deteccao.ts --passada <passada final> --saida <pasta nova> --coluna-principal deteccao [--sem-expostas]"
+    }
+  ],
+  "pendentes": [
+    {
+      "item": "referência ground-truth-processos-f2.json 1.0.0, tela-f2/ (estratos, critérios, classes, página congelada) e todos os hashes de tela.*",
+      "estado": "do agente da referência; a bancada preenche só sha256 e contagens"
+    },
+    {
+      "item": "pacote govbr-telas da F2 (export-telas-1.7.0), lock só da imagem screens, texto da tarefa, inventário do DOM",
+      "estado": "depois da ala pnip-f2/ semeada no corpus"
+    },
+    {
+      "item": "controles de viabilidade (controlesDeViabilidade): portão do sem, controle 1, controle 2",
+      "estado": "fatos pendentes; nesta ordem; qualquer falha encerra a F2 antes da coleta"
+    },
+    {
+      "item": "D_fc^F2 na 1.2.0 pura",
+      "estado": "o mesmo limite da D, da E e da F; não bloqueia a coleta"
+    }
+  ],
+  "descritivos": {
+    "tipo": "descritivo pré-declarado, sem D e sem teste (adendo 2 §6); coluna detecção (chave principal|1.2.0, spec confirmada = ≥ 1 unidade confirmada; [máximo] com os pendentes) e, ao lado, a fundamentada (specFundamentada, leitura principal); linha total = o primário; por braço, trio e mediana",
+    "obrigatorio": "o recálculo da processos-f2 recusa rodar sem telas.json › processos-f2.estratos, e recusa a tela que declarar níveis e estratos juntos",
+    "porTipo": {
+      "o-que": "specs semeadas confirmadas por tipo de defeito (os tipos do arquivo de estratos, na ordem dele) e por braço, com o denominador efetivo de cada tipo (quantas semeadas do tipo a referência congelada tem); é a tabela que responde ao motivo da F2",
+      "fonte": "recalculo.json › porTipo (denominador, subtipos, deteccao, fundamentada) e a seção 'Specs semeadas confirmadas por tipo de defeito' do tabela.md; recalculo-campanha.ts › lerEstratos, tabelaPorTipo, tabelaPorNivelDosEstratos, tabelaPorInteracao (eval bancada-f2 56cc35c)"
+    },
+    "porNivel": {
+      "o-que": "specs semeadas confirmadas por nível de dificuldade (rótulo do arquivo de estratos) e por braço",
+      "fonte": "recalculo.json › porNivel e a seção 'Specs semeadas confirmadas por nível de dificuldade'"
+    },
+    "porInteracao": {
+      "o-que": "specs semeadas confirmadas por exigência de interação (exigeInteracao do arquivo de estratos: exige-interacao, sem-interacao) e por braço",
+      "fonte": "recalculo.json › porInteracao e a seção 'Specs semeadas confirmadas por exigência de interação'"
+    }
+  },
+  "controlesDeViabilidade": {
+    "nota": "fatos a registrar ANTES do congelamento desta análise; os três dão decisão binária sobre a composição inteira (adendo 2 §5 e errata 1); nenhum resultado por defeito é lido pela sessão principal",
+    "portaoDeTetoDoSem": {
+      "regra": "adendo 2 §5: 3 execuções só do sem, primeira passada cega, pendente conta como confirmado; passa se a mediana do máximo ≤ ⌊n/2⌋; uma recomposição fixada; segunda falha encerra",
+      "campanha": "portao-teto-f2-01 (recomposição: portao-teto-f2-02)",
+      "comando": "npm run portao:teto -- --passada <passada> --saida <pasta nova>",
+      "estado": "PENDENTE",
+      "veredito": "PENDENTE",
+      "portaoTetoMdSha256": "PENDENTE"
+    },
+    "controle1Cobertura": {
+      "regra": "errata 1, controle 1 (sem modelo): com a referência congelada, roda-se a linha de base e lê-se só a contagem, por tipo, de semeados que a varredura sem guia do oráculo marca; a F2 segue se pelo menos um for marcado e pelo menos um não for. Correspondência achado × spec feita à mão por um agente que não participa de mais nada; a sessão principal lê só as contagens; o diagnóstico guiado, o axe e o detalhe por spec continuam fechados até o fechamento da coleta",
+      "campanha": "linha de base da nat78-tela-f2-01 (disparo so-linha-de-base, emenda (a)) ou da ensaio-trio-f2-01 (coleta+linha-de-base) — decisão da sessão principal",
+      "estado": "PENDENTE",
+      "veredito": "PENDENTE",
+      "contagemPorTipo": "PENDENTE"
+    },
+    "controle2TetoDoFerramentas": {
+      "regra": "errata 1, controle 2: 3 execuções só do ferramentas, fora da amostra, julgadas como no portão do sem (primeira passada cega; pendente conta como confirmado); a F2 segue se a mediana for no máximo n − 2",
+      "campanha": "portao-ferramentas-f2-01",
+      "comando": "npm run portao:teto -- --passada <passada> --saida <pasta nova> --braco ferramentas --limiar n-menos-2",
+      "estado": "PENDENTE",
+      "veredito": "PENDENTE",
+      "portaoTetoMdSha256": "PENDENTE"
+    }
+  }
+}
