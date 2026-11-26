@@ -4,12 +4,12 @@
   "campaignId": "portao-teto-f-01",
   "kind": "pilot",
   "title": "Portão de teto da tela F (adendo de 26/11 ao protocolo NAT-78, §5) — 3 execuções SÓ do braço sem na tela candidata processos-f, fora da amostra",
-  "objective": "RASCUNHO da bancada (ramo bancada-f; não disparável até design.screens[0].version ter o site da F). Portão de teto do adendo de 26/11 §5: 3 execuções só do braço sem na tela F candidata, julgadas às cegas contra as specs semeadas; passa se a mediana das specs semeadas confirmadas por execução for no máximo ⌊n/2⌋ (6 de 12). Só o sem é disparado: o ferramentas e o com NÃO rodam no portão (o oráculo não roda na F antes do congelamento da referência, adendo §3), e o portão (npm run portao:teto) recusa análise de outro braço. Sem linha de base (ausência planejada abaixo: a linha de base roda o validator, que é o oráculo). As execuções do portão não entram na amostra da nat78-tela-f-01 e nenhum resultado por defeito é usado; a sessão principal lê só portao-teto.md. Instrumento igual ao da campanha da F (mesmo fixed, limites e tarefa). Segundo portão (recomposição 2/2/4/4), se houver: campanha própria portao-teto-f-02, com os mesmos campos.",
+  "objective": "Campanha piloto do portão de teto, pronta para disparo (bancada-f, rodada 2b): site govbr-telas-site-03af89205307 (govbr-telas b663a26), referência candidata congelada ground-truth-processos-f.json 1.0.0 (sha256 d32088bf…d5b3e0), lock 8bc5c8e0… (eval 2370376), texto da tarefa 84faf4eb… (30 min). Portão de teto do adendo de 26/11 §5: 3 execuções só do braço sem na tela F candidata, julgadas às cegas contra as specs semeadas; passa se a mediana das specs semeadas confirmadas por execução for no máximo ⌊n/2⌋ (6 de 12). Só o sem é disparado: o ferramentas e o com NÃO rodam no portão (o oráculo não roda na F antes do congelamento da referência, adendo §3), e o portão (npm run portao:teto) recusa análise de outro braço. Sem linha de base (ausência planejada abaixo: a linha de base roda o validator, que é o oráculo). As execuções do portão não entram na amostra da nat78-tela-f-01 e nenhum resultado por defeito é usado; a sessão principal lê só portao-teto.md. Instrumento igual ao da campanha da F (mesmo fixed, limites e tarefa). Segundo portão (recomposição 2/2/4/4), se houver: campanha própria portao-teto-f-02, com os mesmos campos.",
   "hypotheses": [
     "Portão de desenho, sem hipótese científica: a mediana do sem nas specs semeadas é ≤ ⌊n/2⌋?"
   ],
   "createdAt": "2026-11-26T08:00:00Z",
-  "frozenAt": null,
+  "frozenAt": "2026-11-26T09:45:00Z",
   "design": {
     "screens": [
       {
@@ -149,11 +149,6 @@
     "approvedAt": null
   },
   "pendingDecisions": [
-    {
-      "topic": "design.screens[0].version = govbr-telas-site-<12 hex> do pacote govbr-telas da F; frozenAt no commit que torna o portão disparável",
-      "issue": "NAT-139",
-      "owner": "bancada rodada 2"
-    },
     {
       "topic": "Custo do portão (3 execuções sem de 30 min + uma passada cega) dentro da cota; sem orçamento próprio aprovado (piloto)",
       "issue": "NAT-139",
