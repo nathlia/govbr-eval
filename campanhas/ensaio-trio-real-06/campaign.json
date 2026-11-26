@@ -1,0 +1,165 @@
+{
+  "contract": "campaign.v2",
+  "fixture": false,
+  "campaignId": "ensaio-trio-real-06",
+  "kind": "pilot",
+  "title": "Ensaio real DESCARTÁVEL de 1 trio na tela A antes do congelamento da tela F (adendo de 26/11 ao NAT-78, §6) — sem/ferramentas/com em quadrado latino, Opus 5.5 high, oráculo congelado 3.7.12, linha de base congelada da campanha (emenda (a)); ENSAIO fora de qualquer análise e de qualquer número da tese",
+  "objective": "Adendo de 26/11 ao protocolo NAT-78 (tela F), §6: antes de congelar a F, um trio de teste descartável numa tela de desenvolvimento, repetido até passar sem nenhuma mudança. Forma da dev-3712-a-01 (o trio com modelo na tela A que valeu como ensaio limpo na versão congelada antes de D e E: protocolo §10 item 10, N1, D-198 item 4): tela A (solicitacao), 1 trio, quadrado latino, semente declarada, agenda v2, assinatura (conta = principal). Instrumento = o da nat78-tela-f-01 menos a tela: validator 3.7.12 (816f4bae41f4486b7055f0ac265167e87ce0d5e5, tag congelado-3.7.12; dist cd1aaf354b9d…, data b4b2eceb…), skill 8139bb0c, lock runner/images.lock.json 8bc5c8e0… (agent, oracle, collector e egress iguais aos de D e E; screens govbr-runner-screens:telas1.0.0-03af89205307), pacote govbr-telas b663a264da2fd1197dd234737a8c74297cbead60 (site 03af89205307), e o MESMO caminho de disparo da F: campanha → agenda (semente = commit do campaign.json) → um disparo so-linha-de-base → registro campanhas/ensaio-trio-real-06/linha-de-base.json commitado sozinho → 3 slots so-coleta por --ref que só difere do commit da linha de base pelo registro → coleta:trio com a linha de base congelada. Técnico: passa se os 3 slots rodam com técnico e isolamento passed, submissão aceita, identidade igual à campanha congelada e o coleta:trio sai com código 0. Nenhum achado, contagem ou pontuação é lido; nada daqui entra em número da tese nem motiva mudança no oráculo (congelado).",
+  "hypotheses": [
+    "Ensaio de infraestrutura com modelo real: nenhuma hipótese científica. Técnico: os 3 slots passam e o coleta:trio pela linha de base congelada sai com código 0."
+  ],
+  "createdAt": "2026-11-26T18:30:00Z",
+  "frozenAt": "2026-11-26T18:30:00Z",
+  "design": {
+    "screens": [
+      {
+        "id": "solicitacao",
+        "label": "Solicitar serviço",
+        "version": "govbr-telas-site-03af89205307"
+      }
+    ],
+    "arms": [
+      "sem",
+      "ferramentas",
+      "com"
+    ],
+    "models": [
+      {
+        "family": "Opus",
+        "requested": "claude-opus-5-5"
+      }
+    ],
+    "effort": "high",
+    "repetitions": 1,
+    "order": "quadrado-latino",
+    "seed": 20261141,
+    "comparisons": [
+      {
+        "id": "ferramentas-x-com",
+        "arms": [
+          "ferramentas",
+          "com"
+        ],
+        "role": "primary",
+        "question": "Ensaio (sem inferência): estrutura da comparação ferramentas-x-com. Nada deste ensaio é comparado, lido por braço nem entra em número da tese."
+      },
+      {
+        "id": "sem-x-ferramentas",
+        "arms": [
+          "sem",
+          "ferramentas"
+        ],
+        "role": "secondary",
+        "question": "Ensaio (sem inferência): estrutura da comparação sem-x-ferramentas. Nada deste ensaio é comparado, lido por braço nem entra em número da tese."
+      },
+      {
+        "id": "sem-x-com",
+        "arms": [
+          "sem",
+          "com"
+        ],
+        "role": "secondary",
+        "question": "Ensaio (sem inferência): estrutura da comparação sem-x-com. Nada deste ensaio é comparado, lido por braço nem entra em número da tese."
+      }
+    ]
+  },
+  "fixed": {
+    "protocolSha256": "8139bb0cd71d273e1f63294b2523478fd54fc2e05033cfc58f58bda174d83e3c",
+    "client": {
+      "name": "claude-code",
+      "version": "2.1.288 (Claude Code)"
+    },
+    "provider": {
+      "name": "anthropic",
+      "authMethod": "oauth-subscription"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "147.0.7727.15"
+    },
+    "playwrightMcp": "@playwright/mcp@0.0.70",
+    "isolationPolicyVersion": "isolamento-runner-1.1.0",
+    "oracleProfiles": {
+      "com": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.12",
+        "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "evaluation",
+        "tools": [
+          "get_component_spec",
+          "get_design_tokens",
+          "get_ds_rules",
+          "get_emag_rules",
+          "get_finding_details",
+          "get_page_rules",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "04ae14378db09bd4cdef48841e3d1a9388b701e18279fe08a04267af3c74614c"
+      },
+      "ferramentas": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.12",
+        "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "knowledge-free",
+        "tools": [
+          "get_finding_details",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "5b9c59aaa490f5de2a4a497eda8a2e3dbedd25b2a8288fed8eb049f7233d40dc"
+      }
+    },
+    "scorerVersion": "flow-semantic-1.8.2"
+  },
+  "limits": {
+    "timeoutSeconds": 1800,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 6,
+    "retryOn": [
+      "rate-limited",
+      "model-unavailable",
+      "auth-failed",
+      "preflight-failed",
+      "vm-lost",
+      "harness-error",
+      "archive-unavailable",
+      "cancelled"
+    ],
+    "attemptSelection": "Ensaio: vale a primeira tentativa sem falha técnica de cada slot, na ordem da agenda; nova tentativa só por falha técnica (protocolo §7.2), no máximo 1 por slot (3 slots, teto 6)."
+  },
+  "failurePolicy": "Como na nat78-tela-f-01 (protocolo §7.2 com a emenda (a)): linha de base da campanha medida e congelada uma vez antes do 1º slot (disparo so-linha-de-base), registro commitado sozinho, todo slot com etapas = so-coleta pelo ref que tem o registro; job de infraestrutura reexecutado sem contar tentativa. Isolamento reprovado = defeito a explicar antes de congelar a F; nunca resgatado. Qualquer mudança de código motivada pelo ensaio = ensaio de novo, até passar sem mudança.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": []
+  },
+  "analysisPlan": {
+    "primaryOutcome": "Nenhum desfecho (ensaio). Técnico: 3 slots com técnico e isolamento passed, submissão aceita, identidade igual à campanha congelada (oráculo 3.7.12 nos perfis evaluation e knowledge-free), linha de base congelada da campanha utilizável e conferida pelo coleta:trio (código 0, sinais técnicos lacrados).",
+    "secondaryOutcomes": [
+      "Medidas de recurso (tempo, custo estimado, fração da janela de 5 h), só registradas, para o orçamento da nat78-tela-f-01."
+    ],
+    "uncertaintyMethod": null,
+    "exclusionRules": "A campanha inteira fica fora de qualquer número da tese e de qualquer leitura por braço; não motiva mudança no oráculo, na referência, no scorer nem na política do juiz."
+  },
+  "budget": {
+    "approved": false,
+    "amount": null,
+    "currency": null,
+    "approvedBy": null,
+    "approvedAt": null
+  },
+  "pendingDecisions": []
+}
