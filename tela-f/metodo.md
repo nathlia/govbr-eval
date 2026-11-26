@@ -31,7 +31,8 @@ diferença). `tela-f/.gitattributes` as marca `-text` para que o checkout não m
 
 ## O que não foi lido nem usado
 
-`govbr-ds-validator` (qualquer checkout, código ou dado), `.validator-*`, `checker-aliases.json`, `kb-aliases.json`,
+`govbr-ds-validator` (código, verificadores, aliases; de dados, só a exceção autorizada na revisão abaixo: os
+arquivos de regra servidos na tag `congelado-3.7.12`, campos id/texto/fonte), `.validator-*`, `checker-aliases.json`, `kb-aliases.json`,
 `results/`, `reports/`, `govbr-resultados`, logs de execução (`pipeline/logs/`), ferramentas MCP e CLI do validator,
 axe. Da base literal, nenhum campo além dos quatro acima (nem força, estratégia de validação, automatizável,
 confiança, evidência esperada, texto normalizado). Nenhum modelo chamado, nenhum workflow disparado.
@@ -57,7 +58,39 @@ confiança, evidência esperada, texto normalizado). Nenhum modelo chamado, nenh
      de formulário ou de navegação, regra da E2 § 5) → `classeDaSpec` tem de dar `ds`.
 3. **Composição** (§ 4 item 4): 3 primeiros sobreviventes por nível → semeadas; seguintes → reserva.
 
-## Resultado
+## Revisão de 26/11: (d) passa a ser registro, não filtro
+
+O coordenador mudou o adendo (§ 4 item 3, "id na base: registro, não filtro"), vendo só a contagem da primeira
+aplicação, sem ver a lista. Nenhum candidato sai por falta de id. A cláusula é procurada na base que o oráculo
+congelado serve: `govbr-ds-validator`, tag `congelado-3.7.12` (816f4ba), lida por `git show` (sem checkout, sem
+build, sem executar), `data/knowledge/manifest.json` › versão ativa › `ruleFiles` (`normalized/rules.jsonl` com as
+emendas, que incluem as unidades de especificação, e `normalized/carried-over.jsonl`), sha256 conferidos contra o
+manifesto da versão. De cada registro, só `id`, `originalText`, `source.corpusFile` e `source.charRange`. Nada de
+`src/`, verificadores, aliases, força ou detecção. Os arquivos do corpus citados foram conferidos pelo sha256 contra o
+corpus da versão servida.
+
+`mapear-clausulas-oraculo.mjs` → `clausulas-oraculo.json`: cada parte do trecho (na ordem do "[…]") é localizada no
+arquivo; liga-se o registro do mesmo arquivo com faixa sobreposta cujo texto está contido na parte ou a contém. Sem
+registro ligado → `semIdMapeado: true`, com o trecho literal e o arquivo (como as specs sem id da referência 1.1.0 da D).
+
+Filtros (a), (b), (e): os mesmos juízos. (c): ids da base servida; candidato sem id é comparado pela fonte (id de
+referência com faixa sobreposta ao trecho, no mesmo arquivo) e pelo texto (spec de referência que traz o trecho);
+se não pode ser a mesma regra, passa. O veredito antigo de (d) fica em `filtros.json` como `dAntigo`.
+
+| Nível | candidatos | conferente | (a) | (b) | (c) | (e) | com id | sem id | (dAntigo) |
+|---|---|---|---|---|---|---|---|---|---|
+| fácil | 6 | 4 | 4 | 4 | 3 | 3 | 3 | 0 | 2 |
+| médio | 6 | 5 | 5 | 5 | 5 | 5 | 5 | 0 | 1 |
+| difícil | 6 | 4 | 4 | 4 | 4 | 4 | 3 | 1 | 1 |
+| muito difícil | 6 | 4 | 4 | 4 | 4 | 4 | 2 | 2 | 1 |
+
+**Composição** (`compor.mjs` → `composicao.json`): 12 semeadas, F-01…F-12, 3 por nível; reserva R-01…R-04 (0/2/1/1).
+Semeadas com id na base servida: 3/3/3/2; sem id mapeado: 0/0/0/1. Recomposição do portão (§ 5) já fixada:
+saem F-03 e F-06, entram R-03 e R-04. Listas para a construção: `lista-de-mudancas.json` (12) e
+`lista-de-mudancas-reserva.json` (4, com `podeSubstituir`), sem nível, cláusula, id de regra nem justificativa.
+
+## Primeira aplicação (regra antiga, histórico)
+
 
 Sobreviventes por nível depois de cada passo (`filtros.json › _meta.sobreviventesPorNivelDepoisDeCadaFiltro`):
 
@@ -77,7 +110,7 @@ tabelas de especificação dos componentes e fundamentos (nenhum `originalText` 
 tabelas; todos os trechos foram achados literais no corpus, só não têm id. Os que sobrevivem citam frases do texto
 corrido.
 
-## Próximo passo previsto no adendo (não executado aqui)
+## Próximo passo que a primeira aplicação previa (superado pela revisão)
 
 § 4 item 4: o seletor é chamado **uma vez** para completar cada nível sem 3 aprovados (faltam 1 no fácil, 2 no
 médio, 2 no difícil, 2 no muito difícil). Observação de procedimento para o novo pedido, sem tocar nos critérios: a
@@ -89,6 +122,8 @@ encerramento (§ 7).
 ## Reprodução
 
 ```
-node tela-f/mapear-clausulas.mjs   # → tela-f/clausulas-base.json
-node tela-f/filtros.mjs            # → tela-f/filtros.json
+node tela-f/mapear-clausulas.mjs          # → clausulas-base.json (regra antiga, dAntigo)
+node tela-f/mapear-clausulas-oraculo.mjs  # → clausulas-oraculo.json (registro d)
+node tela-f/filtros.mjs                   # → filtros.json
+node tela-f/compor.mjs                    # → composicao.json, lista-de-mudancas*.json
 ```

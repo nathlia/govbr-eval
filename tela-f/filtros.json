@@ -12,7 +12,26 @@
    },
    "clausulasBase": {
     "arquivo": "tela-f/clausulas-base.json",
-    "sha256": "eec9198c5defd619cc177add5c14f533b2e083880b84712df48857ba55ad3bc6"
+    "sha256": "eec9198c5defd619cc177add5c14f533b2e083880b84712df48857ba55ad3bc6",
+    "uso": "só dAntigo"
+   },
+   "clausulasOraculo": {
+    "arquivo": "tela-f/clausulas-oraculo.json",
+    "sha256": "fb97d983adea02d8b8627405fb802e2f60ccf5bff9cdb289c53cac403fdc85ca",
+    "uso": "registro (d) e (c)"
+   },
+   "baseServida": {
+    "validador": "congelado-3.7.12",
+    "commit": "816f4bae41f4486b7055f0ac265167e87ce0d5e5",
+    "ruleFiles": {
+     "normalized/rules.jsonl": "ca8f428a52063ac8c208cca96432a40c84af8e75b4742744367a47717f9f28b8",
+     "normalized/carried-over.jsonl": "16e0a764e4a0f05b3f116df83f1400598a95173f5dec34f775c0a9b843cade19"
+    },
+    "camposLidos": [
+     "id",
+     "source.corpusFile",
+     "source.charRange"
+    ]
    },
    "base": {
     "arquivo": "ds-rules/govbr-ds-3.7.0-corpus/normalizacao/rules.jsonl",
@@ -80,12 +99,12 @@
    "pnipMock": "F:/Dev Nath/TCC/.tmp-eval/pnip-mock-f, ramo tela-f @ 3d02f68 (só leitura)"
   },
   "resolucaoDosIdsDasReferencias": {
-   "naBase": 127,
+   "naBase": 176,
    "mapaNovos": 7,
-   "mapaTexto": 46,
+   "mapaTexto": 36,
    "foraDeFormatoIgnorados": 236,
-   "naoResolvidos": 39,
-   "idsDaBaseUsados": 67
+   "naoResolvidos": 0,
+   "idsDaBaseUsados": 87
   },
   "sobreviventesPorNivelDepoisDeCadaFiltro": {
    "facil": {
@@ -94,8 +113,12 @@
     "a": 4,
     "b": 4,
     "c": 3,
-    "d": 2,
-    "e": 2
+    "e": 3,
+    "dRegistro": {
+     "comId": 3,
+     "semIdMapeado": 0
+    },
+    "dAntigo": 2
    },
    "medio": {
     "candidatos": 6,
@@ -103,8 +126,12 @@
     "a": 5,
     "b": 5,
     "c": 5,
-    "d": 1,
-    "e": 1
+    "e": 5,
+    "dRegistro": {
+     "comId": 5,
+     "semIdMapeado": 0
+    },
+    "dAntigo": 1
    },
    "dificil": {
     "candidatos": 6,
@@ -112,8 +139,12 @@
     "a": 4,
     "b": 4,
     "c": 4,
-    "d": 1,
-    "e": 1
+    "e": 4,
+    "dRegistro": {
+     "comId": 3,
+     "semIdMapeado": 1
+    },
+    "dAntigo": 1
    },
    "muito-dificil": {
     "candidatos": 6,
@@ -121,8 +152,12 @@
     "a": 4,
     "b": 4,
     "c": 4,
-    "d": 1,
-    "e": 1
+    "e": 4,
+    "dRegistro": {
+     "comId": 2,
+     "semIdMapeado": 2
+    },
+    "dAntigo": 1
    }
   }
  },
@@ -154,14 +189,16 @@
     },
     "c": {
      "passa": true,
-     "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
+     "razao": "nenhum dos 2 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
     },
     "d": {
-     "passa": true,
-     "razao": "id(s) citável(is) na base literal: govbr-3.7.0-component-table-bc0d039ca6cc",
+     "registro": true,
      "ids": [
-      "govbr-3.7.0-component-table-bc0d039ca6cc"
-     ]
+      "govbr-3.7.0-component-table-bc0d039ca6cc",
+      "govbr-3.7.0-component-table-4aac83c034bd"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-table-bc0d039ca6cc, govbr-3.7.0-component-table-4aac83c034bd"
     },
     "e": {
      "passa": true,
@@ -171,6 +208,13 @@
      ],
      "classe": "ds"
     }
+   },
+   "dAntigo": {
+    "passa": true,
+    "ids": [
+     "govbr-3.7.0-component-table-bc0d039ca6cc"
+    ],
+    "razao": "id(s) na base literal da normalização: govbr-3.7.0-component-table-bc0d039ca6cc"
    },
    "sobrevive": true
   },
@@ -191,12 +235,15 @@
     },
     "c": {
      "passa": true,
-     "razao": "nenhum id ligado (ver d): nada a comparar"
+     "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
     },
     "d": {
-     "passa": false,
-     "razao": "trecho localizado no corpus (componentes/input__designer.md), mas nenhum id da base literal tem faixa sobreposta a ele",
-     "ids": []
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-input-2b3b4e282965"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-input-2b3b4e282965"
     },
     "e": {
      "passa": true,
@@ -207,8 +254,12 @@
      "classe": "ds"
     }
    },
-   "sobrevive": false,
-   "saiEm": "d"
+   "dAntigo": {
+    "passa": false,
+    "ids": [],
+    "razao": "regra antiga (exigir id na base literal da normalização): nenhum id com faixa sobreposta ao trecho"
+   },
+   "sobrevive": true
   },
   {
    "id": "F-facil-4",
@@ -230,12 +281,13 @@
      "razao": "id usado em referência: govbr-3.7.0-component-button-81f5e26ec0ef (A2:U-06)"
     },
     "d": {
-     "passa": true,
-     "razao": "id(s) citável(is) na base literal: govbr-3.7.0-component-button-81f5e26ec0ef, govbr-3.7.0-component-button-b1c0168342fb",
+     "registro": true,
      "ids": [
       "govbr-3.7.0-component-button-81f5e26ec0ef",
       "govbr-3.7.0-component-button-b1c0168342fb"
-     ]
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-button-81f5e26ec0ef, govbr-3.7.0-component-button-b1c0168342fb"
     },
     "e": {
      "passa": true,
@@ -245,6 +297,14 @@
      ],
      "classe": "ds"
     }
+   },
+   "dAntigo": {
+    "passa": true,
+    "ids": [
+     "govbr-3.7.0-component-button-81f5e26ec0ef",
+     "govbr-3.7.0-component-button-b1c0168342fb"
+    ],
+    "razao": "id(s) na base literal da normalização: govbr-3.7.0-component-button-81f5e26ec0ef, govbr-3.7.0-component-button-b1c0168342fb"
    },
    "sobrevive": false,
    "saiEm": "c"
@@ -279,11 +339,12 @@
      "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
     },
     "d": {
-     "passa": true,
-     "razao": "id(s) citável(is) na base literal: govbr-3.7.0-component-button-0cfc7ea7ab46",
+     "registro": true,
      "ids": [
       "govbr-3.7.0-component-button-0cfc7ea7ab46"
-     ]
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-button-0cfc7ea7ab46"
     },
     "e": {
      "passa": true,
@@ -293,6 +354,13 @@
      ],
      "classe": "ds"
     }
+   },
+   "dAntigo": {
+    "passa": true,
+    "ids": [
+     "govbr-3.7.0-component-button-0cfc7ea7ab46"
+    ],
+    "razao": "id(s) na base literal da normalização: govbr-3.7.0-component-button-0cfc7ea7ab46"
    },
    "sobrevive": true
   },
@@ -323,12 +391,15 @@
     },
     "c": {
      "passa": true,
-     "razao": "nenhum id ligado (ver d): nada a comparar"
+     "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
     },
     "d": {
-     "passa": false,
-     "razao": "trecho localizado no corpus (componentes/button__designer.md), mas nenhum id da base literal tem faixa sobreposta a ele",
-     "ids": []
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-button-4e73723a0df8"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-button-4e73723a0df8"
     },
     "e": {
      "passa": true,
@@ -339,8 +410,12 @@
      "classe": "ds"
     }
    },
-   "sobrevive": false,
-   "saiEm": "d"
+   "dAntigo": {
+    "passa": false,
+    "ids": [],
+    "razao": "regra antiga (exigir id na base literal da normalização): nenhum id com faixa sobreposta ao trecho"
+   },
+   "sobrevive": true
   },
   {
    "id": "F-medio-3",
@@ -359,12 +434,15 @@
     },
     "c": {
      "passa": true,
-     "razao": "nenhum id ligado (ver d): nada a comparar"
+     "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
     },
     "d": {
-     "passa": false,
-     "razao": "trecho localizado no corpus (componentes/tag__designer.md), mas nenhum id da base literal tem faixa sobreposta a ele",
-     "ids": []
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-tag-6e456d98e420"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-tag-6e456d98e420"
     },
     "e": {
      "passa": true,
@@ -375,8 +453,12 @@
      "classe": "ds"
     }
    },
-   "sobrevive": false,
-   "saiEm": "d"
+   "dAntigo": {
+    "passa": false,
+    "ids": [],
+    "razao": "regra antiga (exigir id na base literal da normalização): nenhum id com faixa sobreposta ao trecho"
+   },
+   "sobrevive": true
   },
   {
    "id": "F-medio-4",
@@ -395,12 +477,15 @@
     },
     "c": {
      "passa": true,
-     "razao": "nenhum id ligado (ver d): nada a comparar"
+     "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
     },
     "d": {
-     "passa": false,
-     "razao": "trecho localizado no corpus (componentes/table__designer.md), mas nenhum id da base literal tem faixa sobreposta a ele",
-     "ids": []
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-table-559426cdec19"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-table-559426cdec19"
     },
     "e": {
      "passa": true,
@@ -411,8 +496,12 @@
      "classe": "ds"
     }
    },
-   "sobrevive": false,
-   "saiEm": "d"
+   "dAntigo": {
+    "passa": false,
+    "ids": [],
+    "razao": "regra antiga (exigir id na base literal da normalização): nenhum id com faixa sobreposta ao trecho"
+   },
+   "sobrevive": true
   },
   {
    "id": "F-medio-5",
@@ -434,11 +523,12 @@
      "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
     },
     "d": {
-     "passa": true,
-     "razao": "id(s) citável(is) na base literal: govbr-3.7.0-component-pagination-68ef5027b4e7",
+     "registro": true,
      "ids": [
       "govbr-3.7.0-component-pagination-68ef5027b4e7"
-     ]
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-pagination-68ef5027b4e7"
     },
     "e": {
      "passa": true,
@@ -448,6 +538,13 @@
      ],
      "classe": "ds"
     }
+   },
+   "dAntigo": {
+    "passa": true,
+    "ids": [
+     "govbr-3.7.0-component-pagination-68ef5027b4e7"
+    ],
+    "razao": "id(s) na base literal da normalização: govbr-3.7.0-component-pagination-68ef5027b4e7"
    },
    "sobrevive": true
   },
@@ -468,12 +565,15 @@
     },
     "c": {
      "passa": true,
-     "razao": "nenhum id ligado (ver d): nada a comparar"
+     "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
     },
     "d": {
-     "passa": false,
-     "razao": "trecho localizado no corpus (componentes/pagination__designer.md), mas nenhum id da base literal tem faixa sobreposta a ele",
-     "ids": []
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-pagination-fdb0b4e4e6b3"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-pagination-fdb0b4e4e6b3"
     },
     "e": {
      "passa": true,
@@ -484,8 +584,12 @@
      "classe": "ds"
     }
    },
-   "sobrevive": false,
-   "saiEm": "d"
+   "dAntigo": {
+    "passa": false,
+    "ids": [],
+    "razao": "regra antiga (exigir id na base literal da normalização): nenhum id com faixa sobreposta ao trecho"
+   },
+   "sobrevive": true
   },
   {
    "id": "F-dificil-1",
@@ -517,11 +621,12 @@
      "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
     },
     "d": {
-     "passa": true,
-     "razao": "id(s) citável(is) na base literal: govbr-3.7.0-component-avatar-723660559374",
+     "registro": true,
      "ids": [
       "govbr-3.7.0-component-avatar-723660559374"
-     ]
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-avatar-723660559374"
     },
     "e": {
      "passa": true,
@@ -531,6 +636,13 @@
      ],
      "classe": "ds"
     }
+   },
+   "dAntigo": {
+    "passa": true,
+    "ids": [
+     "govbr-3.7.0-component-avatar-723660559374"
+    ],
+    "razao": "id(s) na base literal da normalização: govbr-3.7.0-component-avatar-723660559374"
    },
    "sobrevive": true
   },
@@ -551,12 +663,15 @@
     },
     "c": {
      "passa": true,
-     "razao": "nenhum id ligado (ver d): nada a comparar"
+     "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
     },
     "d": {
-     "passa": false,
-     "razao": "trecho localizado no corpus (componentes/button__designer.md), mas nenhum id da base literal tem faixa sobreposta a ele",
-     "ids": []
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-button-71d4266a8572"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-button-71d4266a8572"
     },
     "e": {
      "passa": true,
@@ -567,8 +682,12 @@
      "classe": "ds"
     }
    },
-   "sobrevive": false,
-   "saiEm": "d"
+   "dAntigo": {
+    "passa": false,
+    "ids": [],
+    "razao": "regra antiga (exigir id na base literal da normalização): nenhum id com faixa sobreposta ao trecho"
+   },
+   "sobrevive": true
   },
   {
    "id": "F-dificil-4",
@@ -587,12 +706,15 @@
     },
     "c": {
      "passa": true,
-     "razao": "nenhum id ligado (ver d): nada a comparar"
+     "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
     },
     "d": {
-     "passa": false,
-     "razao": "trecho localizado no corpus (componentes/table__designer.md), mas nenhum id da base literal tem faixa sobreposta a ele",
-     "ids": []
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-table-d08c9e4951e5"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-table-d08c9e4951e5"
     },
     "e": {
      "passa": true,
@@ -603,8 +725,12 @@
      "classe": "ds"
     }
    },
-   "sobrevive": false,
-   "saiEm": "d"
+   "dAntigo": {
+    "passa": false,
+    "ids": [],
+    "razao": "regra antiga (exigir id na base literal da normalização): nenhum id com faixa sobreposta ao trecho"
+   },
+   "sobrevive": true
   },
   {
    "id": "F-dificil-5",
@@ -623,12 +749,17 @@
     },
     "c": {
      "passa": true,
-     "razao": "nenhum id ligado (ver d): nada a comparar"
+     "razao": "sem id: nenhum id das referências tem faixa sobreposta ao trecho em fundamentos-visuais/estados.md, nenhuma spec das referências traz o trecho; não pode ser a mesma regra"
     },
     "d": {
-     "passa": false,
-     "razao": "trecho localizado no corpus (fundamentos-visuais/estados.md), mas nenhum id da base literal tem faixa sobreposta a ele",
-     "ids": []
+     "registro": true,
+     "ids": [],
+     "semIdMapeado": true,
+     "clausula": {
+      "arquivo": "fundamentos-visuais/estados.md",
+      "trecho": "| background/foreground (Sobre um fundo Claro)  | color    | `--blue-warm-vivid-70` |"
+     },
+     "razao": "semIdMapeado: trecho literal localizado em fundamentos-visuais/estados.md, sem registro da base servida ligado a ele"
     },
     "e": {
      "passa": true,
@@ -639,8 +770,12 @@
      "classe": "ds"
     }
    },
-   "sobrevive": false,
-   "saiEm": "d"
+   "dAntigo": {
+    "passa": false,
+    "ids": [],
+    "razao": "regra antiga (exigir id na base literal da normalização): nenhum id com faixa sobreposta ao trecho"
+   },
+   "sobrevive": true
   },
   {
    "id": "F-dificil-6",
@@ -672,11 +807,12 @@
      "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
     },
     "d": {
-     "passa": true,
-     "razao": "id(s) citável(is) na base literal: govbr-3.7.0-component-select-ba2187bb7906",
+     "registro": true,
      "ids": [
       "govbr-3.7.0-component-select-ba2187bb7906"
-     ]
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-select-ba2187bb7906"
     },
     "e": {
      "passa": true,
@@ -686,6 +822,13 @@
      ],
      "classe": "ds"
     }
+   },
+   "dAntigo": {
+    "passa": true,
+    "ids": [
+     "govbr-3.7.0-component-select-ba2187bb7906"
+    ],
+    "razao": "id(s) na base literal da normalização: govbr-3.7.0-component-select-ba2187bb7906"
    },
    "sobrevive": true
   },
@@ -706,12 +849,15 @@
     },
     "c": {
      "passa": true,
-     "razao": "nenhum id ligado (ver d): nada a comparar"
+     "razao": "nenhum dos 1 id(s) ligado(s) aparece nas referências de A, A2, B, D, E"
     },
     "d": {
-     "passa": false,
-     "razao": "trecho localizado no corpus (componentes/tag__designer.md), mas nenhum id da base literal tem faixa sobreposta a ele",
-     "ids": []
+     "registro": true,
+     "ids": [
+      "govbr-3.7.0-component-tag-07d13ad49df0"
+     ],
+     "semIdMapeado": false,
+     "razao": "id(s) na base servida pelo oráculo congelado: govbr-3.7.0-component-tag-07d13ad49df0"
     },
     "e": {
      "passa": true,
@@ -722,8 +868,12 @@
      "classe": "ds"
     }
    },
-   "sobrevive": false,
-   "saiEm": "d"
+   "dAntigo": {
+    "passa": false,
+    "ids": [],
+    "razao": "regra antiga (exigir id na base literal da normalização): nenhum id com faixa sobreposta ao trecho"
+   },
+   "sobrevive": true
   },
   {
    "id": "F-muito-dificil-3",
@@ -752,12 +902,17 @@
     },
     "c": {
      "passa": true,
-     "razao": "nenhum id ligado (ver d): nada a comparar"
+     "razao": "sem id: nenhum id das referências tem faixa sobreposta ao trecho em fundamentos-visuais/estados.md, nenhuma spec das referências traz o trecho; não pode ser a mesma regra"
     },
     "d": {
-     "passa": false,
-     "razao": "trecho localizado no corpus (fundamentos-visuais/estados.md), mas nenhum id da base literal tem faixa sobreposta a ele",
-     "ids": []
+     "registro": true,
+     "ids": [],
+     "semIdMapeado": true,
+     "clausula": {
+      "arquivo": "fundamentos-visuais/estados.md",
+      "trecho": "| background/foreground | color    | `--blue-warm-vivid-50` |"
+     },
+     "razao": "semIdMapeado: trecho literal localizado em fundamentos-visuais/estados.md, sem registro da base servida ligado a ele"
     },
     "e": {
      "passa": true,
@@ -768,8 +923,12 @@
      "classe": "ds"
     }
    },
-   "sobrevive": false,
-   "saiEm": "d"
+   "dAntigo": {
+    "passa": false,
+    "ids": [],
+    "razao": "regra antiga (exigir id na base literal da normalização): nenhum id com faixa sobreposta ao trecho"
+   },
+   "sobrevive": true
   },
   {
    "id": "F-muito-dificil-5",
@@ -788,12 +947,17 @@
     },
     "c": {
      "passa": true,
-     "razao": "nenhum id ligado (ver d): nada a comparar"
+     "razao": "sem id: nenhum id das referências tem faixa sobreposta ao trecho em fundamentos-visuais/estados.md, nenhuma spec das referências traz o trecho; não pode ser a mesma regra"
     },
     "d": {
-     "passa": false,
-     "razao": "trecho localizado no corpus (fundamentos-visuais/estados.md), mas nenhum id da base literal tem faixa sobreposta a ele",
-     "ids": []
+     "registro": true,
+     "ids": [],
+     "semIdMapeado": true,
+     "clausula": {
+      "arquivo": "fundamentos-visuais/estados.md",
+      "trecho": "| border (Sobre um fundo Claro)  | color    | `--gold-vivid-40` | […] | border  | style    | `dashed`               |"
+     },
+     "razao": "semIdMapeado: trecho literal localizado em fundamentos-visuais/estados.md, sem registro da base servida ligado a ele"
     },
     "e": {
      "passa": true,
@@ -804,8 +968,12 @@
      "classe": "ds"
     }
    },
-   "sobrevive": false,
-   "saiEm": "d"
+   "dAntigo": {
+    "passa": false,
+    "ids": [],
+    "razao": "regra antiga (exigir id na base literal da normalização): nenhum id com faixa sobreposta ao trecho"
+   },
+   "sobrevive": true
   },
   {
    "id": "F-muito-dificil-6",

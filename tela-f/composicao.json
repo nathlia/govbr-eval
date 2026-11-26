@@ -1,0 +1,319 @@
+{
+ "_meta": {
+  "regra": "adendo § 4 item 4 (3 primeiros sobreviventes por nível, na ordem do seletor; o resto é reserva, na mesma ordem); ids F-01… na ordem facil, medio, dificil, muito-dificil",
+  "filtros": {
+   "arquivo": "tela-f/filtros.json",
+   "sha256": "f0766081cfbe8a353ec275db32dba5e57578e4a8b0cb7402746e628dae9dcb54"
+  },
+  "contagens": {
+   "facil": {
+    "semeadas": 3,
+    "semeadasComId": 3,
+    "semeadasSemIdMapeado": 0,
+    "reserva": 0
+   },
+   "medio": {
+    "semeadas": 3,
+    "semeadasComId": 3,
+    "semeadasSemIdMapeado": 0,
+    "reserva": 2
+   },
+   "dificil": {
+    "semeadas": 3,
+    "semeadasComId": 3,
+    "semeadasSemIdMapeado": 0,
+    "reserva": 1
+   },
+   "muito-dificil": {
+    "semeadas": 3,
+    "semeadasComId": 2,
+    "semeadasSemIdMapeado": 1,
+    "reserva": 1
+   }
+  },
+  "recomposicaoDoPortao": {
+   "regra": "adendo § 5: sai o 3º fácil e o 3º médio da ordem do seletor; entram o 4º difícil e o 4º muito difícil (composição 2/2/4/4)",
+   "sai": [
+    "F-03",
+    "F-06"
+   ],
+   "entra": [
+    "R-03",
+    "R-04"
+   ],
+   "possivel": true
+  },
+  "reposicao": "adendo § 4 item 5: semeada que não pega sai e é reposta pela próxima da reserva do mesmo nível (posicaoNaReservaDoNivel crescente)"
+ },
+ "semeadas": [
+  {
+   "id": "F-01",
+   "nivel": "facil",
+   "candidato": "F-facil-2",
+   "ordemDoSeletor": 2,
+   "rules": [
+    "govbr-3.7.0-component-table-bc0d039ca6cc",
+    "govbr-3.7.0-component-table-4aac83c034bd"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "componente"
+   ],
+   "classe": "ds",
+   "estado": "inicial",
+   "risco": null
+  },
+  {
+   "id": "F-02",
+   "nivel": "facil",
+   "candidato": "F-facil-3",
+   "ordemDoSeletor": 3,
+   "rules": [
+    "govbr-3.7.0-component-input-2b3b4e282965"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "estrutura"
+   ],
+   "classe": "ds",
+   "estado": "inicial",
+   "risco": null
+  },
+  {
+   "id": "F-03",
+   "nivel": "facil",
+   "candidato": "F-facil-6",
+   "ordemDoSeletor": 6,
+   "rules": [
+    "govbr-3.7.0-component-button-0cfc7ea7ab46"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "estrutura"
+   ],
+   "classe": "ds",
+   "estado": "inicial",
+   "risco": null
+  },
+  {
+   "id": "F-04",
+   "nivel": "medio",
+   "candidato": "F-medio-2",
+   "ordemDoSeletor": 2,
+   "rules": [
+    "govbr-3.7.0-component-button-4e73723a0df8"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "inicial",
+   "risco": null
+  },
+  {
+   "id": "F-05",
+   "nivel": "medio",
+   "candidato": "F-medio-3",
+   "ordemDoSeletor": 3,
+   "rules": [
+    "govbr-3.7.0-component-tag-6e456d98e420"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "inicial",
+   "risco": null
+  },
+  {
+   "id": "F-06",
+   "nivel": "medio",
+   "candidato": "F-medio-4",
+   "ordemDoSeletor": 4,
+   "rules": [
+    "govbr-3.7.0-component-table-559426cdec19"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "inicial",
+   "risco": null
+  },
+  {
+   "id": "F-07",
+   "nivel": "dificil",
+   "candidato": "F-dificil-2",
+   "ordemDoSeletor": 2,
+   "rules": [
+    "govbr-3.7.0-component-avatar-723660559374"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "componente"
+   ],
+   "classe": "ds",
+   "estado": "inicial",
+   "risco": null
+  },
+  {
+   "id": "F-08",
+   "nivel": "dificil",
+   "candidato": "F-dificil-3",
+   "ordemDoSeletor": 3,
+   "rules": [
+    "govbr-3.7.0-component-button-71d4266a8572"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "tipografia"
+   ],
+   "classe": "ds",
+   "estado": "inicial (desabilitado, mas visível)",
+   "risco": "depende de text-transform ser herdado para dentro do shadow root (funcionou no navegador)."
+  },
+  {
+   "id": "F-09",
+   "nivel": "dificil",
+   "candidato": "F-dificil-4",
+   "ordemDoSeletor": 4,
+   "rules": [
+    "govbr-3.7.0-component-table-d08c9e4951e5"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "inicial",
+   "risco": null
+  },
+  {
+   "id": "F-10",
+   "nivel": "muito-dificil",
+   "candidato": "F-muito-dificil-1",
+   "ordemDoSeletor": 1,
+   "rules": [
+    "govbr-3.7.0-component-select-ba2187bb7906"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "clicar em qualquer tag de filtro (ex.: \"Tipo de processo\") para abrir a lista de opções",
+   "risco": null
+  },
+  {
+   "id": "F-11",
+   "nivel": "muito-dificil",
+   "candidato": "F-muito-dificil-2",
+   "ordemDoSeletor": 2,
+   "rules": [
+    "govbr-3.7.0-component-tag-07d13ad49df0"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "componente"
+   ],
+   "classe": "ds",
+   "estado": "abrir uma tag de filtro e escolher uma opção (ex.: Tipo de processo → \"Certificação Higiênico-Sanitária\")",
+   "risco": null
+  },
+  {
+   "id": "F-12",
+   "nivel": "muito-dificil",
+   "candidato": "F-muito-dificil-4",
+   "ordemDoSeletor": 4,
+   "rules": [],
+   "semIdMapeado": true,
+   "clausula": {
+    "arquivo": "fundamentos-visuais/estados.md",
+    "trecho": "| background/foreground | color    | `--blue-warm-vivid-50` |"
+   },
+   "categories": [
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "clicar no input \"Exibir\" da paginação para abrir a lista (10/25/50/100)",
+   "risco": "estilo global alcançando o componente filho; regra global também atinge o select \"Página\"."
+  }
+ ],
+ "reserva": [
+  {
+   "id": "R-01",
+   "posicaoNaReservaDoNivel": 1,
+   "nivel": "medio",
+   "candidato": "F-medio-5",
+   "ordemDoSeletor": 5,
+   "rules": [
+    "govbr-3.7.0-component-pagination-68ef5027b4e7"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "inicial",
+   "risco": "depende de estilo global alcançar o input do componente filho br-select-pnip."
+  },
+  {
+   "id": "R-02",
+   "posicaoNaReservaDoNivel": 2,
+   "nivel": "medio",
+   "candidato": "F-medio-6",
+   "ordemDoSeletor": 6,
+   "rules": [
+    "govbr-3.7.0-component-pagination-fdb0b4e4e6b3"
+   ],
+   "semIdMapeado": false,
+   "categories": [
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "inicial",
+   "risco": null
+  },
+  {
+   "id": "R-03",
+   "posicaoNaReservaDoNivel": 1,
+   "nivel": "dificil",
+   "candidato": "F-dificil-5",
+   "ordemDoSeletor": 5,
+   "rules": [],
+   "semIdMapeado": true,
+   "clausula": {
+    "arquivo": "fundamentos-visuais/estados.md",
+    "trecho": "| background/foreground (Sobre um fundo Claro)  | color    | `--blue-warm-vivid-70` |"
+   },
+   "categories": [
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "inicial",
+   "risco": null
+  },
+  {
+   "id": "R-04",
+   "posicaoNaReservaDoNivel": 1,
+   "nivel": "muito-dificil",
+   "candidato": "F-muito-dificil-5",
+   "ordemDoSeletor": 5,
+   "rules": [],
+   "semIdMapeado": true,
+   "clausula": {
+    "arquivo": "fundamentos-visuais/estados.md",
+    "trecho": "| border (Sobre um fundo Claro)  | color    | `--gold-vivid-40` | […] | border  | style    | `dashed`               |"
+   },
+   "categories": [
+    "token"
+   ],
+   "classe": "ds",
+   "estado": "navegar por teclado (Tab) até um item de aba",
+   "risco": "depende de custom properties atravessarem o shadow root de br-tab (funcionou no navegador)."
+  }
+ ]
+}

@@ -8,14 +8,19 @@
  *       candidato com `risco` do conferente fica, marcado;
  *   (b) sem coviolação com defeito natural da rota (ground-truth-processos-1.1.0.json: mesmo elemento E mesma
  *       propriedade/regra) nem com candidato semeado à frente dele na composição;
- *   (c) nenhum id ligado (filtro d) aparece em violations[].rules ou rulesLegado das referências de A, A2, B, D, E
- *       (ids fora da base literal resolvidos por normalizacao/mapa-ids.json: antigo → novos; antigo sem novos → texto
- *       antigo comparado com o trecho citado);
- *   (d) a cláusula citada tem id citável na base literal (tela-f/clausulas-base.json, de mapear-clausulas.mjs);
+ *   (c) nenhum id ligado (registro d) aparece em violations[].rules ou rulesLegado das referências de A, A2, B, D, E
+ *       (ids fora da base servida resolvidos por normalizacao/mapa-ids.json: antigo → novos; antigo sem novos → texto
+ *       antigo comparado com o trecho citado). Candidato sem id: comparado pela fonte e pelo texto — reprova se algum id
+ *       das referências tem, na base servida, faixa no mesmo arquivo sobreposta ao trecho citado, ou se alguma spec das
+ *       referências traz o trecho citado no próprio texto; senão não pode ser a mesma regra e passa;
+ *   (d) REGISTRO, NÃO FILTRO (adendo § 4 item 3, revisto em 26/11): ids da cláusula na base que o oráculo congelado
+ *       serve (tela-f/clausulas-oraculo.json, de mapear-clausulas-oraculo.mjs) ou `semIdMapeado: true`. A regra antiga
+ *       (exigir id na base literal da normalização, tela-f/clausulas-base.json) fica gravada como `dAntigo`;
  *   (e) as `categories` que a spec levaria saem classe `ds` por classeDaSpec (scripts/reanalise-nat74/e14-deteccao.ts).
  * Juízos de (a), (b) e (e) estão escritos abaixo, um por candidato, com uma linha de razão.
  * Uso: node tela-f/filtros.mjs → tela-f/filtros.json
  */
+import { execFileSync } from "child_process";
 import { createHash } from "crypto";
 import { readFileSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
@@ -39,7 +44,16 @@ const candBuf = lerBuf(join(AQUI, "selecao/candidatos.json"));
 const verBuf = lerBuf(join(AQUI, "conferencia/veredictos.json"));
 const cand = JSON.parse(candBuf);
 const ver = new Map(JSON.parse(verBuf).map(v => [v.id, v]));
-const clausulas = lerJson(join(AQUI, "clausulas-base.json"));
+const clausulas = lerJson(join(AQUI, "clausulas-base.json")); // regra antiga (dAntigo)
+const oraculo = lerJson(join(AQUI, "clausulas-oraculo.json")); // registro (d)
+// base servida pelo oráculo congelado: só id, source.corpusFile, source.charRange (para resolver ids das referências)
+const VAL = oraculo._meta.validador;
+const servida = new Map();
+for (const f of Object.keys(VAL.ruleFiles)) {
+  const buf = execFileSync("git", ["-C", VAL.dir, "show", `${VAL.tag}:data/knowledge/versions/${VAL.baseAtiva}/${f}`], { maxBuffer: 1 << 30 });
+  if (sha(buf) !== VAL.ruleFiles[f]) throw new Error(`${f}: sha256 mudou desde clausulas-oraculo.json`);
+  for (const l of buf.toString("utf8").split("\n").filter(Boolean)) { const r = JSON.parse(l); servida.set(r.id, { arquivo: r.source?.corpusFile ?? null, faixa: r.source?.charRange ?? null }); }
+}
 
 // ---------- juízos (a), (b), (e) ----------
 const A = { // construtível: fonte conferido no worktree .tmp-eval/pnip-mock-f (ramo tela-f, 3d02f68)
@@ -115,17 +129,19 @@ const mapa = new Map(JSON.parse(mapaBuf).mapa.map(m => [m.antigo, { novos: m.nov
 const usados = new Map(); // id da base → [tela:spec]
 const antigosSemNovos = []; // { id, texto, onde }
 const lidas = [];
+const textosDasSpecs = []; // { onde, texto } — para candidato sem id (comparação pelo texto)
 const resolucao = { naBase: 0, mapaNovos: 0, mapaTexto: 0, foraDeFormatoIgnorados: 0, naoResolvidos: [] };
 for (const [tela, arq] of REFS) {
   const buf = lerBuf(join(RAIZ, arq));
   const ref = JSON.parse(buf);
   lidas.push({ tela, arquivo: arq, sha256: sha(buf), versao: ref._meta?.version ?? null });
   for (const v of ref.violations ?? []) {
+    textosDasSpecs.push({ onde: `${tela}:${v.id}`, texto: limpa(JSON.stringify(v)) });
     for (const r of [...(v.rules ?? []), ...(v.rulesLegado ?? [])]) {
       if (typeof r !== "string" || !r.startsWith("govbr-")) { resolucao.foraDeFormatoIgnorados++; continue; }
       const onde = `${tela}:${v.id}`;
       const marca = id => usados.set(id, [...new Set([...(usados.get(id) ?? []), onde])]);
-      if (naBase.has(r)) { resolucao.naBase++; marca(r); continue; }
+      if (naBase.has(r) || servida.has(r)) { resolucao.naBase++; marca(r); continue; }
       const m = mapa.get(r);
       if (m?.novos.length) { resolucao.mapaNovos++; m.novos.forEach(marca); continue; }
       if (m) { resolucao.mapaTexto++; antigosSemNovos.push({ id: r, texto: m.texto, onde }); continue; }
@@ -142,21 +158,33 @@ for (const c of ordenados) {
   const v = ver.get(c.id);
   const l = { id: c.id, nivel: c.nivel, ordem: c.ordem, conferente: v.aprovado ? "aprovado" : "reprovado", risco: v.risco ?? null };
   if (!v.aprovado) { l.motivoConferente = v.motivoReprovacao; l.sobrevive = false; l.saiEm = "conferente"; linhas.push(l); continue; }
-  const cl = clausulas.porCandidato[c.id];
-  const ids = [...new Set(cl.partes.flatMap(p => p.ids ?? []).map(x => x.id))];
+  const cl = clausulas.porCandidato[c.id]; // regra antiga
+  const co = oraculo.porCandidato[c.id];   // registro (d)
+  const idsAntigos = [...new Set(cl.partes.flatMap(p => p.ids ?? []).map(x => x.id))];
+  const ids = co.ids;
   const [aOk, aR] = A[c.id], [bOk, bR] = B[c.id], [cats, eR] = E[c.id];
   // (c)
-  const expostosPorId = ids.filter(i => usados.has(i)).map(i => ({ id: i, em: usados.get(i) }));
-  const partes = cl.partes.map(p => limpa(p.parte));
-  const porTexto = antigosSemNovos.filter(a => { const t = limpa(a.texto); return t.length >= 15 && partes.some(p => p.includes(t) || t.includes(p)); });
-  const cOk = expostosPorId.length === 0 && porTexto.length === 0;
-  const cR = ids.length === 0 ? "nenhum id ligado (ver d): nada a comparar"
-    : cOk ? `nenhum dos ${ids.length} id(s) ligado(s) aparece nas referências de A, A2, B, D, E`
-    : `id usado em referência: ${expostosPorId.map(e => `${e.id} (${e.em.join(", ")})`).join("; ")}${porTexto.length ? `; id antigo por texto: ${porTexto.map(a => a.id).join(", ")}` : ""}`;
-  // (d)
-  const dOk = ids.length > 0;
-  const dR = dOk ? `id(s) citável(is) na base literal: ${ids.join(", ")}`
-    : `trecho localizado no corpus (${cl.arquivo}), mas nenhum id da base literal tem faixa sobreposta a ele`;
+  const partesLimpas = co.partes.map(p => limpa(p.parte));
+  const porTexto = antigosSemNovos.filter(a => { const t = limpa(a.texto); return t.length >= 15 && partesLimpas.some(p => p.includes(t) || t.includes(p)); });
+  let cOk, cR;
+  if (ids.length) {
+    const expostosPorId = ids.filter(i => usados.has(i)).map(i => ({ id: i, em: usados.get(i) }));
+    cOk = expostosPorId.length === 0 && porTexto.length === 0;
+    cR = cOk ? `nenhum dos ${ids.length} id(s) ligado(s) aparece nas referências de A, A2, B, D, E`
+      : `id usado em referência: ${expostosPorId.map(e => `${e.id} (${e.em.join(", ")})`).join("; ")}${porTexto.length ? `; id antigo por texto: ${porTexto.map(a => a.id).join(", ")}` : ""}`;
+  } else {
+    // sem id: mesma fonte (id de referência com faixa sobreposta no mesmo arquivo) ou mesmo texto citado numa spec
+    const faixas = co.partes.filter(p => p.achada).map(p => p.faixaNoArquivo);
+    const mesmaFonte = [...usados.keys()].filter(id => { const r = servida.get(id); return r && r.arquivo === co.arquivo && Array.isArray(r.faixa) && faixas.some(f => r.faixa[0] < f[1] && r.faixa[1] > f[0]); });
+    const mesmoTexto = textosDasSpecs.filter(t => partesLimpas.some(p => p.length >= 15 && t.texto.includes(p))).map(t => t.onde);
+    cOk = mesmaFonte.length === 0 && mesmoTexto.length === 0 && porTexto.length === 0;
+    cR = cOk ? `sem id: nenhum id das referências tem faixa sobreposta ao trecho em ${co.arquivo}, nenhuma spec das referências traz o trecho; não pode ser a mesma regra`
+      : `sem id, mas coincide: ${[...mesmaFonte, ...mesmoTexto, ...porTexto.map(a => a.id)].join(", ")}`;
+  }
+  // (d) registro
+  const dR = ids.length ? `id(s) na base servida pelo oráculo congelado: ${ids.join(", ")}`
+    : `semIdMapeado: trecho literal localizado em ${co.arquivo}, sem registro da base servida ligado a ele`;
+  const dAntigoOk = idsAntigos.length > 0;
   // (e)
   const classe = classeDaSpec(cats);
   const eOk = classe === "ds";
@@ -164,10 +192,11 @@ for (const c of ordenados) {
     a: { passa: aOk, razao: aR },
     b: { passa: bOk, razao: bR },
     c: { passa: cOk, razao: cR },
-    d: { passa: dOk, razao: dR, ids },
+    d: { registro: true, ids, semIdMapeado: ids.length === 0, ...(ids.length ? {} : { clausula: { arquivo: co.arquivo, trecho: co.trechoLiteral } }), razao: dR },
     e: { passa: eOk, razao: `categories ${JSON.stringify(cats)} → classe ${classe}; ${eR}`, categories: cats, classe },
   };
-  const primeiro = ["a", "b", "c", "d", "e"].find(f => !l.filtros[f].passa);
+  l.dAntigo = { passa: dAntigoOk, ids: idsAntigos, razao: dAntigoOk ? `id(s) na base literal da normalização: ${idsAntigos.join(", ")}` : "regra antiga (exigir id na base literal da normalização): nenhum id com faixa sobreposta ao trecho" };
+  const primeiro = ["a", "b", "c", "e"].find(f => !l.filtros[f].passa);
   l.sobrevive = !primeiro;
   if (primeiro) l.saiEm = primeiro;
   linhas.push(l);
@@ -177,7 +206,11 @@ for (const n of NIVEIS) {
   const ln = linhas.filter(l => l.nivel === n);
   let vivos = ln.filter(l => l.conferente === "aprovado");
   const passo = { candidatos: ln.length, conferente: vivos.length };
-  for (const f of ["a", "b", "c", "d", "e"]) { vivos = vivos.filter(l => l.filtros[f].passa); passo[f] = vivos.length; }
+  for (const f of ["a", "b", "c", "e"]) { vivos = vivos.filter(l => l.filtros[f].passa); passo[f] = vivos.length; }
+  passo.dRegistro = { comId: vivos.filter(l => !l.filtros.d.semIdMapeado).length, semIdMapeado: vivos.filter(l => l.filtros.d.semIdMapeado).length };
+  let antigos = ln.filter(l => l.conferente === "aprovado");
+  for (const f of ["a", "b", "c"]) antigos = antigos.filter(l => l.filtros[f].passa);
+  passo.dAntigo = antigos.filter(l => l.dAntigo.passa).length;
   contagem[n] = passo;
 }
 const saida = {
@@ -186,7 +219,9 @@ const saida = {
     insumos: {
       candidatos: { arquivo: "tela-f/selecao/candidatos.json", sha256: sha(candBuf) },
       veredictos: { arquivo: "tela-f/conferencia/veredictos.json", sha256: sha(verBuf) },
-      clausulasBase: { arquivo: "tela-f/clausulas-base.json", sha256: sha(lerBuf(join(AQUI, "clausulas-base.json"))) },
+      clausulasBase: { arquivo: "tela-f/clausulas-base.json", sha256: sha(lerBuf(join(AQUI, "clausulas-base.json"))), uso: "só dAntigo" },
+      clausulasOraculo: { arquivo: "tela-f/clausulas-oraculo.json", sha256: sha(lerBuf(join(AQUI, "clausulas-oraculo.json"))), uso: "registro (d) e (c)" },
+      baseServida: { validador: VAL.tag, commit: VAL.commit, ruleFiles: VAL.ruleFiles, camposLidos: ["id", "source.corpusFile", "source.charRange"] },
       base: { arquivo: "ds-rules/govbr-ds-3.7.0-corpus/normalizacao/rules.jsonl", sha256: sha(baseBuf), camposLidos: ["id", "source.corpusFile", "source.charRange", "originalText"] },
       mapaIds: { arquivo: "ds-rules/govbr-ds-3.7.0-corpus/normalizacao/mapa-ids.json", sha256: sha(mapaBuf), camposLidos: ["antigo", "novos", "originalTextAntigo"] },
       referencias: lidas,

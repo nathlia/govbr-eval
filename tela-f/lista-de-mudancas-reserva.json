@@ -1,0 +1,85 @@
+{
+ "_meta": {
+  "para": "agente de construção da tela F (fase 1): substitutas, na ordem",
+  "fonte": "pnip-mock/src (worktree .tmp-eval/pnip-mock-f, ramo tela-f; manter o fim de linha que o arquivo já tem — hoje LF)",
+  "regra": "Cada entrada tem de passar na conferência dela (semeado × sem semente, sem oráculo e sem axe). Se não passar, a entrada sai e é reposta pela reserva (lista-de-mudancas-reserva.json): a primeira entrada ainda não usada, na ordem, cujo campo `podeSubstituir` contém o id que saiu."
+ },
+ "reserva": [
+  {
+   "id": "R-01",
+   "localizador": "govbr-custom-pagination: 1º div.pagination-per-page (rótulo \"Exibir\") › br-select-pnip input#total",
+   "estado": "inicial",
+   "mudanca": [
+    {
+     "arquivo": "src/app/utils/components/govbr-custom-pagination/govbr-custom-pagination.component.html",
+     "linha": "1º <div class=\"pagination-per-page\">",
+     "antes": "<div class=\"pagination-per-page\">   (o que contém label=\"Exibir\")",
+     "depois": "<div class=\"pagination-per-page pp-exibir\">   (se a classe pp-exibir já estiver lá, não repetir)"
+    },
+    {
+     "arquivo": "src/styles.css",
+     "linha": "fim do arquivo",
+     "antes": "(nada)",
+     "depois": ".pp-exibir input { border-color: var(--gray-40) !important; }"
+    }
+   ],
+   "conferencia": "Depois do build, no estado inicial, input#total tem border-color rgb(136, 136, 136) (largura 1px); input#page segue com borda transparente. No build sem semente os dois têm borda transparente.",
+   "podeSubstituir": [
+    "F-04",
+    "F-05",
+    "F-06"
+   ]
+  },
+  {
+   "id": "R-02",
+   "localizador": "govbr-custom-pagination div.pagination-information (\"1–9 de 9 itens\")",
+   "estado": "inicial",
+   "mudanca": {
+    "arquivo": "src/app/utils/components/govbr-custom-pagination/govbr-custom-pagination.component.html",
+    "linha": "div.pagination-information",
+    "antes": "<div class=\"pagination-information d-sm-flex\" aria-live=\"polite\">",
+    "depois": "<div class=\"pagination-information d-sm-flex\" aria-live=\"polite\" style=\"color: var(--blue-warm-vivid-70)\">"
+   },
+   "conferencia": "Depois do build, no estado inicial, o texto de div.pagination-information tem color rgb(19, 81, 180); os rótulos \"Exibir\" e \"Página\" seguem rgb(51, 51, 51). No build sem semente: rgb(51, 51, 51).",
+   "podeSubstituir": [
+    "F-04",
+    "F-05",
+    "F-06"
+   ]
+  },
+  {
+   "id": "R-03",
+   "localizador": "pnip-mpa-processos div.br-table tbody td a[role=\"button\"] (número do processo)",
+   "estado": "inicial",
+   "mudanca": {
+    "arquivo": "src/app/pages/portal-mpa/processos/processos.component.html",
+    "linha": 87,
+    "antes": "<a [style.cursor]=\"'pointer'\" role=\"button\" (click)=\"redirectDocumentos(p)\">{{p.numeroProcesso}}</a>",
+    "depois": "<a class=\"text-blue-vivid-60\" [style.cursor]=\"'pointer'\" role=\"button\" (click)=\"redirectDocumentos(p)\">{{p.numeroProcesso}}</a>"
+   },
+   "conferencia": "Depois do build, no estado inicial, os links do número do processo têm color rgb(0, 94, 162). No build sem semente: rgb(19, 81, 180).",
+   "podeSubstituir": [
+    "F-07",
+    "F-08",
+    "F-09"
+   ]
+  },
+  {
+   "id": "R-04",
+   "localizador": "pnip-mpa-processos br-tab → shadow: li.tab-item > button (itens de aba)",
+   "estado": "foco por teclado (Tab) num item de aba",
+   "mudanca": {
+    "arquivo": "src/app/pages/portal-mpa/processos/processos.component.html",
+    "linha": 13,
+    "antes": "<br-tab (onTabItemClick)=\"onTabItemClick($event)\">",
+    "depois": "<br-tab style=\"--focus-style: solid; --focus: var(--blue-warm-vivid-70); --focus-color: var(--blue-warm-vivid-70)\" (onTabItemClick)=\"onTabItemClick($event)\">"
+   },
+   "conferencia": "Depois do build, com foco de teclado num item de aba, o button interno tem outline rgb(19, 81, 180) solid 4px. No build sem semente, no mesmo estado: rgb(194, 133, 12) dashed 4px (offset −4px).",
+   "podeSubstituir": [
+    "F-10",
+    "F-11",
+    "F-12"
+   ]
+  }
+ ]
+}

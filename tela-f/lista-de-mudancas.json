@@ -1,0 +1,166 @@
+{
+ "_meta": {
+  "para": "agente de construção da tela F (fase 1)",
+  "fonte": "pnip-mock/src (worktree .tmp-eval/pnip-mock-f, ramo tela-f; manter o fim de linha que o arquivo já tem — hoje LF)",
+  "baseDeComparacao": "build sem semente da ala pnip-f (.tmp-eval/pnip-f-sem-semente; lista e694a39f…), não a pnip-d",
+  "regras": [
+   "Aplicar só as mudanças listadas, no fonte; nada por folha de estilo ou script por cima do build.",
+   "Cada entrada tem de passar na conferência dela (semeado × sem semente, sem oráculo e sem axe). Se não passar, a entrada sai e é reposta pela reserva (lista-de-mudancas-reserva.json): a primeira entrada ainda não usada, na ordem, cujo campo `podeSubstituir` contém o id que saiu.",
+   "Não mexer em src/mock/manipuladores/processos-mpa.ts; não rodar git checkout/stash/reset --hard/restore no worktree (fins de linha, fase 0 § 3)."
+  ]
+ },
+ "mudancas": [
+  {
+   "id": "F-01",
+   "localizador": "pnip-mpa-processos div.br-table table tbody tr > td que contém o nome do solicitante (5ª célula da linha na aba Tramitando)",
+   "estado": "inicial",
+   "mudanca": {
+    "arquivo": "src/app/pages/portal-mpa/processos/processos.component.html",
+    "linha": 90,
+    "antes": "<td>   (a célula imediatamente antes de {{p.solicitante}}, l. 90)",
+    "depois": "<td style=\"max-width:90px; white-space:nowrap; overflow:hidden\">"
+   },
+   "conferencia": "Depois do build, no estado inicial, as células do solicitante têm white-space = nowrap, overflow = hidden, text-overflow = clip e, em pelo menos uma, scrollWidth > clientWidth. No build sem semente: white-space = normal e scrollWidth == clientWidth em todas."
+  },
+  {
+   "id": "F-02",
+   "localizador": "pnip-search-table-utils div.br-input > button.br-button[aria-label=\"Buscar\"] (e [aria-label=\"Limpar\"], que aparece após digitar)",
+   "estado": "inicial",
+   "mudanca": {
+    "arquivo": "src/app/utils/components/search-table.utils.ts",
+    "linha": "19 e 28",
+    "antes": "[style.margin-top]=\"'-38px'\"   (nos dois botões)",
+    "depois": "[style.margin-top]=\"'-12px'\"   (nos dois botões)"
+   },
+   "conferencia": "Depois do build, no estado inicial, o centro vertical do botão Buscar fica cerca de 26–28 px abaixo do centro vertical do campo de busca (botão abaixo da borda inferior do campo). No build sem semente a diferença é ≤ 2 px."
+  },
+  {
+   "id": "F-03",
+   "localizador": "pnip-mpa-processos div.d-flex.justify-content-end (contêiner do botão Voltar, depois da paginação)",
+   "estado": "inicial",
+   "mudanca": {
+    "arquivo": "src/app/pages/portal-mpa/processos/processos.component.html",
+    "linha": 164,
+    "antes": "<div class=\"d-flex justify-content-end mt-4\">",
+    "depois": "<div class=\"d-flex justify-content-end\" style=\"margin-top:-20px\">"
+   },
+   "conferencia": "Depois do build, no estado inicial, a caixa do botão Voltar intersecta a caixa do campo do seletor \"Página\" da paginação (distância vertical paginação→Voltar ≈ −20 px). No build sem semente o Voltar fica 24 px abaixo, sem interseção."
+  },
+  {
+   "id": "F-04",
+   "localizador": "botão Voltar (hoje pnip-mpa-processos br-button[label=\"Voltar\"])",
+   "estado": "inicial",
+   "mudanca": {
+    "arquivo": "src/app/pages/portal-mpa/processos/processos.component.html",
+    "linha": 165,
+    "antes": "<br-button label=\"Voltar\" type=\"secondary\" (click)=\"voltar()\"/>",
+    "depois": "<button type=\"button\" class=\"br-button secondary\" style=\"border-radius:var(--surface-rounder-sm)\" (click)=\"voltar()\">Voltar</button>"
+   },
+   "conferencia": "Depois do build, no estado inicial, o botão Voltar (button.br-button.secondary em light DOM) tem border-radius computado 4px, com o texto \"Voltar\" e o clique funcionando; o Exportar segue com border-radius de pílula (≈ 1680px). No build sem semente o Voltar (interior do br-button) tem border-radius ≈ 1680px."
+  },
+  {
+   "id": "F-05",
+   "localizador": "pnip-mpa-processos div.tab-panel span.br-tag.interaction (a de \"Meus processos\")",
+   "estado": "inicial",
+   "mudanca": {
+    "arquivo": "src/app/pages/portal-mpa/processos/processos.component.html",
+    "linha": 25,
+    "antes": "<span class=\"br-tag interaction small\" (click)=\"toggleMeusProcessos()\"",
+    "depois": "<span class=\"br-tag interaction small\" [style.border-radius]=\"'var(--surface-rounder-pill)'\" (click)=\"toggleMeusProcessos()\""
+   },
+   "conferencia": "Depois do build, no estado inicial, a tag \"Meus processos\" tem border-top-left-radius computado ≥ 16px (pílula); as tags de filtro vizinhas seguem com 4px. No build sem semente ela tem 4px."
+  },
+  {
+   "id": "F-06",
+   "localizador": "pnip-mpa-processos div.br-table thead th com texto \"Téc. Adm.\"",
+   "estado": "inicial",
+   "mudanca": {
+    "arquivo": "src/app/pages/portal-mpa/processos/processos.component.html",
+    "linha": 72,
+    "antes": "<th class=\"text-blue-vivid-60 text-bold\" scope=\"col\" *ngIf=\"status === 'TRAMITANDO' || status === 'HISTORICO'\">Téc. Adm.</th>",
+    "depois": "<th class=\"text-blue-vivid-60 text-bold\" scope=\"col\" style=\"background-color: var(--pure-0)\" *ngIf=\"status === 'TRAMITANDO' || status === 'HISTORICO'\">Téc. Adm.</th>"
+   },
+   "conferencia": "Depois do build, no estado inicial, esse th tem background-color rgb(255, 255, 255); os demais th seguem rgb(240, 240, 240). No build sem semente todos os th têm rgb(240, 240, 240)."
+  },
+  {
+   "id": "F-07",
+   "localizador": "pnip-header button#avatar-dropdown-trigger span.br-avatar > span.content",
+   "estado": "inicial",
+   "mudanca": {
+    "arquivo": "src/app/layout/header/header.component.html",
+    "linha": 7,
+    "antes": "<span class=\"content bg-orange-vivid-30 text-pure-0\">",
+    "depois": "<span class=\"content bg-orange-vivid-30 text-pure-0\" style=\"border-radius: var(--surface-rounder-sm)\">"
+   },
+   "conferencia": "Depois do build, no estado inicial, span.content do avatar tem border-radius computado 4px. No build sem semente: 50%."
+  },
+  {
+   "id": "F-08",
+   "localizador": "pnip-multiple-search-table-utils br-button[label=\"Limpar filtros\"] → shadow: button",
+   "estado": "inicial",
+   "mudanca": {
+    "arquivo": "src/app/utils/components/multiple-search-table.utils.ts",
+    "linha": 55,
+    "antes": "<br-button icon label=\"Limpar filtros\" [disabled]=\"selected && selected.length === 0\" (click)=\"clearSelected()\"></br-button>",
+    "depois": "<br-button icon class=\"text-uppercase\" label=\"Limpar filtros\" [disabled]=\"selected && selected.length === 0\" (click)=\"clearSelected()\"></br-button>"
+   },
+   "conferencia": "Depois do build, no estado inicial, o button interno (shadow root do br-button \"Limpar filtros\") tem text-transform computado uppercase (texto renderizado \"LIMPAR FILTROS\"). No build sem semente: none."
+  },
+  {
+   "id": "F-09",
+   "localizador": "pnip-mpa-processos div.br-table table.table tbody td (todas as células do corpo)",
+   "estado": "inicial",
+   "mudanca": {
+    "arquivo": "src/app/pages/portal-mpa/processos/processos.component.scss",
+    "linha": "fim do arquivo",
+    "antes": "(nada; hoje só .swal-height)",
+    "depois": ".br-table .table tbody td { padding-top: 12px !important; padding-bottom: 12px !important; }"
+   },
+   "conferencia": "Depois do build, no estado inicial, todo td do tbody tem padding-top e padding-bottom 12px (padding-left/right seguem 24px; th segue 16px/24px). No build sem semente: td com 16px/24px."
+  },
+  {
+   "id": "F-10",
+   "localizador": "pnip-multiple-search-table-utils div.br-select > div.br-list (lista de opções de um filtro)",
+   "estado": "clicar numa tag de filtro (ex.: \"Tipo de processo\") para abrir a lista de opções",
+   "mudanca": {
+    "arquivo": "src/app/utils/components/multiple-search-table.utils.ts",
+    "linha": 44,
+    "antes": "<div class=\"br-list d-block mt-1\">",
+    "depois": "<div class=\"br-list d-block mt-1\" style=\"box-shadow:none\">"
+   },
+   "conferencia": "Depois do build, com a lista do filtro aberta, div.br-list tem box-shadow computado none. No build sem semente, no mesmo estado: rgba(0, 0, 0, 0.16) 0px 3px 6px 0px."
+  },
+  {
+   "id": "F-11",
+   "localizador": "pnip-multiple-search-table-utils div.row.pl-2 span.br-tag.interaction (tag do filtro escolhido) e seus filhos i / span / button.br-button.inverted.circle",
+   "estado": "clicar numa tag de filtro (ex.: \"Tipo de processo\") e escolher uma opção (ex.: a 1ª)",
+   "mudanca": {
+    "arquivo": "src/app/utils/components/multiple-search-table.utils.ts",
+    "linha": "25–30",
+    "antes": "<i class=\"{{s.icon}} mr-1\" aria-hidden=\"true\"></i>\n<span class=\"text-truncate\" [style.max-width]=\"'150px'\">{{s.option}}</span>\n<button class=\"br-button inverted circle\" type=\"button\" (click)=\"removeSelected(i)\">…</button>",
+    "depois": "<button class=\"br-button inverted circle\" type=\"button\" (click)=\"removeSelected(i)\">…</button>\n<i class=\"{{s.icon}} mr-1\" aria-hidden=\"true\"></i>\n<span class=\"text-truncate\" [style.max-width]=\"'150px'\">{{s.option}}</span>   (só mover o <button> inteiro, com o <i class=\"fas fa-times\"> de dentro, para antes do <i>)"
+   },
+   "conferencia": "Depois do build, com uma opção escolhida, na tag selecionada o x do botão < x do ícone < x do rótulo, e o botão continua removendo o filtro. No build sem semente: ícone (x ≈ 104) < rótulo (≈ 132) < botão (≈ 294, extremidade direita)."
+  },
+  {
+   "id": "F-12",
+   "localizador": "govbr-custom-pagination: 1º div.pagination-per-page (rótulo \"Exibir\") › br-select-pnip div.br-list > div.br-item.selected",
+   "estado": "clicar no campo \"Exibir\" da paginação para abrir a lista (10/25/50/100) — a parada \"lista-exibir\" da tela D",
+   "mudanca": [
+    {
+     "arquivo": "src/app/utils/components/govbr-custom-pagination/govbr-custom-pagination.component.html",
+     "linha": "1º <div class=\"pagination-per-page\">",
+     "antes": "<div class=\"pagination-per-page\">   (o que contém label=\"Exibir\")",
+     "depois": "<div class=\"pagination-per-page pp-exibir\">   (se a classe pp-exibir já estiver lá, não repetir)"
+    },
+    {
+     "arquivo": "src/styles.css",
+     "linha": "fim do arquivo",
+     "antes": "(nada)",
+     "depois": ".pp-exibir .br-list .br-item.selected { background-color: var(--blue-warm-vivid-70) !important; }"
+    }
+   ],
+   "conferencia": "Depois do build, com a lista do Exibir aberta, o item selecionado (\"10\") tem background-color rgb(19, 81, 180) e texto branco. No build sem semente, no mesmo estado: rgb(38, 112, 232). A lista do \"Página\" não muda."
+  }
+ ]
+}

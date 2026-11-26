@@ -1,0 +1,440 @@
+{
+ "_meta": {
+  "regra": "adendo § 4 item 3 (id na base: registro, não filtro); procedimento no cabeçalho de tela-f/mapear-clausulas-oraculo.mjs",
+  "validador": {
+   "dir": "F:/Dev Nath/TCC/govbr-ds-validator",
+   "tag": "congelado-3.7.12",
+   "commit": "816f4bae41f4486b7055f0ac265167e87ce0d5e5",
+   "baseAtiva": "3.7.0-literal-2026-10-15",
+   "ruleFiles": {
+    "normalized/rules.jsonl": "ca8f428a52063ac8c208cca96432a40c84af8e75b4742744367a47717f9f28b8",
+    "normalized/carried-over.jsonl": "16e0a764e4a0f05b3f116df83f1400598a95173f5dec34f775c0a9b843cade19"
+   },
+   "registros": 5490,
+   "camposLidos": [
+    "id",
+    "originalText",
+    "source.corpusFile",
+    "source.charRange"
+   ],
+   "somenteLeitura": "git show; nenhum checkout, build ou execução"
+  },
+  "arquivosDoCorpus": {
+   "componentes/table__designer.md": "7c7deb5e54314d5c0a045d7a67aeb8b0a6becd0932a559bd620bd4ba6452c82e",
+   "componentes/input__designer.md": "53a723f27af14da6f8a27bdda81d44fe6f95fee309a9661773c215391a1b4f7e",
+   "componentes/button__designer.md": "97ffa84ac951fa1409ee30c897e14040cc3301342cd92ea5763bfa6feb66b673",
+   "componentes/tag__designer.md": "217ff4ad33cdec95444daa29fd88ebb1b3cb9083e67b263056c3213e8e726c8f",
+   "componentes/pagination__designer.md": "73c81987c388272bf34dea74891eca99515bace33357b182be9cb05125f97b19",
+   "componentes/avatar__designer.md": "e934668acff74f8d756aefc418f8526864e7a70c896d3b967dfeb1e8f7b87c9e",
+   "fundamentos-visuais/estados.md": "4a60fd28e435b743db2380436eb7246cedbe3071ae85e7cae4752aceba39ecc2",
+   "componentes/select__designer.md": "015496bfba8116ccabbcd07cc102996eb647824e126b7199256959592f12f8bf"
+  }
+ },
+ "porCandidato": {
+  "F-facil-2": {
+   "arquivo": "componentes/table__designer.md",
+   "trechoLiteral": "Os textos devem ser truncados exibindo as reticências no final. Ao passar o *mouse* sobre o texto truncado é revelado o texto completo pelo uso de *tooltip*.",
+   "partes": [
+    {
+     "parte": "Os textos devem ser truncados exibindo as reticências no final. Ao passar o mouse sobre o texto truncado é revelado o texto completo pelo uso de tooltip.",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      6737,
+      6894
+     ],
+     "ids": [
+      "govbr-3.7.0-component-table-bc0d039ca6cc",
+      "govbr-3.7.0-component-table-4aac83c034bd"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-table-bc0d039ca6cc",
+    "govbr-3.7.0-component-table-4aac83c034bd"
+   ],
+   "semIdMapeado": false
+  },
+  "F-facil-3": {
+   "arquivo": "componentes/input__designer.md",
+   "trechoLiteral": "| Ação interna                               | margin-top/bottom          | `--spacing-vertical-center` |",
+   "partes": [
+    {
+     "parte": "| Ação interna | margin-top/bottom | --spacing-vertical-center |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      19259,
+      19364
+     ],
+     "ids": [
+      "govbr-3.7.0-component-input-2b3b4e282965"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-input-2b3b4e282965"
+   ],
+   "semIdMapeado": false
+  },
+  "F-facil-4": {
+   "arquivo": "componentes/button__designer.md",
+   "trechoLiteral": "**Importante:** o crescimento do botão deve acompanhar o tamanho do rótulo, porém as margens internas devem ser respeitadas.",
+   "partes": [
+    {
+     "parte": "Importante: o crescimento do botão deve acompanhar o tamanho do rótulo, porém as margens internas devem ser respeitadas.",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      3109,
+      3231
+     ],
+     "ids": [
+      "govbr-3.7.0-component-button-81f5e26ec0ef",
+      "govbr-3.7.0-component-button-b1c0168342fb"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-button-81f5e26ec0ef",
+    "govbr-3.7.0-component-button-b1c0168342fb"
+   ],
+   "semIdMapeado": false
+  },
+  "F-facil-6": {
+   "arquivo": "componentes/button__designer.md",
+   "trechoLiteral": "Quando o botão estiver próximo a algum outro componente, mantenha um espaçamento mínimo para que a o botão seja notado na tela e que sua área de interação não se confunda com as de outros componentes.",
+   "partes": [
+    {
+     "parte": "Quando o botão estiver próximo a algum outro componente, mantenha um espaçamento mínimo para que a o botão seja notado na tela e que sua área de interação não se confunda com as de outros componentes.",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      12495,
+      12695
+     ],
+     "ids": [
+      "govbr-3.7.0-component-button-0cfc7ea7ab46"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-button-0cfc7ea7ab46"
+   ],
+   "semIdMapeado": false
+  },
+  "F-medio-2": {
+   "arquivo": "componentes/button__designer.md",
+   "trechoLiteral": "| Superfície (Padrão) | border-radius | `--surface-rounder-pill` |",
+   "partes": [
+    {
+     "parte": "| Superfície (Padrão) | border-radius | --surface-rounder-pill |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      17497,
+      17563
+     ],
+     "ids": [
+      "govbr-3.7.0-component-button-4e73723a0df8"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-button-4e73723a0df8"
+   ],
+   "semIdMapeado": false
+  },
+  "F-medio-3": {
+   "arquivo": "componentes/tag__designer.md",
+   "trechoLiteral": "### Arredondamento [*Tag* de Interação] […] | Superfície | top-left-bottom-right | `--surface-rounder-sm` |",
+   "partes": [
+    {
+     "parte": "### Arredondamento [Tag de Interação]",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      20526,
+      20565
+     ],
+     "ids": [],
+     "soSobrepostos": []
+    },
+    {
+     "parte": "| Superfície | top-left-bottom-right | --surface-rounder-sm |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 2,
+     "faixaNoArquivo": [
+      20695,
+      20758
+     ],
+     "ids": [
+      "govbr-3.7.0-component-tag-6e456d98e420"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-tag-6e456d98e420"
+   ],
+   "semIdMapeado": false
+  },
+  "F-medio-4": {
+   "arquivo": "componentes/table__designer.md",
+   "trechoLiteral": "| Header da Tabela                  | background | `--gray-5`             |",
+   "partes": [
+    {
+     "parte": "| Header da Tabela | background | --gray-5 |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      19992,
+      20067
+     ],
+     "ids": [
+      "govbr-3.7.0-component-table-559426cdec19"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-table-559426cdec19"
+   ],
+   "semIdMapeado": false
+  },
+  "F-medio-5": {
+   "arquivo": "componentes/pagination__designer.md",
+   "trechoLiteral": "deve-se utilizar o componente *select* personalizado, onde o seu *input* (Campo de Entrada de Texto) estará em densidade alta, sem contorno e pré definido",
+   "partes": [
+    {
+     "parte": "deve-se utilizar o componente select personalizado, onde o seu input (Campo de Entrada de Texto) estará em densidade alta, sem contorno e pré definido",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      9735,
+      9889
+     ],
+     "ids": [
+      "govbr-3.7.0-component-pagination-68ef5027b4e7"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-pagination-68ef5027b4e7"
+   ],
+   "semIdMapeado": false
+  },
+  "F-medio-6": {
+   "arquivo": "componentes/pagination__designer.md",
+   "trechoLiteral": "| Texto Módulos                           | color      | `--color-secondary-08` |",
+   "partes": [
+    {
+     "parte": "| Texto Módulos | color | --color-secondary-08 |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      17777,
+      17858
+     ],
+     "ids": [
+      "govbr-3.7.0-component-pagination-fdb0b4e4e6b3"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-pagination-fdb0b4e4e6b3"
+   ],
+   "semIdMapeado": false
+  },
+  "F-dificil-2": {
+   "arquivo": "componentes/avatar__designer.md",
+   "trechoLiteral": "A representação do usuário deve estar contida em uma superfície circular.",
+   "partes": [
+    {
+     "parte": "A representação do usuário deve estar contida em uma superfície circular.",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      1430,
+      1503
+     ],
+     "ids": [
+      "govbr-3.7.0-component-avatar-723660559374"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-avatar-723660559374"
+   ],
+   "semIdMapeado": false
+  },
+  "F-dificil-3": {
+   "arquivo": "componentes/button__designer.md",
+   "trechoLiteral": "| Rótulo (Padrão) | `--font-size-scale-up-01` | `--font-weight-semi-bold` |     `none`     |",
+   "partes": [
+    {
+     "parte": "| Rótulo (Padrão) | --font-size-scale-up-01 | --font-weight-semi-bold | none |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      14672,
+      14764
+     ],
+     "ids": [
+      "govbr-3.7.0-component-button-71d4266a8572"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-button-71d4266a8572"
+   ],
+   "semIdMapeado": false
+  },
+  "F-dificil-4": {
+   "arquivo": "componentes/table__designer.md",
+   "trechoLiteral": "| Linhas (Densidade Padrão)             | padding-top    |  `--spacing-scale-2x`  |",
+   "partes": [
+    {
+     "parte": "| Linhas (Densidade Padrão) | padding-top | --spacing-scale-2x |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      22707,
+      22790
+     ],
+     "ids": [
+      "govbr-3.7.0-component-table-d08c9e4951e5"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-table-d08c9e4951e5"
+   ],
+   "semIdMapeado": false
+  },
+  "F-dificil-5": {
+   "arquivo": "fundamentos-visuais/estados.md",
+   "trechoLiteral": "| background/foreground (Sobre um fundo Claro)  | color    | `--blue-warm-vivid-70` |",
+   "partes": [
+    {
+     "parte": "| background/foreground (Sobre um fundo Claro) | color | --blue-warm-vivid-70 |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      12774,
+      12859
+     ],
+     "ids": [],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [],
+   "semIdMapeado": true
+  },
+  "F-muito-dificil-1": {
+   "arquivo": "componentes/select__designer.md",
+   "trechoLiteral": "O componente *list* será apresentado flutuando sobre a tela e uma sombra deve ser utilizada para proporcionar contraste entre o componente e o conteúdo de tela ao fundo.",
+   "partes": [
+    {
+     "parte": "O componente list será apresentado flutuando sobre a tela e uma sombra deve ser utilizada para proporcionar contraste entre o componente e o conteúdo de tela ao fundo.",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      3147,
+      3316
+     ],
+     "ids": [
+      "govbr-3.7.0-component-select-ba2187bb7906"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-select-ba2187bb7906"
+   ],
+   "semIdMapeado": false
+  },
+  "F-muito-dificil-2": {
+   "arquivo": "componentes/tag__designer.md",
+   "trechoLiteral": "| Tertiary-button            | `--spacing-horizontal-right`  |",
+   "partes": [
+    {
+     "parte": "| Tertiary-button | --spacing-horizontal-right |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      15314,
+      15376
+     ],
+     "ids": [
+      "govbr-3.7.0-component-tag-07d13ad49df0"
+     ],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [
+    "govbr-3.7.0-component-tag-07d13ad49df0"
+   ],
+   "semIdMapeado": false
+  },
+  "F-muito-dificil-4": {
+   "arquivo": "fundamentos-visuais/estados.md",
+   "trechoLiteral": "| background/foreground | color    | `--blue-warm-vivid-50` |",
+   "partes": [
+    {
+     "parte": "| background/foreground | color | --blue-warm-vivid-50 |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      25667,
+      25728
+     ],
+     "ids": [],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [],
+   "semIdMapeado": true
+  },
+  "F-muito-dificil-5": {
+   "arquivo": "fundamentos-visuais/estados.md",
+   "trechoLiteral": "| border (Sobre um fundo Claro)  | color    | `--gold-vivid-40` | […] | border  | style    | `dashed`               |",
+   "partes": [
+    {
+     "parte": "| border (Sobre um fundo Claro) | color | --gold-vivid-40 |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 1,
+     "faixaNoArquivo": [
+      21135,
+      21200
+     ],
+     "ids": [],
+     "soSobrepostos": []
+    },
+    {
+     "parte": "| border | style | dashed |",
+     "achada": true,
+     "ocorrenciasNoArquivo": 2,
+     "faixaNoArquivo": [
+      21449,
+      21496
+     ],
+     "ids": [],
+     "soSobrepostos": []
+    }
+   ],
+   "ids": [],
+   "semIdMapeado": true
+  }
+ }
+}
