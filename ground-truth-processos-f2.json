@@ -1,8 +1,8 @@
 {
  "_meta": {
   "version": "1.0.0",
-  "status": "RASCUNHO — não congelado. Falta o que está em tela-f2/pendencias-congelamento.md (auditoria cega das semeadas, classes NAT-71 e D-156, conferência final na ala do corpus, sha256 do arquivo de estratos e dos critérios, congelamento).",
-  "version_note": "1.0.0 (rascunho de 26/11/2026): tela F2 do segundo estudo de seguimento (adendo-2-tela-f2-protocolo-2026-11-26.md). Estrato semeado F2-01…F2-12 (tela-f2/composicao.json, 3 por tipo) + estrato natural = as 13 specs da referência 1.1.0 da D (sha256 2eacba80efb373c4923f7f85593c684647e6b5ec58ad5a341329d96a44632569), sem mudança fora a âncora da D-14 (ver _meta.estratos.natural.reancoradas).",
+  "status": "1.0.0 congelada — 2026-11-26. Tela F2 (segundo estudo de seguimento, adendo 2 de 26/11): 25 specs (12 semeadas, 3 por tipo, + 13 naturais da D), 69 unidades, 3 paradas em 3 segmentos (paradas nos segmentos 0 e 2), 9 controles conformes. Registro em tela-f2/congelamento-1.0.0.md.",
+  "version_note": "1.0.0 (2026-11-26): estrato semeado F2-01…F2-12 escolhido à mão por agente cego ao oráculo (seletor, cotas por tipo do adendo 2 § 3–§ 4), conferido por um segundo agente cego (conferente), filtrado e composto mecanicamente pelo agente da referência (tela-f2/filtros.json, composicao.json) — curado, não sorteado; construído no fonte da rota (pnip-mock tela-f2 9d16700; 12/12 pegaram). Estrato natural = as 13 specs da referência 1.1.0 da D, re-medidas nos dois builds pelo código da D (evidência idêntica), com a âncora da D-14 trocada por outra do mesmo elemento (_meta.estratos.natural.reancoradas).",
   "page": "Processos do portal MPA do PNIP — tela F2 (segundo estudo de seguimento; cópia da rota da tela D na ala pnip-f2, com defeitos do DS no fonte), aplicação real em modo mock",
   "url": "/pnip-f2/portal-mpa/processos?mock-perfil=mpa",
   "waitFor": "main .br-table tbody tr",
@@ -59,7 +59,7 @@
     "id": "inicial",
     "afterStep": 0,
     "path": "/pnip-f2/portal-mpa/processos",
-    "note": "aba padrão \"Tramitando\" com \"Meus processos\" ligado — primeiro paint da lista paginada"
+    "note": "carga da rota, sem clicar em nenhuma aba: a lista paginada de processos em tramitação, com \"Meus processos\" ligado — primeiro paint (nota da D reescrita sem nomear a aba marcada: tela-f2/congelamento-1.0.0.md)"
    },
    {
     "id": "lista-exibir",
@@ -291,9 +291,305 @@
     "sha256": "429265a1364fe485c888c792c5fe0117c5e9eade62e06e3bcbf076b386489532"
    },
    "estratos": "tela-f2/estratos-1.0.0.json (id da spec semeada → tipo, subtipo, nível, interação; fora da referência)",
-   "construcao": "tela-f2/construcao/ (cópia das provas do construtor, .tmp-eval/pnip-f2-construcao: 12/12 M pegaram, 4/4 R no build de prova, 0 diferenças sem atribuição; build semeado lista b113879f…; pnip-mock tela-f2 9d16700; govbr-corpus tela-f2 a7d6ccd)",
    "remedidaNaturais": "tela-f2/remedida-d/ (código da D na ala pnip-f2, nos dois builds)",
    "idsNaBase": "tela-f2/conferencia-ids-base.json"
+  },
+  "escolha": {
+   "regra": "adendo-2-tela-f2-protocolo-2026-11-26.md § 3–§ 4 (com o adendo da F § 4)",
+   "seletor": "tela-f2/selecao/ (24 candidatos, 6 por tipo, à mão, cego ao oráculo)",
+   "conferente": "tela-f2/conferencia/ (21 de 24 aprovados)",
+   "filtros": "tela-f2/filtros.json (21 → 16 sobreviventes; id na base é registro, não filtro; nível oficial = o menor entre seletor e conferente)",
+   "composicao": "tela-f2/composicao.json (3 por tipo + reserva por tipo)",
+   "natureza": "curada por agente cego ao oráculo e conferida por um segundo, não sorteada"
+  },
+  "estados_resumo": {
+   "paradas": 3,
+   "segmentos": 3,
+   "segmentosComParada": [
+    0,
+    2
+   ],
+   "nota": "2 passos navigate: segmento 1 é a passagem pela rota de vistorias, sem parada"
+  },
+  "idsNaBase": {
+   "arquivo": "tela-f2/conferencia-ids-base.json",
+   "validador": "govbr-ds-validator congelado-3.7.12 (816f4ba, árvore .tmp-eval/validator-3712r), só id/texto/fonte",
+   "semeadoIds": 10,
+   "semeadoIdsCasam": 10,
+   "semeadoSemId": 3,
+   "semeadoSemIdConfirmado": 3,
+   "naturalIds": 19,
+   "naturalIdsExistem": 19
+  },
+  "confirmacaoCega": {
+   "regra": "pacote neutro de 24 afirmações (as 12 semeadas como um juiz as lê + 12 iscas da mesma forma, falsas na página, medidas antes), embaralhado com semente gravada; confirmada = veredicto 'verdadeira' e violaClausula 'sim'; dois auditores cegos independentes (tela-f2/auditoria-cega/)",
+   "pedidoSha256": "f2b13c9ab03df3a6cb2567534ec64cded1174938119afa6a3e6e4b98af7e5232",
+   "semeadas": {
+    "confirmadasPelosDois": 12,
+    "porUm": 0,
+    "porNenhum": 0
+   },
+   "iscas": {
+    "falsasNosDois": 12,
+    "verdadeiraEmAlgum": 0
+   },
+   "juizNaoDecide": 0,
+   "descricoesReescritas": 0
+  },
+  "porSpec": {
+   "F2-01": {
+    "confirmacaoCega": {
+     "afirmacao": "A-18",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f2/conferencia-construcao.json)",
+    "aceitacao": "nao-implementado (critério em tela-f2/criterios-de-julgamento.json)"
+   },
+   "F2-02": {
+    "confirmacaoCega": {
+     "afirmacao": "A-16",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f2/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F2-03": {
+    "confirmacaoCega": {
+     "afirmacao": "A-01",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f2/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F2-04": {
+    "confirmacaoCega": {
+     "afirmacao": "A-15",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f2/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F2-05": {
+    "confirmacaoCega": {
+     "afirmacao": "A-19",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f2/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F2-06": {
+    "confirmacaoCega": {
+     "afirmacao": "A-09",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f2/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F2-07": {
+    "confirmacaoCega": {
+     "afirmacao": "A-23",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f2/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F2-08": {
+    "confirmacaoCega": {
+     "afirmacao": "A-12",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f2/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F2-09": {
+    "confirmacaoCega": {
+     "afirmacao": "A-05",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f2/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F2-10": {
+    "confirmacaoCega": {
+     "afirmacao": "A-11",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f2/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F2-11": {
+    "confirmacaoCega": {
+     "afirmacao": "A-20",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f2/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F2-12": {
+    "confirmacaoCega": {
+     "afirmacao": "A-02",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f2/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   }
+  },
+  "classes": {
+   "nota": "NAT-71 (protocolo NAT-78 § 5.3): 12 semeadas por dois classificadores cegos (desempate pelo 3º cego por maioria, se preciso); 13 naturais herdadas da D",
+   "arquivo": "tela-f2/classes-nat71/classes-finais.json",
+   "d156": "tela-f2/classes-d156-1.0.0.json"
+  },
+  "niveis": "tela-f2/estratos-1.0.0.json (id da spec semeada → tipo, subtipo, nível, interação; fora da referência)",
+  "criteriosDeJulgamento": "tela-f2/criterios-de-julgamento.json",
+  "paginaCongelada": "tela-f2/pagina-congelada.json (ala pnip-f2, 190 arquivos, lista b113879f…; govbr-corpus tela-f2 a7d6ccd)",
+  "evidencia": {
+   "construcao": "tela-f2/construcao/ e tela-f2/conferencia-construcao.json",
+   "remedidaNaturais": "tela-f2/remedida-d/",
+   "conferenciaReferencia": "tela-f2/conferir-referencia-1.0.0.log"
   }
  },
  "violations": [
