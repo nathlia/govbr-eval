@@ -150,5 +150,40 @@
       },
       "externos": []
     }
+  },
+  "processos-f": {
+    "titulo": "tela F — processos do portal MPA do PNIP com defeitos do DS semeados em quatro níveis (cópia da rota da tela D na ala pnip-f; estudo de seguimento do NAT-78, adendo de 26/11)",
+    "entry": "pnip-f/portal-mpa/processos?mock-perfil=mpa",
+    "reference": null,
+    "sources": [],
+    "runs": {
+      "com": "results/runs-processos-f",
+      "sem": "results/runs-processos-f-ablacao",
+      "smoke": "results/runs-processos-f-smoke"
+    },
+    "review": "results/semantic-review-processos-f",
+    "nota": "Tela F (adendo de 26/11 ao protocolo NAT-78: estudo de seguimento, fora da família de Holm da D e da E), ainda SEM referência (reference: null; a 1.0.0 entra num commit pequeno junto com niveis e criteriosDeJulgamento). Cópia da rota da tela D com defeitos do DS injetados no fonte do pnip-mock (f8905a8) e build congelado byte a byte na ala própria govbr-corpus/public/pnip-f/ (base href /pnip-f/; manifesto public/pnip-f/manifesto.json, corpus 157a3cc), para não mudar um byte das telas B, C e D. O `?mock-perfil=mpa` escolhe a mesma sessão fictícia de coordenadora da tela D, e o próprio app o retira da barra de endereço. Regra de reserva (adendo §3): o oráculo não roda nesta tela antes do congelamento da referência (nem varredura, nem verificação, nem linha de base). Não é entrada Vite: sources vazio. Preparação e gabarito em tela-f/ (fora do checkout esparso da coleta).",
+    "isolamento": {
+      "texto": "Processos",
+      "alvo": "br-tab",
+      "fonte": null,
+      "interacao": {
+        "clicar": ".br-tag.interaction",
+        "esperar": "main .br-table tbody tr:nth-child(10)",
+        "nota": "Prova de vida, não estado de gabarito: a mesma da tela D (a etiqueta \"Meus processos\", light DOM, desliga o filtro e a lista passa de 9 para 10 linhas por página). Os estados da referência serão os do _meta.setup dela."
+      },
+      "externos": [],
+      "site": {
+        "arvore": "pnip-f/",
+        "excluir": [
+          "pnip-f/manifesto.json"
+        ],
+        "indice": "pnip-f/index.html",
+        "aliases": {
+          "/assets/images/exit-icon.png": "pnip-f/assets/images/exit-icon.png"
+        },
+        "nota": "SPA, mesmas regras da tela B (vistorias.isolamento.site) sobre a árvore pnip-f/: árvore inteira congelada (chunks lazy montados em tempo de execução), índice a todo GET sem extensão sob /pnip-f/, e o único alias é o ícone do \"Sair\" (sob <base href=\"/pnip-f/\"> o template sai do prefixo). O manifesto da ala é proveniência e fica fora do site."
+      }
+    }
   }
 }
