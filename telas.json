@@ -162,7 +162,7 @@
       "smoke": "results/runs-processos-f-smoke"
     },
     "review": "results/semantic-review-processos-f",
-    "criteriosDeJulgamento": { "arquivo": "tela-f/criterios-de-julgamento-sem-predicado.json", "sha256": "3daa97943b657ad0334846e3f99f6f943cf90462bdcc26d1571d6b5efd3a9ef2" },
+    "criteriosDeJulgamento": { "arquivo": "tela-f/criterios-de-julgamento-sem-predicado.json", "sha256": "26622cd77b90d3cce45a99020aa37a520011c5eff4ff7dc31a1903a4db3d34d0" },
     "niveis": { "arquivo": "tela-f/niveis-1.0.0.json", "sha256": "6ea71d3b4347be06389445616a811aa3b3676b21f900ef465df50f013ccc6977" },
     "nota": "Tela F (adendo de 26/11 ao protocolo NAT-78: estudo de seguimento, fora da família de Holm da D e da E), referência ground-truth-processos-f.json 1.0.0 congelada em 2026-11-26 (eval tela-f dd7d21e, aqui byte a byte; sha256 d32088bf…d5b3e0): 25 specs (12 semeadas, 13 naturais, 4 expostas), 77 unidades, 4 paradas em 3 segmentos; níveis e critérios de julgamento declarados abaixo pelo sha256. Cópia da rota da tela D com defeitos do DS injetados no fonte do pnip-mock (f8905a8) e build congelado byte a byte na ala própria govbr-corpus/public/pnip-f/ (base href /pnip-f/; manifesto public/pnip-f/manifesto.json, corpus 157a3cc), para não mudar um byte das telas B, C e D. O `?mock-perfil=mpa` escolhe a mesma sessão fictícia de coordenadora da tela D, e o próprio app o retira da barra de endereço. Regra de reserva (adendo §3): o oráculo não roda nesta tela antes do congelamento da referência (nem varredura, nem verificação, nem linha de base). Não é entrada Vite: sources vazio. Preparação e gabarito em tela-f/ (fora do checkout esparso da coleta).",
     "isolamento": {
