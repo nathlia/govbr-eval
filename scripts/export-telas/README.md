@@ -1,6 +1,6 @@
 # govbr-telas
 
-Cinco páginas web prontas para abrir no navegador, servidas por um servidor mínimo que usa só o
+Seis páginas web prontas para abrir no navegador, servidas por um servidor mínimo que usa só o
 Node.js. Não há código-fonte a compilar nem dependência a instalar: a pasta `site/` já traz os
 arquivos finais.
 
@@ -26,7 +26,7 @@ ou, sem npm:
 node server.mjs
 ```
 
-O servidor escuta em `http://127.0.0.1:3300` e imprime os endereços das cinco telas. `Ctrl+C`
+O servidor escuta em `http://127.0.0.1:3300` e imprime os endereços das seis telas. `Ctrl+C`
 encerra.
 
 Outra porta: `node server.mjs --port 8080` (ou a variável de ambiente `PORT`). O servidor só aceita
@@ -41,6 +41,7 @@ conexões da própria máquina; para escutar em outra interface, use `--host` (o
 | Acompanhar requerimento | <http://127.0.0.1:3300/acompanhamento.html> |
 | Processos | <http://127.0.0.1:3300/pnip-d/portal-mpa/processos?mock-perfil=mpa> |
 | Cadastrar país importador | <http://127.0.0.1:3300/cadastro-pais.html> |
+| Processos | <http://127.0.0.1:3300/pnip-f/portal-mpa/processos?mock-perfil=mpa> |
 
 **Solicitar serviço** é uma página única: um formulário de solicitação com o histórico de pedidos
 anteriores.
@@ -61,15 +62,18 @@ e recarregar.
 
 **Cadastrar país importador** é uma página única com um formulário de cadastro e a lista de países já
 cadastrados. Os links da trilha de navegação, da conta e o Cancelar levam a páginas simples do mesmo site.
+
+A segunda **Processos** é a mesma tela da aplicação de página única, numa outra cópia própria servida sob `/pnip-f/`;
+vale o que foi dito de **Vistorias** sobre dados fictícios, `?mock-perfil=mpa` e recarregar.
 Nenhuma das telas faz pedidos a outros endereços.
 
 ## O que o servidor faz
 
 - Serve somente os arquivos listados em `site-manifest.json`, a partir de `site/`. Se algum
   arquivo diferir do sha256 registrado no manifesto, o servidor não sobe.
-- Sob `/pnip/`, um endereço sem extensão recebe `site/pnip/index.html`, e sob `/pnip-d/`,
-  `site/pnip-d/index.html` (rotas das aplicações de página única, `routing.spas` do manifesto). O
-  único endereço fora desses prefixos que aponta para dentro deles é o declarado em
+- Sob `/pnip/`, um endereço sem extensão recebe `site/pnip/index.html`, sob `/pnip-d/`,
+  `site/pnip-d/index.html`, e sob `/pnip-f/`, `site/pnip-f/index.html` (rotas das aplicações de página
+  única, `routing.spas` do manifesto). O único endereço fora desses prefixos que aponta para dentro deles é o declarado em
   `routing.aliases` do manifesto.
 - Qualquer outro endereço responde 404, sem listagem de pasta. Caminhos com `..`, barra invertida ou
   equivalentes codificados respondem 400. Métodos diferentes de GET e HEAD respondem 405.
@@ -79,7 +83,7 @@ Nenhuma das telas faz pedidos a outros endereços.
 | Arquivo | Papel |
 |---|---|
 | `server.mjs` | Servidor estático (somente módulos nativos do Node.js). |
-| `site/` | Os arquivos servidos: `solicitacao.html` + `assets/`, a aplicação em `pnip/` e a cópia dela em `pnip-d/`, `acompanhamento.html` + `acompanhamento/` (com as páginas `inicio.html` e `meus-requerimentos.html`), e `cadastro-pais.html` + `cadastro-pais/` (com as páginas `administracao.html`, `minha-conta.html`, `paises-importadores.html` e `servicos-defesa.html`). |
+| `site/` | Os arquivos servidos: `solicitacao.html` + `assets/`, a aplicação em `pnip/` e as cópias dela em `pnip-d/` e `pnip-f/`, `acompanhamento.html` + `acompanhamento/` (com as páginas `inicio.html` e `meus-requerimentos.html`), e `cadastro-pais.html` + `cadastro-pais/` (com as páginas `administracao.html`, `minha-conta.html`, `paises-importadores.html` e `servicos-defesa.html`). |
 | `site-manifest.json` | Origem dos arquivos, rotas e sha256 + tamanho de cada arquivo. |
 | `skills/avaliar-tela/SKILL.md` | Procedimento genérico para avaliar uma tela em execução pela interface e enviar um relatório JSON. Os marcadores `{{...}}` da seção Entradas são preenchidos por quem prepara a execução. O servidor não o serve. |
 | `package.json` | Só o script `npm start`; sem dependências. |

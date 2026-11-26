@@ -30,6 +30,7 @@ diretório temporário apagado no fim.
 | `site/cadastro-pais.html` + `site/cadastro-pais/*` + `site/administracao.html` + `site/minha-conta.html` + `site/paises-importadores.html` + `site/servicos-defesa.html` + `site/assets/*` (tela E, desde `export-telas-1.5.0`) | o mesmo build, mais `public/cadastro-pais/` e as quatro páginas de destino de `public/` | A regra da A2 (`SCREEN_E_PUBLIC`), numa CÓPIA do build sem o que a A2 devolve de `public/`: o fechamento casa por nome, e as duas páginas construídas têm scripts com o mesmo nome (`comportamento.js`, `core.min.js`) em pastas próprias. Caminho que a A ou a A2 também usam (fontes do DS) fica com o arquivo já planejado se os bytes forem iguais; bytes diferentes param a exportação. Hoje: 36 arquivos, 10 novos. |
 | `site/pnip/**` | `govbr-corpus/public/pnip/` (build Angular congelado) | Exatamente a lista do manifesto do congelamento (`manifesto.json`), cada arquivo conferido por sha256; árvore com arquivo a mais ou a menos faz a exportação parar. O manifesto do congelamento fica de fora (telas.json `isolamento.site.excluir`). |
 | `site/pnip-d/**` (tela D `processos`, desde `export-telas-1.4.0`) | `govbr-corpus/public/pnip-d/` (build Angular congelado, `base href /pnip-d/`) | A mesma regra da `pnip/`: a lista do manifesto do congelamento da ala, conferida por sha256; o manifesto da ala fica de fora. |
+| `site/pnip-f/**` (tela F `processos-f`, desde `export-telas-1.6.0`) | `govbr-corpus/public/pnip-f/` (build Angular congelado, `base href /pnip-f/`) | A mesma regra da `pnip-d/`. |
 | `server.mjs`, `README.md` | modelos em `scripts/export-telas/` | copiados como estão |
 | `package.json`, `.node-version`, `.gitattributes`, `site-manifest.json` | gerados pelo exportador | — |
 | `skills/avaliar-tela/SKILL.md` | `govbr-eval/skills/avaliar-tela/SKILL.md` (T2) | `PACKAGE_SKILLS`, lista fechada de uma entrada; fins de linha normalizados para LF; hash em `skills[]` do manifesto. Nada mais de `skills/` entra (o protocolo antigo `evaluate-screen` + `_shared/` e `evaluate-all` ficam fora). O servidor não o serve (404). Ver [`skill-avaliar-tela.md`](skill-avaliar-tela.md). |
@@ -89,6 +90,12 @@ responde 404 às rotas da D (falha visível, nunca a página errada). Na raiz mu
 `package.json` (descrição); `site/` de A, B, A2 e D fica byte a byte igual (420 de 420 arquivos). `GOVBR_CORPUS_DIR`
 aponta outro checkout do corpus (uma worktree), no exportador e no teste. A diretiva de source map do `core.min.js`
 da E é aceita pelo mesmo hash da A2 (os mesmos bytes do pacote 3.7.0).
+
+**1.6.0 (tela F).** Terceira SPA, `processos-f` em `site/pnip-f/` (ala `govbr-corpus/public/pnip-f/`, `base href /pnip-f/`),
+pela regra da `pnip-d/`: a lista do manifesto do congelamento da ala, conferida por sha256; o manifesto da ala fica de
+fora; `routing.spas` ganha `/pnip-f/`; o alias do ícone do "Sair" só entra com os mesmos bytes do da B. Na raiz mudam
+`README.md` (seis telas) e `package.json` (descrição); `site/` de A, B, A2, D e E fica byte a byte igual. O teste
+aceita tela sem referência (`reference: null`): visita só a entrada e a prova de vida de `telas.json`.
 
 ## O manifesto (`site-manifest.json`)
 
