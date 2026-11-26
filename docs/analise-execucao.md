@@ -296,7 +296,8 @@ cegos, que recebem só os arquivos indicados.
    `portao-teto.json` e `portao-teto.md` (execuções, contagem por execução, mediana, n, limiar ⌊n/2⌋, veredito; nenhum id
    de spec) e, à parte, o lacrado `portao-teto-por-spec.json`. Recusa passada fora da 1.3.0, análise com mais de uma
    execução de agente ou de outro braço, número de execuções ≠ 3, referências diferentes e estrato semeado inválido;
-   pendente só no máximo (sem acordo dos dois lados do limiar, "indeterminado"). Testes: `npm run test:portao-teto`.
+   cartão pendente conta como confirmado (adendo §5, a leitura mais dura): o veredito sai da mediana do máximo, e as duas
+   contagens ficam na saída. Testes: `npm run test:portao-teto`.
 
 7. Material da autora (§8.4; sem modelo): `npm run revisao:material-autora -- preparar --passada <passada adjudicada>
    --saida <pasta nova> [--analise DIR] [--coleta ARQ] [--origem <pasta da origem>] [--teto 10|15] [--site <site congelado>]`

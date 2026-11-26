@@ -1,6 +1,6 @@
 /**
  * Testes do portão de teto da tela F (portao-teto.ts; adendo de 26/11 §5). Sem modelo, sem rede.
- *   1. sintético: estrato semeado, limiar ⌊n/2⌋, veredito (passa / não passa / indeterminado por pendentes), recusas de
+ *   1. sintético: estrato semeado, limiar ⌊n/2⌋, veredito (passa / não passa; pendente conta como confirmado), recusas de
  *      execução que não é do sem ou de análise com mais de uma execução, CLI;
  *   2. dados arquivados da D (fechada; só leitura): a contagem por execução é a MESMA do recálculo arquivado de 26/11 (a
  *      coluna `sem` do primário, por trio), com a referência F sintética (semeado = as 9 não expostas da D); e o caminho de
@@ -43,10 +43,11 @@ try {
     assert.equal(vereditoDoPortao([ex(6), ex(6), ex(6)], 11).veredito, "nao-passa", "n = 11: limiar 5");
     assert.equal(vereditoDoPortao([ex(0), ex(0), ex(0)], 12).veredito, "passa");
   });
-  t("pendentes: só no máximo; lados diferentes do limiar → indeterminado (nunca resolvido em silêncio)", () => {
-    assert.deepEqual(vereditoDoPortao([ex(6, 7), ex(6, 7), ex(3)], 12), { mediana: 6, medianaMax: 7, n: 12, limiar: 6, veredito: "indeterminado (pendentes)" });
+  t("pendente conta como confirmado (adendo §5): o veredito sai da mediana do máximo; as duas contagens ficam", () => {
+    assert.deepEqual(vereditoDoPortao([ex(6, 7), ex(6, 7), ex(3)], 12), { mediana: 6, medianaMax: 7, n: 12, limiar: 6, veredito: "nao-passa" }, "confirmado passaria; com os pendentes não passa");
     assert.equal(vereditoDoPortao([ex(5, 6), ex(4), ex(6)], 12).veredito, "passa", "máximo ainda ≤ limiar");
-    assert.equal(vereditoDoPortao([ex(7, 8), ex(7), ex(1)], 12).veredito, "nao-passa", "confirmado já > limiar");
+    assert.equal(vereditoDoPortao([ex(7, 8), ex(7), ex(1)], 12).veredito, "nao-passa");
+    assert.deepEqual(Object.keys(vereditoDoPortao([ex(1), ex(1), ex(1)], 12)), ["mediana", "medianaMax", "n", "limiar", "veredito"]);
   });
   t("número de execuções ≠ 3 recusa", () => {
     assert.throws(() => vereditoDoPortao([ex(1), ex(2)], 12), /3 execuções do sem/);

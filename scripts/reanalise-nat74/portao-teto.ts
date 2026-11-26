@@ -10,9 +10,9 @@
  * Regra de crédito: a MESMA do recálculo (`recalculo-campanha.ts › creditosDoTrio`, chave `principal|1.2.0`: na passada da
  * política do juiz 1.3.0 essa chave lê o derivado 1.3.0, a coluna detecção); spec confirmada = ≥ 1 unidade confirmada
  * (D-102); conjunto = `_meta.estratos.semeado.specs` da referência das análises. n = o tamanho do estrato semeado; limiar
- * = ⌊n/2⌋ (adendo §5: 6 de 12); passa se a mediana das execuções ≤ limiar. Cartão pendente (sem veredito na passada) entra
- * só no máximo: se a mediana do confirmado e a do máximo caem em lados diferentes do limiar, o veredito é
- * "indeterminado (pendentes)" — nunca resolvido em silêncio.
+ * = ⌊n/2⌋ (adendo §5: 6 de 12). Cartão que os juízes deixam pendente conta como CONFIRMADO para o portão (adendo §5, a
+ * leitura mais dura): o veredito sai do máximo (confirmadas + pendentes): passa se a mediana do máximo ≤ limiar; senão,
+ * não passa. As duas contagens (confirmado e máximo) ficam na saída.
  *
  * O que NÃO é o recálculo: não há trio, coleta-trio, comparação, D, teste, S4' nem adjudicação. A primeira passada (ou a
  * adjudicada, se houver) é a que se dá. `--origem` (opcional) aplica a origem medida pela mesma derivação do recálculo;
@@ -58,14 +58,14 @@ export function semeadasDaReferencia(ref: Referencia): string[] {
 export const limiarDoPortao = (n: number): number => Math.floor(n / 2);
 
 export interface ExecucaoDoPortao { analise: string; runId: string; confirmadas: string[]; maximo: string[] }
-export interface Veredito { mediana: number | null; medianaMax: number | null; n: number; limiar: number; veredito: "passa" | "nao-passa" | "indeterminado (pendentes)" }
+export interface Veredito { mediana: number | null; medianaMax: number | null; n: number; limiar: number; veredito: "passa" | "nao-passa" }
 
-/** Mediana das execuções contra ⌊n/2⌋; pendente só no máximo, e o veredito só sai quando os dois lados concordam. */
+/** Mediana das execuções contra ⌊n/2⌋; o pendente conta como confirmado (adendo §5): o veredito sai da mediana do máximo. */
 export function vereditoDoPortao(execucoes: ExecucaoDoPortao[], n: number): Veredito {
   if (execucoes.length !== EXECUCOES_DO_PORTAO) throw new Error(`o portão tem ${EXECUCOES_DO_PORTAO} execuções do sem (adendo §5); recebeu ${execucoes.length}`);
   const limiar = limiarDoPortao(n);
   const med = mediana(execucoes.map(e => e.confirmadas.length))!, medMax = mediana(execucoes.map(e => e.maximo.length))!;
-  const veredito = medMax <= limiar ? "passa" : med > limiar ? "nao-passa" : "indeterminado (pendentes)";
+  const veredito = medMax <= limiar ? "passa" : "nao-passa";
   return { mediana: med, medianaMax: medMax, n, limiar, veredito };
 }
 
@@ -141,7 +141,7 @@ export function avaliarPortao(o: OpcoesPortao): SaidaPortao {
   E.conferir(entradas);
   const json: Record<string, unknown> = {
     formato: FORMATO_PORTAO, versao: PORTAO_VERSAO,
-    regra: `adendo da F §5: ${EXECUCOES_DO_PORTAO} execuções só do sem, julgadas às cegas; por execução, specs do estrato semeado com ≥ 1 unidade confirmada (creditosDoTrio, chave ${CHAVE_DO_PORTAO}: o derivado da passada 1.3.0, coluna detecção, D-102); passa se a mediana ≤ ⌊n/2⌋; pendente só no máximo, e sem acordo dos dois lados o veredito é indeterminado`,
+    regra: `adendo da F §5: ${EXECUCOES_DO_PORTAO} execuções só do sem, julgadas às cegas; por execução, specs do estrato semeado com ≥ 1 unidade confirmada (creditosDoTrio, chave ${CHAVE_DO_PORTAO}: o derivado da passada 1.3.0, coluna detecção, D-102); cartão pendente conta como confirmado (máximo = confirmadas + pendentes); passa se a mediana do máximo ≤ ⌊n/2⌋, senão não passa`,
     passada: { nome: p.nome, versao: p.versao, politica: p.politica, julgamentosSha256: p.julgSha, adjudicada: false },
     origem: origemInfo ?? "sem origem medida: nenhum crédito sai por origem DS (lado conservador do portão)",
     referencia: refInfo,
@@ -153,7 +153,7 @@ export function avaliarPortao(o: OpcoesPortao): SaidaPortao {
   const md = [
     `- execuções: ${ex.map(e => e.runId).join(", ")}`,
     `- specs semeadas confirmadas por execução: ${ex.map(lim).join(", ")}`,
-    `- mediana: ${fmt(v.mediana)}${v.mediana === v.medianaMax ? "" : ` [≤${fmt(v.medianaMax)}]`}`,
+    `- mediana: ${fmt(v.mediana)}${v.mediana === v.medianaMax ? "" : ` [com os pendentes: ${fmt(v.medianaMax)}; o portão lê esta]`}`,
     `- n: ${v.n}`,
     `- limiar: ${v.limiar} (⌊n/2⌋)`,
     `- veredito: ${v.veredito}`,

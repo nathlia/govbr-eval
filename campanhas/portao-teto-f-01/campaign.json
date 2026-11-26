@@ -139,7 +139,7 @@
     "primaryOutcome": "Por execução, as specs do estrato semeado (_meta.estratos.semeado.specs da referência candidata da F) com ≥ 1 unidade confirmada pela passada cega (política do juiz 1.3.0, coluna detecção, a regra do recálculo: recalculo-campanha.ts › creditosDoTrio, chave principal|1.2.0); mediana das 3; passa se ≤ ⌊n/2⌋. npm run portao:teto (scripts/reanalise-nat74/portao-teto.ts). Só a contagem por execução, a mediana, n, o limiar e o veredito saem para a sessão principal (portao-teto.md); os ids ficam no lacrado portao-teto-por-spec.json.",
     "secondaryOutcomes": [],
     "uncertaintyMethod": null,
-    "exclusionRules": "Só execuções do braço sem, uma por análise individual (analisar --pacote … --sem-linha-de-base); outra configuração é recusada pelo portão. Cartão pendente na passada entra só no máximo; sem acordo dos dois lados do limiar, o veredito é indeterminado."
+    "exclusionRules": "Só execuções do braço sem, uma por análise individual (analisar --pacote … --sem-linha-de-base); outra configuração é recusada pelo portão. Cartão pendente na passada conta como confirmado (adendo §5): o veredito sai da mediana do máximo."
   },
   "budget": {
     "approved": false,
