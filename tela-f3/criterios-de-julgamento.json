@@ -2,11 +2,11 @@
  "_meta": {
   "titulo": "Tela F3 — critérios de julgamento fixados antes da coleta para todas as specs (observável, estado, critério)",
   "data": "2026-11-27",
-  "status": "Rascunho até o congelamento da referência 1.0.0; um critério para cada uma das 25 specs.",
+  "status": "Fixado antes de qualquer execução de agente na tela F3, com a referência congelada 1.0.0; um critério para cada uma das 25 specs.",
   "referencia": {
    "arquivo": "ground-truth-processos-f3.json",
    "versao": "1.0.0",
-   "sha256": "c8d1a84effc8312a36e1c67eec7ae45b4a220b44338040fa7ba0f6cf6e01e861"
+   "sha256": "14baee19d40b8818e9d44d2b00b6636b94fbaee5d79cefddedc97307ebfbd7b0"
   },
   "mandato": "Para cada spec sem predicado implementado, o observável, o estado em que é observado e o critério de decisão do juiz cego ficam escritos antes da coleta (adendo da F § 4 'Referência da F', mantido pelos adendos 2 e 3; mesmo formato da F e da F2). Para as specs com predicado, uma linha de observável/estado/critério, porque o predicado sustenta a spec mas não credita alegação. Os critérios dos casos 03, 04, 09 e 12 usam a redação do adendo 3 § 3.",
   "naoFeito": "Nenhum modelo, nenhuma ferramenta do validator, nenhum axe. As specs naturais (D-01…D-14) mantêm os critérios e a política de julgamento da tela D (os mesmos textos da F e da F2).",

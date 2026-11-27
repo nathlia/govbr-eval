@@ -1,0 +1,1134 @@
+A-02 {
+ "hdr": [
+  "Aberto há",
+  "",
+  "Nº Processo",
+  "Tipo de Processo",
+  "Solicitante",
+  "Analista",
+  "Téc. Adm.",
+  "Status",
+  ""
+ ],
+ "cells": [
+  {
+   "text": "Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa",
+   "w": "150px",
+   "maxW": "150px",
+   "ov": "hidden",
+   "ws": "nowrap",
+   "to": "clip",
+   "title": null,
+   "titles": [],
+   "sw": 591,
+   "cw": 150,
+   "inline": null,
+   "cls": "solicitante"
+  },
+  {
+   "text": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+   "w": "150px",
+   "maxW": "150px",
+   "ov": "hidden",
+   "ws": "nowrap",
+   "to": "clip",
+   "title": null,
+   "titles": [],
+   "sw": 454,
+   "cw": 150,
+   "inline": null,
+   "cls": "solicitante"
+  },
+  {
+   "text": "Pessoa Exemplo Gomes",
+   "w": "150px",
+   "maxW": "150px",
+   "ov": "hidden",
+   "ws": "nowrap",
+   "to": "clip",
+   "title": null,
+   "titles": [],
+   "sw": 206,
+   "cw": 150,
+   "inline": null,
+   "cls": "solicitante"
+  },
+  {
+   "text": "Pessoa Exemplo Cardoso",
+   "w": "150px",
+   "maxW": "150px",
+   "ov": "hidden",
+   "ws": "nowrap",
+   "to": "clip",
+   "title": null,
+   "titles": [],
+   "sw": 214,
+   "cw": 150,
+   "inline": null,
+   "cls": "solicitante"
+  },
+  {
+   "text": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+   "w": "150px",
+   "maxW": "150px",
+   "ov": "hidden",
+   "ws": "nowrap",
+   "to": "clip",
+   "title": null,
+   "titles": [],
+   "sw": 340,
+   "cw": 150,
+   "inline": null,
+   "cls": "solicitante"
+  },
+  {
+   "text": "Pessoa Exemplo Esteves",
+   "w": "150px",
+   "maxW": "150px",
+   "ov": "hidden",
+   "ws": "nowrap",
+   "to": "clip",
+   "title": null,
+   "titles": [],
+   "sw": 210,
+   "cw": 150,
+   "inline": null,
+   "cls": "solicitante"
+  },
+  {
+   "text": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+   "w": "150px",
+   "maxW": "150px",
+   "ov": "hidden",
+   "ws": "nowrap",
+   "to": "clip",
+   "title": null,
+   "titles": [],
+   "sw": 371,
+   "cw": 150,
+   "inline": null,
+   "cls": "solicitante"
+  },
+  {
+   "text": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+   "w": "150px",
+   "maxW": "150px",
+   "ov": "hidden",
+   "ws": "nowrap",
+   "to": "clip",
+   "title": null,
+   "titles": [],
+   "sw": 348,
+   "cw": 150,
+   "inline": null,
+   "cls": "solicitante"
+  },
+  {
+   "text": "Pessoa Exemplo Dias",
+   "w": "150px",
+   "maxW": "150px",
+   "ov": "hidden",
+   "ws": "nowrap",
+   "to": "clip",
+   "title": null,
+   "titles": [],
+   "sw": 187,
+   "cw": 150,
+   "inline": null,
+   "cls": "solicitante"
+  }
+ ],
+ "tooltip": []
+}
+A-03 {
+ "tabs": [
+  {
+   "cls": "tab-item active",
+   "txt": "Aguardando análise",
+   "aria": null
+  },
+  {
+   "cls": "tab-item",
+   "txt": "Tramitando",
+   "aria": null
+  },
+  {
+   "cls": "tab-item",
+   "txt": "Concluídos",
+   "aria": null
+  }
+ ],
+ "hdr": [
+  "Aberto há",
+  "",
+  "Nº Processo",
+  "Tipo de Processo",
+  "Solicitante",
+  "Analista",
+  "Téc. Adm.",
+  "Status",
+  ""
+ ],
+ "tag": [
+  "Meus processos",
+  "Aberto há",
+  "Tipo de processo",
+  "Status",
+  "Espécie alvo",
+  "Método de pesca",
+  "Petrecho"
+ ],
+ "status": [
+  "Em análise analista",
+  "Em análise supervisor",
+  "Aguarda complementos",
+  "Em revisão analista",
+  "Em análise supervisor",
+  "Aguardando plano de ação",
+  "Em análise supervisor",
+  "Em análise diretor",
+  "Aguardando SFPA"
+ ],
+ "hdrT": [
+  "Aberto há",
+  "",
+  "Nº Processo",
+  "Tipo de Processo",
+  "Solicitante",
+  "Analista",
+  "Téc. Adm.",
+  "Status",
+  ""
+ ],
+ "tagT": [
+  "Meus processos",
+  "Aberto há",
+  "Tipo de processo",
+  "Status",
+  "Espécie alvo",
+  "Método de pesca",
+  "Petrecho"
+ ],
+ "rowsT": 9,
+ "firstT": [
+  "11 horas 00000.000010/2026-00 Alteração de Certificado HS Pessoa Exemplo De Nome",
+  "3 dias 00000.000011/2026-00 CAOL - Cert. Acred Origem Legal do Pescado Pessoa Ex",
+  "8 dias 00000.000013/2026-00 Habilitação de Técnico Responsável Pessoa Exemplo Go",
+  "15 dias 00000.000016/2026-00 Vinculação de embarcação Pessoa Exemplo Cardoso Usu",
+  "23 dias 00000.000019/2026-00 Alteração de Certificado HS Pessoa Exemplo Farias /",
+  "38 dias 00000.000025/2026-00 Vinculação de embarcação Pessoa Exemplo Esteves Usu",
+  "44 dias 00000.000027/2026-00 Certificação Higiênico-Sanitária Pessoa Exemplo Gom",
+  "45 dias 00000.000028/2026-00 Alteração de Certificado HS Pessoa Exemplo Alves / ",
+  "53 dias 00000.000031/2026-00 Habilitação de Técnico Responsável Pessoa Exemplo D"
+ ],
+ "tabsT": [
+  "tab-item",
+  "tab-item active",
+  "tab-item"
+ ],
+ "hdrA": [
+  "Aberto há",
+  "Nº Processo",
+  "Tipo de Processo",
+  "Solicitante",
+  "Status",
+  ""
+ ],
+ "tagA": [
+  "Aberto há",
+  "Tipo de processo",
+  "Status",
+  "Espécie alvo",
+  "Método de pesca",
+  "Petrecho"
+ ],
+ "firstA": [
+  "5 horas 00000.000001/2026-00 Alteração de Certificado HS Pessoa Exemplo Barros /",
+  "2 dias 00000.000002/2026-00 CAOL - Cert. Acred Origem Legal do Pescado Pessoa Ex",
+  "5 dias 00000.000003/2026-00 Suspender certificação Pessoa Exemplo Dias / Barco E",
+  "8 dias 00000.000004/2026-00 Habilitação de Técnico Responsável Pessoa Exemplo Es",
+  "10 dias 00000.000005/2026-00 Cancelamento de Certificação Pessoa Exemplo Farias ",
+  "13 dias 00000.000006/2026-00 Habilitação Mercados Específicos Pessoa Exemplo Gom",
+  "15 dias 00000.000007/2026-00 Vinculação de embarcação Pessoa Exemplo Alves Aguar",
+  "18 dias 00000.000008/2026-00 Desvínculo de Embarcação Pessoa Exemplo Barros / Ba",
+  "20 dias 00000.000009/2026-00 Certificação Higiênico-Sanitária Pessoa Exemplo Car"
+ ]
+}
+A-04 {
+ "r": [
+  {
+   "fs": "14px",
+   "fw": "500",
+   "ov": "visible",
+   "ws": "normal",
+   "to": "clip",
+   "inline": null,
+   "sw": 131,
+   "cw": 131,
+   "sh": 113,
+   "ch": 113,
+   "txt": "Alteração de Certificado HS"
+  },
+  {
+   "fs": "14px",
+   "fw": "500",
+   "ov": "visible",
+   "ws": "normal",
+   "to": "clip",
+   "inline": null,
+   "sw": 131,
+   "cw": 131,
+   "sh": 152,
+   "ch": 152,
+   "txt": "CAOL - Cert. Acred Origem Legal do Pescado"
+  },
+  {
+   "fs": "14px",
+   "fw": "500",
+   "ov": "visible",
+   "ws": "normal",
+   "to": "clip",
+   "inline": null,
+   "sw": 131,
+   "cw": 131,
+   "sh": 112,
+   "ch": 112,
+   "txt": "Habilitação de Técnico Responsável"
+  },
+  {
+   "fs": "14px",
+   "fw": "500",
+   "ov": "visible",
+   "ws": "normal",
+   "to": "clip",
+   "inline": null,
+   "sw": 131,
+   "cw": 131,
+   "sh": 112,
+   "ch": 112,
+   "txt": "Vinculação de embarcação"
+  },
+  {
+   "fs": "14px",
+   "fw": "500",
+   "ov": "visible",
+   "ws": "normal",
+   "to": "clip",
+   "inline": null,
+   "sw": 131,
+   "cw": 131,
+   "sh": 152,
+   "ch": 152,
+   "txt": "Alteração de Certificado HS"
+  },
+  {
+   "fs": "14px",
+   "fw": "500",
+   "ov": "visible",
+   "ws": "normal",
+   "to": "clip",
+   "inline": null,
+   "sw": 131,
+   "cw": 131,
+   "sh": 112,
+   "ch": 112,
+   "txt": "Vinculação de embarcação"
+  },
+  {
+   "fs": "14px",
+   "fw": "500",
+   "ov": "visible",
+   "ws": "normal",
+   "to": "clip",
+   "inline": null,
+   "sw": 131,
+   "cw": 131,
+   "sh": 152,
+   "ch": 152,
+   "txt": "Certificação Higiênico-Sanitária"
+  },
+  {
+   "fs": "14px",
+   "fw": "500",
+   "ov": "visible",
+   "ws": "normal",
+   "to": "clip",
+   "inline": null,
+   "sw": 131,
+   "cw": 131,
+   "sh": 113,
+   "ch": 113,
+   "txt": "Alteração de Certificado HS"
+  },
+  {
+   "fs": "14px",
+   "fw": "500",
+   "ov": "visible",
+   "ws": "normal",
+   "to": "clip",
+   "inline": null,
+   "sw": 131,
+   "cw": 131,
+   "sh": 112,
+   "ch": 112,
+   "txt": "Habilitação de Técnico Responsável"
+  }
+ ],
+ "other": [
+  "14px",
+  "14px",
+  "14px",
+  "14px",
+  "14px",
+  "14px",
+  "14px",
+  "14px",
+  "14px"
+ ],
+ "base": "14px",
+ "up01": "16.8px",
+ "down01": "11.662px",
+ "rootFs": "16px"
+}
+A-06 [
+ {
+  "txt": "Aguardando análise",
+  "fs": "16.8px",
+  "fw": "500",
+  "nameFs": "16.8px",
+  "nameFw": "500",
+  "up02": "16.8px"
+ },
+ {
+  "txt": "Tramitando",
+  "fs": "16.8px",
+  "fw": "500",
+  "nameFs": "16.8px",
+  "nameFw": "500",
+  "up02": "16.8px"
+ },
+ {
+  "txt": "Concluídos",
+  "fs": "16.8px",
+  "fw": "500",
+  "nameFs": "16.8px",
+  "nameFw": "500",
+  "up02": "16.8px"
+ }
+]
+A-08/16/24 {
+ "antes": {
+  "color": "rgb(19, 81, 180)",
+  "border": "rgb(19, 81, 180) 1px solid",
+  "bg": "rgb(255, 255, 255)",
+  "bgImg": "none",
+  "fs": "16.8px",
+  "fw": "600",
+  "spanFs": "16.8px",
+  "spanColor": "rgb(19, 81, 180)",
+  "inline": null,
+  "after": {
+   "content": "none",
+   "bg": "rgba(0, 0, 0, 0)",
+   "bgImg": "none",
+   "op": "1",
+   "inset": "auto,auto,auto,auto"
+  },
+  "before": {
+   "content": "none",
+   "bg": "rgba(0, 0, 0, 0)",
+   "bgImg": "none",
+   "op": "1"
+  },
+  "filter": "none",
+  "opacity": "1",
+  "hostStyle": null,
+  "vars": {
+   "xs": "0.16",
+   "hover": "0.16",
+   "interactive": "#1351b4",
+   "color": "#333"
+  }
+ },
+ "depois": {
+  "color": "rgb(19, 81, 180)",
+  "border": "rgb(19, 81, 180) 1px solid",
+  "bg": "rgb(255, 255, 255)",
+  "bgImg": "linear-gradient(rgba(19, 81, 180, 0.16), rgba(19, 81, 180, 0.16))",
+  "fs": "16.8px",
+  "fw": "600",
+  "spanFs": "16.8px",
+  "spanColor": "rgb(19, 81, 180)",
+  "inline": null,
+  "after": {
+   "content": "none",
+   "bg": "rgba(0, 0, 0, 0)",
+   "bgImg": "none",
+   "op": "1",
+   "inset": "auto,auto,auto,auto"
+  },
+  "before": {
+   "content": "none",
+   "bg": "rgba(0, 0, 0, 0)",
+   "bgImg": "none",
+   "op": "1"
+  },
+  "filter": "none",
+  "opacity": "1",
+  "hostStyle": null,
+  "vars": {
+   "xs": "0.16",
+   "hover": "0.16",
+   "interactive": "#1351b4",
+   "color": "#333"
+  }
+ },
+ "hov": true,
+ "rules": []
+}
+A-09 [
+ {
+  "cls": "br-button middle",
+  "bg": "rgba(0, 0, 0, 0)",
+  "border": "none 0px rgb(19, 81, 180)",
+  "radius": "1680px",
+  "color": "rgb(19, 81, 180)",
+  "txt": "",
+  "hostText": "Assinar",
+  "box": [
+   106,
+   40
+  ],
+  "appearance": "button"
+ },
+ {
+  "cls": "br-button middle",
+  "bg": "rgba(0, 0, 0, 0)",
+  "border": "none 0px rgb(19, 81, 180)",
+  "radius": "1680px",
+  "color": "rgb(19, 81, 180)",
+  "txt": "",
+  "hostText": "Assinar",
+  "box": [
+   106,
+   40
+  ],
+  "appearance": "button"
+ },
+ {
+  "cls": "br-button middle",
+  "bg": "rgba(0, 0, 0, 0)",
+  "border": "none 0px rgb(19, 81, 180)",
+  "radius": "1680px",
+  "color": "rgb(19, 81, 180)",
+  "txt": "",
+  "hostText": "Assinar",
+  "box": [
+   106,
+   40
+  ],
+  "appearance": "button"
+ }
+]
+A-10 {
+ "outer": "<span _ngcontent-evn-c16=\"\" class=\"br-avatar\" title=\"U\"><span _ngcontent-evn-c16=\"\" class=\"bg-orange-vivid-30 text-pure-0\"> U </span></span>",
+ "cls": "bg-orange-vivid-30 text-pure-0",
+ "bg": "rgb(255, 140, 0)",
+ "radius": "0px",
+ "box": [
+  877.7,
+  40.1,
+  18.2,
+  40
+ ],
+ "pad": "0px",
+ "disp": "block",
+ "fs": "24.192px",
+ "lh": "40px",
+ "ta": "center",
+ "avatarBox": [
+  18.15625,
+  40
+ ],
+ "avatarRadius": "0px",
+ "avatarCls": "br-avatar",
+ "children": [
+  "bg-orange-vivid-30 text-pure-0"
+ ]
+}
+A-14/17 {
+ "lim": {
+  "host": {
+   "op": "0.45",
+   "cursor": "not-allowed",
+   "color": "rgb(51, 51, 51)",
+   "filter": "none",
+   "disabledAttr": true,
+   "inline": null,
+   "cls": ""
+  },
+  "btn": {
+   "op": "0.45",
+   "cursor": "not-allowed",
+   "color": "rgb(19, 81, 180)",
+   "filter": "none",
+   "disabledAttr": true,
+   "inline": null,
+   "cls": "br-button middle"
+  }
+ },
+ "dis": [
+  {
+   "title": "Desassociar processo do analista responsável",
+   "host": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": "br-button middle"
+   },
+   "iconOp": "1"
+  },
+  {
+   "title": "Desassociar processo do analista responsável",
+   "host": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": "br-button middle"
+   },
+   "iconOp": "1"
+  },
+  {
+   "title": "Desassociar processo do analista responsável",
+   "host": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": "br-button middle"
+   },
+   "iconOp": "1"
+  },
+  {
+   "title": "Desassociar processo do analista responsável",
+   "host": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": "br-button middle"
+   },
+   "iconOp": "1"
+  },
+  {
+   "title": "Desassociar processo do analista responsável",
+   "host": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": "br-button middle"
+   },
+   "iconOp": "1"
+  },
+  {
+   "title": "Desassociar processo do analista responsável",
+   "host": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": "br-button middle"
+   },
+   "iconOp": "1"
+  },
+  {
+   "title": "Desassociar processo do analista responsável",
+   "host": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": "br-button middle"
+   },
+   "iconOp": "1"
+  },
+  {
+   "title": "Desassociar processo do analista responsável",
+   "host": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": "br-button middle"
+   },
+   "iconOp": "1"
+  }
+ ],
+ "allDesas": [
+  {
+   "i": 0,
+   "disabled": false,
+   "row": 0,
+   "host": {
+    "op": "1",
+    "cursor": "auto",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": false,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "pointer",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": false,
+    "inline": null,
+    "cls": "br-button middle"
+   }
+  },
+  {
+   "i": 1,
+   "disabled": true,
+   "row": 1,
+   "host": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": "br-button middle"
+   }
+  },
+  {
+   "i": 2,
+   "disabled": true,
+   "row": 2,
+   "host": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": "br-button middle"
+   }
+  },
+  {
+   "i": 3,
+   "disabled": true,
+   "row": 3,
+   "host": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": "br-button middle"
+   }
+  },
+  {
+   "i": 4,
+   "disabled": true,
+   "row": 4,
+   "host": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": "br-button middle"
+   }
+  },
+  {
+   "i": 5,
+   "disabled": true,
+   "row": 5,
+   "host": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": "br-button middle"
+   }
+  },
+  {
+   "i": 6,
+   "disabled": true,
+   "row": 6,
+   "host": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": "br-button middle"
+   }
+  },
+  {
+   "i": 7,
+   "disabled": true,
+   "row": 7,
+   "host": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": "br-button middle"
+   }
+  },
+  {
+   "i": 8,
+   "disabled": true,
+   "row": 8,
+   "host": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(51, 51, 51)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": ""
+   },
+   "btn": {
+    "op": "1",
+    "cursor": "not-allowed",
+    "color": "rgb(19, 81, 180)",
+    "filter": "none",
+    "disabledAttr": true,
+    "inline": null,
+    "cls": "br-button middle"
+   }
+  }
+ ],
+ "vars": "0.45"
+}
+A-15 {
+ "txt": "Meus processos",
+ "style": "cursor: pointer; background-color: rgb(23, 85, 169);",
+ "bg": "rgb(23, 85, 169)",
+ "cls": "br-tag interaction small",
+ "color": "rgb(255, 255, 255)",
+ "var70": "#1351b4"
+}
+A-18 {
+ "ul": "<ul _ngcontent-yqq-c9=\"\"><li _ngcontent-yqq-c9=\"\"><li _ngcontent-yqq-c9=\"\"><a _ngcontent-yqq-c9=\"\" href=\"javascript:void(0)\" class=\"page active\"> 1 </a></li></li><li _ngcontent-yqq-c9=\"\"><button _ngcontent-yqq-c9=\"\" type=\"button\" aria-label=\"Página seguinte\" class=\"br-button circle\" disabled=\"\" style=\"border-radius: 7px;\"><i _ngcontent-yqq-c9=\"\" aria-hidden=\"true\" class=\"fas fa-angle-right\"></i></button></li></ul>",
+ "ulText": "1",
+ "pages": [
+  {
+   "t": "1",
+   "vis": "visible",
+   "disp": "inline-flex",
+   "op": "1",
+   "color": "rgb(255, 255, 255)",
+   "bg": "rgb(12, 50, 111)",
+   "box": [
+    528,
+    1713,
+    44,
+    36
+   ]
+  }
+ ],
+ "navText": "1"
+}
+A-19 {
+ "html": "<i class=\"fas fa-chevron-right icon\" aria-hidden=\"true\"></i><a href=\"portal-mpa/processos\">Processos</a>",
+ "aColor": "rgb(19, 81, 180)",
+ "aHref": "portal-mpa/processos",
+ "tabIndex": 0,
+ "all": [
+  {
+   "html": "<a href=\"/portal-mpa/\"><button class=\"br-button small circle\" aria-label=\"\" type=\"button\"><span class=\"sr-only\">Home</span><i class=\"fas fa-home\" aria",
+   "color": "rgb(19, 81, 180)"
+  },
+  {
+   "html": "<i class=\"fas fa-chevron-right icon\" aria-hidden=\"true\"></i><a href=\"portal-mpa/processos\">Processos</a>",
+   "color": "rgb(19, 81, 180)"
+  }
+ ],
+ "bodyColor": "rgb(51, 51, 51)",
+ "liColor": "rgb(51, 51, 51)",
+ "tabSeq": [
+  "BUTTON  ",
+  "BUTTON U\nOlá, Usuária de Teste, SUPER ",
+  "A Home /portal-mpa/",
+  "BUTTON Home ",
+  "A Processos portal-mpa/processos",
+  "BUTTON Exportar ",
+  "BUTTON Aguardando análise ",
+  "BUTTON Tramitando ",
+  "BUTTON Concluídos ",
+  "INPUT  ",
+  "BUTTON  ",
+  "INPUT  "
+ ]
+}
+A-20 [
+ {
+  "aria": "Página seguinte",
+  "cls": "br-button circle",
+  "style": "border-radius: 7px;",
+  "radius": "7px",
+  "box": [
+   40,
+   40
+  ],
+  "disabled": true
+ }
+]
+A-23 [
+ {
+  "txt": "Alteração de Certificado HS",
+  "ov": "visible",
+  "ws": "normal",
+  "to": "clip",
+  "w": "131.312px",
+  "h": "113.688px",
+  "sw": 131,
+  "cw": 131
+ },
+ {
+  "txt": "CAOL - Cert. Acred Origem Legal do Pescado",
+  "ov": "visible",
+  "ws": "normal",
+  "to": "clip",
+  "w": "131.312px",
+  "h": "153px",
+  "sw": 131,
+  "cw": 131
+ },
+ {
+  "txt": "Habilitação de Técnico Responsável",
+  "ov": "visible",
+  "ws": "normal",
+  "to": "clip",
+  "w": "131.312px",
+  "h": "113px",
+  "sw": 131,
+  "cw": 131
+ },
+ {
+  "txt": "Vinculação de embarcação",
+  "ov": "visible",
+  "ws": "normal",
+  "to": "clip",
+  "w": "131.312px",
+  "h": "113px",
+  "sw": 131,
+  "cw": 131
+ },
+ {
+  "txt": "Alteração de Certificado HS",
+  "ov": "visible",
+  "ws": "normal",
+  "to": "clip",
+  "w": "131.312px",
+  "h": "153px",
+  "sw": 131,
+  "cw": 131
+ },
+ {
+  "txt": "Vinculação de embarcação",
+  "ov": "visible",
+  "ws": "normal",
+  "to": "clip",
+  "w": "131.312px",
+  "h": "113px",
+  "sw": 131,
+  "cw": 131
+ },
+ {
+  "txt": "Certificação Higiênico-Sanitária",
+  "ov": "visible",
+  "ws": "normal",
+  "to": "clip",
+  "w": "131.312px",
+  "h": "153px",
+  "sw": 131,
+  "cw": 131
+ },
+ {
+  "txt": "Alteração de Certificado HS",
+  "ov": "visible",
+  "ws": "normal",
+  "to": "clip",
+  "w": "131.312px",
+  "h": "114.188px",
+  "sw": 131,
+  "cw": 131
+ },
+ {
+  "txt": "Habilitação de Técnico Responsável",
+  "ov": "visible",
+  "ws": "normal",
+  "to": "clip",
+  "w": "131.312px",
+  "h": "113px",
+  "sw": 131,
+  "cw": 131
+ }
+]

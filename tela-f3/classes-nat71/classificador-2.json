@@ -1,0 +1,92 @@
+{
+ "arquivo": "classificador-2",
+ "referencia": "specs.json (tela F3, processos-f3 1.0.0)",
+ "referenciaSha256": "c8d1a84effc8312a36e1c67eec7ae45b4a220b44338040fa7ba0f6cf6e01e861",
+ "definicoes": "Só os arquivos desta pasta: LEIA.md, definicoes.md (NAT-71 §3.1–3.2 e NAT-78 §5.3), specs.json e criterios-de-julgamento.json (leitura auxiliar). Sem navegador, página, repositório, ferramenta de validação ou outra classificação. Nível a foi dado só quando a referência tem predicado de aceitação implementado (bloco comPredicado / acceptance) E os arquivos documentam um positivo (valor semeado) e um negativo (build sem semente ou elemento irmão que passa); predicado implementado sem negativo documentado ficou em b.",
+ "specs": [
+  {
+   "id": "F3-01",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "O defeito é a ausência de um filho (a seta \"Página anterior\") na composição da Pagination: decidir exige relacionar contêiner e itens (quais setas existem ao redor dos números), não um atributo de um elemento isolado (§3.1, contextual: contêiner↔item). O predicado é determinístico (contar as setas de navegação do nav), mas os critérios dizem que nenhuma espécie implementada mede ausência de filho: escrevível, não implementado (§3.2 b)."
+  },
+  {
+   "id": "F3-02",
+   "classe": "sintático",
+   "automatizabilidade": "a",
+   "limitrofe": true,
+   "motivo": "A norma cobrada é \"a classe content é propriedade obrigatória do conteúdo interno\": decidível olhando um elemento (o span do avatar) e a presença de um valor de atributo class (§3.1, sintático). Limítrofe com layout/visual, porque o predicado de aceitação da referência mede o efeito no estilo computado (border-top-left-radius 50%), e a deformação é geométrica. Nível a: predicado estilo-computado implementado na referência, com o negativo documentado (o core computa 50% quando a classe content existe)."
+  },
+  {
+   "id": "F3-03",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "O defeito só aparece numa transição de estado: acionar o × e observar que a tag e o filtro continuam (§3.1, contextual: transição de estado). O predicado é determinístico (depois do clique/Enter no ×, a tag deve sair do DOM e o filtro deixar de valer), mas os critérios registram que nenhuma espécie implementada mede o efeito de um clique (§3.2 b)."
+  },
+  {
+   "id": "F3-04",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "O que a referência cobra é o estilo computado das células (overflow-x diferente de visible e text-overflow diferente de ellipsis): decidível sobre o estilo e a geometria de um elemento num estado (§3.1, layout/visual); a falta de title/tooltip é parte acessória, e o critério aceita só o corte sem reticências. Há predicado estilo-computado implementado na referência, mas estes arquivos não documentam um negativo medido (só descrevem quais valores não sustentariam), por isso b e não a (§3.2)."
+  },
+  {
+   "id": "F3-05",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "motivo": "Cor de fundo #1755a9 fora da paleta: é o caso \"valor fora dos tokens\", como o exemplo A-03 (§3.1, layout/visual), e não \"token certo para o contexto\", porque o valor não está na paleta. Nível a: predicado estilo-computado (background-color = rgb(19, 81, 180)) implementado na referência, com positivo semeado e negativo no build sem semente (que mede rgb(19, 81, 180))."
+  },
+  {
+   "id": "F3-06",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "motivo": "O raio de 7px no lugar do círculo é propriedade do estilo computado e da forma de um elemento (§3.1, layout/visual: raio, tamanho). Nível a: predicado estilo-computado (border-top-left-radius = 50%) implementado na referência, com positivo (a seta, 7px) e negativo na mesma página (os botões \"Exibir lista\" medem 50%); não há regra do validator listada (rules vazio), então o nível vem só do predicado de aceitação."
+  },
+  {
+   "id": "F3-07",
+   "classe": "sintático",
+   "automatizabilidade": "a",
+   "limitrofe": true,
+   "motivo": "Pela norma do DS o item atual é por definição o último do breadcrumb, então não é preciso saber a URL ou o estado para saber qual é o atual: basta olhar o li:last-child e a ausência do atributo data-active / a presença de <a href> (§3.1, sintático, como o exemplo do aria-current conhecido pelo próprio elemento). Limítrofe com contextual, porque identificar o item exige a posição dele no contêiner e o href aponta para a própria página (relação com a URL). Nível a: predicado atributos-ausentes implementado, com negativo documentado (a D e o build sem semente trazem data-active=\"active\")."
+  },
+  {
+   "id": "F3-08",
+   "classe": "layout/visual",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "motivo": "font-size de 16,8 px em vez de 20,16 px é medida no estilo computado de um elemento (§3.1, layout/visual). Limítrofe com semântico, porque 16,8 px é um token válido (--font-size-scale-up-01) usado no papel errado, o que a regra do §3.1 chama de \"token certo para o contexto\" (semântico); fiquei em layout/visual porque o papel é fixado pela própria anatomia da Tab (o rótulo da aba usa scale-up-02), sem interpretação de propósito. Predicado estilo-computado implementado na referência, mas sem negativo documentado nestes arquivos: b."
+  },
+  {
+   "id": "F3-09",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "Decidir exige uma transição de estado (escolher 25 no seletor) e relacionar dois elementos: a opção marcada na lista (e a tabela que já mostra 14 linhas) com o valor exibido no campo (§3.1, contextual: transição de estado e relação entre elementos). Predicado determinístico escrevível (depois da escolha, input.value igual à opção escolhida), mas os critérios dizem que nenhuma espécie implementada o mede (§3.2 b)."
+  },
+  {
+   "id": "F3-10",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "motivo": "Opacidade 1 no lugar de 0,45 em botões desabilitados é estilo computado de um elemento num estado conhecido pelo próprio elemento (atributo disabled) (§3.1, layout/visual). Nível a: predicado estilo-computado (opacity = 0.45) implementado na referência, com negativo na mesma página (\"Limpar filtros\" desabilitado mede 0.45); rules vazio, então o nível vem só do predicado de aceitação."
+  },
+  {
+   "id": "F3-11",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "motivo": "O defeito é a falta de correspondência entre o item marcado como ativo e o conteúdo exibido no painel (\"Aguardando análise\" ativo com o conteúdo de \"Tramitando\"): decidir exige relacionar dois elementos, item da Tab e painel (§3.1, contextual), e, na regra limítrofe do sintático, saber qual item é o atual. O predicado implementado (classe-no-elemento: active no 1º li) só mede um efeito no estado fixado, não a relação item↔painel, e estes arquivos não documentam negativo; o predicado relacional é determinístico e escrevível (§3.2 b)."
+  },
+  {
+   "id": "F3-12",
+   "classe": "semântico",
+   "automatizabilidade": "c",
+   "limitrofe": false,
+   "motivo": "A spec cobra a adequação do rótulo à ação: \"Confirmar\" não diz que a ação é assinar. É o caso \"se o rótulo descreve a função\", em que dois revisores precisam ler o conteúdo (rótulo e diálogo) e não só a estrutura (§3.1, semântico; a presença do rótulo seria sintática). Não há predicado fechado sem julgamento de significado, e os critérios registram que nenhuma espécie compara texto com ação (§3.2 c)."
+  }
+ ]
+}

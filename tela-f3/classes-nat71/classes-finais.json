@@ -1,0 +1,245 @@
+{
+ "arquivo": "classes-finais",
+ "protocolo": "NAT-78 §5.3 (NAT-71 §3.1–3.2); adendo da F § 4, mantido pelos adendos 2 e 3",
+ "referencia": "ground-truth-processos-f3.json",
+ "referenciaSha256": "14baee19d40b8818e9d44d2b00b6636b94fbaee5d79cefddedc97307ebfbd7b0",
+ "fontes": {
+  "classificador-1.json": "a18455ea720fbc76986a6a1b5b446441c1cb7384c6bae2e9a8949b188f8b9e47",
+  "classificador-2.json": "3371375dbfc6f158ba5f1cf7646706fe3520f2836e9d7be1db9609a62820a48c",
+  "classificador-3.json": "d666c3218d4769cdb6bd8af826787cdfb0b0cb4e53f9cbc27599718df82fc3dd",
+  "heranca-naturais.json": "cf65caf7d92ef5bfd973e6cc87d44cbe6a6715b52f56b07e8dd38fc6bf5bf4a9"
+ },
+ "pedido": {
+  "referenciaSha256DoPedido": "c8d1a84effc8312a36e1c67eec7ae45b4a220b44338040fa7ba0f6cf6e01e861",
+  "nota": "o pedido foi montado sobre o rascunho; as 12 specs semeadas do pedido são idênticas às da referência final (só o _meta mudou)"
+ },
+ "regra": "classificadores 1 e 2 = dupla classificação; onde discordam em classe ou nível, o 3 (cego) desempata por maioria; três diferentes → sem-maioria. Regra da F e da F2, mantida (na F3 a lista é aberta; os classificadores não a conhecem além das 12 specs que recebem).",
+ "contagens": {
+  "classe": {
+   "contextual/relacional": 10,
+   "sintático": 6,
+   "layout/visual": 7,
+   "semântico": 2
+  },
+  "automatizabilidade": {
+   "b": 10,
+   "a": 13,
+   "c": 2
+  },
+  "origem": {
+   "acordo": 8,
+   "desempate-classificador-3": 4,
+   "herdada-da-D": 13
+  },
+  "total": 25,
+  "acordo1x2": {
+   "classe": 11,
+   "nivel": 9,
+   "de": 12
+  },
+  "desempates": 4,
+  "semMaioria": 0
+ },
+ "specs": [
+  {
+   "id": "F3-01",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "F3-02",
+   "classe": "sintático",
+   "automatizabilidade": "a",
+   "limitrofe": true,
+   "origem": "desempate-classificador-3",
+   "motivo": "Classificadores 1 e 2 discordaram; o classificador 3, cego à disputa, desempatou por maioria. Motivos em classificador-1/2/3.json."
+  },
+  {
+   "id": "F3-03",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "F3-04",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "origem": "desempate-classificador-3",
+   "motivo": "Classificadores 1 e 2 discordaram; o classificador 3, cego à disputa, desempatou por maioria. Motivos em classificador-1/2/3.json."
+  },
+  {
+   "id": "F3-05",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "F3-06",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "F3-07",
+   "classe": "sintático",
+   "automatizabilidade": "a",
+   "limitrofe": true,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "F3-08",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": true,
+   "origem": "desempate-classificador-3",
+   "motivo": "Classificadores 1 e 2 discordaram; o classificador 3, cego à disputa, desempatou por maioria. Motivos em classificador-1/2/3.json."
+  },
+  {
+   "id": "F3-09",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "F3-10",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "F3-11",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "a",
+   "limitrofe": true,
+   "origem": "desempate-classificador-3",
+   "motivo": "Classificadores 1 e 2 discordaram; o classificador 3, cego à disputa, desempatou por maioria. Motivos em classificador-1/2/3.json."
+  },
+  {
+   "id": "F3-12",
+   "classe": "semântico",
+   "automatizabilidade": "c",
+   "limitrofe": false,
+   "origem": "acordo",
+   "motivo": "Os dois classificadores cegos deram a mesma classe e o mesmo nível; motivos em classificador-1.json e classificador-2.json."
+  },
+  {
+   "id": "D-01",
+   "classe": "sintático",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "herdada-da-D",
+   "motivo": "Spec da referência 1.1.0 da D (idêntica byte a byte); herdada de tela-d/classes-nat71/classes-finais.json (acordo)."
+  },
+  {
+   "id": "D-02",
+   "classe": "sintático",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "herdada-da-D",
+   "motivo": "Spec da referência 1.1.0 da D (idêntica byte a byte); herdada de tela-d/classes-nat71/classes-finais.json (acordo)."
+  },
+  {
+   "id": "D-03",
+   "classe": "sintático",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "herdada-da-D",
+   "motivo": "Spec da referência 1.1.0 da D (idêntica byte a byte); herdada de tela-d/classes-nat71/classes-finais.json (acordo)."
+  },
+  {
+   "id": "D-04",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "a",
+   "limitrofe": true,
+   "origem": "herdada-da-D",
+   "motivo": "Spec da referência 1.1.0 da D (idêntica byte a byte); herdada de tela-d/classes-nat71/classes-finais.json (decisao-da-autora-2026-11-16)."
+  },
+  {
+   "id": "D-05",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "origem": "herdada-da-D",
+   "motivo": "Spec da referência 1.1.0 da D (idêntica byte a byte); herdada de tela-d/classes-nat71/classes-finais.json (acordo)."
+  },
+  {
+   "id": "D-06",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "origem": "herdada-da-D",
+   "motivo": "Spec da referência 1.1.0 da D (idêntica byte a byte); herdada de tela-d/classes-nat71/classes-finais.json (decisao-da-autora-2026-11-16)."
+  },
+  {
+   "id": "D-07",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "herdada-da-D",
+   "motivo": "Spec da referência 1.1.0 da D (idêntica byte a byte); herdada de tela-d/classes-nat71/classes-finais.json (acordo)."
+  },
+  {
+   "id": "D-08",
+   "classe": "sintático",
+   "automatizabilidade": "a",
+   "limitrofe": true,
+   "origem": "herdada-da-D",
+   "motivo": "Spec da referência 1.1.0 da D (idêntica byte a byte); herdada de tela-d/classes-nat71/classes-finais.json (decisao-da-autora-2026-11-16)."
+  },
+  {
+   "id": "D-10",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": true,
+   "origem": "herdada-da-D",
+   "motivo": "Spec da referência 1.1.0 da D (idêntica byte a byte); herdada de tela-d/classes-nat71/classes-finais.json (decisao-da-autora-2026-11-16)."
+  },
+  {
+   "id": "D-11",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "b",
+   "limitrofe": false,
+   "origem": "herdada-da-D",
+   "motivo": "Spec da referência 1.1.0 da D (idêntica byte a byte); herdada de tela-d/classes-nat71/classes-finais.json (acordo)."
+  },
+  {
+   "id": "D-12",
+   "classe": "contextual/relacional",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "origem": "herdada-da-D",
+   "motivo": "Spec da referência 1.1.0 da D (idêntica byte a byte); herdada de tela-d/classes-nat71/classes-finais.json (decisao-da-autora-2026-11-16)."
+  },
+  {
+   "id": "D-13",
+   "classe": "semântico",
+   "automatizabilidade": "c",
+   "limitrofe": false,
+   "origem": "herdada-da-D",
+   "motivo": "Spec da referência 1.1.0 da D (idêntica byte a byte); herdada de tela-d/classes-nat71/classes-finais.json (acordo)."
+  },
+  {
+   "id": "D-14",
+   "classe": "layout/visual",
+   "automatizabilidade": "a",
+   "limitrofe": false,
+   "origem": "herdada-da-D",
+   "motivo": "Spec da referência 1.1.0 da D (idêntica fora a âncora, reancorada no mesmo elemento); herdada de tela-d/classes-nat71/classes-finais.json (decisao-da-autora-2026-11-16)."
+  }
+ ]
+}

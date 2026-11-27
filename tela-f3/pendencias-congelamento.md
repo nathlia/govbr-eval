@@ -35,3 +35,7 @@ foi para `main` nem foi enviado. Para refazer tudo: servir os dois builds (`node
 5. `status` sem RASCUNHO; campos de congelamento no `_meta`; commit da referência sozinho.
 6. `estratos.mjs --selar` e `criterios.mjs` (citam o sha256 final); registro `congelamento-1.0.0.md`; manifesto de
    entrega para a bancada.
+
+> **Fechado em 27/11:** itens 1–6 feitos; referência congelada no commit `1209423` (sha256 `14baee19…`). Registro em
+> `congelamento-1.0.0.md`. O passo seguinte (commit em `telas.json` e na lista de telas com critérios) é da bancada,
+> com o manifesto de `.tmp-eval/tela-f3-para-bancada/`.

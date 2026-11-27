@@ -1,0 +1,222 @@
+{
+ "auditor": "2",
+ "pedidoSha256": "e58537ec2eff2189eefd423d72b3b45cf72610804d19da1f0960da58c2470af1",
+ "respostas": [
+  {
+   "id": "A-01",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Antes: tag 'Meus processos' com style background-color rgb(23,85,169), 9 linhas, '1 – 9 de 9 itens'. Depois do clique: o fundo inline some (tag desligada), coluna de caixas some, tabela passa a 10 linhas, '1 – 10 de 23 itens', paginação 1 2 3. Segundo clique religa e volta a 9 linhas.",
+   "nota": "A tag liga e desliga e filtra a tabela."
+  },
+  {
+   "id": "A-02",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "As 9 td:nth-of-type(5) (class solicitante): width/max-width 150px, overflow hidden, white-space nowrap, text-overflow clip; scrollWidth 187–591 px (todas > 150); 1ª linha 'Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa' scrollWidth 591 (maior). Nenhum atributo title na td nem nos filhos; hover de 1,5 s na 1ª célula: nenhum .br-tooltip/[role=tooltip] no DOM, sem aria-describedby; captura a02-hover.png sem reticências.",
+   "nota": ""
+  },
+  {
+   "id": "A-03",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Na carga: li.tab-item.active = 'Aguardando análise'; conteúdo: tag 'Meus processos' ligada, colunas Aberto há|☐|Nº Processo|Tipo|Solicitante|Analista|Téc. Adm.|Status, 9 linhas (000010, 000011, 000013...). Clicar 'Tramitando' mostra exatamente esse mesmo conteúdo. Clicar 'Aguardando análise' mostra outro: sem tag 'Meus processos', colunas Aberto há|Nº Processo|Tipo|Solicitante|Status, 9 linhas diferentes.",
+   "nota": "br-tab tem style inline; o vínculo 'conteúdo = Tramitando' foi estabelecido comparando com o clique em cada aba."
+  },
+  {
+   "id": "A-04",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "As 9 td:nth-of-type(4) têm font-size 14px (= --font-size-scale-base, 14px na raiz), font-weight 500. Nenhuma com 15px.",
+   "nota": ""
+  },
+  {
+   "id": "A-05",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Concluídos, seletor 'Página' → 2 (pela entrada e pelo botão da lista): tabela 4 linhas, '11 – 14 de 14 itens', e input#page.value = '2' (também após tirar o foco); captura a05-pag.png mostra 'Página 2'.",
+   "nota": "O campo acompanha a escolha."
+  },
+  {
+   "id": "A-06",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Os 3 button do br-tab (shadow) 'Aguardando análise', 'Tramitando', 'Concluídos': font-size 16.8px, font-weight 500. O hospedeiro br-tab tem style inline '--font-size-scale-up-02: var(--font-size-scale-up-01)'; na raiz --font-size-scale-up-02 = 20.16px.",
+   "nota": "Esperado 20,16 px pela cláusula; mostrado 16,8 px."
+  },
+  {
+   "id": "A-07",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Marcada a caixa da linha 2 (1ª caixa da lista): aparece br-button label='Confirmar' icon=check type=primary (texto do botão interno 'Confirmar'). Clique abre diálogo (swal2) com título 'Confirma a assinatura de 1 processo(s)?', 'Resumo da assinatura: CAOL: 1', 'Todos os processos selecionados serão assinados digitalmente.', botões 'Assinar' e 'Cancelar'. Cliquei 'Cancelar'; diálogo fechou.",
+   "nota": "Rótulo 'Confirmar' não nomeia a ação de assinar."
+  },
+  {
+   "id": "A-08",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Sem hover: background-image none. Com hover (:hover true): background-image linear-gradient(rgba(19,81,180,0.16), rgba(19,81,180,0.16)); --hover = 0.16 = --surface-opacity-xs. Botão muda visivelmente (a08-hover.png).",
+   "nota": "Overlay presente com opacidade 0,16."
+  },
+  {
+   "id": "A-09",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Os 3 botões internos de br-button[title=Assinar] têm class 'br-button middle'; fundo rgba(0,0,0,0), borda none 0px, border-radius 1680px, cor rgb(19,81,180); aparecem como texto azul 'Assinar', não como botão nativo cinza.",
+   "nota": ""
+  },
+  {
+   "id": "A-10",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "pnip-header .br-avatar > span: class 'bg-orange-vivid-30 text-pure-0' (sem 'content'), 18.16×40 px, border-radius 0px, fundo rgb(255,140,0), letra 'U' 24.19px ocupando a largura; .br-avatar também 18.16×40.",
+   "nota": ""
+  },
+  {
+   "id": "A-11",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Concluídos, seletor 'Exibir' → 25 (pela entrada e pelo botão): tabela 14 linhas, '1 – 14 de 14 itens'; na lista o item 25 fica .selected e o rádio checked; input#total.value continua '10' (também após tirar o foco); captura a11-pag.png mostra 'Exibir 10'.",
+   "nota": ""
+  },
+  {
+   "id": "A-12",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Antes: div.row.pl-2:not(.align-items-center) vazio, 'Limpar filtros' desabilitado. Após escolher 'Últimos 60 dias': aparece span.br-tag.interaction 'Últimos 60 dias' com botão × nessa linha, e 'Limpar filtros' habilita.",
+   "nota": "A tag do filtro é acrescentada."
+  },
+  {
+   "id": "A-13",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Concluídos: antes '1 – 10 de 14 itens', 10 linhas. Após clicar 'Página seguinte': '11 – 14 de 14 itens', 4 linhas, página 2 ativa, seta fica desabilitada.",
+   "nota": "Muda de página (o campo 'Página' fica em 1, mas isso não é o que a frase afirma)."
+  },
+  {
+   "id": "A-14",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "br-button[label='Limpar filtros'] com disabled: opacity computada 0.45 no hospedeiro e no button interno (disabled=true), cursor not-allowed.",
+   "nota": "Não tem opacidade 1."
+  },
+  {
+   "id": "A-15",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "span.br-tag.interaction 'Meus processos' (ligada na carga): style='cursor: pointer; background-color: rgb(23, 85, 169);'; computado rgb(23,85,169). --blue-warm-vivid-70 = #1351B4 (cores.md).",
+   "nota": ""
+  },
+  {
+   "id": "A-16",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "button interno de Exportar (class 'br-button secondary middle'): color rgb(19,81,180), border solid 1px rgb(19,81,180); filhos idem.",
+   "nota": "É o #1351b4, não #005ea2."
+  },
+  {
+   "id": "A-17",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "8 br-button[disabled] 'Desassociar processo do analista responsável' na tbody: opacity 1 no hospedeiro e no button interno (disabled=true, cursor not-allowed); o habilitado da 1ª linha: opacity 1, cursor pointer, mesma cor rgb(19,81,180). 'Limpar filtros' desabilitado: opacity 0.45.",
+   "nota": ""
+  },
+  {
+   "id": "A-18",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "nav.br-pagination > ul na carga contém li > a.page.active ' 1 ' (44 px de largura, visível) antes do botão 'Página seguinte'.",
+   "nota": "O identificador '1' aparece entre/antes das setas."
+  },
+  {
+   "id": "A-19",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "br-breadcrumb (shadow) li.crumb:last-child contém <a href=\"portal-mpa/processos\">Processos</a> (resolve para /pnip-f3/portal-mpa/processos, a própria rota sem a query), cor rgb(19,81,180) (azul de link), tabIndex 0; na sequência de Tab o foco passa por 'A:Processos' após Home.",
+   "nota": "'Para a própria página' vale pelo caminho; a query ?mock-perfil não está no href."
+  },
+  {
+   "id": "A-20",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "button[aria-label='Página seguinte']: class 'br-button circle', style inline 'border-radius: 7px;', computado 7px, 40×40. Os 2 button[aria-label='Exibir lista'] dos seletores Exibir/Página: border-radius 50%, 32×32.",
+   "nota": ""
+  },
+  {
+   "id": "A-21",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Com a tag 'Últimos 60 dias': × = button.br-button.inverted.circle, fundo rgb(19,81,180), ícone branco, 50%, 28×28, tabIndex 0 (alcançado por Tab, recebe foco). Após clique: a tag continua (1 tag), 'Limpar filtros' continua habilitado, 9 linhas. Focado + Enter: mesmo resultado.",
+   "nota": ""
+  },
+  {
+   "id": "A-22",
+   "veredicto": "verdadeira",
+   "violaClausula": "sim",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "Carga: ul = [a.page '1'][button 'Página seguinte' (disabled)]; nenhum botão 'Página anterior'. Concluídos p1: [1][2][Página seguinte]. Após 'Página seguinte' (p2 ativa, 11–14 de 14): ul = [1][2 ativa][Página seguinte disabled], sem seta de voltar. Nenhum button no ul além de 'Página seguinte'.",
+   "nota": ""
+  },
+  {
+   "id": "A-23",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "As 9 td:nth-of-type(4): overflow visible, white-space normal; scrollWidth = clientWidth = 131 (nada cortado); o texto quebra em várias linhas (altura 113–153 px), ex.: 'CAOL - Cert. Acred Origem Legal do Pescado' inteiro.",
+   "nota": "Quem corta numa linha é a coluna Solicitante (A-02), não Tipo de Processo."
+  },
+  {
+   "id": "A-24",
+   "veredicto": "falsa",
+   "violaClausula": "nao-se-aplica",
+   "clausulaConfere": "sim",
+   "juizDecide": "sim",
+   "medida": "button interno de Exportar: font-size 16.8px (= --font-size-scale-up-01), font-weight 600.",
+   "nota": "Não é 14px."
+  }
+ ]
+}
