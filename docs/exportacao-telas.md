@@ -32,6 +32,7 @@ diretório temporário apagado no fim.
 | `site/pnip-d/**` (tela D `processos`, desde `export-telas-1.4.0`) | `govbr-corpus/public/pnip-d/` (build Angular congelado, `base href /pnip-d/`) | A mesma regra da `pnip/`: a lista do manifesto do congelamento da ala, conferida por sha256; o manifesto da ala fica de fora. |
 | `site/pnip-f/**` (tela F `processos-f`, desde `export-telas-1.6.0`) | `govbr-corpus/public/pnip-f/` (build Angular congelado, `base href /pnip-f/`) | A mesma regra da `pnip-d/`. |
 | `site/pnip-f2/**` (tela F2 `processos-f2`, desde `export-telas-1.7.0`) | `govbr-corpus/public/pnip-f2/` (build Angular congelado, `base href /pnip-f2/`) | A mesma regra da `pnip-d/`. |
+| `site/pnip-f3/**` (tela F3 `processos-f3`, desde `export-telas-1.8.0`) | `govbr-corpus/public/pnip-f3/` (build Angular congelado, `base href /pnip-f3/`) | A mesma regra da `pnip-d/`. |
 | `server.mjs`, `README.md` | modelos em `scripts/export-telas/` | copiados como estão |
 | `package.json`, `.node-version`, `.gitattributes`, `site-manifest.json` | gerados pelo exportador | — |
 | `skills/avaliar-tela/SKILL.md` | `govbr-eval/skills/avaliar-tela/SKILL.md` (T2) | `PACKAGE_SKILLS`, lista fechada de uma entrada; fins de linha normalizados para LF; hash em `skills[]` do manifesto. Nada mais de `skills/` entra (o protocolo antigo `evaluate-screen` + `_shared/` e `evaluate-all` ficam fora). O servidor não o serve (404). Ver [`skill-avaliar-tela.md`](skill-avaliar-tela.md). |
@@ -102,6 +103,10 @@ aceita tela sem referência (`reference: null`): visita só a entrada e a prova 
 pela mesma regra. Na raiz mudam `README.md` (sete telas) e `package.json` (descrição); `site/` de A, B, A2, D, E e F fica
 byte a byte igual (ensaio de 26/11 com a ala SEM semente num corpus descartável: 620 de 620 arquivos iguais aos de `b663a26`,
 190 novos, todos sob `pnip-f2/`).
+
+**1.8.0 (tela F3).** Quinta SPA, `processos-f3` em `site/pnip-f3/` (ala `govbr-corpus/public/pnip-f3/`, `base href /pnip-f3/`),
+pela mesma regra. Na raiz mudam `README.md` (oito telas) e `package.json` (descrição); `site/` de A, B, A2, D, E, F e F2
+fica byte a byte igual (ensaio de 27/11 com uma ala de ensaio sem semente num clone descartável do corpus; ver a bancada da F3).
 
 ## O manifesto (`site-manifest.json`)
 
