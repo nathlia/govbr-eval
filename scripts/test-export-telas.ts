@@ -119,6 +119,10 @@ pageSentence("O arquivo deve estar em PDF, JPG ou PNG e ter até 5 MB.", /^site\
   "A2: mensagem de recusa do envio que a página mostra (comportamento.js); a referência a cita entre aspas");
 // Tela E (govbr-corpus bancada-e, página construída): ground-truth-cadastro-pais.json cita entre aspas o título da
 // mensagem de retorno que a página mostra depois do envio.
+// Tela F3 (govbr-corpus tela-f3 9d194d7): ground-truth-processos-f3.json cita entre aspas, na F3-04, o nome fictício do
+// solicitante da 1ª linha da lista da carga, que o bundle da página traz (dado do mock do pnip-mock tela-f3).
+pageSentence("Pessoa Exemplo De Nome Comprido Para Teste Da Listagem", /^site\/pnip-f3\/main\.[0-9a-f]+\.js$/,
+  "F3: nome fictício do solicitante da 1ª linha da lista, visível na página; a referência o cita entre aspas");
 pageSentence("Não foi possível salvar o país.", /^site\/cadastro-pais\.html$/,
   "E: título da mensagem de retorno do envio, visível na página; a referência o cita entre aspas");
 
