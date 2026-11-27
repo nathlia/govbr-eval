@@ -40,7 +40,10 @@
  * estrato semeado (defeitos do DS injetados, todos da classe ds, nenhum exposto), sensibilidade = todas (semeadas + naturais
  * não expostas), as unidades do primário e, como na D, com as expostas; tela F2 (`processos-f2`, 1.0.0; segundo seguimento,
  * adendo 2 de 26/11) pela mesma regra da F, com as tabelas descritivas por tipo de defeito e por nível lidas do arquivo de
- * estratos declarado em `telas.json › processos-f2.estratos`. δ = 2 specs. Outra tela: recusa.
+ * estratos declarado em `telas.json › processos-f2.estratos`; tela F3 (`processos-f3`, 1.0.0; terceiro seguimento, adendo 3
+ * de 27/11) pela mesma regra da F2, com o arquivo de estratos no formato da F3 (mais origem e controle da varredura por spec),
+ * a tabela descritiva por origem e a sensibilidade pré-declarada sem os controles da varredura (as três comparações, pelo
+ * mesmo método do primário, nas semeadas que não são controle). δ = 2 specs. Outra tela: recusa.
  *
  * `--por-protocolo` (NAT-78 §4.5): sensibilidade por protocolo AO LADO do primário. O estado do oráculo de cada slot vem da
  * `summary.json` da análise (`mcpIsolamento.usoOraculo` = `run.status.oracleUsage`); o slot conta quando o estado é o que o
@@ -127,8 +130,9 @@ export interface Referencia {
   /**
    * `nivel` (tela F, F2): o nível de dificuldade da spec semeada, se a referência o repete; tem de ser o do arquivo de níveis
    * (F) ou de estratos (F2). `tipo` (tela F2): o tipo de defeito, se a referência o repete; tem de ser o do arquivo de estratos.
+   * `origem` e `controleDaVarredura` (tela F3): idem, se a referência os repete.
    */
-  violations: { id: string; expectedCount?: number; categories?: string[]; rules?: string[]; nivel?: string; tipo?: string }[];
+  violations: { id: string; expectedCount?: number; categories?: string[]; rules?: string[]; nivel?: string; tipo?: string; origem?: string; controleDaVarredura?: boolean }[];
 }
 
 /**
@@ -240,7 +244,11 @@ export function regraDaTela(tela: string, ref: Referencia): RegraDesfecho {
   // processos-f2 1.0.0 (tela F2, segundo seguimento; adendo 2 de 26/11 §6, §7): a MESMA regra da F (primário = estrato
   // semeado, mesmas sensibilidades e recusas). O que muda fica fora da regra: as tabelas descritivas por tipo e por nível
   // saem do arquivo de estratos (`telas.json › processos-f2.estratos`, `lerEstratos`), não do arquivo de níveis.
-  if ((tela === "processos-f" || tela === "processos-f2") && ref._meta.version === "1.0.0") {
+  //
+  // processos-f3 1.0.0 (tela F3, terceiro seguimento; adendo 3 de 27/11 §6, §7): a MESMA regra da F2. O que muda fica de
+  // novo fora da regra, no arquivo de estratos (formato `tela-f3-estratos-1.0.0`: mais `origem` e `controleDaVarredura`
+  // por spec semeada), com as saídas `porOrigem` e `semControles` (a sensibilidade pré-declarada sem os controles).
+  if ((tela === "processos-f" || tela === "processos-f2" || tela === "processos-f3") && ref._meta.version === "1.0.0") {
     const est = ref._meta.estratos;
     const sem = est?.semeado?.specs, nat = est?.natural?.specs, exp = est?.exposto?.specs;
     const rot = `${tela} ${ref._meta.version}`;
@@ -271,7 +279,7 @@ export function regraDaTela(tela: string, ref: Referencia): RegraDesfecho {
       { id: "unidades", rotulo: `unidades das specs semeadas (${nu}; por unidade, sensibilidade)`, specs: prim.map(v => v.id), modo: "unidade", tipo: "sensibilidade" },
       ...(exp.length ? [{ id: "com-expostas", rotulo: `com as expostas (${ids.length} specs; sensibilidade)`, specs: ids, modo: "spec" as const, tipo: "sensibilidade" as const }] : [])] };
   }
-  throw new Error(`tela ${tela} (referência ${ref._meta.version}) sem regra de desfecho pré-registrada (só processos 1.0.0/1.1.0, solicitacao 2.0.0, cadastro-pais 1.0.0, processos-f 1.0.0 e processos-f2 1.0.0)`);
+  throw new Error(`tela ${tela} (referência ${ref._meta.version}) sem regra de desfecho pré-registrada (só processos 1.0.0/1.1.0, solicitacao 2.0.0, cadastro-pais 1.0.0, processos-f 1.0.0, processos-f2 1.0.0 e processos-f3 1.0.0)`);
 }
 
 /** Conta o conjunto de unidades confirmadas no modo da tela, restrito às specs do conjunto. */
@@ -628,14 +636,35 @@ export function lerNiveis(telaId: string, ref: Referencia, refSha256: string, E:
  * e subtipos NÃO estão no código: valem pelo arquivo.
  */
 export const FORMATO_ESTRATOS = "tela-f2-estratos-1.0.0";
+/**
+ * [tela F3] O formato da F3 (adendo 3 de 27/11, §2.3, §3, §6, §7): o da F2 com dois campos a mais, obrigatórios em toda spec
+ * semeada: `origem` (de onde veio o defeito em relação à lista da F2: `mantido`, `trocado` ou `novo`) e `controleDaVarredura`
+ * (booleano: o defeito foi escolhido porque se espera que a varredura sem guia o marque). Tipos e subtipos continuam dados
+ * do arquivo; nenhuma cota por tipo (a F3 tem contagens desiguais).
+ */
+export const FORMATO_ESTRATOS_F3 = "tela-f3-estratos-1.0.0";
+export const FORMATOS_ESTRATOS = [FORMATO_ESTRATOS, FORMATO_ESTRATOS_F3] as const;
+export type FormatoEstratos = typeof FORMATOS_ESTRATOS[number];
+/** O formato de estratos que cada tela tem de declarar (tela fora daqui: qualquer um dos formatos). */
+export const FORMATO_ESTRATOS_DA_TELA: Readonly<Record<string, FormatoEstratos>> = { "processos-f2": FORMATO_ESTRATOS, "processos-f3": FORMATO_ESTRATOS_F3 };
+/** [tela F3] Vocabulário de `origem` (adendo 3 §3, coluna "Origem"); é também a ordem das linhas da tabela por origem. */
+export const ORIGENS = ["mantido", "trocado", "novo"] as const;
+export type Origem = typeof ORIGENS[number];
 export interface TipoDeclarado { id: string; rotulo: string; definicao?: string; subtipos?: string[] }
-export interface EstratoDaSpec { tipo: string; subtipo?: string; nivel: Nivel; exigeInteracao: boolean }
+export interface EstratoDaSpec { tipo: string; subtipo?: string; nivel: Nivel; exigeInteracao: boolean; origem?: Origem; controleDaVarredura?: boolean }
 export interface ArquivoEstratos {
-  formato: typeof FORMATO_ESTRATOS; referencia: ArquivoNiveis["referencia"]; tipos: TipoDeclarado[];
+  formato: FormatoEstratos; referencia: ArquivoNiveis["referencia"]; tipos: TipoDeclarado[];
   specs: Record<string, EstratoDaSpec>;
 }
 /** Linhas da tabela por exigência de interação (na ordem). */
 export const INTERACAO = ["exige-interacao", "sem-interacao"] as const;
+/** O `tipo` (rótulo) de cada tabela descritiva dos estratos, pelo formato do arquivo: o texto da F2 fica byte a byte o de antes. */
+function rotuloDescritivo(formato: FormatoEstratos, tabela: "tipo" | "nivel" | "interacao" | "origem"): string {
+  if (formato === FORMATO_ESTRATOS) return { tipo: "descritiva pré-declarada (sem D, sem teste; adendo 2 da tela F2 §6)",
+    nivel: "descritiva pré-declarada (sem D, sem teste; adendo 2 da tela F2 §4 item 6 e §6)", interacao: "descritiva pré-declarada (sem D, sem teste; adendo 2 da tela F2 §3 e §6)",
+    origem: "descritiva pré-declarada (sem D, sem teste)" }[tabela];
+  return "descritiva pré-declarada (sem D, sem teste; adendo 3 da tela F3 §6)";
+}
 
 /** `estratos` da tela em `telas.json`, ou `null`. Mesmo formato e mesmas recusas da declaração de níveis. */
 export function estratosDeclarados(telaId: string, telasAbs: string = TELAS_JSON): DeclaracaoNiveis | null {
@@ -648,12 +677,14 @@ export function estratosDeclarados(telaId: string, telasAbs: string = TELAS_JSON
  * estrato semeado (n qualquer, nunca fixado aqui); cada spec com exatamente um `tipo` (um dos declarados), um `nivel` (do
  * vocabulário de níveis) e `exigeInteracao` booleano, mais `subtipo` se e só se o tipo declara subtipos (e então um deles),
  * e nada mais; todo tipo declarado com ao menos uma spec (os tipos presentes são exatamente os declarados); e o
- * `tipo`/`nivel` que a referência repetir numa spec igual ao do arquivo.
+ * `tipo`/`nivel` que a referência repetir numa spec igual ao do arquivo. No formato da F3, cada spec tem ainda exatamente
+ * `origem` (um de `ORIGENS`) e `controleDaVarredura` (booleano), e o que a referência repetir deles tem de ser igual.
  */
 export function conferirEstratos(doc: unknown, ref: Referencia, refSha256: string, refArquivo: string | null): ArquivoEstratos {
   const N = "arquivo de estratos";
   const d = doc as Partial<Record<keyof ArquivoEstratos, unknown>> | null;
-  if (!d || typeof d !== "object" || d.formato !== FORMATO_ESTRATOS) throw new Error(`${N}: formato ${JSON.stringify(d?.formato)} ≠ ${FORMATO_ESTRATOS}`);
+  if (!d || typeof d !== "object" || !(FORMATOS_ESTRATOS as readonly unknown[]).includes(d.formato)) throw new Error(`${N}: formato ${JSON.stringify(d?.formato)} ≠ ${FORMATOS_ESTRATOS.join(" nem ")}`);
+  const formato = d.formato as FormatoEstratos, f3 = formato === FORMATO_ESTRATOS_F3;
   const referencia = conferirReferenciaCitada(N, d.referencia, ref, refSha256, refArquivo);
   if (!Array.isArray(d.tipos) || !d.tipos.length) throw new Error(`${N} sem tipos [{ id, rotulo }] (lista não vazia)`);
   const tipos: TipoDeclarado[] = d.tipos.map((t: unknown, i: number) => {
@@ -679,22 +710,28 @@ export function conferirEstratos(doc: unknown, ref: Referencia, refSha256: strin
       throw new Error(`${N}: ${s} tem de ter exatamente um tipo e um nível (tipo: texto, nivel: texto)`);
     const t = tipos.find(y => y.id === x.tipo);
     if (!t) throw new Error(`${N}: ${s} com tipo ${JSON.stringify(x.tipo)} fora dos tipos declarados no próprio arquivo (${idsTipo.join(" | ")})`);
-    const chaves = ["exigeInteracao", "nivel", ...(t.subtipos ? ["subtipo"] : []), "tipo"];
+    const chaves = [...(f3 ? ["controleDaVarredura"] : []), "exigeInteracao", "nivel", ...(f3 ? ["origem"] : []), ...(t.subtipos ? ["subtipo"] : []), "tipo"];
     if (JSON.stringify(Object.keys(x).sort()) !== JSON.stringify(chaves))
       throw new Error(`${N}: ${s} tem de ter exatamente { ${chaves.join(", ")} } (subtipo só nos tipos que declaram subtipos), nada mais`);
     if (typeof x.exigeInteracao !== "boolean") throw new Error(`${N}: ${s} com exigeInteracao ${JSON.stringify(x.exigeInteracao)} (tem de ser true ou false)`);
+    if (f3 && typeof x.controleDaVarredura !== "boolean") throw new Error(`${N}: ${s} com controleDaVarredura ${JSON.stringify(x.controleDaVarredura)} (tem de ser true ou false)`);
+    if (f3 && !(ORIGENS as readonly unknown[]).includes(x.origem)) throw new Error(`${N}: ${s} com origem ${JSON.stringify(x.origem)} fora de ${ORIGENS.join(" | ")}`);
     if (t.subtipos && (typeof x.subtipo !== "string" || !t.subtipos.includes(x.subtipo)))
       throw new Error(`${N}: ${s} com subtipo ${JSON.stringify(x.subtipo)} fora dos subtipos de ${t.id} (${t.subtipos.join(" | ")})`);
     if (!(NIVEIS as readonly string[]).includes(x.nivel)) throw new Error(`${N}: ${s} com nível ${JSON.stringify(x.nivel)} fora de ${NIVEIS.join(" | ")}`);
     const v = ref.violations.find(y => y.id === s);
     if (v?.tipo !== undefined && v.tipo !== x.tipo) throw new Error(`${N}: ${s} é do tipo ${x.tipo} no arquivo e ${v.tipo} na referência`);
     if (v?.nivel !== undefined && v.nivel !== x.nivel) throw new Error(`${N}: ${s} é ${x.nivel} no arquivo e ${v.nivel} na referência`);
-    saida[s] = { tipo: x.tipo, ...(t.subtipos ? { subtipo: x.subtipo as string } : {}), nivel: x.nivel as Nivel, exigeInteracao: x.exigeInteracao };
+    if (f3 && v?.origem !== undefined && v.origem !== x.origem) throw new Error(`${N}: ${s} tem origem ${x.origem} no arquivo e ${v.origem} na referência`);
+    if (f3 && v?.controleDaVarredura !== undefined && v.controleDaVarredura !== x.controleDaVarredura)
+      throw new Error(`${N}: ${s} tem controleDaVarredura ${x.controleDaVarredura} no arquivo e ${v.controleDaVarredura} na referência`);
+    saida[s] = { tipo: x.tipo, ...(t.subtipos ? { subtipo: x.subtipo as string } : {}), nivel: x.nivel as Nivel, exigeInteracao: x.exigeInteracao,
+      ...(f3 ? { origem: x.origem as Origem, controleDaVarredura: x.controleDaVarredura as boolean } : {}) };
   }
   const usados = new Set(Object.values(saida).map(x => x.tipo));
   const vazios = idsTipo.filter(t => !usados.has(t));
   if (vazios.length) throw new Error(`${N}: tipo(s) declarado(s) sem nenhuma spec semeada (${vazios.join(", ")}): os tipos presentes têm de ser exatamente os declarados`);
-  return { formato: FORMATO_ESTRATOS, referencia, tipos, specs: saida };
+  return { formato, referencia, tipos, specs: saida };
 }
 
 /** O arquivo de estratos da tela, lido (registrado em `E`) e conferido; `null` se a tela não o declara. */
@@ -738,7 +775,7 @@ export function tabelaPorNivel(niveis: { declaracao: DeclaracaoNiveis; doc: Arqu
 export function tabelaPorNivelDosEstratos(estratos: { declaracao: DeclaracaoNiveis; doc: ArquivoEstratos }, telaId: string, trios: TrioEntrada[],
   fund: FundamentadaPorTrio[], bracos: readonly string[], specDe: (u: string) => string | undefined): PorNivel {
   return montarPorNivel(Object.fromEntries(Object.entries(estratos.doc.specs).map(([s, x]) => [s, x.nivel])), {
-    tipo: "descritiva pré-declarada (sem D, sem teste; adendo 2 da tela F2 §4 item 6 e §6)", fonte: "arquivo de estratos",
+    tipo: rotuloDescritivo(estratos.doc.formato, "nivel"), fonte: "arquivo de estratos",
     declaradoEm: `telas.json › ${telaId}.estratos`, arquivo: estratos.declaracao.arquivo, sha256: estratos.declaracao.sha256, formato: estratos.doc.formato, referencia: estratos.doc.referencia,
   }, trios, fund, bracos, specDe);
 }
@@ -801,7 +838,7 @@ export function tabelaPorTipo(estratos: { declaracao: DeclaracaoNiveis; doc: Arq
   const specs: Record<string, string[]> = Object.fromEntries(doc.tipos.map(t => [t.id, Object.keys(doc.specs).filter(s => doc.specs[s].tipo === t.id).sort()]));
   const linhas: [string, Set<string>][] = [...doc.tipos.map(t => [t.id, new Set(specs[t.id])] as [string, Set<string>]), ["total", new Set(Object.keys(doc.specs))]];
   const { deteccao, fundamentada } = contagemPorLinha(linhas, chave, trios, fund, bracos, specDe);
-  return { tipo: "descritiva pré-declarada (sem D, sem teste; adendo 2 da tela F2 §6)",
+  return { tipo: rotuloDescritivo(doc.formato, "tipo"),
     regra: "por tipo do arquivo de estratos (na ordem de tipos): specs semeadas do tipo com ≥ 1 unidade confirmada (detecção, chave principal|1.2.0, D-102; [máximo] com os pendentes) e specs semeadas do tipo fundamentadas (specFundamentada, leitura principal), por braço e trio, com a mediana entre os trios com o braço; total = o primário",
     declaradoEm: `telas.json › ${telaId}.estratos`, arquivo: estratos.declaracao.arquivo, sha256: estratos.declaracao.sha256, formato: doc.formato, referencia: doc.referencia,
     chave, bracos: [...bracos], trios: trios.map(t => t.trio), tipos: doc.tipos.map(t => ({ ...t })), specs,
@@ -818,7 +855,7 @@ export function tabelaPorInteracao(estratos: { declaracao: DeclaracaoNiveis; doc
   const specs: Record<string, string[]> = Object.fromEntries(INTERACAO.map(k => [k, Object.keys(doc.specs).filter(s => doc.specs[s].exigeInteracao === (k === "exige-interacao")).sort()]));
   const linhas: [string, Set<string>][] = [...INTERACAO.map(k => [k, new Set(specs[k])] as [string, Set<string>]), ["total", new Set(Object.keys(doc.specs))]];
   const { deteccao, fundamentada } = contagemPorLinha(linhas, chave, trios, fund, bracos, specDe);
-  return { tipo: "descritiva pré-declarada (sem D, sem teste; adendo 2 da tela F2 §3 e §6)",
+  return { tipo: rotuloDescritivo(doc.formato, "interacao"),
     regra: "por exigência de interação do arquivo de estratos (exigeInteracao true → exige-interacao, false → sem-interacao): specs semeadas da linha com ≥ 1 unidade confirmada (detecção, chave principal|1.2.0, D-102; [máximo] com os pendentes) e specs semeadas da linha fundamentadas (specFundamentada, leitura principal), por braço e trio, com a mediana entre os trios com o braço; total = o primário",
     declaradoEm: `telas.json › ${telaId}.estratos`, arquivo: estratos.declaracao.arquivo, sha256: estratos.declaracao.sha256, formato: doc.formato, referencia: doc.referencia,
     chave, bracos: [...bracos], trios: trios.map(t => t.trio), specs, deteccao, fundamentada };
@@ -828,6 +865,82 @@ export function tabelaPorInteracao(estratos: { declaracao: DeclaracaoNiveis; doc
 export function porInteracaoMd(p: PorInteracao): string {
   return secaoDescritivaMd("## Specs semeadas confirmadas por exigência de interação (descritivo pré-declarado; sem D, sem teste)", "Interação", "interação (specs)",
     p, [...INTERACAO, "total"].map(k => [k, k, k === "total" ? Object.values(p.specs).flat().length : p.specs[k].length]));
+}
+
+/** [tela F3] Tabela por origem (adendo 3 §6): linhas = `ORIGENS` na ordem e `total`, com o denominador de cada linha. */
+export interface PorOrigem extends Omit<PorNivel, "specs"> { specs: Record<string, string[]>; denominador: Record<string, number> }
+
+/**
+ * [tela F3] Specs semeadas confirmadas por ORIGEM do defeito (mantido, trocado, novo; atributo do arquivo de estratos da F3),
+ * como as por nível e por interação: detecção da chave principal|1.2.0 e fundamentada ao lado; `total` = o primário. Linha
+ * sem spec fica com denominador 0 (nenhuma cota por origem). Só para o formato da F3 (o da F2 não tem `origem`).
+ */
+export function tabelaPorOrigem(estratos: { declaracao: DeclaracaoNiveis; doc: ArquivoEstratos }, telaId: string, trios: TrioEntrada[],
+  fund: FundamentadaPorTrio[], bracos: readonly string[], specDe: (u: string) => string | undefined): PorOrigem {
+  const doc = estratos.doc;
+  if (doc.formato !== FORMATO_ESTRATOS_F3) throw new Error(`tabela por origem: arquivo de estratos no formato ${doc.formato} (só ${FORMATO_ESTRATOS_F3} traz origem)`);
+  const chave = chaveVariante("principal", "1.2.0");
+  const specs: Record<string, string[]> = Object.fromEntries(ORIGENS.map(k => [k, Object.keys(doc.specs).filter(s => doc.specs[s].origem === k).sort()]));
+  const linhas: [string, Set<string>][] = [...ORIGENS.map(k => [k, new Set(specs[k])] as [string, Set<string>]), ["total", new Set(Object.keys(doc.specs))]];
+  const { deteccao, fundamentada } = contagemPorLinha(linhas, chave, trios, fund, bracos, specDe);
+  return { tipo: rotuloDescritivo(doc.formato, "origem"),
+    regra: "por origem do arquivo de estratos (na ordem mantido, trocado, novo): specs semeadas da origem com ≥ 1 unidade confirmada (detecção, chave principal|1.2.0, D-102; [máximo] com os pendentes) e specs semeadas da origem fundamentadas (specFundamentada, leitura principal), por braço e trio, com a mediana entre os trios com o braço; total = o primário",
+    declaradoEm: `telas.json › ${telaId}.estratos`, arquivo: estratos.declaracao.arquivo, sha256: estratos.declaracao.sha256, formato: doc.formato, referencia: doc.referencia,
+    chave, bracos: [...bracos], trios: trios.map(t => t.trio), specs,
+    denominador: Object.fromEntries([...ORIGENS.map(k => [k, specs[k].length] as [string, number]), ["total", Object.keys(doc.specs).length]]), deteccao, fundamentada };
+}
+
+/** Seção da tabela por origem no tabela.md (depois da por interação). */
+export function porOrigemMd(p: PorOrigem): string {
+  return secaoDescritivaMd("## Specs semeadas confirmadas por origem do defeito (descritivo pré-declarado; sem D, sem teste)", "Origens", "origem (denominador)",
+    p, [...ORIGENS, "total"].map(k => [k, k, p.denominador[k]]));
+}
+
+/** Rótulo pré-declarado da sensibilidade sem os controles da varredura (adendo 3 §2.5, §6). */
+export const ROTULO_SEM_CONTROLES = "sensibilidade pré-declarada, sem os controles da varredura";
+/** Id do conjunto da sensibilidade sem os controles (entra na semente: `…|recalculo|<comparação>|principal|1.2.0|sem-controles`). */
+export const CONJUNTO_SEM_CONTROLES = "sem-controles";
+
+/** [tela F3] A sensibilidade sem os controles da varredura: as comparações do desenho nas semeadas com `controleDaVarredura: false`. */
+export interface SemControles {
+  tipo: string; rotulo: typeof ROTULO_SEM_CONTROLES; regra: string;
+  declaradoEm: string; arquivo: string; sha256: string; formato: string; referencia: ArquivoNiveis["referencia"];
+  /** Contagens do arquivo de estratos: semeadas (o primário), controles da varredura e as que ficam nesta sensibilidade. */
+  contagem: { semeadas: number; controles: number; semControles: number };
+  /** As semeadas com `controleDaVarredura: true` (fora desta sensibilidade) e as com `false` (o conjunto daqui), ordenadas. */
+  controles: string[]; specs: string[];
+  /** A chave lida (variante principal, política principal) e o conjunto usado (por spec, D-102). */
+  chave: string; conjunto: Conjunto;
+  /** Uma tabela por comparação do desenho (primária primeiro), pela MESMA `tabelaDaComparacao` do primário. */
+  tabelas: TabelaComparacao[];
+}
+
+/**
+ * [tela F3] Sensibilidade pré-declarada ao lado do primário (adendo 3 §2.5, §6): D_fc, D_sc e D_sf recalculados nas specs
+ * semeadas com `controleDaVarredura: false`, pela MESMA `tabelaDaComparacao` (mesmo crédito por spec, mesma permutação
+ * exata por troca de sinais, mesmo IC e mesma leitura com δ), variante principal, política 1.2.0, semente própria (o id do
+ * conjunto entra nela). Não decide nada sobre a quantidade de controles: com 0 controles o conjunto é o primário, com todos
+ * controles o conjunto é vazio (D = 0 em todo trio); as contagens vão na saída.
+ */
+export function sensibilidadeSemControles(estratos: { declaracao: DeclaracaoNiveis; doc: ArquivoEstratos }, telaId: string, regra: RegraDesfecho,
+  trios: TrioEntrada[], comps: Comparacao[], o: { specDe: (u: string) => string | undefined; nPlanejado: number | null; sementeBase: string; reamostragens?: number }): SemControles {
+  const doc = estratos.doc;
+  if (doc.formato !== FORMATO_ESTRATOS_F3) throw new Error(`sensibilidade sem os controles: arquivo de estratos no formato ${doc.formato} (só ${FORMATO_ESTRATOS_F3} traz controleDaVarredura)`);
+  const ids = Object.keys(doc.specs).sort();
+  for (const s of ids) if (typeof doc.specs[s].controleDaVarredura !== "boolean") throw new Error(`sensibilidade sem os controles: ${s} sem controleDaVarredura booleano`);
+  const prim = conjuntoDe(regra, "primario");
+  if (JSON.stringify([...prim.specs].sort()) !== JSON.stringify(ids)) throw new Error("sensibilidade sem os controles: as specs do arquivo de estratos não são o primário da regra");
+  const controles = ids.filter(s => doc.specs[s].controleDaVarredura), specs = ids.filter(s => !doc.specs[s].controleDaVarredura);
+  const conjunto: Conjunto = { id: CONJUNTO_SEM_CONTROLES, rotulo: `specs semeadas que não são controle da varredura (${specs.length} de ${ids.length}; ${controles.length} controle(s) fora; ${ROTULO_SEM_CONTROLES})`,
+    specs, modo: "spec", tipo: "sensibilidade" };
+  const regraSC: RegraDesfecho = { ...regra, conjuntos: [...regra.conjuntos, conjunto] };
+  const tabelas = comps.map(c => tabelaDaComparacao(trios, c, { variante: "principal", politica: "1.2.0", conjunto: CONJUNTO_SEM_CONTROLES, regra: regraSC, specDe: o.specDe,
+    nPlanejado: o.nPlanejado, sementeBase: o.sementeBase, reamostragens: o.reamostragens }));
+  return { tipo: "sensibilidade pré-declarada ao lado do primário (adendo 3 da tela F3 §2.5 e §6)", rotulo: ROTULO_SEM_CONTROLES,
+    regra: "as comparações do desenho (primária e secundárias) recalculadas nas specs semeadas com controleDaVarredura false do arquivo de estratos, pelo mesmo método do primário (spec confirmada = ≥ 1 unidade confirmada, chave principal|1.2.0; permutação exata por troca de sinais; IC bootstrap; leitura com δ), semente própria (…|recalculo|<comparação>|principal|1.2.0|sem-controles)",
+    declaradoEm: `telas.json › ${telaId}.estratos`, arquivo: estratos.declaracao.arquivo, sha256: estratos.declaracao.sha256, formato: doc.formato, referencia: doc.referencia,
+    contagem: { semeadas: ids.length, controles: controles.length, semControles: specs.length }, controles, specs,
+    chave: chaveVariante("principal", "1.2.0"), conjunto, tabelas };
 }
 
 /** Uma seção descritiva (tipo, nível, interação) no tabela.md: cabeçalho, nota da fonte e uma linha por (linha × braço). */
@@ -1162,6 +1275,10 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
   const estratos = lerEstratos(regra.tela, analises[0].ref, refSha, E, o.telas ?? TELAS_JSON);
   if (estratos && niveis) throw new Error(`tela ${regra.tela} declara telas.json › ${regra.tela}.niveis e .estratos: os níveis teriam duas fontes (declare só um)`);
   if (!estratos && regra.tela === "processos-f2") throw new Error("tela processos-f2 sem telas.json › processos-f2.estratos: as tabelas por tipo e por nível são pré-declaradas (adendo 2 da F2 §6)");
+  // [tela F3] Mesmo caminho, com o formato da F3 (origem e controle da varredura): sem ele não há a sensibilidade pré-declarada.
+  if (!estratos && regra.tela === "processos-f3") throw new Error("tela processos-f3 sem telas.json › processos-f3.estratos: a sensibilidade sem os controles da varredura e as tabelas por tipo, origem, nível e interação são pré-declaradas (adendo 3 da F3 §6)");
+  const formatoExigido = FORMATO_ESTRATOS_DA_TELA[regra.tela];
+  if (estratos && formatoExigido && estratos.doc.formato !== formatoExigido) throw new Error(`tela ${regra.tela}: arquivo de estratos no formato ${estratos.doc.formato} ≠ ${formatoExigido} (o formato é o da tela)`);
 
   // Contestados (S4'), ratificações, resíduo.
   const contestados: (Contestado & { passada: string })[] = [];
@@ -1295,11 +1412,17 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
   if (porNivel) json.porNivel = porNivel;
   const porInteracao = estratos ? tabelaPorInteracao(estratos, regra.tela, trios, fundDesc, bracos, specDe) : null;
   if (porInteracao) json.porInteracao = porInteracao;
+  // [tela F3] Por origem (descritiva) e a sensibilidade sem os controles da varredura, só no formato da F3.
+  const f3 = estratos?.doc.formato === FORMATO_ESTRATOS_F3 ? estratos : null;
+  const porOrigem = f3 ? tabelaPorOrigem(f3, regra.tela, trios, fundDesc, bracos, specDe) : null;
+  if (porOrigem) json.porOrigem = porOrigem;
+  const semControles = f3 ? sensibilidadeSemControles(f3, regra.tela, regra, trios, comps, { specDe, nPlanejado, sementeBase, reamostragens: o.reamostragens }) : null;
+  if (semControles) json.semControles = semControles;
   const pp = o.porProtocolo ? sensibilidadePorProtocolo(analises, trios, E, { regra, specDe, comps, nPlanejado, sementeBase, reamostragens: o.reamostragens }) : null;
   if (pp) json.sensibilidadePorProtocolo = pp;
   json.entradas = E.manifesto();
   E.conferir(json.entradas as Record<string, string>);
-  return { json, md: tabelaMd(json, tabelas, regra, comps, s4.disponivel) + (fund ? fundamentadaMd(fund, regra, bracos) : "") + (porTipo ? porTipoMd(porTipo) : "") + (porNivel ? porNivelMd(porNivel) : "") + (porInteracao ? porInteracaoMd(porInteracao) : "") + (pp ? porProtocoloMd(pp, regra) : "") };
+  return { json, md: tabelaMd(json, tabelas, regra, comps, s4.disponivel, semControles) + (fund ? fundamentadaMd(fund, regra, bracos) : "") + (porTipo ? porTipoMd(porTipo) : "") + (porNivel ? porNivelMd(porNivel) : "") + (porInteracao ? porInteracaoMd(porInteracao) : "") + (porOrigem ? porOrigemMd(porOrigem) : "") + (pp ? porProtocoloMd(pp, regra) : "") };
 }
 
 export interface SensibilidadePorProtocolo {
@@ -1462,7 +1585,27 @@ function linhaCompacta(t: TabelaComparacao): string {
   return `| ${t.nome} | ${t.porTrio.map(r => `${r.trio}: ${r.d ?? "—"}`).join("; ")} | ${fmt(t.estatistica.media)} | ${t.nEfetivo} | ${t.estatistica.leitura} | ${t.leituraDelta} |`;
 }
 
-export function tabelaMd(j: Record<string, unknown>, tab: Record<string, TabelaComparacao[]>, regra: RegraDesfecho, comps: Comparacao[], temS4: boolean): string {
+/**
+ * [tela F3] Seção da sensibilidade sem os controles da varredura, logo depois dos blocos do primário: as comparações lado a
+ * lado (primário × sem os controles) e o bloco completo de cada uma.
+ */
+export function semControlesMd(sc: SemControles, primario: TabelaComparacao[]): string {
+  const L = [`### ${ROTULO_SEM_CONTROLES[0].toUpperCase()}${ROTULO_SEM_CONTROLES.slice(1)} — ${sc.conjunto.rotulo}`, "",
+    `Arquivo de estratos: \`${sc.arquivo}\` (${sc.formato}, sha256 ${sc.sha256.slice(0, 8)}…, declarado em \`${sc.declaradoEm}\`). ` +
+    `Semeadas: ${sc.contagem.semeadas}; controles da varredura (\`controleDaVarredura: true\`, fora daqui): ${sc.contagem.controles}; nesta sensibilidade: ${sc.contagem.semControles}. ` +
+    `Mesmo método do primário (chave \`${sc.chave}\`, por spec, permutação exata por troca de sinais), semente própria (\`…|${sc.conjunto.id}\`).`, "",
+    "| comparação | primário: D por trio | média | p | leitura | sem os controles: D por trio | média | p | leitura | leitura com δ |", "|---|---|---|---|---|---|---|---|---|---|"];
+  for (const t of sc.tabelas) {
+    const p = primario.find(x => x.comparacao === t.comparacao);
+    const d = (x: TabelaComparacao) => x.porTrio.map(r => `${r.trio}: ${r.d ?? "—"}`).join("; ");
+    L.push(`| ${t.nome} | ${p ? d(p) : "n/d"} | ${p ? fmt(p.estatistica.media) : "n/d"} | ${p ? fmt(p.estatistica.principal.p, 4) : "n/d"} | ${p ? p.estatistica.leitura : "n/d"} | ${d(t)} | ${fmt(t.estatistica.media)} | ${fmt(t.estatistica.principal.p, 4)} | ${t.estatistica.leitura} | ${t.leituraDelta} |`);
+  }
+  L.push("");
+  for (const t of sc.tabelas) L.push(...blocoComparacao(t).map(x => x.replace(/^### (.*)$/, `#### $1 — sem os controles da varredura`)));
+  return L.join("\n");
+}
+
+export function tabelaMd(j: Record<string, unknown>, tab: Record<string, TabelaComparacao[]>, regra: RegraDesfecho, comps: Comparacao[], temS4: boolean, semControles: SemControles | null = null): string {
   const L: string[] = [`# Recálculo §8.5 — campanha \`${j.campanha}\` (tela ${regra.tela}, referência ${regra.referencia})`, ""];
   if (j.aviso) L.push(`> **${j.aviso}.**`, "");
   const ps = j.passadas as { nome: string; julgamentosSha256: string; adjudicada: boolean }[];
@@ -1478,6 +1621,7 @@ export function tabelaMd(j: Record<string, unknown>, tab: Record<string, TabelaC
   }
   L.push(j.notaPolitica ? "## Política 1.3.0 do juiz (principal; crédito da 1.2.0 + R16)" : "## Política 1.2.0 (principal)", "");
   for (const t of tab["principal|1.2.0|primario"]) L.push(...blocoComparacao(t));
+  if (semControles) L.push(semControlesMd(semControles, tab["principal|1.2.0|primario"]));
   for (const c of regra.conjuntos.filter(x => x.tipo !== "primario")) {
     L.push(`### ${c.tipo === "a-parte" ? "À parte (nunca somada)" : "Sensibilidade"} — ${c.rotulo}`, "",
       "| comparação | D por trio | média | n | leitura | leitura com δ |", "|---|---|---|---|---|---|");
