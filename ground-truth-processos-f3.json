@@ -1,8 +1,8 @@
 {
  "_meta": {
   "version": "1.0.0",
-  "status": "RASCUNHO — não congelado. Falta o que está em tela-f3/pendencias-congelamento.md (auditoria cega das semeadas, classes NAT-71 e D-156, conferência final na ala do corpus, sha256 do arquivo de estratos e dos critérios, congelamento).",
-  "version_note": "1.0.0 (rascunho de 27/11/2026): tela F3 do terceiro estudo de seguimento (adendo-3-tela-f3-protocolo-2026-11-27.md). Estrato semeado F3-01…F3-12 (lista da autora, adendo 3 § 3; tela-f3/semeadas.mjs) + estrato natural = as 13 specs da referência 1.1.0 da D (sha256 2eacba80efb373c4923f7f85593c684647e6b5ec58ad5a341329d96a44632569), sem mudança fora a âncora da D-14 (ver _meta.estratos.natural.reancoradas).",
+  "status": "1.0.0 congelada — 2026-11-27. Tela F3 (terceiro estudo de seguimento, adendo 3 de 27/11): 25 specs (12 semeadas da lista da autora — T1 3, T2 2, T3 1, T4 5, R 1 — + 13 naturais da D), 69 unidades, 6 paradas em 9 segmentos (paradas nos segmentos 0, 2, 4, 6, 8), 9 controles conformes. Registro em tela-f3/congelamento-1.0.0.md.",
+  "version_note": "1.0.0 (2026-11-27): estrato semeado F3-01…F3-12 = a lista da autora (adendo 3 § 2.2 e § 3: 5 mantidos da F2, 6 trocados, 1 novo; 3 controles da varredura, 05–07), implementada pelo Codex no fonte da rota (pnip-mock tela-f3 088a086; 12/12 M passaram na medida da construção), conferida aqui nos dois builds e confirmada por dois auditores cegos com iscas — escolhida por quem conhece o oráculo, não sorteada nem curada às cegas. Estrato natural = as 13 specs da referência 1.1.0 da D, re-medidas nos dois builds pelo código da D (evidência idêntica), com a âncora da D-14 trocada por outra do mesmo elemento, como na F2 (_meta.estratos.natural.reancoradas).",
   "page": "Processos do portal MPA do PNIP — tela F3 (terceiro estudo de seguimento; cópia da rota da tela D na ala pnip-f3, com os defeitos do DS da lista da autora no fonte), aplicação real em modo mock",
   "url": "/pnip-f3/portal-mpa/processos?mock-perfil=mpa",
   "waitFor": "main .br-table tbody tr",
@@ -394,7 +394,7 @@
    ]
   },
   "fundo": "Condições que o autor da tela não escreveu (método § 5, adendo da D § C), que não são unidades — alegação correta sobre elas entra como descoberta: (1) código do DS 3.4.1/1.16.0: tamanho 32×32 e raio dos alvos \"Buscar\" e \"Exibir lista\" (regra .br-input .br-button do core; E-03, D-135), aria-label das abas = id do br-tab-item quando a prop aria-label falta (\"AGUARDANDO_ANALISE\", \"TRAMITANDO\", \"HISTORICO\" — a escolha do id é autoral, o recurso é do web component; sem norma no universo, auditoria.md § 6), alt=\"logo\" fixo no logo do <br-header>, aria-label=\"\" no botão interno de todo br-button e no botão Home do breadcrumb, item atual do breadcrumb sem aria-current, texto visualmente oculto \"Home\", Menu e Home 32×32 dos web components, regra `.br-select .br-list:focus{outline:none}` do core (a lista do seletor não mostra foco), grid de 24 px do core (E-08), aba ativa sem aria-selected; (2) interno de bibliotecas de terceiros — nenhum visível nas paradas; (3) isolamento/mock: nenhuma perda medida (fontes e ícones locais, 0 externos, 0 escritas, 0 chamadas sem fixture); o link do breadcrumb aponta para /portal-mpa/ sem /pnip-d/ e recarrega (artefato do base href); os números de processo das linhas 1, 5 e 8 recarregam em /login (destino do mock); o conteúdo da lista, dos status e das opções dos filtros vem do manipulador só-leitura; \"Aberto há\" deriva do relógio congelado.",
-  "fora_de_escopo": "Como na D (abaixo), menos o que os estados novos trazem para dentro: a linha marcada, o botão de ação em lote e o diálogo de assinatura aberto e cancelado (parada assinatura-cancelada); a aba \"Concluídos\" clicada, a página 2 dela e o seletor \"Exibir\" com 25 (pagina-2, exibir-25); a tag do filtro escolhido e o clique no × dela (filtro-removido); e o texto do rótulo dos botões de ação (a F3 tem um caso de redação de rótulo, adendo 3 § 3). Fora continuam: a aba \"Aguardando análise\" clicada, \"Meus processos\" desligado, a lista aberta dos filtros, outros filtros e opções, outras páginas e outras quantidades por página, \"Assinar\" do diálogo (nunca clicado), o SweetAlert2 do \"Desassociar\", \"Exportar\", \"Ver processo\", números de processo, o clique nos links do breadcrumb e no \"Voltar\" (navegam ou recarregam), menu do avatar, a rota de vistorias atravessada pela navegação (segmentos 1, 3, 5 e 7, sem parada), outras janelas e zoom, linguagem e microcopy fora dos rótulos de ação, conteúdo das fixtures, regras só da base literal. Texto da D: Vistas excluídas pela regra de escolha (adendo da D § B; tela-d/selecao.json): abas \"Aguardando análise\"/\"Concluídos\", \"Meus processos\", filtros aplicados e troca de página (recarregam a lista no lugar: não aditivas), \"Exportar\", \"Ver processo\", números de processo, breadcrumb, \"Voltar\" (navegam ou recarregam), os dois SweetAlert2 (\"Desassociar\", \"Assinar\": diálogo sem componente do DS novo), menu do avatar (nada novo), listas abertas dos filtros (não eram gatilho pelo seletor congelado). Também fora: outras janelas e zoom, linguagem e microcopy (salvo decisão da autora), conteúdo das fixtures (processos, nomes, números, datas, status, opções), regras só da base literal. Alegação correta sobre o que está fora vira descoberta e não muda o denominador.",
+  "fora_de_escopo": "Como na D (abaixo), menos o que os estados novos trazem para dentro: a linha marcada, o botão de ação em lote e o diálogo de assinatura aberto e cancelado (parada assinatura-cancelada); a aba \"Concluídos\" clicada, a página 2 dela e o seletor \"Exibir\" com 25 (pagina-2, exibir-25); a tag do filtro escolhido e o clique no × dela (filtro-removido); e o texto do rótulo dos botões de ação (a F3 tem um caso de redação de rótulo, adendo 3 § 3). Fora continuam: a aba \"Aguardando análise\" clicada, \"Meus processos\" desligado, a lista aberta dos filtros, outros filtros e opções, outras páginas e outras quantidades por página, \"Assinar\" do diálogo (nunca clicado), o SweetAlert2 do \"Desassociar\", \"Exportar\", \"Ver processo\", números de processo, o clique nos links do breadcrumb e no \"Voltar\" (navegam ou recarregam), menu do avatar, a rota de vistorias atravessada pela navegação (segmentos 1, 3, 5 e 7, sem parada), outras janelas e zoom, linguagem e microcopy fora dos rótulos de ação, conteúdo das fixtures, regras só da base literal. Natural conhecido e não catalogado (a referência herda só as 13 da D): na parada pagina-2, depois de \"Página seguinte\", o campo do seletor \"Página\" continua mostrando 1 com o item 2 marcado na lista — medido igual nos dois builds (tela-f3/sondas/campo-pagina.mts; anotado por um auditor cego), portanto da rota e não semeado; não é spec, e alegação correta sobre ele vira descoberta (a F3-09 é o campo \"Exibir\" depois de uma escolha, e o critério dela já exclui o seletor \"Página\"). Texto da D: Vistas excluídas pela regra de escolha (adendo da D § B; tela-d/selecao.json): abas \"Aguardando análise\"/\"Concluídos\", \"Meus processos\", filtros aplicados e troca de página (recarregam a lista no lugar: não aditivas), \"Exportar\", \"Ver processo\", números de processo, breadcrumb, \"Voltar\" (navegam ou recarregam), os dois SweetAlert2 (\"Desassociar\", \"Assinar\": diálogo sem componente do DS novo), menu do avatar (nada novo), listas abertas dos filtros (não eram gatilho pelo seletor congelado). Também fora: outras janelas e zoom, linguagem e microcopy (salvo decisão da autora), conteúdo das fixtures (processos, nomes, números, datas, status, opções), regras só da base literal. Alegação correta sobre o que está fora vira descoberta e não muda o denominador.",
   "nunca_agregar_com": "ground-truth-processos.json, ground-truth-processos-1.1.0.json (tela D), ground-truth-processos-f.json (tela F), ground-truth-processos-f2.json (tela F2) e todas as referências listadas na D: ground-truth-fluxo.json, ground-truth-solicitacao.json (tela A), ground-truth-vistorias.json (tela B), ground-truth-cadastrar-empresa.json (tela C), ground-truth.json (suíte TC-*), organic-ground-truth.json, ground-truth-privacidade.json e ground-truth-pnip-login.json — instrumentos ou páginas diferentes (D-13, D-49). Os números desta tela nunca se somam, se promediam nem formam série com os de outra.",
   "baselines": "MEDIDAS sob o carimbo de cada bateria; nenhuma expectativa de detecção por ferramenta é declarada aqui (D-06).",
   "origem": {
@@ -412,9 +412,325 @@
     "sha256": "e0104d223403103ca12c44698f6a184b3b94d2ce223e9637d716174d016de8b2"
    },
    "estratos": "tela-f3/estratos-1.0.0.json (id da spec semeada → tipo, subtipo, nível, interação, origem, controle da varredura; fora da referência)",
-   "construcao": "tela-f3/construcao/ (cópia das provas do construtor, .tmp-eval/pnip-f3-construcao: 12/12 M passaram na medida, 7/7 mudanças da F2 que saíram voltaram ao valor sem semente, 0 diferenças sem atribuição; build semeado lista 30b16f0d…; pnip-mock tela-f3 088a086; govbr-corpus tela-f3 9d194d7)",
    "remedidaNaturais": "tela-f3/remedida-d/ (código da D na ala pnip-f3, nos dois builds)",
    "idsNaBase": "tela-f3/conferencia-ids-base.json"
+  },
+  "escolha": {
+   "regra": "adendo-3-tela-f3-protocolo-2026-11-27.md § 2.2 e § 3",
+   "quemEscolheu": "a autora (reviu a lista da F2: manteve 5, trocou 6, acrescentou 1); o Codex implementou e conferiu as cláusulas; a sessão principal conferiu o fonte",
+   "lista": "tela-f3/semeadas.mjs (ordem do adendo 3 § 3; F3-nn = M-nn da construção)",
+   "natureza": "lista aberta, escolhida por quem conhece o oráculo e as leituras de cobertura da F e da F2; não sorteada (adendo 3 § 2.1–§ 2.3, § 8)"
+  },
+  "estados_resumo": {
+   "paradas": 6,
+   "segmentos": 9,
+   "segmentosComParada": [
+    0,
+    2,
+    4,
+    6,
+    8
+   ],
+   "nota": "8 passos navigate: os segmentos ímpares são passagens pela rota de vistorias, sem parada; a árvore de cada segmento com parada é a mesma da entrada direta (tela-f3/conferir-arvores.json)"
+  },
+  "idsNaBase": {
+   "arquivo": "tela-f3/conferencia-ids-base.json",
+   "validador": "govbr-ds-validator congelado-3.7.12 (816f4ba, árvore .tmp-eval/validator-3712r), só id/texto/fonte",
+   "semeadoIds": 13,
+   "semeadoIdsCasam": 13,
+   "semeadoSemId": 2,
+   "semeadoSemIdConfirmado": 2,
+   "clausulasLiterais": 13,
+   "clausulas": 13,
+   "naturalIds": 19,
+   "naturalIdsExistem": 19,
+   "repeticoes": 8
+  },
+  "regrasRepetidas": {
+   "arquivo": "tela-f3/conferencia-ids-base.json › repetidas",
+   "nota": "declaradas, não filtradas (adendo 3 § 3)",
+   "repeticoes": [
+    "F3-01 component-pagination-4323d08f3e2d → F2 F2-01",
+    "F3-01 component-pagination-0a0e2ad9474e → F2 F2-01",
+    "F3-02 development-avatar-23d40d3d6ea4 → F2 F2-02",
+    "F3-04 component-table-bc0d039ca6cc → F F-01",
+    "F3-04 component-table-4aac83c034bd → F F-01",
+    "F3-08 component-tab-b717690fd662 → F2 F2-08",
+    "F3-11 component-tab-50ac44341161 → F2 F2-11",
+    "F3-12 component-button-a4d904dedad5 → A2 (nota de chamariz, $._meta.conformes.itens[10].medida)"
+   ]
+  },
+  "confirmacaoCega": {
+   "regra": "pacote neutro de 24 afirmações (as 12 semeadas como um juiz as lê + 12 iscas da mesma forma, falsas na página, medidas antes; 5 iscas pedem interação), embaralhado com semente gravada; confirmada = veredicto 'verdadeira' e violaClausula 'sim'; dois auditores cegos independentes (tela-f3/auditoria-cega/)",
+   "pedidoSha256": "e58537ec2eff2189eefd423d72b3b45cf72610804d19da1f0960da58c2470af1",
+   "semeadas": {
+    "confirmadasPelosDois": 12,
+    "porUm": 0,
+    "porNenhum": 0
+   },
+   "iscas": {
+    "falsasNosDois": 12,
+    "verdadeiraEmAlgum": 0
+   },
+   "juizNaoDecide": 0,
+   "descricoesReescritas": 0
+  },
+  "porSpec": {
+   "F3-01": {
+    "confirmacaoCega": {
+     "afirmacao": "A-22",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f3/conferencia-construcao.json)",
+    "aceitacao": "nao-implementado (critério em tela-f3/criterios-de-julgamento.json; predicado próprio em tela-f3/sonda.json)"
+   },
+   "F3-02": {
+    "confirmacaoCega": {
+     "afirmacao": "A-10",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f3/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F3-03": {
+    "confirmacaoCega": {
+     "afirmacao": "A-21",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f3/conferencia-construcao.json)",
+    "aceitacao": "nao-implementado (critério em tela-f3/criterios-de-julgamento.json; predicado próprio em tela-f3/sonda.json)"
+   },
+   "F3-04": {
+    "confirmacaoCega": {
+     "afirmacao": "A-02",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f3/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F3-05": {
+    "confirmacaoCega": {
+     "afirmacao": "A-15",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f3/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F3-06": {
+    "confirmacaoCega": {
+     "afirmacao": "A-20",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f3/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F3-07": {
+    "confirmacaoCega": {
+     "afirmacao": "A-19",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f3/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F3-08": {
+    "confirmacaoCega": {
+     "afirmacao": "A-06",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f3/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F3-09": {
+    "confirmacaoCega": {
+     "afirmacao": "A-11",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f3/conferencia-construcao.json)",
+    "aceitacao": "nao-implementado (critério em tela-f3/criterios-de-julgamento.json; predicado próprio em tela-f3/sonda.json)"
+   },
+   "F3-10": {
+    "confirmacaoCega": {
+     "afirmacao": "A-17",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f3/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F3-11": {
+    "confirmacaoCega": {
+     "afirmacao": "A-03",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f3/conferencia-construcao.json)",
+    "aceitacao": "sustenta (conferir-referencia-1.0.0.log)"
+   },
+   "F3-12": {
+    "confirmacaoCega": {
+     "afirmacao": "A-07",
+     "auditor1": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "auditor2": {
+      "veredicto": "verdadeira",
+      "violaClausula": "sim",
+      "clausulaConfere": "sim",
+      "juizDecide": "sim"
+     },
+     "confirmadas": 2
+    },
+    "construcao": "pegou (tela-f3/conferencia-construcao.json)",
+    "aceitacao": "nao-implementado (critério em tela-f3/criterios-de-julgamento.json; predicado próprio em tela-f3/sonda.json)"
+   }
+  },
+  "classes": {
+   "nota": "NAT-71 (protocolo NAT-78 § 5.3): 12 semeadas por dois classificadores cegos (desempate pelo 3º cego por maioria, se preciso); 13 naturais herdadas da D",
+   "arquivo": "tela-f3/classes-nat71/classes-finais.json",
+   "d156": "tela-f3/classes-d156-1.0.0.json"
+  },
+  "niveis": "tela-f3/estratos-1.0.0.json (id da spec semeada → tipo, subtipo, nível, interação, origem, controle da varredura; fora da referência)",
+  "criteriosDeJulgamento": "tela-f3/criterios-de-julgamento.json",
+  "paginaCongelada": "tela-f3/pagina-congelada.json (ala pnip-f3, 190 arquivos, lista 30b16f0d…; govbr-corpus tela-f3 9d194d7)",
+  "evidencia": {
+   "construcao": "tela-f3/construcao/ e tela-f3/conferencia-construcao.json",
+   "sonda": "tela-f3/sonda.json",
+   "arvores": "tela-f3/conferir-arvores.json",
+   "remedidaNaturais": "tela-f3/remedida-d/",
+   "conferenciaReferencia": "tela-f3/conferir-referencia-1.0.0.log"
   }
  },
  "violations": [
