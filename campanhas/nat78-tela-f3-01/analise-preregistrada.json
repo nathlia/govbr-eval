@@ -1,8 +1,8 @@
 {
   "formato": "nat78-analise-preregistrada-1.0.0",
-  "estado": "RASCUNHO da bancada F3 (27/11/2026, ramo bancada-f3): forma pronta; todo hash que depende do adendo 3 congelado, da referência, do arquivo de estratos, dos critérios, das classes, do inventário, do pacote, do lock ou do texto da tarefa está marcado PENDENTE; os dois controles de viabilidade são fatos pendentes. Não congelado: o commit sozinho que o congela vem depois dos dois controles e antes do campaign.json da F3.",
+  "estado": "RASCUNHO da bancada F3 (27/11/2026, ramo bancada-f3, rodada 2): todos os hashes conhecidos preenchidos (adendo 3 congelado com a errata 1, referência congelada, estratos, critérios, classes D-156 e NAT-71, conformes, página congelada, inventário do DOM, pacote, lock, texto da tarefa). Ainda não congelado: os dois controles de viabilidade (controlesDeViabilidade) são fatos pendentes; o commit sozinho que o congela vem depois deles e antes do campaign.json da F3.",
   "campanha": "nat78-tela-f3-01",
-  "item": "Adendo 3 ao protocolo NAT-78 de 27/11/2026 (tela F3, composição revista pela autora; RASCUNHO, congela antes da referência da F3) §2, §5, §6, §7, sobre o adendo 2 (que vale, com a errata 1, onde o adendo 3 não muda nada), o adendo da F e o protocolo congelado de 16/11 (CONG-15, thesis a46ab3f): análise da tela F3 configurada ANTES da coleta, na forma da da tela F2 (campanhas/nat78-tela-f2-01/analise-preregistrada.json). Só dados: nomes de conjunto, políticas, colunas, comandos, regras de leitura e as contagens que o adendo 3 §3 declara; nenhuma descrição, âncora, regra nem id de spec da referência. Commitado sozinho, antes do campaign.json da F3, que cita o sha256 deste arquivo em analysisPlan.",
+  "item": "Adendo 3 ao protocolo NAT-78 de 27/11/2026 (tela F3, composição revista pela autora; congelado em thesis 8d7d0b1, errata 1 em b7f83c6) §2, §5, §6, §7, sobre o adendo 2 (que vale, com a errata 1, onde o adendo 3 não muda nada), o adendo da F e o protocolo congelado de 16/11 (CONG-15, thesis a46ab3f): análise da tela F3 configurada ANTES da coleta, na forma da da tela F2 (campanhas/nat78-tela-f2-01/analise-preregistrada.json). Só dados: nomes de conjunto, políticas, colunas, comandos, regras de leitura e as contagens que o adendo 3 §3 declara; nenhuma descrição, âncora, regra nem id de spec da referência. Commitado sozinho, antes do campaign.json da F3, que cita o sha256 deste arquivo em analysisPlan.",
   "seguimento": {
     "natureza": "terceiro desenho de seguimento, feito DEPOIS de ver D, E, a F e a F2, inclusive depois de ver que a varredura sem guia não marcou nenhum dos 12 semeados da F2, quais eram e por que cada um escapou (adendo 3 §2.1, §8.1): evidência de seguimento, não confirmatória; toda tabela da F3 leva esse rótulo",
     "familiaHolm": "FORA da família de Holm de D e E (adendo 3 §2.6): teste próprio com α = 0,05",
@@ -35,9 +35,13 @@
     },
     "adendo3": {
       "documento": "thesis-workspace/planejamento/atual/adendo-3-tela-f3-protocolo-2026-11-27.md",
-      "estado": "RASCUNHO em 27/11/2026; congela no commit que carregar o arquivo sozinho, antes do congelamento da referência da F3",
-      "commitCongelado": "PENDENTE",
-      "sha256Arquivo": "PENDENTE",
+      "estado": "CONGELADO em 27/11/2026 (commit sozinho, antes do congelamento da referência da F3); errata 1 depois do congelamento da referência e antes de qualquer execução de agente ou leitura de cobertura",
+      "commitCongelado": "8d7d0b1439466a41f7ad66e7138e8f133621ebd6",
+      "sha256Arquivo": "2317543d024413f99df329616a065a33b877d2d9f58274bde2a3ba84e70ce736",
+      "errata": [
+        "b7f83c65faf1bcee809ad7826c8b1cc5787aff5e (errata 1: quatro acertos de redação — ids quando a base tem um, regras repetidas conferidas, estados dos casos 09 e 12)"
+      ],
+      "sha256ArquivoComErrata1": "4bd88773a404f672ecb8f372e382506fd9680d621c4ced1fb931d789a14a2928",
       "papel": "vale o adendo 2 (com a errata 1) em tudo o que o adendo 3 não muda"
     }
   },
@@ -47,40 +51,29 @@
     "referencia": {
       "arquivo": "ground-truth-processos-f3.json",
       "versao": "1.0.0",
-      "sha256": "PENDENTE",
-      "commitCongelamento": "PENDENTE",
+      "sha256": "14baee19d40b8818e9d44d2b00b6636b94fbaee5d79cefddedc97307ebfbd7b0",
+      "commitCongelamento": "12094236216f0540fdfda3f3889563c05f47fdc9 (eval ramo tela-f3, commit só com a referência; o seguinte, 819c0b8, sela tela-f3/); no ramo bancada-f3 por avanço rápido sobre 819c0b8, 196/196 arquivos iguais ao MANIFESTO.json da entrega",
       "contagens": {
-        "specs": "PENDENTE",
-        "unidades": "PENDENTE",
-        "semeado": "PENDENTE",
-        "natural": "PENDENTE",
-        "exposto": "PENDENTE",
-        "paradas": "PENDENTE",
-        "segmentos": "PENDENTE"
-      },
-      "contagensDeclaradas": {
+        "specs": 25,
+        "unidades": 69,
         "semeado": 12,
         "natural": 13,
-        "nota": "adendo 3 §4: as 12 semeadas mais as 13 naturais herdadas da D; a contagem medida substitui esta no preenchimento"
+        "exposto": 4,
+        "paradas": 6,
+        "segmentos": 9,
+        "segmentosComParada": 5
       },
       "estratos": "declarados em _meta.estratos da própria referência: semeado (as specs do DS injetadas, todas da classe ds pela classeDaSpec; o primário), natural (as specs da referência 1.1.0 da D reconferidas na cópia) e exposto (as do casco, dentro do natural; também em _meta.exposto.specs, a forma da D). A regra de desfecho recusa estrato semeado vazio, semeada fora da classe ds, semeada exposta e estratos semeado/natural que não repartem a referência.",
-      "conferencia": "npm run conferir:referencia -- --tela processos-f3 contra o site exportado (PENDENTE)",
-      "regraDeDesfecho": "regraDaTela processos-f3 1.0.0 = a regra da F2 (eval bancada-f3 30926b0; testes em test-recalculo-campanha.ts): primário = as n semeadas (nada fixa 12); todas; unidades; com-expostas se houver exposta"
+      "conferencia": "npm run conferir:referencia -- --tela processos-f3 contra o site exportado (govbr-telas 439e5d2): paradas inicial → lista-exibir → assinatura-cancelada → pagina-2 → exibir-25 → filtro-removido em 9 segmentos, 25 specs, 69 unidades (tela-f3/conferir-referencia-site-exportado-2026-11-27.log, eval ef1c04c)",
+      "regraDeDesfecho": "regraDaTela processos-f3 1.0.0 = a regra da F2 (eval bancada-f3 30926b0) aceita a referência: primário 12, todas 21, unidades das 12, com-expostas 25"
     },
     "estratos": {
       "arquivo": "tela-f3/estratos-1.0.0.json",
       "formato": "tela-f3-estratos-1.0.0",
-      "sha256": "PENDENTE",
+      "sha256": "ad48fb747aecc897f20985bda0a6994f36d00bf992f9e02441d6353e08806f54",
       "declaracao": "telas.json › processos-f3.estratos { arquivo, sha256 }",
       "regra": "por spec semeada: tipo (um dos tipos que o próprio arquivo declara: T1–T4 do adendo 2 §3 e R Redação do adendo 3 §3), subtipo (só nos tipos que declaram subtipos: T1 anatomia | marcacao), nivel (facil | medio | dificil | muito-dificil, rótulo), exigeInteracao (true | false), origem (mantido | trocado | novo) e controleDaVarredura (true | false), todos obrigatórios; todo tipo declarado com spec; nenhuma cota por tipo; ids = exatamente o estrato semeado; congelado com a referência. O recálculo para se o sha256 divergir da declaração, se a referência citada não for a das análises, se faltar ou sobrar campo, se origem ou controleDaVarredura faltar ou estiver fora do vocabulário (controleDaVarredura tem de ser booleano), se o formato não for o da F3 ou se a processos-f3 não declarar o arquivo (recalculo-campanha.ts › lerEstratos, conferirEstratos).",
       "contagens": {
-        "porTipo": "PENDENTE",
-        "porOrigem": "PENDENTE",
-        "controlesDaVarredura": "PENDENTE",
-        "porNivel": "PENDENTE",
-        "exigeInteracao": "PENDENTE"
-      },
-      "contagensDeclaradas": {
         "porTipo": {
           "T1": 3,
           "T2": 2,
@@ -94,50 +87,59 @@
           "novo": 1
         },
         "controlesDaVarredura": 3,
-        "nota": "adendo 3 §3 (distribuição por tipo, coluna Origem, três controles); a contagem do arquivo congelado substitui esta no preenchimento e tem de ser igual"
-      }
+        "porNivel": {
+          "facil": 4,
+          "medio": 3,
+          "dificil": 4,
+          "muito-dificil": 1
+        },
+        "exigeInteracao": 3
+      },
+      "commit": "95f0e59 (declaração em telas.json); as contagens são as do adendo 3 §3 e o recálculo de ponta a ponta com o arquivo real passou (bancada F3, rodada 2)"
     },
     "criteriosDeJulgamento": {
-      "arquivo": "tela-f3/criterios-de-julgamento.json (nome esperado; o do agente da referência vale)",
-      "sha256": "PENDENTE",
-      "declaracao": "telas.json › processos-f3.criteriosDeJulgamento { arquivo, sha256 }",
-      "nota": "como na F2: critério para TODA spec da referência (semeadas e naturais), passada dos juízes nat78-primeira-passada-1.4.8; os critérios de crédito dos casos de comportamento e redação são os do adendo 3 §3; a montagem para se faltar critério ou o sha256 divergir"
+      "arquivo": "tela-f3/criterios-de-julgamento.json",
+      "sha256": "7c5fa91c5b65519fa2d56949a16dea6368b423cb3711560124196d3fedf0e3d1",
+      "declaracao": "telas.json › processos-f3.criteriosDeJulgamento { arquivo, sha256 } (eval 95f0e59)",
+      "nota": "critério para as 25 specs (semeadas e naturais); passada dos juízes nat78-primeira-passada-1.4.8; a montagem para se o sha256 divergir"
     },
     "classes": {
       "arquivo": "tela-f3/classes-d156-1.0.0.json",
-      "sha256": "PENDENTE",
-      "nota": "tela-d/classes-d156.ts sobre a referência congelada; toda semeada sai ds (a regra de desfecho também confere)"
+      "sha256": "c2e5de873cfded1a14bf26c6eaf6cc006ffddce47bb63f0e9d2ccf6d74f7f42f",
+      "contagens": "não expostas 21 = ds 13 · geral 8; expostas 4 = geral 4; as 12 semeadas ds"
     },
     "controlesConformes": {
-      "arquivo": "tela-f3/conformes.json (se houver)",
-      "sha256": "PENDENTE"
+      "arquivo": "tela-f3/conformes.json",
+      "sha256": "697a52171ee497211a2e1dbaba44625c2b78a654b17706bd84e48dfa09738053",
+      "itens": 9
     },
     "inventarioDom": {
       "arquivo": "scripts/vazamento/inventario-dom/processos-f3.json",
-      "sha256": "PENDENTE",
-      "manifestoNavegacao": "PENDENTE",
-      "nota": "manifesto-navegacao.ts --tela processos-f3 → inventario-dom.ts → conferir-inventario.ts, depois do congelamento da referência"
+      "sha256": "9c2315571dcd5d983ec2ae5548dd498a6b55063ea0f64e20f5a64c9bc4526e37",
+      "commit": "939c361",
+      "manifestoNavegacao": "237b01df8761eb0288b07b297cdf3c2b4540452dd05fc5bc70631a230c34d57f",
+      "nota": "6 paradas, 53 tags, 157 classes, 51 dinâmicas; preso ao site bc38c2332381"
     },
     "paginaCongelada": {
       "arquivo": "tela-f3/pagina-congelada.json",
-      "sha256": "PENDENTE",
-      "arquivos": "PENDENTE",
-      "corpus": "govbr-corpus tela-f3 (PENDENTE: commit da ala public/pnip-f3/ semeada; pnip-mock tela-f3 088a086)"
+      "sha256": "f8b71deebd61724031be2a47409cab41f95eb3da3598bd8a4aa53277421af91d",
+      "arquivos": 190,
+      "corpus": "govbr-corpus tela-f3 9d194d792a8c8d2771c0d373f636ffb0b1d624ad, public/pnip-f3/ (190/190 iguais ao manifesto da ala e ao pacote; lista 30b16f0d…; pnip-mock 088a086)"
     },
     "pacote": {
-      "govbrTelas": "PENDENTE",
+      "govbrTelas": "439e5d2c59693c0f65cd85da1bba02d58add0054",
       "exportador": "export-telas-1.8.0",
-      "site": "PENDENTE",
-      "manifesto": "PENDENTE"
+      "site": "bc38c23323810bfb77594a9b4fd91766740128a1f92da3684e0ac3f3a15cfa99",
+      "manifesto": "968fec4fd13fca5e23955fe02d3e4d8a235ab2d3f540a49739f9c6445094ec88"
     },
     "lock": {
       "arquivo": "runner/images.lock.json",
-      "sha256": "PENDENTE",
-      "commit": "PENDENTE (commit sozinho; só a imagem screens muda em relação ao lock da F2)"
+      "sha256": "485791a047273843e4819b1ae8203f837f466e3ed8ab14925b1b2355aac98202",
+      "commit": "0a0e255 (commit sozinho; só a imagem screens muda em relação ao lock da F2)"
     },
     "textoDaTarefa": {
-      "sha256": "PENDENTE",
-      "nota": "30 min com relógio, igual nos três braços; esperado diferir do da F2 só na linha da URL (/pnip-f3/)"
+      "sha256": "f1c4e5c8bcc6327abbc3049f8489f03ffd8f56131dbbfd52c21ca64f6557c34b",
+      "nota": "30 min com relógio, igual nos três braços; difere do da F2 (959f4e34…) só na linha da URL (/pnip-f3/)"
     }
   },
   "desfechoPrimario": {
@@ -275,9 +277,10 @@
     "naF3": "o primário já é a classe ds (as semeadas); as naturais ficam ao lado, descritivas, por braço e trio"
   },
   "classesNat71": {
-    "arquivo": "tela-f3/classes-nat71/classes-finais.json (se o agente da referência repetir o procedimento da F2)",
-    "sha256": "PENDENTE",
-    "estado": "PENDENTE"
+    "arquivo": "tela-f3/classes-nat71/classes-finais.json",
+    "sha256": "005216c576815898067a50fd27c97ba4295479fffe2891c6e838eb4dfab7015d",
+    "commit": "819c0b8 (ramo tela-f3; no bancada-f3 por avanço rápido)",
+    "estado": "feito pelo agente da referência"
   },
   "comandos": [
     {
@@ -328,20 +331,12 @@
   ],
   "pendentes": [
     {
-      "item": "adendo 3 congelado (commit sozinho) e o sha256 do arquivo",
-      "estado": "antes do congelamento da referência da F3 (adendo 3, cabeçalho)"
-    },
-    {
-      "item": "referência ground-truth-processos-f3.json 1.0.0, tela-f3/ (estratos no formato tela-f3-estratos-1.0.0, critérios, classes, página congelada) e todos os hashes de tela.*",
-      "estado": "do agente da referência; a bancada preenche só sha256 e contagens"
-    },
-    {
-      "item": "pacote govbr-telas da F3 (export-telas-1.8.0), lock só da imagem screens, texto da tarefa, inventário do DOM",
-      "estado": "depois da ala pnip-f3/ semeada no corpus"
-    },
-    {
       "item": "controles de viabilidade (controlesDeViabilidade): controle 1 (cobertura), controle 2 (teto do ferramentas); o portão do sem não roda",
       "estado": "fatos pendentes; nesta ordem; qualquer falha encerra a F3 antes da coleta"
+    },
+    {
+      "item": "test:isolation --tela processos-f3 no corpus novo, dublê dos três braços (ensaio-trio-f3-01) pelo GitHub e portão de vazamento por reexecução",
+      "estado": "antes da cadeia de congelamento"
     },
     {
       "item": "D_fc^F3 na 1.2.0 pura",
