@@ -1,0 +1,169 @@
+{
+  "contract": "campaign.v2",
+  "fixture": true,
+  "campaignId": "ensaio-trio-f3-01",
+  "kind": "pilot",
+  "title": "ENSAIO DESCARTÁVEL SEM MODELO (dublê) dos três braços na tela F3 (processos-f3), etapas coleta+linha-de-base: oráculo e linha de base na F3 depois do congelamento da referência; nunca dado, nada daqui entra em número da tese",
+  "objective": "Adendo 3 §7 (ensaios como na F2 antes da cadeia de congelamento). Prova o encanamento dos três braços na F3 com o instrumento da nat78-tela-f3-01: cliente real contra o dublê roteirizado (cenário honesto), oráculo 3.7.12 nos perfis evaluation (com) e knowledge-free (ferramentas), coletor, paredes de isolamento, linha de base (axe + validator não guiado e guiado) e arquivamento, e depois a análise do trio, a passada cega 1.4.8 e o recálculo com a regra processos-f3 (tabelas por tipo, origem, nível e interação e a sensibilidade sem os controles da varredura). A linha de base do primeiro disparo (o sem) é a que o controle de cobertura (adendo 3 §5.1) lê. Um disparo por braço (campanha sem agenda, braço no disparo), par p01. Só depois do congelamento da referência da F3. Nada é comparado; nenhum número daqui é resultado. RASCUNHO: site PENDENTE, frozenAt nulo.",
+  "hypotheses": [
+    "Ensaio de infraestrutura: nenhuma hipótese científica."
+  ],
+  "createdAt": "2026-11-27T03:30:00Z",
+  "frozenAt": null,
+  "design": {
+    "screens": [
+      {
+        "id": "processos-f3",
+        "label": "Processos (cópia semeada da rota da tela D, ala pnip-f3)",
+        "version": "govbr-telas-site-PENDENTE"
+      }
+    ],
+    "arms": [
+      "sem",
+      "ferramentas",
+      "com"
+    ],
+    "models": [
+      {
+        "family": "claude",
+        "requested": "claude-opus-duble-teste"
+      }
+    ],
+    "effort": "high",
+    "repetitions": 1,
+    "order": "sequencial",
+    "seed": null,
+    "comparisons": [
+      {
+        "id": "ferramentas-x-com",
+        "arms": [
+          "ferramentas",
+          "com"
+        ],
+        "role": "primary",
+        "question": "Ensaio sem modelo (sem inferência): estrutura da comparação ferramentas-x-com da nat78-tela-f3-01. Nada deste ensaio é comparado nem entra em número da tese."
+      },
+      {
+        "id": "sem-x-com",
+        "arms": [
+          "sem",
+          "com"
+        ],
+        "role": "secondary",
+        "question": "Ensaio sem modelo (sem inferência): estrutura da comparação sem-x-com da nat78-tela-f3-01. Nada deste ensaio é comparado nem entra em número da tese."
+      },
+      {
+        "id": "sem-x-ferramentas",
+        "arms": [
+          "sem",
+          "ferramentas"
+        ],
+        "role": "secondary",
+        "question": "Ensaio sem modelo (sem inferência): estrutura da comparação sem-x-ferramentas da nat78-tela-f3-01. Nada deste ensaio é comparado nem entra em número da tese."
+      }
+    ]
+  },
+  "fixed": {
+    "protocolSha256": "8139bb0cd71d273e1f63294b2523478fd54fc2e05033cfc58f58bda174d83e3c",
+    "client": {
+      "name": "claude-code",
+      "version": "2.1.288 (Claude Code)"
+    },
+    "provider": {
+      "name": "stub",
+      "authMethod": "unknown"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "147.0.7727.15"
+    },
+    "playwrightMcp": "@playwright/mcp@0.0.70",
+    "isolationPolicyVersion": "isolamento-runner-1.1.0",
+    "oracleProfiles": {
+      "com": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.12",
+        "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "evaluation",
+        "tools": [
+          "get_component_spec",
+          "get_design_tokens",
+          "get_ds_rules",
+          "get_emag_rules",
+          "get_finding_details",
+          "get_page_rules",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "04ae14378db09bd4cdef48841e3d1a9388b701e18279fe08a04267af3c74614c"
+      },
+      "ferramentas": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.12",
+        "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "knowledge-free",
+        "tools": [
+          "get_finding_details",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "5b9c59aaa490f5de2a4a497eda8a2e3dbedd25b2a8288fed8eb049f7233d40dc"
+      }
+    },
+    "scorerVersion": "flow-semantic-1.8.2"
+  },
+  "limits": {
+    "timeoutSeconds": 1800,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 6,
+    "retryOn": [
+      "rate-limited",
+      "model-unavailable",
+      "auth-failed",
+      "preflight-failed",
+      "vm-lost",
+      "harness-error",
+      "archive-unavailable",
+      "cancelled"
+    ],
+    "attemptSelection": "Ensaio: vale a primeira tentativa sem falha técnica de cada braço; nova tentativa só por falha técnica, no máximo 2 por braço e 6 no ensaio."
+  },
+  "failurePolicy": "Ensaio sem modelo: falha técnica leva a conserto e nova rodada do ensaio (repetido até passar sem nenhuma mudança, adendo §6). Isolamento reprovado = defeito a explicar, nunca resgatado.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": []
+  },
+  "analysisPlan": {
+    "primaryOutcome": "Nenhum desfecho (ensaio). Técnico: os 3 disparos com técnico e isolamento passed, submissão aceita, oráculo absent-verified (sem) e used-adherent (ferramentas, com), linha de base utilizável; análise do trio pronta; passada 1.4.8 monta com os critérios da F3; recálculo da processos-f3 com as tabelas por tipo, origem, nível e interação e a sensibilidade sem os controles roda; detecção em duas colunas roda.",
+    "secondaryOutcomes": [],
+    "uncertaintyMethod": null,
+    "exclusionRules": "Nada é comparado."
+  },
+  "budget": {
+    "approved": false,
+    "amount": null,
+    "currency": "USD",
+    "approvedBy": null,
+    "approvedAt": null
+  },
+  "pendingDecisions": [
+    {
+      "topic": "Ensaio sem modelo: custo zero (dublê); disparável depois do congelamento da referência da F3, com o site da F3, a referência e tela-f3/ commitadas (critérios e estratos declarados) e frozenAt",
+      "issue": "NAT-139",
+      "owner": "sessão principal"
+    }
+  ]
+}
