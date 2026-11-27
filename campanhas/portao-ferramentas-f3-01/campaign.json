@@ -1,0 +1,158 @@
+{
+  "contract": "campaign.v2",
+  "fixture": false,
+  "campaignId": "portao-ferramentas-f3-01",
+  "kind": "pilot",
+  "title": "Controle de teto do ferramentas da tela F3 (adendo 3 de 27/11, §5.2) — 3 execuções SÓ do braço ferramentas na tela processos-f3, fora da amostra",
+  "objective": "RASCUNHO da bancada F3 (27/11/2026, ramo bancada-f3; não disparável: site, referência, lock e texto da tarefa PENDENTES; frozenAt nulo). Controle 2 do adendo 3 §5.2 (o controle 2 da errata 1 do adendo 2, sem mudança de regra): depois do controle de cobertura (§5.1) passar, 3 execuções só do braço ferramentas (oráculo 3.7.12, perfil knowledge-free: get_finding_details, scan_page, verify_finding), julgadas como no portão do sem da F2 (primeira passada cega; cartão pendente conta como confirmado). Passa se a mediana das specs semeadas confirmadas por execução for no máximo n − 2 (n = 12: no máximo 10); se ficar a menos de duas specs do máximo, a F3 encerra antes da coleta. Decisão binária sobre a composição inteira; sem recomposição (a lista não tem reserva, §5). O braço com não roda em nenhum piloto e a diferença primária nunca é olhada antes da coleta. A F3 não tem portão de teto do sem (adendo 3 §5.3, decisão da autora de 27/11, com o mesmo parecer do Codex e da sessão principal): o sem não roda em nenhum piloto da F3. npm run portao:teto -- --braco ferramentas --limiar n-menos-2 (recusa execução de outro braço). As execuções não entram na amostra da nat78-tela-f3-01; a sessão principal lê só portao-teto.md. Linha de base: ausência planejada (abaixo).",
+  "hypotheses": [
+    "Controle de viabilidade, sem hipótese científica: a mediana do ferramentas nas n specs semeadas da F3 é ≤ n − 2?"
+  ],
+  "createdAt": "2026-11-27T03:30:00Z",
+  "frozenAt": null,
+  "design": {
+    "screens": [
+      {
+        "id": "processos-f3",
+        "label": "Processos (cópia semeada da rota da tela D, ala pnip-f3)",
+        "version": "govbr-telas-site-PENDENTE"
+      }
+    ],
+    "arms": [
+      "sem",
+      "ferramentas",
+      "com"
+    ],
+    "models": [
+      {
+        "family": "Opus",
+        "requested": "claude-opus-5-5"
+      }
+    ],
+    "effort": "high",
+    "repetitions": 3,
+    "order": "sequencial",
+    "seed": null,
+    "comparisons": [
+      {
+        "id": "ferramentas-x-com",
+        "arms": [
+          "ferramentas",
+          "com"
+        ],
+        "role": "primary",
+        "question": "Não se aplica ao controle (só o ferramentas roda); declarada porque o contrato campaign.v2 exige uma comparação principal. Nenhuma comparação é calculada; a diferença primária nunca é olhada antes da coleta (adendo 3 §5)."
+      }
+    ]
+  },
+  "fixed": {
+    "protocolSha256": "8139bb0cd71d273e1f63294b2523478fd54fc2e05033cfc58f58bda174d83e3c",
+    "client": {
+      "name": "claude-code",
+      "version": "2.1.288 (Claude Code)"
+    },
+    "provider": {
+      "name": "anthropic",
+      "authMethod": "oauth-subscription"
+    },
+    "browser": {
+      "name": "chromium",
+      "version": "147.0.7727.15"
+    },
+    "playwrightMcp": "@playwright/mcp@0.0.70",
+    "isolationPolicyVersion": "isolamento-runner-1.1.0",
+    "oracleProfiles": {
+      "com": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.12",
+        "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "evaluation",
+        "tools": [
+          "get_component_spec",
+          "get_design_tokens",
+          "get_ds_rules",
+          "get_emag_rules",
+          "get_finding_details",
+          "get_page_rules",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "04ae14378db09bd4cdef48841e3d1a9388b701e18279fe08a04267af3c74614c"
+      },
+      "ferramentas": {
+        "package": "govbr-ds-validator-server",
+        "version": "3.7.12",
+        "distSha256": "cd1aaf354b9d5bcf8cf1464b7f679ff4c30030712683df74a398191eaf17ff06",
+        "dataSha256": "b4b2eceb64a044246d5b96def6a0fa09c38f73541530349b6cc6989e0beae637",
+        "profile": "knowledge-free",
+        "tools": [
+          "get_finding_details",
+          "scan_page",
+          "verify_finding"
+        ],
+        "toolsListSha256": "5b9c59aaa490f5de2a4a497eda8a2e3dbedd25b2a8288fed8eb049f7233d40dc"
+      }
+    },
+    "scorerVersion": "flow-semantic-1.8.2"
+  },
+  "limits": {
+    "timeoutSeconds": 1800,
+    "maxTurns": null,
+    "maxBudgetUsd": null
+  },
+  "retryPolicy": {
+    "maxAttemptsPerSlot": 2,
+    "campaignAttemptCeiling": 5,
+    "retryOn": [
+      "rate-limited",
+      "model-unavailable",
+      "auth-failed",
+      "preflight-failed",
+      "vm-lost",
+      "harness-error",
+      "archive-unavailable",
+      "cancelled"
+    ],
+    "attemptSelection": "Como no portão do sem: entra a primeira tentativa elegível de cada uma das 3 execuções; nova tentativa só por falha técnica, no máximo 2 por execução e 5 no controle. Tempo esgotado (1.800 s) é resultado do agente: inelegível, sem nova tentativa."
+  },
+  "failurePolicy": "Execução inelegível (técnico, isolamento, submissão, identidade, uso do oráculo fora de used-adherent) não entra no controle; com menos de 3 execuções elegíveis dentro do teto, o controle não decide (npm run portao:teto recusa ≠ 3) e a sessão principal registra o motivo. Isolamento reprovado = execução perdida, sem resgate.",
+  "baselinePolicy": {
+    "required": true,
+    "comparable": [
+      "linha-de-base/validator-nao-guiada",
+      "linha-de-base/axe"
+    ],
+    "diagnosticOnly": [
+      "linha-de-base/validator-guiada"
+    ],
+    "plannedAbsences": [
+      {
+        "screenId": "processos-f3",
+        "justification": "Adendo 3 §5.2 (controle 2 da errata 1 do adendo 2): o controle conta só as specs semeadas que o agente do ferramentas confirma (creditosDoTrio, chave principal|1.2.0); a linha de base não entra na conta. A linha de base da F3 é medida no controle 1 (cobertura, sem modelo, a do dublê sem da ensaio-trio-f3-01); o diagnóstico guiado e o axe dela continuam fechados até o fim da coleta (adendo 2 §5 e errata 1, que valem onde o adendo 3 não muda nada). Uma linha de base por execução poria cartões de varredura e axe na passada cega deste piloto sem mudar a contagem. Disparo com etapas = so-coleta (o oráculo knowledge-free roda dentro da execução do agente, como em todo slot ferramentas); análise com --sem-linha-de-base.",
+        "declaredAt": "2026-11-27T03:30:00Z",
+        "analysisPath": "individual"
+      }
+    ]
+  },
+  "analysisPlan": {
+    "primaryOutcome": "Por execução do ferramentas, as specs do estrato semeado (_meta.estratos.semeado.specs da referência congelada da F3; n = 12) com ≥ 1 unidade confirmada pela passada cega (política do juiz 1.3.0, coluna detecção, a regra do recálculo: recalculo-campanha.ts › creditosDoTrio, chave principal|1.2.0); mediana das 3; passa se a mediana do máximo (pendente conta como confirmado) ≤ n − 2. npm run portao:teto -- --passada <passada> --saida <pasta nova> --braco ferramentas --limiar n-menos-2. A sessão principal lê só portao-teto.md; os ids ficam no lacrado portao-teto-por-spec.json.",
+    "secondaryOutcomes": [],
+    "uncertaintyMethod": null,
+    "exclusionRules": "Só execuções do braço ferramentas, uma por análise individual (analisar --pacote … --sem-linha-de-base); outra configuração é recusada pelo portão (--braco ferramentas). Cartão pendente conta como confirmado (errata 1, 'julgadas como no portão do sem')."
+  },
+  "budget": {
+    "approved": false,
+    "amount": null,
+    "currency": "USD",
+    "approvedBy": null,
+    "approvedAt": null
+  },
+  "pendingDecisions": [
+    {
+      "topic": "Disparável só depois do controle 1 passar, com o site da F3, a referência congelada e tela-f3/ commitadas no ref, o lock com a imagem screens da F3 e frozenAt; custo estimado ≈ US$ 14 (3 execuções ferramentas de 30 min, ≈ 4,7 cada, mediana do ferramentas da D) mais uma passada cega, dentro do teto do adendo 3 §7 (piloto sem orçamento próprio)",
+      "issue": "NAT-139",
+      "owner": "sessão principal"
+    }
+  ]
+}
