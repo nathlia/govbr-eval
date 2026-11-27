@@ -1,0 +1,399 @@
+{
+  "formato": "nat78-analise-preregistrada-1.0.0",
+  "estado": "RASCUNHO da bancada F3 (27/11/2026, ramo bancada-f3): forma pronta; todo hash que depende do adendo 3 congelado, da referência, do arquivo de estratos, dos critérios, das classes, do inventário, do pacote, do lock ou do texto da tarefa está marcado PENDENTE; os dois controles de viabilidade são fatos pendentes. Não congelado: o commit sozinho que o congela vem depois dos dois controles e antes do campaign.json da F3.",
+  "campanha": "nat78-tela-f3-01",
+  "item": "Adendo 3 ao protocolo NAT-78 de 27/11/2026 (tela F3, composição revista pela autora; RASCUNHO, congela antes da referência da F3) §2, §5, §6, §7, sobre o adendo 2 (que vale, com a errata 1, onde o adendo 3 não muda nada), o adendo da F e o protocolo congelado de 16/11 (CONG-15, thesis a46ab3f): análise da tela F3 configurada ANTES da coleta, na forma da da tela F2 (campanhas/nat78-tela-f2-01/analise-preregistrada.json). Só dados: nomes de conjunto, políticas, colunas, comandos, regras de leitura e as contagens que o adendo 3 §3 declara; nenhuma descrição, âncora, regra nem id de spec da referência. Commitado sozinho, antes do campaign.json da F3, que cita o sha256 deste arquivo em analysisPlan.",
+  "seguimento": {
+    "natureza": "terceiro desenho de seguimento, feito DEPOIS de ver D, E, a F e a F2, inclusive depois de ver que a varredura sem guia não marcou nenhum dos 12 semeados da F2, quais eram e por que cada um escapou (adendo 3 §2.1, §8.1): evidência de seguimento, não confirmatória; toda tabela da F3 leva esse rótulo",
+    "familiaHolm": "FORA da família de Holm de D e E (adendo 3 §2.6): teste próprio com α = 0,05",
+    "naoMuda": "os resultados de D e E e os registros da F e da F2 (tentativas interrompidas) ficam como estão",
+    "quemEscolheu": "lista aberta: a autora reviu a lista da F2 (manteve 5, trocou 6, acrescentou 1); ela conhece o oráculo e as duas leituras de cobertura; a regra do adendo 2 §2.2 (ninguém escolhe nem vê a lista antes do fechamento da coleta) deixa de valer para a F3 (adendo 3 §2.2). Continua garantido: oráculo lacrado na 3.7.12, agentes das execuções sem a lista, julgamento da autora cego ao braço, referência e análise congeladas antes da coleta (§2.4)",
+    "controlesDaVarredura": "três dos 12 semeados foram escolhidos porque se espera que a varredura sem guia os marque (adendo 3 §2.3); ficam marcados no arquivo de estratos (controleDaVarredura: true) antes da coleta; entram direto na diferença primária, que por isso é publicada ao lado da mesma diferença sem eles (desfechoPrimario.sensibilidadeAoLado)",
+    "selecao": "a F3, se coletada, é uma tela em que a varredura sem guia marca ao menos um semeado e deixa passar ao menos um (controle 1) e em que o ferramentas fica a pelo menos duas specs do máximo (controle 2); não há portão de teto do sem (§5.3). As duas condições entram na interpretação (adendo 3 §8.7)"
+  },
+  "protocolo": {
+    "documento": "thesis-workspace/planejamento/atual/protocolo-nat78-estudo-complementar-CONGELADO-2026-11-16.md (revisão 6 congelada)",
+    "commitCongelado": "a46ab3fb950edf55df2d00b5da33a2552e695485",
+    "adendo": {
+      "documento": "thesis-workspace/planejamento/atual/adendo-tela-f-protocolo-2026-11-26.md",
+      "commitCongelado": "e6f202fffa97c74a1f55f063dc407512dc8ceec3",
+      "sha256Blob": "68d67e7f02371153de9f7cfa48cad5eccaf2354242b88e980667b9feb34511e0",
+      "errata": [
+        "a5a982eb64a697040606d48b70594cc2822fc649 (errata 1: referência congelada como candidata antes do portão; oráculo só depois do portão)"
+      ],
+      "nota": "congelado sem a revisão do Codex, por decisão da autora (D-214 item 5); correção só por errata datada",
+      "papel": "adendo da F: vale onde o adendo 2 não diz nada"
+    },
+    "adendo2": {
+      "documento": "thesis-workspace/planejamento/atual/adendo-2-tela-f2-protocolo-2026-11-26.md",
+      "commitCongelado": "447e47f (thesis-workspace; hash completo a preencher no congelamento desta análise)",
+      "errata": [
+        "66f1195 (errata 1: controle de cobertura e controle de teto do ferramentas, aceitos antes de qualquer resultado da seleção)"
+      ],
+      "sha256ArquivoComErrata1": "b4e939634e06a03dada1e69a7fa0659c6b67b95c6997d08fc4b422c2a3ab395f",
+      "papel": "vale, com a errata 1, onde o adendo 3 não muda nada"
+    },
+    "adendo3": {
+      "documento": "thesis-workspace/planejamento/atual/adendo-3-tela-f3-protocolo-2026-11-27.md",
+      "estado": "RASCUNHO em 27/11/2026; congela no commit que carregar o arquivo sozinho, antes do congelamento da referência da F3",
+      "commitCongelado": "PENDENTE",
+      "sha256Arquivo": "PENDENTE",
+      "papel": "vale o adendo 2 (com a errata 1) em tudo o que o adendo 3 não muda"
+    }
+  },
+  "tela": {
+    "id": "processos-f3",
+    "rota": "/pnip-f3/portal-mpa/processos?mock-perfil=mpa",
+    "referencia": {
+      "arquivo": "ground-truth-processos-f3.json",
+      "versao": "1.0.0",
+      "sha256": "PENDENTE",
+      "commitCongelamento": "PENDENTE",
+      "contagens": {
+        "specs": "PENDENTE",
+        "unidades": "PENDENTE",
+        "semeado": "PENDENTE",
+        "natural": "PENDENTE",
+        "exposto": "PENDENTE",
+        "paradas": "PENDENTE",
+        "segmentos": "PENDENTE"
+      },
+      "contagensDeclaradas": {
+        "semeado": 12,
+        "natural": 13,
+        "nota": "adendo 3 §4: as 12 semeadas mais as 13 naturais herdadas da D; a contagem medida substitui esta no preenchimento"
+      },
+      "estratos": "declarados em _meta.estratos da própria referência: semeado (as specs do DS injetadas, todas da classe ds pela classeDaSpec; o primário), natural (as specs da referência 1.1.0 da D reconferidas na cópia) e exposto (as do casco, dentro do natural; também em _meta.exposto.specs, a forma da D). A regra de desfecho recusa estrato semeado vazio, semeada fora da classe ds, semeada exposta e estratos semeado/natural que não repartem a referência.",
+      "conferencia": "npm run conferir:referencia -- --tela processos-f3 contra o site exportado (PENDENTE)",
+      "regraDeDesfecho": "regraDaTela processos-f3 1.0.0 = a regra da F2 (eval bancada-f3 30926b0; testes em test-recalculo-campanha.ts): primário = as n semeadas (nada fixa 12); todas; unidades; com-expostas se houver exposta"
+    },
+    "estratos": {
+      "arquivo": "tela-f3/estratos-1.0.0.json",
+      "formato": "tela-f3-estratos-1.0.0",
+      "sha256": "PENDENTE",
+      "declaracao": "telas.json › processos-f3.estratos { arquivo, sha256 }",
+      "regra": "por spec semeada: tipo (um dos tipos que o próprio arquivo declara: T1–T4 do adendo 2 §3 e R Redação do adendo 3 §3), subtipo (só nos tipos que declaram subtipos: T1 anatomia | marcacao), nivel (facil | medio | dificil | muito-dificil, rótulo), exigeInteracao (true | false), origem (mantido | trocado | novo) e controleDaVarredura (true | false), todos obrigatórios; todo tipo declarado com spec; nenhuma cota por tipo; ids = exatamente o estrato semeado; congelado com a referência. O recálculo para se o sha256 divergir da declaração, se a referência citada não for a das análises, se faltar ou sobrar campo, se origem ou controleDaVarredura faltar ou estiver fora do vocabulário (controleDaVarredura tem de ser booleano), se o formato não for o da F3 ou se a processos-f3 não declarar o arquivo (recalculo-campanha.ts › lerEstratos, conferirEstratos).",
+      "contagens": {
+        "porTipo": "PENDENTE",
+        "porOrigem": "PENDENTE",
+        "controlesDaVarredura": "PENDENTE",
+        "porNivel": "PENDENTE",
+        "exigeInteracao": "PENDENTE"
+      },
+      "contagensDeclaradas": {
+        "porTipo": {
+          "T1": 3,
+          "T2": 2,
+          "T3": 1,
+          "T4": 5,
+          "R": 1
+        },
+        "porOrigem": {
+          "mantido": 5,
+          "trocado": 6,
+          "novo": 1
+        },
+        "controlesDaVarredura": 3,
+        "nota": "adendo 3 §3 (distribuição por tipo, coluna Origem, três controles); a contagem do arquivo congelado substitui esta no preenchimento e tem de ser igual"
+      }
+    },
+    "criteriosDeJulgamento": {
+      "arquivo": "tela-f3/criterios-de-julgamento.json (nome esperado; o do agente da referência vale)",
+      "sha256": "PENDENTE",
+      "declaracao": "telas.json › processos-f3.criteriosDeJulgamento { arquivo, sha256 }",
+      "nota": "como na F2: critério para TODA spec da referência (semeadas e naturais), passada dos juízes nat78-primeira-passada-1.4.8; os critérios de crédito dos casos de comportamento e redação são os do adendo 3 §3; a montagem para se faltar critério ou o sha256 divergir"
+    },
+    "classes": {
+      "arquivo": "tela-f3/classes-d156-1.0.0.json",
+      "sha256": "PENDENTE",
+      "nota": "tela-d/classes-d156.ts sobre a referência congelada; toda semeada sai ds (a regra de desfecho também confere)"
+    },
+    "controlesConformes": {
+      "arquivo": "tela-f3/conformes.json (se houver)",
+      "sha256": "PENDENTE"
+    },
+    "inventarioDom": {
+      "arquivo": "scripts/vazamento/inventario-dom/processos-f3.json",
+      "sha256": "PENDENTE",
+      "manifestoNavegacao": "PENDENTE",
+      "nota": "manifesto-navegacao.ts --tela processos-f3 → inventario-dom.ts → conferir-inventario.ts, depois do congelamento da referência"
+    },
+    "paginaCongelada": {
+      "arquivo": "tela-f3/pagina-congelada.json",
+      "sha256": "PENDENTE",
+      "arquivos": "PENDENTE",
+      "corpus": "govbr-corpus tela-f3 (PENDENTE: commit da ala public/pnip-f3/ semeada; pnip-mock tela-f3 088a086)"
+    },
+    "pacote": {
+      "govbrTelas": "PENDENTE",
+      "exportador": "export-telas-1.8.0",
+      "site": "PENDENTE",
+      "manifesto": "PENDENTE"
+    },
+    "lock": {
+      "arquivo": "runner/images.lock.json",
+      "sha256": "PENDENTE",
+      "commit": "PENDENTE (commit sozinho; só a imagem screens muda em relação ao lock da F2)"
+    },
+    "textoDaTarefa": {
+      "sha256": "PENDENTE",
+      "nota": "30 min com relógio, igual nos três braços; esperado diferir do da F2 só na linha da URL (/pnip-f3/)"
+    }
+  },
+  "desfechoPrimario": {
+    "pergunta": "QP-F3 (adendo 3 §2.5): a mesma do adendo 2 §2.4 — com − ferramentas estima o efeito do PERFIL COMPLETO do oráculo (a consulta à base normativa mais as checagens automáticas de DS que o perfil evaluation tem e o knowledge-free não tem: tokens e estrutura no scan_page da 3.7.12) sobre a detecção dos defeitos do DS semeados",
+    "comparacao": "ferramentas-x-com",
+    "nome": "D_fc^F3",
+    "formula": "D_fc^F3 = specs semeadas confirmadas por com − as confirmadas por ferramentas, por trio",
+    "conjunto": "primario",
+    "conjuntoDescricao": "as 12 specs do estrato semeado da referência congelada da F3 (adendo 3 §6); por spec (D-102): spec confirmada = pelo menos uma unidade confirmada pela revisão fechada; 9 trios; permutação exata; α = 0,05; δ = 2 specs por trio",
+    "nota": "os três controles da varredura entram direto nesta diferença, porque o braço ferramentas não tem as checagens de token e de estrutura (adendo 3 §2.5); por isso o primário é publicado ao lado da mesma diferença sem eles (sensibilidadeAoLado). O primário não separa a base normativa das checagens (adendo 2 §8.2)",
+    "politica": "1.3.0 (crédito da 1.2.0 + R16; D-156 item 2), como na D e na E",
+    "coluna": "deteccao",
+    "fonte": "revisao:recalculo › recalculo.json › tabelas['principal|1.2.0|primario'] (na passada 1.3.0 essas chaves leem o derivado 1.3.0: notaPolitica), comparação ferramentas-x-com; regra de desfecho processos-f3 1.0.0 em recalculo-campanha.ts › regraDaTela (eval bancada-f3 30926b0)",
+    "sensibilidadeAoLado": {
+      "id": "sem-controles",
+      "rotulo": "sensibilidade pré-declarada, sem os controles da varredura",
+      "o-que": "a mesma diferença (D_fc^F3) e as duas secundárias nas specs semeadas com controleDaVarredura false do arquivo de estratos (9 das 12, adendo 3 §6), pelo MESMO método do primário: spec confirmada = ≥ 1 unidade confirmada, chave principal|1.2.0, permutação exata por troca de sinais, IC bootstrap, leitura com δ; semente própria (…|recalculo|<comparação>|principal|1.2.0|sem-controles)",
+      "leitura": "publicada ao lado do primário, sem teste próprio no lugar dele e sem correção; se o ganho estiver só nos três controles, a tese diz isso (adendo 3 §6). Controle não marcado pela varredura no controle 1 continua controle no arquivo de estratos (a marca é de antes da coleta) e sai desta sensibilidade do mesmo jeito",
+      "fonte": "recalculo.json › semControles (contagem, controles, specs, conjunto, tabelas) e a seção 'Sensibilidade pré-declarada, sem os controles da varredura' do tabela.md, logo depois dos blocos do primário; recalculo-campanha.ts › sensibilidadeSemControles (eval bancada-f3 30926b0)",
+      "contagemDeclarada": {
+        "semeadas": 12,
+        "controles": 3,
+        "semControles": 9
+      }
+    }
+  },
+  "comparacoesSecundarias": [
+    {
+      "pergunta": "D_sc^F3",
+      "comparacao": "sem-x-com",
+      "nome": "D_sc^F3",
+      "formula": "D_sc^F3 = com − sem",
+      "ressalva": "sem controle de teto do sem: o portão de teto do sem não roda na F3 (adendo 3 §5.3, decisão da autora de 27/11); D_sc^F3 é publicado com essa ressalva escrita ao lado"
+    },
+    {
+      "pergunta": "D_sf^F3",
+      "comparacao": "sem-x-ferramentas",
+      "nome": "D_sf^F3",
+      "formula": "D_sf^F3 = ferramentas − sem",
+      "ressalva": "o controle 2 (adendo 3 §5.2) escolheu uma tela em que o ferramentas fica a pelo menos duas specs do máximo; o teto do sem não foi controlado (§5.3)"
+    }
+  ],
+  "politicas": {
+    "principal": "1.3.0",
+    "aoLado": [
+      "1.1.0"
+    ],
+    "pura120": {
+      "como": "o mesmo caminho da D e da E: reingestão da passada final da F3 em pasta nova (npx tsx scripts/reanalise-nat74/e14-ingerir.ts --fila <passada final> --politica 1.2.0 --gravar-em <pasta nova>); a tabela de duas colunas lê esse julgamentos.json por e14-deteccao.ts --julgamentos <pasta nova>/julgamentos.json",
+      "limite": "o mesmo da D e da E: revisao:recalculo lê só o julgamentos.json de dentro da passada; o D_fc^F3 na 1.2.0 pura exige uma cópia da passada reingerida na 1.2.0"
+    }
+  },
+  "colunas": {
+    "principal": "deteccao",
+    "aoLado": "fundamentada",
+    "testeNaFundamentada": false,
+    "nota": "como na D, na E, na F e na F2 (D-157 item 4; N8): coluna principal detecção; fundamentada descritiva, ao lado, por braço e trio, com mediana; sem sensibilidade própria da coluna fundamentada."
+  },
+  "sensibilidades": [
+    {
+      "id": "todas",
+      "o-que": "as n semeadas mais as specs naturais não expostas da rota, por spec (adendo 3 §6)",
+      "fonte": "recalculo.json › tabelas['…|todas']"
+    },
+    {
+      "id": "unidades",
+      "o-que": "a mesma comparação do primário contada por unidade, nas unidades das specs semeadas",
+      "fonte": "recalculo.json › tabelas['…|unidades']"
+    },
+    {
+      "id": "com-expostas",
+      "o-que": "todas as specs da referência, inclusive as do casco (expostas), por spec; existe só se a referência tiver exposta (a mesma sensibilidade da D)",
+      "fonte": "recalculo.json › tabelas['…|com-expostas']"
+    },
+    {
+      "id": "politica-1.1.0",
+      "o-que": "sem R15 e sem Q1 a",
+      "fonte": "recalculo.json › tabelas['…|1.1.0|…']"
+    },
+    {
+      "id": "S4'",
+      "o-que": "sem crédito contestado não ratificado, no braço que o recebeu",
+      "fonte": "recalculo.json › tabelas[\"S4'|…\"] (passada adjudicada com contestados.json; ratificações por --ratificacoes <respostas-autora.json>)"
+    },
+    {
+      "id": "por-protocolo",
+      "o-que": "§4.5: as mesmas três comparações só com as execuções aderentes ao uso declarado do oráculo; ANÁLISE DE SENSIBILIDADE, nunca o primário",
+      "definicao": "nat78-aderencia-por-protocolo-1.0.0 (sem = absent-verified; ferramentas e com = used-adherent; used-with-errors à parte); trio com slot excluído sai das três comparações (TRIO_COM_SLOT_FORA = trio-inteiro)",
+      "opcao": "--por-protocolo (revisao:recalculo)",
+      "fonte": "recalculo.json › sensibilidadePorProtocolo"
+    },
+    {
+      "id": "pura-1.2.0",
+      "o-que": "D_fc^F3 na política 1.2.0 pura, pela reingestão (politicas.pura120)",
+      "fonte": "recalculo sobre a cópia da passada reingerida na 1.2.0"
+    }
+  ],
+  "incerteza": {
+    "teste": "permutação exata por troca de sinais sobre a média de D_fc^F3, bicaudal (estatistica-pareada.ts › testePermutacaoSinal)",
+    "robustez": [
+      "Wilcoxon-Pratt exato",
+      "teste do sinal exato"
+    ],
+    "ic": "IC 95% bootstrap percentil, 10.000 reamostragens, mulberry32, semente = campanha.design.seed da F3 (recalculo: base|recalculo|<comparação>|<variante>|<política>|<conjunto>)",
+    "alfaSecundarias": 0.05,
+    "correcaoSecundarias": "nenhuma",
+    "trioIncompleto": "entra só nas comparações que têm os dois braços",
+    "publicar": [
+      "D por trio",
+      "média",
+      "mediana",
+      "DP",
+      "n planejado (9)",
+      "n efetivo"
+    ],
+    "semControles": "a sensibilidade sem os controles usa o mesmo teste, o mesmo IC e a mesma robustez, com semente própria (o id do conjunto sem-controles entra nela)"
+  },
+  "leitura": {
+    "limiar": {
+      "alfa": 0.05,
+      "teste": "próprio da F3",
+      "holm": "nenhum: a F3 é lida como seguimento (adendo 3 §2.6)"
+    },
+    "congelada": "vantagem do com exige p < 0,05 e média > 0; o simétrico é vantagem do ferramentas; o resto é nenhuma diferença detectável. Estrito (p < limiar). O recálculo lê com α = 0,05; na F3 essa é a leitura publicada (nenhum holmTelas é aplicado).",
+    "delta": {
+      "valor": 2,
+      "unidade": "specs por trio",
+      "regra": "como no protocolo (§6.1): IC inteiro em [−2, +2] → o IC estimado caiu dentro da faixa pré-especificada de ±δ; cruzou ±2 → inconclusivo para o efeito relevante (recalculo-campanha.ts › leituraComDelta); δ = 2 specs por trio (adendo 3 §6)"
+    },
+    "publicar": "o que sair, favorável, nulo ou desfavorável (adendo 3 §2.6), com o primário e a sensibilidade sem os controles lado a lado"
+  },
+  "tipoDeSpec": {
+    "regra": "ds × geral pela categories da referência (D-156 3.i; e14-deteccao.ts › classeDaSpec)",
+    "fonte": "e14-deteccao.ts › porClasse, rodado uma vez com e sem --sem-expostas (a F declara _meta.exposto.specs na forma da D)",
+    "naF3": "o primário já é a classe ds (as semeadas); as naturais ficam ao lado, descritivas, por braço e trio"
+  },
+  "classesNat71": {
+    "arquivo": "tela-f3/classes-nat71/classes-finais.json (se o agente da referência repetir o procedimento da F2)",
+    "sha256": "PENDENTE",
+    "estado": "PENDENTE"
+  },
+  "comandos": [
+    {
+      "passo": "0",
+      "o-que": "servir o site congelado da F3 (pacote govbr-telas da F3)",
+      "comando": "npx tsx scripts/reanalise-nat74/e14-campanha.ts --servir ../govbr-telas --porta <porta>"
+    },
+    {
+      "passo": "1",
+      "o-que": "primeira passada cega da F3, em passada própria (cartões da F3 nunca no mesmo lote de outra tela); política 1.3.0",
+      "comando": "npx tsx scripts/reanalise-nat74/e14-campanha.ts --analise <análise p01> … --analise <análise p09> --saida <passada> --base-url http://127.0.0.1:<porta> --validador <checkout do validator 816f4bae41f4486b7055f0ac265167e87ce0d5e5>; juiz por lote; npx tsx scripts/reanalise-nat74/e14-ingerir.ts --fila <passada>"
+    },
+    {
+      "passo": "3",
+      "o-que": "confiabilidade (antes da adjudicação)",
+      "comando": "npm run revisao:confiabilidade -- amostra --passada <passada> --saida <revisao>; npm run revisao:confiabilidade -- medir --passada <passada> --amostra <revisao>/confiabilidade"
+    },
+    {
+      "passo": "2",
+      "o-que": "consistência e adjudicação",
+      "comando": "npm run revisao:consistencia -- --passada <passada> --saida <revisao>; npm run revisao:adjudicacao -- preparar --passada <passada> --confiabilidade <revisao>/confiabilidade --saida <revisao>; … revelar …; npm run revisao:adjudicacao -- aplicar --passada <passada> --adjudicacao <revisao>/adjudicacao --saida <pasta nova>"
+    },
+    {
+      "passo": "6",
+      "o-que": "origem medida",
+      "comando": "npm run revisao:origem -- medir --passada <passada adjudicada> --site <site congelado> --ds <pacote DS> [--ds …] --saida <pasta nova>"
+    },
+    {
+      "passo": "4",
+      "o-que": "material da autora (teto 10)",
+      "comando": "npm run revisao:material-autora -- preparar --passada <passada adjudicada> --origem <origem> --site <site congelado> --saida <pasta nova> --teto 10 --validador <checkout congelado>; npm run revisao:material-autora -- responder --material <pasta> --texto <linhas> --saida <pasta nova>"
+    },
+    {
+      "passo": "5",
+      "o-que": "recálculo: D_fc^F3 (primária), D_sc^F3, D_sf^F3; 1.3.0 + 1.1.0; S4'; todas; unidades; com-expostas; tabelas por tipo, origem, nível e interação e a sensibilidade sem os controles da varredura; leitura com δ; α = 0,05 sem Holm",
+      "comando": "npm run revisao:recalculo -- --passada <passada adjudicada> --saida <pasta nova> --origem <origem> --ratificacoes <respostas-autora.json>"
+    },
+    {
+      "passo": "5-pp",
+      "o-que": "sensibilidade por protocolo (nunca o primário), em pasta própria",
+      "comando": "npm run revisao:recalculo -- --passada <passada adjudicada> --saida <outra pasta nova> --origem <origem> --ratificacoes <respostas-autora.json> --por-protocolo"
+    },
+    {
+      "passo": "7",
+      "o-que": "duas colunas por tipo de spec (semeadas ds; naturais ao lado)",
+      "comando": "npx tsx scripts/reanalise-nat74/e14-deteccao.ts --passada <passada final> --saida <pasta nova> --coluna-principal deteccao [--sem-expostas]"
+    }
+  ],
+  "pendentes": [
+    {
+      "item": "adendo 3 congelado (commit sozinho) e o sha256 do arquivo",
+      "estado": "antes do congelamento da referência da F3 (adendo 3, cabeçalho)"
+    },
+    {
+      "item": "referência ground-truth-processos-f3.json 1.0.0, tela-f3/ (estratos no formato tela-f3-estratos-1.0.0, critérios, classes, página congelada) e todos os hashes de tela.*",
+      "estado": "do agente da referência; a bancada preenche só sha256 e contagens"
+    },
+    {
+      "item": "pacote govbr-telas da F3 (export-telas-1.8.0), lock só da imagem screens, texto da tarefa, inventário do DOM",
+      "estado": "depois da ala pnip-f3/ semeada no corpus"
+    },
+    {
+      "item": "controles de viabilidade (controlesDeViabilidade): controle 1 (cobertura), controle 2 (teto do ferramentas); o portão do sem não roda",
+      "estado": "fatos pendentes; nesta ordem; qualquer falha encerra a F3 antes da coleta"
+    },
+    {
+      "item": "D_fc^F3 na 1.2.0 pura",
+      "estado": "o mesmo limite da D, da E, da F e da F2; não bloqueia a coleta"
+    }
+  ],
+  "descritivos": {
+    "tipo": "descritivo pré-declarado, sem D e sem teste (adendo 3 §6); coluna detecção (chave principal|1.2.0, spec confirmada = ≥ 1 unidade confirmada; [máximo] com os pendentes) e, ao lado, a fundamentada (specFundamentada, leitura principal); linha total = o primário; por braço, trio e mediana",
+    "obrigatorio": "o recálculo da processos-f3 recusa rodar sem telas.json › processos-f3.estratos ou com o arquivo em outro formato que não tela-f3-estratos-1.0.0, e recusa a tela que declarar níveis e estratos juntos",
+    "porTipo": {
+      "o-que": "specs semeadas confirmadas por tipo de defeito (os tipos do arquivo de estratos, na ordem dele: T1–T4 e R) e por braço, com o denominador de cada tipo (contagens desiguais: 3/2/1/5/1 pelo adendo 3 §3; a cota igual do adendo 2 §4.1 deixa de valer)",
+      "fonte": "recalculo.json › porTipo (denominador, subtipos, deteccao, fundamentada) e a seção 'Specs semeadas confirmadas por tipo de defeito' do tabela.md; recalculo-campanha.ts › lerEstratos, tabelaPorTipo, tabelaPorOrigem, tabelaPorNivelDosEstratos, tabelaPorInteracao (eval bancada-f3 30926b0)"
+    },
+    "porOrigem": {
+      "o-que": "specs semeadas confirmadas por origem do defeito em relação à lista da F2 (mantido, trocado, novo; 5/6/1 pelo adendo 3 §3) e por braço, com o denominador de cada origem",
+      "fonte": "recalculo.json › porOrigem e a seção 'Specs semeadas confirmadas por origem do defeito'"
+    },
+    "porNivel": {
+      "o-que": "specs semeadas confirmadas por nível de dificuldade (os quatro níveis do adendo da F, atribuídos na montagem da referência; rótulo do arquivo de estratos) e por braço",
+      "fonte": "recalculo.json › porNivel e a seção 'Specs semeadas confirmadas por nível de dificuldade'"
+    },
+    "porInteracao": {
+      "o-que": "specs semeadas confirmadas por exigência de interação (exigeInteracao do arquivo de estratos: exige-interacao, sem-interacao) e por braço",
+      "fonte": "recalculo.json › porInteracao e a seção 'Specs semeadas confirmadas por exigência de interação'"
+    },
+    "outros": "coluna fundamentada ao lado da detecção; sensibilidade com todas as specs (sensibilidades › todas)"
+  },
+  "controlesDeViabilidade": {
+    "nota": "fatos a registrar ANTES do congelamento desta análise, nesta ordem; os dois dão decisão binária sobre a composição inteira (adendo 3 §5); não há recomposição (a lista não tem reserva); o braço com não roda em nenhum piloto e a diferença primária nunca é olhada antes da coleta",
+    "portaoDeTetoDoSem": {
+      "roda": false,
+      "decisao": "NÃO RODA (adendo 3 §5.3): decisão da autora de 27/11, com o mesmo parecer do Codex e da sessão principal. O sem não entra no primário, e o adendo 2 §5 já dizia que o teto que importa é o do ferramentas. Sem esse portão, D_sc^F3 é publicado sem controle de teto, com essa ressalva (comparacoesSecundarias). Nenhuma campanha portao-teto-f3-* existe"
+    },
+    "controle1Cobertura": {
+      "regra": "adendo 3 §5.1 (como o controle 1 da errata 1 do adendo 2, sem modelo): com a referência congelada, lê-se quantos semeados a varredura sem guia do oráculo marca; a F3 segue se pelo menos um for marcado e pelo menos um não for. Como a lista é aberta, lê-se também quais; em particular, quantos dos três controles foram marcados. Controle não marcado continua na lista como semeado comum e é contado assim. Correspondência achado × spec feita à mão por um agente que não participa de mais nada, de forma conservadora (mesmo elemento ou raiz da página, mesma regra ou propriedade); o diagnóstico guiado e o axe continuam fechados até o fechamento da coleta",
+      "campanha": "a linha de base do 1º disparo (o sem) da ensaio-trio-f3-01, etapas coleta+linha-de-base (sem modelo: o dublê não muda o que a linha de base mede). Não a da nat78-tela-f3-01: a dela (emenda (a)) só existe depois do campaign.json final, que cita esta análise, que precisa deste fato antes",
+      "estado": "PENDENTE",
+      "veredito": "PENDENTE",
+      "contagem": {
+        "semeadasMarcadas": "PENDENTE",
+        "controlesMarcados": "PENDENTE",
+        "porTipo": "PENDENTE",
+        "quais": "PENDENTE"
+      }
+    },
+    "controle2TetoDoFerramentas": {
+      "regra": "adendo 3 §5.2 (o controle 2 da errata 1 do adendo 2): 3 execuções só do ferramentas, fora da amostra, julgadas como no portão do sem da F2 (primeira passada cega; pendente conta como confirmado); a F3 segue se a mediana for no máximo n − 2 (n = 12: ≤ 10)",
+      "campanha": "portao-ferramentas-f3-01 (ensaio antes: ensaio-portao-ferramentas-f3-01)",
+      "comando": "npm run portao:teto -- --passada <passada> --saida <pasta nova> --braco ferramentas --limiar n-menos-2",
+      "estado": "PENDENTE",
+      "veredito": "PENDENTE",
+      "portaoTetoMdSha256": "PENDENTE"
+    }
+  }
+}
