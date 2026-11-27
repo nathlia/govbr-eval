@@ -1,0 +1,37 @@
+processos-f3 · ground-truth-processos-f3.json 1.0.0 · http://127.0.0.1:3331/pnip-f3/portal-mpa/processos?mock-perfil=mpa
+estados: inicial → lista-exibir → assinatura-cancelada → pagina-2 → exibir-25 → filtro-removido · 25 specs · 69 unidades
+
+  inicial  segmento 0 · /pnip-f3/portal-mpa/processos
+  lista-exibir  segmento 0 · /pnip-f3/portal-mpa/processos
+  assinatura-cancelada  segmento 2 · /pnip-f3/portal-mpa/processos
+  pagina-2  segmento 4 · /pnip-f3/portal-mpa/processos
+  exibir-25  segmento 6 · /pnip-f3/portal-mpa/processos
+  filtro-removido  segmento 8 · /pnip-f3/portal-mpa/processos
+
+  F3-01  1 unidade(s) · sempre · sem predicado
+  F3-02  1 unidade(s) · inicial · sustenta — alguma propriedade de [border-top-left-radius] fora de {50%} (mesmo desfecho (sustenta) em inicial, lista-exibir: 1 participante(s) medidos em "inicial": border-top-left-radius=0px)
+  F3-03  1 unidade(s) · filtro-removido · sem predicado
+  F3-04  1 unidade(s) · inicial · sustenta — todas as propriedades de [overflow-x, text-overflow] fora de {visible, ellipsis} (mesmo desfecho (sustenta) em inicial, lista-exibir: 9 participante(s) medidos em "inicial": overflow-x=hidden, text-overflow=clip | overflow-x=hidden, text-overflow=clip | overflow-x=hidden, text-overflow=clip | overflow-x=hidden, text-overflow=clip | overflow-x=hidden, text-overflow=clip | overflow-x=hidden, text-overflow=clip | overflow-x=hidden, text-overflow=clip | overflow-x=hidden, text-overflow=clip | overflow-x=hidden, text-overflow=clip)
+  F3-05  1 unidade(s) · inicial · sustenta — alguma propriedade de [background-color] fora de {rgb(19, 81, 180)} (mesmo desfecho (sustenta) em inicial, lista-exibir: 1 participante(s) medidos em "inicial": background-color=rgb(23, 85, 169))
+  F3-06  1 unidade(s) · inicial · sustenta — alguma propriedade de [border-top-left-radius] fora de {50%} (mesmo desfecho (sustenta) em inicial, lista-exibir: 1 participante(s) medidos em "inicial": border-top-left-radius=7px)
+  F3-07  1 unidade(s) · inicial · sustenta — nenhum destes atributos presente: data-active (mesmo desfecho (sustenta) em inicial, lista-exibir: 1 participante(s) medidos em "inicial": ausentes: data-active)
+  F3-08  1 unidade(s) · inicial · sustenta — alguma propriedade de [font-size] fora de {20.16px} (mesmo desfecho (sustenta) em inicial, lista-exibir: 3 participante(s) medidos em "inicial": font-size=16.8px | font-size=16.8px | font-size=16.8px)
+  F3-09  1 unidade(s) · exibir-25 · sem predicado
+  F3-10  1 unidade(s) · inicial · sustenta — alguma propriedade de [opacity] fora de {0.45} (mesmo desfecho (sustenta) em inicial, lista-exibir: 8 participante(s) medidos em "inicial": opacity=1 | opacity=1 | opacity=1 | opacity=1 | opacity=1 | opacity=1 | opacity=1 | opacity=1)
+  F3-11  1 unidade(s) · inicial · sustenta — o próprio <li> carrega a classe .active (mesmo desfecho (sustenta) em inicial, lista-exibir: 1 participante(s) medidos em "inicial": <li class="tab-item active">)
+  F3-12  1 unidade(s) · assinatura-cancelada · sem predicado
+  D-01  18 unidade(s) · inicial · sem predicado
+  D-02  9 unidade(s) · inicial · sem predicado
+  D-03  7 unidade(s) · inicial · sem predicado
+  D-04  7 unidade(s) · inicial · sem predicado
+  D-05  1 unidade(s) · inicial · sem predicado
+  D-06  8 unidade(s) · inicial · sem predicado
+  D-07  1 unidade(s) · inicial · sem predicado
+  D-08  1 unidade(s) · inicial · sem predicado
+  D-10  1 unidade(s) · inicial · sem predicado
+  D-11  1 unidade(s) · sempre · sem predicado
+  D-12  1 unidade(s) · sempre · sem predicado
+  D-13  1 unidade(s) · sempre · sem predicado
+  D-14  1 unidade(s) · sempre · sem predicado
+
+Referência conferida: estados, contagens e predicados sustentam na página.
