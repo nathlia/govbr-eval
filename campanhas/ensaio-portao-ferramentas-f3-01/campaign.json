@@ -4,18 +4,18 @@
   "campaignId": "ensaio-portao-ferramentas-f3-01",
   "kind": "pilot",
   "title": "ENSAIO sem modelo do controle de teto do ferramentas da F3 (dublê, braço ferramentas ×3, so-coleta; nunca dado; o veredito não significa nada)",
-  "objective": "Ensaio de ponta a ponta sem modelo do controle 2 da F3 (adendo 3 §5.2 e §7: ensaios como na F2 antes da cadeia de congelamento): cliente real contra o dublê (cenário honesto), braço ferramentas ×3 com o oráculo 3.7.12 knowledge-free (aderência used-adherent), etapas so-coleta, análise individual --sem-linha-de-base, passada cega com respostas fabricadas, npm run portao:teto -- --braco ferramentas --limiar n-menos-2. Põe o oráculo contra a F3: só depois do congelamento da referência. Mesmo instrumento da portao-ferramentas-f3-01; só o modelo e o provedor são os do dublê. RASCUNHO: site PENDENTE, frozenAt nulo.",
+  "objective": "Ensaio de ponta a ponta sem modelo do controle 2 da F3 (adendo 3 §5.2 e §7: ensaios como na F2 antes da cadeia de congelamento): cliente real contra o dublê (cenário honesto), braço ferramentas ×3 com o oráculo 3.7.12 knowledge-free (aderência used-adherent), etapas so-coleta, análise individual --sem-linha-de-base, passada cega com respostas fabricadas, npm run portao:teto -- --braco ferramentas --limiar n-menos-2. Põe o oráculo contra a F3: só depois do congelamento da referência. Mesmo instrumento da portao-ferramentas-f3-01; só o modelo e o provedor são os do dublê. Pronta para disparo (bancada F3, rodada 2, 27/11/2026): site govbr-telas-site-bc38c2332381 (govbr-telas 439e5d2), referência ground-truth-processos-f3.json 1.0.0 (sha256 14baee19…fbd7b0), lock 485791a0… (eval 0a0e255), texto da tarefa f1c4e5c8… (30 min); adendo 3 congelado em thesis 8d7d0b1 (errata 1 b7f83c6).",
   "hypotheses": [
     "Controle de viabilidade, sem hipótese científica: a mediana do ferramentas nas n specs semeadas da F3 é ≤ n − 2?"
   ],
   "createdAt": "2026-11-27T03:30:00Z",
-  "frozenAt": null,
+  "frozenAt": "2026-11-27T05:30:00Z",
   "design": {
     "screens": [
       {
         "id": "processos-f3",
         "label": "Processos (cópia semeada da rota da tela D, ala pnip-f3)",
-        "version": "govbr-telas-site-PENDENTE"
+        "version": "govbr-telas-site-bc38c2332381"
       }
     ],
     "arms": [
@@ -150,7 +150,7 @@
   },
   "pendingDecisions": [
     {
-      "topic": "Ensaio sem modelo: custo zero (dublê); disparável depois do congelamento da referência da F3, com o site da F3 e frozenAt",
+      "topic": "Ensaio sem modelo: custo zero (dublê); só minutos do runner do GitHub",
       "issue": "NAT-139",
       "owner": "sessão principal"
     }

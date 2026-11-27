@@ -4,18 +4,18 @@
   "campaignId": "portao-ferramentas-f3-01",
   "kind": "pilot",
   "title": "Controle de teto do ferramentas da tela F3 (adendo 3 de 27/11, §5.2) — 3 execuções SÓ do braço ferramentas na tela processos-f3, fora da amostra",
-  "objective": "RASCUNHO da bancada F3 (27/11/2026, ramo bancada-f3; não disparável: site, referência, lock e texto da tarefa PENDENTES; frozenAt nulo). Controle 2 do adendo 3 §5.2 (o controle 2 da errata 1 do adendo 2, sem mudança de regra): depois do controle de cobertura (§5.1) passar, 3 execuções só do braço ferramentas (oráculo 3.7.12, perfil knowledge-free: get_finding_details, scan_page, verify_finding), julgadas como no portão do sem da F2 (primeira passada cega; cartão pendente conta como confirmado). Passa se a mediana das specs semeadas confirmadas por execução for no máximo n − 2 (n = 12: no máximo 10); se ficar a menos de duas specs do máximo, a F3 encerra antes da coleta. Decisão binária sobre a composição inteira; sem recomposição (a lista não tem reserva, §5). O braço com não roda em nenhum piloto e a diferença primária nunca é olhada antes da coleta. A F3 não tem portão de teto do sem (adendo 3 §5.3, decisão da autora de 27/11, com o mesmo parecer do Codex e da sessão principal): o sem não roda em nenhum piloto da F3. npm run portao:teto -- --braco ferramentas --limiar n-menos-2 (recusa execução de outro braço). As execuções não entram na amostra da nat78-tela-f3-01; a sessão principal lê só portao-teto.md. Linha de base: ausência planejada (abaixo).",
+  "objective": "Pronta para disparo (bancada F3, rodada 2, 27/11/2026): site govbr-telas-site-bc38c2332381 (govbr-telas 439e5d2), referência ground-truth-processos-f3.json 1.0.0 (sha256 14baee19…fbd7b0), lock 485791a0… (eval 0a0e255), texto da tarefa f1c4e5c8… (30 min); adendo 3 congelado em thesis 8d7d0b1 (errata 1 b7f83c6). Controle 2 do adendo 3 §5.2 (o controle 2 da errata 1 do adendo 2, sem mudança de regra): depois do controle de cobertura (§5.1) passar, 3 execuções só do braço ferramentas (oráculo 3.7.12, perfil knowledge-free: get_finding_details, scan_page, verify_finding), julgadas como no portão do sem da F2 (primeira passada cega; cartão pendente conta como confirmado). Passa se a mediana das specs semeadas confirmadas por execução for no máximo n − 2 (n = 12: no máximo 10); se ficar a menos de duas specs do máximo, a F3 encerra antes da coleta. Decisão binária sobre a composição inteira; sem recomposição (a lista não tem reserva, §5). O braço com não roda em nenhum piloto e a diferença primária nunca é olhada antes da coleta. A F3 não tem portão de teto do sem (adendo 3 §5.3, decisão da autora de 27/11, com o mesmo parecer do Codex e da sessão principal): o sem não roda em nenhum piloto da F3. npm run portao:teto -- --braco ferramentas --limiar n-menos-2 (recusa execução de outro braço). As execuções não entram na amostra da nat78-tela-f3-01; a sessão principal lê só portao-teto.md. Linha de base: ausência planejada (abaixo).",
   "hypotheses": [
     "Controle de viabilidade, sem hipótese científica: a mediana do ferramentas nas n specs semeadas da F3 é ≤ n − 2?"
   ],
   "createdAt": "2026-11-27T03:30:00Z",
-  "frozenAt": null,
+  "frozenAt": "2026-11-27T05:30:00Z",
   "design": {
     "screens": [
       {
         "id": "processos-f3",
         "label": "Processos (cópia semeada da rota da tela D, ala pnip-f3)",
-        "version": "govbr-telas-site-PENDENTE"
+        "version": "govbr-telas-site-bc38c2332381"
       }
     ],
     "arms": [
@@ -150,7 +150,7 @@
   },
   "pendingDecisions": [
     {
-      "topic": "Disparável só depois do controle 1 passar, com o site da F3, a referência congelada e tela-f3/ commitadas no ref, o lock com a imagem screens da F3 e frozenAt; custo estimado ≈ US$ 14 (3 execuções ferramentas de 30 min, ≈ 4,7 cada, mediana do ferramentas da D) mais uma passada cega, dentro do teto do adendo 3 §7 (piloto sem orçamento próprio)",
+      "topic": "Dispara só depois de o controle 1 (cobertura) passar (adendo 3 §5.1–§5.2); custo ≈ US$ 14 (3 execuções ferramentas de 30 min) mais uma passada cega, dentro do teto de US$ 217,86 do adendo 3 §7 (piloto sem orçamento próprio)",
       "issue": "NAT-139",
       "owner": "sessão principal"
     }

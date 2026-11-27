@@ -4,18 +4,18 @@
   "campaignId": "ensaio-trio-f3-01",
   "kind": "pilot",
   "title": "ENSAIO DESCARTÁVEL SEM MODELO (dublê) dos três braços na tela F3 (processos-f3), etapas coleta+linha-de-base: oráculo e linha de base na F3 depois do congelamento da referência; nunca dado, nada daqui entra em número da tese",
-  "objective": "Adendo 3 §7 (ensaios como na F2 antes da cadeia de congelamento). Prova o encanamento dos três braços na F3 com o instrumento da nat78-tela-f3-01: cliente real contra o dublê roteirizado (cenário honesto), oráculo 3.7.12 nos perfis evaluation (com) e knowledge-free (ferramentas), coletor, paredes de isolamento, linha de base (axe + validator não guiado e guiado) e arquivamento, e depois a análise do trio, a passada cega 1.4.8 e o recálculo com a regra processos-f3 (tabelas por tipo, origem, nível e interação e a sensibilidade sem os controles da varredura). A linha de base do primeiro disparo (o sem) é a que o controle de cobertura (adendo 3 §5.1) lê. Um disparo por braço (campanha sem agenda, braço no disparo), par p01. Só depois do congelamento da referência da F3. Nada é comparado; nenhum número daqui é resultado. RASCUNHO: site PENDENTE, frozenAt nulo.",
+  "objective": "Adendo 3 §7 (ensaios como na F2 antes da cadeia de congelamento). Prova o encanamento dos três braços na F3 com o instrumento da nat78-tela-f3-01: cliente real contra o dublê roteirizado (cenário honesto), oráculo 3.7.12 nos perfis evaluation (com) e knowledge-free (ferramentas), coletor, paredes de isolamento, linha de base (axe + validator não guiado e guiado) e arquivamento, e depois a análise do trio, a passada cega 1.4.8 e o recálculo com a regra processos-f3 (tabelas por tipo, origem, nível e interação e a sensibilidade sem os controles da varredura). A linha de base do primeiro disparo (o sem) é a que o controle de cobertura (adendo 3 §5.1) lê. Um disparo por braço (campanha sem agenda, braço no disparo), par p01. Só depois do congelamento da referência da F3. Nada é comparado; nenhum número daqui é resultado. Pronta para disparo (bancada F3, rodada 2, 27/11/2026): site govbr-telas-site-bc38c2332381 (govbr-telas 439e5d2), referência ground-truth-processos-f3.json 1.0.0 (sha256 14baee19…fbd7b0), lock 485791a0… (eval 0a0e255), texto da tarefa f1c4e5c8… (30 min); adendo 3 congelado em thesis 8d7d0b1 (errata 1 b7f83c6).",
   "hypotheses": [
     "Ensaio de infraestrutura: nenhuma hipótese científica."
   ],
   "createdAt": "2026-11-27T03:30:00Z",
-  "frozenAt": null,
+  "frozenAt": "2026-11-27T05:30:00Z",
   "design": {
     "screens": [
       {
         "id": "processos-f3",
         "label": "Processos (cópia semeada da rota da tela D, ala pnip-f3)",
-        "version": "govbr-telas-site-PENDENTE"
+        "version": "govbr-telas-site-bc38c2332381"
       }
     ],
     "arms": [
@@ -161,7 +161,7 @@
   },
   "pendingDecisions": [
     {
-      "topic": "Ensaio sem modelo: custo zero (dublê); disparável depois do congelamento da referência da F3, com o site da F3, a referência e tela-f3/ commitadas (critérios e estratos declarados) e frozenAt",
+      "topic": "Ensaio sem modelo: custo zero (dublê); a linha de base do 1º disparo (o sem) é a do controle de cobertura (adendo 3 §5.1)",
       "issue": "NAT-139",
       "owner": "sessão principal"
     }
