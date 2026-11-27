@@ -49,6 +49,8 @@ export const CAMPOS_OPERACIONAIS = ["url", "waitFor", "viewport", "setup", "stat
  * construção e da confirmação cega, objetos; `estados_resumo`: um resumo por parada, objeto com uma chave por estado,
  * documental porque as paradas e o caminho até elas estão em `setup` e `states`; `niveis`, `criteriosDeJulgamento`,
  * `paginaCongelada`: textos que apontam arquivos de `tela-f/`), classificados pelo nome e pela forma, sem ler o conteúdo.
+ * O da tela F3 (27/11/2026: `regrasRepetidas`, objeto { arquivo, nota, repeticoes }: o registro das regras que repetem
+ * specs de referências anteriores, adendo 3 §3), documental pelo nome e pela forma, sem ler o conteúdo.
  */
 export const CAMPOS_DOCUMENTAIS = [
   "version", "version_note", "historico", "status", "page", "suite", "ds", "unit_of_evaluation", "setup_rationale",
@@ -58,6 +60,7 @@ export const CAMPOS_DOCUMENTAIS = [
   "estratos", "coviolacoes", "portao", "decisoesDaAutora", "regraMesmaClausula", "fundamentacao", "correcoesDaPagina",
   "desvios", "sensibilidades", "pagina",
   "origem", "escolha", "idsNaBase", "semIdMapeado", "confirmacaoCega", "estados_resumo", "niveis", "criteriosDeJulgamento", "paginaCongelada",
+  "regrasRepetidas",
 ] as const;
 /** Campos de um passo do `setup` (FlowSetupStep): todos operacionais. */
 export const CAMPOS_DO_PASSO = ["action", "selector", "value", "ms", "path", "waitFor"] as const;
