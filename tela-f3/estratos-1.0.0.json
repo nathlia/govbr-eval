@@ -1,0 +1,123 @@
+{
+  "formato": "tela-f3-estratos-1.0.0",
+  "referencia": {
+    "arquivo": "ground-truth-processos-f3.json",
+    "versao": "1.0.0",
+    "sha256": "PENDENTE-CONGELAMENTO"
+  },
+  "tipos": [
+    {
+      "id": "T1",
+      "rotulo": "Estrutura",
+      "subtipos": [
+        "anatomia",
+        "marcacao"
+      ]
+    },
+    {
+      "id": "T2",
+      "rotulo": "Valor fora do sistema"
+    },
+    {
+      "id": "T3",
+      "rotulo": "Valor do sistema no lugar errado"
+    },
+    {
+      "id": "T4",
+      "rotulo": "Estado e comportamento"
+    },
+    {
+      "id": "R",
+      "rotulo": "Redação"
+    }
+  ],
+  "specs": {
+    "F3-01": {
+      "tipo": "T1",
+      "subtipo": "anatomia",
+      "nivel": "medio",
+      "exigeInteracao": false,
+      "origem": "mantido",
+      "controleDaVarredura": false
+    },
+    "F3-02": {
+      "tipo": "T1",
+      "subtipo": "marcacao",
+      "nivel": "facil",
+      "exigeInteracao": false,
+      "origem": "mantido",
+      "controleDaVarredura": false
+    },
+    "F3-03": {
+      "tipo": "T4",
+      "nivel": "facil",
+      "exigeInteracao": true,
+      "origem": "trocado",
+      "controleDaVarredura": false
+    },
+    "F3-04": {
+      "tipo": "T4",
+      "nivel": "facil",
+      "exigeInteracao": false,
+      "origem": "novo",
+      "controleDaVarredura": false
+    },
+    "F3-05": {
+      "tipo": "T2",
+      "nivel": "dificil",
+      "exigeInteracao": false,
+      "origem": "trocado",
+      "controleDaVarredura": true
+    },
+    "F3-06": {
+      "tipo": "T2",
+      "nivel": "medio",
+      "exigeInteracao": false,
+      "origem": "trocado",
+      "controleDaVarredura": true
+    },
+    "F3-07": {
+      "tipo": "T1",
+      "subtipo": "marcacao",
+      "nivel": "dificil",
+      "exigeInteracao": false,
+      "origem": "trocado",
+      "controleDaVarredura": true
+    },
+    "F3-08": {
+      "tipo": "T3",
+      "nivel": "dificil",
+      "exigeInteracao": false,
+      "origem": "mantido",
+      "controleDaVarredura": false
+    },
+    "F3-09": {
+      "tipo": "T4",
+      "nivel": "facil",
+      "exigeInteracao": true,
+      "origem": "trocado",
+      "controleDaVarredura": false
+    },
+    "F3-10": {
+      "tipo": "T4",
+      "nivel": "dificil",
+      "exigeInteracao": false,
+      "origem": "mantido",
+      "controleDaVarredura": false
+    },
+    "F3-11": {
+      "tipo": "T4",
+      "nivel": "medio",
+      "exigeInteracao": false,
+      "origem": "mantido",
+      "controleDaVarredura": false
+    },
+    "F3-12": {
+      "tipo": "R",
+      "nivel": "muito-dificil",
+      "exigeInteracao": true,
+      "origem": "trocado",
+      "controleDaVarredura": false
+    }
+  }
+}

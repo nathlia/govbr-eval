@@ -1,0 +1,134 @@
+{
+ "_meta": {
+  "data": "2026-11-27",
+  "regra": "cabeçalho de tela-f3/conferir-arvores.mts",
+  "urls": {
+   "semeado": "http://127.0.0.1:3340",
+   "semSemente": "http://127.0.0.1:3331"
+  }
+ },
+ "semeado": [
+  {
+   "parada": "lista-exibir",
+   "segmento": 0,
+   "entradaDireta": {
+    "url": "http://127.0.0.1:3340/pnip-f3/portal-mpa/processos?mock-perfil=mpa",
+    "passos": 2,
+    "direta": false
+   },
+   "elementos": 588,
+   "resultado": "igual",
+   "erro": null
+  },
+  {
+   "parada": "assinatura-cancelada",
+   "segmento": 2,
+   "entradaDireta": {
+    "url": "http://127.0.0.1:3340/pnip-f3/portal-mpa/processos?mock-perfil=mpa",
+    "passos": 7,
+    "direta": true
+   },
+   "elementos": 596,
+   "resultado": "igual",
+   "erro": null
+  },
+  {
+   "parada": "pagina-2",
+   "segmento": 4,
+   "entradaDireta": {
+    "url": "http://127.0.0.1:3340/pnip-f3/portal-mpa/processos?mock-perfil=mpa",
+    "passos": 5,
+    "direta": true
+   },
+   "elementos": 357,
+   "resultado": "igual",
+   "erro": null
+  },
+  {
+   "parada": "exibir-25",
+   "segmento": 6,
+   "entradaDireta": {
+    "url": "http://127.0.0.1:3340/pnip-f3/portal-mpa/processos?mock-perfil=mpa",
+    "passos": 8,
+    "direta": true
+   },
+   "elementos": 588,
+   "resultado": "igual",
+   "erro": null
+  },
+  {
+   "parada": "filtro-removido",
+   "segmento": 8,
+   "entradaDireta": {
+    "url": "http://127.0.0.1:3340/pnip-f3/portal-mpa/processos?mock-perfil=mpa",
+    "passos": 8,
+    "direta": true
+   },
+   "elementos": 594,
+   "resultado": "igual",
+   "erro": null
+  }
+ ],
+ "semSemente": [
+  {
+   "parada": "lista-exibir",
+   "segmento": 0,
+   "entradaDireta": {
+    "url": "http://127.0.0.1:3331/pnip-f3/portal-mpa/processos?mock-perfil=mpa",
+    "passos": 2,
+    "direta": false
+   },
+   "elementos": 591,
+   "resultado": "igual",
+   "erro": null
+  },
+  {
+   "parada": "assinatura-cancelada",
+   "segmento": 2,
+   "entradaDireta": {
+    "url": "http://127.0.0.1:3331/pnip-f3/portal-mpa/processos?mock-perfil=mpa",
+    "passos": 7,
+    "direta": true
+   },
+   "elementos": 599,
+   "resultado": "igual",
+   "erro": null
+  },
+  {
+   "parada": "pagina-2",
+   "segmento": 4,
+   "entradaDireta": {
+    "url": "http://127.0.0.1:3331/pnip-f3/portal-mpa/processos?mock-perfil=mpa",
+    "passos": 5,
+    "direta": true
+   },
+   "elementos": 360,
+   "resultado": "igual",
+   "erro": null
+  },
+  {
+   "parada": "exibir-25",
+   "segmento": 6,
+   "entradaDireta": {
+    "url": "http://127.0.0.1:3331/pnip-f3/portal-mpa/processos?mock-perfil=mpa",
+    "passos": 8,
+    "direta": true
+   },
+   "elementos": 591,
+   "resultado": "igual",
+   "erro": null
+  },
+  {
+   "parada": "filtro-removido",
+   "segmento": 8,
+   "entradaDireta": {
+    "url": "http://127.0.0.1:3331/pnip-f3/portal-mpa/processos?mock-perfil=mpa",
+    "passos": 8,
+    "direta": true
+   },
+   "elementos": 591,
+   "resultado": "igual",
+   "erro": null
+  }
+ ]
+}

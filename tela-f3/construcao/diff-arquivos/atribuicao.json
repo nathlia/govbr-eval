@@ -1,0 +1,11 @@
+{
+ "base": "pnip-f3-sem-semente (lista 9d117870…0abb9c) × pnip-f3-semeada (lista 30b16f0d…bce173); hunks por token com identificadores de 1–2 caracteres normalizados (tokdiff.mjs --norm)",
+ "index.html": {"hunks": 2, "atribuicao": "nomes de runtime e main"},
+ "runtime": {"hunks": 4, "atribuicao": "hashes dos chunks 3343, 4929, 5560, 5945"},
+ "main": {"hunks": 66, "atribuicao": {"M-09 (BrSelectComponent: fixedSelectionLabel)": 3, "M-09 (fixedPageSizeLabel/fixedSelectionLabel na paginação)": 3, "M-06 (nextButtonRadius, binding de border-radius)": 4, "M-01 (seta anterior: consts e instruções removidas)": 2, "M-01+M-06+M-09 (renumeração de índices do template da paginação: consts, decls 30→27, vars 10→11)": 52, "M-02 (classe content)": 1, "M-04 (dado do mock: nome comprido)": 1}, "semAtribuicao": 0},
+ "5560": {"hunks": 35, "atribuicao": {"M-03": 2, "M-04 (classe)": 1, "M-04 (CSS)": 1, "M-05": 1, "M-06+M-09 (atributos da paginação)": 2, "M-07": 2, "M-08": 1, "M-10 (CSS)": 1, "M-11": 1, "M-12": 1, "renumeração de índices do template da tela (consequência das mudanças nele)": 22}, "semAtribuicao": 0},
+ "3343": {"hunks": 3, "atribuicao": {"M-03 (allowTagRemoval em MultipleSearchTableUtils)": 3}},
+ "4929": {"hunks": 3, "atribuicao": {"M-03 (allowTagRemoval em MultipleSearchTableUtils)": 3}},
+ "5945": {"hunks": 3, "atribuicao": {"M-03 (allowTagRemoval em MultipleSearchTableUtils)": 3}},
+ "semNormalizar": "main 966, 5560 34, 3343 60, 4929 3, 5945 198 hunks: o excedente é troca de nome de variável local do minificador (some com --norm)"
+}

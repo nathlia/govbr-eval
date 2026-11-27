@@ -1,0 +1,190 @@
+{
+  "tela": "processos-f3 (tela F3)",
+  "regra": "procedimento da D (tela-d/sortear-conformes.mjs), com as âncoras e os hospedeiros das mudanças das specs semeadas somados à exclusão que a D já fazia (elemento âncora de unidade); ver cabeçalho de tela-f3/sortear-conformes-f3.mjs",
+  "semente": "tela-f3/conformes 2026-11-27 (gravada antes do sorteio)",
+  "prng": "mulberry32(uint32 dos 8 primeiros hex do sha256 da semente)",
+  "teto": 12,
+  "elegiveisDaD": [
+    "breadcrumb-tab",
+    "breadcrumb-li",
+    "breadcrumb-orientacao",
+    "titulo-contraste",
+    "botoes-rotulo",
+    "exportar-foco",
+    "abas-teclado",
+    "th-contraste",
+    "assinar-rotulo",
+    "status-contraste",
+    "divisor",
+    "radio-rotulo",
+    "item-superficie",
+    "item-padding"
+  ],
+  "excluidos": {
+    "breadcrumb-tab": "hospedeiro da mudança semeada M-07 (br-breadcrumb; o seletor `br-breadcrumb >>> a` passa de 1 para 2 elementos no build semeado)",
+    "breadcrumb-li": "elemento âncora da F3-07 (o último li do breadcrumb é um dos dois itens do par)",
+    "breadcrumb-orientacao": "hospedeiro da mudança semeada M-07 (br-breadcrumb)",
+    "abas-teclado": "elementos âncora da F3-08 (botões das abas; br-tab é hospedeiro da M-08, e o item da F3-11 é um deles)",
+    "item-superficie": "a medida do par (clique perto da borda do item \"25\" da lista do \"Exibir\" e leitura do valor do campo) lê o campo que é âncora da F3-09: com a M-09 o campo mostra 10 depois da escolha, e a medida da D dá FALHA no build semeado (tela-f3/remedida-d/semeada-d14.log); a mudança semeada contamina a medida do controle"
+  },
+  "elegiveis": [
+    "titulo-contraste",
+    "botoes-rotulo",
+    "exportar-foco",
+    "th-contraste",
+    "assinar-rotulo",
+    "status-contraste",
+    "divisor",
+    "radio-rotulo",
+    "item-padding"
+  ],
+  "camada1_um_por_tipo": [],
+  "sorteio": false,
+  "substituicao": {
+    "saem": [
+      "K-01 breadcrumb-tab",
+      "K-02 breadcrumb-li",
+      "K-05 abas-teclado",
+      "K-11 item-superficie"
+    ],
+    "entram": [
+      "botoes-rotulo"
+    ],
+    "total": 9,
+    "nota": "com 9 elegíveis depois das exclusões (≤ 12), o procedimento da D põe todos; a F3 fica com 9 controles, não 12"
+  },
+  "remedida": {
+    "arquivo": "tela-f3/remedida-d/semeada-d14.log e sem-semente-d14.log",
+    "resultado": "os 9 pares re-medidos nos dois builds pelo código da D; ver tela-f3/conferencia-construcao.json › paresDaD"
+  },
+  "itens": [
+    {
+      "id": "K-01",
+      "deD": "K-03",
+      "par": "titulo-contraste",
+      "tipo": "estrutura",
+      "state": "inicial",
+      "selector": "pnip-mpa-processos h2",
+      "count": 1,
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "medida": "h2 \"Processos\": #005ea2 sobre #fff = 6,72:1 (≥ 4,5:1; a norma tem a unidade D-06)."
+    },
+    {
+      "id": "K-02",
+      "deD": null,
+      "par": "botoes-rotulo",
+      "tipo": "button",
+      "state": "inicial",
+      "selector": "pnip-mpa-processos br-button[label]:not([disabled])",
+      "count": 2,
+      "rules": [
+        "govbr-3.7.0-component-button-4d7b5f978df1"
+      ],
+      "medida": "\"Exportar\" e \"Voltar\": botões não circulares com o rótulo visível no próprio botão (a norma tem a unidade D-01)."
+    },
+    {
+      "id": "K-03",
+      "deD": "K-04",
+      "par": "exportar-foco",
+      "tipo": "button",
+      "state": "inicial",
+      "selector": "pnip-mpa-processos br-button[label=Exportar] >>> button",
+      "count": 1,
+      "rules": [
+        "govbr-3.7.0-accessibility-global-21fbcc2fe37b",
+        "emag:4.4",
+        "wcag:2.4.7"
+      ],
+      "medida": "com foco por Tab, o botão \"Exportar\" ganha outline dashed 4px rgb(194,133,12) (a norma tem a unidade D-10)."
+    },
+    {
+      "id": "K-04",
+      "deD": "K-06",
+      "par": "th-contraste",
+      "tipo": "table",
+      "state": "inicial",
+      "selector": "pnip-mpa-processos table thead th.text-bold:not(:last-child)",
+      "count": 7,
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "medida": "os 7 títulos de coluna com texto: #005ea2 sobre #f0f0f0 ≥ 4,5:1 (a norma tem a unidade D-06)."
+    },
+    {
+      "id": "K-05",
+      "deD": "K-07",
+      "par": "assinar-rotulo",
+      "tipo": "button",
+      "state": "inicial",
+      "selector": "pnip-mpa-processos table tbody br-button[title=Assinar]",
+      "count": 3,
+      "rules": [
+        "govbr-3.7.0-component-button-4d7b5f978df1"
+      ],
+      "medida": "os 3 \"Assinar\" da coluna de ações: botão não circular com o texto \"Assinar\" visível (vizinho dos botões de ícone da D-01)."
+    },
+    {
+      "id": "K-06",
+      "deD": "K-08",
+      "par": "status-contraste",
+      "tipo": "estrutura",
+      "state": "inicial",
+      "selector": "pnip-status-solicitacao-utils .bg-indigo-vivid-60 > div",
+      "count": 1,
+      "rules": [
+        "govbr-3.7.0-accessibility-global-cb09bc0c77c0",
+        "emag:4.1",
+        "wcag:1.4.3"
+      ],
+      "medida": "status \"Em revisão analista\": branco sobre indigo-vivid-60 ≥ 4,5:1 (os outros 8 status são a unidade D-06)."
+    },
+    {
+      "id": "K-07",
+      "deD": "K-09",
+      "par": "divisor",
+      "tipo": "divider",
+      "state": "inicial",
+      "selector": "pnip-mpa-processos > br-divider",
+      "count": 1,
+      "rules": [
+        "govbr-3.7.0-accessibility-divider-30bbcbf3a17c"
+      ],
+      "medida": "<br-divider> abaixo do breadcrumb: fora do Tab (tabIndex < 0) e o span interno sem papel na árvore do Chromium."
+    },
+    {
+      "id": "K-08",
+      "deD": "K-10",
+      "par": "radio-rotulo",
+      "tipo": "radio",
+      "state": "lista-exibir",
+      "selector": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip .br-radio input[type=radio]",
+      "count": 4,
+      "rules": [
+        "govbr-3.7.0-accessibility-global-b95c42b61ed3",
+        "emag:6.2",
+        "wcag:1.3.1",
+        "govbr-3.7.0-accessibility-global-b5fad7ce076d"
+      ],
+      "medida": "os 4 rádios da lista \"Exibir\" com <label for> associado (labels.length = 1; a norma tem as unidades D-04/D-05)."
+    },
+    {
+      "id": "K-09",
+      "deD": "K-12",
+      "par": "item-padding",
+      "tipo": "item",
+      "state": "lista-exibir",
+      "selector": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip .br-item",
+      "count": 4,
+      "rules": [
+        "govbr-3.7.0-component-item-a10751502b98"
+      ],
+      "medida": "padding computado 16px (--spacing-scale-2x) nos quatro br-item."
+    }
+  ]
+}

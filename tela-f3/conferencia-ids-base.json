@@ -1,0 +1,739 @@
+{
+ "_meta": {
+  "data": "2026-11-27",
+  "criterio": "ver cabeçalho de tela-f3/conferir-ids-base.mjs",
+  "validador": {
+   "dir": "F:/Dev Nath/TCC/.tmp-eval/validator-3712r",
+   "tag": "congelado-3.7.12 (HEAD 816f4ba da árvore congelada)",
+   "commit": "816f4bae41f4486b7055f0ac265167e87ce0d5e5",
+   "baseAtiva": "3.7.0-literal-2026-10-15",
+   "ruleFiles": {
+    "normalized/rules.jsonl": "ca8f428a52063ac8c208cca96432a40c84af8e75b4742744367a47717f9f28b8",
+    "normalized/carried-over.jsonl": "16e0a764e4a0f05b3f116df83f1400598a95173f5dec34f775c0a9b843cade19"
+   },
+   "registros": 5490,
+   "camposLidos": [
+    "id",
+    "originalText",
+    "source.corpusFile",
+    "source.charRange"
+   ]
+  },
+  "referencia": {
+   "arquivo": "ground-truth-processos-f3.json",
+   "version": "1.0.0",
+   "sha256": "c8d1a84effc8312a36e1c67eec7ae45b4a220b44338040fa7ba0f6cf6e01e861",
+   "status": "RASCUNHO — não congelado. Falta o que es"
+  },
+  "contagens": {
+   "semeadoIds": 13,
+   "semeadoIdsCasam": 13,
+   "semeadoSemId": 2,
+   "semeadoSemIdConfirmado": 2,
+   "clausulasLiterais": 13,
+   "clausulas": 13,
+   "naturalIds": 19,
+   "naturalIdsExistem": 19,
+   "repeticoes": 8
+  },
+  "referenciasConferidas": [
+   {
+    "tela": "A",
+    "nome": "solicitacao",
+    "arquivo": "ground-truth-solicitacao.json",
+    "sha256": "0832f339d18037f85cfced4549e9eb3c1e85e0903b2ad95e89bcfc6030f76f2f"
+   },
+   {
+    "tela": "A2",
+    "nome": "acompanhamento",
+    "arquivo": "ground-truth-acompanhamento.json",
+    "sha256": "1ed853e980c104bcc42a6dffe6dd61af69427ddf820bd52450998da73a2f03bc"
+   },
+   {
+    "tela": "B",
+    "nome": "vistorias",
+    "arquivo": "ground-truth-vistorias.json",
+    "sha256": "bbde01f90d58d008d60b913e6178b69d9a27d0194291431d692073d59ea10648"
+   },
+   {
+    "tela": "D",
+    "nome": "processos",
+    "arquivo": "ground-truth-processos-1.1.0.json",
+    "sha256": "2eacba80efb373c4923f7f85593c684647e6b5ec58ad5a341329d96a44632569"
+   },
+   {
+    "tela": "E",
+    "nome": "cadastro-pais",
+    "arquivo": "ground-truth-cadastro-pais.json",
+    "sha256": "661cc54b7b291bc6e455065ecb23c08e5279bf7a0e9c7d6494afd78ae112c528"
+   },
+   {
+    "tela": "F",
+    "nome": "processos-f",
+    "arquivo": "ground-truth-processos-f.json",
+    "sha256": "d32088bfd7ecb44c2bf75de58f95f425047aa0b2180e80dad9fefbec24d5b3e0"
+   },
+   {
+    "tela": "F2",
+    "nome": "processos-f2",
+    "arquivo": "ground-truth-processos-f2.json",
+    "sha256": "0725eb73be600002e7e26c173cd54ec3389416c30e6b089173439fd103f910c9"
+   }
+  ]
+ },
+ "clausulas": {
+  "F3-01": [
+   {
+    "arquivo": "componentes/pagination__designer.md",
+    "trecho": "Constituem um *Botão* para esquerda e outro para direita. A cada clique, o usuário poderá navegar página por página de forma crescente ou decrescente (direita / esquerda).",
+    "literal": true,
+    "linhas": [
+     49
+    ],
+    "arquivoSha256": "73c81987c388272bf34dea74891eca99515bace33357b182be9cb05125f97b19",
+    "ids": [
+     "govbr-3.7.0-component-pagination-4323d08f3e2d",
+     "govbr-3.7.0-component-pagination-0a0e2ad9474e"
+    ]
+   }
+  ],
+  "F3-02": [
+   {
+    "arquivo": "componentes/avatar__desenvolvedor.md",
+    "trecho": "| class    | string | **content**   | Aplicado no conteúdo interno. Pode conter imagem, ícone ou letra. |",
+    "literal": true,
+    "linhas": [
+     22
+    ],
+    "arquivoSha256": "2e168f8a692facc91451272b87905a26ac236ad02db80eee9431ac9acad98550",
+    "ids": [
+     "govbr-3.7.0-development-avatar-23d40d3d6ea4"
+    ]
+   }
+  ],
+  "F3-03": [
+   {
+    "arquivo": "componentes/tag__designer.md",
+    "trecho": "Uma *tag* é considerada dispensável quando apresenta o botão terciário que permite que o usuário possa excluir a *tag*.",
+    "literal": true,
+    "linhas": [
+     106
+    ],
+    "arquivoSha256": "217ff4ad33cdec95444daa29fd88ebb1b3cb9083e67b263056c3213e8e726c8f",
+    "ids": [
+     "govbr-3.7.0-component-tag-de4b72eadecf"
+    ]
+   }
+  ],
+  "F3-04": [
+   {
+    "arquivo": "componentes/table__designer.md",
+    "trecho": "Os textos devem ser truncados exibindo as reticências no final. Ao passar o *mouse* sobre o texto truncado é revelado o texto completo pelo uso de *tooltip*.",
+    "literal": true,
+    "linhas": [
+     157
+    ],
+    "arquivoSha256": "7c7deb5e54314d5c0a045d7a67aeb8b0a6becd0932a559bd620bd4ba6452c82e",
+    "ids": [
+     "govbr-3.7.0-component-table-bc0d039ca6cc",
+     "govbr-3.7.0-component-table-4aac83c034bd"
+    ]
+   }
+  ],
+  "F3-05": [
+   {
+    "arquivo": "componentes/tag__designer.md",
+    "trecho": "| Superfície | color    | `--blue-warm-vivid-70` |",
+    "secao": "### Cores [*Tag* de Interação]",
+    "literal": true,
+    "linhas": [
+     396
+    ],
+    "arquivoSha256": "217ff4ad33cdec95444daa29fd88ebb1b3cb9083e67b263056c3213e8e726c8f",
+    "ids": [
+     "govbr-3.7.0-component-tag-93cce777e402"
+    ]
+   }
+  ],
+  "F3-06": [
+   {
+    "arquivo": "componentes/pagination__designer.md",
+    "trecho": "O *Pagination* contém os componentes: *Botão Circular*, *Lista* e *Separadores*, além de outros elementos específicos, e é organizado nos seguintes módulos:",
+    "literal": true,
+    "linhas": [
+     29
+    ],
+    "arquivoSha256": "73c81987c388272bf34dea74891eca99515bace33357b182be9cb05125f97b19",
+    "ids": []
+   }
+  ],
+  "F3-07": [
+   {
+    "arquivo": "componentes/breadcrumb__designer.md",
+    "trecho": "Cada item do *breadcrumb* é um *link*, exceto o último, que define a tela atual em que o usuário se encontra.",
+    "literal": true,
+    "linhas": [
+     42
+    ],
+    "arquivoSha256": "15261207eda6ad3b09cc039d7c125ebcd2b184edd0b10c78f006fd549399cace",
+    "ids": [
+     "govbr-3.7.0-component-breadcrumb-c54865b466d0"
+    ]
+   },
+   {
+    "arquivo": "componentes/breadcrumb__acessibilidade.md",
+    "trecho": "A página atual ou último elemento do *breadcrumb*, não deve ser considerado um link, portanto deve possuir a formatação visual correspondente a um texto comum;",
+    "literal": true,
+    "linhas": [
+     35
+    ],
+    "arquivoSha256": "52db28735236bd018e42409d8a7d3640c42737cca0a9697cb95a8cac32c4b1dd",
+    "ids": [
+     "govbr-3.7.0-accessibility-breadcrumb-53db61fa81f9"
+    ]
+   }
+  ],
+  "F3-08": [
+   {
+    "arquivo": "componentes/tab__designer.md",
+    "trecho": "| Rótulo da *Tab*       | `--font-size-scale-up-02` | `--font-weight-medium`    |",
+    "literal": true,
+    "linhas": [
+     223
+    ],
+    "arquivoSha256": "5082c03fa21e00b4c4f73c6f55db3e066eb78c9489bc14a8e9c01c6ccc3c8832",
+    "ids": [
+     "govbr-3.7.0-component-tab-b717690fd662"
+    ]
+   }
+  ],
+  "F3-09": [
+   {
+    "arquivo": "componentes/select__designer.md",
+    "trecho": "3. O campo de entrada exibe a opção selecionada.",
+    "literal": true,
+    "linhas": [
+     137
+    ],
+    "arquivoSha256": "015496bfba8116ccabbcd07cc102996eb647824e126b7199256959592f12f8bf",
+    "ids": [
+     "govbr-3.7.0-component-select-42e87c4d09d5"
+    ]
+   }
+  ],
+  "F3-10": [
+   {
+    "arquivo": "fundamentos-visuais/estados.md",
+    "trecho": "| background/foreground | opacity  | `--surface-opacity-md`  |",
+    "literal": true,
+    "linhas": [
+     234
+    ],
+    "arquivoSha256": "4a60fd28e435b743db2380436eb7246cedbe3071ae85e7cae4752aceba39ecc2",
+    "ids": []
+   }
+  ],
+  "F3-11": [
+   {
+    "arquivo": "componentes/tab__designer.md",
+    "trecho": "A - O Item da *Tab* Ativo tem a finalidade de mostrar ao usuário em qual aba ele se encontra.",
+    "literal": true,
+    "linhas": [
+     56
+    ],
+    "arquivoSha256": "5082c03fa21e00b4c4f73c6f55db3e066eb78c9489bc14a8e9c01c6ccc3c8832",
+    "ids": [
+     "govbr-3.7.0-component-tab-50ac44341161"
+    ]
+   }
+  ],
+  "F3-12": [
+   {
+    "arquivo": "componentes/button__designer.md",
+    "trecho": "Deve estar alinhado com o tom de voz da sua marca, além de orientar de forma clara qual ação esperada.",
+    "literal": true,
+    "linhas": [
+     78
+    ],
+    "arquivoSha256": "97ffa84ac951fa1409ee30c897e14040cc3301342cd92ea5763bfa6feb66b673",
+    "ids": [
+     "govbr-3.7.0-component-button-a4d904dedad5"
+    ]
+   }
+  ]
+ },
+ "linhas": [
+  {
+   "spec": "F3-01",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-pagination-4323d08f3e2d",
+   "existe": true,
+   "arquivo": "componentes/pagination__designer.md",
+   "charRange": [
+    1960,
+    2017
+   ],
+   "linhaDoRegistro": 49,
+   "textoDoRegistro": "Constituem um *Botão* para esquerda e outro para direita.",
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "faixaNaOcorrencia": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F3-01",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-pagination-0a0e2ad9474e",
+   "existe": true,
+   "arquivo": "componentes/pagination__designer.md",
+   "charRange": [
+    2018,
+    2131
+   ],
+   "linhaDoRegistro": 49,
+   "textoDoRegistro": "A cada clique, o usuário poderá navegar página por página de forma crescente ou decrescente (direita / esquerda).",
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "faixaNaOcorrencia": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F3-02",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-development-avatar-23d40d3d6ea4",
+   "existe": true,
+   "arquivo": "componentes/avatar__desenvolvedor.md",
+   "charRange": [
+    860,
+    965
+   ],
+   "linhaDoRegistro": 22,
+   "textoDoRegistro": "| class    | string | **content**   | Aplicado no conteúdo interno. Pode conter imagem, ícone ou letra. |",
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "faixaNaOcorrencia": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F3-03",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-tag-de4b72eadecf",
+   "existe": true,
+   "arquivo": "componentes/tag__designer.md",
+   "charRange": [
+    3982,
+    4101
+   ],
+   "linhaDoRegistro": 106,
+   "textoDoRegistro": "Uma *tag* é considerada dispensável quando apresenta o botão terciário que permite que o usuário possa excluir a *tag*.",
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "faixaNaOcorrencia": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F3-04",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-table-bc0d039ca6cc",
+   "existe": true,
+   "arquivo": "componentes/table__designer.md",
+   "charRange": [
+    6737,
+    6800
+   ],
+   "linhaDoRegistro": 157,
+   "textoDoRegistro": "Os textos devem ser truncados exibindo as reticências no final.",
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "faixaNaOcorrencia": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F3-04",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-table-4aac83c034bd",
+   "existe": true,
+   "arquivo": "componentes/table__designer.md",
+   "charRange": [
+    6801,
+    6894
+   ],
+   "linhaDoRegistro": 157,
+   "textoDoRegistro": "Ao passar o *mouse* sobre o texto truncado é revelado o texto completo pelo uso de *tooltip*.",
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "faixaNaOcorrencia": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F3-05",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-tag-93cce777e402",
+   "existe": true,
+   "arquivo": "componentes/tag__designer.md",
+   "charRange": [
+    19134,
+    19184
+   ],
+   "linhaDoRegistro": 396,
+   "textoDoRegistro": "| Superfície | color    | `--blue-warm-vivid-70` |",
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "faixaNaOcorrencia": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F3-06",
+   "estrato": "semeado",
+   "id": null,
+   "semIdMapeado": true,
+   "arquivo": "componentes/pagination__designer.md",
+   "registrosComOMesmoTexto": [],
+   "rulesVazio": true,
+   "resultado": "casa",
+   "nota": "continua sem registro na base servida"
+  },
+  {
+   "spec": "F3-07",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-breadcrumb-c54865b466d0",
+   "existe": true,
+   "arquivo": "componentes/breadcrumb__designer.md",
+   "charRange": [
+    1854,
+    1963
+   ],
+   "linhaDoRegistro": 42,
+   "textoDoRegistro": "Cada item do *breadcrumb* é um *link*, exceto o último, que define a tela atual em que o usuário se encontra.",
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "faixaNaOcorrencia": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F3-07",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-accessibility-breadcrumb-53db61fa81f9",
+   "existe": true,
+   "arquivo": "componentes/breadcrumb__acessibilidade.md",
+   "charRange": [
+    1930,
+    2013
+   ],
+   "linhaDoRegistro": 35,
+   "textoDoRegistro": "A página atual ou último elemento do *breadcrumb*, não deve ser considerado um link",
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "faixaNaOcorrencia": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F3-08",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-tab-b717690fd662",
+   "existe": true,
+   "arquivo": "componentes/tab__designer.md",
+   "charRange": [
+    10638,
+    10719
+   ],
+   "linhaDoRegistro": 223,
+   "textoDoRegistro": "| Rótulo da *Tab*       | `--font-size-scale-up-02` | `--font-weight-medium`    |",
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "faixaNaOcorrencia": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F3-09",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-select-42e87c4d09d5",
+   "existe": true,
+   "arquivo": "componentes/select__designer.md",
+   "charRange": [
+    5840,
+    5885
+   ],
+   "linhaDoRegistro": 137,
+   "textoDoRegistro": "O campo de entrada exibe a opção selecionada.",
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "faixaNaOcorrencia": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F3-10",
+   "estrato": "semeado",
+   "id": null,
+   "semIdMapeado": true,
+   "arquivo": "fundamentos-visuais/estados.md",
+   "registrosComOMesmoTexto": [],
+   "rulesVazio": true,
+   "resultado": "casa",
+   "nota": "continua sem registro na base servida"
+  },
+  {
+   "spec": "F3-11",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-tab-50ac44341161",
+   "existe": true,
+   "arquivo": "componentes/tab__designer.md",
+   "charRange": [
+    2136,
+    2229
+   ],
+   "linhaDoRegistro": 56,
+   "textoDoRegistro": "A - O Item da *Tab* Ativo tem a finalidade de mostrar ao usuário em qual aba ele se encontra.",
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "faixaNaOcorrencia": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "F3-12",
+   "estrato": "semeado",
+   "id": "govbr-3.7.0-component-button-a4d904dedad5",
+   "existe": true,
+   "arquivo": "componentes/button__designer.md",
+   "charRange": [
+    3348,
+    3450
+   ],
+   "linhaDoRegistro": 78,
+   "textoDoRegistro": "Deve estar alinhado com o tom de voz da sua marca, além de orientar de forma clara qual ação esperada.",
+   "mesmoArquivo": true,
+   "textoNoTrecho": true,
+   "faixaNaOcorrencia": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-01",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-component-button-7ef75d42ac65",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-02",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-cba01678f54a",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-02",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-5e5dd3d9b3cb",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-02",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-41850b4791b8",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-03",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-cba01678f54a",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-03",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-5e5dd3d9b3cb",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-03",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-41850b4791b8",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-03",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-5817ddd685a6",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-04",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-1c77d9289315",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-05",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-1c77d9289315",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-06",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-d3badaa7e5ca",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-07",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-8ca3df343265",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-08",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-9b31bc6b5b43",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-10",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-a399e39c0110",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-10",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-f12b1bae5784",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-11",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-735a059968e3",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-12",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-eae0553d6387",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-13",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-e77859710a44",
+   "existe": true,
+   "resultado": "casa"
+  },
+  {
+   "spec": "D-14",
+   "estrato": "natural",
+   "id": "govbr-3.7.0-accessibility-global-d3badaa7e5ca",
+   "existe": true,
+   "resultado": "casa"
+  }
+ ],
+ "repetidas": [
+  {
+   "semeada": "F3-01",
+   "id": "govbr-3.7.0-component-pagination-4323d08f3e2d",
+   "tela": "F2",
+   "arquivo": "ground-truth-processos-f2.json",
+   "specsComARegra": [
+    "F2-01"
+   ],
+   "ondeAparece": [
+    "$.violations[0].rules[0]"
+   ]
+  },
+  {
+   "semeada": "F3-01",
+   "id": "govbr-3.7.0-component-pagination-0a0e2ad9474e",
+   "tela": "F2",
+   "arquivo": "ground-truth-processos-f2.json",
+   "specsComARegra": [
+    "F2-01"
+   ],
+   "ondeAparece": [
+    "$.violations[0].rules[1]"
+   ]
+  },
+  {
+   "semeada": "F3-02",
+   "id": "govbr-3.7.0-development-avatar-23d40d3d6ea4",
+   "tela": "F2",
+   "arquivo": "ground-truth-processos-f2.json",
+   "specsComARegra": [
+    "F2-02"
+   ],
+   "ondeAparece": [
+    "$.violations[1].rules[0]"
+   ]
+  },
+  {
+   "semeada": "F3-04",
+   "id": "govbr-3.7.0-component-table-bc0d039ca6cc",
+   "tela": "F",
+   "arquivo": "ground-truth-processos-f.json",
+   "specsComARegra": [
+    "F-01"
+   ],
+   "ondeAparece": [
+    "$.violations[0].rules[0]"
+   ]
+  },
+  {
+   "semeada": "F3-04",
+   "id": "govbr-3.7.0-component-table-4aac83c034bd",
+   "tela": "F",
+   "arquivo": "ground-truth-processos-f.json",
+   "specsComARegra": [
+    "F-01"
+   ],
+   "ondeAparece": [
+    "$.violations[0].rules[1]"
+   ]
+  },
+  {
+   "semeada": "F3-08",
+   "id": "govbr-3.7.0-component-tab-b717690fd662",
+   "tela": "F2",
+   "arquivo": "ground-truth-processos-f2.json",
+   "specsComARegra": [
+    "F2-08"
+   ],
+   "ondeAparece": [
+    "$.violations[7].rules[0]"
+   ]
+  },
+  {
+   "semeada": "F3-11",
+   "id": "govbr-3.7.0-component-tab-50ac44341161",
+   "tela": "F2",
+   "arquivo": "ground-truth-processos-f2.json",
+   "specsComARegra": [
+    "F2-11"
+   ],
+   "ondeAparece": [
+    "$.violations[10].rules[0]"
+   ]
+  },
+  {
+   "semeada": "F3-12",
+   "id": "govbr-3.7.0-component-button-a4d904dedad5",
+   "tela": "A2",
+   "arquivo": "ground-truth-acompanhamento.json",
+   "specsComARegra": [],
+   "ondeAparece": [
+    "$._meta.conformes.itens[10].medida"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,197 @@
+{
+ "_meta": {
+  "semente": "tela-f3/auditoria-cega 2026-11-27 (gravada antes de montar o pedido)",
+  "ordem": "sha256(semente|origem) crescente",
+  "pedidoSha256": "e58537ec2eff2189eefd423d72b3b45cf72610804d19da1f0960da58c2470af1",
+  "data": "2026-11-27",
+  "regra": "iscas escritas e medidas falsas na página semeada antes de qualquer resposta; nada da chave vai para pedido/",
+  "pagina": "http://127.0.0.1:3340",
+  "referenciaSha256": "c8d1a84effc8312a36e1c67eec7ae45b4a220b44338040fa7ba0f6cf6e01e861"
+ },
+ "afirmacoes": [
+  {
+   "id": "A-01",
+   "origem": "I-05",
+   "tipo": "isca",
+   "medidaNaPagina": "9->10",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-02",
+   "origem": "F3-04",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-03",
+   "origem": "F3-11",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-04",
+   "origem": "I-04",
+   "tipo": "isca",
+   "medidaNaPagina": [
+    "14px",
+    "14px",
+    "14px",
+    "14px",
+    "14px",
+    "14px",
+    "14px",
+    "14px",
+    "14px"
+   ],
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-05",
+   "origem": "I-11",
+   "tipo": "isca",
+   "medidaNaPagina": "11 – 14 de 14 itens / campo 2",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-06",
+   "origem": "F3-08",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-07",
+   "origem": "F3-12",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-08",
+   "origem": "I-12",
+   "tipo": "isca",
+   "medidaNaPagina": "linear-gradient(rgba(19, 81, 180, 0.16), rgba(19, 81, 180, 0.16))",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-09",
+   "origem": "I-01",
+   "tipo": "isca",
+   "medidaNaPagina": [
+    "br-button middle/1680px",
+    "br-button middle/1680px",
+    "br-button middle/1680px"
+   ],
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-10",
+   "origem": "F3-02",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-11",
+   "origem": "F3-09",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-12",
+   "origem": "I-09",
+   "tipo": "isca",
+   "medidaNaPagina": [
+    "Últimos 60 dias"
+   ],
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-13",
+   "origem": "I-06",
+   "tipo": "isca",
+   "medidaNaPagina": "1 – 10 de 14 itens -> 11 – 14 de 14 itens",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-14",
+   "origem": "I-10",
+   "tipo": "isca",
+   "medidaNaPagina": "0.45",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-15",
+   "origem": "F3-05",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-16",
+   "origem": "I-07",
+   "tipo": "isca",
+   "medidaNaPagina": "rgb(19, 81, 180)/rgb(19, 81, 180)",
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-17",
+   "origem": "F3-10",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-18",
+   "origem": "I-03",
+   "tipo": "isca",
+   "medidaNaPagina": [
+    "1/true"
+   ],
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-19",
+   "origem": "F3-07",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-20",
+   "origem": "F3-06",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-21",
+   "origem": "F3-03",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-22",
+   "origem": "F3-01",
+   "tipo": "semeada",
+   "esperado": "verdadeira"
+  },
+  {
+   "id": "A-23",
+   "origem": "I-02",
+   "tipo": "isca",
+   "medidaNaPagina": [
+    "visible/normal/false",
+    "visible/normal/false",
+    "visible/normal/false",
+    "visible/normal/false",
+    "visible/normal/false",
+    "visible/normal/false",
+    "visible/normal/false",
+    "visible/normal/false",
+    "visible/normal/false"
+   ],
+   "esperado": "falsa"
+  },
+  {
+   "id": "A-24",
+   "origem": "I-08",
+   "tipo": "isca",
+   "medidaNaPagina": "16.8px",
+   "esperado": "falsa"
+  }
+ ]
+}

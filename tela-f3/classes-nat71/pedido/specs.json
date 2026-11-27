@@ -1,0 +1,287 @@
+{
+ "origem": "ground-truth-processos-f3.json, tela F3 (processos), referência 1.0.0 — só as specs a classificar",
+ "referenciaSha256": "c8d1a84effc8312a36e1c67eec7ae45b4a220b44338040fa7ba0f6cf6e01e861",
+ "estados": [
+  {
+   "id": "inicial",
+   "note": "carga da rota, sem clicar em nenhuma aba: a lista paginada de processos em tramitação, com \"Meus processos\" ligado — primeiro paint (nota da D reescrita sem nomear a aba marcada, como na F2)"
+  },
+  {
+   "id": "lista-exibir",
+   "note": "lista do seletor \"Exibir\" (itens por página) da paginação aberta — última parada do segmento 0"
+  },
+  {
+   "id": "assinatura-cancelada",
+   "note": "segmento 2 (depois de ida e volta por navegação, a rota recomeça): na lista da carga, com \"Meus processos\" ligado, a caixa da 2ª linha marcada (a 1ª caixa da lista); o botão de ação em lote aparece abaixo da tabela; o diálogo de assinatura aberto por ele e CANCELADO (nunca \"Assinar\"); a linha continua marcada e o botão continua visível"
+  },
+  {
+   "id": "pagina-2",
+   "note": "segmento 4: aba \"Concluídos\" (14 itens) e \"Página seguinte\": página 2, itens 11 a 14"
+  },
+  {
+   "id": "exibir-25",
+   "note": "segmento 6: aba \"Concluídos\" e, no seletor \"Exibir\" da paginação, a opção 25: a tabela mostra as 14 linhas"
+  },
+  {
+   "id": "filtro-removido",
+   "note": "segmento 8 (o último, porque a página guarda o filtro escolhido na sessão): filtro \"Aberto há\" aberto, opção \"Últimos 60 dias\" escolhida (a lista continua com as mesmas 9 linhas) e, depois, um clique no × da tag do filtro escolhido"
+  }
+ ],
+ "specs": [
+  {
+   "id": "F3-01",
+   "state": "sempre",
+   "anchor": "govbr-custom-pagination nav.br-pagination > ul",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-pagination-4323d08f3e2d",
+    "govbr-3.7.0-component-pagination-0a0e2ad9474e"
+   ],
+   "categories": [
+    "componente",
+    "estrutura"
+   ],
+   "description": "Paginação no rodapé da tabela: só existe a seta \"Página seguinte\" (botão à direita dos números de página); a seta \"Página anterior\" não existe em nenhuma página da lista. Na carga, o número \"1\" fica sem seta antes dele; na página 2 (por exemplo na aba \"Concluídos\", 14 itens, depois de \"Página seguinte\") também não há seta para voltar, só o número \"1\". O defeito vale em qualquer página e em qualquer aba. A Pagination tem duas setas de navegação obrigatórias, um botão para a esquerda e outro para a direita."
+  },
+  {
+   "id": "F3-02",
+   "state": "inicial",
+   "anchor": "pnip-header .br-avatar > span",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-development-avatar-23d40d3d6ea4"
+   ],
+   "categories": [
+    "componente",
+    "estrutura"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "border-top-left-radius"
+    ],
+    "allowed": [
+     "50%"
+    ],
+    "note": "Superfície circular do Avatar (border-radius 50%, o que o core computa com a classe content no conteúdo interno)."
+   },
+   "description": "Avatar de letra no cabeçalho (\"U\"): o conteúdo interno do avatar não tem a classe `content` (o span tem só bg-orange-vivid-30 e text-pure-0). Sem ela, o avatar vira um retângulo laranja estreito (cerca de 18×40 px, border-radius 0, display block) com a letra encostada, em vez da superfície circular de 40×40 com a letra centralizada. No Avatar, a classe `content` é propriedade obrigatória do conteúdo interno."
+  },
+  {
+   "id": "F3-03",
+   "state": "filtro-removido",
+   "anchor": "pnip-multiple-search-table-utils div.row.pl-2:not(.align-items-center) span.br-tag.interaction",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-tag-de4b72eadecf"
+   ],
+   "categories": [
+    "componente",
+    "comportamento"
+   ],
+   "description": "Tag do filtro escolhido (aparece acima da barra de filtros depois de abrir o filtro \"Aberto há\" e escolher \"Últimos 60 dias\"): o botão × da tag aparece e recebe foco como o botão circular do DS (classe br-button, 28×28, azul), mas clicar nele, ou focá-lo e apertar Enter, não remove o filtro — depois do clique a tag \"Últimos 60 dias\" continua visível e o filtro continua aplicado (\"Limpar filtros\" segue habilitado e é o que tira o filtro). Uma Tag interativa dispensável apresenta o botão que permite ao usuário excluí-la."
+  },
+  {
+   "id": "F3-04",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos table tbody td:nth-of-type(5)",
+   "scope": "composicao",
+   "expectedCount": 1,
+   "participantCount": 9,
+   "rules": [
+    "govbr-3.7.0-component-table-bc0d039ca6cc",
+    "govbr-3.7.0-component-table-4aac83c034bd"
+   ],
+   "categories": [
+    "componente",
+    "comportamento"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "quantifier": "todas",
+    "properties": [
+     "overflow-x",
+     "text-overflow"
+    ],
+    "allowed": [
+     "visible",
+     "ellipsis"
+    ],
+    "note": "Corte sem reticências: o conteúdo que passa da célula fica escondido (overflow-x diferente de visible) E o corte não exibe reticências (text-overflow diferente de ellipsis). Célula que quebra o texto (visible) ou que trunca com reticências (ellipsis) não sustenta."
+   },
+   "description": "Coluna \"Solicitante\" da tabela de processos: as 9 células cortam o texto na largura de 150 px, numa linha só e sem reticências (overflow hidden, white-space nowrap, text-overflow clip), e nenhuma tem title nem tooltip que mostre o texto completo ao passar o mouse. O nome comprido da 1ª linha (\"Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa\") é o que mais perde, mas todas as células da coluna aparecem cortadas, até \"Pessoa Exemplo Dias\". Na Table, o texto truncado exibe reticências no final e o texto completo é revelado por tooltip ao passar o mouse. Uma única regra de estilo corta a coluna inteira: uma unidade para o conjunto; o relato de qualquer célula cortada é desta spec."
+  },
+  {
+   "id": "F3-05",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos div.tab-panel > div.col > div.row:first-of-type span.br-tag.interaction",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-tag-93cce777e402"
+   ],
+   "categories": [
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "background-color"
+    ],
+    "allowed": [
+     "rgb(19, 81, 180)"
+    ],
+    "note": "--blue-warm-vivid-70 (#1351b4), a cor da superfície da Tag de interação; no build sem semente a mesma tag mede rgb(19, 81, 180)."
+   },
+   "description": "Tag de interação \"Meus processos\" (ligada, na barra acima da tabela): a superfície tem cor de fundo rgb(23, 85, 169) (#1755a9), posta em estilo inline na própria tag, em vez do azul da Tag de interação, rgb(19, 81, 180) (#1351b4). #1755a9 não é cor da paleta. A superfície da Tag de interação usa --blue-warm-vivid-70."
+  },
+  {
+   "id": "F3-06",
+   "state": "inicial",
+   "anchor": "govbr-custom-pagination nav.br-pagination button[aria-label=\"Página seguinte\"]",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [],
+   "categories": [
+    "componente",
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "border-top-left-radius"
+    ],
+    "allowed": [
+     "50%"
+    ],
+    "note": "Botão Circular (border-radius 50%); os botões \"Exibir lista\" da mesma paginação medem 50%."
+   },
+   "description": "Seta \"Página seguinte\" da paginação: o botão tem border-radius 7px (estilo inline) e aparece como um quadrado de 40×40 com cantos arredondados, e não como botão circular; os botões \"Exibir lista\" dos dois seletores da mesma paginação são circulares (border-radius 50%). As setas de navegação da Pagination são Botões Circulares."
+  },
+  {
+   "id": "F3-07",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos br-breadcrumb >>> li.crumb:last-child",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-breadcrumb-c54865b466d0",
+    "govbr-3.7.0-accessibility-breadcrumb-53db61fa81f9"
+   ],
+   "categories": [
+    "componente",
+    "estrutura"
+   ],
+   "acceptance": {
+    "kind": "atributos-ausentes",
+    "attributes": [
+     "data-active"
+    ],
+    "note": "O último item do br-breadcrumb sem a marca de item atual (data-active), que é o que o web component usa para renderizar o item atual como texto e não como link; o item atual da D e do build sem semente traz data-active=\"active\"."
+   },
+   "description": "Breadcrumb: o último item, \"Processos\" (a página atual), é um link — <a href=\"portal-mpa/processos\">, que aponta para a própria página —, com a cor de link e no Tab, em vez de texto comum; o item não tem a marca de item atual (data-active). Cada item do breadcrumb é um link, exceto o último, que define a tela atual; a página atual não deve ser considerada um link."
+  },
+  {
+   "id": "F3-08",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos br-tab >>> button",
+   "scope": "composicao",
+   "expectedCount": 1,
+   "participantCount": 3,
+   "rules": [
+    "govbr-3.7.0-component-tab-b717690fd662"
+   ],
+   "categories": [
+    "tipografia",
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "font-size"
+    ],
+    "allowed": [
+     "20.16px"
+    ],
+    "note": "--font-size-scale-up-02 (20,16 px), o tamanho do rótulo da Tab."
+   },
+   "description": "Rótulos das três abas (\"Aguardando análise\", \"Tramitando\", \"Concluídos\"): font-size 16,8 px (--font-size-scale-up-01, o tamanho do texto dos botões), um degrau abaixo do previsto; o peso continua medium. O rótulo da Tab usa --font-size-scale-up-02 (20,16 px) com --font-weight-medium. Um único estilo no componente define os três rótulos: uma unidade para o conjunto."
+  },
+  {
+   "id": "F3-09",
+   "state": "exibir-25",
+   "anchor": "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip input#total",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-select-42e87c4d09d5"
+   ],
+   "categories": [
+    "componente",
+    "comportamento"
+   ],
+   "description": "Seletor \"Exibir\" (itens por página) da paginação, na aba \"Concluídos\" (14 itens): depois de abrir o seletor e escolher 25, a tabela passa a mostrar as 14 linhas (\"1 – 14 de 14 itens\") e o item 25 fica marcado na lista, mas o campo do seletor continua mostrando 10. O mesmo acontece com 50: o campo mostra sempre 10. O campo de entrada do Select exibe a opção selecionada."
+  },
+  {
+   "id": "F3-10",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos table tbody br-button[disabled]",
+   "scope": "composicao",
+   "expectedCount": 1,
+   "participantCount": 8,
+   "rules": [],
+   "categories": [
+    "comportamento",
+    "token"
+   ],
+   "acceptance": {
+    "kind": "estilo-computado",
+    "properties": [
+     "opacity"
+    ],
+    "allowed": [
+     "0.45"
+    ],
+    "note": "--surface-opacity-md (0,45), a opacidade do estado desabilitado; o \"Limpar filtros\" desabilitado, na mesma página, mede 0.45."
+   },
+   "description": "Botões \"Desassociar processo do analista responsável\" desabilitados na coluna de ações (8): opacidade 1, iguais ao habilitado da 1ª linha (ícone vermelho cheio); só o cursor not-allowed indica o estado. O botão \"Limpar filtros\", também desabilitado, tem opacidade 0,45. No estado desabilitado, fundo e primeiro plano têm opacidade --surface-opacity-md. Uma única regra define os oito: uma unidade para o conjunto."
+  },
+  {
+   "id": "F3-11",
+   "state": "inicial",
+   "anchor": "pnip-mpa-processos br-tab >>> li.tab-item:first-child",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-tab-50ac44341161"
+   ],
+   "categories": [
+    "comportamento"
+   ],
+   "acceptance": {
+    "kind": "classe-no-elemento",
+    "tag": "li",
+    "classe": "active",
+    "note": "O item \"Aguardando análise\" (1º item da Tab) carrega a marca de item ativo enquanto o conteúdo exibido é o da aba \"Tramitando\"."
+   },
+   "description": "Abas: o item \"Aguardando análise\" aparece como aba ativa (marca de item ativo, texto destacado), mas o conteúdo exibido é o da aba \"Tramitando\" (tag \"Meus processos\", colunas Analista e Téc. Adm., processos em tramitação); o item \"Tramitando\" aparece como inativo. O item ativo da Tab mostra ao usuário em qual aba ele se encontra."
+  },
+  {
+   "id": "F3-12",
+   "state": "assinatura-cancelada",
+   "anchor": "pnip-mpa-processos div.mt-3 > br-button[icon=\"check\"][type=\"primary\"]",
+   "scope": "unico",
+   "expectedCount": 1,
+   "rules": [
+    "govbr-3.7.0-component-button-a4d904dedad5"
+   ],
+   "categories": [
+    "componente"
+   ],
+   "description": "Botão de ação em lote abaixo da tabela (aparece ao marcar a caixa de ao menos uma linha da lista da carga, com \"Meus processos\" ligado; a 1ª caixa está na 2ª linha): o rótulo visível é \"Confirmar\", mas o botão abre o diálogo \"Confirma a assinatura de 1 processo(s)?\", com \"Assinar\" e \"Cancelar\" — a ação oferecida é assinar os processos selecionados, e o rótulo não diz isso. O rótulo do Button deve orientar de forma clara qual ação é esperada."
+  }
+ ]
+}

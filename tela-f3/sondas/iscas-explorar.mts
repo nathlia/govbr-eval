@@ -1,0 +1,31 @@
+// Sonda exploratória para escrever iscas da auditoria cega (só no build semeado).
+import { chromium } from "playwright";
+import { openPage } from "../../scripts/anchors.ts";
+const URL = `${process.argv[2]}/pnip-f3/portal-mpa/processos?mock-perfil=mpa`;
+const b = await chromium.launch();
+const nova = async () => { const c = await b.newContext({ viewport: { width: 1280, height: 900 }, timezoneId: "America/Sao_Paulo" }); const p = await c.newPage(); await openPage(p, URL, { waitFor: "main .br-table tbody tr" }); await p.waitForTimeout(500); return p; };
+let p = await nova();
+console.log("selects", JSON.stringify(await p.evaluate(() => [...document.querySelectorAll("govbr-custom-pagination br-select-pnip")].map(s => s.outerHTML.slice(0, 200) + " | input " + (s.querySelector("input") as any)?.id + "=" + (s.querySelector("input") as any)?.value))));
+console.log("tipo", JSON.stringify(await p.evaluate(() => [...document.querySelectorAll("pnip-mpa-processos table tbody td:nth-of-type(4)")].map((td: any) => { const c = getComputedStyle(td); return td.textContent.trim().slice(0, 25) + "|" + c.overflowX + "|" + c.whiteSpace + "|" + td.scrollWidth + ">" + td.clientWidth; }))));
+const n0 = await p.locator("pnip-mpa-processos table tbody tr").count();
+await p.click("pnip-mpa-processos div.tab-panel > div.col > div.row:first-of-type span.br-tag.interaction"); await p.waitForTimeout(1500);
+console.log("meus toggle", n0, "->", await p.locator("pnip-mpa-processos table tbody tr").count());
+p = await nova();
+await p.click('pnip-mpa-processos br-tab button[data-panel="HISTORICO"]'); await p.waitForSelector("pnip-mpa-processos .br-table tbody tr:nth-child(10)");
+const info = () => p.evaluate(() => (document.querySelector("govbr-custom-pagination") as HTMLElement).innerText.replace(/\s+/g, " "));
+console.log("concl", await info());
+// seletor Página
+const PG = "govbr-custom-pagination nav > div:nth-of-type(3) br-select-pnip";
+console.log("pg count", await p.locator(PG + " input").count(), await p.evaluate(s => (document.querySelector(s + " input") as any)?.value, PG));
+await p.click(PG + " input"); await p.waitForTimeout(600);
+console.log("pg itens", JSON.stringify(await p.evaluate(s => [...document.querySelectorAll(s + " .br-list .br-item")].map(i => i.textContent!.trim()), PG)));
+await p.click(PG + " .br-list .br-item:nth-child(2) .br-radio"); await p.waitForTimeout(1200);
+console.log("pg depois", await info(), await p.evaluate(s => (document.querySelector(s + " input") as any)?.value, PG));
+p = await nova();
+await p.click('pnip-mpa-processos br-tab button[data-panel="HISTORICO"]'); await p.waitForSelector("pnip-mpa-processos .br-table tbody tr:nth-child(10)");
+await p.click('govbr-custom-pagination nav.br-pagination button[aria-label="Página seguinte"]'); await p.waitForTimeout(1000);
+console.log("seguinte", await info());
+p = await nova();
+console.log("exportar", JSON.stringify(await p.evaluate(() => { const b = document.querySelector("pnip-mpa-processos br-button[label=Exportar]")!.shadowRoot!.querySelector("button")!; const c = getComputedStyle(b); return [c.color, c.borderTopColor, c.fontSize, c.fontWeight]; })));
+console.log("home", JSON.stringify(await p.evaluate(() => { const r = document.querySelector("pnip-mpa-processos br-breadcrumb")!.shadowRoot!; const a = r.querySelector("li.crumb.home a") as HTMLAnchorElement; return [a.getAttribute("href"), a.tabIndex]; })));
+await b.close();

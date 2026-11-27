@@ -1,0 +1,2991 @@
+{
+ "_meta": {
+  "data": "2026-11-27",
+  "regra": "cabeçalho de tela-f3/sonda.mts; sem oráculo, sem axe, sem detector",
+  "semeado": "http://127.0.0.1:3340",
+  "semSemente": "http://127.0.0.1:3331",
+  "paradas": [
+   "inicial",
+   "lista-exibir",
+   "assinatura-cancelada",
+   "pagina-2",
+   "exibir-25",
+   "filtro-removido"
+  ]
+ },
+ "resultado": {
+  "F3-01": {
+   "semeado": true,
+   "semSemente": false,
+   "separa": true
+  },
+  "F3-02": {
+   "semeado": true,
+   "semSemente": false,
+   "separa": true
+  },
+  "F3-03": {
+   "semeado": true,
+   "semSemente": false,
+   "separa": true
+  },
+  "F3-04": {
+   "semeado": true,
+   "semSemente": false,
+   "separa": true
+  },
+  "F3-05": {
+   "semeado": true,
+   "semSemente": false,
+   "separa": true
+  },
+  "F3-06": {
+   "semeado": true,
+   "semSemente": false,
+   "separa": true
+  },
+  "F3-07": {
+   "semeado": true,
+   "semSemente": false,
+   "separa": true
+  },
+  "F3-08": {
+   "semeado": true,
+   "semSemente": false,
+   "separa": true
+  },
+  "F3-09": {
+   "semeado": true,
+   "semSemente": false,
+   "separa": true
+  },
+  "F3-10": {
+   "semeado": true,
+   "semSemente": false,
+   "separa": true
+  },
+  "F3-11": {
+   "semeado": true,
+   "semSemente": false,
+   "separa": true
+  },
+  "F3-12": {
+   "semeado": true,
+   "semSemente": false,
+   "separa": true
+  }
+ },
+ "semeado": {
+  "paradas": {
+   "inicial": {
+    "path": "/pnip-f3/portal-mpa/processos",
+    "linhas": 9,
+    "informacao": "1 – 9 de 9 itens",
+    "paginacao": {
+     "setas": [
+      {
+       "rotulo": "Página seguinte",
+       "desabilitado": true,
+       "raio": "7px",
+       "estilo": "border-radius: 7px;",
+       "caixa": "40x40"
+      }
+     ],
+     "itensDaLista": 2,
+     "numeros": [
+      "1*"
+     ]
+    },
+    "exibirListaRaios": [
+     "50%",
+     "50%"
+    ],
+    "avatar": {
+     "classe": "bg-orange-vivid-30 text-pure-0",
+     "caixa": "18.2x40",
+     "display": "block",
+     "raio": "0px"
+    },
+    "solicitante": {
+     "cabecalho": "Solicitante",
+     "celulas": [
+      {
+       "texto": "Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 591,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 454,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Gomes",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 206,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Cardoso",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 214,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 340,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Esteves",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 210,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 371,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 348,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Dias",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 187,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      }
+     ]
+    },
+    "meusProcessos": {
+     "texto": "Meus processos",
+     "fundo": "rgb(23, 85, 169)",
+     "estilo": "cursor: pointer; background-color: rgb(23, 85, 169);"
+    },
+    "tagsDeFiltro": [
+     "Aberto há=rgb(255, 255, 255)",
+     "Tipo de processo=rgb(255, 255, 255)",
+     "Status=rgb(255, 255, 255)",
+     "Espécie alvo=rgb(255, 255, 255)",
+     "Método de pesca=rgb(255, 255, 255)",
+     "Petrecho=rgb(255, 255, 255)"
+    ],
+    "breadcrumb": {
+     "itens": 2,
+     "ultimo": {
+      "dataActive": null,
+      "temLink": true,
+      "href": "portal-mpa/processos",
+      "hrefResolvido": "http://127.0.0.1:3340/pnip-f3/portal-mpa/processos",
+      "cor": "rgb(19, 81, 180)",
+      "tabIndex": 0,
+      "texto": "Processos"
+     }
+    },
+    "abas": [
+     {
+      "texto": "Aguardando análise",
+      "ativa": true,
+      "fonte": "16.8px",
+      "peso": "500"
+     },
+     {
+      "texto": "Tramitando",
+      "ativa": false,
+      "fonte": "16.8px",
+      "peso": "500"
+     },
+     {
+      "texto": "Concluídos",
+      "ativa": false,
+      "fonte": "16.8px",
+      "peso": "500"
+     }
+    ],
+    "cabecalhos": [
+     "Aberto há",
+     "Nº Processo",
+     "Tipo de Processo",
+     "Solicitante",
+     "Analista",
+     "Téc. Adm.",
+     "Status"
+    ],
+    "desassociarDesabilitados": [
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1"
+    ],
+    "habilitadoNaLinha": [
+     "Ver processo:1"
+    ],
+    "limparFiltros": {
+     "desabilitado": true,
+     "opacidade": "0.45"
+    },
+    "exibir": {
+     "campo": "10",
+     "itens": [
+      "10*(marcado)",
+      "25",
+      "50",
+      "100"
+     ]
+    },
+    "botaoLote": [],
+    "tagEscolhida": [],
+    "sessao": [],
+    "naturaisSempre": {
+     "h1": 0,
+     "h2": [
+      "Processos"
+     ],
+     "saltos": 0,
+     "title": "PNIP",
+     "avatar": "rgb(255, 255, 255) sobre rgb(255, 140, 0) 24.192px/700"
+    }
+   },
+   "lista-exibir": {
+    "path": "/pnip-f3/portal-mpa/processos",
+    "linhas": 9,
+    "informacao": "1 – 9 de 9 itens",
+    "paginacao": {
+     "setas": [
+      {
+       "rotulo": "Página seguinte",
+       "desabilitado": true,
+       "raio": "7px",
+       "estilo": "border-radius: 7px;",
+       "caixa": "40x40"
+      }
+     ],
+     "itensDaLista": 2,
+     "numeros": [
+      "1*"
+     ]
+    },
+    "exibirListaRaios": [
+     "50%",
+     "50%"
+    ],
+    "avatar": {
+     "classe": "bg-orange-vivid-30 text-pure-0",
+     "caixa": "18.2x40",
+     "display": "block",
+     "raio": "0px"
+    },
+    "solicitante": {
+     "cabecalho": "Solicitante",
+     "celulas": [
+      {
+       "texto": "Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 591,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 454,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Gomes",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 206,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Cardoso",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 214,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 340,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Esteves",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 210,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 371,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 348,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Dias",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 187,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      }
+     ]
+    },
+    "meusProcessos": {
+     "texto": "Meus processos",
+     "fundo": "rgb(23, 85, 169)",
+     "estilo": "cursor: pointer; background-color: rgb(23, 85, 169);"
+    },
+    "tagsDeFiltro": [
+     "Aberto há=rgb(255, 255, 255)",
+     "Tipo de processo=rgb(255, 255, 255)",
+     "Status=rgb(255, 255, 255)",
+     "Espécie alvo=rgb(255, 255, 255)",
+     "Método de pesca=rgb(255, 255, 255)",
+     "Petrecho=rgb(255, 255, 255)"
+    ],
+    "breadcrumb": {
+     "itens": 2,
+     "ultimo": {
+      "dataActive": null,
+      "temLink": true,
+      "href": "portal-mpa/processos",
+      "hrefResolvido": "http://127.0.0.1:3340/pnip-f3/portal-mpa/processos",
+      "cor": "rgb(19, 81, 180)",
+      "tabIndex": 0,
+      "texto": "Processos"
+     }
+    },
+    "abas": [
+     {
+      "texto": "Aguardando análise",
+      "ativa": true,
+      "fonte": "16.8px",
+      "peso": "500"
+     },
+     {
+      "texto": "Tramitando",
+      "ativa": false,
+      "fonte": "16.8px",
+      "peso": "500"
+     },
+     {
+      "texto": "Concluídos",
+      "ativa": false,
+      "fonte": "16.8px",
+      "peso": "500"
+     }
+    ],
+    "cabecalhos": [
+     "Aberto há",
+     "Nº Processo",
+     "Tipo de Processo",
+     "Solicitante",
+     "Analista",
+     "Téc. Adm.",
+     "Status"
+    ],
+    "desassociarDesabilitados": [
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1"
+    ],
+    "habilitadoNaLinha": [
+     "Ver processo:1"
+    ],
+    "limparFiltros": {
+     "desabilitado": true,
+     "opacidade": "0.45"
+    },
+    "exibir": {
+     "campo": "",
+     "itens": [
+      "10*(marcado)",
+      "25",
+      "50",
+      "100"
+     ]
+    },
+    "botaoLote": [],
+    "tagEscolhida": [],
+    "sessao": [],
+    "naturaisSempre": {
+     "h1": 0,
+     "h2": [
+      "Processos"
+     ],
+     "saltos": 0,
+     "title": "PNIP",
+     "avatar": "rgb(255, 255, 255) sobre rgb(255, 140, 0) 24.192px/700"
+    }
+   },
+   "assinatura-cancelada": {
+    "path": "/pnip-f3/portal-mpa/processos",
+    "linhas": 9,
+    "informacao": "1 – 9 de 9 itens",
+    "paginacao": {
+     "setas": [
+      {
+       "rotulo": "Página seguinte",
+       "desabilitado": true,
+       "raio": "7px",
+       "estilo": "border-radius: 7px;",
+       "caixa": "40x40"
+      }
+     ],
+     "itensDaLista": 2,
+     "numeros": [
+      "1*"
+     ]
+    },
+    "exibirListaRaios": [
+     "50%",
+     "50%"
+    ],
+    "avatar": {
+     "classe": "bg-orange-vivid-30 text-pure-0",
+     "caixa": "18.2x40",
+     "display": "block",
+     "raio": "0px"
+    },
+    "solicitante": {
+     "cabecalho": "Solicitante",
+     "celulas": [
+      {
+       "texto": "Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 591,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 454,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Gomes",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 206,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Cardoso",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 214,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 340,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Esteves",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 210,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 371,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 348,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Dias",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 187,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      }
+     ]
+    },
+    "meusProcessos": {
+     "texto": "Meus processos",
+     "fundo": "rgb(23, 85, 169)",
+     "estilo": "cursor: pointer; background-color: rgb(23, 85, 169);"
+    },
+    "tagsDeFiltro": [
+     "Aberto há=rgb(255, 255, 255)",
+     "Tipo de processo=rgb(255, 255, 255)",
+     "Status=rgb(255, 255, 255)",
+     "Espécie alvo=rgb(255, 255, 255)",
+     "Método de pesca=rgb(255, 255, 255)",
+     "Petrecho=rgb(255, 255, 255)"
+    ],
+    "breadcrumb": {
+     "itens": 2,
+     "ultimo": {
+      "dataActive": null,
+      "temLink": true,
+      "href": "portal-mpa/processos",
+      "hrefResolvido": "http://127.0.0.1:3340/pnip-f3/portal-mpa/processos",
+      "cor": "rgb(19, 81, 180)",
+      "tabIndex": 0,
+      "texto": "Processos"
+     }
+    },
+    "abas": [
+     {
+      "texto": "Aguardando análise",
+      "ativa": true,
+      "fonte": "16.8px",
+      "peso": "500"
+     },
+     {
+      "texto": "Tramitando",
+      "ativa": false,
+      "fonte": "16.8px",
+      "peso": "500"
+     },
+     {
+      "texto": "Concluídos",
+      "ativa": false,
+      "fonte": "16.8px",
+      "peso": "500"
+     }
+    ],
+    "cabecalhos": [
+     "Aberto há",
+     "Nº Processo",
+     "Tipo de Processo",
+     "Solicitante",
+     "Analista",
+     "Téc. Adm.",
+     "Status"
+    ],
+    "desassociarDesabilitados": [
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1"
+    ],
+    "habilitadoNaLinha": [
+     "Ver processo:1"
+    ],
+    "limparFiltros": {
+     "desabilitado": true,
+     "opacidade": "0.45"
+    },
+    "exibir": {
+     "campo": "10",
+     "itens": [
+      "10*(marcado)",
+      "25",
+      "50",
+      "100"
+     ]
+    },
+    "botaoLote": [
+     {
+      "label": "Confirmar",
+      "texto": "Confirmar",
+      "icon": "check"
+     }
+    ],
+    "tagEscolhida": [],
+    "sessao": [],
+    "naturaisSempre": {
+     "h1": 0,
+     "h2": [
+      "Processos"
+     ],
+     "saltos": 0,
+     "title": "PNIP",
+     "avatar": "rgb(255, 255, 255) sobre rgb(255, 140, 0) 24.192px/700"
+    }
+   },
+   "pagina-2": {
+    "path": "/pnip-f3/portal-mpa/processos",
+    "linhas": 4,
+    "informacao": "11 – 14 de 14 itens",
+    "paginacao": {
+     "setas": [
+      {
+       "rotulo": "Página seguinte",
+       "desabilitado": true,
+       "raio": "7px",
+       "estilo": "border-radius: 7px;",
+       "caixa": "40x40"
+      }
+     ],
+     "itensDaLista": 3,
+     "numeros": [
+      "1",
+      "2*"
+     ]
+    },
+    "exibirListaRaios": [
+     "50%",
+     "50%"
+    ],
+    "avatar": {
+     "classe": "bg-orange-vivid-30 text-pure-0",
+     "caixa": "18.2x40",
+     "display": "block",
+     "raio": "0px"
+    },
+    "solicitante": {
+     "cabecalho": "Analista",
+     "celulas": [
+      {
+       "texto": "Pessoa Exemplo Analista Um",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 108,
+       "clientWidth": 108,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Dois",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 108,
+       "clientWidth": 108,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Usuária De Teste",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 108,
+       "clientWidth": 108,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Dois",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 108,
+       "clientWidth": 108,
+       "title": null,
+       "titlesDentro": 0
+      }
+     ]
+    },
+    "meusProcessos": {
+     "texto": "Aberto há",
+     "fundo": "rgb(255, 255, 255)",
+     "estilo": "cursor: pointer;"
+    },
+    "tagsDeFiltro": [
+     "Aberto há=rgb(255, 255, 255)",
+     "Tipo de processo=rgb(255, 255, 255)",
+     "Status=rgb(255, 255, 255)",
+     "Espécie alvo=rgb(255, 255, 255)",
+     "Método de pesca=rgb(255, 255, 255)",
+     "Petrecho=rgb(255, 255, 255)"
+    ],
+    "breadcrumb": {
+     "itens": 2,
+     "ultimo": {
+      "dataActive": null,
+      "temLink": true,
+      "href": "portal-mpa/processos",
+      "hrefResolvido": "http://127.0.0.1:3340/pnip-f3/portal-mpa/processos",
+      "cor": "rgb(19, 81, 180)",
+      "tabIndex": 0,
+      "texto": "Processos"
+     }
+    },
+    "abas": [
+     {
+      "texto": "Aguardando análise",
+      "ativa": false,
+      "fonte": "16.8px",
+      "peso": "500"
+     },
+     {
+      "texto": "Tramitando",
+      "ativa": false,
+      "fonte": "16.8px",
+      "peso": "500"
+     },
+     {
+      "texto": "Concluídos",
+      "ativa": true,
+      "fonte": "16.8px",
+      "peso": "500"
+     }
+    ],
+    "cabecalhos": [
+     "Data/Hora",
+     "Nº Processo",
+     "Tipo de Processo",
+     "Solicitante",
+     "Analista",
+     "Téc. Adm.",
+     "Status"
+    ],
+    "desassociarDesabilitados": [],
+    "habilitadoNaLinha": [
+     "Ver processo:1"
+    ],
+    "limparFiltros": {
+     "desabilitado": true,
+     "opacidade": "0.45"
+    },
+    "exibir": {
+     "campo": "10",
+     "itens": [
+      "10*(marcado)",
+      "25",
+      "50",
+      "100"
+     ]
+    },
+    "botaoLote": [],
+    "tagEscolhida": [],
+    "sessao": [],
+    "naturaisSempre": {
+     "h1": 0,
+     "h2": [
+      "Processos"
+     ],
+     "saltos": 0,
+     "title": "PNIP",
+     "avatar": "rgb(255, 255, 255) sobre rgb(255, 140, 0) 24.192px/700"
+    }
+   },
+   "exibir-25": {
+    "path": "/pnip-f3/portal-mpa/processos",
+    "linhas": 14,
+    "informacao": "1 – 14 de 14 itens",
+    "paginacao": {
+     "setas": [
+      {
+       "rotulo": "Página seguinte",
+       "desabilitado": true,
+       "raio": "7px",
+       "estilo": "border-radius: 7px;",
+       "caixa": "40x40"
+      }
+     ],
+     "itensDaLista": 2,
+     "numeros": [
+      "1*"
+     ]
+    },
+    "exibirListaRaios": [
+     "50%",
+     "50%"
+    ],
+    "avatar": {
+     "classe": "bg-orange-vivid-30 text-pure-0",
+     "caixa": "18.2x40",
+     "display": "block",
+     "raio": "0px"
+    },
+    "solicitante": {
+     "cabecalho": "Analista",
+     "celulas": [
+      {
+       "texto": "Usuária De Teste",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 106,
+       "clientWidth": 106,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Dois",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 106,
+       "clientWidth": 106,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Um",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 106,
+       "clientWidth": 106,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Usuária De Teste",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 106,
+       "clientWidth": 106,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Um",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 106,
+       "clientWidth": 106,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Dois",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 106,
+       "clientWidth": 106,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Usuária De Teste",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 106,
+       "clientWidth": 106,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Dois",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 106,
+       "clientWidth": 106,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Um",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 106,
+       "clientWidth": 106,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Usuária De Teste",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 106,
+       "clientWidth": 106,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Um",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 106,
+       "clientWidth": 106,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Dois",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 106,
+       "clientWidth": 106,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Usuária De Teste",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 106,
+       "clientWidth": 106,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Dois",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 106,
+       "clientWidth": 106,
+       "title": null,
+       "titlesDentro": 0
+      }
+     ]
+    },
+    "meusProcessos": {
+     "texto": "Aberto há",
+     "fundo": "rgb(255, 255, 255)",
+     "estilo": "cursor: pointer;"
+    },
+    "tagsDeFiltro": [
+     "Aberto há=rgb(255, 255, 255)",
+     "Tipo de processo=rgb(255, 255, 255)",
+     "Status=rgb(255, 255, 255)",
+     "Espécie alvo=rgb(255, 255, 255)",
+     "Método de pesca=rgb(255, 255, 255)",
+     "Petrecho=rgb(255, 255, 255)"
+    ],
+    "breadcrumb": {
+     "itens": 2,
+     "ultimo": {
+      "dataActive": null,
+      "temLink": true,
+      "href": "portal-mpa/processos",
+      "hrefResolvido": "http://127.0.0.1:3340/pnip-f3/portal-mpa/processos",
+      "cor": "rgb(19, 81, 180)",
+      "tabIndex": 0,
+      "texto": "Processos"
+     }
+    },
+    "abas": [
+     {
+      "texto": "Aguardando análise",
+      "ativa": false,
+      "fonte": "16.8px",
+      "peso": "500"
+     },
+     {
+      "texto": "Tramitando",
+      "ativa": false,
+      "fonte": "16.8px",
+      "peso": "500"
+     },
+     {
+      "texto": "Concluídos",
+      "ativa": true,
+      "fonte": "16.8px",
+      "peso": "500"
+     }
+    ],
+    "cabecalhos": [
+     "Data/Hora",
+     "Nº Processo",
+     "Tipo de Processo",
+     "Solicitante",
+     "Analista",
+     "Téc. Adm.",
+     "Status"
+    ],
+    "desassociarDesabilitados": [],
+    "habilitadoNaLinha": [
+     "Ver processo:1"
+    ],
+    "limparFiltros": {
+     "desabilitado": true,
+     "opacidade": "0.45"
+    },
+    "exibir": {
+     "campo": "10",
+     "itens": [
+      "10",
+      "25*(marcado)",
+      "50",
+      "100"
+     ]
+    },
+    "botaoLote": [],
+    "tagEscolhida": [],
+    "sessao": [],
+    "naturaisSempre": {
+     "h1": 0,
+     "h2": [
+      "Processos"
+     ],
+     "saltos": 0,
+     "title": "PNIP",
+     "avatar": "rgb(255, 255, 255) sobre rgb(255, 140, 0) 24.192px/700"
+    }
+   },
+   "filtro-removido": {
+    "path": "/pnip-f3/portal-mpa/processos",
+    "linhas": 9,
+    "informacao": "1 – 9 de 9 itens",
+    "paginacao": {
+     "setas": [
+      {
+       "rotulo": "Página seguinte",
+       "desabilitado": true,
+       "raio": "7px",
+       "estilo": "border-radius: 7px;",
+       "caixa": "40x40"
+      }
+     ],
+     "itensDaLista": 2,
+     "numeros": [
+      "1*"
+     ]
+    },
+    "exibirListaRaios": [
+     "50%",
+     "50%"
+    ],
+    "avatar": {
+     "classe": "bg-orange-vivid-30 text-pure-0",
+     "caixa": "18.2x40",
+     "display": "block",
+     "raio": "0px"
+    },
+    "solicitante": {
+     "cabecalho": "Solicitante",
+     "celulas": [
+      {
+       "texto": "Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 591,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 454,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Gomes",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 206,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Cardoso",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 214,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 340,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Esteves",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 210,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 371,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 348,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Dias",
+       "classe": "solicitante",
+       "overflowX": "hidden",
+       "whiteSpace": "nowrap",
+       "textOverflow": "clip",
+       "maxWidth": "150px",
+       "scrollWidth": 187,
+       "clientWidth": 150,
+       "title": null,
+       "titlesDentro": 0
+      }
+     ]
+    },
+    "meusProcessos": {
+     "texto": "Meus processos",
+     "fundo": "rgb(23, 85, 169)",
+     "estilo": "cursor: pointer; background-color: rgb(23, 85, 169);"
+    },
+    "tagsDeFiltro": [
+     "Aberto há=rgb(255, 255, 255)",
+     "Tipo de processo=rgb(255, 255, 255)",
+     "Status=rgb(255, 255, 255)",
+     "Espécie alvo=rgb(255, 255, 255)",
+     "Método de pesca=rgb(255, 255, 255)",
+     "Petrecho=rgb(255, 255, 255)"
+    ],
+    "breadcrumb": {
+     "itens": 2,
+     "ultimo": {
+      "dataActive": null,
+      "temLink": true,
+      "href": "portal-mpa/processos",
+      "hrefResolvido": "http://127.0.0.1:3340/pnip-f3/portal-mpa/processos",
+      "cor": "rgb(19, 81, 180)",
+      "tabIndex": 0,
+      "texto": "Processos"
+     }
+    },
+    "abas": [
+     {
+      "texto": "Aguardando análise",
+      "ativa": true,
+      "fonte": "16.8px",
+      "peso": "500"
+     },
+     {
+      "texto": "Tramitando",
+      "ativa": false,
+      "fonte": "16.8px",
+      "peso": "500"
+     },
+     {
+      "texto": "Concluídos",
+      "ativa": false,
+      "fonte": "16.8px",
+      "peso": "500"
+     }
+    ],
+    "cabecalhos": [
+     "Aberto há",
+     "Nº Processo",
+     "Tipo de Processo",
+     "Solicitante",
+     "Analista",
+     "Téc. Adm.",
+     "Status"
+    ],
+    "desassociarDesabilitados": [
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1",
+     "1/1"
+    ],
+    "habilitadoNaLinha": [
+     "Ver processo:1"
+    ],
+    "limparFiltros": {
+     "desabilitado": false,
+     "opacidade": "1"
+    },
+    "exibir": {
+     "campo": "10",
+     "itens": [
+      "10*(marcado)",
+      "25",
+      "50",
+      "100"
+     ]
+    },
+    "botaoLote": [],
+    "tagEscolhida": [
+     {
+      "texto": "Últimos 60 dias",
+      "visivel": true
+     }
+    ],
+    "sessao": [
+     "filters-process-mpa-TRAMITANDO=[{\"icon\":\"far fa-clock\",\"attr\":\"abertoHa\",\"option\":\"Últimos 60 dias\"}]"
+    ],
+    "naturaisSempre": {
+     "h1": 0,
+     "h2": [
+      "Processos"
+     ],
+     "saltos": 0,
+     "title": "PNIP",
+     "avatar": "rgb(255, 255, 255) sobre rgb(255, 140, 0) 24.192px/700"
+    }
+   }
+  },
+  "dialogo": {
+   "titulo": "Confirma a assinatura de 1 processo(s)?",
+   "texto": "Resumo da assinatura: CAOL: 1 Todos os processos selecionados serão assinados digitalmente.",
+   "botoes": [
+    "Assinar",
+    "Cancelar"
+   ]
+  },
+  "depoisDoCancelar": {
+   "dialogo": false,
+   "rotulo": "Confirmar"
+  },
+  "xAntes": {
+   "classe": "br-button inverted circle",
+   "caixa": "28x28",
+   "raio": "50%",
+   "fundo": "rgb(19, 81, 180)",
+   "tabIndex": 0,
+   "desabilitado": false,
+   "linhas": 9
+  },
+  "depoisDoEnter": 1,
+  "hover": {
+   "tooltipsVisiveis": [],
+   "antesHover": 0
+  },
+  "externos": [],
+  "erros": []
+ },
+ "semSemente": {
+  "paradas": {
+   "inicial": {
+    "path": "/pnip-f3/portal-mpa/processos",
+    "linhas": 9,
+    "informacao": "1 – 9 de 9 itens",
+    "paginacao": {
+     "setas": [
+      {
+       "rotulo": "Página anterior",
+       "desabilitado": true,
+       "raio": "50%",
+       "estilo": null,
+       "caixa": "40x40"
+      },
+      {
+       "rotulo": "Página seguinte",
+       "desabilitado": true,
+       "raio": "50%",
+       "estilo": null,
+       "caixa": "40x40"
+      }
+     ],
+     "itensDaLista": 3,
+     "numeros": [
+      "1*"
+     ]
+    },
+    "exibirListaRaios": [
+     "50%",
+     "50%"
+    ],
+    "avatar": {
+     "classe": "content bg-orange-vivid-30 text-pure-0",
+     "caixa": "40x40",
+     "display": "flex",
+     "raio": "50%"
+    },
+    "solicitante": {
+     "cabecalho": "Solicitante",
+     "celulas": [
+      {
+       "texto": "Pessoa Exemplo Dias / Barco Exemplo Alfa",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Gomes",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Cardoso",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Esteves",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Dias",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      }
+     ]
+    },
+    "meusProcessos": {
+     "texto": "Meus processos",
+     "fundo": "rgb(19, 81, 180)",
+     "estilo": "cursor: pointer;"
+    },
+    "tagsDeFiltro": [
+     "Aberto há=rgb(255, 255, 255)",
+     "Tipo de processo=rgb(255, 255, 255)",
+     "Status=rgb(255, 255, 255)",
+     "Espécie alvo=rgb(255, 255, 255)",
+     "Método de pesca=rgb(255, 255, 255)",
+     "Petrecho=rgb(255, 255, 255)"
+    ],
+    "breadcrumb": {
+     "itens": 2,
+     "ultimo": {
+      "dataActive": "active",
+      "temLink": false,
+      "href": null,
+      "hrefResolvido": null,
+      "cor": "rgb(51, 51, 51)",
+      "tabIndex": null,
+      "texto": "Processos"
+     }
+    },
+    "abas": [
+     {
+      "texto": "Aguardando análise",
+      "ativa": false,
+      "fonte": "20.16px",
+      "peso": "500"
+     },
+     {
+      "texto": "Tramitando",
+      "ativa": true,
+      "fonte": "20.16px",
+      "peso": "500"
+     },
+     {
+      "texto": "Concluídos",
+      "ativa": false,
+      "fonte": "20.16px",
+      "peso": "500"
+     }
+    ],
+    "cabecalhos": [
+     "Aberto há",
+     "Nº Processo",
+     "Tipo de Processo",
+     "Solicitante",
+     "Analista",
+     "Téc. Adm.",
+     "Status"
+    ],
+    "desassociarDesabilitados": [
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45"
+    ],
+    "habilitadoNaLinha": [
+     "Ver processo:1"
+    ],
+    "limparFiltros": {
+     "desabilitado": true,
+     "opacidade": "0.45"
+    },
+    "exibir": {
+     "campo": "10",
+     "itens": [
+      "10*(marcado)",
+      "25",
+      "50",
+      "100"
+     ]
+    },
+    "botaoLote": [],
+    "tagEscolhida": [],
+    "sessao": [],
+    "naturaisSempre": {
+     "h1": 0,
+     "h2": [
+      "Processos"
+     ],
+     "saltos": 0,
+     "title": "PNIP",
+     "avatar": "rgb(255, 255, 255) sobre rgb(255, 140, 0) 24.192px/700"
+    }
+   },
+   "lista-exibir": {
+    "path": "/pnip-f3/portal-mpa/processos",
+    "linhas": 9,
+    "informacao": "1 – 9 de 9 itens",
+    "paginacao": {
+     "setas": [
+      {
+       "rotulo": "Página anterior",
+       "desabilitado": true,
+       "raio": "50%",
+       "estilo": null,
+       "caixa": "40x40"
+      },
+      {
+       "rotulo": "Página seguinte",
+       "desabilitado": true,
+       "raio": "50%",
+       "estilo": null,
+       "caixa": "40x40"
+      }
+     ],
+     "itensDaLista": 3,
+     "numeros": [
+      "1*"
+     ]
+    },
+    "exibirListaRaios": [
+     "50%",
+     "50%"
+    ],
+    "avatar": {
+     "classe": "content bg-orange-vivid-30 text-pure-0",
+     "caixa": "40x40",
+     "display": "flex",
+     "raio": "50%"
+    },
+    "solicitante": {
+     "cabecalho": "Solicitante",
+     "celulas": [
+      {
+       "texto": "Pessoa Exemplo Dias / Barco Exemplo Alfa",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Gomes",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Cardoso",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Esteves",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Dias",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      }
+     ]
+    },
+    "meusProcessos": {
+     "texto": "Meus processos",
+     "fundo": "rgb(19, 81, 180)",
+     "estilo": "cursor: pointer;"
+    },
+    "tagsDeFiltro": [
+     "Aberto há=rgb(255, 255, 255)",
+     "Tipo de processo=rgb(255, 255, 255)",
+     "Status=rgb(255, 255, 255)",
+     "Espécie alvo=rgb(255, 255, 255)",
+     "Método de pesca=rgb(255, 255, 255)",
+     "Petrecho=rgb(255, 255, 255)"
+    ],
+    "breadcrumb": {
+     "itens": 2,
+     "ultimo": {
+      "dataActive": "active",
+      "temLink": false,
+      "href": null,
+      "hrefResolvido": null,
+      "cor": "rgb(51, 51, 51)",
+      "tabIndex": null,
+      "texto": "Processos"
+     }
+    },
+    "abas": [
+     {
+      "texto": "Aguardando análise",
+      "ativa": false,
+      "fonte": "20.16px",
+      "peso": "500"
+     },
+     {
+      "texto": "Tramitando",
+      "ativa": true,
+      "fonte": "20.16px",
+      "peso": "500"
+     },
+     {
+      "texto": "Concluídos",
+      "ativa": false,
+      "fonte": "20.16px",
+      "peso": "500"
+     }
+    ],
+    "cabecalhos": [
+     "Aberto há",
+     "Nº Processo",
+     "Tipo de Processo",
+     "Solicitante",
+     "Analista",
+     "Téc. Adm.",
+     "Status"
+    ],
+    "desassociarDesabilitados": [
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45"
+    ],
+    "habilitadoNaLinha": [
+     "Ver processo:1"
+    ],
+    "limparFiltros": {
+     "desabilitado": true,
+     "opacidade": "0.45"
+    },
+    "exibir": {
+     "campo": "",
+     "itens": [
+      "10*(marcado)",
+      "25",
+      "50",
+      "100"
+     ]
+    },
+    "botaoLote": [],
+    "tagEscolhida": [],
+    "sessao": [],
+    "naturaisSempre": {
+     "h1": 0,
+     "h2": [
+      "Processos"
+     ],
+     "saltos": 0,
+     "title": "PNIP",
+     "avatar": "rgb(255, 255, 255) sobre rgb(255, 140, 0) 24.192px/700"
+    }
+   },
+   "assinatura-cancelada": {
+    "path": "/pnip-f3/portal-mpa/processos",
+    "linhas": 9,
+    "informacao": "1 – 9 de 9 itens",
+    "paginacao": {
+     "setas": [
+      {
+       "rotulo": "Página anterior",
+       "desabilitado": true,
+       "raio": "50%",
+       "estilo": null,
+       "caixa": "40x40"
+      },
+      {
+       "rotulo": "Página seguinte",
+       "desabilitado": true,
+       "raio": "50%",
+       "estilo": null,
+       "caixa": "40x40"
+      }
+     ],
+     "itensDaLista": 3,
+     "numeros": [
+      "1*"
+     ]
+    },
+    "exibirListaRaios": [
+     "50%",
+     "50%"
+    ],
+    "avatar": {
+     "classe": "content bg-orange-vivid-30 text-pure-0",
+     "caixa": "40x40",
+     "display": "flex",
+     "raio": "50%"
+    },
+    "solicitante": {
+     "cabecalho": "Solicitante",
+     "celulas": [
+      {
+       "texto": "Pessoa Exemplo Dias / Barco Exemplo Alfa",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Gomes",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Cardoso",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Esteves",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Dias",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      }
+     ]
+    },
+    "meusProcessos": {
+     "texto": "Meus processos",
+     "fundo": "rgb(19, 81, 180)",
+     "estilo": "cursor: pointer;"
+    },
+    "tagsDeFiltro": [
+     "Aberto há=rgb(255, 255, 255)",
+     "Tipo de processo=rgb(255, 255, 255)",
+     "Status=rgb(255, 255, 255)",
+     "Espécie alvo=rgb(255, 255, 255)",
+     "Método de pesca=rgb(255, 255, 255)",
+     "Petrecho=rgb(255, 255, 255)"
+    ],
+    "breadcrumb": {
+     "itens": 2,
+     "ultimo": {
+      "dataActive": "active",
+      "temLink": false,
+      "href": null,
+      "hrefResolvido": null,
+      "cor": "rgb(51, 51, 51)",
+      "tabIndex": null,
+      "texto": "Processos"
+     }
+    },
+    "abas": [
+     {
+      "texto": "Aguardando análise",
+      "ativa": false,
+      "fonte": "20.16px",
+      "peso": "500"
+     },
+     {
+      "texto": "Tramitando",
+      "ativa": true,
+      "fonte": "20.16px",
+      "peso": "500"
+     },
+     {
+      "texto": "Concluídos",
+      "ativa": false,
+      "fonte": "20.16px",
+      "peso": "500"
+     }
+    ],
+    "cabecalhos": [
+     "Aberto há",
+     "Nº Processo",
+     "Tipo de Processo",
+     "Solicitante",
+     "Analista",
+     "Téc. Adm.",
+     "Status"
+    ],
+    "desassociarDesabilitados": [
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45"
+    ],
+    "habilitadoNaLinha": [
+     "Ver processo:1"
+    ],
+    "limparFiltros": {
+     "desabilitado": true,
+     "opacidade": "0.45"
+    },
+    "exibir": {
+     "campo": "10",
+     "itens": [
+      "10*(marcado)",
+      "25",
+      "50",
+      "100"
+     ]
+    },
+    "botaoLote": [
+     {
+      "label": "Assinar selecionados",
+      "texto": "Assinar selecionados",
+      "icon": "check"
+     }
+    ],
+    "tagEscolhida": [],
+    "sessao": [],
+    "naturaisSempre": {
+     "h1": 0,
+     "h2": [
+      "Processos"
+     ],
+     "saltos": 0,
+     "title": "PNIP",
+     "avatar": "rgb(255, 255, 255) sobre rgb(255, 140, 0) 24.192px/700"
+    }
+   },
+   "pagina-2": {
+    "path": "/pnip-f3/portal-mpa/processos",
+    "linhas": 4,
+    "informacao": "11 – 14 de 14 itens",
+    "paginacao": {
+     "setas": [
+      {
+       "rotulo": "Página anterior",
+       "desabilitado": false,
+       "raio": "50%",
+       "estilo": null,
+       "caixa": "40x40"
+      },
+      {
+       "rotulo": "Página seguinte",
+       "desabilitado": true,
+       "raio": "50%",
+       "estilo": null,
+       "caixa": "40x40"
+      }
+     ],
+     "itensDaLista": 4,
+     "numeros": [
+      "1",
+      "2*"
+     ]
+    },
+    "exibirListaRaios": [
+     "50%",
+     "50%"
+    ],
+    "avatar": {
+     "classe": "content bg-orange-vivid-30 text-pure-0",
+     "caixa": "40x40",
+     "display": "flex",
+     "raio": "50%"
+    },
+    "solicitante": {
+     "cabecalho": "Analista",
+     "celulas": [
+      {
+       "texto": "Pessoa Exemplo Analista Um",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 113,
+       "clientWidth": 113,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Dois",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 113,
+       "clientWidth": 113,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Usuária De Teste",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 113,
+       "clientWidth": 113,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Dois",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 113,
+       "clientWidth": 113,
+       "title": null,
+       "titlesDentro": 0
+      }
+     ]
+    },
+    "meusProcessos": {
+     "texto": "Aberto há",
+     "fundo": "rgb(255, 255, 255)",
+     "estilo": "cursor: pointer;"
+    },
+    "tagsDeFiltro": [
+     "Aberto há=rgb(255, 255, 255)",
+     "Tipo de processo=rgb(255, 255, 255)",
+     "Status=rgb(255, 255, 255)",
+     "Espécie alvo=rgb(255, 255, 255)",
+     "Método de pesca=rgb(255, 255, 255)",
+     "Petrecho=rgb(255, 255, 255)"
+    ],
+    "breadcrumb": {
+     "itens": 2,
+     "ultimo": {
+      "dataActive": "active",
+      "temLink": false,
+      "href": null,
+      "hrefResolvido": null,
+      "cor": "rgb(51, 51, 51)",
+      "tabIndex": null,
+      "texto": "Processos"
+     }
+    },
+    "abas": [
+     {
+      "texto": "Aguardando análise",
+      "ativa": false,
+      "fonte": "20.16px",
+      "peso": "500"
+     },
+     {
+      "texto": "Tramitando",
+      "ativa": false,
+      "fonte": "20.16px",
+      "peso": "500"
+     },
+     {
+      "texto": "Concluídos",
+      "ativa": true,
+      "fonte": "20.16px",
+      "peso": "500"
+     }
+    ],
+    "cabecalhos": [
+     "Data/Hora",
+     "Nº Processo",
+     "Tipo de Processo",
+     "Solicitante",
+     "Analista",
+     "Téc. Adm.",
+     "Status"
+    ],
+    "desassociarDesabilitados": [],
+    "habilitadoNaLinha": [
+     "Ver processo:1"
+    ],
+    "limparFiltros": {
+     "desabilitado": true,
+     "opacidade": "0.45"
+    },
+    "exibir": {
+     "campo": "10",
+     "itens": [
+      "10*(marcado)",
+      "25",
+      "50",
+      "100"
+     ]
+    },
+    "botaoLote": [],
+    "tagEscolhida": [],
+    "sessao": [],
+    "naturaisSempre": {
+     "h1": 0,
+     "h2": [
+      "Processos"
+     ],
+     "saltos": 0,
+     "title": "PNIP",
+     "avatar": "rgb(255, 255, 255) sobre rgb(255, 140, 0) 24.192px/700"
+    }
+   },
+   "exibir-25": {
+    "path": "/pnip-f3/portal-mpa/processos",
+    "linhas": 14,
+    "informacao": "1 – 14 de 14 itens",
+    "paginacao": {
+     "setas": [
+      {
+       "rotulo": "Página anterior",
+       "desabilitado": true,
+       "raio": "50%",
+       "estilo": null,
+       "caixa": "40x40"
+      },
+      {
+       "rotulo": "Página seguinte",
+       "desabilitado": true,
+       "raio": "50%",
+       "estilo": null,
+       "caixa": "40x40"
+      }
+     ],
+     "itensDaLista": 3,
+     "numeros": [
+      "1*"
+     ]
+    },
+    "exibirListaRaios": [
+     "50%",
+     "50%"
+    ],
+    "avatar": {
+     "classe": "content bg-orange-vivid-30 text-pure-0",
+     "caixa": "40x40",
+     "display": "flex",
+     "raio": "50%"
+    },
+    "solicitante": {
+     "cabecalho": "Analista",
+     "celulas": [
+      {
+       "texto": "Usuária De Teste",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 109,
+       "clientWidth": 109,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Dois",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 109,
+       "clientWidth": 109,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Um",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 109,
+       "clientWidth": 109,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Usuária De Teste",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 109,
+       "clientWidth": 109,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Um",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 109,
+       "clientWidth": 109,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Dois",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 109,
+       "clientWidth": 109,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Usuária De Teste",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 109,
+       "clientWidth": 109,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Dois",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 109,
+       "clientWidth": 109,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Um",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 109,
+       "clientWidth": 109,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Usuária De Teste",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 109,
+       "clientWidth": 109,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Um",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 109,
+       "clientWidth": 109,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Dois",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 109,
+       "clientWidth": 109,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Usuária De Teste",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 109,
+       "clientWidth": 109,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Analista Dois",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 109,
+       "clientWidth": 109,
+       "title": null,
+       "titlesDentro": 0
+      }
+     ]
+    },
+    "meusProcessos": {
+     "texto": "Aberto há",
+     "fundo": "rgb(255, 255, 255)",
+     "estilo": "cursor: pointer;"
+    },
+    "tagsDeFiltro": [
+     "Aberto há=rgb(255, 255, 255)",
+     "Tipo de processo=rgb(255, 255, 255)",
+     "Status=rgb(255, 255, 255)",
+     "Espécie alvo=rgb(255, 255, 255)",
+     "Método de pesca=rgb(255, 255, 255)",
+     "Petrecho=rgb(255, 255, 255)"
+    ],
+    "breadcrumb": {
+     "itens": 2,
+     "ultimo": {
+      "dataActive": "active",
+      "temLink": false,
+      "href": null,
+      "hrefResolvido": null,
+      "cor": "rgb(51, 51, 51)",
+      "tabIndex": null,
+      "texto": "Processos"
+     }
+    },
+    "abas": [
+     {
+      "texto": "Aguardando análise",
+      "ativa": false,
+      "fonte": "20.16px",
+      "peso": "500"
+     },
+     {
+      "texto": "Tramitando",
+      "ativa": false,
+      "fonte": "20.16px",
+      "peso": "500"
+     },
+     {
+      "texto": "Concluídos",
+      "ativa": true,
+      "fonte": "20.16px",
+      "peso": "500"
+     }
+    ],
+    "cabecalhos": [
+     "Data/Hora",
+     "Nº Processo",
+     "Tipo de Processo",
+     "Solicitante",
+     "Analista",
+     "Téc. Adm.",
+     "Status"
+    ],
+    "desassociarDesabilitados": [],
+    "habilitadoNaLinha": [
+     "Ver processo:1"
+    ],
+    "limparFiltros": {
+     "desabilitado": true,
+     "opacidade": "0.45"
+    },
+    "exibir": {
+     "campo": "25",
+     "itens": [
+      "10",
+      "25*(marcado)",
+      "50",
+      "100"
+     ]
+    },
+    "botaoLote": [],
+    "tagEscolhida": [],
+    "sessao": [],
+    "naturaisSempre": {
+     "h1": 0,
+     "h2": [
+      "Processos"
+     ],
+     "saltos": 0,
+     "title": "PNIP",
+     "avatar": "rgb(255, 255, 255) sobre rgb(255, 140, 0) 24.192px/700"
+    }
+   },
+   "filtro-removido": {
+    "path": "/pnip-f3/portal-mpa/processos",
+    "linhas": 9,
+    "informacao": "1 – 9 de 9 itens",
+    "paginacao": {
+     "setas": [
+      {
+       "rotulo": "Página anterior",
+       "desabilitado": true,
+       "raio": "50%",
+       "estilo": null,
+       "caixa": "40x40"
+      },
+      {
+       "rotulo": "Página seguinte",
+       "desabilitado": true,
+       "raio": "50%",
+       "estilo": null,
+       "caixa": "40x40"
+      }
+     ],
+     "itensDaLista": 3,
+     "numeros": [
+      "1*"
+     ]
+    },
+    "exibirListaRaios": [
+     "50%",
+     "50%"
+    ],
+    "avatar": {
+     "classe": "content bg-orange-vivid-30 text-pure-0",
+     "caixa": "40x40",
+     "display": "flex",
+     "raio": "50%"
+    },
+    "solicitante": {
+     "cabecalho": "Solicitante",
+     "celulas": [
+      {
+       "texto": "Pessoa Exemplo Dias / Barco Exemplo Alfa",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Gomes",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Cardoso",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Esteves",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      },
+      {
+       "texto": "Pessoa Exemplo Dias",
+       "classe": "",
+       "overflowX": "visible",
+       "whiteSpace": "normal",
+       "textOverflow": "clip",
+       "maxWidth": "none",
+       "scrollWidth": 120,
+       "clientWidth": 120,
+       "title": null,
+       "titlesDentro": 0
+      }
+     ]
+    },
+    "meusProcessos": {
+     "texto": "Meus processos",
+     "fundo": "rgb(19, 81, 180)",
+     "estilo": "cursor: pointer;"
+    },
+    "tagsDeFiltro": [
+     "Aberto há=rgb(255, 255, 255)",
+     "Tipo de processo=rgb(255, 255, 255)",
+     "Status=rgb(255, 255, 255)",
+     "Espécie alvo=rgb(255, 255, 255)",
+     "Método de pesca=rgb(255, 255, 255)",
+     "Petrecho=rgb(255, 255, 255)"
+    ],
+    "breadcrumb": {
+     "itens": 2,
+     "ultimo": {
+      "dataActive": "active",
+      "temLink": false,
+      "href": null,
+      "hrefResolvido": null,
+      "cor": "rgb(51, 51, 51)",
+      "tabIndex": null,
+      "texto": "Processos"
+     }
+    },
+    "abas": [
+     {
+      "texto": "Aguardando análise",
+      "ativa": false,
+      "fonte": "20.16px",
+      "peso": "500"
+     },
+     {
+      "texto": "Tramitando",
+      "ativa": true,
+      "fonte": "20.16px",
+      "peso": "500"
+     },
+     {
+      "texto": "Concluídos",
+      "ativa": false,
+      "fonte": "20.16px",
+      "peso": "500"
+     }
+    ],
+    "cabecalhos": [
+     "Aberto há",
+     "Nº Processo",
+     "Tipo de Processo",
+     "Solicitante",
+     "Analista",
+     "Téc. Adm.",
+     "Status"
+    ],
+    "desassociarDesabilitados": [
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45",
+     "0.45/0.45"
+    ],
+    "habilitadoNaLinha": [
+     "Ver processo:1"
+    ],
+    "limparFiltros": {
+     "desabilitado": true,
+     "opacidade": "0.45"
+    },
+    "exibir": {
+     "campo": "10",
+     "itens": [
+      "10*(marcado)",
+      "25",
+      "50",
+      "100"
+     ]
+    },
+    "botaoLote": [],
+    "tagEscolhida": [],
+    "sessao": [
+     "filters-process-mpa-TRAMITANDO=[]"
+    ],
+    "naturaisSempre": {
+     "h1": 0,
+     "h2": [
+      "Processos"
+     ],
+     "saltos": 0,
+     "title": "PNIP",
+     "avatar": "rgb(255, 255, 255) sobre rgb(255, 140, 0) 24.192px/700"
+    }
+   }
+  },
+  "dialogo": {
+   "titulo": "Confirma a assinatura de 1 processo(s)?",
+   "texto": "Resumo da assinatura: CAOL: 1 Todos os processos selecionados serão assinados digitalmente.",
+   "botoes": [
+    "Assinar",
+    "Cancelar"
+   ]
+  },
+  "depoisDoCancelar": {
+   "dialogo": false,
+   "rotulo": "Assinar selecionados"
+  },
+  "xAntes": {
+   "classe": "br-button inverted circle",
+   "caixa": "28x28",
+   "raio": "50%",
+   "fundo": "rgb(19, 81, 180)",
+   "tabIndex": 0,
+   "desabilitado": false,
+   "linhas": 9
+  },
+  "depoisDoEnter": 0,
+  "hover": {
+   "tooltipsVisiveis": [],
+   "antesHover": 0
+  },
+  "externos": [],
+  "erros": []
+ }
+}

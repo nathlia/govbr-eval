@@ -1,0 +1,147 @@
+/**
+ * Tela F3 — as 12 specs semeadas, na ordem do adendo 3 § 3 (F3-01…F3-12 = M-01…M-12 da construção), num lugar só:
+ * montar-referencia.mjs, estratos.mjs, conferir-ids-base.mjs, criterios.mjs e a auditoria cega leem daqui.
+ *
+ * Por spec: a mudança (M), a origem, o tipo e o subtipo do adendo 3 § 3; o nível (quatro níveis do adendo da F § 4) e a
+ * exigência de interação, cada um com uma linha de justificativa; a marca de controle da varredura (§ 2.3); a âncora,
+ * o escopo, a contagem, o estado e o predicado de aceitação da referência; a cláusula literal do DS 3.7.0 (arquivo do
+ * corpus e trecho, conferido literal por conferir-ids-base.mjs) com os ids da base congelada (ou nenhum: semIdMapeado);
+ * as categorias; a descrição. Os números das descrições são os medidos em tela-f3/sonda.json.
+ */
+export const ANCORA_D14 = "pnip-header .br-avatar > span";
+
+const PAG = "govbr-custom-pagination nav.br-pagination";
+export const SEMEADAS = [
+  {
+    id: "F3-01", M: "M-01", origem: "mantido", deF2: "F2-01", tipo: "T1", subtipo: "anatomia",
+    nivel: "medio", porQueNivel: "mesmo defeito e mesma página da F2-01 (nível da F2: o menor entre seletor e conferente); na página 1 só se nota comparando a paginação com o par de setas que ela deveria ter",
+    exigeInteracao: false, porQueInteracao: "a falta da seta anterior já se vê na carga (o número \"1\" sem seta antes dele); a página 2 só a torna mais evidente",
+    controleDaVarredura: false,
+    anchor: `${PAG} > ul`, scope: "unico", expectedCount: 1, state: "sempre",
+    clausulas: [{ arquivo: "componentes/pagination__designer.md", trecho: "Constituem um *Botão* para esquerda e outro para direita. A cada clique, o usuário poderá navegar página por página de forma crescente ou decrescente (direita / esquerda).", rules: ["govbr-3.7.0-component-pagination-4323d08f3e2d", "govbr-3.7.0-component-pagination-0a0e2ad9474e"] }],
+    categories: ["componente", "estrutura"],
+    description: "Paginação no rodapé da tabela: só existe a seta \"Página seguinte\" (botão à direita dos números de página); a seta \"Página anterior\" não existe em nenhuma página da lista. Na carga, o número \"1\" fica sem seta antes dele; na página 2 (por exemplo na aba \"Concluídos\", 14 itens, depois de \"Página seguinte\") também não há seta para voltar, só o número \"1\". O defeito vale em qualquer página e em qualquer aba. A Pagination tem duas setas de navegação obrigatórias, um botão para a esquerda e outro para a direita.",
+  },
+  {
+    id: "F3-02", M: "M-02", origem: "mantido", deF2: "F2-02", tipo: "T1", subtipo: "marcacao",
+    nivel: "facil", porQueNivel: "mesmo defeito da F2-02 (nível da F2): o avatar deformado num retângulo estreito é quebra visível para qualquer pessoa",
+    exigeInteracao: false, porQueInteracao: "visível na carga, no cabeçalho",
+    controleDaVarredura: false,
+    anchor: ANCORA_D14, scope: "unico", expectedCount: 1, state: "inicial",
+    acceptance: { kind: "estilo-computado", properties: ["border-top-left-radius"], allowed: ["50%"], note: "Superfície circular do Avatar (border-radius 50%, o que o core computa com a classe content no conteúdo interno)." },
+    clausulas: [{ arquivo: "componentes/avatar__desenvolvedor.md", trecho: "| class    | string | **content**   | Aplicado no conteúdo interno. Pode conter imagem, ícone ou letra. |", rules: ["govbr-3.7.0-development-avatar-23d40d3d6ea4"] }],
+    categories: ["componente", "estrutura"],
+    description: "Avatar de letra no cabeçalho (\"U\"): o conteúdo interno do avatar não tem a classe `content` (o span tem só bg-orange-vivid-30 e text-pure-0). Sem ela, o avatar vira um retângulo laranja estreito (cerca de 18×40 px, border-radius 0, display block) com a letra encostada, em vez da superfície circular de 40×40 com a letra centralizada. No Avatar, a classe `content` é propriedade obrigatória do conteúdo interno.",
+  },
+  {
+    id: "F3-03", M: "M-03", origem: "trocado", tipo: "T4",
+    nivel: "facil", porQueNivel: "depois do clique, a tag que não sai é quebra visível para qualquer pessoa, sem conhecer o DS",
+    exigeInteracao: true, porQueInteracao: "só existe depois de escolher uma opção de filtro e clicar no × da tag",
+    controleDaVarredura: false,
+    anchor: "pnip-multiple-search-table-utils div.row.pl-2:not(.align-items-center) span.br-tag.interaction", scope: "unico", expectedCount: 1, state: "filtro-removido",
+    clausulas: [{ arquivo: "componentes/tag__designer.md", trecho: "Uma *tag* é considerada dispensável quando apresenta o botão terciário que permite que o usuário possa excluir a *tag*.", rules: ["govbr-3.7.0-component-tag-de4b72eadecf"] }],
+    categories: ["componente", "comportamento"],
+    description: "Tag do filtro escolhido (aparece acima da barra de filtros depois de abrir o filtro \"Aberto há\" e escolher \"Últimos 60 dias\"): o botão × da tag aparece e recebe foco como o botão circular do DS (classe br-button, 28×28, azul), mas clicar nele, ou focá-lo e apertar Enter, não remove o filtro — depois do clique a tag \"Últimos 60 dias\" continua visível e o filtro continua aplicado (\"Limpar filtros\" segue habilitado e é o que tira o filtro). Uma Tag interativa dispensável apresenta o botão que permite ao usuário excluí-la.",
+  },
+  {
+    id: "F3-04", M: "M-04", origem: "novo", tipo: "T4",
+    nivel: "facil", porQueNivel: "nomes cortados no meio, sem reticências, são quebra visível para qualquer pessoa",
+    exigeInteracao: false, porQueInteracao: "o corte se vê na carga; só a falta de tooltip pede passar o mouse",
+    controleDaVarredura: false,
+    anchor: "pnip-mpa-processos table tbody td:nth-of-type(5)", scope: "composicao", expectedCount: 1, participantCount: 9, state: "inicial",
+    acceptance: { kind: "estilo-computado", quantifier: "todas", properties: ["overflow-x", "text-overflow"], allowed: ["visible", "ellipsis"], note: "Corte sem reticências: o conteúdo que passa da célula fica escondido (overflow-x diferente de visible) E o corte não exibe reticências (text-overflow diferente de ellipsis). Célula que quebra o texto (visible) ou que trunca com reticências (ellipsis) não sustenta." },
+    clausulas: [{ arquivo: "componentes/table__designer.md", trecho: "Os textos devem ser truncados exibindo as reticências no final. Ao passar o *mouse* sobre o texto truncado é revelado o texto completo pelo uso de *tooltip*.", rules: ["govbr-3.7.0-component-table-bc0d039ca6cc", "govbr-3.7.0-component-table-4aac83c034bd"] }],
+    categories: ["componente", "comportamento"],
+    description: "Coluna \"Solicitante\" da tabela de processos: as 9 células cortam o texto na largura de 150 px, numa linha só e sem reticências (overflow hidden, white-space nowrap, text-overflow clip), e nenhuma tem title nem tooltip que mostre o texto completo ao passar o mouse. O nome comprido da 1ª linha (\"Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa\") é o que mais perde, mas todas as células da coluna aparecem cortadas, até \"Pessoa Exemplo Dias\". Na Table, o texto truncado exibe reticências no final e o texto completo é revelado por tooltip ao passar o mouse. Uma única regra de estilo corta a coluna inteira: uma unidade para o conjunto; o relato de qualquer célula cortada é desta spec.",
+  },
+  {
+    id: "F3-05", M: "M-05", origem: "trocado", tipo: "T2",
+    nivel: "dificil", porQueNivel: "um azul próximo do azul do DS parece correto; só está errado contra o token da superfície da Tag de interação (as tags de filtro da mesma barra são brancas, não servem de comparação)",
+    exigeInteracao: false, porQueInteracao: "visível na carga, com \"Meus processos\" ligado",
+    controleDaVarredura: true,
+    anchor: "pnip-mpa-processos div.tab-panel > div.col > div.row:first-of-type span.br-tag.interaction", scope: "unico", expectedCount: 1, state: "inicial",
+    acceptance: { kind: "estilo-computado", properties: ["background-color"], allowed: ["rgb(19, 81, 180)"], note: "--blue-warm-vivid-70 (#1351b4), a cor da superfície da Tag de interação; no build sem semente a mesma tag mede rgb(19, 81, 180)." },
+    clausulas: [{ arquivo: "componentes/tag__designer.md", trecho: "| Superfície | color    | `--blue-warm-vivid-70` |", secao: "### Cores [*Tag* de Interação]", rules: ["govbr-3.7.0-component-tag-93cce777e402"] }],
+    categories: ["token"],
+    description: "Tag de interação \"Meus processos\" (ligada, na barra acima da tabela): a superfície tem cor de fundo rgb(23, 85, 169) (#1755a9), posta em estilo inline na própria tag, em vez do azul da Tag de interação, rgb(19, 81, 180) (#1351b4). #1755a9 não é cor da paleta. A superfície da Tag de interação usa --blue-warm-vivid-70.",
+  },
+  {
+    id: "F3-06", M: "M-06", origem: "trocado", tipo: "T2",
+    nivel: "medio", porQueNivel: "só se vê comparando com os botões circulares da mesma paginação (os \"Exibir lista\" dos dois seletores)",
+    exigeInteracao: false, porQueInteracao: "visível na carga, no rodapé da tabela",
+    controleDaVarredura: true,
+    anchor: `${PAG} button[aria-label="Página seguinte"]`, scope: "unico", expectedCount: 1, state: "inicial",
+    acceptance: { kind: "estilo-computado", properties: ["border-top-left-radius"], allowed: ["50%"], note: "Botão Circular (border-radius 50%); os botões \"Exibir lista\" da mesma paginação medem 50%." },
+    clausulas: [{ arquivo: "componentes/pagination__designer.md", trecho: "O *Pagination* contém os componentes: *Botão Circular*, *Lista* e *Separadores*, além de outros elementos específicos, e é organizado nos seguintes módulos:", rules: [] }],
+    categories: ["componente", "token"],
+    description: "Seta \"Página seguinte\" da paginação: o botão tem border-radius 7px (estilo inline) e aparece como um quadrado de 40×40 com cantos arredondados, e não como botão circular; os botões \"Exibir lista\" dos dois seletores da mesma paginação são circulares (border-radius 50%). As setas de navegação da Pagination são Botões Circulares.",
+  },
+  {
+    id: "F3-07", M: "M-07", origem: "trocado", tipo: "T1", subtipo: "marcacao",
+    nivel: "dificil", porQueNivel: "um link no último item parece normal; só está errado contra a regra do Breadcrumb (o item atual não é link)",
+    exigeInteracao: false, porQueInteracao: "visível na carga (o item é link, com cor e cursor de link)",
+    controleDaVarredura: true,
+    anchor: "pnip-mpa-processos br-breadcrumb >>> li.crumb:last-child", scope: "unico", expectedCount: 1, state: "inicial",
+    acceptance: { kind: "atributos-ausentes", attributes: ["data-active"], note: "O último item do br-breadcrumb sem a marca de item atual (data-active), que é o que o web component usa para renderizar o item atual como texto e não como link; o item atual da D e do build sem semente traz data-active=\"active\"." },
+    clausulas: [
+      { arquivo: "componentes/breadcrumb__designer.md", trecho: "Cada item do *breadcrumb* é um *link*, exceto o último, que define a tela atual em que o usuário se encontra.", rules: ["govbr-3.7.0-component-breadcrumb-c54865b466d0"] },
+      { arquivo: "componentes/breadcrumb__acessibilidade.md", trecho: "A página atual ou último elemento do *breadcrumb*, não deve ser considerado um link, portanto deve possuir a formatação visual correspondente a um texto comum;", rules: ["govbr-3.7.0-accessibility-breadcrumb-53db61fa81f9"] },
+    ],
+    categories: ["componente", "estrutura"],
+    description: "Breadcrumb: o último item, \"Processos\" (a página atual), é um link — <a href=\"portal-mpa/processos\">, que aponta para a própria página —, com a cor de link e no Tab, em vez de texto comum; o item não tem a marca de item atual (data-active). Cada item do breadcrumb é um link, exceto o último, que define a tela atual; a página atual não deve ser considerada um link.",
+  },
+  {
+    id: "F3-08", M: "M-08", origem: "mantido", deF2: "F2-08", tipo: "T3",
+    nivel: "dificil", porQueNivel: "mesmo defeito da F2-08 (nível da F2): o rótulo menor parece correto; só está errado contra o token da Tab",
+    exigeInteracao: false, porQueInteracao: "visível na carga",
+    controleDaVarredura: false,
+    anchor: "pnip-mpa-processos br-tab >>> button", scope: "composicao", expectedCount: 1, participantCount: 3, state: "inicial",
+    acceptance: { kind: "estilo-computado", properties: ["font-size"], allowed: ["20.16px"], note: "--font-size-scale-up-02 (20,16 px), o tamanho do rótulo da Tab." },
+    clausulas: [{ arquivo: "componentes/tab__designer.md", trecho: "| Rótulo da *Tab*       | `--font-size-scale-up-02` | `--font-weight-medium`    |", rules: ["govbr-3.7.0-component-tab-b717690fd662"] }],
+    categories: ["tipografia", "token"],
+    description: "Rótulos das três abas (\"Aguardando análise\", \"Tramitando\", \"Concluídos\"): font-size 16,8 px (--font-size-scale-up-01, o tamanho do texto dos botões), um degrau abaixo do previsto; o peso continua medium. O rótulo da Tab usa --font-size-scale-up-02 (20,16 px) com --font-weight-medium. Um único estilo no componente define os três rótulos: uma unidade para o conjunto.",
+  },
+  {
+    id: "F3-09", M: "M-09", origem: "trocado", tipo: "T4",
+    nivel: "facil", porQueNivel: "depois da escolha, o campo que mostra 10 com a tabela de 14 linhas é divergência visível para qualquer pessoa",
+    exigeInteracao: true, porQueInteracao: "só existe depois de abrir o seletor \"Exibir\" e escolher outra quantidade",
+    controleDaVarredura: false,
+    anchor: "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip input#total", scope: "unico", expectedCount: 1, state: "exibir-25",
+    clausulas: [{ arquivo: "componentes/select__designer.md", trecho: "3. O campo de entrada exibe a opção selecionada.", rules: ["govbr-3.7.0-component-select-42e87c4d09d5"] }],
+    categories: ["componente", "comportamento"],
+    description: "Seletor \"Exibir\" (itens por página) da paginação, na aba \"Concluídos\" (14 itens): depois de abrir o seletor e escolher 25, a tabela passa a mostrar as 14 linhas (\"1 – 14 de 14 itens\") e o item 25 fica marcado na lista, mas o campo do seletor continua mostrando 10. O mesmo acontece com 50: o campo mostra sempre 10. O campo de entrada do Select exibe a opção selecionada.",
+  },
+  {
+    id: "F3-10", M: "M-10", origem: "mantido", deF2: "F2-10", tipo: "T4",
+    nivel: "dificil", porQueNivel: "mesmo defeito da F2-10 (nível da F2): o botão parece habilitado; só está errado contra o tratamento do estado desabilitado do DS",
+    exigeInteracao: false, porQueInteracao: "visível na carga",
+    controleDaVarredura: false,
+    anchor: "pnip-mpa-processos table tbody br-button[disabled]", scope: "composicao", expectedCount: 1, participantCount: 8, state: "inicial",
+    acceptance: { kind: "estilo-computado", properties: ["opacity"], allowed: ["0.45"], note: "--surface-opacity-md (0,45), a opacidade do estado desabilitado; o \"Limpar filtros\" desabilitado, na mesma página, mede 0.45." },
+    clausulas: [{ arquivo: "fundamentos-visuais/estados.md", trecho: "| background/foreground | opacity  | `--surface-opacity-md`  |", rules: [] }],
+    categories: ["comportamento", "token"],
+    description: "Botões \"Desassociar processo do analista responsável\" desabilitados na coluna de ações (8): opacidade 1, iguais ao habilitado da 1ª linha (ícone vermelho cheio); só o cursor not-allowed indica o estado. O botão \"Limpar filtros\", também desabilitado, tem opacidade 0,45. No estado desabilitado, fundo e primeiro plano têm opacidade --surface-opacity-md. Uma única regra define os oito: uma unidade para o conjunto.",
+  },
+  {
+    id: "F3-11", M: "M-11", origem: "mantido", deF2: "F2-11", tipo: "T4",
+    nivel: "medio", porQueNivel: "mesmo defeito da F2-11 (nível da F2): só se vê comparando a aba marcada com o conteúdo exibido",
+    exigeInteracao: false, porQueInteracao: "visível na carga",
+    controleDaVarredura: false,
+    anchor: "pnip-mpa-processos br-tab >>> li.tab-item:first-child", scope: "unico", expectedCount: 1, state: "inicial",
+    acceptance: { kind: "classe-no-elemento", tag: "li", classe: "active", note: "O item \"Aguardando análise\" (1º item da Tab) carrega a marca de item ativo enquanto o conteúdo exibido é o da aba \"Tramitando\"." },
+    clausulas: [{ arquivo: "componentes/tab__designer.md", trecho: "A - O Item da *Tab* Ativo tem a finalidade de mostrar ao usuário em qual aba ele se encontra.", rules: ["govbr-3.7.0-component-tab-50ac44341161"] }],
+    categories: ["comportamento"],
+    description: "Abas: o item \"Aguardando análise\" aparece como aba ativa (marca de item ativo, texto destacado), mas o conteúdo exibido é o da aba \"Tramitando\" (tag \"Meus processos\", colunas Analista e Téc. Adm., processos em tramitação); o item \"Tramitando\" aparece como inativo. O item ativo da Tab mostra ao usuário em qual aba ele se encontra.",
+  },
+  {
+    id: "F3-12", M: "M-12", origem: "trocado", tipo: "R",
+    nivel: "muito-dificil", porQueNivel: "pede selecionar uma linha e, para perceber o defeito, a regra do DS sobre o rótulo do Button (orientar qual ação é esperada): \"Confirmar\" sozinho não é quebra",
+    exigeInteracao: true, porQueInteracao: "o botão só aparece depois de marcar a caixa de uma linha; a ação só se revela abrindo o diálogo",
+    controleDaVarredura: false,
+    anchor: 'pnip-mpa-processos div.mt-3 > br-button[icon="check"][type="primary"]', scope: "unico", expectedCount: 1, state: "assinatura-cancelada",
+    clausulas: [{ arquivo: "componentes/button__designer.md", trecho: "Deve estar alinhado com o tom de voz da sua marca, além de orientar de forma clara qual ação esperada.", rules: ["govbr-3.7.0-component-button-a4d904dedad5"] }],
+    categories: ["componente"],
+    description: "Botão de ação em lote abaixo da tabela (aparece ao marcar a caixa de ao menos uma linha da lista da carga, com \"Meus processos\" ligado; a 1ª caixa está na 2ª linha): o rótulo visível é \"Confirmar\", mas o botão abre o diálogo \"Confirma a assinatura de 1 processo(s)?\", com \"Assinar\" e \"Cancelar\" — a ação oferecida é assinar os processos selecionados, e o rótulo não diz isso. O rótulo do Button deve orientar de forma clara qual ação é esperada.",
+  },
+];
+if (SEMEADAS.length !== 12 || SEMEADAS.some((s, i) => s.id !== `F3-${String(i + 1).padStart(2, "0")}` || s.M !== `M-${String(i + 1).padStart(2, "0")}`)) throw new Error("lista fora de ordem");

@@ -1,0 +1,4623 @@
+{
+ "resumo": {
+  "forcar": 460,
+  "cenarios": 18,
+  "celulas": 192,
+  "maiorNecessariaOutras": 454,
+  "celulaMaior": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+  "necessariaLonga": [
+   591.11
+  ],
+  "longaEm": [
+   "inicial|null|10|p1",
+   "inicial|null|25|p1",
+   "inicial|null|50|p1",
+   "Tramitando|true|10|p1",
+   "Tramitando|true|25|p1",
+   "Tramitando|true|50|p1",
+   "Tramitando|false|10|p1",
+   "Tramitando|false|25|p1",
+   "Tramitando|false|50|p1"
+  ],
+  "cortadasOutras": 0,
+  "longasCortadas": "9/9",
+  "transbordaTabela": [
+   "inicial|null|10|p1",
+   "inicial|null|25|p1",
+   "inicial|null|50|p1",
+   "Aguardando análise|null|10|p1",
+   "Aguardando análise|null|25|p1",
+   "Aguardando análise|null|50|p1",
+   "Tramitando|true|10|p1",
+   "Tramitando|true|25|p1",
+   "Tramitando|true|50|p1",
+   "Tramitando|false|10|p1",
+   "Tramitando|false|10|p2",
+   "Tramitando|false|10|p3",
+   "Tramitando|false|25|p1",
+   "Tramitando|false|50|p1",
+   "Concluídos|null|10|p1",
+   "Concluídos|null|10|p2",
+   "Concluídos|null|25|p1",
+   "Concluídos|null|50|p1"
+  ],
+  "transbordaDoc": 15,
+  "boxSizing": [
+   "border-box"
+  ]
+ },
+ "res": [
+  {
+   "aba": "inicial",
+   "meus": null,
+   "por": "10",
+   "pagina": 1,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa",
+     "necessaria": 591.11,
+     "scrollW": 591,
+     "clientW": 460,
+     "w": 460,
+     "cortada": true,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+     "necessaria": 454,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes",
+     "necessaria": 205.75,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso",
+     "necessaria": 213.99,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+     "necessaria": 340.46,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves",
+     "necessaria": 209.94,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+     "necessaria": 370.65,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+     "necessaria": 348.22,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias",
+     "necessaria": 187.18,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    }
+   ],
+   "larguras": [
+    93.84,
+    66,
+    203.48,
+    131.31,
+    460,
+    105.61,
+    113.13,
+    163.41,
+    153.5
+   ],
+   "tabela": {
+    "scrollW": 1490,
+    "clientW": 1096,
+    "tabelaW": 1490,
+    "transborda": true,
+    "docTransborda": true
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "inicial",
+   "meus": null,
+   "por": "25",
+   "pagina": 1,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa",
+     "necessaria": 591.11,
+     "scrollW": 591,
+     "clientW": 460,
+     "w": 460,
+     "cortada": true,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+     "necessaria": 454,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes",
+     "necessaria": 205.75,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso",
+     "necessaria": 213.99,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+     "necessaria": 340.46,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves",
+     "necessaria": 209.94,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+     "necessaria": 370.65,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+     "necessaria": 348.22,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias",
+     "necessaria": 187.18,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    }
+   ],
+   "larguras": [
+    93.84,
+    66,
+    203.48,
+    131.31,
+    460,
+    105.61,
+    113.13,
+    163.41,
+    153.5
+   ],
+   "tabela": {
+    "scrollW": 1490,
+    "clientW": 1096,
+    "tabelaW": 1490,
+    "transborda": true,
+    "docTransborda": true
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "inicial",
+   "meus": null,
+   "por": "50",
+   "pagina": 1,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa",
+     "necessaria": 591.11,
+     "scrollW": 591,
+     "clientW": 460,
+     "w": 460,
+     "cortada": true,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+     "necessaria": 454,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes",
+     "necessaria": 205.75,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso",
+     "necessaria": 213.99,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+     "necessaria": 340.46,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves",
+     "necessaria": 209.94,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+     "necessaria": 370.65,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+     "necessaria": 348.22,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias",
+     "necessaria": 187.18,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    }
+   ],
+   "larguras": [
+    93.84,
+    66,
+    203.48,
+    131.31,
+    460,
+    105.61,
+    113.13,
+    163.41,
+    153.5
+   ],
+   "tabela": {
+    "scrollW": 1490,
+    "clientW": 1096,
+    "tabelaW": 1490,
+    "transborda": true,
+    "docTransborda": true
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "Aguardando análise",
+   "meus": null,
+   "por": "10",
+   "pagina": 1,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo Barros / Barco Exemplo Bravo",
+     "necessaria": 358.11,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Pescados Exemplo Ltda (fictícia)",
+     "necessaria": 440.66,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias / Barco Exemplo Delta",
+     "necessaria": 340.9,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves",
+     "necessaria": 209.94,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Alfa",
+     "necessaria": 341.69,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Barco Exemplo Bravo",
+     "necessaria": 362.18,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves",
+     "necessaria": 194.5,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros / Barco Exemplo Delta",
+     "necessaria": 355.43,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Barco Exemplo Eco",
+     "necessaria": 357.11,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    }
+   ],
+   "larguras": [
+    93.84,
+    205,
+    143.88,
+    440.66,
+    145.11,
+    159.8
+   ],
+   "tabela": {
+    "scrollW": 1188,
+    "clientW": 1096,
+    "tabelaW": 1188,
+    "transborda": true,
+    "docTransborda": false
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "Aguardando análise",
+   "meus": null,
+   "por": "25",
+   "pagina": 1,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo Barros / Barco Exemplo Bravo",
+     "necessaria": 358.11,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Pescados Exemplo Ltda (fictícia)",
+     "necessaria": 440.66,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias / Barco Exemplo Delta",
+     "necessaria": 340.9,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves",
+     "necessaria": 209.94,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Alfa",
+     "necessaria": 341.69,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Barco Exemplo Bravo",
+     "necessaria": 362.18,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves",
+     "necessaria": 194.5,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros / Barco Exemplo Delta",
+     "necessaria": 355.43,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Barco Exemplo Eco",
+     "necessaria": 357.11,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    }
+   ],
+   "larguras": [
+    93.84,
+    205,
+    143.88,
+    440.66,
+    145.11,
+    159.8
+   ],
+   "tabela": {
+    "scrollW": 1188,
+    "clientW": 1096,
+    "tabelaW": 1188,
+    "transborda": true,
+    "docTransborda": false
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "Aguardando análise",
+   "meus": null,
+   "por": "50",
+   "pagina": 1,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo Barros / Barco Exemplo Bravo",
+     "necessaria": 358.11,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Pescados Exemplo Ltda (fictícia)",
+     "necessaria": 440.66,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias / Barco Exemplo Delta",
+     "necessaria": 340.9,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves",
+     "necessaria": 209.94,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Alfa",
+     "necessaria": 341.69,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Barco Exemplo Bravo",
+     "necessaria": 362.18,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves",
+     "necessaria": 194.5,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros / Barco Exemplo Delta",
+     "necessaria": 355.43,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Barco Exemplo Eco",
+     "necessaria": 357.11,
+     "scrollW": 441,
+     "clientW": 441,
+     "w": 440.66,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    }
+   ],
+   "larguras": [
+    93.84,
+    205,
+    143.88,
+    440.66,
+    145.11,
+    159.8
+   ],
+   "tabela": {
+    "scrollW": 1188,
+    "clientW": 1096,
+    "tabelaW": 1188,
+    "transborda": true,
+    "docTransborda": false
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "Tramitando",
+   "meus": true,
+   "por": "10",
+   "pagina": 1,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa",
+     "necessaria": 591.11,
+     "scrollW": 591,
+     "clientW": 460,
+     "w": 460,
+     "cortada": true,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+     "necessaria": 454,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes",
+     "necessaria": 205.75,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso",
+     "necessaria": 213.99,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+     "necessaria": 340.46,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves",
+     "necessaria": 209.94,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+     "necessaria": 370.65,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+     "necessaria": 348.22,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias",
+     "necessaria": 187.18,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    }
+   ],
+   "larguras": [
+    93.84,
+    66,
+    203.48,
+    131.31,
+    460,
+    105.61,
+    113.13,
+    163.41,
+    153.5
+   ],
+   "tabela": {
+    "scrollW": 1490,
+    "clientW": 1096,
+    "tabelaW": 1490,
+    "transborda": true,
+    "docTransborda": true
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "Tramitando",
+   "meus": true,
+   "por": "25",
+   "pagina": 1,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa",
+     "necessaria": 591.11,
+     "scrollW": 591,
+     "clientW": 460,
+     "w": 460,
+     "cortada": true,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+     "necessaria": 454,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes",
+     "necessaria": 205.75,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso",
+     "necessaria": 213.99,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+     "necessaria": 340.46,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves",
+     "necessaria": 209.94,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+     "necessaria": 370.65,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+     "necessaria": 348.22,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias",
+     "necessaria": 187.18,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    }
+   ],
+   "larguras": [
+    93.84,
+    66,
+    203.48,
+    131.31,
+    460,
+    105.61,
+    113.13,
+    163.41,
+    153.5
+   ],
+   "tabela": {
+    "scrollW": 1490,
+    "clientW": 1096,
+    "tabelaW": 1490,
+    "transborda": true,
+    "docTransborda": true
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "Tramitando",
+   "meus": true,
+   "por": "50",
+   "pagina": 1,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa",
+     "necessaria": 591.11,
+     "scrollW": 591,
+     "clientW": 460,
+     "w": 460,
+     "cortada": true,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+     "necessaria": 454,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes",
+     "necessaria": 205.75,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso",
+     "necessaria": 213.99,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+     "necessaria": 340.46,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves",
+     "necessaria": 209.94,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+     "necessaria": 370.65,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+     "necessaria": 348.22,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias",
+     "necessaria": 187.18,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    }
+   ],
+   "larguras": [
+    93.84,
+    66,
+    203.48,
+    131.31,
+    460,
+    105.61,
+    113.13,
+    163.41,
+    153.5
+   ],
+   "tabela": {
+    "scrollW": 1490,
+    "clientW": 1096,
+    "tabelaW": 1490,
+    "transborda": true,
+    "docTransborda": true
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "Tramitando",
+   "meus": false,
+   "por": "10",
+   "pagina": 1,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa",
+     "necessaria": 591.11,
+     "scrollW": 591,
+     "clientW": 460,
+     "w": 460,
+     "cortada": true,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+     "necessaria": 454,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Charlie",
+     "necessaria": 362.22,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes",
+     "necessaria": 205.75,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Eco",
+     "necessaria": 337.61,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros / Barco Exemplo Alfa",
+     "necessaria": 346.05,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso",
+     "necessaria": 213.99,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias / Barco Exemplo Charlie",
+     "necessaria": 352.05,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Barco Exemplo Delta",
+     "necessaria": 363.66,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+     "necessaria": 340.46,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    }
+   ],
+   "larguras": [
+    93.84,
+    202.55,
+    143.88,
+    460,
+    112.77,
+    113.13,
+    163.41,
+    159.8
+   ],
+   "tabela": {
+    "scrollW": 1449,
+    "clientW": 1096,
+    "tabelaW": 1449,
+    "transborda": true,
+    "docTransborda": true
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "Tramitando",
+   "meus": false,
+   "por": "10",
+   "pagina": 2,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo Gomes / Pescados Exemplo Ltda (fictícia)",
+     "necessaria": 432.43,
+     "scrollW": 446,
+     "clientW": 446,
+     "w": 445.77,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Bravo",
+     "necessaria": 350.91,
+     "scrollW": 446,
+     "clientW": 446,
+     "w": 445.77,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros",
+     "necessaria": 201.69,
+     "scrollW": 446,
+     "clientW": 446,
+     "w": 445.77,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Barco Exemplo Delta",
+     "necessaria": 367.72,
+     "scrollW": 446,
+     "clientW": 446,
+     "w": 445.77,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias / Barco Exemplo Eco",
+     "necessaria": 330.29,
+     "scrollW": 446,
+     "clientW": 446,
+     "w": 445.77,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves",
+     "necessaria": 209.94,
+     "scrollW": 446,
+     "clientW": 446,
+     "w": 445.77,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Bravo",
+     "necessaria": 353.75,
+     "scrollW": 446,
+     "clientW": 446,
+     "w": 445.77,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+     "necessaria": 370.65,
+     "scrollW": 446,
+     "clientW": 446,
+     "w": 445.77,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+     "necessaria": 348.22,
+     "scrollW": 446,
+     "clientW": 446,
+     "w": 445.77,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros / Comercio Exemplo Do Mar (fictícia)",
+     "necessaria": 445.77,
+     "scrollW": 446,
+     "clientW": 446,
+     "w": 445.77,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    }
+   ],
+   "larguras": [
+    93.84,
+    204.63,
+    143.88,
+    445.77,
+    112.77,
+    113.13,
+    163.41,
+    159.8
+   ],
+   "tabela": {
+    "scrollW": 1437,
+    "clientW": 1096,
+    "tabelaW": 1437,
+    "transborda": true,
+    "docTransborda": true
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "Tramitando",
+   "meus": false,
+   "por": "10",
+   "pagina": 3,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo Cardoso / Barco Exemplo Alfa",
+     "necessaria": 358.35,
+     "scrollW": 375,
+     "clientW": 375,
+     "w": 374.81,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias",
+     "necessaria": 187.18,
+     "scrollW": 375,
+     "clientW": 375,
+     "w": 374.81,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Barco Exemplo Charlie",
+     "necessaria": 374.82,
+     "scrollW": 375,
+     "clientW": 375,
+     "w": 374.81,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    }
+   ],
+   "larguras": [
+    93.84,
+    204.56,
+    143.88,
+    374.81,
+    112.77,
+    113.13,
+    145.11,
+    159.8
+   ],
+   "tabela": {
+    "scrollW": 1348,
+    "clientW": 1096,
+    "tabelaW": 1348,
+    "transborda": true,
+    "docTransborda": true
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "Tramitando",
+   "meus": false,
+   "por": "25",
+   "pagina": 1,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa",
+     "necessaria": 591.11,
+     "scrollW": 591,
+     "clientW": 460,
+     "w": 460,
+     "cortada": true,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+     "necessaria": 454,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Charlie",
+     "necessaria": 362.22,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes",
+     "necessaria": 205.75,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Eco",
+     "necessaria": 337.61,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros / Barco Exemplo Alfa",
+     "necessaria": 346.05,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso",
+     "necessaria": 213.99,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias / Barco Exemplo Charlie",
+     "necessaria": 352.05,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Barco Exemplo Delta",
+     "necessaria": 363.66,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+     "necessaria": 340.46,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Pescados Exemplo Ltda (fictícia)",
+     "necessaria": 432.43,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Bravo",
+     "necessaria": 350.91,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros",
+     "necessaria": 201.69,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Barco Exemplo Delta",
+     "necessaria": 367.72,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias / Barco Exemplo Eco",
+     "necessaria": 330.29,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves",
+     "necessaria": 209.94,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Bravo",
+     "necessaria": 353.75,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+     "necessaria": 370.65,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+     "necessaria": 348.22,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros / Comercio Exemplo Do Mar (fictícia)",
+     "necessaria": 445.77,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Barco Exemplo Alfa",
+     "necessaria": 358.35,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias",
+     "necessaria": 187.18,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Barco Exemplo Charlie",
+     "necessaria": 374.82,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    }
+   ],
+   "larguras": [
+    93.84,
+    204.63,
+    143.88,
+    460,
+    112.77,
+    113.13,
+    163.41,
+    159.8
+   ],
+   "tabela": {
+    "scrollW": 1451,
+    "clientW": 1096,
+    "tabelaW": 1451,
+    "transborda": true,
+    "docTransborda": true
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "Tramitando",
+   "meus": false,
+   "por": "50",
+   "pagina": 1,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo De Nome Comprido Para Teste Da Listagem / Barco Exemplo Alfa",
+     "necessaria": 591.11,
+     "scrollW": 591,
+     "clientW": 460,
+     "w": 460,
+     "cortada": true,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Comercio Exemplo Do Mar (fictícia)",
+     "necessaria": 454,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Charlie",
+     "necessaria": 362.22,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes",
+     "necessaria": 205.75,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Eco",
+     "necessaria": 337.61,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros / Barco Exemplo Alfa",
+     "necessaria": 346.05,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso",
+     "necessaria": 213.99,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias / Barco Exemplo Charlie",
+     "necessaria": 352.05,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Barco Exemplo Delta",
+     "necessaria": 363.66,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Eco",
+     "necessaria": 340.46,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Pescados Exemplo Ltda (fictícia)",
+     "necessaria": 432.43,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Bravo",
+     "necessaria": 350.91,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros",
+     "necessaria": 201.69,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Barco Exemplo Delta",
+     "necessaria": 367.72,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias / Barco Exemplo Eco",
+     "necessaria": 330.29,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves",
+     "necessaria": 209.94,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Bravo",
+     "necessaria": 353.75,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Barco Exemplo Charlie",
+     "necessaria": 370.65,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Delta",
+     "necessaria": 348.22,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros / Comercio Exemplo Do Mar (fictícia)",
+     "necessaria": 445.77,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Barco Exemplo Alfa",
+     "necessaria": 358.35,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153,
+      153
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias",
+     "necessaria": 187.18,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113,
+      113
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Barco Exemplo Charlie",
+     "necessaria": 374.82,
+     "scrollW": 460,
+     "clientW": 460,
+     "w": 460,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    }
+   ],
+   "larguras": [
+    93.84,
+    204.63,
+    143.88,
+    460,
+    112.77,
+    113.13,
+    163.41,
+    159.8
+   ],
+   "tabela": {
+    "scrollW": 1451,
+    "clientW": 1096,
+    "tabelaW": 1451,
+    "transborda": true,
+    "docTransborda": true
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "Concluídos",
+   "meus": null,
+   "por": "10",
+   "pagina": 1,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Delta",
+     "necessaria": 351.07,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      93,
+      93,
+      93,
+      93,
+      93,
+      93,
+      93,
+      93
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes",
+     "necessaria": 205.75,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Alfa",
+     "necessaria": 338.85,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros / Barco Exemplo Bravo",
+     "necessaria": 358.11,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Barco Exemplo Charlie",
+     "necessaria": 378.88,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias / Pescados Exemplo Ltda (fictícia)",
+     "necessaria": 413.83,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Barco Exemplo Eco",
+     "necessaria": 353.05,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias",
+     "necessaria": 197.33,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Barco Exemplo Bravo",
+     "necessaria": 362.18,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Charlie",
+     "necessaria": 359.38,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94
+     ]
+    }
+   ],
+   "larguras": [
+    135.13,
+    204.45,
+    143.88,
+    413.83,
+    105.61,
+    113.13,
+    133.83,
+    120
+   ],
+   "tabela": {
+    "scrollW": 1370,
+    "clientW": 1096,
+    "tabelaW": 1370,
+    "transborda": true,
+    "docTransborda": true
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "Concluídos",
+   "meus": null,
+   "por": "10",
+   "pagina": 2,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo Barros",
+     "necessaria": 201.69,
+     "scrollW": 366,
+     "clientW": 366,
+     "w": 366.34,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Barco Exemplo Eco",
+     "necessaria": 357.11,
+     "scrollW": 366,
+     "clientW": 366,
+     "w": 366.34,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias / Barco Exemplo Alfa",
+     "necessaria": 331.52,
+     "scrollW": 366,
+     "clientW": 366,
+     "w": 366.34,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Barco Exemplo Bravo",
+     "necessaria": 366.35,
+     "scrollW": 366,
+     "clientW": 366,
+     "w": 366.34,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    }
+   ],
+   "larguras": [
+    131.41,
+    203.41,
+    130.09,
+    366.34,
+    105.61,
+    113.13,
+    133.83,
+    120
+   ],
+   "tabela": {
+    "scrollW": 1304,
+    "clientW": 1096,
+    "tabelaW": 1304,
+    "transborda": true,
+    "docTransborda": true
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "Concluídos",
+   "meus": null,
+   "por": "25",
+   "pagina": 1,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Delta",
+     "necessaria": 351.07,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      93,
+      93,
+      93,
+      93,
+      93,
+      93,
+      93,
+      93
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes",
+     "necessaria": 205.75,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Alfa",
+     "necessaria": 338.85,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros / Barco Exemplo Bravo",
+     "necessaria": 358.11,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Barco Exemplo Charlie",
+     "necessaria": 378.88,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias / Pescados Exemplo Ltda (fictícia)",
+     "necessaria": 413.83,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Barco Exemplo Eco",
+     "necessaria": 353.05,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias",
+     "necessaria": 197.33,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Barco Exemplo Bravo",
+     "necessaria": 362.18,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Charlie",
+     "necessaria": 359.38,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros",
+     "necessaria": 201.69,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Barco Exemplo Eco",
+     "necessaria": 357.11,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias / Barco Exemplo Alfa",
+     "necessaria": 331.52,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Barco Exemplo Bravo",
+     "necessaria": 366.35,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    }
+   ],
+   "larguras": [
+    135.13,
+    204.45,
+    143.88,
+    413.83,
+    105.61,
+    113.13,
+    133.83,
+    120
+   ],
+   "tabela": {
+    "scrollW": 1370,
+    "clientW": 1096,
+    "tabelaW": 1370,
+    "transborda": true,
+    "docTransborda": true
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  },
+  {
+   "aba": "Concluídos",
+   "meus": null,
+   "por": "50",
+   "pagina": 1,
+   "linhas": [
+    {
+     "texto": "Pessoa Exemplo Farias / Barco Exemplo Delta",
+     "necessaria": 351.07,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      93,
+      93,
+      93,
+      93,
+      93,
+      93,
+      93,
+      93
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes",
+     "necessaria": 205.75,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Alfa",
+     "necessaria": 338.85,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros / Barco Exemplo Bravo",
+     "necessaria": 358.11,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Barco Exemplo Charlie",
+     "necessaria": 378.88,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias / Pescados Exemplo Ltda (fictícia)",
+     "necessaria": 413.83,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Barco Exemplo Eco",
+     "necessaria": 353.05,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Farias",
+     "necessaria": 197.33,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Gomes / Barco Exemplo Bravo",
+     "necessaria": 362.18,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Alves / Barco Exemplo Charlie",
+     "necessaria": 359.38,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Barros",
+     "necessaria": 201.69,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Cardoso / Barco Exemplo Eco",
+     "necessaria": 357.11,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Dias / Barco Exemplo Alfa",
+     "necessaria": 331.52,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94,
+      94
+     ]
+    },
+    {
+     "texto": "Pessoa Exemplo Esteves / Barco Exemplo Bravo",
+     "necessaria": 366.35,
+     "scrollW": 414,
+     "clientW": 414,
+     "w": 413.83,
+     "cortada": false,
+     "boxSizing": "border-box",
+     "title": null,
+     "textOverflow": "clip",
+     "alturas": [
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114,
+      114
+     ]
+    }
+   ],
+   "larguras": [
+    135.13,
+    204.45,
+    143.88,
+    413.83,
+    105.61,
+    113.13,
+    133.83,
+    120
+   ],
+   "tabela": {
+    "scrollW": 1370,
+    "clientW": 1096,
+    "tabelaW": 1370,
+    "transborda": true,
+    "docTransborda": true
+   },
+   "eventos": {
+    "externas": [],
+    "erros": [],
+    "falhas": []
+   }
+  }
+ ]
+}

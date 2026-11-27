@@ -1,0 +1,428 @@
+{
+ "_meta": {
+  "data": "2026-11-27",
+  "regra": "cabeçalho de tela-f3/conferir-construcao.mjs; sem oráculo, sem axe, sem detector",
+  "referencia": {
+   "arquivo": "ground-truth-processos-f3.json",
+   "sha256": "c8d1a84effc8312a36e1c67eec7ae45b4a220b44338040fa7ba0f6cf6e01e861",
+   "status": "rascunho"
+  },
+  "builds": {
+   "semeado": ".tmp-eval/corpus-tela-f3/public/pnip-f3 (= .tmp-eval/pnip-f3-semeada, lista 30b16f0d…; govbr-corpus tela-f3 9d194d7)",
+   "semSemente": ".tmp-eval/pnip-f3-sem-semente (lista 9d117870…)"
+  },
+  "contagens": {
+   "semeadas": 12,
+   "pegam": 12,
+   "problemasNoSemeado": 0,
+   "problemasInesperadosNoSemSemente": 0,
+   "naturaisComEvidenciaIgual": 13,
+   "naturais": 13,
+   "paresDaDComEvidenciaIgual": 10,
+   "paresDaD": 12,
+   "paresDiferentesNosConformes": 0,
+   "arvoresIguais": 10,
+   "arvores": 10
+  }
+ },
+ "semeadas": [
+  {
+   "spec": "F3-01",
+   "mudanca": "M-01",
+   "estado": "sempre",
+   "construtor": "passou",
+   "sonda": {
+    "semeado": true,
+    "semSemente": false,
+    "separa": true
+   },
+   "semeada": "âncora resolve, sem predicado",
+   "semSemente": "âncora resolve, sem predicado",
+   "pega": true,
+   "como": "sem predicado na referência: predicado próprio da sonda (tela-f3/sonda.mts › PEGA) nos dois builds"
+  },
+  {
+   "spec": "F3-02",
+   "mudanca": "M-02",
+   "estado": "inicial",
+   "construtor": "passou",
+   "sonda": {
+    "semeado": true,
+    "semSemente": false,
+    "separa": true
+   },
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds + predicado próprio da sonda"
+  },
+  {
+   "spec": "F3-03",
+   "mudanca": "M-03",
+   "estado": "filtro-removido",
+   "construtor": "passou",
+   "sonda": {
+    "semeado": true,
+    "semSemente": false,
+    "separa": true
+   },
+   "semeada": "âncora resolve, sem predicado",
+   "semSemente": "âncora não casa com nenhum elemento da página: pnip-multiple-search-table-utils div.row.pl-2:not(.align-items-center) span.br-tag.interaction",
+   "pega": true,
+   "como": "sem predicado na referência: predicado próprio da sonda (tela-f3/sonda.mts › PEGA) nos dois builds"
+  },
+  {
+   "spec": "F3-04",
+   "mudanca": "M-04",
+   "estado": "inicial",
+   "construtor": "passou",
+   "sonda": {
+    "semeado": true,
+    "semSemente": false,
+    "separa": true
+   },
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds + predicado próprio da sonda"
+  },
+  {
+   "spec": "F3-05",
+   "mudanca": "M-05",
+   "estado": "inicial",
+   "construtor": "passou",
+   "sonda": {
+    "semeado": true,
+    "semSemente": false,
+    "separa": true
+   },
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds + predicado próprio da sonda"
+  },
+  {
+   "spec": "F3-06",
+   "mudanca": "M-06",
+   "estado": "inicial",
+   "construtor": "passou",
+   "sonda": {
+    "semeado": true,
+    "semSemente": false,
+    "separa": true
+   },
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds + predicado próprio da sonda"
+  },
+  {
+   "spec": "F3-07",
+   "mudanca": "M-07",
+   "estado": "inicial",
+   "construtor": "passou",
+   "sonda": {
+    "semeado": true,
+    "semSemente": false,
+    "separa": true
+   },
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds + predicado próprio da sonda"
+  },
+  {
+   "spec": "F3-08",
+   "mudanca": "M-08",
+   "estado": "inicial",
+   "construtor": "passou",
+   "sonda": {
+    "semeado": true,
+    "semSemente": false,
+    "separa": true
+   },
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds + predicado próprio da sonda"
+  },
+  {
+   "spec": "F3-09",
+   "mudanca": "M-09",
+   "estado": "exibir-25",
+   "construtor": "passou",
+   "sonda": {
+    "semeado": true,
+    "semSemente": false,
+    "separa": true
+   },
+   "semeada": "âncora resolve, sem predicado",
+   "semSemente": "âncora resolve, sem predicado",
+   "pega": true,
+   "como": "sem predicado na referência: predicado próprio da sonda (tela-f3/sonda.mts › PEGA) nos dois builds"
+  },
+  {
+   "spec": "F3-10",
+   "mudanca": "M-10",
+   "estado": "inicial",
+   "construtor": "passou",
+   "sonda": {
+    "semeado": true,
+    "semSemente": false,
+    "separa": true
+   },
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds + predicado próprio da sonda"
+  },
+  {
+   "spec": "F3-11",
+   "mudanca": "M-11",
+   "estado": "inicial",
+   "construtor": "passou",
+   "sonda": {
+    "semeado": true,
+    "semSemente": false,
+    "separa": true
+   },
+   "semeada": "sustenta",
+   "semSemente": "refuta",
+   "pega": true,
+   "como": "predicado da referência (check-reference) nos dois builds + predicado próprio da sonda"
+  },
+  {
+   "spec": "F3-12",
+   "mudanca": "M-12",
+   "estado": "assinatura-cancelada",
+   "construtor": "passou",
+   "sonda": {
+    "semeado": true,
+    "semSemente": false,
+    "separa": true
+   },
+   "semeada": "âncora resolve, sem predicado",
+   "semSemente": "âncora resolve, sem predicado",
+   "pega": true,
+   "como": "sem predicado na referência: predicado próprio da sonda (tela-f3/sonda.mts › PEGA) nos dois builds"
+  }
+ ],
+ "problemasNoSemSemente": [
+  {
+   "spec": "F3-03",
+   "problema": "âncora não casa com nenhum elemento da página: pnip-multiple-search-table-utils div.row.pl-2:not(.align-items-center) span.br-tag.interaction"
+  },
+  {
+   "spec": "F3-02",
+   "problema": "predicado refuta — mesmo desfecho (refuta) em inicial, lista-exibir: a página desmente a spec em 1 de 1 participante(s): body>pnip-root>pnip-header>div>div>butt"
+  },
+  {
+   "spec": "F3-04",
+   "problema": "predicado refuta — mesmo desfecho (refuta) em inicial, lista-exibir: a página desmente a spec em 9 de 9 participante(s): body>pnip-root>main>pnip-mpa>pnip-mpa-p"
+  },
+  {
+   "spec": "F3-05",
+   "problema": "predicado refuta — mesmo desfecho (refuta) em inicial, lista-exibir: a página desmente a spec em 1 de 1 participante(s): body>pnip-root>main>pnip-mpa>pnip-mpa-p"
+  },
+  {
+   "spec": "F3-06",
+   "problema": "predicado refuta — mesmo desfecho (refuta) em inicial, lista-exibir: a página desmente a spec em 1 de 1 participante(s): body>pnip-root>main>pnip-mpa>pnip-mpa-p"
+  },
+  {
+   "spec": "F3-07",
+   "problema": "predicado refuta — mesmo desfecho (refuta) em inicial, lista-exibir: a página desmente a spec em 1 de 1 participante(s): body>pnip-root>main>pnip-mpa>pnip-mpa-p"
+  },
+  {
+   "spec": "F3-08",
+   "problema": "predicado refuta — mesmo desfecho (refuta) em inicial, lista-exibir: a página desmente a spec em 3 de 3 participante(s): body>pnip-root>main>pnip-mpa>pnip-mpa-p"
+  },
+  {
+   "spec": "F3-10",
+   "problema": "predicado refuta — mesmo desfecho (refuta) em inicial, lista-exibir: a página desmente a spec em 8 de 8 participante(s): body>pnip-root>main>pnip-mpa>pnip-mpa-p"
+  },
+  {
+   "spec": "F3-11",
+   "problema": "predicado refuta — mesmo desfecho (refuta) em inicial, lista-exibir: a página desmente a spec em 1 de 1 participante(s): body>pnip-root>main>pnip-mpa>pnip-mpa-p"
+  }
+ ],
+ "naturais": [
+  {
+   "spec": "D-01",
+   "igual": true
+  },
+  {
+   "spec": "D-02",
+   "igual": true
+  },
+  {
+   "spec": "D-03",
+   "igual": true
+  },
+  {
+   "spec": "D-04",
+   "igual": true
+  },
+  {
+   "spec": "D-05",
+   "igual": true
+  },
+  {
+   "spec": "D-06",
+   "igual": true
+  },
+  {
+   "spec": "D-07",
+   "igual": true
+  },
+  {
+   "spec": "D-08",
+   "igual": true
+  },
+  {
+   "spec": "D-10",
+   "igual": true
+  },
+  {
+   "spec": "D-11",
+   "igual": true
+  },
+  {
+   "spec": "D-12",
+   "igual": true
+  },
+  {
+   "spec": "D-13",
+   "igual": true
+  },
+  {
+   "spec": "D-14",
+   "igual": true
+  }
+ ],
+ "paresDaD": [
+  {
+   "par": "K-01",
+   "nome": "breadcrumb-tab",
+   "igual": false,
+   "nosConformesDaF3": false
+  },
+  {
+   "par": "K-02",
+   "nome": "breadcrumb-li",
+   "igual": true,
+   "nosConformesDaF3": false
+  },
+  {
+   "par": "K-03",
+   "nome": "titulo-contraste",
+   "igual": true,
+   "nosConformesDaF3": true
+  },
+  {
+   "par": "K-04",
+   "nome": "exportar-foco",
+   "igual": true,
+   "nosConformesDaF3": true
+  },
+  {
+   "par": "K-05",
+   "nome": "abas-teclado",
+   "igual": true,
+   "nosConformesDaF3": false
+  },
+  {
+   "par": "K-06",
+   "nome": "th-contraste",
+   "igual": true,
+   "nosConformesDaF3": true
+  },
+  {
+   "par": "K-07",
+   "nome": "assinar-rotulo",
+   "igual": true,
+   "nosConformesDaF3": true
+  },
+  {
+   "par": "K-08",
+   "nome": "status-contraste",
+   "igual": true,
+   "nosConformesDaF3": true
+  },
+  {
+   "par": "K-09",
+   "nome": "divisor",
+   "igual": true,
+   "nosConformesDaF3": true
+  },
+  {
+   "par": "K-10",
+   "nome": "radio-rotulo",
+   "igual": true,
+   "nosConformesDaF3": true
+  },
+  {
+   "par": "K-11",
+   "nome": "item-superficie",
+   "igual": false,
+   "nosConformesDaF3": false
+  },
+  {
+   "par": "K-12",
+   "nome": "item-padding",
+   "igual": true,
+   "nosConformesDaF3": true
+  }
+ ],
+ "arvores": [
+  {
+   "build": "semeado",
+   "parada": "lista-exibir",
+   "resultado": "igual"
+  },
+  {
+   "build": "semeado",
+   "parada": "assinatura-cancelada",
+   "resultado": "igual"
+  },
+  {
+   "build": "semeado",
+   "parada": "pagina-2",
+   "resultado": "igual"
+  },
+  {
+   "build": "semeado",
+   "parada": "exibir-25",
+   "resultado": "igual"
+  },
+  {
+   "build": "semeado",
+   "parada": "filtro-removido",
+   "resultado": "igual"
+  },
+  {
+   "build": "semSemente",
+   "parada": "lista-exibir",
+   "resultado": "igual"
+  },
+  {
+   "build": "semSemente",
+   "parada": "assinatura-cancelada",
+   "resultado": "igual"
+  },
+  {
+   "build": "semSemente",
+   "parada": "pagina-2",
+   "resultado": "igual"
+  },
+  {
+   "build": "semSemente",
+   "parada": "exibir-25",
+   "resultado": "igual"
+  },
+  {
+   "build": "semSemente",
+   "parada": "filtro-removido",
+   "resultado": "igual"
+  }
+ ]
+}
