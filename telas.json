@@ -228,7 +228,7 @@
   "processos-f3": {
     "titulo": "tela F3 — processos do portal MPA do PNIP com defeitos do DS semeados escolhidos pela autora (cópia da rota da tela D na ala pnip-f3; terceiro estudo de seguimento do NAT-78, adendo 3 de 27/11)",
     "entry": "pnip-f3/portal-mpa/processos?mock-perfil=mpa",
-    "reference": null,
+    "reference": "ground-truth-processos-f3.json",
     "sources": [],
     "runs": {
       "com": "results/runs-processos-f3",
@@ -236,7 +236,9 @@
       "smoke": "results/runs-processos-f3-smoke"
     },
     "review": "results/semantic-review-processos-f3",
-    "nota": "Tela F3 (adendo 3 de 27/11 ao protocolo NAT-78: terceiro estudo de seguimento, fora da família de Holm da D e da E; vale o adendo 2 com a errata 1 onde o adendo 3 não muda nada), ainda SEM referência (reference: null; a ground-truth-processos-f3.json 1.0.0 entra num commit pequeno junto com estratos e criteriosDeJulgamento). Cópia da rota da tela D com os 12 defeitos do DS da lista da autora injetados no fonte do pnip-mock (ramo tela-f3, 088a086) e build congelado byte a byte na ala própria govbr-corpus/public/pnip-f3/ (base href /pnip-f3/), para não mudar um byte das telas B, C, D, F e F2. O `?mock-perfil=mpa` escolhe a mesma sessão fictícia de coordenadora da tela D, e o próprio app o retira da barra de endereço. Regra de reserva (adendo da F §3, mantida nos adendos 2 e 3): o oráculo não roda nesta tela antes do congelamento da referência; a F3 não tem portão de teto do sem (adendo 3 §5.3). Não é entrada Vite: sources vazio. Preparação e gabarito em tela-f3/ (fora do checkout esparso da coleta).",
+    "criteriosDeJulgamento": { "arquivo": "tela-f3/criterios-de-julgamento.json", "sha256": "7c5fa91c5b65519fa2d56949a16dea6368b423cb3711560124196d3fedf0e3d1" },
+    "estratos": { "arquivo": "tela-f3/estratos-1.0.0.json", "sha256": "ad48fb747aecc897f20985bda0a6994f36d00bf992f9e02441d6353e08806f54" },
+    "nota": "Tela F3 (adendo 3 de 27/11 ao protocolo NAT-78, congelado em thesis 8d7d0b1 com errata 1: terceiro estudo de seguimento, fora da família de Holm da D e da E), referência ground-truth-processos-f3.json 1.0.0 congelada em 2026-11-27 (eval tela-f3 1209423, selo 819c0b8, aqui byte a byte; sha256 14baee19…bfbd7b0): 25 specs (12 semeadas da lista da autora, 13 naturais herdadas da D, 4 expostas), 69 unidades, 6 paradas em 9 segmentos (5 com parada); estratos (formato tela-f3-estratos-1.0.0) e critérios de julgamento declarados abaixo pelo sha256. Cópia da rota da tela D com os defeitos injetados no fonte do pnip-mock (tela-f3 088a086) e build congelado byte a byte na ala própria govbr-corpus/public/pnip-f3/ (base href /pnip-f3/; manifesto public/pnip-f3/manifesto.json, corpus tela-f3 9d194d7), para não mudar um byte das telas B, C, D, F e F2. O `?mock-perfil=mpa` escolhe a mesma sessão fictícia de coordenadora da tela D, e o próprio app o retira da barra de endereço. Sem portão de teto do sem (adendo 3 §5.3): o oráculo pode rodar nesta tela desde o congelamento da referência. Não é entrada Vite: sources vazio. Preparação e gabarito em tela-f3/ (fora do checkout esparso da coleta).",
     "isolamento": {
       "texto": "Processos",
       "alvo": "br-tab",
