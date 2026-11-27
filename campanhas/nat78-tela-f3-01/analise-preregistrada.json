@@ -1,6 +1,5 @@
 {
   "formato": "nat78-analise-preregistrada-1.0.0",
-  "estado": "RASCUNHO da bancada F3 (27/11/2026, ramo bancada-f3, rodada 2): todos os hashes conhecidos preenchidos (adendo 3 congelado com a errata 1, referência congelada, estratos, critérios, classes D-156 e NAT-71, conformes, página congelada, inventário do DOM, pacote, lock, texto da tarefa). Ainda não congelado: os dois controles de viabilidade (controlesDeViabilidade) são fatos pendentes; o commit sozinho que o congela vem depois deles e antes do campaign.json da F3.",
   "campanha": "nat78-tela-f3-01",
   "item": "Adendo 3 ao protocolo NAT-78 de 27/11/2026 (tela F3, composição revista pela autora; congelado em thesis 8d7d0b1, errata 1 em b7f83c6) §2, §5, §6, §7, sobre o adendo 2 (que vale, com a errata 1, onde o adendo 3 não muda nada), o adendo da F e o protocolo congelado de 16/11 (CONG-15, thesis a46ab3f): análise da tela F3 configurada ANTES da coleta, na forma da da tela F2 (campanhas/nat78-tela-f2-01/analise-preregistrada.json). Só dados: nomes de conjunto, políticas, colunas, comandos, regras de leitura e as contagens que o adendo 3 §3 declara; nenhuma descrição, âncora, regra nem id de spec da referência. Commitado sozinho, antes do campaign.json da F3, que cita o sha256 deste arquivo em analysisPlan.",
   "seguimento": {
@@ -331,14 +330,6 @@
   ],
   "pendentes": [
     {
-      "item": "controles de viabilidade (controlesDeViabilidade): controle 1 (cobertura), controle 2 (teto do ferramentas); o portão do sem não roda",
-      "estado": "fatos pendentes; nesta ordem; qualquer falha encerra a F3 antes da coleta"
-    },
-    {
-      "item": "test:isolation --tela processos-f3 no corpus novo, dublê dos três braços (ensaio-trio-f3-01) pelo GitHub e portão de vazamento por reexecução",
-      "estado": "antes da cadeia de congelamento"
-    },
-    {
       "item": "D_fc^F3 na 1.2.0 pura",
       "estado": "o mesmo limite da D, da E, da F e da F2; não bloqueia a coleta"
     }
@@ -365,30 +356,119 @@
     "outros": "coluna fundamentada ao lado da detecção; sensibilidade com todas as specs (sensibilidades › todas)"
   },
   "controlesDeViabilidade": {
-    "nota": "fatos a registrar ANTES do congelamento desta análise, nesta ordem; os dois dão decisão binária sobre a composição inteira (adendo 3 §5); não há recomposição (a lista não tem reserva); o braço com não roda em nenhum piloto e a diferença primária nunca é olhada antes da coleta",
+    "nota": "fatos registrados ANTES do congelamento desta análise, nesta ordem; os dois dão decisão binária sobre a composição inteira (adendo 3 §5); não há recomposição (a lista não tem reserva); o braço com não rodou em nenhum piloto com modelo e a diferença primária não foi olhada antes da coleta. Os dois passaram",
     "portaoDeTetoDoSem": {
       "roda": false,
       "decisao": "NÃO RODA (adendo 3 §5.3): decisão da autora de 27/11, com o mesmo parecer do Codex e da sessão principal. O sem não entra no primário, e o adendo 2 §5 já dizia que o teto que importa é o do ferramentas. Sem esse portão, D_sc^F3 é publicado sem controle de teto, com essa ressalva (comparacoesSecundarias). Nenhuma campanha portao-teto-f3-* existe"
     },
     "controle1Cobertura": {
-      "regra": "adendo 3 §5.1 (como o controle 1 da errata 1 do adendo 2, sem modelo): com a referência congelada, lê-se quantos semeados a varredura sem guia do oráculo marca; a F3 segue se pelo menos um for marcado e pelo menos um não for. Como a lista é aberta, lê-se também quais; em particular, quantos dos três controles foram marcados. Controle não marcado continua na lista como semeado comum e é contado assim. Correspondência achado × spec feita à mão por um agente que não participa de mais nada, de forma conservadora (mesmo elemento ou raiz da página, mesma regra ou propriedade); o diagnóstico guiado e o axe continuam fechados até o fechamento da coleta",
-      "campanha": "a linha de base do 1º disparo (o sem) da ensaio-trio-f3-01, etapas coleta+linha-de-base (sem modelo: o dublê não muda o que a linha de base mede). Não a da nat78-tela-f3-01: a dela (emenda (a)) só existe depois do campaign.json final, que cita esta análise, que precisa deste fato antes",
-      "estado": "PENDENTE",
-      "veredito": "PENDENTE",
+      "regra": "adendo 3 §5.1 (como o controle 1 da errata 1 do adendo 2, sem modelo): com a referência congelada, lê-se quantos semeados a varredura sem guia do oráculo marca; a F3 segue se pelo menos um for marcado e pelo menos um não for. Como a lista é aberta, lê-se também quais; em particular, quantos dos três controles foram marcados. A marca de controle é dada pela intenção e fica congelada no arquivo de estratos antes desta leitura: um controle que a varredura não marcar continua na lista, continua marcado como controle e continua fora da sensibilidade da §6. Correspondência achado × spec feita à mão por um agente que não participa de mais nada, de forma conservadora (mesmo elemento ou raiz da página, mesma regra ou propriedade); o diagnóstico guiado e o axe continuam fechados até o fechamento da coleta",
+      "campanha": "a linha de base do 1º disparo (o sem) da ensaio-trio-f3-01, etapas coleta+linha-de-base, sem modelo: lb-20261127-054614-processos-f3-e114e6",
+      "estado": "PASSOU",
+      "veredito": "passa: 3 de 12 semeadas marcadas (≥ 1 e < 12)",
       "contagem": {
-        "semeadasMarcadas": "PENDENTE",
-        "controlesMarcados": "PENDENTE",
-        "porTipo": "PENDENTE",
-        "quais": "PENDENTE"
+        "semeadasMarcadas": 3,
+        "controlesMarcados": 3,
+        "porTipo": {
+          "T1": {
+            "marcadas": 1,
+            "de": 3
+          },
+          "T2": {
+            "marcadas": 2,
+            "de": 2
+          },
+          "T3": {
+            "marcadas": 0,
+            "de": 1
+          },
+          "T4": {
+            "marcadas": 0,
+            "de": 5
+          },
+          "R": {
+            "marcadas": 0,
+            "de": 1
+          }
+        },
+        "quais": [
+          "F3-05",
+          "F3-06",
+          "F3-07"
+        ]
+      },
+      "ressalva": "a F3-07 conta por \"mesma propriedade\", não por \"mesma regra\" (o id da regra do achado não é nenhum dos dois da spec); uma leitura mais conservadora daria 2 de 12, e a condição continuaria cumprida",
+      "arquivos": {
+        "resultadoMd": "analises/controle-cobertura-f3/resultado.md",
+        "resultadoMdSha256": "58defc8a06f3b9c0a7ca9d18a957d5fdb75509b6aa96504d0ce451b3085330c2",
+        "resultadoJson": "analises/controle-cobertura-f3/resultado.json",
+        "resultadoJsonSha256": "1a709b681ece4c247013401c161daf71e54c4ae6e9b84db3055a5f5866735f49",
+        "repositorio": "govbr-resultados",
+        "commit": "e8fca358a65aba6998ed6db51e8ea8521ee2cbd5",
+        "entradas": {
+          "bruta": "e114e6325eee0089014e6cf57a79eec27e27994e77b90afab0dbbbfbb2da1848",
+          "baseline": "cc2121feade570e6b18ac275a71038768859fc849c178db270def21e81f1ed01",
+          "referencia": "14baee19d40b8818e9d44d2b00b6636b94fbaee5d79cefddedc97307ebfbd7b0",
+          "estratos": "ad48fb747aecc897f20985bda0a6994f36d00bf992f9e02441d6353e08806f54"
+        }
       }
     },
     "controle2TetoDoFerramentas": {
-      "regra": "adendo 3 §5.2 (o controle 2 da errata 1 do adendo 2): 3 execuções só do ferramentas, fora da amostra, julgadas como no portão do sem da F2 (primeira passada cega; pendente conta como confirmado); a F3 segue se a mediana for no máximo n − 2 (n = 12: ≤ 10)",
+      "regra": "adendo 3 §5.2 (o controle 2 da errata 1 do adendo 2): 3 execuções só do ferramentas, fora da amostra, com primeira passada cega e cartão pendente contado como confirmado; a F3 segue se a mediana for no máximo n − 2 (10 de 12)",
       "campanha": "portao-ferramentas-f3-01 (ensaio antes: ensaio-portao-ferramentas-f3-01)",
       "comando": "npm run portao:teto -- --passada <passada> --saida <pasta nova> --braco ferramentas --limiar n-menos-2",
-      "estado": "PENDENTE",
-      "veredito": "PENDENTE",
-      "portaoTetoMdSha256": "PENDENTE"
+      "estado": "PASSOU",
+      "veredito": "passa: mediana com os pendentes 2 de 12, limiar 10 (n − 2)",
+      "execucoes": [
+        {
+          "analise": "p01/analisar-20261127T1",
+          "runId": "20261127-061622-processos-f3-ferramentas-ea42",
+          "confirmadas": 0,
+          "maximo": 4
+        },
+        {
+          "analise": "p02/analisar-20261127T1",
+          "runId": "20261127-063732-processos-f3-ferramentas-cf1b",
+          "confirmadas": 0,
+          "maximo": 2
+        },
+        {
+          "analise": "p03/analisar-20261127T1",
+          "runId": "20261127-065713-processos-f3-ferramentas-298d",
+          "confirmadas": 0,
+          "maximo": 1
+        }
+      ],
+      "disparos": [
+        "45950581611",
+        "45952812510",
+        "45954956355"
+      ],
+      "porExecucao": {
+        "confirmadas": [
+          0,
+          0,
+          0
+        ],
+        "comOsPendentes": [
+          4,
+          2,
+          1
+        ]
+      },
+      "mediana": 0,
+      "medianaComOsPendentes": 2,
+      "n": 12,
+      "limiar": 10,
+      "arquivos": {
+        "portaoTetoMd": "analises/portao-ferramentas-f3-01/portao-20261127T1/portao-teto.md",
+        "portaoTetoMdSha256": "5ae42424791561bac35d810d2b543b3578a3df1f4d7534488ef907066ebd6c32",
+        "portaoTetoJson": "analises/portao-ferramentas-f3-01/portao-20261127T1/portao-teto.json",
+        "portaoTetoJsonSha256": "c61ac3a3d8d44f85ee8604d3d1c4e292657487fe709d8d6f51c4d5d363d84f8a",
+        "lacrado": "analises/portao-ferramentas-f3-01/portao-20261127T1/portao-teto-por-spec.json (não lido até o fim da coleta)",
+        "repositorio": "govbr-resultados",
+        "commit": "ac72098cefb42f933924d5aa648fcb1838a18904"
+      }
     }
   }
 }
