@@ -119,6 +119,11 @@ site congelado desde `export-telas-1.7.0`. Escopo e rótulo iguais aos da D ("Pr
 govbr-telas novo (com a ala `pnip-f2/` semeada) e o lock refeito só na imagem `screens` (commit próprio). `tela-f2/` fica
 fora do checkout esparso da coleta.
 
+**Tela F3 (`tela = processos-f3`, adendo 3 de 27/11 ao NAT-78; ramo `bancada-f3`).** Mesmo caminho da F2: quinta SPA do
+site congelado desde `export-telas-1.8.0`. Escopo e rótulo iguais aos da D ("Processos"), janela 1280×900. Exige pacote
+govbr-telas novo (com a ala `pnip-f3/` semeada) e o lock refeito só na imagem `screens` (commit próprio). `tela-f3/` fica
+fora do checkout esparso da coleta.
+
 **Trio (NAT-61, `braco = ferramentas`).** O terceiro braço usa o mesmo contêiner do oráculo do `com`, no
 perfil `knowledge-free` (validator ≥ 2.14.0); o checkout e a compilação do validator rodam em `com` e em
 `ferramentas`. Ensaio de trio sem campanha commitada: use um id de campanha com o segmento `trio`
