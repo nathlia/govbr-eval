@@ -17,9 +17,9 @@ import { join, resolve } from "node:path";
 import { desfechoDaAutora, desfechoDaPassada, lerTextoDaAutora, ratifica, type RespostaAutora } from "./autora-respostas";
 import { RESULTADOS, lerJson, sha } from "./comum";
 import { VALIDADOR_PADRAO, prepararCampanha } from "./e14-campanha";
-import { COTAS, estratoDe, executar, gravarArquivos, ordemDoEstrato, prepararMaterial, responder, selecionar, type Candidato } from "./material-autora";
+import { COTAS, efeitosNoD, estratoDe, executar, gravarArquivos, ordemDoEstrato, prepararMaterial, responder, selecionar, type Candidato } from "./material-autora";
 import { lerPasso } from "./material-imagens";
-import { recalcular, type TabelaComparacao } from "./recalculo-campanha";
+import { Entradas, carregarCampanha, contar, creditosDoTrio, julgadosDoTrio, recalcular, type TabelaComparacao } from "./recalculo-campanha";
 import { gravarImutavel } from "./revisao-campanha";
 
 let n = 0, falhas = 0, pulados = 0;
@@ -162,6 +162,37 @@ try {
     assert.ok(ratifica("credita:A-04", "credita:A-04")); assert.ok(!ratifica("credita:A-04", "credita:A-08")); assert.ok(!ratifica("pendente", "pendente"));
   });
 
+  console.log("material da autora: estrato 1 com a regra de cena (--cena-pela-spec; passada real da F3, só leitura)");
+  {
+    const PF3 = join(RESULTADOS, "analises", "nat78-tela-f3-01", "primeira-passada-20261127T1");
+    if (!existsSync(join(PF3, "julgamentos.json"))) { pulados++; console.log("  PULADO regra de cena: passada da F3 ausente"); }
+    else {
+      const carga = carregarCampanha({ passadas: [PF3] }, new Entradas());
+      const comp = carga.comps.find(c => c.role === "primary") ?? carga.comps[0];
+      const [x, y] = comp.arms;
+      await t("[cena-pela-spec] desligada = de antes (opção ausente ≡ {}); ligada: D base = o do creditosDoTrio com a regra, e cartões com segmentos passam a mexer no D (trio p01)", () => {
+        let mudouBase = 0, efeitoSegmentado = 0;
+        for (const a of carga.analises.filter(x => x.coleta.trio === "p01")) {
+          const js = julgadosDoTrio(a, carga.derivadoNa);
+          const sem = efeitosNoD(a, js, carga, comp), com = efeitosNoD(a, js, carga, comp, { cenaPelaSpec: true });
+          assert.deepEqual(efeitosNoD(a, js, carga, comp, {}), sem, a.coleta.trio);
+          const specDe = new Map(a.pkg.units.map(u => [u.id, u.specId]));
+          const cnt = contar(carga.regra, "primario", u => specDe.get(u));
+          const cr = creditosDoTrio(a.pkg, js, { politica: "1.2.0", reviewer: "teste", fonte: "teste", bracos: carga.bracos, cenaPelaSpec: true }).porBraco;
+          assert.equal(com.dBase, cnt(cr[y].confirmadas) - cnt(cr[x].confirmadas), a.coleta.trio);
+          if (com.dBase !== sem.dBase) mudouBase++;
+          const seg = new Set(js.filter(j => a.pkg.cards.find(c => c.id === j.cardId)!.segmentos).map(j => j.id));
+          for (const e of com.efeitos) if (seg.has(e.id) && Math.abs(e.delta) >= 1) { efeitoSegmentado++; assert.ok(Math.abs(sem.efeitos.find(z => z.id === e.id)?.delta ?? 0) < 1, e.id); }
+        }
+        assert.ok(mudouBase > 0, "algum trio muda o D base com a regra");
+        assert.ok(efeitoSegmentado > 0, "algum cartão com segmentos entra no estrato 1 só com a regra");
+      });
+      await t("[cena-pela-spec] CLI: a opção só vale em preparar (responder recusa)", async () => {
+        assert.equal(await silencioso(() => executar(["responder", "--cena-pela-spec", "--material", join(tmp, "m"), "--texto", join(tmp, "t.txt"), "--saida", join(tmp, "z")])), 1);
+      });
+    }
+  }
+
   console.log("material da autora: ensaio (fora da amostra, só leitura; saídas em pasta temporária)");
   const T = join(RESULTADOS, "analises", "ensaio-trio-real-01", "trio-01");
   const ADJ = join(T, "revisao-20261019T7", "adjudicada-20261020T1"), T5 = join(T, "primeira-passada-20261019T5"), ORIG = join(T, "origem-20261020T2");
@@ -248,6 +279,13 @@ try {
       for (const c of l5) assert.equal(reg.get(c.id), JSON.stringify(c), c.id);
       const m2 = await prepararMaterial({ passadas: [ADJ], origens: [ORIG], ...base });
       assert.deepEqual(m2.arquivos, m.arquivos);
+      // [cena-pela-spec] tela sem segmentos: a regra não muda a seleção nem o que a autora lê; só marca selecao/manifesto.
+      const m3 = await prepararMaterial({ passadas: [ADJ], origens: [ORIG], ...base, cenaPelaSpec: true });
+      const sel3 = m3.selecao as typeof sel & { cenaPelaSpec?: { regra: string } };
+      assert.equal(sel3.cenaPelaSpec?.regra, "cena-pela-spec-1.0.0");
+      assert.deepEqual(sel3.paraAutora, sel.paraAutora);
+      for (const r of ["autora/casos.md", "autora/LEIAME.md", "cegueira.json"]) assert.equal(m3.arquivos.find(([q]) => q === r)![1], m.arquivos.find(([q]) => q === r)![1], r);
+      assert.equal((m.selecao as { cenaPelaSpec?: unknown }).cenaPelaSpec, undefined, "sem a opção, nada marcado");
     });
     const SITE = join(RESULTADOS, "sites", "c3846c433f5d3cc6d6a54036aebdf8c39c9899e7f2b083a12bd4843305bb24db");
     if (!existsSync(SITE)) { pulados++; console.log("  PULADO imagens: site congelado ausente"); }

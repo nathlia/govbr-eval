@@ -4,7 +4,7 @@
  * que o recálculo consome no S4' (`recalculo-campanha.ts --ratificacoes`). Sem modelo, sem rede, determinístico.
  *
  *   npm run revisao:material-autora -- preparar --passada P [--passada …] --saida PASTA_NOVA
- *       [--analise DIR …] [--coleta coleta-trio.json …] [--origem PASTA_DA_ORIGEM …] [--teto 10|15] [--site DIR]
+ *       [--analise DIR …] [--coleta coleta-trio.json …] [--origem PASTA_DA_ORIGEM …] [--teto 10|15] [--site DIR] [--cena-pela-spec]
  *     → PASTA_NOVA/autora/{LEIAME.md, casos.md}            (o que a autora lê: cego, casos R-01…)
  *       PASTA_NOVA/chave/chave-autora.json                  (NÃO vai à autora: caso → cartão, braço, estrato, desfecho)
  *       PASTA_NOVA/selecao.{json,json.sha256,md}            (interno: estratos, cotas, repasses, "julgado só por LLM")
@@ -18,7 +18,10 @@
  *   1. o veredito muda o D_fc de um trio em ≥ 1 — medido: para cada cartão vinculado ou creditado (política 1.2.0, origem
  *      medida aplicada), o veredito é invertido (crédito sai; vínculo sem crédito passa a creditar a spec do vínculo) e o
  *      D_fc do trio (ferramentas × com, desfecho primário por spec, D-102) é recalculado pelas funções do recálculo
- *      (`creditosDoTrio` + `contar`); |ΔD_fc| ≥ 1 → estrato 1;
+ *      (`creditosDoTrio` + `contar`); |ΔD_fc| ≥ 1 → estrato 1. Com `--cena-pela-spec` (opcional, padrão desligado), o
+ *      `creditosDoTrio` decide a cena dos cartões com segmentos pela regra `cena-pela-spec-1.0.0` do recálculo (a mesma do
+ *      `recalculo-campanha.ts --cena-pela-spec`); sem ela, todo cartão com segmentos fica pendente e não mexe no D. Sem a
+ *      opção, a saída é byte a byte a de antes;
  *   2. alegação julgada falsa (FP): veredito `false` na 1.2.0 (erro factual ou erro normativo);
  *   3. achado correto novo, fora da referência: violação de origem página/indeterminada sem crédito;
  *   4. origem DS (D-129): `violacao-ds` com a origem medida (sem `--origem`, vazio e dito);
@@ -43,7 +46,7 @@ import { loadSite } from "../measurement-surface";
 import { createRequire } from "node:module";
 import type { CartaoCego, CitacaoPorReferencia, Derivado, ItemChave } from "./e14-comum";
 import {
-  Entradas, RECALCULO_VERSAO, carregarCampanha, contar, creditosDoTrio, julgadosDoTrio, vereditoNaPolitica,
+  DEFINICAO_CENA_PELA_SPEC, Entradas, RECALCULO_VERSAO, REGRA_CENA_PELA_SPEC, carregarCampanha, contar, creditosDoTrio, julgadosDoTrio, vereditoNaPolitica,
   type AnaliseLida, type CargaCampanha, type CartaoJulgado, type Comparacao,
 } from "./recalculo-campanha";
 import { cegueiraArquivos, gravarImutavel, lerArgs, type Passada } from "./revisao-campanha";
@@ -71,13 +74,13 @@ export interface EfeitoDfc { id: string; trio: string; braco: string; inversao: 
  * Para cada cartão vinculado ou creditado do trio, o D da comparação com o veredito invertido. Usa as funções do recálculo
  * (`creditosDoTrio`: decisão do scorer por unidade; `contar`: desfecho primário por spec), nunca uma contagem própria.
  */
-export function efeitosNoD(a: AnaliseLida, julgados: CartaoJulgado[], carga: Pick<CargaCampanha, "regra" | "bracos">, comp: Comparacao): { efeitos: EfeitoDfc[]; dBase: number | null; motivo: string | null } {
+export function efeitosNoD(a: AnaliseLida, julgados: CartaoJulgado[], carga: Pick<CargaCampanha, "regra" | "bracos">, comp: Comparacao, oc: { cenaPelaSpec?: boolean } = {}): { efeitos: EfeitoDfc[]; dBase: number | null; motivo: string | null } {
   const specDe = new Map(a.pkg.units.map(u => [u.id, u.specId]));
   const cnt = contar(carga.regra, "primario", u => specDe.get(u));
   const [x, y] = comp.arms;
   const op = { politica: "1.2.0" as const, reviewer: `${RECALCULO_VERSAO} · ${a.passada.nome} · ${MATERIAL_VERSAO}`, fonte: `${a.passada.nome}/julgamentos.json sha256:${a.passada.julgSha}`, bracos: carga.bracos };
   const dDe = (js: CartaoJulgado[], removidos?: ReadonlySet<string>): number | null => {
-    const cr = creditosDoTrio(a.pkg, js, { ...op, removidos }).porBraco;
+    const cr = creditosDoTrio(a.pkg, js, { ...op, removidos, ...(oc.cenaPelaSpec ? { cenaPelaSpec: true } : {}) }).porBraco;
     return cr[x] && cr[y] ? cnt(cr[y].confirmadas) - cnt(cr[x].confirmadas) : null;
   };
   const dBase = dDe(julgados);
@@ -356,7 +359,9 @@ export function cegueiraDoMaterial(o: { autora: [string, string][]; casos: { cas
 
 // ───────────────────────────────────────────────────────────────── preparar
 
-export interface OpcoesMaterial { passadas: string[]; analises?: string[]; coletas?: string[]; origens?: string[]; teto?: number; site?: string | null; validador?: string }
+export interface OpcoesMaterial { passadas: string[]; analises?: string[]; coletas?: string[]; origens?: string[]; teto?: number; site?: string | null; validador?: string;
+  /** Estrato 1 com a regra de cena do recálculo (cena-pela-spec-1.0.0) para cartões com segmentos. Padrão desligado. */
+  cenaPelaSpec?: boolean }
 export interface Material { arquivos: [string, string | Buffer][]; selecao: Record<string, unknown>; cegueira: { resultado: string; falhas: unknown[] }; resumo: string[];
   /** A mesma conferência de cegueira sobre outros textos da autora (teste de vazamento). */
   conferir: (autora: [string, string][], nomesDeImagens?: string[]) => { resultado: string; falhas: unknown[] } }
@@ -377,7 +382,7 @@ export async function prepararMaterial(o: OpcoesMaterial): Promise<Material> {
   for (const a of carga.analises) {
     const js = julgadosDoTrio(a, carga.derivadoNa);
     for (const j of js) trioDe.set(j.id, a.coleta.trio);
-    const r = efeitosNoD(a, js, carga, comp);
+    const r = efeitosNoD(a, js, carga, comp, o.cenaPelaSpec ? { cenaPelaSpec: true } : {});
     dBase[a.coleta.trio] = r.dBase;
     if (r.motivo) avisos.push(r.motivo);
     for (const e of r.efeitos) efeitos.set(e.id, e);
@@ -463,12 +468,13 @@ export async function prepararMaterial(o: OpcoesMaterial): Promise<Material> {
     teto: teto, cotas: sel.cotas, cotasAlternativas: COTAS, semente: { valor: semente, regra: "ordem no estrato = sha256(semente|material-autora|e<n>|chave); 1º braço da alternância = paridade do 1º hex de sha256(semente|material-autora|inicio|e<n>); ordem dos casos = sha256(semente|material-autora|caso|chave)" },
     regras: {
       precedencia: "um cartão fica só no estrato de menor número em que cabe (1 → 5)",
-      estrato1: `para cada cartão vinculado ou creditado (1.2.0, origem medida aplicada): veredito invertido (crédito sai / vínculo passa a creditar), D da comparação ${comp.id} (${par[1]} − ${par[0]}, desfecho primário por spec) recalculado por creditosDoTrio + contar (recalculo-campanha.ts); |ΔD| ≥ 1`,
+      estrato1: `para cada cartão vinculado ou creditado (1.2.0, origem medida aplicada): veredito invertido (crédito sai / vínculo passa a creditar), D da comparação ${comp.id} (${par[1]} − ${par[0]}, desfecho primário por spec) recalculado por creditosDoTrio + contar (recalculo-campanha.ts); |ΔD| ≥ 1${o.cenaPelaSpec ? `; cartões com segmentos pela regra de cena ${REGRA_CENA_PELA_SPEC}` : ""}`,
       estrato2: "veredito false na 1.2.0 (erro-factual ou erro-normativo)", estrato3: "violacao-pagina ou violacao-origem-indeterminada sem crédito",
       estrato4: "violacao-ds (com a origem medida)", estrato5: "cartão de linha de base (execução lb-*)",
       balanceamento: `alterna ${par.join(" e ")} quando o estrato tem os dois; depois o resto deles; depois os outros braços`,
       repasse: "estratos 2–5 sorteados primeiro; cota não usada (vazio ou poucos cartões) vai ao estrato 1; o que o estrato 1 não usa fica sem uso",
     },
+    ...(o.cenaPelaSpec ? { cenaPelaSpec: { regra: REGRA_CENA_PELA_SPEC, definicao: DEFINICAO_CENA_PELA_SPEC, nota: "opção --cena-pela-spec: só o estrato 1 (efeito no D) muda; o mesmo creditosDoTrio do recalculo-campanha.ts --cena-pela-spec" } } : {}),
     comparacao: { id: comp.id, bracos: par, dBasePorTrio: dBase }, avisos,
     estratos: sel.estratos, semUso: sel.semUso,
     efeitosNoDfc: [...efeitos.values()].sort((a, b) => (a.id < b.id ? -1 : 1)),
@@ -482,6 +488,7 @@ export async function prepararMaterial(o: OpcoesMaterial): Promise<Material> {
   const internos: [string, string][] = [["selecao.json", selTxt], ["selecao.json.sha256", `${sha(selTxt)}  selecao.json\n`], ["selecao.md", selecaoMd(corpoSel)],
     ["chave/chave-autora.json", chaveTxt], ["cegueira.json", cegTxt]];
   const manifesto = { formato: "nat78-material-autora-manifesto-1.0.0", versao: MATERIAL_VERSAO, campanha: carga.camp.campaignId, teto, cotas: sel.cotas,
+    ...(o.cenaPelaSpec ? { cenaPelaSpec: REGRA_CENA_PELA_SPEC } : {}),
     casos: casos.map(c => c.caso), defeitos: tela.defeitos.map(d => d.id), tela: { nome: tela.nome, versao: tela.versao, endereco: tela.endereco },
     respostas: { formato: FORMATO_RESPOSTAS_AUTORA, comando: "npm run revisao:material-autora -- responder --material <esta pasta> --texto <linhas da autora> --saida <pasta nova>" },
     arquivosDaAutora: Object.fromEntries([...autora, ...imagens].map(([r, t]) => [r, sha(t)])),
@@ -492,7 +499,7 @@ export async function prepararMaterial(o: OpcoesMaterial): Promise<Material> {
     chaveSha256: sha(chaveTxt), selecaoSha256: sha(selTxt), cegueira: cegueira.resultado, entradas: E.manifesto() };
   E.conferir(manifesto.entradas);
   const resumo = [
-    `seleção (teto ${teto}, cotas ${sel.cotas.join("/")}, semente ${semente}): ${casos.length} caso(s) para a autora; ${corpoSel.julgadoSoPorLLM.length} ${ROTULO_SO_LLM}`,
+    `seleção (teto ${teto}, cotas ${sel.cotas.join("/")}, semente ${semente}${o.cenaPelaSpec ? `, estrato 1 com a regra de cena ${REGRA_CENA_PELA_SPEC}` : ""}): ${casos.length} caso(s) para a autora; ${corpoSel.julgadoSoPorLLM.length} ${ROTULO_SO_LLM}`,
     ...sel.estratos.map(e => `  estrato ${e.n} (${e.nome}): ${e.candidatos} candidato(s) ${JSON.stringify(e.porBraco)}; cota ${e.cota}${e.n === 1 ? ` + ${e.recebido} recebida = ${e.cotaEfetiva}` : ""}; ${e.selecionados.length} selecionado(s)${e.repassadoAo1 ? `; ${e.repassadoAo1} repassada(s) ao estrato 1` : ""}${e.semUso ? `; ${e.semUso} sem uso` : ""}`),
     ...avisos.map(a => `  aviso: ${a}`), `  cegueira: ${cegueira.resultado}`];
   if (capturas) resumo.push(`  imagens: ${imagens.length} arquivo(s); receita não alcança o estado em: ${[...capturas].filter(([, v]) => !v.alcancou).map(([k]) => k).join(", ") || "nenhum"}`);
@@ -502,9 +509,10 @@ export async function prepararMaterial(o: OpcoesMaterial): Promise<Material> {
 export function selecaoMd(s: Record<string, unknown>): string {
   const x = s as { campanha: string; ensaio: boolean; teto: number; cotas: number[]; semente: { valor: string }; estratos: EstratoSel[]; semUso: number; avisos: string[];
     paraAutora: { caso: string; id: string; braco: string; estrato: number; motivo: string; desfechoPassada: string }[]; julgadoSoPorLLM: { id: string; braco: string; estrato: number | null; motivo: string }[];
-    comparacao: { id: string; dBasePorTrio: Record<string, number | null> } };
+    comparacao: { id: string; dBasePorTrio: Record<string, number | null> }; cenaPelaSpec?: { regra: string } };
   const L = [`# Seleção para a autora (§8.4) — \`${x.campanha}\``, "", "> **Interno: não entregar à autora** (traz braço e estrato).", ""];
   if (x.ensaio) L.push("> ENSAIO fora da amostra: nenhum número daqui é resultado.", "");
+  if (x.cenaPelaSpec) L.push(`Estrato 1 medido com a regra de cena \`${x.cenaPelaSpec.regra}\` (opção --cena-pela-spec): os cartões com segmentos entram no D do trio.`, "");
   L.push(`Teto ${x.teto}, cotas ${x.cotas.join("/")}; semente \`${x.semente.valor}\`; D base por trio (${x.comparacao.id}): ${Object.entries(x.comparacao.dBasePorTrio).map(([t, d]) => `${t} ${d ?? "—"}`).join(", ")}.`, "",
     "| estrato | candidatos (por braço) | cota | recebida | selecionados | repassada ao 1 | sem uso |", "|---|---|---|---|---|---|---|");
   for (const e of x.estratos) L.push(`| ${e.n}. ${e.nome} | ${e.candidatos} ${JSON.stringify(e.porBraco)} | ${e.cota} | ${e.n === 1 ? e.recebido : "—"} | ${e.selecionados.length} | ${e.n === 1 ? "—" : e.repassadoAo1} | ${e.n === 1 ? e.semUso : "—"} |`);
@@ -541,7 +549,7 @@ export function responder(o: { material: string; texto: string }): { arquivos: [
 // ───────────────────────────────────────────────────────────────── CLI
 
 const USO = `uso:
-  material-autora.ts preparar --passada P [--passada …] --saida PASTA_NOVA [--analise DIR …] [--coleta ARQ …] [--origem PASTA …] [--teto 10|15] [--site DIR] [--validador DIR]
+  material-autora.ts preparar --passada P [--passada …] --saida PASTA_NOVA [--analise DIR …] [--coleta ARQ …] [--origem PASTA …] [--teto 10|15] [--site DIR] [--validador DIR] [--cena-pela-spec]
   material-autora.ts responder --material PASTA --texto ARQ --saida PASTA_NOVA`;
 
 /** Grava texto e imagens sem nunca trocar conteúdo (versão nova = pasta nova). */
@@ -551,7 +559,7 @@ export function gravarArquivos(raiz: string, arquivos: [string, string | Buffer]
 }
 
 export async function executar(argv: string[]): Promise<number> {
-  const a = lerArgs(argv, ["--passada", "--saida", "--analise", "--coleta", "--origem", "--teto", "--site", "--validador", "--material", "--texto"], []);
+  const a = lerArgs(argv, ["--passada", "--saida", "--analise", "--coleta", "--origem", "--teto", "--site", "--validador", "--material", "--texto"], ["--cena-pela-spec"]);
   if ("erro" in a) { console.error(`RECUSADO: ${a.erro}\n${USO}`); return 1; }
   try {
     const um = (k: string, obrig = true) => { const v = a.opts.get(k); if (!v?.length) { if (obrig) throw new Error(`falta ${k} (obrigatório; nunca há pasta padrão)`); return null; } if (v.length > 1) throw new Error(`${k} mais de uma vez`); return v[0]; };
@@ -565,7 +573,8 @@ export async function executar(argv: string[]): Promise<number> {
       for (const p of passadas) { const r = relative(p, saida); if (r === "" || (!r.startsWith("..") && !isAbsolute(r))) throw new Error(`--saida não pode ficar dentro da passada ${p}`); }
       const teto = um("--teto", false);
       const m = await prepararMaterial({ passadas, analises: a.opts.get("--analise"), coletas: a.opts.get("--coleta"), origens: (a.opts.get("--origem") ?? []).map(x => resolve(x)),
-        teto: teto ? Number(teto) : undefined, site: um("--site", false), validador: um("--validador", false) ?? undefined });
+        teto: teto ? Number(teto) : undefined, site: um("--site", false), validador: um("--validador", false) ?? undefined,
+        ...(a.flags.has("--cena-pela-spec") ? { cenaPelaSpec: true } : {}) });
       if (m.cegueira.resultado !== "OK") {
         gravarArquivos(saida, m.arquivos.filter(([r]) => r === "cegueira.json"));
         console.error(`CEGUEIRA FALHOU (${m.cegueira.falhas.length}); só cegueira.json gravado.`); for (const f of m.cegueira.falhas.slice(0, 30)) console.error(`  ${JSON.stringify(f)}`); return 3;
@@ -574,6 +583,7 @@ export async function executar(argv: string[]): Promise<number> {
       for (const l of m.resumo) console.log(l);
       console.log(`gravado em ${saida}; à autora vai SÓ ${join(saida, "autora")}`);
     } else if (modo === "responder") {
+      if (a.flags.has("--cena-pela-spec")) throw new Error("--cena-pela-spec só vale em preparar (responder lê o material como foi preparado)");
       const r = responder({ material: um("--material")!, texto: um("--texto")! });
       if (r.erros.length) { console.error(`RESPOSTAS RECUSADAS (${r.erros.length}); nada gravado:`); for (const e of r.erros) console.error(`  ${e}`); return 1; }
       gravarImutavel(saida, r.arquivos);
