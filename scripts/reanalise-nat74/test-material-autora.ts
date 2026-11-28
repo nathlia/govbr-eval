@@ -18,7 +18,8 @@ import { desfechoDaAutora, desfechoDaPassada, lerTextoDaAutora, ratifica, type R
 import { RESULTADOS, lerJson, sha } from "./comum";
 import { VALIDADOR_PADRAO, prepararCampanha } from "./e14-campanha";
 import { COTAS, efeitosNoD, estratoDe, executar, gravarArquivos, ordemDoEstrato, prepararMaterial, responder, selecionar, type Candidato } from "./material-autora";
-import { lerPasso } from "./material-imagens";
+import { capturarCasos, lerPasso } from "./material-imagens";
+import type { CartaoCego } from "./e14-comum";
 import { Entradas, carregarCampanha, contar, creditosDoTrio, julgadosDoTrio, recalcular, type TabelaComparacao } from "./recalculo-campanha";
 import { gravarImutavel } from "./revisao-campanha";
 
@@ -63,6 +64,30 @@ try {
     assert.deepEqual(lerPasso("focar o botão 'Fechar a mensagem'"), { tipo: "focar", alvo: { nome: "Fechar a mensagem", papel: "button" } });
     assert.equal(lerPasso("andar de bicicleta"), null);
     assert.equal(lerPasso("preencher #nome"), null);
+  });
+  await t("imagens 1.2.0: seletor composto, 'rótulo (seletor)', 'seletor (comentário)', texto entre aspas sem seletor, navegar da SPA; prosa não vira CSS", () => {
+    assert.deepEqual(lerPasso(`click 'Ver processo' (tbody tr:nth-child(2) br-button[title="Ver processo"])`), { tipo: "clicar", alvo: { css: `tbody tr:nth-child(2) br-button[title="Ver processo"]` } });
+    assert.deepEqual(lerPasso(`click tbody tr:nth-child(2) br-button[title="Ver processo"] button (processo 00000.000011/2026-00, Em análise supervisor)`), { tipo: "clicar", alvo: { css: `tbody tr:nth-child(2) br-button[title="Ver processo"] button` } });
+    assert.deepEqual(lerPasso(`click br-tab button[data-panel="HISTORICO"] (aba Concluídos)`), { tipo: "clicar", alvo: { css: `br-tab button[data-panel="HISTORICO"]` } });
+    assert.deepEqual(lerPasso("clicar em `govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip input#total`"), { tipo: "clicar", alvo: { css: "govbr-custom-pagination nav > div:nth-of-type(1) br-select-pnip input#total" } });
+    assert.deepEqual(lerPasso("click 'Meus processos' para desligar o filtro"), { tipo: "clicar", alvo: { texto: "Meus processos" } });
+    assert.deepEqual(lerPasso("click página '2' na paginação"), { tipo: "clicar", alvo: { texto: "2" } });
+    assert.deepEqual(lerPasso("navegar para `/pnip-f3/portal-mpa/vistorias` (mesma página, sem recarregar) e esperar `pnip-propesc-vistorias`"), { tipo: "navegar", caminho: "/pnip-f3/portal-mpa/vistorias", esperar: "pnip-propesc-vistorias" });
+    assert.deepEqual(lerPasso("navegar para /pnip-f3/portal-mpa/vistorias"), { tipo: "navegar", caminho: "/pnip-f3/portal-mpa/vistorias", esperar: null });
+    assert.deepEqual(lerPasso("focar o botão 'Fechar a mensagem'"), { tipo: "focar", alvo: { nome: "Fechar a mensagem", papel: "button" } }, "o botão X continua nome acessível de botão");
+    // Prosa (palavra que não é etiqueta conhecida nem elemento com hífen, acento, maiúscula) não é seletor.
+    assert.deepEqual(lerPasso("clicar na primeira linha da tabela"), { tipo: "clicar", alvo: { nome: "primeira linha da tabela", papel: null } });
+    assert.deepEqual(lerPasso("click Ver processo"), { tipo: "clicar", alvo: { nome: "Ver processo", papel: null } });
+    assert.deepEqual(lerPasso("click 'a' ou 'b'"), { tipo: "clicar", alvo: { nome: "'a' ou 'b'", papel: null } }, "dois trechos entre aspas: ambíguo, não escolhe");
+    assert.equal(lerPasso("navegar para https://exemplo.org/x"), null, "fora de caminho da mesma origem: não sabe refazer");
+    // Passo escrito como o JSON do setup da referência: as formas do runSetupSteps; o resto continua null.
+    assert.deepEqual(lerPasso('{"action":"wait","ms":1500}'), { tipo: "pausa", ms: 1500 });
+    assert.deepEqual(lerPasso('{"action":"wait","selector":"#x"}'), { tipo: "esperar", css: "#x" });
+    assert.deepEqual(lerPasso('{"action":"click","selector":"br-tab button"}'), { tipo: "clicar", alvo: { css: "br-tab button" } });
+    assert.deepEqual(lerPasso('{"action":"fill","selector":"#nome","value":"Maria"}'), { tipo: "preencher", alvo: { css: "#nome" }, valor: "Maria" });
+    assert.deepEqual(lerPasso('{"action":"navigate","path":"/a/b","waitFor":"main"}'), { tipo: "navegar", caminho: "/a/b", esperar: "main" });
+    for (const ruim of ['{"action":"navigate","path":"/a"}', '{"action":"click"}', '{"action":"wait","ms":999999}', '{"action":"scroll","y":3}', '{"action":"click","selector":"#a","ms":3}', "{nao é json"])
+      assert.equal(lerPasso(ruim), null, ruim);
   });
   await t("CLI: modo, --saida e --passada obrigatórios; teto fora de 10/15 recusa; --saida existente recusa", async () => {
     assert.equal(await silencioso(() => executar([])), 1);
@@ -161,6 +186,32 @@ try {
     assert.equal(desfechoDaAutora(r({ defeito: "nao-sei" })), "pendente");
     assert.ok(ratifica("credita:A-04", "credita:A-04")); assert.ok(!ratifica("credita:A-04", "credita:A-08")); assert.ok(!ratifica("pendente", "pendente"));
   });
+
+  console.log("material da autora: imagens 1.2.0 na página congelada da F3 (shadow roots do DS, texto visível, navegar da SPA)");
+  {
+    const SITE_F3 = join(RESULTADOS, "sites", "968fec4fd13fca5e23955fe02d3e4d8a235ab2d3f540a49739f9c6445094ec88");
+    if (!existsSync(SITE_F3)) { pulados++; console.log("  PULADO imagens F3: site congelado ausente"); }
+    else await t("[imagens 1.2.0] F3 real: seletor através da shadow root, 'rótulo (seletor)', texto entre aspas e navegar alcançam o estado; sujeito em shadow root é medido e contornado; passo impossível continua dito", async () => {
+      const cartao = (id: string, passos: string[], chave: string): CartaoCego => ({ id, tela: "A", telaNome: "t", normaCitada: null, candidatas: [], fatosMedidos: [], vereditoRegistrado: null, perguntas: [], citaveis: [],
+        alegacao: { regra: null, seletor: null, observado: "outline-style", esperado: null, estado: { viewport: { width: 1280, height: 900 }, passos }, cena: "c", sinais: [], evidencias: [],
+          sujeitos: [{ id: "s1", chave, rotulo: "x", cena: null }], sujeitosNaoListados: 0 } });
+      const casos = [
+        { caso: "R-01", cartao: cartao("R-01", ["click br-tab button[data-panel=\"HISTORICO\"] (aba Concluídos)"], 'br-tab button[data-panel="HISTORICO"]') },
+        { caso: "R-02", cartao: cartao("R-02", ["click 'Ver processo' (tbody tr:nth-child(2) br-button[title=\"Ver processo\"])"], "main") },
+        { caso: "R-03", cartao: cartao("R-03", ["click 'Meus processos' para desligar o filtro", "click página '2' na paginação"], "main") },
+        { caso: "R-04", cartao: cartao("R-04", ["navegar para `/pnip-f3/portal-mpa/vistorias` (mesma página, sem recarregar) e esperar `pnip-propesc-vistorias`"], "pnip-propesc-vistorias") },
+        { caso: "R-05", cartao: cartao("R-05", ["click 'Não existe nesta página'"], "main") },
+        { caso: "R-06", cartao: cartao("R-06", ["girar a tela"], "main") },
+      ];
+      const cap = await capturarCasos(casos, { siteDir: SITE_F3, endereco: "/pnip-f3/portal-mpa/processos?mock-perfil=mpa", waitFor: "main .br-table tbody tr" });
+      for (const k of ["R-01", "R-02", "R-03", "R-04"]) assert.ok(cap.get(k)!.alcancou, `${k}: ${cap.get(k)!.passos.join(" | ")}`);
+      assert.ok(cap.get("R-01")!.medida.some(l => /^<button/.test(l) && /outline-style/.test(l)), "o botão dentro da shadow root do br-tab é medido: " + cap.get("R-01")!.medida.join(" | "));
+      assert.ok(cap.get("R-01")!.recorte, "e contornado (há recorte)");
+      assert.match(cap.get("R-04")!.passos[0], /sem recarregar/);
+      assert.ok(!cap.get("R-05")!.alcancou && /não achei "Não existe nesta página"/.test(cap.get("R-05")!.passos[0]));
+      assert.ok(!cap.get("R-06")!.alcancou && /não sei refazer este passo/.test(cap.get("R-06")!.passos[0]));
+    });
+  }
 
   console.log("material da autora: estrato 1 com a regra de cena (--cena-pela-spec; passada real da F3, só leitura)");
   {
