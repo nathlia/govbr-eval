@@ -22,6 +22,7 @@ import {
   Entradas, FORMATO_ESTRATOS, FORMATO_ESTRATOS_F3, ORIGENS, porOrigemMd, semControlesMd, sensibilidadeSemControles, tabelaPorOrigem, FORMATO_NIVEIS, INTERACAO, NIVEIS, conferirEstratos, estratosDeclarados, lerEstratos, porInteracaoMd, porTipoMd, tabelaPorInteracao, tabelaPorNivelDosEstratos, tabelaPorTipo, TRIO_COM_SLOT_FORA, conferirNiveis, lerNiveis, mediana, niveisDeclarados, porNivelMd, tabelaPorNivel, chavePorProtocolo, chaveVariante, colunaFundamentada, conjuntoDe, contar, contarFundamentada, ehIdDeVerificacao, executar, fundamentadaDoTrio, fundamentadaMd, idCanonico,
   leituraComDelta, normaDaFundamentacao, recalcular, regraDaTela, removidosS4, sensibilidadeSemIdsExpostos, slotsPorProtocolo,
   tabelaDaComparacao, tabelaPorProtocolo, unidadesDaSpec, vereditoNaPolitica,
+  REGRA_CENA_PELA_SPEC, carregarCampanha, cenaPelaSpec, creditosDoTrio, julgadosDoTrio,
   type CartaoJulgado, type Comparacao, type Contestado, type TabelaComparacao, type TrioEntrada,
 } from "./recalculo-campanha";
 
@@ -1168,6 +1169,60 @@ try {
           i4 = i("## S4'"), iT = i("## Specs semeadas confirmadas por tipo"), iN = i("## Specs semeadas confirmadas por nível"), iI = i("## Specs semeadas confirmadas por exigência"), iO = i("## Specs semeadas confirmadas por origem");
         assert.ok(iP < iSC && iSC < iS && iS < i4 && i4 < iT && iT < iN && iN < iI && iI < iO, "primário < sem os controles < sensibilidades < S4' < tipo < nível < interação < origem");
         assert.match(md, /\| R Redação \(1\) \|/);
+      });
+    }
+  }
+
+  console.log("recálculo de campanha nova: regra de cena cena-pela-spec-1.0.0 (cartões com segmentos, F3 real)");
+  {
+    // Passada real da F3 (9 segmentos): a regra decide a cena sem ler braço, execução nem trio; sem a opção, tudo como antes.
+    const PF3 = join(RESULTADOS, "analises", "nat78-tela-f3-01", "primeira-passada-20261127T1");
+    if (!existsSync(join(PF3, "julgamentos.json"))) { pulados++; console.log("  PULADO regra de cena: passada da F3 ausente"); }
+    else {
+      const carga = carregarCampanha({ passadas: [PF3] }, new Entradas());
+      const a = carga.analises.find(x => x.coleta.trio === "p01")!;
+      const js = julgadosDoTrio(a, carga.derivadoNa);
+      const card = (j: CartaoJulgado) => a.pkg.cards.find(c => c.id === j.cardId)!;
+      const ver = (j: CartaoJulgado) => vereditoNaPolitica(j.derivado, "1.2.0");
+      const seg = js.filter(j => card(j).segmentos && ver(j).veredito !== "pendente");
+      const segRef = seg.filter(j => ver(j).veredito === "reference"), segNao = seg.filter(j => ver(j).veredito !== "reference");
+      const base = { politica: "1.2.0" as const, reviewer: "teste", fonte: "teste", bracos: carga.bracos };
+      const sem = creditosDoTrio(a.pkg, js, base), com = creditosDoTrio(a.pkg, js, { ...base, cenaPelaSpec: true });
+      const pend = (cr: typeof sem) => new Set(Object.values(cr.porBraco).flatMap(x => x.pendentes));
+      const cred = (cr: typeof sem) => new Set(Object.values(cr.porBraco).flatMap(x => x.creditados));
+      t("[cena-pela-spec] opção desligada: todo cartão com segmentos fica pendente, com o motivo de sempre; sem contagem da regra", () => {
+        assert.ok(segRef.length > 0 && segNao.length > 0, "o trio tem cartões com segmentos dos dois tipos");
+        for (const j of seg) assert.ok(pend(sem).has(j.id), j.id);
+        assert.ok(sem.recusados.filter(r => seg.some(j => j.id === r.id)).every(r => r.motivo === "cartão com segmentos: a passada não decide a cena"));
+        assert.equal(sem.cenaPelaSpec, undefined);
+      });
+      t("[cena-pela-spec] reference com o segmento da spec entre os do cartão: decidido na cena das unidades da spec e creditado", () => {
+        const creditados = segRef.filter(j => cred(com).has(j.id));
+        assert.ok(creditados.length > 0);
+        for (const j of creditados) {
+          const c = cenaPelaSpec(card(j), a.pkg, ver(j));
+          assert.ok("cena" in c && c.como === "referencia");
+          if ("cena" in c) assert.ok(a.pkg.units.filter(u => u.specId === ver(j).spec).every(u => u.scene === c.cena) && card(j).segmentos!.some(o => o.scene === c.cena));
+        }
+      });
+      t("[cena-pela-spec] sem crédito: decidido (sai dos pendentes), nenhuma unidade; a cena é o primeiro segmento do cartão na ordem do plano", () => {
+        for (const j of segNao) { assert.ok(!pend(com).has(j.id), j.id); assert.ok(!cred(com).has(j.id), j.id); }
+        const c = cenaPelaSpec(card(segNao[0]), a.pkg, ver(segNao[0]));
+        const num = (s: string) => a.pkg.scenes.find(x => x.id === s)!.segmento!.numero;
+        assert.ok("cena" in c && c.como === "nao-referencia" && card(segNao[0]).segmentos!.every(o => num(o.scene) >= num(c.cena)));
+      });
+      t("[cena-pela-spec] segmento da spec fora dos segmentos do cartão: pendente, com o motivo dito; a contagem por braço fecha", () => {
+        const j = segRef[0], s = ver(j).spec!;
+        const daSpec = new Set(a.pkg.units.filter(u => u.specId === s).map(u => u.scene));
+        const sem1 = { ...card(j), segmentos: card(j).segmentos!.filter(o => !daSpec.has(o.scene)) };
+        const r = cenaPelaSpec(sem1, a.pkg, ver(j));
+        assert.ok("pendente" in r && r.tipo === "segmento-da-spec-fora-do-cartao");
+        assert.match("pendente" in r ? r.pendente : "", new RegExp(`^${REGRA_CENA_PELA_SPEC.replace(/\./g, "\\.")}: o segmento da ${s} .* não está entre os do cartão`));
+        assert.deepEqual(cenaPelaSpec(card(j), a.pkg, { veredito: "reference", spec: "NAO-EXISTE" }), { tipo: "spec-sem-unidade", pendente: `${REGRA_CENA_PELA_SPEC}: a NAO-EXISTE não tem unidade no pacote` });
+        for (const [b, x] of Object.entries(com.cenaPelaSpec!)) {
+          assert.equal(x.referencia + x.naoReferencia + Object.values(x.pendentes).reduce((m, n) => m + n, 0), x.segmentados, b);
+          assert.equal(x.segmentados, js.filter(j => j.braco === b && card(j).segmentos).length, b);
+        }
       });
     }
   }

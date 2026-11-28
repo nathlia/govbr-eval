@@ -288,6 +288,19 @@ cegos, que recebem só os arquivos indicados.
    `summary.json` nem é lida e a saída é byte a byte a de antes (conferido contra o `7ab7b0c` no ensaio, T4 e adjudicada).
    Testes: `npm run test:revisao-recalculo` (inclui a equivalência da vinculação copiada de `montar.ts` contra o próprio
    `montarDecisoes`, em todo cartão × spec de pacotes reais: deriva da cópia falha o teste).
+   **`--cena-pela-spec` (regra `cena-pela-spec-1.0.0`; declarada DEPOIS da coleta da F3, desvio declarado; padrão desligada).**
+   Cartão cujo seletor resolve em mais de um segmento (D-60, `card.segmentos`) precisa de `cena` na decisão do scorer, e a
+   passada cega não pergunta a cena: sem a opção, o recálculo deixa todo cartão desses pendente ("a passada não decide a
+   cena"), e na F3 (9 segmentos) quase todo cartão de agente é assim. Com a opção: veredito `reference` da spec S → a cena é
+   o segmento onde o pacote construiu as unidades de S (o do `state` de S; `sempre` → o último), só se for um dos segmentos
+   do cartão; o crédito segue pelo caminho de sempre (`unidadesDaSpec` + scorer) com os sujeitos dessa cena. Segmento de S
+   fora dos do cartão, ou unidades de S em mais de um deles → pendente, com o motivo. Veredito sem crédito (`false`,
+   `novel`, `unresolved`) → o primeiro segmento do cartão na ordem do plano, dito no `rationale`; não credita unidade
+   nenhuma e deixa de segurar o trio em provisório. A regra lê só o cartão, as unidades e as cenas do pacote (nunca braço,
+   execução ou trio). `recalculo.json › cenaPelaSpec` traz a regra, a definição e, por braço (1.2.0, leitura principal,
+   somado nos trios), cartões com segmentos, decididos (reference / sem crédito) e pendentes por motivo; o `tabela.md` abre
+   com a nota de que a regra foi aplicada e declarada depois da coleta. Sem a opção, saída byte a byte a de antes (conferido
+   nos recálculos da D, da E e da F3 e nos portões de teto da F e da F2).
    **Portão de teto da tela F (adendo de 26/11 §5; sem modelo):** `npm run portao:teto -- --passada <passada julgada e
    ingerida> --saida <pasta nova> [--analise DIR …] [--origem <pasta>]` lê UMA passada cega (política 1.3.0) sobre as
    análises individuais das 3 execuções só do `sem` (`analisar --pacote … --sem-linha-de-base`, campanha piloto

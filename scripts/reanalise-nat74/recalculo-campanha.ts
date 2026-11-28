@@ -376,17 +376,47 @@ export function proveniencia(d: Derivado): string {
 }
 export interface BracoCredito { runId: string; confirmadas: string[]; admissiveis: string[]; pendentes: string[]; recusados: { id: string; motivo: string }[];
   creditados: string[] }
-export interface CreditosDoTrio { porBraco: Record<string, BracoCredito>; recusados: { id: string; cardId: string; motivo: string }[] }
+export interface CreditosDoTrio { porBraco: Record<string, BracoCredito>; recusados: { id: string; cardId: string; motivo: string }[];
+  /** Só com `cenaPelaSpec`: o que a regra fez com os cartões com segmentos, por braço (contagem; a regra não lê o braço). */
+  cenaPelaSpec?: Record<string, ContagemCena> }
 
 const pendente = (cardId: string): SemanticDecision => ({ cardId, status: "pending", reviewer: "", rationale: "", complete: false, evidenceRefs: [], atoms: [] });
 
+/**
+ * Regra de cena para cartão com segmentos (D-60), declarada DEPOIS da coleta da F3 (desvio declarado; opção, padrão
+ * desligada). A passada cega não pergunta a cena; sem a regra, todo cartão com segmentos fica pendente.
+ */
+export const REGRA_CENA_PELA_SPEC = "cena-pela-spec-1.0.0";
+export const DEFINICAO_CENA_PELA_SPEC = "cartão com segmentos: veredito reference da spec S → a cena é o segmento onde o pacote construiu as unidades de S (o do state de S; sempre → o último), se for um dos segmentos do cartão, e o crédito segue pelo caminho de sempre nessa cena (senão, pendente); veredito sem crédito → o primeiro segmento do cartão na ordem do plano; não lê braço, execução nem trio";
+export interface ContagemCena { segmentados: number; referencia: number; naoReferencia: number; pendentes: Record<string, number> }
+
+/** A cena que a regra escolhe, ou por que o cartão fica pendente. Lê só o cartão, as unidades e as cenas do pacote. */
+export function cenaPelaSpec(card: Card, pkg: Pick<SemanticPackage, "units" | "scenes">, v: { veredito: VereditoCartao; spec: string | null }):
+  { cena: string; como: "referencia" | "nao-referencia"; nota: string } | { pendente: string; tipo: string } {
+  const doCartao = card.segmentos!.map(o => o.scene);
+  if (v.veredito === "reference") {
+    const daSpec = [...new Set(pkg.units.filter(u => u.specId === v.spec).map(u => u.scene))].sort();
+    if (!daSpec.length) return { tipo: "spec-sem-unidade", pendente: `${REGRA_CENA_PELA_SPEC}: a ${v.spec} não tem unidade no pacote` };
+    const comuns = daSpec.filter(c => doCartao.includes(c));
+    if (!comuns.length) return { tipo: "segmento-da-spec-fora-do-cartao", pendente: `${REGRA_CENA_PELA_SPEC}: o segmento da ${v.spec} (${daSpec.join(", ")}) não está entre os do cartão (${doCartao.join(", ")})` };
+    if (comuns.length > 1) return { tipo: "spec-em-mais-de-um-segmento-do-cartao", pendente: `${REGRA_CENA_PELA_SPEC}: unidades da ${v.spec} em ${comuns.length} segmentos do cartão (${comuns.join(", ")}): ambíguo` };
+    return { cena: comuns[0], como: "referencia", nota: `cena ${comuns[0]} = segmento das unidades da ${v.spec} (${REGRA_CENA_PELA_SPEC})` };
+  }
+  const ordem = (s: string) => pkg.scenes.find(x => x.id === s)?.segmento?.numero ?? Number.MAX_SAFE_INTEGER;
+  const primeira = doCartao.map((s, i) => ({ s, i })).sort((x, y) => ordem(x.s) - ordem(y.s) || x.i - y.i)[0].s;
+  return { cena: primeira, como: "nao-referencia", nota: `cena ${primeira} = primeiro segmento do cartão na ordem do plano; veredito sem crédito (${REGRA_CENA_PELA_SPEC})` };
+}
+
 /** Unidades confirmadas por braço num trio (um pacote), sob a política e com os cartões `removidos` (S4') sem crédito. */
-export function creditosDoTrio(pkg: SemanticPackage, julgados: CartaoJulgado[], o: { politica: Politica; removidos?: ReadonlySet<string>; reviewer: string; fonte: string; bracos: readonly string[] }): CreditosDoTrio {
+export function creditosDoTrio(pkg: SemanticPackage, julgados: CartaoJulgado[], o: { politica: Politica; removidos?: ReadonlySet<string>; reviewer: string; fonte: string; bracos: readonly string[];
+  /** Regra `cena-pela-spec-1.0.0` (declarada depois da coleta da F3). Sem ela, cartão com segmentos fica pendente, como sempre. */
+  cenaPelaSpec?: boolean }): CreditosDoTrio {
   const cards = new Map(pkg.cards.map(c => [c.id, c]));
   const decisoes = new Map<string, SemanticDecision>();
   const recusados: CreditosDoTrio["recusados"] = [];
   const idDe = new Map<string, CartaoJulgado>();
   const pend = new Set<string>();
+  const pelaRegra = new Map<string, "referencia" | "nao-referencia">();
   for (const j of ordenar(julgados, x => x.cardId)) {
     const card = cards.get(j.cardId);
     if (!card) throw new Error(`${j.id}: cartão ${j.cardId} fora do pacote`);
@@ -394,17 +424,25 @@ export function creditosDoTrio(pkg: SemanticPackage, julgados: CartaoJulgado[], 
     idDe.set(j.cardId, j);
     const v = vereditoNaPolitica(j.derivado, o.politica, o.removidos?.has(j.id) ?? false);
     if (v.veredito === "pendente") { decisoes.set(j.cardId, pendente(j.cardId)); pend.add(j.cardId); continue; }
-    if (card.segmentos) { decisoes.set(j.cardId, pendente(j.cardId)); pend.add(j.cardId); recusados.push({ id: j.id, cardId: j.cardId, motivo: "cartão com segmentos: a passada não decide a cena" }); continue; }
-    const subs = card.subjects;
+    let cena: { cena: string; nota: string } | null = null;
+    if (card.segmentos) {
+      if (!o.cenaPelaSpec) { decisoes.set(j.cardId, pendente(j.cardId)); pend.add(j.cardId); recusados.push({ id: j.id, cardId: j.cardId, motivo: "cartão com segmentos: a passada não decide a cena" }); continue; }
+      const c = cenaPelaSpec(card, pkg, v);
+      if ("pendente" in c) { decisoes.set(j.cardId, pendente(j.cardId)); pend.add(j.cardId); recusados.push({ id: j.id, cardId: j.cardId, motivo: c.pendente }); continue; }
+      cena = c; pelaRegra.set(j.cardId, c.como);
+    }
+    const subs = cena ? card.subjects.filter(s => s.scene === cena!.cena) : card.subjects;
+    if (cena && !subs.length) { decisoes.set(j.cardId, pendente(j.cardId)); pend.add(j.cardId); pelaRegra.delete(j.cardId); recusados.push({ id: j.id, cardId: j.cardId, motivo: `${REGRA_CENA_PELA_SPEC}: nenhum sujeito do cartão na cena ${cena!.cena}` }); continue; }
+    const nota = cena ? ` · ${cena.nota}` : "";
     const base = { id: "cartao", text: (card.observed ?? card.description ?? "").trim() || card.id, subjects: subs.map(s => s.id) };
     let atom: ReviewAtom;
     if (v.veredito === "reference") {
-      const r = unidadesDaSpec(card, pkg.units, v.spec!, subs, `${j.id}: ${v.motivo}${proveniencia(j.derivado)}`, o.reviewer, [o.fonte]);
-      if ("falhou" in r) { decisoes.set(j.cardId, pendente(j.cardId)); pend.add(j.cardId); recusados.push({ id: j.id, cardId: j.cardId, motivo: r.falhou }); continue; }
+      const r = unidadesDaSpec(card, pkg.units, v.spec!, subs, `${j.id}: ${v.motivo}${proveniencia(j.derivado)}${nota}`, o.reviewer, [o.fonte]);
+      if ("falhou" in r) { decisoes.set(j.cardId, pendente(j.cardId)); pend.add(j.cardId); pelaRegra.delete(j.cardId); recusados.push({ id: j.id, cardId: j.cardId, motivo: r.falhou }); continue; }
       atom = { ...base, verdict: "reference", unitIds: r.unitIds, citation: j.derivado.fundamentacao === "norma" ? "supported" : "uncertain", ...(r.links.length ? { links: r.links } : {}) };
     } else atom = { ...base, verdict: v.veredito, unitIds: [], citation: "uncertain" };
-    decisoes.set(j.cardId, { cardId: j.cardId, status: "reviewed", reviewer: o.reviewer, rationale: `${j.id}: ${v.motivo}${proveniencia(j.derivado)}`, complete: true,
-      evidenceRefs: [o.fonte, j.id], atoms: [atom] });
+    decisoes.set(j.cardId, { cardId: j.cardId, status: "reviewed", reviewer: o.reviewer, rationale: `${j.id}: ${v.motivo}${proveniencia(j.derivado)}${nota}`, complete: true,
+      evidenceRefs: [o.fonte, j.id], atoms: [atom], ...(cena ? { cena: cena.cena } : {}) });
   }
   const montadas = (): SemanticReviews => ({ version: pkg.version, decisions: [...decisoes.values()] });
   let score: ReturnType<typeof scoreSemanticPackage>;
@@ -436,7 +474,22 @@ export function creditosDoTrio(pkg: SemanticPackage, julgados: CartaoJulgado[], 
       pendentes: meus.filter(j => pend.has(j.cardId)).map(j => j.id).sort(), recusados: recusados.filter(r => meus.some(j => j.id === r.id)).map(r => ({ id: r.id, motivo: r.motivo })),
       creditados };
   }
-  return { porBraco, recusados };
+  if (!o.cenaPelaSpec) return { porBraco, recusados };
+  // Contagem por braço (só relatório): a regra já decidiu sem ler o braço. Recusa posterior (vínculo, scorer) = pendente.
+  const motivoDe = new Map(recusados.map(r => [r.cardId, r.motivo]));
+  const cenaPorBraco: Record<string, ContagemCena> = {};
+  for (const j of julgados) {
+    if (!cards.get(j.cardId)!.segmentos) continue;
+    const c = (cenaPorBraco[j.braco] ??= { segmentados: 0, referencia: 0, naoReferencia: 0, pendentes: {} });
+    c.segmentados++;
+    const como = pelaRegra.get(j.cardId);
+    if (como && decisoes.get(j.cardId)?.status === "reviewed") { if (como === "referencia") c.referencia++; else c.naoReferencia++; continue; }
+    const m = motivoDe.get(j.cardId);
+    const tipo = !m ? "pendente na passada" : m.startsWith(`${REGRA_CENA_PELA_SPEC}: `) ? m.slice(REGRA_CENA_PELA_SPEC.length + 2).replace(/ \(.*$/, "").replace(/\b[A-Z][A-Z0-9]*-\d+\b/g, "S").replace(/cena \S+/, "cena C")
+      : m.startsWith("recusado pelo scorer") ? "recusado pelo scorer" : m.replace(/\b[A-Z][A-Z0-9]*-\d+\b/g, "S").replace(/cena \S+/, "cena C");
+    c.pendentes[tipo] = (c.pendentes[tipo] ?? 0) + 1;
+  }
+  return { porBraco, recusados, cenaPelaSpec: cenaPorBraco };
 }
 
 // ───────────────────────────────────────────────────────────────── coluna fundamentada e a variante "sem ids expostos" (tela E)
@@ -1160,6 +1213,8 @@ export class Entradas {
 export interface OpcoesRecalculo { passadas: string[]; analises?: string[]; coletas?: string[]; residuoPassada?: string | null; ratificacoes?: string | null; reamostragens?: number; origens?: string[];
   /** NAT-78 §4.5: sensibilidade por protocolo ao lado (lê a `summary.json` de cada análise). Sem ela, saída byte a byte a de antes. */
   porProtocolo?: boolean;
+  /** Regra `cena-pela-spec-1.0.0` para cartão com segmentos (declarada depois da coleta da F3). Sem ela, saída byte a byte a de antes. */
+  cenaPelaSpec?: boolean;
   /** `telas.json` lido para a declaração de níveis (F) ou de estratos (F2) (padrão: o deste repositório; os testes passam um sintético). */
   telas?: string }
 
@@ -1346,6 +1401,7 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
   const recusas: Record<string, unknown>[] = [];
   const removidosTodos = new Set<string>();
   const specDeTodos = new Map<string, string>();
+  const cenaTotal: Record<string, ContagemCena> | null = o.cenaPelaSpec ? {} : null;
   for (const a of ordenar(analises, x => x.coleta.trio)) {
     for (const u of a.pkg.units) specDeTodos.set(u.id, u.specId);
     const p = a.passada;
@@ -1357,7 +1413,13 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
     const fonte = `${p.nome}/julgamentos.json sha256:${p.julgSha}`;
     for (const v of ["principal", "S4'"] as Variante[]) for (const pol of POLITICAS) {
       if (v === "S4'" && !s4.disponivel) continue;
-      const cr = creditosDoTrio(a.pkg, julgados, { politica: pol, removidos: v === "S4'" ? removidos : undefined, reviewer: `${RECALCULO_VERSAO} · ${p.nome}`, fonte, bracos });
+      const cr = creditosDoTrio(a.pkg, julgados, { politica: pol, removidos: v === "S4'" ? removidos : undefined, reviewer: `${RECALCULO_VERSAO} · ${p.nome}`, fonte, bracos,
+        ...(o.cenaPelaSpec ? { cenaPelaSpec: true } : {}) });
+      if (cenaTotal && v === "principal" && pol === "1.2.0") for (const [b, x] of Object.entries(cr.cenaPelaSpec ?? {})) {
+        const t = (cenaTotal[b] ??= { segmentados: 0, referencia: 0, naoReferencia: 0, pendentes: {} });
+        t.segmentados += x.segmentados; t.referencia += x.referencia; t.naoReferencia += x.naoReferencia;
+        for (const [k, n] of Object.entries(x.pendentes)) t.pendentes[k] = (t.pendentes[k] ?? 0) + n;
+      }
       creditos[chaveVariante(v, pol)] = Object.fromEntries(Object.entries(cr.porBraco).map(([b, x]) => [b, { confirmadas: x.confirmadas, admissiveis: x.admissiveis, pendentes: x.pendentes.length }]));
       if (cr.recusados.length) recusas.push({ trio: a.coleta.trio, variante: v, politica: pol, recusados: cr.recusados });
       if (v === "principal" && pol === "1.2.0") for (const [b, x] of Object.entries(cr.porBraco)) {
@@ -1397,6 +1459,9 @@ export function recalcular(o: OpcoesRecalculo): Recalculo {
       porBraco: s4PorBraco, ...(autoraInfo ? { autora: autoraInfo } : {}) },
     residuoDeBraco: residuoInfo, recusasDoScorer: recusas, tabelas,
   };
+  if (cenaTotal) json.cenaPelaSpec = { regra: REGRA_CENA_PELA_SPEC, definicao: DEFINICAO_CENA_PELA_SPEC,
+    declarada: "depois da coleta (desvio declarado): a passada cega não pergunta a cena; sem a regra, todo cartão com segmentos fica pendente",
+    contagem: "política 1.2.0, leitura principal, somada nos trios", porBraco: Object.fromEntries(Object.entries(cenaTotal).sort(([x], [y]) => (x < y ? -1 : 1))) };
   if (o.origens?.length) json.origem = resumoDaOrigem(passadas, origemInfo, derivadoNa);
   // Coluna fundamentada com as suas sensibilidades, só quando a regra da tela as declara (tela E): mesma passada, mesmo
   // derivado; sem a declaração (D, A), nada muda.
@@ -1608,6 +1673,13 @@ export function semControlesMd(sc: SemControles, primario: TabelaComparacao[]): 
 export function tabelaMd(j: Record<string, unknown>, tab: Record<string, TabelaComparacao[]>, regra: RegraDesfecho, comps: Comparacao[], temS4: boolean, semControles: SemControles | null = null): string {
   const L: string[] = [`# Recálculo §8.5 — campanha \`${j.campanha}\` (tela ${regra.tela}, referência ${regra.referencia})`, ""];
   if (j.aviso) L.push(`> **${j.aviso}.**`, "");
+  const cs = j.cenaPelaSpec as { regra: string; definicao: string; porBraco: Record<string, ContagemCena> } | undefined;
+  if (cs) {
+    L.push(`> **Regra de cena \`${cs.regra}\` aplicada, declarada DEPOIS da coleta (desvio declarado).** ${cs.definicao}.`, "",
+      "| braço | cartões com segmentos | decididos pela regra: reference | decididos: sem crédito | pendentes (motivo: n) |", "|---|---|---|---|---|");
+    for (const [b, x] of Object.entries(cs.porBraco)) L.push(`| ${b} | ${x.segmentados} | ${x.referencia} | ${x.naoReferencia} | ${Object.entries(x.pendentes).sort(([, m], [, n]) => n - m).map(([k, n]) => `${k}: ${n}`).join("; ") || "—"} |`);
+    L.push("", "Contagem na política 1.2.0, leitura principal, somada nos trios (`recalculo.json › cenaPelaSpec`).", "");
+  }
   const ps = j.passadas as { nome: string; julgamentosSha256: string; adjudicada: boolean }[];
   L.push(`Respostas congeladas: ${ps.map(p => `\`${p.nome}\` (${p.adjudicada ? "adjudicada" : "1ª passada"}, julgamentos ${p.julgamentosSha256.slice(0, 8)}…)`).join("; ")}. ` +
     `Crédito por unidade pelo scorer do pacote; no desfecho por spec (D-102), uma spec conta quando ao menos uma unidade dela é confirmada. ` +
@@ -1672,10 +1744,10 @@ export function tabelaMd(j: Record<string, unknown>, tab: Record<string, TabelaC
 const USO = `uso:
   recalculo-campanha.ts --passada PASSADA [--passada OUTRA ...] --saida PASTA_NOVA
       [--analise DIR ...] [--coleta coleta-trio.json ...] [--residuo-passada PASSADA] [--ratificacoes ARQ] [--reamostragens N] [--origem PASTA ...]
-      [--por-protocolo]`;
+      [--por-protocolo] [--cena-pela-spec]`;
 
 export function executar(argv: string[]): number {
-  const a = lerArgs(argv, ["--passada", "--saida", "--analise", "--coleta", "--residuo-passada", "--ratificacoes", "--reamostragens", "--origem"], ["--por-protocolo"]);
+  const a = lerArgs(argv, ["--passada", "--saida", "--analise", "--coleta", "--residuo-passada", "--ratificacoes", "--reamostragens", "--origem"], ["--por-protocolo", "--cena-pela-spec"]);
   if ("erro" in a) { console.error(`RECUSADO: ${a.erro}\n${USO}`); return 1; }
   try {
     if (a.modo.length) throw new Error(`argumento solto: ${a.modo.join(" ")}`);
@@ -1691,7 +1763,7 @@ export function executar(argv: string[]): number {
     const ream = um("--reamostragens");
     const r = recalcular({ passadas, analises: a.opts.get("--analise"), coletas: a.opts.get("--coleta"), residuoPassada: um("--residuo-passada"),
       ratificacoes: um("--ratificacoes"), reamostragens: ream ? Number(ream) : undefined, origens: (a.opts.get("--origem") ?? []).map(x => resolve(x)),
-      ...(a.flags.has("--por-protocolo") ? { porProtocolo: true } : {}) });
+      ...(a.flags.has("--por-protocolo") ? { porProtocolo: true } : {}), ...(a.flags.has("--cena-pela-spec") ? { cenaPelaSpec: true } : {}) });
     const jTxt = jsonTexto(r.json);
     gravarImutavel(saida, [["recalculo.json", jTxt], ["recalculo.json.sha256", `${sha(jTxt)}  recalculo.json\n`], ["tabela.md", r.md]]);
     const tab = (r.json.tabelas as Record<string, TabelaComparacao[]>)["principal|1.2.0|primario"];
